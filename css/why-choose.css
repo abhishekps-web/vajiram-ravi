@@ -60,6 +60,17 @@
 @keyframes wcDriftB { from { transform: translate3d(0, 5px, 0); } to { transform: translate3d(0, -7px, 0); } }
 @keyframes wcDriftC { from { transform: translate3d(0, -4px, 0); } to { transform: translate3d(0, 7px, 0); } }
 
+/* reveal: when the grid scrolls in (.rise -> .rise.in, js/content.js) each card rises and settles, one after another, then its
+   illustration pops in. Uses translate/scale/opacity so it never fights the hover, which owns transform. */
+.wc__cards.rise > .wc__card { opacity: 0; translate: 0 56px; scale: .96;
+  transition: transform .7s var(--ease), background-color .7s var(--ease), opacity .8s var(--ease), translate 1s var(--ease), scale 1s var(--ease);
+  transition-delay: 0s, 0s, calc(var(--i, 0) * 110ms), calc(var(--i, 0) * 110ms), calc(var(--i, 0) * 110ms); }
+.wc__cards.rise.in > .wc__card { opacity: 1; translate: 0 0; scale: 1; }
+.wc__cards.rise .wc__art { opacity: 0; scale: .8; transition: opacity .7s var(--ease), scale .9s var(--spring, cubic-bezier(.34, 1.4, .5, 1)); transition-delay: calc(var(--i, 0) * 110ms + .35s); }
+.wc__cards.rise.in .wc__art { opacity: 1; scale: 1; }
+.wc__cards.rise .wc__num { scale: .6; transition: border-color .6s var(--ease), background-color .6s var(--ease), color .6s var(--ease), transform .7s var(--ease), scale .7s var(--spring, cubic-bezier(.34, 1.4, .5, 1)); transition-delay: 0s, 0s, 0s, 0s, calc(var(--i, 0) * 110ms + .25s); }
+.wc__cards.rise.in .wc__num { scale: 1; }
+
 /* hover: the card lifts, the sculpture turns a touch, the number bubble fills brand. Everything eases on --ease, nothing springs. */
 @media (hover: hover) and (pointer: fine) {
   .wc__card:hover { transform: translate3d(0, -6px, 0); background: #FFE9D6; }
@@ -122,6 +133,7 @@
 
 /* ---- reduced motion: everything visible and still ---- */
 @media (prefers-reduced-motion: reduce) {
+  .wc__cards.rise > .wc__card, .wc__cards.rise .wc__art, .wc__cards.rise .wc__num { opacity: 1; translate: none; scale: none; }
   .wc__card, .wc__num, .wc__art, .wc__art svg, .wc__dot, .wc__n, .wc__star, .wc__em, .wc__arr, .wc__stat::before, .wc__dim { transition: none; animation: none; }
   .wc__art svg { transform: none; }
   .wc__star { transform: none; }
