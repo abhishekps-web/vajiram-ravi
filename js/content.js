@@ -136,106 +136,33 @@
   $$('a', drawer).forEach(a => a.addEventListener('click', () => setDrawer(false)));
   const explore = $('#explore'), exBtn = $('#exploreBtn');
   const setMega = open => { explore.classList.toggle('open', open); exBtn.setAttribute('aria-expanded', open); };
-  $('#mega').innerHTML = STAGES.map(s => `<div><p>${s.k}</p><ul>${s.cats.map(c => `<li><a href="#courses" data-cat="${c}">${esc(CATS[c].t)}<span>${CATS[c].courses.length}</span></a></li>`).join('')}</ul></div>`).join('');
+  // All courses: the five stages as numbered columns along one line, each programme a row (name, one-line description, course count),
+  // and a guidance column; programme rows open the catalogue on that category (the [data-cat] handler below)
+  const total = CATS.reduce((n, c) => n + c.courses.length, 0);
+  const plural = n => n + (n === 1 ? ' course' : ' courses');
+  $('#mega').innerHTML = `<div class="mega__stages">${STAGES.map((s, i) => `<section class="mega__col" style="--i:${i}">
+      <p class="mega__k"><b>${String(i + 1).padStart(2, '0')}</b>${s.k}</p>
+      <ul>${s.cats.map(c => `<li><a class="mega__a" href="#courses" data-cat="${c}"><span class="mega__t">${esc(CATS[c].t)}</span><span class="mega__d">${esc(CAT_D[c])}</span><span class="mega__n">${plural(CATS[c].courses.length)}</span></a></li>`).join('')}</ul>
+    </section>`).join('')}</div>
+    <aside class="mega__aside">
+      <p class="mega__k">Not sure where to start?</p>
+      <p class="mega__p">A counsellor will match you to a programme for your stage, with no pressure to enrol.</p>
+      <a class="bt bt--brand mega__cta" href="#contact">Talk to a counsellor<span class="sq sq--52 sq--white"><img src="assets/img/icons/arrow-brand.svg" alt="" width="16" height="16"></span></a>
+      <a class="mega__all" href="#courses">View all ${total} courses<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
+    </aside>`;
+  $$('#mega .mega__cta, #mega .mega__all').forEach(a => a.addEventListener('click', () => setMega(false)));
   exBtn.addEventListener('click', () => setMega(!explore.classList.contains('open')));
   let megaT;
   explore.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') { clearTimeout(megaT); setMega(true); } });
   explore.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') megaT = setTimeout(() => setMega(false), 160); });
   document.addEventListener('click', e => { if (!explore.contains(e.target)) setMega(false); });
+  explore.addEventListener('focusout', e => { if (!explore.contains(e.relatedTarget)) setMega(false); });
+  exBtn.addEventListener('keydown', e => { if (e.key === 'ArrowDown') { e.preventDefault(); setMega(true); const f = $('#mega .mega__a'); if (f) f.focus(); } });
   addEventListener('keydown', e => { if (e.key === 'Escape') { setMega(false); setDrawer(false); } });
 
   /* ---------------- hero ---------------- */
   const names = top10.map(p => `<span><small>AIR ${p.r} · CSE ${p.y}</small>${esc(p.n)}<i aria-hidden="true"></i></span>`).join('');
   $('#heroNames').innerHTML = `<div>${names}</div><div aria-hidden="true">${names}</div>`;
-
-  /* ---------------- banner carousel: hold, then slide ----------------
-     The banner set is cloned so the strip loops seamlessly. Each banner holds
-     centre stage for HOLD ms, then the strip slides one banner to the left.
-     Hover pauses the countdown; drag snaps to the nearest banner; a dot slides
-     its banner to the centre. Banners brighten as they reach the centre and the
-     dots follow whichever banner is nearest the centre. */
-  (() => {
-    const view = $('#bnrView'), track = $('#bnrTrack'), dots = $('#bnrDots');
-    const orig = $$('.bnr__s', track), n = orig.length, START = 0;   // start with the GS banner (now the first slide) centred
-    const HOLD = 3000, SLIDE = 900;                                   // ms on centre stage, ms to slide to the next
-    dots.innerHTML = orig.map((_, i) => `<button type="button" role="tab" aria-label="Banner ${i + 1} of ${n}"></button>`).join('');
-    let sw = 0, gap = 0, setW = 0, x = 0, paused = false, visible = true, drag = null, tween = null, last = 0, active = -1, held = 0;
-    const build = () => {
-      $$('.bnr__s.clone', track).forEach(c => c.remove());
-      sw = orig[0].getBoundingClientRect().width; gap = parseFloat(getComputedStyle(track).columnGap) || 0;
-      setW = n * (sw + gap);
-      const copies = Math.ceil(view.clientWidth / setW) + 2;   // one set to the left, then enough to fill the view
-      for (let k = 0; k < copies; k++) orig.forEach(s => { const c = s.cloneNode(true); c.classList.add('clone'); c.setAttribute('aria-hidden', 'true'); c.tabIndex = -1; track.append(c); });
-    };
-    const centreX = i => setW + i * (sw + gap) + sw / 2;           // slide i of the second set, in track coordinates
-    const xFor = i => ((centreX(i) - view.clientWidth / 2 - setW) % setW + setW) % setW;
-    const all = () => $$('.bnr__s', track);
-    const paint = () => {
-      const t = -(setW + ((x % setW) + setW) % setW);
-      track.style.transform = `translate3d(${t}px,0,0)`;
-      const vc = view.clientWidth / 2;
-      let best = 0, bestD = Infinity;
-      all().forEach((s, k) => {
-        const c = t + k * (sw + gap) + sw / 2, d = Math.abs(c - vc);
-        s.style.setProperty('--dim', (.08 * Math.min(1, d / (sw * .6))).toFixed(3));
-        if (d < bestD) { bestD = d; best = k % n; }
-      });
-      if (best !== active) { active = best; [...dots.children].forEach((b, i) => b.setAttribute('aria-selected', i === best)); }
-    };
-    const step = () => sw + gap;
-    const slideTo = to => { tween = { from: x, to, t0: performance.now(), a: active }; held = 0; };
-    const frame = now => {
-      const dt = Math.min(100, (now - last) || 0); last = now;
-      if (tween) {
-        const k = Math.min(1, (now - tween.t0) / SLIDE), e = k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
-        x = tween.from + (tween.to - tween.from) * e; if (k === 1) { tween = null; held = 0; }
-      } else if (!drag && !paused && !reduce) {
-        held += dt;
-        if (held >= HOLD) slideTo(x + step());           // next banner takes centre stage
-      }
-      paint();
-      dots.style.setProperty("--hp", tween ? (active === tween.a ? 1 : 0) : Math.min(1, held / HOLD).toFixed(4));
-      if (visible) requestAnimationFrame(frame);
-    };
-    build(); x = xFor(START); paint();
-    new IntersectionObserver(es => { const v = es[0].isIntersecting; if (v && !visible) { visible = true; last = performance.now(); requestAnimationFrame(frame); } visible = v; }).observe(view);
-    requestAnimationFrame(t => { last = t; frame(t); });
-    addEventListener('resize', () => { const i = active; build(); x = xFor(i < 0 ? START : i); paint(); });
-    // chevrons step one banner either way (from wherever a slide in progress is heading)
-    const nudge = dir => { const from = tween ? tween.to : x, base = xFor(START); slideTo(base + (Math.round((from - base) / step()) + dir) * step()); };
-    $('#bnrPrev').addEventListener('click', () => nudge(-1));
-    $('#bnrNext').addEventListener('click', () => nudge(1));
-    // hover pauses the countdown (mouse only); dots slide the chosen banner to the centre, always moving forward
-    view.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') paused = true; });
-    view.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') { paused = false; held = 0; } });
-    dots.addEventListener('click', e => {
-      const b = e.target.closest('button'); if (!b) return;
-      const i = [...dots.children].indexOf(b), cur = ((x % setW) + setW) % setW;
-      let to = x - cur + xFor(i); if (to < x - 1) to += setW;
-      if (Math.abs(to - x) > 1) slideTo(to);
-    });
-    // drag / swipe
-    let moved = false;
-    view.addEventListener('pointerdown', e => { drag = { x0: e.clientX, start: x }; moved = false; tween = null; });
-    addEventListener('pointermove', e => {
-      if (!drag) return; const dx = e.clientX - drag.x0;
-      if (Math.abs(dx) > 6) { moved = true; view.classList.add('drag'); }
-      if (moved) x = drag.start - dx;
-    });
-    // on release, settle on the nearest banner (or the next one in the drag direction after a flick)
-    const end = e => {
-      if (!drag) return;
-      const dx = (e && e.clientX != null ? e.clientX : drag.x0) - drag.x0;
-      drag = null; view.classList.remove('drag');
-      if (!moved) return;
-      const base = xFor(START), rel = x - base;
-      let k = Math.round(rel / step());
-      if (Math.abs(dx) > sw * .08 && Math.round(rel / step()) === Math.round((rel + dx) / step())) k += dx < 0 ? 1 : -1;
-      slideTo(base + k * step());
-    };
-    addEventListener('pointerup', end); addEventListener('pointercancel', end);
-    view.addEventListener('click', e => { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
-  })();
 
   /* ---------------- results: four cards ---------------- */
   const faces = l => `<span class="kc__faces">${l.map(p => `<img src="${esc(p.src)}" alt="" loading="lazy">`).join('')}</span>`;
@@ -734,8 +661,10 @@
   });
 
   /* ---------------- footer ---------------- */
-  const HREF = { 'About us': '#why', 'Contact us': '#contact', FAQs: '#faq' };
+  const HREF = { 'About us': '#story', 'Contact us': '#contact', FAQs: '#faq' };
   $('#footCols').innerHTML = FOOTER.map(([h, l]) => `<div><h3>${esc(h)}</h3><ul>${l.map(x => `<li><a href="${HREF[x] || SITE}"${HREF[x] ? '' : ' target="_blank" rel="noopener"'}>${esc(x)}</a></li>`).join('')}</ul></div>`).join('');
+  // the latest current-affairs headlines (markup in index.html) sit in the brand column, under the social links, where there was empty space
+  const news = $('.foot__news'), brand = $('.foot__brand'); if (news && brand) { news.classList.add('foot__news--col'); brand.append(news); }
   $('#socials').innerHTML = SOCIAL.map(n => `<li><a href="${SITE}" target="_blank" rel="noopener" aria-label="${n}">${ico(`soc-${n.toLowerCase()}.svg`, 18)}</a></li>`).join('');
   $$('.foot__bot a').forEach(a => { a.href = SITE; a.target = '_blank'; a.rel = 'noopener'; });
 

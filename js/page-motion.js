@@ -125,7 +125,7 @@
 (() => {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const MAP = {
-    courses: '.band__in', why: '.wc__in', batches: ':scope > *', bnr: ':scope > *', gs: '.gs__in, .gsbook',
+    courses: '.band__in', why: '.wc__in', batches: ':scope > *', gs: '.gs__in, .gsbook',
     faculty: ':scope > *', stories: ':scope > *', contact: '.contact__in', resources: ':scope > *', visit: ':scope > *', faq: ':scope > *', closing: ':scope > *'
   };
   const secs = [];
@@ -195,6 +195,6 @@
   if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12, rootMargin: '0px 0px -6% 0px' });
   const arm = el => { if (!el || el.classList.contains('sg')) return; [...el.children].forEach((c, i) => c.style.setProperty('--i', Math.min(i, 8))); el.classList.add('sg'); io.observe(el); };
-  const go = () => ['#price', '#faqList', '#gzTen'].forEach(s => { const el = document.querySelector(s); if (el && el.children.length) arm(el); });
+  const go = () => ['#price', '#faqList', '#gzTen', '#story:not(.cmp--run) .cmp__track'].forEach(s => { const el = document.querySelector(s); if (el && el.children.length) arm(el); });
   go(); addEventListener('load', go);
 })();
