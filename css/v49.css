@@ -1312,3 +1312,11 @@ section#why.wc, #stories.sheet, #faq.sheet { background: var(--ground); }   /* o
 #contact .contact__in { max-width: none; padding-left: var(--px); padding-right: var(--px); }
 #gs.gs { --gs-left: var(--px); }   /* text column starts on the container edge (was centred on an old 1240px container) */
 section#toppers.vrnp { padding-left: var(--px); padding-right: var(--px); }   /* the paper sits on the container (was 16 / 28px from the screen edge) */
+
+/* programme books: a small illustration where the description used to sit (gold line work, soft fills, an accent, inside a dotted medallion) */
+.gsbook__ico { display: block; margin-top: 14px; color: #FFD48A; }
+.gsbook__ico svg { display: block; width: 72px; height: 72px; margin: 0 auto; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.gsbook__ico .r1 { stroke-width: 1.2; stroke-dasharray: .1 3.4; opacity: .7; }
+.gsbook__ico .r2 { stroke-width: .8; opacity: .35; }
+.gsbook__ico .f { fill: rgba(255, 212, 138, .2); }
+.gsbook__ico .a { fill: currentColor; stroke: none; }
