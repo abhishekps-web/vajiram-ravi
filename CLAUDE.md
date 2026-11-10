@@ -50,5 +50,5 @@ The client wants **every section and every element animated**. For any change to
 ## Working notes
 
 - The user previews `index.html` straight from disk (file://), so bump the `?v=` query on any CSS/JS link you edit in `index.html`, or the browser serves the cached file.
-- The Toppers section (`#toppers`) is the /v5 newspaper ("The Aspirant's Chronicle"): markup in `index.html`, styles `css/toppers.css`, year switch `js/toppers.js`, data `js/data/toppers-archive.js`.
+- The Toppers section (`#toppers`) is "The Civil Services Gazette", a results-special front page modelled on vajiram-ravi-homepage.vercel.app `#results`: a static shell in `index.html`, styles `css/toppers.css`, everything else written by `js/toppers.js` from `js/data/toppers-archive.js` (per year: rank, name, programmes, `photo` colour portrait, `img` b/w fallback; programme names fall back to `js/data/toppers.js`). Add or edit a rank holder in the data only. Its filters use `data-gz-cat` because `content.js` treats any `[data-cat]` click as "open the course catalogue".
 - The "How it works" and results sections near the end of `index.html` sit inside `<div id="parked" hidden>`; they are not shown.

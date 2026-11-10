@@ -9,11 +9,11 @@
 <link rel="icon" href="assets/img/brand/emblem.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Geist:wght@500&family=Anek+Devanagari:wght@500&family=Geist+Mono:wght@400&family=Hanken+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300&family=League+Spartan:wght@600;700&family=Mukta:wght@400;500;600;700&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/v49.css?v=113">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Geist:wght@500&family=Anek+Devanagari:wght@500&family=Geist+Mono:wght@400&family=Hanken+Grotesk:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300&family=League+Spartan:wght@600;700&family=Mukta:wght@400;500;600;700&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/v49.css?v=123">
 <link rel="stylesheet" href="css/why-choose.css?v=8">
 <link rel="stylesheet" href="css/intro.css?v=2">
-<link rel="stylesheet" href="css/toppers.css?v=18">
+<link rel="stylesheet" href="css/toppers.css?v=25">
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -84,94 +84,63 @@
 
 </div>
 
-<!-- ============ TOPPERS: "The Aspirant's Chronicle", the newspaper front page from /v5 (css/toppers.css, js/toppers.js) ============ -->
-<section class="vrnp" id="toppers" aria-labelledby="npH">
-  <div class="np-page">
-  <div class="rs-paper-sheet rs-np">
-    <header class="rs-np-mast">
-      <div class="rs-paper-folio"><span>Results · CSE 2025</span><span class="np-sm-only">Front page</span><span>Estd. 1976 · New Delhi</span></div>
-      <div class="rs-np-title"><p class="rs-paper-mast np-mast-name">The Aspirant&rsquo;s Chronicle</p></div>
-      <nav class="rs-np-nav" aria-label="In this edition">
-        <a href="#np-top3" data-np-latest>The top three</a><a href="#np-story" data-np-latest>The story</a><a href="#np-rest" data-np-latest>AIR 4 to 10</a><a href="#np-top3" data-np-year hidden>CSE 2025</a>
-        <a href="#contact" class="is-cta">Admissions 2027</a>
-      </nav>
+<!-- ============ TOPPERS: "The Civil Services Gazette", a results-special front page (layout after vajiram-ravi-homepage.vercel.app #results).
+     Static shell only: every topper, story, seal, fact and filter count is written by js/toppers.js from js/data/toppers-archive.js
+     (plus programme names from js/data/toppers.js where the archive has none). Styles: css/toppers.css. ============ -->
+<section class="gz" id="toppers" aria-labelledby="gzHl">
+  <div class="gz__sheet">
+    <header class="gz__mast rv" style="--d:.05s">
+      <p class="gz__ear"><span>Digital edition</span><span>New Delhi</span></p>
+      <div class="gz__title">
+        <p class="gz__name">The Civil Services Gazette</p>
+        <p class="gz__hin" lang="hi">सिविल सेवा समाचार &middot; स्थापित 1976</p>
+      </div>
+      <p class="gz__ear gz__ear--r"><b class="gz__tag">Results special</b></p>
     </header>
+    <p class="gz__date rv" style="--d:.1s"><span>02 &middot; The results</span><span class="gz__ed"><label for="gzYear">UPSC Civil Services Examination</label><select id="gzYear" class="gz__yr"></select></span><span>Final result</span></p>
 
-    <div class="rs-np-banner">
-      <h2 id="npH" class="rs-paper-head np-banner-h">Meet the toppers</h2>
-      <p class="rs-paper-deck np-deck" id="npDeck">All India Ranks 1 to 10 in the Civil Services Examination 2025, every one of them prepared with Vajiram &amp; Ravi</p>
+    <div class="gz__banner">
+      <p class="gz__kicker rv" style="--d:.14s" id="gzKick">Union Public Service Commission</p>
+      <h2 class="gz__hl rv" style="--d:.2s" id="gzHl">Behind every rank is <em>a different journey</em></h2>
+      <p class="gz__deck rv" style="--d:.28s" id="gzDeck"></p>
     </div>
 
-    <div class="rs-yr" role="group" aria-label="Toppers by year">
-      <p class="rs-yr-label">Toppers by year</p>
-      <div class="rs-yr-chips" id="npYears"></div>
-      <p class="rs-yr-note">UPSC CSE results, 2016 to 2025</p>
+    <div class="gz__body rv" style="--d:.1s" id="gzLead">
+      <figure class="gz__fig">
+        <span class="gz__frame"><img id="gzImg" src="assets/img/toppers/portrait/2025/01-anuj-agnihotri.webp" alt="" width="768" height="768" decoding="async"></span>
+        <span class="gz__seal" id="gzSeal" aria-hidden="true"></span>
+        <figcaption class="gz__cap" id="gzCap"></figcaption>
+      </figure>
+      <div class="gz__story">
+        <p class="gz__kicker gz__kicker--s" id="gzStKick"></p>
+        <h3 class="gz__sub" id="gzSub"></h3>
+        <p class="gz__by">Results desk &middot; New Delhi</p>
+        <div class="gz__cols" id="gzCols"></div>
+        <dl class="gz__facts" id="gzFacts"></dl>
+      </div>
     </div>
 
-    <div id="npLatest">
-    <div id="np-top3" class="rs-np-top3" role="list" aria-label="All India Ranks 1, 2 and 3">
-      <figure role="listitem" class="rs-np-hero is-first">
-        <div class="rs-np-hero-photo"><img class="np-fill" src="assets/img/toppers/bw/anuj-agnihotri.webp" alt="Anuj Agnihotri, AIR 1 in CSE 2025" decoding="async"><svg viewBox="0 0 120 120" class="rs-seal rs-np-seal" role="img" aria-label="All India Rank 1"><defs><path id="np-seal-1" d="M60 60m-41 0a41 41 0 1 1 82 0a41 41 0 1 1-82 0"/></defs><circle cx="60" cy="60" r="58" fill="var(--rs-cream)"/><circle cx="60" cy="60" r="55" fill="none" stroke="currentColor" stroke-width="2.600"/><circle cx="60" cy="60" r="31" fill="none" stroke="currentColor" stroke-width="1.400"/><text font-size="11" font-weight="700" letter-spacing="2.100" fill="currentColor" font-family="var(--rs-display), sans-serif"><textPath href="#np-seal-1" startOffset="1%">VAJIRAM &amp; RAVI · NEW DELHI ·</textPath></text><text x="60" y="48" text-anchor="middle" font-size="9" font-weight="700" letter-spacing="2.200" fill="currentColor" font-family="var(--rs-display), sans-serif">AIR</text><text x="60" y="76" text-anchor="middle" font-size="34" font-weight="800" letter-spacing="-1" fill="currentColor" font-family="var(--rs-paper-head), Georgia, serif">1</text><path d="M44 84h32" stroke="currentColor" stroke-width="1.400" stroke-linecap="round"/></svg></div>
-        <figcaption class="rs-np-hero-cap"><p class="rs-paper-kicker">All India Rank 1</p><p class="rs-np-hero-name">Anuj Agnihotri</p><p class="rs-paper-caption">Prepared with Interview Guidance Programme</p></figcaption>
-      </figure>
-      <figure role="listitem" class="rs-np-hero">
-        <div class="rs-np-hero-photo"><img class="np-fill" src="assets/img/toppers/bw/rajeshwari-suve-m.webp" alt="Rajeshwari Suve M, AIR 2 in CSE 2025" loading="lazy" decoding="async"><svg viewBox="0 0 120 120" class="rs-seal rs-np-seal" role="img" aria-label="All India Rank 2"><defs><path id="np-seal-2" d="M60 60m-41 0a41 41 0 1 1 82 0a41 41 0 1 1-82 0"/></defs><circle cx="60" cy="60" r="58" fill="var(--rs-cream)"/><circle cx="60" cy="60" r="55" fill="none" stroke="currentColor" stroke-width="2.600"/><circle cx="60" cy="60" r="31" fill="none" stroke="currentColor" stroke-width="1.400"/><text font-size="11" font-weight="700" letter-spacing="2.100" fill="currentColor" font-family="var(--rs-display), sans-serif"><textPath href="#np-seal-2" startOffset="1%">VAJIRAM &amp; RAVI · NEW DELHI ·</textPath></text><text x="60" y="48" text-anchor="middle" font-size="9" font-weight="700" letter-spacing="2.200" fill="currentColor" font-family="var(--rs-display), sans-serif">AIR</text><text x="60" y="76" text-anchor="middle" font-size="34" font-weight="800" letter-spacing="-1" fill="currentColor" font-family="var(--rs-paper-head), Georgia, serif">2</text><path d="M44 84h32" stroke="currentColor" stroke-width="1.400" stroke-linecap="round"/></svg></div>
-        <figcaption class="rs-np-hero-cap"><p class="rs-paper-kicker">All India Rank 2</p><p class="rs-np-hero-name">Rajeshwari Suve M</p><p class="rs-paper-caption">Prepared with PowerUp Prelims Test Series · IGP · Mains Test Series</p></figcaption>
-      </figure>
-      <figure role="listitem" class="rs-np-hero">
-        <div class="rs-np-hero-photo"><img class="np-fill" src="assets/img/toppers/bw/akansh-dhull.webp" alt="Akansh Dhull, AIR 3 in CSE 2025" loading="lazy" decoding="async"><svg viewBox="0 0 120 120" class="rs-seal rs-np-seal" role="img" aria-label="All India Rank 3"><defs><path id="np-seal-3" d="M60 60m-41 0a41 41 0 1 1 82 0a41 41 0 1 1-82 0"/></defs><circle cx="60" cy="60" r="58" fill="var(--rs-cream)"/><circle cx="60" cy="60" r="55" fill="none" stroke="currentColor" stroke-width="2.600"/><circle cx="60" cy="60" r="31" fill="none" stroke="currentColor" stroke-width="1.400"/><text font-size="11" font-weight="700" letter-spacing="2.100" fill="currentColor" font-family="var(--rs-display), sans-serif"><textPath href="#np-seal-3" startOffset="1%">VAJIRAM &amp; RAVI · NEW DELHI ·</textPath></text><text x="60" y="48" text-anchor="middle" font-size="9" font-weight="700" letter-spacing="2.200" fill="currentColor" font-family="var(--rs-display), sans-serif">AIR</text><text x="60" y="76" text-anchor="middle" font-size="34" font-weight="800" letter-spacing="-1" fill="currentColor" font-family="var(--rs-paper-head), Georgia, serif">3</text><path d="M44 84h32" stroke="currentColor" stroke-width="1.400" stroke-linecap="round"/></svg></div>
-        <figcaption class="rs-np-hero-cap"><p class="rs-paper-kicker">All India Rank 3</p><p class="rs-np-hero-name">Akansh Dhull</p><p class="rs-paper-caption">Prepared with GS Prelims cum Mains Classroom</p></figcaption>
-      </figure>
-    </div>
-
-    <div id="np-story" class="rs-np-story">
-      <article class="rs-np-article">
-        <p class="rs-paper-kicker">The story</p>
-        <h3 class="rs-paper-head np-story-h">Nine of the top ten trained for the interview board at V&amp;R</h3>
-        <p class="rs-paper-by np-mt3">Vajiram &amp; Ravi · New Delhi</p>
-        <div class="rs-paper-body rs-np-cols np-mt4">
-          <p class="rs-np-lede">The final result of the UPSC Civil Services Examination 2025 places all ten of the top All India Ranks with aspirants who prepared at Vajiram &amp; Ravi.</p>
-          <p>Anuj Agnihotri heads the list at AIR 1, having prepared for the Personality Test with the institute&rsquo;s Interview Guidance Programme (IGP).</p>
-          <p>9 of the ten went through IGP before facing the board. Akansh Dhull, AIR 3, came through the classroom GS Prelims cum Mains programme.</p>
-          <p>Their programmes ranged from the PowerUp Prelims and Mains test series to Sociology optional coaching and the GS Ethics module.</p>
+    <section class="gz__roll rv" style="--d:.05s" aria-labelledby="gzRollH">
+      <div class="gz__rollh">
+        <h3 id="gzRollH">The first ten</h3>
+        <div class="gz__tabs" id="gzTabs" role="group" aria-label="Read the rank holders by rank or by programme">
+          <button type="button" class="gz__tab" aria-pressed="true" data-gz-cat="all">By rank</button>
+          <button type="button" class="gz__tab" aria-pressed="false" data-gz-cat="igp">Interview Guidance</button>
+          <button type="button" class="gz__tab" aria-pressed="false" data-gz-cat="test">Test series</button>
+          <button type="button" class="gz__tab" aria-pressed="false" data-gz-cat="gs">General Studies</button>
+          <button type="button" class="gz__tab" aria-pressed="false" data-gz-cat="opt">Optional</button>
         </div>
-      </article>
-      <aside class="rs-np-rail">
-        <div class="rs-paper-box">
-          <p class="rs-paper-kicker">In numbers</p>
-          <dl class="np-mt2">
-            <div class="rs-paper-stat"><dt class="rs-paper-head np-stat-n">10/10</dt><dd>of the top ten All India Ranks prepared with V&amp;R</dd></div>
-            <div class="rs-paper-stat"><dt class="rs-paper-head np-stat-n">9</dt><dd>of the ten took the Interview Guidance Programme</dd></div>
-            <div class="rs-paper-stat"><dt class="rs-paper-head np-stat-n">1976</dt><dd>the year Vajiram &amp; Ravi began preparing aspirants</dd></div>
-          </dl>
-        </div>
-        <a href="#contact" class="rs-paper-ad">
-          <span class="rs-paper-kicker">Admissions</span>
-          <span class="rs-paper-head np-mt2 np-ad-h">Admissions open for 2027</span>
-          <span class="rs-paper-body np-mt2 np-block">Classroom &amp; online GS Prelims cum Mains. English and Hindi medium. New Delhi · Chennai.</span>
-          <span class="rs-btn rs-btn--ink np-mt4"><span class="rs-btn-label"><span class="rs-btn-t">Book a free counselling call</span><span class="rs-btn-t" aria-hidden="true">Book a free counselling call</span></span><span class="rs-btn-arrow" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M2.5 8h11"/><path d="M8.6 3.6C9.4 5.9 11.2 7.4 13.5 8 11.2 8.6 9.4 10.1 8.6 12.4"/></svg><svg viewBox="0 0 16 16"><path d="M2.5 8h11"/><path d="M8.6 3.6C9.4 5.9 11.2 7.4 13.5 8 11.2 8.6 9.4 10.1 8.6 12.4"/></svg></span></span>
-        </a>
-      </aside>
-    </div>
-
-    <div id="np-rest" class="rs-np-sec"><p class="rs-paper-kicker">The rest of the top ten</p><p class="rs-np-sec-sub">AIR 4 to 10</p></div>
-    <ul class="rs-np-rest">
-      <li class="rs-np-card"><div class="rs-np-card-photo"><img class="np-fill" src="assets/img/toppers/bw/raghav-jhunjhunwala.webp" alt="Raghav Jhunjhunwala, AIR 4 in CSE 2025" loading="lazy" decoding="async"></div><div class="np-cap"><p class="rs-paper-kicker">All India Rank 4</p><p class="np-cap-name">Raghav Jhunjhunwala</p><p class="rs-paper-caption">Prepared with IGP</p></div></li>
-      <li class="rs-np-card"><div class="rs-np-card-photo"><img class="np-fill" src="assets/img/toppers/bw/ishan-bhatnagar.webp" alt="Ishan Bhatnagar, AIR 5 in CSE 2025" loading="lazy" decoding="async"></div><div class="np-cap"><p class="rs-paper-kicker">All India Rank 5</p><p class="np-cap-name">Ishan Bhatnagar</p><p class="rs-paper-caption">Prepared with Sociology Optional · Prelims CAMP · IGP</p></div></li>
-      <li class="rs-np-card"><div class="rs-np-card-photo"><img class="np-fill" src="assets/img/toppers/bw/zinnia-aurora.webp" alt="Zinnia Aurora, AIR 6 in CSE 2025" loading="lazy" decoding="async"></div><div class="np-cap"><p class="rs-paper-kicker">All India Rank 6</p><p class="np-cap-name">Zinnia Aurora</p><p class="rs-paper-caption">Prepared with GS Ethics Module · IGP · Power Up 23</p></div></li>
-      <li class="rs-np-card"><div class="rs-np-card-photo"><img class="np-fill" src="assets/img/toppers/bw/a-r-rajah-mohaideen.webp" alt="A R Rajah Mohaideen, AIR 7 in CSE 2025" loading="lazy" decoding="async"></div><div class="np-cap"><p class="rs-paper-kicker">All India Rank 7</p><p class="np-cap-name">A R Rajah Mohaideen</p><p class="rs-paper-caption">Prepared with IGP</p></div></li>
-      <li class="rs-np-card"><div class="rs-np-card-photo"><img class="np-fill" src="assets/img/toppers/bw/pakshal-secretry.webp" alt="Pakshal Secretry, AIR 8 in CSE 2025" loading="lazy" decoding="async"></div><div class="np-cap"><p class="rs-paper-kicker">All India Rank 8</p><p class="np-cap-name">Pakshal Secretry</p><p class="rs-paper-caption">Prepared with Mains Camp · IGP</p></div></li>
-      <li class="rs-np-card"><div class="rs-np-card-photo"><img class="np-fill" src="assets/img/toppers/bw/astha-jain.webp" alt="Astha Jain, AIR 9 in CSE 2025" loading="lazy" decoding="async"></div><div class="np-cap"><p class="rs-paper-kicker">All India Rank 9</p><p class="np-cap-name">Astha Jain</p><p class="rs-paper-caption">Prepared with IGP</p></div></li>
-      <li class="rs-np-card"><div class="rs-np-card-photo"><img class="np-fill" src="assets/img/toppers/bw/ujjwal-priyank.webp" alt="Ujjwal Priyank, AIR 10 in CSE 2025" loading="lazy" decoding="async"></div><div class="np-cap"><p class="rs-paper-kicker">All India Rank 10</p><p class="np-cap-name">Ujjwal Priyank</p><p class="rs-paper-caption">Prepared with IGP</p></div></li>
-    </ul>
-    <div id="npMoreLatest"></div>
-    </div>
-    <div id="npYearView" hidden></div>
-
-
-    <div class="rs-np-end"><p class="rs-paper-imprint">Published by Vajiram &amp; Ravi · 1-B/7, Pusa Road, Old Rajinder Nagar, New Delhi 110060 · Since 1976</p><a href="#contact" class="rs-btn rs-btn--ink"><span class="rs-btn-label"><span class="rs-btn-t">Admissions for 2027 are open</span><span class="rs-btn-t" aria-hidden="true">Admissions for 2027 are open</span></span><span class="rs-btn-arrow" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M2.5 8h11"/><path d="M8.6 3.6C9.4 5.9 11.2 7.4 13.5 8 11.2 8.6 9.4 10.1 8.6 12.4"/></svg><svg viewBox="0 0 16 16"><path d="M2.5 8h11"/><path d="M8.6 3.6C9.4 5.9 11.2 7.4 13.5 8 11.2 8.6 9.4 10.1 8.6 12.4"/></svg></span></a></div>
-    <span class="rs-paper-veil" aria-hidden="true"></span>
-  </div>
+      </div>
+      <p class="gz__hint">Select a rank holder to bring their story to the front page.</p>
+      <p class="gz__ct" id="gzCount" aria-live="polite"></p>
+      <p class="sr-only" id="gzSay" aria-live="polite"></p>
+      <ol class="gz__ten" id="gzTen"></ol>
+      <button type="button" class="gz__all" id="gzAll" aria-expanded="false" aria-controls="gzTen" hidden></button>
+      <div class="gz__more">
+        <span>Programme associations as published on the institute&rsquo;s results page.</span>
+        <a class="bt bt--brand" href="https://vajiramandravi.com/ias-selections-from-vajiram/" target="_blank" rel="noopener">Explore all UPSC results<span class="sq sq--52 sq--white"><img src="assets/img/icons/arrow-brand.svg" alt="" width="16" height="16"></span></a>
+      </div>
+    </section>
   </div>
 </section>
 
@@ -437,32 +406,56 @@
   </div>
 </section>
 
-<!-- ============ FREE RESOURCES: "Study materials" (Figma 2256:4675); css/v49.css .sm, cards rendered from ARTICLES in js/content.js ============ -->
+<!-- ============ FREE RESOURCES (content from vajiram-ravi-sharon.vercel.app): six resource cards, each with its own action; css/v49.css .sm / .sm__card--res.
+     Every link opens the Vajiram &amp; Ravi site (content.js [data-rs]) until the resource pages exist. ============ -->
 <section class="sm" id="resources" aria-labelledby="resrcH">
   <div class="sm__in">
     <div class="sm__head">
       <div class="sm__titles">
         <div class="lbl rv" style="--d:.05s"><span class="lbl__t">Free resources</span><i></i><span class="lbl__orn" aria-hidden="true"></span></div>
-        <h2 id="resrcH" class="h2 h2--sec rv" style="--d:.12s">Study materials for every stage of UPSC</h2>
-      </div>
-      <div class="sm__tabs rv" style="--d:.2s" role="tablist" aria-label="Article type" id="smTabs">
-        <button type="button" role="tab" id="smTab-Prelims" aria-controls="smGrid" aria-selected="false" data-tab="Prelims">Prelims</button>
-        <button type="button" role="tab" id="smTab-Mains" aria-controls="smGrid" aria-selected="true" data-tab="Mains">Mains</button>
-        <button type="button" role="tab" id="smTab-Quest" aria-controls="smGrid" aria-selected="false" data-tab="Quest">Quest</button>
+        <h2 id="resrcH" class="h2 h2--sec rv" style="--d:.12s">Your preparation can begin today.</h2>
+        <p class="intro rv" style="--d:.2s">Daily current affairs, a monthly magazine and the official papers, free, from the Vajiram &amp; Ravi editorial desk.</p>
       </div>
     </div>
-    <ul class="sm__grid" id="smGrid" role="tabpanel" aria-labelledby="smTab-Mains"></ul>
-    <div class="sm__foot rv" style="--d:.1s">
-      <div class="sm__more">
-        <p class="sm__morek">Other free resources</p>
-        <a class="sm__chip" href="#" data-rs>Monthly magazine<img src="assets/img/icons/arrow-brand.svg" alt="" width="14" height="14"></a>
-        <a class="sm__chip" href="#" data-rs>Yojana &amp; Kurukshetra<img src="assets/img/icons/arrow-brand.svg" alt="" width="14" height="14"></a>
-        <a class="sm__chip" href="#" data-rs>Previous year papers<img src="assets/img/icons/arrow-brand.svg" alt="" width="14" height="14"></a>
-        <a class="sm__chip" href="#" data-rs>Toppers’ answer sheets<img src="assets/img/icons/arrow-brand.svg" alt="" width="14" height="14"></a>
-        <a class="sm__chip" href="#" data-rs>Essay practice<img src="assets/img/icons/arrow-brand.svg" alt="" width="14" height="14"></a>
-      </div>
-      <a class="bt bt--brand" href="#" data-rs>View more<span class="sq sq--52 sq--white"><img src="assets/img/icons/arrow-brand.svg" alt="" width="16" height="16"></span></a>
-    </div>
+    <ul class="sm__grid sm__grid--res">
+      <li class="sm__card sm__card--res"><img class="sm__rays" src="assets/img/patterns/surya-rays.svg" alt="" width="300" height="300">
+        <span class="sm__tag">Updated daily</span>
+        <h3 class="sm__t">Current affairs</h3>
+        <p class="sm__d">Prelims, Mains and Quest articles, written the way UPSC asks.</p>
+        <a class="sm__act" href="#" data-rs>Read today&rsquo;s articles<span class="sm__go sq sq--38 sq--ink"><img src="assets/img/icons/arrow-white.svg" alt="" width="16" height="16"><img src="assets/img/icons/arrow-brand.svg" alt="" width="16" height="16"></span></a>
+      </li>
+      <li class="sm__card sm__card--res"><img class="sm__rays" src="assets/img/patterns/surya-rays.svg" alt="" width="300" height="300">
+        <span class="sm__tag">Monthly</span>
+        <h3 class="sm__t">The Recitals</h3>
+        <p class="sm__d">UPSC current affairs monthly material, free to download.</p>
+        <a class="sm__act" href="#" data-rs>Download this month<span class="sm__go sq sq--38 sq--ink"><img src="assets/img/icons/arrow-white.svg" alt="" width="16" height="16"><img src="assets/img/icons/arrow-brand.svg" alt="" width="16" height="16"></span></a>
+      </li>
+      <li class="sm__card sm__card--res"><img class="sm__rays" src="assets/img/patterns/surya-rays.svg" alt="" width="300" height="300">
+        <span class="sm__tag">Practice</span>
+        <h3 class="sm__t">Previous year papers</h3>
+        <p class="sm__d">Prelims and Mains papers, with the UPSC answer key.</p>
+        <a class="sm__act" href="#" data-rs>Browse papers<span class="sm__go sq sq--38 sq--ink"><img src="assets/img/icons/arrow-white.svg" alt="" width="16" height="16"><img src="assets/img/icons/arrow-brand.svg" alt="" width="16" height="16"></span></a>
+      </li>
+      <li class="sm__card sm__card--res"><img class="sm__rays" src="assets/img/patterns/surya-rays.svg" alt="" width="300" height="300">
+        <span class="sm__tag">Guide</span>
+        <h3 class="sm__t">Syllabus &amp; exam pattern</h3>
+        <p class="sm__d">What is asked at each stage, and how it is marked.</p>
+        <a class="sm__act" href="#" data-rs>Read the guide<span class="sm__go sq sq--38 sq--ink"><img src="assets/img/icons/arrow-white.svg" alt="" width="16" height="16"><img src="assets/img/icons/arrow-brand.svg" alt="" width="16" height="16"></span></a>
+      </li>
+      <li class="sm__card sm__card--res"><img class="sm__rays" src="assets/img/patterns/surya-rays.svg" alt="" width="300" height="300">
+        <span class="sm__tag">Study material</span>
+        <h3 class="sm__t">GS postal books</h3>
+        <p class="sm__d">Printed General Studies material for UPSC preparation.</p>
+        <a class="sm__act" href="#" data-rs>Buy now<span class="sm__go sq sq--38 sq--ink"><img src="assets/img/icons/arrow-white.svg" alt="" width="16" height="16"><img src="assets/img/icons/arrow-brand.svg" alt="" width="16" height="16"></span></a>
+      </li>
+      <li class="sm__card sm__card--res"><img class="sm__rays" src="assets/img/patterns/surya-rays.svg" alt="" width="300" height="300">
+        <span class="sm__tag">Key dates</span>
+        <h3 class="sm__t">UPSC Calendar 2027</h3>
+        <p class="sm__d">Every stage date, plus the age limit and eligibility rules.</p>
+        <ul class="sm__stages" aria-label="Stages with dates in the calendar"><li>Notification</li><li>Prelims</li><li>Mains</li><li>Interview</li></ul>
+        <a class="sm__act" href="#" data-rs>See the calendar<span class="sm__go sq sq--38 sq--ink"><img src="assets/img/icons/arrow-white.svg" alt="" width="16" height="16"><img src="assets/img/icons/arrow-brand.svg" alt="" width="16" height="16"></span></a>
+      </li>
+    </ul>
   </div>
 </section>
 
@@ -470,31 +463,22 @@
 <section class="band dots band--gap cm-sec" id="visit" aria-labelledby="locH">
   <div class="lbl rv" style="--d:.05s"><span class="lbl__t">Contact and campus</span><i></i><span class="lbl__orn" aria-hidden="true"></span></div>
   <h2 id="locH" class="h2 h2--sec rv" style="--d:.12s">Visit us, call us or write.</h2>
-  <p class="intro rv" style="--d:.2s">Pick the channel that suits you, or come to New Delhi or Chennai.</p>
+  <p class="intro rv" style="--d:.2s">Pick the channel that suits you, or visit us in New Delhi.</p>
   <div class="cm rv" style="--d:.28s" id="cmPanel">
     <div class="cm__map">
-      <svg viewBox="0 0 450 460" role="img" aria-label="Dotted map of India with our campuses in New Delhi and Chennai">
+      <svg viewBox="0 0 450 460" role="img" aria-label="Dotted map of India with our campus in New Delhi">
         <path class="cm__dots" d="M145 15h.01M155 15h.01M95 25h.01M105 25h.01M115 25h.01M125 25h.01M135 25h.01M145 25h.01M155 25h.01M165 25h.01M95 35h.01M105 35h.01M115 35h.01M125 35h.01M135 35h.01M145 35h.01M155 35h.01M105 45h.01M115 45h.01M125 45h.01M135 45h.01M145 45h.01M155 45h.01M165 45h.01M115 55h.01M125 55h.01M135 55h.01M145 55h.01M155 55h.01M105 65h.01M115 65h.01M125 65h.01M135 65h.01M145 65h.01M155 65h.01M105 75h.01M115 75h.01M125 75h.01M135 75h.01M145 75h.01M155 75h.01M165 75h.01M95 85h.01M105 85h.01M115 85h.01M125 85h.01M135 85h.01M145 85h.01M155 85h.01M165 85h.01M175 85h.01M185 85h.01M85 95h.01M95 95h.01M105 95h.01M115 95h.01M125 95h.01M135 95h.01M145 95h.01M155 95h.01M165 95h.01M175 95h.01M185 95h.01M85 105h.01M95 105h.01M105 105h.01M115 105h.01M125 105h.01M135 105h.01M145 105h.01M155 105h.01M165 105h.01M175 105h.01M185 105h.01M75 115h.01M85 115h.01M95 115h.01M105 115h.01M115 115h.01M125 115h.01M135 115h.01M145 115h.01M155 115h.01M165 115h.01M175 115h.01M185 115h.01M385 115h.01M395 115h.01M405 115h.01M415 115h.01M425 115h.01M65 125h.01M75 125h.01M85 125h.01M95 125h.01M105 125h.01M115 125h.01M125 125h.01M135 125h.01M145 125h.01M155 125h.01M165 125h.01M175 125h.01M185 125h.01M195 125h.01M205 125h.01M375 125h.01M385 125h.01M395 125h.01M405 125h.01M415 125h.01M425 125h.01M435 125h.01M35 135h.01M45 135h.01M55 135h.01M65 135h.01M75 135h.01M85 135h.01M95 135h.01M105 135h.01M115 135h.01M125 135h.01M135 135h.01M145 135h.01M155 135h.01M165 135h.01M175 135h.01M185 135h.01M195 135h.01M205 135h.01M215 135h.01M225 135h.01M305 135h.01M365 135h.01M375 135h.01M385 135h.01M395 135h.01M405 135h.01M415 135h.01M425 135h.01M435 135h.01M35 145h.01M45 145h.01M55 145h.01M65 145h.01M75 145h.01M85 145h.01M95 145h.01M105 145h.01M115 145h.01M125 145h.01M135 145h.01M145 145h.01M155 145h.01M165 145h.01M175 145h.01M185 145h.01M195 145h.01M205 145h.01M215 145h.01M225 145h.01M235 145h.01M245 145h.01M255 145h.01M305 145h.01M315 145h.01M335 145h.01M345 145h.01M355 145h.01M365 145h.01M375 145h.01M385 145h.01M395 145h.01M405 145h.01M45 155h.01M55 155h.01M65 155h.01M75 155h.01M85 155h.01M95 155h.01M105 155h.01M115 155h.01M125 155h.01M135 155h.01M145 155h.01M155 155h.01M165 155h.01M175 155h.01M185 155h.01M195 155h.01M205 155h.01M215 155h.01M225 155h.01M235 155h.01M245 155h.01M255 155h.01M265 155h.01M275 155h.01M285 155h.01M295 155h.01M305 155h.01M325 155h.01M335 155h.01M345 155h.01M355 155h.01M365 155h.01M375 155h.01M385 155h.01M395 155h.01M405 155h.01M45 165h.01M55 165h.01M65 165h.01M75 165h.01M85 165h.01M95 165h.01M105 165h.01M115 165h.01M125 165h.01M135 165h.01M145 165h.01M155 165h.01M165 165h.01M175 165h.01M185 165h.01M195 165h.01M205 165h.01M215 165h.01M225 165h.01M235 165h.01M245 165h.01M255 165h.01M265 165h.01M275 165h.01M285 165h.01M295 165h.01M305 165h.01M335 165h.01M345 165h.01M355 165h.01M365 165h.01M375 165h.01M385 165h.01M395 165h.01M55 175h.01M65 175h.01M75 175h.01M85 175h.01M95 175h.01M105 175h.01M115 175h.01M125 175h.01M135 175h.01M145 175h.01M155 175h.01M165 175h.01M175 175h.01M185 175h.01M195 175h.01M205 175h.01M215 175h.01M225 175h.01M235 175h.01M245 175h.01M255 175h.01M265 175h.01M275 175h.01M285 175h.01M295 175h.01M305 175h.01M375 175h.01M385 175h.01M395 175h.01M15 185h.01M25 185h.01M35 185h.01M45 185h.01M55 185h.01M65 185h.01M75 185h.01M85 185h.01M95 185h.01M105 185h.01M115 185h.01M125 185h.01M135 185h.01M145 185h.01M155 185h.01M165 185h.01M175 185h.01M185 185h.01M195 185h.01M205 185h.01M215 185h.01M225 185h.01M235 185h.01M245 185h.01M255 185h.01M265 185h.01M275 185h.01M285 185h.01M295 185h.01M305 185h.01M365 185h.01M375 185h.01M385 185h.01M395 185h.01M15 195h.01M25 195h.01M35 195h.01M45 195h.01M55 195h.01M65 195h.01M75 195h.01M85 195h.01M95 195h.01M105 195h.01M115 195h.01M125 195h.01M135 195h.01M145 195h.01M155 195h.01M165 195h.01M175 195h.01M185 195h.01M195 195h.01M205 195h.01M215 195h.01M225 195h.01M235 195h.01M245 195h.01M255 195h.01M265 195h.01M275 195h.01M285 195h.01M295 195h.01M305 195h.01M355 195h.01M365 195h.01M375 195h.01M25 205h.01M35 205h.01M45 205h.01M55 205h.01M65 205h.01M75 205h.01M85 205h.01M95 205h.01M105 205h.01M115 205h.01M125 205h.01M135 205h.01M145 205h.01M155 205h.01M165 205h.01M175 205h.01M185 205h.01M195 205h.01M205 205h.01M215 205h.01M225 205h.01M235 205h.01M245 205h.01M255 205h.01M265 205h.01M275 205h.01M285 205h.01M295 205h.01M305 205h.01M375 205h.01M35 215h.01M45 215h.01M55 215h.01M65 215h.01M75 215h.01M85 215h.01M95 215h.01M105 215h.01M115 215h.01M125 215h.01M135 215h.01M145 215h.01M155 215h.01M165 215h.01M175 215h.01M185 215h.01M195 215h.01M205 215h.01M215 215h.01M225 215h.01M235 215h.01M245 215h.01M255 215h.01M265 215h.01M275 215h.01M285 215h.01M295 215h.01M305 215h.01M315 215h.01M375 215h.01M25 225h.01M35 225h.01M45 225h.01M55 225h.01M65 225h.01M75 225h.01M85 225h.01M95 225h.01M105 225h.01M115 225h.01M125 225h.01M135 225h.01M145 225h.01M155 225h.01M165 225h.01M175 225h.01M185 225h.01M195 225h.01M205 225h.01M215 225h.01M225 225h.01M235 225h.01M245 225h.01M255 225h.01M265 225h.01M275 225h.01M285 225h.01M295 225h.01M305 225h.01M315 225h.01M35 235h.01M45 235h.01M55 235h.01M65 235h.01M75 235h.01M85 235h.01M95 235h.01M105 235h.01M115 235h.01M125 235h.01M135 235h.01M145 235h.01M155 235h.01M165 235h.01M175 235h.01M185 235h.01M195 235h.01M205 235h.01M215 235h.01M225 235h.01M235 235h.01M245 235h.01M255 235h.01M265 235h.01M275 235h.01M285 235h.01M75 245h.01M85 245h.01M95 245h.01M105 245h.01M115 245h.01M125 245h.01M135 245h.01M145 245h.01M155 245h.01M165 245h.01M175 245h.01M185 245h.01M195 245h.01M205 245h.01M215 245h.01M225 245h.01M235 245h.01M245 245h.01M255 245h.01M265 245h.01M275 245h.01M285 245h.01M75 255h.01M85 255h.01M95 255h.01M105 255h.01M115 255h.01M125 255h.01M135 255h.01M145 255h.01M155 255h.01M165 255h.01M175 255h.01M185 255h.01M195 255h.01M205 255h.01M215 255h.01M225 255h.01M235 255h.01M245 255h.01M255 255h.01M265 255h.01M75 265h.01M85 265h.01M95 265h.01M105 265h.01M115 265h.01M125 265h.01M135 265h.01M145 265h.01M155 265h.01M165 265h.01M175 265h.01M185 265h.01M195 265h.01M205 265h.01M215 265h.01M225 265h.01M235 265h.01M245 265h.01M255 265h.01M85 275h.01M95 275h.01M105 275h.01M115 275h.01M125 275h.01M135 275h.01M145 275h.01M155 275h.01M165 275h.01M175 275h.01M185 275h.01M195 275h.01M205 275h.01M215 275h.01M225 275h.01M235 275h.01M245 275h.01M85 285h.01M95 285h.01M105 285h.01M115 285h.01M125 285h.01M135 285h.01M145 285h.01M155 285h.01M165 285h.01M175 285h.01M185 285h.01M195 285h.01M205 285h.01M215 285h.01M225 285h.01M235 285h.01M85 295h.01M95 295h.01M105 295h.01M115 295h.01M125 295h.01M135 295h.01M145 295h.01M155 295h.01M165 295h.01M175 295h.01M185 295h.01M195 295h.01M205 295h.01M215 295h.01M225 295h.01M85 305h.01M95 305h.01M105 305h.01M115 305h.01M125 305h.01M135 305h.01M145 305h.01M155 305h.01M165 305h.01M175 305h.01M185 305h.01M195 305h.01M205 305h.01M85 315h.01M95 315h.01M105 315h.01M115 315h.01M125 315h.01M135 315h.01M145 315h.01M155 315h.01M165 315h.01M175 315h.01M185 315h.01M195 315h.01M205 315h.01M95 325h.01M105 325h.01M115 325h.01M125 325h.01M135 325h.01M145 325h.01M155 325h.01M165 325h.01M175 325h.01M185 325h.01M95 335h.01M105 335h.01M115 335h.01M125 335h.01M135 335h.01M145 335h.01M155 335h.01M165 335h.01M175 335h.01M105 345h.01M115 345h.01M125 345h.01M135 345h.01M145 345h.01M155 345h.01M165 345h.01M175 345h.01M105 355h.01M115 355h.01M125 355h.01M135 355h.01M145 355h.01M155 355h.01M165 355h.01M175 355h.01M185 355h.01M105 365h.01M115 365h.01M125 365h.01M135 365h.01M145 365h.01M155 365h.01M165 365h.01M175 365h.01M185 365h.01M115 375h.01M125 375h.01M135 375h.01M145 375h.01M155 375h.01M165 375h.01M175 375h.01M115 385h.01M125 385h.01M135 385h.01M145 385h.01M155 385h.01M165 385h.01M175 385h.01M125 395h.01M135 395h.01M145 395h.01M155 395h.01M165 395h.01M175 395h.01M125 405h.01M135 405h.01M145 405h.01M155 405h.01M165 405h.01M175 405h.01M135 415h.01M145 415h.01M155 415h.01M165 415h.01M135 425h.01M145 425h.01M155 425h.01M165 425h.01M135 435h.01M145 435h.01M155 435h.01M145 445h.01"/>
         <g class="cm__pin" data-city="delhi" transform="translate(135.1 111.0)"><circle r="9" class="cm__pulse"/><circle r="7" class="cm__dot"/><circle r="2.6" class="cm__core"/></g>
-        <g class="cm__pin" data-city="chennai" transform="translate(180.9 361.5)"><circle r="9" class="cm__pulse"/><circle r="7" class="cm__dot"/><circle r="2.6" class="cm__core"/></g>
       </svg>
-      <button type="button" class="cm__label is-on" data-city="delhi" style="left:30.02%;top:24.13%">New Delhi</button>
-      <button type="button" class="cm__label" data-city="chennai" style="left:40.20%;top:78.59%">Chennai</button>
+      <button type="button" class="cm__label" data-city="delhi" style="left:30.02%;top:24.13%">New Delhi</button>
     </div>
     <ul class="cm__list">
-      <li class="cm__item is-on" data-city="delhi">
+      <li class="cm__item" data-city="delhi">
         <p class="cm__tag">New Delhi · Head campus</p>
         <h3>Old Rajinder Nagar</h3>
         <p>1-B/7, Pusa Road, Old Rajinder Nagar, New Delhi 110060</p>
         <p class="cm__near">Next to Gate 5 of Karol Bagh Metro Station, near pillar 103</p>
         <a class="bt bt--line cm__cta" href="https://maps.app.goo.gl/Qd3YkMoiknKT8J456" target="_blank" rel="noopener" aria-label="Get directions to the Old Rajinder Nagar campus on Google Maps (opens in a new tab)">Get directions on Google Maps</a>
-      </li>
-      <li class="cm__item" data-city="chennai">
-        <p class="cm__tag">Chennai · Campus</p>
-        <h3>Egmore</h3>
-        <p>Egmore, Chennai.</p>
-        <p class="cm__near">Ask a counsellor for the full address and the current batches in Chennai.</p>
-        <a class="bt bt--line cm__cta" href="#contact">Ask about the Chennai campus</a>
       </li>
       <li class="cm__item cm__item--chan">
         <div><p class="cm__tag">Talk to us</p><h3>080-6220-6330</h3><p class="cm__near">Monday to Saturday, 9 am to 7 pm</p></div>
@@ -588,19 +572,27 @@
     </div>
     <div class="foot__cols" id="footCols"></div>
   </div>
+  <div class="foot__news" aria-labelledby="footNewsH">
+    <p class="foot__news-k" id="footNewsH">Latest current affairs</p>
+    <ul class="foot__news-list">
+      <li><span>Mains</span><a href="https://vajiramandravi.com/" target="_blank" rel="noopener">Supreme Court redefines the meaning of &lsquo;industry&rsquo;</a></li>
+      <li><span>Mains</span><a href="https://vajiramandravi.com/" target="_blank" rel="noopener">NITI Aayog flags gap between education and employment</a></li>
+      <li><span>Prelims</span><a href="https://vajiramandravi.com/" target="_blank" rel="noopener">Thiksey Monastery</a></li>
+    </ul>
+  </div>
   <p class="foot__word" aria-hidden="true">Vajiram<span>&amp;</span>Ravi</p>
   <div class="foot__bot"><span>© 2026 Vajiram &amp; Ravi. All rights reserved.</span><span><a href="#">Terms and conditions</a><a href="#">Privacy policy</a><a href="#">Grievance redressal</a></span></div>
 </footer>
 
 <script src="js/data/toppers.js"></script>
-<script src="js/data/toppers-archive.js"></script>
-<script src="js/toppers.js?v=4"></script>
-<script src="js/content.js?v=11"></script>
+<script src="js/data/toppers-archive.js?v=3"></script>
+<script src="js/toppers.js?v=10"></script>
+<script src="js/content.js?v=14"></script>
 <script src="js/vendor/lenis.min.js"></script>
 <script src="js/hero-kit.js"></script>
 <script src="js/scroll.js"></script>
-<script src="js/page-motion.js?v=11"></script>
-<script src="js/visit-map.js?v=1"></script>
+<script src="js/page-motion.js?v=12"></script>
+<script src="js/visit-map.js?v=2"></script>
 <script src="js/why-choose.js?v=1"></script>
 <script src="js/accordion.js"></script>
 <script src="js/footer-curtain.js"></script>

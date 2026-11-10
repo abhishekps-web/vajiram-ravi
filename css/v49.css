@@ -1320,3 +1320,66 @@ section#toppers.vrnp { padding-left: var(--px); padding-right: var(--px); }   /*
 .gsbook__ico .r2 { stroke-width: .8; opacity: .35; }
 .gsbook__ico .f { fill: rgba(255, 212, 138, .2); }
 .gsbook__ico .a { fill: currentColor; stroke: none; }
+
+/* FAQ cards: the site's card radius (24px, as the Free resources cards) instead of 4px; the open item's marigold marker is an inset shadow, so it follows the curve */
+#faq .qa { border-radius: 24px; overflow: hidden; }
+
+/* global content container: max width 1440px (was 1800px). Every section reads --px, so all of them follow. */
+:root { --px: max(clamp(14px, 1.4vw, 24px), calc((100vw - 1440px) / 2)); }
+/* footer wordmark: sized with the screen (12.4vw) up to the 1440px container, then held (186px font, about 1130px wide), so on wide screens it
+   stays centred inside the content instead of running past it */
+.foot .foot__word { font-size: min(12.4vw, 186px); }
+
+/* ---- Free resources, resource cards (content from vajiram-ravi-sharon.vercel.app): tag, title, description, optional list, and an action
+   at the foot. Same card as before: white, 24px radius, orange gradient + sun rays on hover, site fonts, the rounded-square arrow. ---- */
+.sm__grid--res { margin-top: 44px; }
+#resources.sm .intro { color: rgb(74, 74, 74); }
+
+/* ---- Footer: full width (no 1440px cap). Content sits 76px inside the screen edge at every size (clear of the gold frame), and the
+   wordmark scales with the screen again (it was held at 186px only to fit the capped content). ---- */
+footer.foot { padding-left: 76px; padding-right: 76px; }
+.foot .foot__word { font-size: 12.4vw; }
+@media (max-width: 640px) { footer.foot { padding-left: 40px; padding-right: 40px; } }
+
+/* ---- Footer news strip: the latest current-affairs headlines (moved here from the Free resources card). Gold tag + white headline, the
+   headline underline draws in on hover; a hairline above separates it from the link columns. ---- */
+.foot__news { display: flex; align-items: baseline; gap: 14px 32px; flex-wrap: wrap; margin: 40px 0 clamp(20px, 3vw, 48px); padding: 20px 0 4px; border-top: 1px solid rgba(255, 255, 255, .22); }
+.foot__news-k { flex: none; margin: 0; font: 700 12px/1.4 var(--f); letter-spacing: .14em; text-transform: uppercase; color: #FFD48A; }
+.foot__news-list { flex: 1 1 0; display: flex; flex-wrap: wrap; gap: 10px 36px; margin: 0; padding: 0; list-style: none; }
+.foot__news-list li { display: flex; align-items: baseline; gap: 10px; min-width: 0; }
+.foot__news-list span { flex: none; padding: 2px 8px; border: 1px solid rgba(255, 212, 138, .55); border-radius: 999px; font: 700 10.5px/1.3 var(--f); letter-spacing: .1em; text-transform: uppercase; color: #FFD48A; }
+.foot__news-list a { font: 500 15.5px/1.4 var(--f); color: #fff; text-decoration: none; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size .3s var(--ease), color .25s var(--ease); }
+.foot__news-list a:focus-visible { outline: 2px solid #fff; outline-offset: 3px; border-radius: 2px; }
+@media (hover: hover) and (pointer: fine) { .foot__news-list a:hover { color: #FFE3B8; background-size: 100% 1px; } }
+@media (max-width: 900px) { .foot__news { flex-direction: column; } .foot__news-list { flex-direction: column; } }
+@media (prefers-reduced-motion: reduce) { .foot__news-list a { transition: none; } }   /* an old dark-ground rule (v25 #resources .intro) made it near-white cream; same grey as every other intro */
+.sm__card--res { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; min-height: 300px; padding: 26px; box-sizing: border-box; }
+.sm__card--res > *:not(.sm__rays) { position: relative; }
+.sm__card--res .sm__rays { left: auto; right: -110px; top: -110px; }
+.sm__card--res .sm__t { margin: 6px 0 0; }
+.sm__d { margin: 0; font: 400 16px/1.5 var(--f); color: var(--body, #4a4038); transition: color .35s var(--ease); }
+.sm__list { list-style: none; margin: 4px 0 0; padding: 0; width: 100%; border-top: 1px solid rgba(194, 65, 12, .14); }
+.sm__list li { display: flex; align-items: baseline; gap: 10px; padding: 9px 0; border-bottom: 1px solid rgba(194, 65, 12, .14); transition: border-color .35s var(--ease); }
+.sm__list span { flex: none; min-width: 52px; font: 700 11px/1.3 var(--f); letter-spacing: .1em; text-transform: uppercase; color: var(--brand); transition: color .35s var(--ease); }
+.sm__list a { font: 500 14.5px/1.4 var(--f); color: var(--ink); text-decoration: none; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size .3s var(--ease), color .35s var(--ease); }
+.sm__stages { list-style: none; margin: 2px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.sm__stages li { padding: 5px 11px; border: 1px solid rgba(194, 65, 12, .3); border-radius: 999px; font: 600 13px/1.2 var(--f); color: var(--brand); transition: border-color .35s var(--ease), color .35s var(--ease); }
+.sm__act { margin-top: auto; padding-top: 8px; display: inline-flex; align-items: center; gap: 12px; font: 700 15.5px/1.2 var(--f); color: var(--ink); text-decoration: none; transition: color .35s var(--ease); }
+.sm__card--res > a.sm__act { flex-direction: row; justify-content: flex-start; height: auto; min-height: 0; padding: 8px 0 0; gap: 12px; }   /* undo the old whole-card link rule (.sm__card > a) */
+.sm__act:focus-visible, .sm__list a:focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; border-radius: 4px; }
+@media (hover: hover) and (pointer: fine) {
+  .sm__card--res:hover .sm__d, .sm__card--res:hover .sm__list a, .sm__card--res:hover .sm__act { color: #fff; }
+  .sm__card--res:hover .sm__list span { color: #FFD48A; }
+  .sm__card--res:hover .sm__list, .sm__card--res:hover .sm__list li { border-color: rgba(255, 255, 255, .28); }
+  .sm__card--res:hover .sm__stages li { border-color: rgba(255, 255, 255, .5); color: #fff; }
+  .sm__list a:hover { background-size: 100% 1px; }
+}
+@media (max-width: 640px) { .sm__card--res { min-height: 0; } }
+@media (prefers-reduced-motion: reduce) { .sm__d, .sm__list li, .sm__list span, .sm__list a, .sm__stages li, .sm__act { transition: none; } }
+
+/* side margins on smaller desktops: they grow with the screen (5.5vw, up to 80px) instead of staying near 20px, so a 1440px screen gets
+   comfortable margins like larger screens; from about 1600px the 1440px content cap centres as before. Every section reads --px. */
+:root { --px: max(clamp(16px, 5.5vw, 80px), calc((100vw - 1440px) / 2)); }
+
+/* Programmes: room below the last shelf for its full 230px floor shadow (the section clips overflow, so 125px of padding cut the shadow off) */
+#courses.band--wall { padding-bottom: calc(230px + 24px); }

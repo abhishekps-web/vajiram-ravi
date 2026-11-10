@@ -1,98 +1,220 @@
-/* Toppers newspaper (/v5 "The Aspirant's Chronicle"): the year chips. CSE 2025 is the static front page in index.html; any earlier
-   year swaps in a grid of that year's top 10 (+ a "More from CSE <year>" list), as in my-app RecipeToppersPaper.tsx. Data: js/data/toppers-archive.js. */
+/* Toppers: "The Civil Services Gazette", a results-special front page (layout and behaviour after vajiram-ravi-homepage.vercel.app #results).
+   Everything below the masthead is written from data, so adding a year, a rank holder or a programme is a data change only:
+   - window.NP_ARCHIVE (js/data/toppers-archive.js): years, and per year {rank, name, programmes, photo (colour), img (b/w fallback)}
+   - window.TOPPERS    (js/data/toppers.js): programme names for anyone the archive lists without them
+   The roll shows the first ten (ranks 1 to 10), with "Show all" for the rest; shared ranks are fine (each entry has its own key).
+   Selecting a rank holder brings them to the lead story; the filters dim the others and mark the matching programme. */
 (() => {
   const sec = document.getElementById('toppers'), data = window.NP_ARCHIVE;
-  if (!sec || !data) return;
-  const $ = s => sec.querySelector(s), $$ = s => [...sec.querySelectorAll(s)];
-  const YEARS = data.ARCHIVE_YEARS, latest = YEARS[0];
-  const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  if (!sec || !data || !document.getElementById('gzTen')) return;
+  const $ = id => document.getElementById(id);
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const esc = t => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-  // same card IA as the CSE 2025 front page: photo, rule, "All India Rank N", name, "Prepared with A · B" (when the official list names programmes)
-  const progs = s => s.split(/,(?![^(]*\))/).map(x => x.trim()).filter(Boolean).join(' · ');
-  const card = (t, small) => `<li class="rs-yv-card${small ? ' is-small' : ''}"><div class="rs-yv-photo">${t.img
-    ? `<img class="np-fill" src="${esc(t.img)}" alt="${esc(t.name)}, AIR ${t.rank}" loading="lazy" decoding="async">`
-    : `<span class="rs-yv-ini">${esc(t.name.charAt(0))}</span>`}</div><div class="np-cap"><p class="rs-paper-kicker">All India Rank ${t.rank}</p><p class="np-cap-name">${esc(t.name)}</p>${t.programmes ? `<p class="rs-paper-caption">Prepared with ${esc(progs(t.programmes))}</p>` : ''}</div></li>`;
-  const more = y => {
-    const m = (data.ARCHIVE[y] || []).filter(t => t.rank > 10);
-    if (!m.length) return '';
-    return `<details class="rs-yv-more"><summary>More from CSE ${y} · AIR ${m[0].rank} to ${m[m.length - 1].rank} <span>(${m.length})</span></summary><ul class="rs-yv-grid is-small">${m.map(t => card(t, true)).join('')}</ul></details>`;
-  };
-  const yearView = y => {
-    const all = data.ARCHIVE[y] || [], top10 = all.filter(t => t.rank <= 10);
-    return `<div id="np-top3" class="rs-yv"><div class="rs-yv-head"><h3>UPSC CSE ${y}</h3><p>${top10.length} ${top10.length === 1 ? 'topper' : 'toppers'} in the top 10 · ${all.length} listed in all</p></div><ul class="rs-yv-grid">${top10.map(t => card(t)).join('')}</ul>${more(y)}</div>`;
-  };
+  /* ---------- data ---------- */
+  const NAME = { igp: 'the Interview Guidance Programme', test: 'a test series', gs: 'a General Studies programme or module', opt: 'an optional subject course' };
+  const catOf = p => /interview|\bigp\b/i.test(p) ? 'igp'
+    : /test series|\bcamp\b|\bflt\b/i.test(p) ? 'test'
+    : /optional|sociology|history|mathematics|psir|public administration|commerce|anthropology|political science|geography|enrichment/i.test(p) ? 'opt'
+    : 'gs';
+  const tidyProg = p => p.replace(/^&\s*/, '').trim()
+    .replace(/^IGP$/i, 'Interview Guidance Programme').replace(/\bIGP\b/g, 'Interview Guidance Programme')
+    .replace(/Interview Guidance Program\b/gi, 'Interview Guidance Programme')
+    .replace(/Prelims Cum Mains/g, 'Prelims-cum-Mains');
+  const splitProgs = s => (s || '').split(/,(?![^(]*\))|\s&\s/).map(tidyProg).filter(Boolean);
+  const titleWord = w => /^[A-Z]{3,}$/.test(w) ? w[0] + w.slice(1).toLowerCase() : w;
+  const tidyName = n => n.replace(/\s*-\s*Rank\s*\d+$/i, '').replace(/^[^A-Za-z]+|[^A-Za-z.]+$/g, '').replace(/\.$/, '').split(' ').map(titleWord).join(' ');
+  const extra = {};   // programme names from js/data/toppers.js, keyed year-rank
+  (window.TOPPERS || []).forEach(t => { if (t.c) extra[t.y + '-' + t.r] = t.c; });
 
-  const latestBox = $('#npLatest'), yearBox = $('#npYearView'), deck = $('#npDeck'), chips = $('#npYears');
-  const deckLatest = deck.innerHTML;
-  $('#npMoreLatest').innerHTML = more(latest);
-  chips.innerHTML = YEARS.map(y => `<button type="button" data-y="${y}" aria-pressed="${y === latest}"${y === latest ? ' class="is-on"' : ''}>${y}</button>`).join('');
-
-  const show = y => {
-    const isLatest = y === latest;
-    $$('#npYears button').forEach(b => { const on = +b.dataset.y === y; b.classList.toggle('is-on', on); b.setAttribute('aria-pressed', on); });
-    latestBox.hidden = !isLatest;
-    yearBox.hidden = isLatest;
-    yearBox.innerHTML = isLatest ? '' : yearView(y);
-    // only one element may carry id="np-top3": the static one while 2025 shows, the year view's otherwise
-    $('#npLatest .rs-np-top3').id = isLatest ? 'np-top3' : '';
-    $$('[data-np-latest]').forEach(a => { a.hidden = !isLatest; });
-    const yl = $('[data-np-year]'); yl.hidden = isLatest; yl.textContent = `CSE ${y}`;
-    deck.innerHTML = isLatest ? deckLatest : `Toppers of the Civil Services Examination ${y} who prepared with Vajiram &amp; Ravi`;
-  };
-  chips.addEventListener('click', e => { const b = e.target.closest('button[data-y]'); if (b) show(+b.dataset.y); });
-})();
-
-/* Press-run reveal for the Toppers paper (styles at the end of css/toppers.css). Each group fades and rises in as it reaches the screen,
-   its items staggered; portraits get a paper wipe and an AIR seal stamp; the "In numbers" figures count up. Skipped for reduced motion. */
-(() => {
-  const sec = document.getElementById('toppers');
-  if (!sec || !('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const GROUPS = [
-    ['.rs-np-mast', '.rs-paper-folio > span, .np-mast-name, .np-mast-hi, .rs-np-nav a'],
-    ['.rs-np-banner', '#npH', 'np-head'],
-    ['.rs-np-banner', '#npDeck'],
-    ['.rs-yr', '.rs-yr-label, .rs-yr-note'],
-    ['.rs-yr', '#npYears button', 'np-pop'],
-    ['.rs-np-top3', '.rs-np-hero'],
-    ['.rs-np-article', '.rs-np-article > .rs-paper-kicker, .np-story-h, .rs-paper-by, .rs-np-cols > p'],
-    ['.rs-np-rail', '.rs-paper-box, .rs-paper-stat, .rs-paper-ad'],
-    ['#np-rest', '#np-rest > *'],
-    ['.rs-np-rest', '.rs-np-rest > li'],
-    ['#npMoreLatest', '#npMoreLatest > *'],
-    ['#np-brief', '#np-brief > *'],
-    ['.rs-np-brief', '.rs-np-brief > li'],
-    ['.rs-np-end', '.rs-np-end > *']
-  ];
-  const groups = new Map();
-  GROUPS.forEach(([box, items, extra]) => {
-    const el = sec.querySelector(box); if (!el) return;
-    const list = [...sec.querySelectorAll(items)].filter(n => el.contains(n) || n === el);
-    list.forEach((n, i) => { n.classList.add('np-r'); if (extra) n.classList.add(extra); n.style.setProperty('--i', (groups.get(el) || []).length + i); });
-    groups.set(el, (groups.get(el) || []).concat(list));
+  const YEARS = data.ARCHIVE_YEARS.slice().sort((a, b) => b - a);
+  const yearList = y => (data.ARCHIVE[y] || []).slice().sort((a, b) => a.rank - b.rank).map((t, i) => {
+    const progs = splitProgs(t.programmes || extra[y + '-' + t.rank]).map(name => ({ name, cat: catOf(name) }));
+    return { key: y + '-' + i, y, rank: t.rank, name: tidyName(t.name), img: t.photo || t.img, progs, cats: [...new Set(progs.map(p => p.cat))] };
   });
 
-  // "In numbers": count up once (10/10 from 0, 9 from 0, 1976 from 1926)
-  const count = el => {
-    const m = el.textContent.match(/^(\d+)(.*)$/); if (!m) return;
-    const end = +m[1], rest = m[2], start = end > 999 ? end - 50 : 0, t0 = performance.now(), dur = 1100;
-    const step = t => { const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3); el.textContent = Math.round(start + (end - start) * e) + rest; if (p < 1) requestAnimationFrame(step); };
-    el.textContent = start + rest; requestAnimationFrame(step);
+  /* ---------- words ---------- */
+  const ORD = ['First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth', 'Seventh', 'Eighth', 'Ninth', 'Tenth'];
+  const ord = n => ORD[n - 1] || n + (['th', 'st', 'nd', 'rd'][(n % 100 > 10 && n % 100 < 14) ? 0 : n % 10] || 'th');
+  const ONES = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+  const TENS = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+  const words = n => n < 20 ? ONES[n] : n < 100 ? TENS[Math.floor(n / 10)] + (n % 10 ? '-' + ONES[n % 10] : '') : String(n);
+  const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+  const join = a => a.length < 2 ? a[0] : a.slice(0, -1).join(', the ') + ' and the ' + a[a.length - 1];
+  const progList = t => join(t.progs.map(p => esc(p.name)));
+
+  /* ---------- elements ---------- */
+  const yearSel = $('gzYear'), kickB = $('gzKick'), deck = $('gzDeck'), lead = $('gzLead');
+  const img = $('gzImg'), seal = $('gzSeal'), capEl = $('gzCap'), stKick = $('gzStKick'), sub = $('gzSub'), cols = $('gzCols'), facts = $('gzFacts');
+  const ten = $('gzTen'), tabs = [...sec.querySelectorAll('.gz__tab')], count = $('gzCount'), say = $('gzSay'), allBtn = $('gzAll'), rollH = $('gzRollH');
+  yearSel.innerHTML = YEARS.map(y => `<option value="${y}">${y}</option>`).join('');
+
+  let list = [], year = YEARS[0], current = null, cat = 'all', expanded = false, stats = {};
+
+  /* ---------- the lead story ---------- */
+  const fill = (t, withImg) => {
+    const first = t === list[0];
+    if (withImg) { img.src = t.img; img.alt = `${t.name}, All India Rank ${t.rank} in the Civil Services Examination ${t.y}`; }
+    seal.innerHTML = `<s>CSE ${t.y}</s><i>AIR</i><b>${t.rank}</b><s>${ord(t.rank)} in India</s>`;
+    capEl.innerHTML = `<b>${esc(t.name)}</b>, All India Rank ${t.rank}, UPSC CSE ${t.y}.`;
+    const n = t.progs.length;
+    stKick.innerHTML = `AIR ${t.rank} &middot; ` + (n > 1 ? `${n} programmes` : n ? esc(t.progs[0].name) : `CSE ${t.y}`);
+    const paras = [];
+    if (first && stats.igp10 > 1) sub.innerHTML = `${esc(t.name)} heads the list; ${words(stats.igp10)} of the top ten were associated with the Interview Guidance Programme`;
+    else if (first) sub.innerHTML = `${esc(t.name)} heads the list in the Civil Services Examination ${t.y}`;
+    else sub.innerHTML = `${esc(t.name)} secures All India Rank ${t.rank} in the Civil Services Examination ${t.y}`;
+    paras.push(n ? `${esc(t.name)}, All India Rank ${t.rank} in the Civil Services Examination ${t.y}, was associated with Vajiram &amp; Ravi through the ${progList(t)}.`
+                 : `${esc(t.name)}, All India Rank ${t.rank} in the Civil Services Examination ${t.y}, is among the rank holders who prepared with Vajiram &amp; Ravi.`);
+    if (first) {
+      const next = list.slice(1, 3).filter(x => x.progs.length);
+      if (next.length) paras.push(next.map(x => `${esc(x.name)}, AIR ${x.rank}, was associated with the ${progList(x)}.`).join(' '));
+    } else if (t.cats.includes('igp')) paras.push('The Interview Guidance Programme prepares candidates for the Personality Test, the final stage of the examination.');
+    if (stats.withProgs) paras.push('The programmes differ from candidate to candidate. Each rank holder&rsquo;s association is listed below as the institute publishes it.');
+    if (stats.n50 > 1) paras.push(`${cap(words(stats.n50))} of the first fifty ranks were associated with one or more of the institute&rsquo;s programmes.`);
+    cols.innerHTML = paras.map(p => `<p>${p}</p>`).join('');
+  };
+  // the story box takes the height of the longest story in the year, so selecting a rank holder never moves the page below
+  const sizeLead = () => {
+    lead.style.minHeight = '';
+    let h = 0;
+    list.forEach(t => { fill(t, false); h = Math.max(h, lead.offsetHeight); });
+    fill(current, false);
+    lead.style.minHeight = h + 'px';
   };
 
-  sec.classList.add('np-anim');
-  const io = new IntersectionObserver(es => es.forEach(e => {
-    if (!e.isIntersecting) return;
-    io.unobserve(e.target);
-    (groups.get(e.target) || []).forEach(n => n.classList.add('is-in'));
-    if (e.target.matches('.rs-np-rail')) e.target.querySelectorAll('.np-stat-n').forEach((n, i) => setTimeout(() => count(n), 200 + i * 120));
-  }), { rootMargin: '0px 0px -12% 0px', threshold: 0.12 });
-  groups.forEach((_, el) => io.observe(el));
+  /* ---------- the roll ---------- */
+  const firstTen = () => { const top = list.filter(t => t.rank <= 10); return top.length ? top : list.slice(0, 10); };
+  const card = (t, i, isExtra) => `<li class="gz__tp${isExtra ? ' is-extra' : ''}" data-key="${t.key}" data-cats="${t.cats.join(' ')}" style="--i:${Math.min(i, 9)}"${isExtra && !expanded ? ' hidden' : ''}>
+      <button class="gz__pick" type="button" aria-pressed="false" aria-controls="gzLead">
+        <span class="gz__mug" aria-hidden="true"><img src="${esc(t.img)}" alt="" width="360" height="450" loading="lazy" decoding="async"></span>
+        <span class="gz__txt"><span class="gz__rk">AIR&nbsp;${t.rank}</span><b class="gz__nm">${esc(t.name)}</b>${t.progs.length
+          ? `<span class="gz__pg">${t.progs.map(p => `<span data-gz-cat="${p.cat}">${esc(p.name)}</span>`).join(' <i aria-hidden="true">&middot;</i> ')}</span>` : ''}</span>
+      </button></li>`;
 
-  // a year view swapped in by the chips: stagger its cards
-  const yearBox = document.getElementById('npYearView');
-  if (yearBox) new MutationObserver(() => {
-    const v = yearBox.querySelector('.rs-yv'); if (!v || v.classList.contains('is-swap')) return;
-    v.querySelectorAll('.rs-yv-card').forEach((c, i) => c.style.setProperty('--i', Math.min(i, 14)));
-    v.classList.add('is-swap');
-  }).observe(yearBox, { childList: true });
+  const renderYear = y => {
+    year = +y; list = yearList(year); expanded = false; cat = 'all';
+    const top = firstTen(), rest = list.filter(t => !top.includes(t));
+    stats = {
+      top10: list.filter(t => t.rank <= 10).length,
+      igp10: list.filter(t => t.rank <= 10 && t.cats.includes('igp')).length,
+      n50: list.filter(t => t.rank <= 50).length,
+      withProgs: list.some(t => t.progs.length)
+    };
+    kickB.innerHTML = `Union Public Service Commission &middot; Civil Services Examination ${year}`;
+    deck.innerHTML = stats.withProgs
+      ? `The UPSC CSE ${year} top-ten rank holders were associated with Vajiram &amp; Ravi through different programmes, from General Studies preparation and test series to interview guidance.`
+      : `The UPSC CSE ${year} rank holders who prepared with Vajiram &amp; Ravi, as the institute publishes them.`;
+    const f = [[stats.top10, 'Of the top ten'], [stats.igp10, 'Interview Guidance Programme'], [stats.n50, 'Of the first fifty ranks'], [1976, 'Preparing aspirants since']].filter(x => x[0]);
+    facts.innerHTML = f.map(([n, l]) => `<div><dt>${l}</dt><dd>${n}</dd></div>`).join('');
+    facts.style.setProperty('--n', f.length);
+    ten.innerHTML = top.map((t, i) => card(t, i, false)).join('') + rest.map((t, i) => card(t, i, true)).join('');
+    allBtn.hidden = !rest.length;
+    allBtn.innerHTML = label();
+    allBtn.setAttribute('aria-expanded', 'false');
+    rollH.textContent = 'The first ten';
+    tabs.forEach(b => {
+      const c = b.dataset.gzCat, k = c === 'all' ? list.length : list.filter(t => t.cats.includes(c)).length;
+      b.hidden = c !== 'all' && !k;
+      let s = b.querySelector('small'); if (!s) { s = document.createElement('small'); b.append(s); }
+      s.textContent = k; s.setAttribute('aria-label', `${k} rank holders`);
+    });
+    current = list[0];
+    sizeLead();
+    pick(current, false);
+    applyFilter('all');
+  };
+
+  /* ---------- selecting ---------- */
+  let ask = 0;
+  const pick = (t, animate) => {
+    current = t;
+    ten.querySelectorAll('.gz__tp').forEach(li => {
+      const on = li.dataset.key === t.key;
+      li.classList.toggle('is-on', on);
+      li.querySelector('.gz__pick').setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    if (!animate) { fill(t, true); return; }
+    say.textContent = `Front page now shows ${t.name}, All India Rank ${t.rank}.`;
+    const top = lead.getBoundingClientRect().top;
+    if (top < 80 || top > innerHeight * .6) {
+      const y = scrollY + top - 96;
+      if (window.__lenis) window.__lenis.scrollTo(y, { duration: reduce ? 0 : 1 }); else scrollTo({ top: y, behavior: reduce ? 'auto' : 'smooth' });
+    }
+    const me = ++ask, im = new Image(); im.src = t.img;
+    Promise.race([(im.decode ? im.decode() : Promise.resolve()).catch(() => {}), new Promise(r => setTimeout(r, 350))]).then(() => {
+      if (me !== ask) return;
+      fill(t, true);
+      if (!reduce) { lead.classList.remove('is-swap'); void lead.offsetWidth; lead.classList.add('is-swap'); }
+    });
+  };
+  ten.addEventListener('click', e => {
+    const li = e.target.closest('.gz__tp'); if (!li) return;
+    const t = list.find(x => x.key === li.dataset.key);
+    if (t && t !== current) pick(t, true);
+  });
+
+  /* ---------- filters ---------- */
+  const applyFilter = c => {
+    cat = c;
+    tabs.forEach(b => b.setAttribute('aria-pressed', b.dataset.gzCat === c ? 'true' : 'false'));
+    sec.classList.toggle('gz--filter', c !== 'all');
+    let inTen = 0, inAll = 0;
+    ten.querySelectorAll('.gz__tp').forEach(li => {
+      const hit = c === 'all' || li.dataset.cats.split(' ').includes(c);
+      if (hit && c !== 'all') { inAll++; if (!li.classList.contains('is-extra')) inTen++; }
+      li.classList.toggle('is-hit', hit && c !== 'all');
+      li.classList.toggle('is-dim', !hit);
+      li.querySelectorAll('.gz__pg [data-gz-cat]').forEach(x => x.classList.toggle('is-hit', c !== 'all' && x.dataset.gzCat === c));
+    });
+    if (c === 'all') { count.textContent = ''; return; }
+    const tenWord = stats.top10 === 10 ? 'top ten' : 'first ten';
+    count.textContent = `${inTen} of the ${tenWord} associated with ${NAME[c]}` + (allBtn.hidden ? '' : ` (${inAll} of all ${list.length} rank holders)`);
+  };
+  tabs.forEach(b => b.addEventListener('click', () => applyFilter(b.dataset.gzCat)));
+
+  /* ---------- show all / edition ---------- */
+  /* Show all / Show the first ten: the list grows or shrinks smoothly (its height animates), the new cards rise in one after another,
+     and on collapse the page glides back to the roll header if it has scrolled past it. The button label rolls to its new text. */
+  const label = () => `<span>${expanded ? 'Show the first ten' : `Show all ${list.length} rank holders`}</span><i aria-hidden="true"></i>`;
+  let busy = false;
+  const glideTo = el => {
+    const y = scrollY + el.getBoundingClientRect().top - 96;
+    if (window.__lenis) window.__lenis.scrollTo(y, { duration: reduce ? 0 : .9 }); else scrollTo({ top: y, behavior: reduce ? 'auto' : 'smooth' });
+  };
+  allBtn.addEventListener('click', () => {
+    if (busy) return;
+    const extras = [...ten.querySelectorAll('.is-extra')];
+    const h0 = ten.offsetHeight;
+    expanded = !expanded;
+    allBtn.setAttribute('aria-expanded', String(expanded));
+    allBtn.innerHTML = label();
+    rollH.textContent = expanded ? 'All rank holders' : 'The first ten';
+    if (reduce) { extras.forEach(li => { li.hidden = !expanded; }); return; }
+    busy = true;
+    if (expanded) {
+      extras.forEach((li, i) => { li.hidden = false; li.style.setProperty('--j', Math.min(i, 14)); li.classList.add('is-new'); });
+    } else {
+      if (ten.getBoundingClientRect().top < 80) glideTo(sec.querySelector('.gz__rollh'));
+      extras.forEach(li => { li.hidden = true; });
+    }
+    const h1 = ten.offsetHeight;
+    if (!expanded) extras.forEach(li => { li.hidden = false; li.classList.add('is-out'); });
+    ten.style.height = h0 + 'px'; ten.style.overflow = 'hidden';
+    void ten.offsetHeight;
+    ten.style.transition = `height ${expanded ? .7 : .55}s cubic-bezier(.2, .7, .2, 1)`;
+    ten.style.height = h1 + 'px';
+    const done = () => {
+      ten.removeEventListener('transitionend', done); clearTimeout(t);
+      ten.style.height = ten.style.overflow = ten.style.transition = '';
+      extras.forEach(li => { li.classList.remove('is-new', 'is-out'); if (!expanded) li.hidden = true; });
+      busy = false;
+    };
+    ten.addEventListener('transitionend', done); const t = setTimeout(done, 900);
+  });
+  yearSel.addEventListener('change', () => renderYear(yearSel.value));
+
+  renderYear(YEARS[0]);
+  let w = innerWidth, rz = 0;
+  addEventListener('resize', () => { if (innerWidth === w) return; w = innerWidth; clearTimeout(rz); rz = setTimeout(sizeLead, 150); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(sizeLead);
 })();

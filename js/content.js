@@ -89,11 +89,6 @@
     { n: 'SMART Prelims', full: 'SMART Prelims Current Affairs Programme 2026', d: '17 Jan', tgt: 'CSE 2027', what: 'Current affairs for Prelims.' },
     { n: 'SMART', full: 'SMART Current Affairs Programme 2026', d: '17 Jan', tgt: 'CSE 2026', what: 'Current affairs for Prelims and Mains.', chip: 'Limited seats' }
   ];
-  const ARTICLES = [
-    ['Prelims', ['United Kingdom Maritime Trade Operations (UKMTO)', 'Mauritius', 'Narwhals', 'Thiksey Monastery', 'Long Tailed Marmot']],
-    ['Mains', ['Mobile Phone Manufacturing Scheme (MPMS) – From Assembly Hub to Indian-Owned Brands', 'US–India Trade Tensions: The Great Transhipment Scam and Tariff Allegations', "U.S.–India Electoral Systems: Trump's Voting ID Rules and the SAVE America Act", 'NITI Aayog Report Flags Large Gap Between Education and Employment for Indian Youth', "India's Sugar Price Hike: Causes, Government Response and the Ethanol Debate", 'Census 2027 Questionnaire – New Questions, NPR Link and Concerns Over Data Collection']],
-    ['Quest', ['UN Reforms, Need, Security Council, General Assembly, Challenges', 'World Meteorological Organization (WMO), Headquarters, Members', 'Article 21, Rights, Doctrines, Challenges, Case Laws, Way Forward', 'Reserve Bank of India (RBI), Governor, Structure, Functions', 'Federalism in Indian Polity, Significance, Features']]
-  ];
   const FREE = ['Monthly magazine', 'Yojana and Kurukshetra', 'Previous year papers', "Toppers' answer sheets", 'Essay practice'];
   // Admission banners (files in assets/img/banners) with the programme each one advertises
   const BANNERS = [
@@ -114,10 +109,15 @@
   ];
   const FAQS = [
     ['Which coaching is best for UPSC?', 'Vajiram & Ravi is renowned for its comprehensive and structured approach, making it one of the top choices for UPSC coaching in India.'],
-    ['Which UPSC coaching is best in Delhi?', 'Vajiram & Ravi is considered one of the best UPSC coaching institutes in Delhi for its proven track record and effective teaching methods.'],
-    ['Which coaching is best for IAS in Delhi?', 'Vajiram & Ravi is highly regarded as one of the best coaching institutes for IAS preparation in Delhi due to its expert faculty and comprehensive study materials.'],
-    ['Which coaching institute has the most UPSC toppers?', 'Vajiram & Ravi is known for producing a significant number of UPSC toppers, reflecting its strong track record in IAS coaching.'],
-    ['Are all courses available online?', 'Yes. Every programme runs in the classroom and LIVE-Online, so you can learn from anywhere.']
+    ['When should I start preparing for UPSC?', 'Graduates usually join the 1-year GS Prelims cum Mains Programme. College students can start earlier with the 2-year Fledgling programme, which spreads the syllabus across their degree.'],
+    ['What does the GS Prelims cum Mains Programme include?', 'Daily classes across the full General Studies syllabus, printed study material, Prelims and Mains tests, and mentoring, in the classroom or LIVE-Online.'],
+    ['Can I prepare in Hindi medium?', 'Yes. Vajiram & Ravi teaches in English and Hindi, with Hindi-medium mentorship and a Mains Test Series in Hindi.'],
+    ['Do you offer coaching for optional subjects?', 'Yes. Optional coaching runs for 20 to 30 weeks in subjects including Geography, History, Sociology, Psychology, Economics and Political Science, with an Optional Test Series alongside.'],
+    ['How do you prepare students for the UPSC interview?', 'The Interview Guidance Programme (IGP) prepares you for the Personality Test with mock interviews and DAF preparation, so you face the board with structure and confidence.'],
+    ['Can I join a test series without a full course?', 'Yes. The Prelims, Mains and Optional test series can be taken on their own, alongside your own preparation.'],
+    ['Where are your centres?', 'The head campus is at 1-B/7, Pusa Road, Old Rajinder Nagar, New Delhi, next to Gate 5 of Karol Bagh Metro Station. There is also a campus in Egmore, Chennai.'],
+    ['Are online classes the same as classroom classes?', 'Yes. Every programme runs in the classroom and LIVE-Online, and live online and recorded classes carry the same faculty, the same tests and the same study plan.'],
+    ['How do I enrol or speak to a counsellor?', 'Book a free session with the form on this page, call 080-6220-6330 (Monday to Saturday, 9 am to 7 pm), or email admissions@vajiramandravi.com. There is no pressure to enrol.']
   ];
   const FOOTER = [
     ['Vajiram & Ravi', ['About us', 'Careers', 'Contact us', 'FAQs']],
@@ -684,33 +684,7 @@
   $('#faqList').innerHTML = FAQS.map(([q, a], i) => `<details class="qa"${i ? '' : ' open'}><summary>${esc(q)}${ico('faq-plus.svg', 20)}</summary><p>${esc(a)}</p></details>`).join('');
   // one answer open at a time + the open/close motion: js/accordion.js
 
-  /* ---------------- resources: "Study materials" (Figma 2256:4675) ----------------
-     Six article cards per tab (Prelims / Mains / Quest) from ARTICLES; the first is the featured orange card with the sun rays.
-     With five articles the featured card spans two columns so the 3 x 2 grid stays full. Every link opens the Vajiram & Ravi site
-     until the article pages exist. */
-  const smGrid = $('#smGrid'), smTabs = $('#smTabs');
-  if (smGrid && smTabs) {
-    const card = (k, t, i, n) => `<li class="sm__card${!i && n === 5 ? ' sm__card--wide' : ''}" style="--i:${i}">
-        <a href="${SITE}" target="_blank" rel="noopener">
-          <img class="sm__rays" src="assets/img/patterns/surya-rays.svg" alt="" width="300" height="300">
-          <span class="sm__top"><span class="sm__tag">${esc(k.toUpperCase())} · ${String(i + 1).padStart(2, '0')}</span><span class="sm__go sq sq--38 sq--ink"><img src="assets/img/icons/arrow-white.svg" alt="" width="16" height="16"><img src="assets/img/icons/arrow-brand.svg" alt="" width="16" height="16"></span></span>
-          <span class="sm__t">${esc(t)}</span>
-        </a></li>`;
-    const show = (k, animate) => {
-      const list = (ARTICLES.find(a => a[0] === k) || ARTICLES[0])[1].slice(0, 6);
-      smGrid.innerHTML = list.map((t, i) => card(k, t, i, list.length)).join('');
-      smGrid.setAttribute('aria-labelledby', 'smTab-' + k);
-      $$('button', smTabs).forEach(b => b.setAttribute('aria-selected', b.dataset.tab === k));
-      if (animate) { smGrid.classList.remove('is-swap'); void smGrid.offsetWidth; smGrid.classList.add('is-swap'); }
-    };
-    show('Mains', false);
-    smTabs.addEventListener('click', e => { const b = e.target.closest('button[data-tab]'); if (b && b.getAttribute('aria-selected') !== 'true') show(b.dataset.tab, true); });
-    smTabs.addEventListener('keydown', e => {
-      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
-      const bs = $$('button', smTabs), i = bs.findIndex(b => b === document.activeElement); if (i < 0) return;
-      const n = bs[(i + (e.key === 'ArrowRight' ? 1 : bs.length - 1)) % bs.length]; n.focus(); n.click(); e.preventDefault();
-    });
-  }
+  /* ---------------- resources: six static cards in index.html; their links open the Vajiram & Ravi site until the pages exist ---------------- */
   $$('#resources [data-rs]').forEach(a => { a.href = SITE; a.target = '_blank'; a.rel = 'noopener'; });
 
   /* ---------------- contact form ---------------- */
