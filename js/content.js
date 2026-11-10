@@ -654,7 +654,7 @@
     return `<article class="inv inv--ticket" style="--i:${i}">
       <div class="inv__frame">
         <div class="ticket__head">
-          <img class="ticket__lotus" src="assets/img/brand/lotus-line.svg" alt="" aria-hidden="true">
+          <img class="ticket__lotus" src="assets/img/brand/lotus-ticket.svg" alt="" aria-hidden="true">
           <div class="ticket__date"><span>Batch starts</span><time><b>${d}</b><span>${mon || ''}<small>${BYEAR}</small></span></time></div>
           <span class="ticket__target">Target exam<strong>UPSC ${esc(b.tgt)}</strong></span>
         </div>
