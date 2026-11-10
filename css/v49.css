@@ -25,7 +25,7 @@
 .dl__prog button { position: relative; padding: 10px 0; background: none; border: 0; cursor: pointer; }
 .dl__prog button i { display: block; width: 56px; height: 3px; border-radius: 3px; background: rgba(255,255,255,.3); position: relative; overflow: hidden; }
 .dl__prog button i::after { content: ""; position: absolute; inset: 0; background: #FFD48A; transform-origin: 0 50%; }
-.dl__prog button i::after { transform: scaleX(var(--f, 0)); }
+.dl__prog button i::after { transform: scaleX(var(--p, 0)); }
 .dl__prog button:focus-visible { outline: 2px solid #FFD48A; outline-offset: 2px; }
 
 /* banner dots: the active dot becomes a pill that fills while its banner holds */
@@ -159,67 +159,10 @@
 .dl--pin::after { content: ""; position: absolute; inset: 0; z-index: 6; background: #1a0a02; opacity: calc(var(--cover, 0) * .85); pointer-events: none; }
 .dl__stick { transform: scale(calc(1 - var(--cover, 0) * .05)); transform-origin: 50% 40%; will-change: transform; }
 #toppers { position: relative; z-index: 2; border-radius: 28px 28px 0 0; box-shadow: 0 -30px 60px -24px rgba(20, 8, 2, .55); }
-#toppers > * { opacity: var(--f, 1); transform: translate3d(0, calc((1 - var(--f, 1)) * 44px), 0); will-change: opacity, transform; }
+#toppers > * { opacity: var(--cov, 1); transform: translate3d(0, calc((1 - var(--cov, 1)) * 44px), 0); will-change: opacity, transform; }
 @media (prefers-reduced-motion: reduce) { .dl--pin { position: relative; } .dl--pin::after { display: none; } .dl__stick { transform: none; } #toppers { margin-top: 0; } #toppers > * { opacity: 1; transform: none; } }
 
-/* ---- Why choose: orange liquid background (same as the reference "Choose from" section), left copy sticky, cards stack on the right ---- */
-.wy { position: relative; margin-top: 12px; background: #C2410C; color: #fff; }
-.wy__bg { position: sticky; top: 0; width: 100%; height: 100vh; height: 100lvh; margin-bottom: -100vh; margin-bottom: -100lvh; overflow: hidden; pointer-events: none; z-index: 0; }   /* scrolls in with the section, then holds still while the cards move, then leaves with it */
-.wy__liquid { position: absolute; inset: 0; }
-.wy__liquid i { position: absolute; left: 0; top: 0; width: var(--s); height: var(--s); margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2); border-radius: 50%; background: radial-gradient(circle, var(--c) 0%, transparent 66%); transform: translate(var(--bx, 20vw), var(--by, 20vh)); transition: transform var(--bt, 1.6s) cubic-bezier(.2, .7, .2, 1); will-change: transform; animation: wyLiquid var(--t) ease-in-out infinite alternate; }
-.wy__liquid i:nth-child(1) { --bx: 22vw; --by: 30vh; --s: 900px; --c: rgba(240, 112, 32, .85); --t: 11s; }
-.wy__liquid i:nth-child(2) { --bx: 78vw; --by: 25vh; --s: 760px; --c: rgba(138, 45, 14, .55); --t: 13s; animation-delay: -4s; }
-.wy__liquid i:nth-child(3) { --bx: 50vw; --by: 70vh; --s: 560px; --c: rgba(254, 170, 28, .28); --t: 9s; animation-delay: -2s; }
-.wy__liquid i:nth-child(4) { --bx: 85vw; --by: 80vh; --s: 1000px; --c: rgba(232, 80, 32, .7); --t: 15s; animation-delay: -7s; }
-@keyframes wyLiquid { 0% { translate: 0 0; scale: 1; } 33% { translate: 60px -40px; scale: 1.12; } 66% { translate: -50px 30px; scale: .92; } 100% { translate: 30px 50px; scale: 1.06; } }
-.wy__cuts { position: absolute; inset: 0; mix-blend-mode: soft-light; opacity: .7; }
-.wy__cuts .cut { position: absolute; top: 50%; height: min(560px, 62%); width: 24%; max-width: none; translate: 0 -50%; object-fit: cover; filter: grayscale(1) contrast(1.15); }
-.wy__cuts .cut--l { left: 0; object-position: 54% 22%; -webkit-mask-image: linear-gradient(90deg, #000 35%, transparent), linear-gradient(0deg, transparent, #000 22%, #000 78%, transparent); mask-image: linear-gradient(90deg, #000 35%, transparent), linear-gradient(0deg, transparent, #000 22%, #000 78%, transparent); -webkit-mask-composite: source-in; mask-composite: intersect; }
-.wy__cuts .cut--r { right: 0; object-position: 74% 45%; -webkit-mask-image: linear-gradient(270deg, #000 35%, transparent), linear-gradient(0deg, transparent, #000 22%, #000 78%, transparent); mask-image: linear-gradient(270deg, #000 35%, transparent), linear-gradient(0deg, transparent, #000 22%, #000 78%, transparent); -webkit-mask-composite: source-in; mask-composite: intersect; }
-
-.wy__in { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(32px, 5vw, 88px); align-items: start; max-width: 1360px; margin: 0 auto; padding: clamp(72px, 9vw, 130px) clamp(20px, 5.5vw, 100px); box-sizing: content-box; }
-.wy__l { position: sticky; top: 112px; align-self: start; }
-.wy__h { margin: 28px 0 0; font: 600 clamp(34px, 3.8vw, 58px)/1.08 var(--f-d); letter-spacing: -.02em; color: #fff; }
-.wy__p { margin: 20px 0 0; max-width: 30em; font-size: clamp(16px, 1.3vw, 19px); line-height: 1.55; color: rgba(255, 255, 255, .92); }
-.wy__count { display: flex; align-items: baseline; gap: 10px; margin: 34px 0 28px; font-family: var(--f-d); }
-.wy__count b { font-size: clamp(44px, 5vw, 72px); font-weight: 600; line-height: 1; letter-spacing: -.03em; }
-.wy__count span { font-size: 18px; color: rgba(255, 255, 255, .75); }
-.wy .lbl--w .lbl__t, .wy .lbl--w .lbl__hi { color: #fff; }
-
-.wy__r { list-style: none; margin: 0; padding: 0; }
-.wy__c { --sc: 1; --dim: 0; position: sticky; top: calc(112px + var(--i) * 22px); margin-bottom: 22vh; min-height: 320px; padding: 40px clamp(24px, 3vw, 44px) 36px; border-radius: 6px; background: #FFFCF6; color: var(--ink); transform: scale(var(--sc)); transform-origin: 50% 0; box-shadow: 0 -16px 28px -18px rgba(90, 25, 0, .4), 0 30px 50px -28px rgba(90, 25, 0, .6); }
-.wy__c:last-child { margin-bottom: 0; }
-.wy__c::before { content: ""; position: absolute; inset: 9px; border: 1.5px solid rgba(194, 65, 12, .5); border-radius: 3px; pointer-events: none; }
-.wy__c::after { content: ""; position: absolute; inset: 0; border-radius: 6px; background: #3a1405; opacity: calc(var(--dim) * .22); pointer-events: none; }
-.wy__num { position: absolute; right: 28px; top: 22px; font: 400 clamp(54px, 6vw, 92px)/1 var(--f-n); color: transparent; -webkit-text-stroke: 1.5px rgba(194, 65, 12, .35); }
-.wy__med { display: grid; place-items: center; width: 68px; height: 68px; border-radius: 50%; background: var(--sand); box-shadow: 0 0 0 1px rgba(194, 65, 12, .18); outline: 1px dashed rgba(194, 65, 12, .35); outline-offset: 5px; }
-.wy__med img, .wy__med svg { width: 34px; height: 34px; }
-.wy__c h3 { margin: 28px 0 0; font: 600 clamp(24px, 2.4vw, 34px)/1.15 var(--f-d); letter-spacing: -.01em; }
-.wy__c p { margin: 12px 0 0; max-width: 28em; font-size: clamp(16px, 1.25vw, 18px); line-height: 1.55; color: #5a4a3a; }
-@media (max-width: 900px) {
-  .wy__in { grid-template-columns: 1fr; }
-  .wy__l { position: static; }
-  .wy__count { display: none; }
-  .wy__l .bt { margin-bottom: 8px; }
-  .wy__c { top: calc(88px + var(--i) * 16px); margin-bottom: 14vh; min-height: 260px; }
-}
-@media (prefers-reduced-motion: reduce) { .wy__liquid i { animation: none; } .wy__c { position: relative; top: auto; margin-bottom: 16px; transform: none; } }
-
-/* the old #why padding rule must not apply to the new section: the background has to reach both edges */
-#why.wy { padding: 0; }
-
-/* collage: feathered on every side so it melts into the orange instead of ending in a hard edge */
-.wy__cuts { opacity: .5; }
-.wy__cuts .cut--r { height: min(680px, 80%); -webkit-mask-image: linear-gradient(270deg, #000 12%, transparent 100%), linear-gradient(0deg, transparent 0%, #000 40%, #000 60%, transparent 100%); mask-image: linear-gradient(270deg, #000 12%, transparent 100%), linear-gradient(0deg, transparent 0%, #000 40%, #000 60%, transparent 100%); -webkit-mask-composite: source-in; mask-composite: intersect; }
-
-/* stack spacing via flex gap (not margins, which count toward pinning) plus a spacer after the last card, so the last card settles on the stack and all cards hold together before the section scrolls away */
-.wy__r { display: flex; flex-direction: column; gap: 22vh; }
-.wy__c, .wy__c:last-child { margin-bottom: 0; flex: none; }
-@media (max-width: 900px) { .wy__r { gap: 14vh; } .wy__c, .wy__c:last-child { margin-bottom: 0; } }
-@media (prefers-reduced-motion: reduce) { .wy__r { gap: 16px; } }
-
-/* no extra orange after the last card: the section ends a normal margin below it. The left text still stays pinned until its bottom meets the last card's bottom. */
-.wy__in { padding-bottom: clamp(56px, 6vw, 96px); }
+/* (the Why section now lives in css/why-choose.css) */
 
 
 /* ---- CTA: the reference site's button. One pill, a white circle with the arrow inside it; on hover the label rolls up to a fresh copy,
@@ -264,7 +207,6 @@
 @media (prefers-reduced-motion: reduce) { .cta .btn__t, .cta .sq svg, .cta.cta { transition: none; } }
 
 /* the pinned background must not spill past the section into the gap below it (that was the orange-to-cream strip) */
-.wy { overflow: clip; }
 
 /* "View all toppers": a text link with an arrow, no pill. The arrow nudges forward and the underline draws in; nothing moves position. */
 .tlink { display: inline-flex; align-items: center; gap: 10px; padding: 6px 0; border: 0; background: none; cursor: pointer; font: 600 17px/1.3 var(--f-d); color: var(--brand); position: relative; }
@@ -325,7 +267,7 @@
 .shelf .gsbook--p .gsbook__ribbon { bottom: -15px; height: 28px; }
 
 /* a standing book: tipped back ~21deg at rest (weak perspective, vanishing point = middle of the shelf), tilted on its own box so it stays hoverable.
-   --p (0 resting .. 1 lifted) and the transform are driven by the hover physics in js/v49-base.js. */
+   --p (0 resting .. 1 lifted) and the transform are driven by the hover physics in js/content.js. */
 .shelf .gsbook--p { --p: 0; transform: perspective(6000px) rotateX(21.5deg); transform-origin: calc(50% - var(--k, 0) * var(--sp, 445px)) 100%; will-change: transform;
  }
 .shelf .gsbook--p .gsbook__in { transform-origin: 50% 100%; }
@@ -468,7 +410,7 @@
 .blank input, .blank select { height: 1.5em; padding: 0 6px; border: 0; border-bottom: 2px dashed rgba(194, 65, 12, .6); border-radius: 2px 2px 0 0; background: transparent; box-shadow: none;
   font: 600 1.18em/1.5 "Caveat", "Segoe Script", cursive; letter-spacing: 0; color: #1B2A52; outline: none; transition: background-color .2s, border-color .2s; }
 .blank input::placeholder { color: rgba(27, 42, 82, .38); font-weight: 500; }
-.blank select { appearance: none; cursor: pointer; padding-right: 24px; background: transparent url(../assets/img/v21/chev-down.svg) right 4px center / 15px 15px no-repeat; }
+.blank select { appearance: none; cursor: pointer; padding-right: 24px; background: transparent url(../assets/img/icons/chev-down.svg) right 4px center / 15px 15px no-repeat; }
 .blank select:invalid { color: rgba(27, 42, 82, .38); font-weight: 500; }
 .blank select option { font: 500 16px var(--f); color: var(--ink); }
 .blank input:focus, .blank select:focus { border-bottom: 2px solid var(--brand); background-color: rgba(254, 170, 28, .14); }
@@ -628,8 +570,6 @@
 #courses .pbk__b .vbtn.cta .sq svg { stroke: #C2410C; }
 
 /* Why: no icon; the number takes its place at the top left of each card */
-.wy__num { position: static; display: block; margin: 0; font: 400 clamp(56px, 5.6vw, 84px)/1 var(--f-n); }
-.wy__c h3 { margin-top: 18px; }
 
 /* batch cards: no Hindi line; the tag (Limited seats / Flagship) sits top right, where it was */
 .inv .chip.inv__tag { position: absolute; z-index: 2; right: 26px; top: 28px; align-self: auto; margin: 0; }
@@ -779,7 +719,6 @@
 
 /* ---- consistency pass ---- */
 /* every section heading shares one size; the "Why" and location headings had drifted larger */
-.wy__h, .lv__h { font: 600 var(--h2)/1.05 var(--f-d); letter-spacing: -.02em; }
 /* decorative text on the book covers and postcard header: nothing below 11px */
 .gsbook__brand, .gsbook--p .gsbook__brand { font-size: 11px; }
 .gsbook__foot, .gsbook--p .gsbook__foot { font-size: 11px; }
@@ -811,12 +750,11 @@
 }
 @media (prefers-reduced-motion: reduce) { .dl__cta.cta.cta { position: relative; top: auto; left: auto; display: inline-flex; margin: 24px clamp(20px, 5.5vw, 100px); } }
 
-/* scroll focus (see js/v49.js): the opacity follows the scroll position through --fx, which the script sets per section */
+/* scroll focus (see js/page-motion.js): the opacity follows the scroll position through --fx, which the script sets per section */
 .fx-on .fx { opacity: var(--fx, .16); will-change: opacity; }
 @media (prefers-reduced-motion: reduce) { .fx-on .fx { opacity: 1; } }
 
 /* more room under the last "Why" card before the next section */
-.wy__in { padding-bottom: calc(clamp(56px, 6vw, 96px) + 90px); }
 #gs .lbl__sym { width: 40px; height: 24px; }
 
 /* all CTA buttons share one label size: 18px */
@@ -861,10 +799,10 @@ footer.foot .foot__bot { font-size: 15.5px; }
 .rs-yv-more.is-closing summary::after { content: "+"; }
 
 /* the section right after the hero slides up over it (user 2026-11-10: Programmes moved under the hero; this used to be #toppers only).
-   js/v49.js sets --cover on the hero and --f on this section as it rises. */
+   js/page-motion.js sets --cover on the hero and --f on this section as it rises. */
 .cover > #dlPin + section { position: relative; z-index: 2; margin-top: 0; border-radius: 28px 28px 0 0; box-shadow: 0 -30px 60px -24px rgba(20, 8, 2, .55); }
-.cover > #dlPin + section > * { opacity: var(--f, 1); transform: translate3d(0, calc((1 - var(--f, 1)) * 44px), 0); will-change: opacity, transform; }
-.fx-on .cover > #dlPin + section > .fx { opacity: calc(var(--f, 1) * var(--fx, .16)); }   /* keep the scroll-focus fade too */
+.cover > #dlPin + section > * { opacity: var(--cov, 1); transform: translate3d(0, calc((1 - var(--cov, 1)) * 44px), 0); will-change: opacity, transform; }
+.fx-on .cover > #dlPin + section > .fx { opacity: calc(var(--cov, 1) * var(--fx, .16)); }   /* keep the scroll-focus fade too */
 @media (prefers-reduced-motion: reduce) { .cover > #dlPin + section > * { opacity: 1; transform: none; } }
 
 /* hero image carousel (replaces the video) */
@@ -894,3 +832,119 @@ footer.foot .foot__bot { font-size: 15.5px; }
 @keyframes dlScroll { 0% { transform: translateY(-100%); } 70%, 100% { transform: translateY(200%); } }
 @media (max-width: 900px) { .dl__scroll { display: none; } }
 @media (prefers-reduced-motion: reduce) { .dl__scroll { display: none; } }
+
+/* footer wordmark reveal (js/footer-word.js): hidden until it scrolls into view, then each letter rises in, staggered */
+.foot__word.fw-ready .fw-c { display: inline-block; font-style: normal; opacity: 0; transform: translate3d(0, 55%, 0) rotate(6deg); transform-origin: 0 100%;
+  transition: opacity .7s var(--ease, cubic-bezier(.2, .7, .2, 1)), transform 1s cubic-bezier(.2, .7, .2, 1); transition-delay: calc(var(--i) * 55ms); }
+.foot__word.fw-ready.fw-in .fw-c { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .foot__word .fw-c { opacity: 1 !important; transform: none !important; } }
+
+/* curtain footer (user 2026-11-10: "footer should stick at the bottom, reveal like a curtain on scroll"). The footer is parked behind the
+   page at the bottom of the screen; the page slides up off it. js/footer-curtain.js sets html.foot-curtain only when the footer fits the
+   screen (a taller footer would never show its top), so short laptops and phones keep the normal flow. Less empty space so it fits 900px. */
+footer.foot { padding-top: 40px; }
+.foot__word { margin-top: 28px; }
+html.foot-curtain main { position: relative; z-index: 1; background: var(--ivory, #FFF9F1); }
+html.foot-curtain footer.foot { position: sticky; bottom: 0; z-index: 0; margin-top: 0; }
+
+/* ---- header language switcher: EN / हिं segmented pill, thumb slides under the active language ---- */
+.nav__end { display: flex; align-items: center; gap: 10px; }
+.lang { position: relative; display: flex; align-items: center; height: 44px; padding: 4px; border-radius: 999px; background: #fff; box-shadow: 0 0 0 1px rgba(38, 38, 38, .06), 0 10px 30px -10px rgba(38, 38, 38, .22); transition: background-color .3s var(--ease), box-shadow .3s var(--ease); }
+.lang__thumb { position: absolute; top: 4px; bottom: 4px; left: 4px; width: calc(50% - 4px); border-radius: 999px; background: var(--brand); transition: transform .45s cubic-bezier(.34, 1.4, .5, 1); }
+.lang[data-cur="hi"] .lang__thumb { transform: translateX(100%); }
+.lang__b { position: relative; z-index: 1; min-width: 44px; height: 100%; padding: 0 12px; border-radius: 999px; font: 700 14px/1 var(--f); letter-spacing: .04em; color: var(--ink); transition: color .25s var(--ease), transform .25s var(--ease); }
+.lang__b[lang="hi"] { font: 600 16px/1 "Mukta", var(--f); letter-spacing: 0; }
+.lang__b[aria-pressed="true"] { color: #fff; }
+.lang__b:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.nav--hero .lang { background: transparent; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .55); }
+.nav--hero .lang__thumb { background: rgba(255, 255, 255, .95); }
+.nav--hero .lang__b { color: #fff; }
+.nav--hero .lang__b[aria-pressed="true"] { color: var(--brand); }
+.nav--hero .lang__b:focus-visible { outline-color: #FFD48A; }
+@media (hover: hover) and (pointer: fine) {
+  .lang__b[aria-pressed="false"]:hover { color: var(--brand); transform: translateY(-1px); }
+  .nav--hero .lang__b[aria-pressed="false"]:hover { color: #FFD48A; }
+  .nav--hero .lang:hover { box-shadow: inset 0 0 0 1px #fff; }
+}
+/* entrance with the header */
+.js .lang { animation: langIn .7s var(--ease) .15s both; }
+@keyframes langIn { from { opacity: 0; transform: translateY(-10px); } }
+/* label swap when the language changes */
+.nav__a.is-sw, .drawer a.is-sw, .talk .btn__label.is-sw { animation: langSw .45s var(--ease); }
+@keyframes langSw { from { opacity: 0; transform: translateY(6px); } }
+html[lang="hi"] .nav__a, html[lang="hi"] .drawer a, html[lang="hi"] .talk .btn__t { font-family: "Mukta", var(--f); }
+@media (max-width: 1100px) { .nav__end { margin-left: 10px; } .nav__end .talk { margin-left: 0; } }
+@media (max-width: 480px) { .nav__end { gap: 6px; margin-left: 6px; } .lang__b { min-width: 32px; padding: 0 6px; font-size: 12.5px; } .lang__b[lang="hi"] { font-size: 14.5px; } .nav .nav__logo, .nav--hero .nav__logo { margin-right: 8px; } .nav--hero .nav__logo .lg, .nav__logo .lg { height: 34px; } }
+@media (prefers-reduced-motion: reduce) { .lang, .lang__thumb, .lang__b { transition: none; animation: none; } .nav__a.is-sw, .drawer a.is-sw, .talk .btn__label.is-sw { animation: none; } }
+
+/* ---- section titles: one size everywhere (64px on desktop, 40px on phones). The hero, the Toppers masthead and card headings are not section titles. ---- */
+:root { --h2: clamp(40px, 6vw, 64px); }
+.h2, .stats__h, .hw__h, .lv__h, .wc__h, .rs__head2 .h2 { font-size: var(--h2); line-height: 1.04; letter-spacing: -.03em; }
+.h2 { max-width: 15em; text-wrap: balance; }
+.gs__h { max-width: 14em; }
+.stats__h { max-width: 18em; }
+@media (min-width: 1000px) { .stats__h { width: auto; } .stats__h .ln { display: inline; white-space: normal; } }
+
+/* ---- section rhythm: one vertical padding and one gap for every section (the hero, the banner carousel and the footer are not sections) ---- */
+:root { --sec-y: clamp(72px, 7vw, 104px); --sec-gap: 24px; --py: var(--sec-y); --pb: var(--sec-y); }
+.band--gap, .sheet, .gs, .bnr, #courses.band--wall { margin-top: var(--sec-gap); }
+#courses.band--wall { padding-top: var(--sec-y); padding-bottom: calc(var(--sec-y) + 24px); }   /* the bottom shelf board casts its shadow below the last row of books */
+#toppers { padding-top: var(--sec-y); padding-bottom: var(--sec-y); }
+#stories.sheet { padding-top: var(--sec-y); padding-bottom: var(--sec-y); }
+.bnr { padding-top: 0; padding-bottom: 0; }
+#faq.faq { margin-bottom: var(--sec-y); }
+
+/* ---- eyebrows: one style everywhere. Brand on light grounds, white on dark ones; Hindi twin, dotted rule and lotus as built in .lbl ---- */
+.lbl { gap: 20px; }
+.lbl .lbl__t { font: 600 14px/1.2 var(--f); letter-spacing: 0; text-transform: none; color: var(--brand); }
+.lbl .lbl__hi { font: 400 17px/1 var(--f-hi); color: var(--brand); border-color: rgba(194, 65, 12, .3); }
+.lbl--w .lbl__t, .lbl--w .lbl__hi, #contact .lbl .lbl__t, #contact .lbl .lbl__hi { color: #fff; border-color: rgba(255, 255, 255, .32); }
+.lbl + .h2, .lbl + .wc__h, .h2--sec { margin-top: 30px; }
+/* the same rhythm for the sections that set their own padding with a stronger selector */
+section#toppers.vrnp { padding-top: var(--sec-y); padding-bottom: var(--sec-y); }
+section#resources.rs { padding-bottom: var(--sec-y); }
+section#visit.lv { padding-top: var(--sec-y); padding-bottom: var(--sec-y); }
+section#bnr.bnr { padding-top: 0; padding-bottom: 0; }
+.band--fac { padding-top: var(--sec-y); }
+.gs { padding-top: var(--sec-y); padding-bottom: var(--sec-y); }
+
+/* ---- Batches: the same centred header as Programmes and Faculty (eyebrow, title, intro, then the "view all" link) ---- */
+#batches > .lbl { justify-content: center; }
+#batches > .lbl > i, #batches > .lbl > .lbl__orn { display: none; }
+#batches > .h2 { margin-left: auto; margin-right: auto; text-align: center; text-wrap: balance; }
+#batches .bhead { flex-direction: column; align-items: center; gap: 18px; margin-bottom: 44px; text-align: center; }
+#batches .bhead .intro { margin-left: auto; margin-right: auto; text-wrap: balance; }
+#batches .cards { padding: 0 12px; }   /* the tilted invitation cards stay inside the page margin */
+
+/* ---- WhatsApp: a fixed contact button, bottom right, above everything; hidden while the intro plays ---- */
+.wa { position: fixed; right: max(20px, env(safe-area-inset-right)); bottom: max(20px, env(safe-area-inset-bottom)); z-index: 60; display: flex; align-items: center; gap: 0; height: 56px; padding: 0; border-radius: 999px; background: #25D366; color: #fff; text-decoration: none; box-shadow: 0 10px 24px -8px rgba(18, 140, 80, .55), 0 2px 6px rgba(0, 0, 0, .12);
+  opacity: 0; transform: translateY(24px) scale(.9); transition: opacity .6s var(--ease), transform .6s var(--spring, cubic-bezier(.34, 1.4, .5, 1)), box-shadow .3s, background-color .3s; }
+.wa.in { opacity: 1; transform: none; }
+html.vrv-lock .wa { opacity: 0; pointer-events: none; }
+.wa__ic { flex: none; display: grid; place-items: center; width: 56px; height: 56px; }
+.wa__ic svg { width: 30px; height: 30px; fill: #fff; transition: transform .45s var(--spring, cubic-bezier(.34, 1.4, .5, 1)); }
+.wa__t { display: inline-grid; max-width: 0; overflow: hidden; white-space: nowrap; font: 600 15px/1 var(--f); letter-spacing: -.01em; transition: max-width .45s var(--ease), padding .45s var(--ease); }
+.wa::before { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: 0 0 0 0 rgba(37, 211, 102, .55); animation: waPulse 2.6s ease-out infinite 1.2s; pointer-events: none; }
+@keyframes waPulse { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, .55); } 70% { box-shadow: 0 0 0 16px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
+.wa:focus-visible { outline: none; box-shadow: 0 0 0 3px #fff, 0 0 0 6px #128C7E, 0 10px 24px -8px rgba(18, 140, 80, .55); }
+.wa:active { transform: scale(.96); }
+@media (hover: hover) and (pointer: fine) {
+  .wa:hover { background: #1EBE5A; box-shadow: 0 16px 30px -10px rgba(18, 140, 80, .6), 0 2px 6px rgba(0, 0, 0, .12); }
+  .wa:hover .wa__t { max-width: 180px; padding-right: 22px; }
+  .wa:hover .wa__ic svg { transform: rotate(-10deg) scale(1.08); }
+}
+@media (max-width: 600px) { .wa { height: 52px; right: 16px; bottom: 16px; } .wa__ic { width: 52px; height: 52px; } .wa__ic svg { width: 28px; height: 28px; } }
+@media (prefers-reduced-motion: reduce) { .wa { opacity: 1; transform: none; transition: none; } .wa::before { animation: none; } .wa__ic svg, .wa__t { transition: none; } }
+
+/* ---- body text: one size, one line height, one colour for running copy; one smaller size for card detail text.
+   Dark grounds (hero, GS, Contact, flagship batch card) keep their own light colours. The Toppers newspaper is its own typographic piece. ---- */
+:root { --body-fs: 16.5px; --body-lh: 1.55; --small-fs: 14.5px; --small-lh: 1.5; }
+.intro, .wc__p, .gs__p, .lv__txt, .lv__contact, .qa p, .dl__p, .sc__p, #contact .intro, #resources.rs > .intro, .contact__l .intro { font-size: var(--body-fs); line-height: var(--body-lh); letter-spacing: -.01em; }
+.intro, .wc__p, .lv__txt, .lv__contact, .qa p, #resources.rs > .intro { color: var(--body); }
+.inv__w, .inv dl, .ra__d, .wc__l, .kc__d, .fc p, .hp__b { font-size: var(--small-fs); line-height: var(--small-lh); }
+.inv__w, .inv dl, .ra__d, .wc__l { color: var(--body); }
+.inv--hi .inv__w, .inv--hi dl { color: rgba(255, 255, 255, .88); }
+#resources.rs .ra__d { font-size: var(--small-fs); line-height: var(--small-lh); color: var(--body); }
+.inv dd, .inv dt { color: var(--body); }
+.inv--hi dd, .inv--hi dt { color: rgba(255, 255, 255, .88); }
+.inv dd { line-height: var(--small-lh); }

@@ -23,7 +23,7 @@ html.lenis, html.lenis body { height: auto; }
 .ln i { display: block; font-style: normal; will-change: transform; }
 
 .vp__side { position: relative; overflow: hidden; display: flex; align-items: flex-end; justify-content: center; padding: clamp(12px, 1.4vw, 22px); }
-.vp__ph { position: absolute; inset: 0; will-change: transform; background: var(--tone) url(../assets/img/v28/samvidhan-scene.jpg) 50% 50% / cover; background-blend-mode: multiply; transform: translate3d(0, var(--iy, 0px), 0) scale(1.2876); }
+.vp__ph { position: absolute; inset: 0; will-change: transform; background: var(--tone) url(../assets/img/photos/samvidhan-scene.jpg) 50% 50% / cover; background-blend-mode: multiply; transform: translate3d(0, var(--iy, 0px), 0) scale(1.2876); }
 .vp__side--haldi { --tone: #F2A24A; background: #E8812F; }
 .vp__side--madder { --tone: #B14A33; background: #7A2414; }
 .vp__side--peacock { --tone: #4F8CA8; background: #1F4A63; }
@@ -57,7 +57,7 @@ html.lenis, html.lenis body { height: auto; }
 .hp__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 300px; }
 .hp__li { position: sticky; top: 0; height: 220svh; }
 .hp__card { position: relative; height: calc(100svh - 40px); margin: 20px; box-sizing: border-box; overflow: hidden; border-radius: 16px; background: #F0E4CF; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: clamp(24px, 4vw, 80px); padding: 0 clamp(28px, 5.5vw, 100px); box-shadow: 0 -20px 50px -30px rgba(60, 20, 0, .35); }
-.hp__jaali { position: absolute; inset: 0; background: url(../assets/img/v44/jaali-ink.svg) 0 0 / 44px 44px; opacity: .1; pointer-events: none; }
+.hp__jaali { position: absolute; inset: 0; background: url(../assets/img/patterns/jaali-ink.svg) 0 0 / 44px 44px; opacity: .1; pointer-events: none; }
 .hp__txt, .hp__vis { position: relative; will-change: transform, opacity; }
 .hp__txt { max-width: 460px; }
 .hp__txt .mono { color: #5A4A40; }

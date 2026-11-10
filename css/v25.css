@@ -53,7 +53,7 @@ ul, ol { list-style: none; }
 .dots { background: #fff radial-gradient(rgba(194, 65, 12, .12) 1px, transparent 1.5px) 0 0 / 24px 24px; }
 .band--gap { margin-top: 12px; }
 
-.jaali { position: absolute; inset: 0; pointer-events: none; background: url(../assets/img/v21/jaali-a.png) 0 0 / 56px 56px repeat; }
+.jaali { position: absolute; inset: 0; pointer-events: none; background: url(../assets/img/patterns/jaali-a.png) 0 0 / 56px 56px repeat; }
 
 /* section label line: mono label | Hindi | rule | lotus */
 .lbl { display: flex; align-items: center; gap: 20px; }
@@ -233,7 +233,7 @@ ul, ol { list-style: none; }
 
 /* ---------- programmes ---------- */
 .band--sand { margin-top: 24px; padding: 0; background: var(--sand); border-radius: 0 0 28px 28px; }
-.band--sand .jaali { opacity: .07; background-image: url(../assets/img/v21/jaali-b.png); }
+.band--sand .jaali { opacity: .07; background-image: url(../assets/img/patterns/jaali-b.png); }
 .band__in { position: relative; padding: var(--py) var(--px) clamp(64px, 6.2vw, 120px); }
 .band--sand .lbl__hi { border-color: rgba(255, 255, 255, .32); }
 .pgrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: 44px; }
@@ -374,7 +374,7 @@ ul, ol { list-style: none; }
 /* ---------- contact ---------- */
 /* sand sheet with concentric rings behind a counsellor portrait (Figma 444:42160) */
 .contact { border: 1px solid #F2E2CF; background: #FDF3E7; }
-.contact::before { content: ""; position: absolute; left: calc(var(--px) - 40px); bottom: 0; width: 1136px; height: 630px; background: url(../assets/img/v21/rings.svg) 0 0 / 100% 100% no-repeat; pointer-events: none; }
+.contact::before { content: ""; position: absolute; left: calc(var(--px) - 40px); bottom: 0; width: 1136px; height: 630px; background: url(../assets/img/patterns/rings.svg) 0 0 / 100% 100% no-repeat; pointer-events: none; }
 .contact__in { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 600px); gap: 40px 56px; padding: var(--pb) var(--px) 0; }
 .contact__l { display: flex; flex-direction: column; }
 .contact__l .intro { max-width: 520px; }
@@ -387,7 +387,7 @@ ul, ol { list-style: none; }
 .field label small { font-weight: 400; font-size: 12.5px; color: var(--muted); }
 .field input, .field select, .tel { width: 100%; height: 53px; padding: 0 16px; border: 1px solid #E6E6E6; border-radius: 16px; background: #FAFAFA; font-weight: 500; font-size: 14px; color: var(--ink); outline: none; transition: border-color .2s, background-color .2s, box-shadow .2s; }
 .field input::placeholder { color: #737373; }
-.field select { appearance: none; padding-right: 44px; background: #FAFAFA url(../assets/img/v21/chev-down.svg) right 16px center / 18px 18px no-repeat; cursor: pointer; }
+.field select { appearance: none; padding-right: 44px; background: #FAFAFA url(../assets/img/icons/chev-down.svg) right 16px center / 18px 18px no-repeat; cursor: pointer; }
 .field select:invalid { color: #737373; }
 .field select option { color: var(--ink); }
 .tel { display: flex; align-items: center; gap: 8px; }
@@ -573,17 +573,17 @@ body { font-size: 17px; letter-spacing: 0; background: var(--ivory); }
 .dots { background-color: var(--ivory); }
 
 /* ---------- shared ---------- */
-.kinari { display: block; height: 30px; background: url(../assets/img/v22/kinari.svg) 0 0 / 40px 30px repeat-x; }
+.kinari { display: block; height: 30px; background: url(../assets/img/patterns/kinari.svg) 0 0 / 40px 30px repeat-x; }
 .pat { position: absolute; inset: 0; pointer-events: none; background-repeat: repeat; }
-.pat--phool { background-image: url(../assets/img/v22/phool-brand.svg); background-size: 56px 56px; opacity: .06; }
-.pat--buta { background-image: url(../assets/img/v22/buta.svg); background-size: 64px 64px; opacity: .08; }
+.pat--phool { background-image: url(../assets/img/patterns/phool-brand.svg); background-size: 56px 56px; opacity: .06; }
+.pat--buta { background-image: url(../assets/img/patterns/buta.svg); background-size: 64px 64px; opacity: .08; }
 
 /* section label: v21's line, set in Mukta; the rule is a string of beads ending in the lotus */
 .lbl__t { font: 600 14px/1.2 var(--f); text-transform: none; letter-spacing: 0; }
 .lbl__hi { font-size: 17px; line-height: 1; color: var(--brand); }
 .lbl i { height: 6px; background: radial-gradient(circle, var(--off) 1.6px, transparent 2.2px) 0 50% / 12px 6px repeat-x; }
-.lbl__orn { flex: none; width: 36px; height: 22px; background: url(../assets/img/v21/lotus.svg) center / contain no-repeat; }
-.lbl__orn--w { background-image: url(../assets/img/v21/lotus-white.svg); }
+.lbl__orn { flex: none; width: 36px; height: 22px; background: url(../assets/img/brand/lotus.svg) center / contain no-repeat; }
+.lbl__orn--w { background-image: url(../assets/img/brand/lotus-white.svg); }
 .lbl--w .lbl__hi { color: var(--marigold); }
 .lbl--w i { background: radial-gradient(circle, rgba(255, 255, 255, .55) 1.6px, transparent 2.2px) 0 50% / 12px 6px repeat-x; }
 
@@ -598,11 +598,11 @@ body { font-size: 17px; letter-spacing: 0; background: var(--ivory); }
 .intro, .kc__d, .rc p, .pc__d, .bc__w { font-size: 16.5px; }
 
 /* ---------- hero: v21's gradient, block-print, jharokha drawing ---------- */
-.hero__pat { position: absolute; inset: 0; background: url(../assets/img/v22/buta.svg) 0 0 / 64px 64px; opacity: .07; pointer-events: none; }
+.hero__pat { position: absolute; inset: 0; background: url(../assets/img/patterns/buta.svg) 0 0 / 64px 64px; opacity: .07; pointer-events: none; }
 .hero__hi { font: 400 clamp(19px, 1.4vw, 25px)/1.3 var(--f-hi); color: #FFD48A; margin-bottom: 14px; }
-.hero__jharokha { position: absolute; right: clamp(24px, 6vw, 120px); top: clamp(110px, 8vw, 150px); width: clamp(260px, 25vw, 470px); aspect-ratio: 100 / 130; background: url(../assets/img/v22/arch-line-130.svg) 0 0 / 100% 100%; opacity: .75; pointer-events: none; }
-.hero__jharokha::before { content: ""; position: absolute; inset: 18px; background: url(../assets/img/v22/arch-line-130.svg) 0 0 / 100% 100%; opacity: .5; }
-.hero__mandala { position: absolute; left: 12%; right: 12%; top: 22%; aspect-ratio: 1; background: url(../assets/img/v22/mandala-gold.svg) center / contain no-repeat; opacity: .8; }
+.hero__jharokha { position: absolute; right: clamp(24px, 6vw, 120px); top: clamp(110px, 8vw, 150px); width: clamp(260px, 25vw, 470px); aspect-ratio: 100 / 130; background: url(../assets/img/patterns/arch-line-130.svg) 0 0 / 100% 100%; opacity: .75; pointer-events: none; }
+.hero__jharokha::before { content: ""; position: absolute; inset: 18px; background: url(../assets/img/patterns/arch-line-130.svg) 0 0 / 100% 100%; opacity: .5; }
+.hero__mandala { position: absolute; left: 12%; right: 12%; top: 22%; aspect-ratio: 1; background: url(../assets/img/patterns/mandala-gold.svg) center / contain no-repeat; opacity: .8; }
 .hero__foot { padding-bottom: 0; }
 .hero__foot .kinari { margin-top: 26px; }
 .hero__foot > p, .hero__foot .marq { position: relative; }
@@ -616,7 +616,7 @@ body { font-size: 17px; letter-spacing: 0; background: var(--ivory); }
 
 /* ---------- results: highlight card gets the buta print ---------- */
 .kc--hi { position: relative; overflow: hidden; }
-.kc--hi::before, .bc--hi::before { content: ""; position: absolute; inset: 0; background: url(../assets/img/v22/buta.svg) 0 0 / 64px 64px; opacity: .09; pointer-events: none; }
+.kc--hi::before, .bc--hi::before { content: ""; position: absolute; inset: 0; background: url(../assets/img/patterns/buta.svg) 0 0 / 64px 64px; opacity: .09; pointer-events: none; }
 .kc--hi > *, .bc--hi > * { position: relative; }
 .bc--hi { position: relative; overflow: hidden; }
 .kc__lbl, .bc__d small, .chip { text-transform: none; font-size: 13px; }
@@ -633,14 +633,14 @@ body { font-size: 17px; letter-spacing: 0; background: var(--ivory); }
 
 /* ---------- GS: v21's orange split, buta print, arch photo on peacock ---------- */
 .gs { grid-template-rows: auto 1fr; }
-.kinari--gs { grid-column: 1 / -1; background-image: url(../assets/img/v22/kinari-teal.svg); }
+.kinari--gs { grid-column: 1 / -1; background-image: url(../assets/img/patterns/kinari-teal.svg); }
 .gs > .pat { top: 30px; }
 .gs__in { grid-row: 2; }
 .gs__fig { grid-row: 2; display: grid; place-items: center; padding: 48px clamp(24px, 4vw, 72px); }
 .gs__fig > span { position: relative; }
 .gs__line, .gs__img { position: absolute !important; }
 .gs__fig { position: relative; }
-.gs__line { inset: 34px clamp(10px, 3.3vw, 58px); background: url(../assets/img/v22/arch-line-130.svg) 0 0 / 100% 100%; }
+.gs__line { inset: 34px clamp(10px, 3.3vw, 58px); background: url(../assets/img/patterns/arch-line-130.svg) 0 0 / 100% 100%; }
 .gs__img { inset: 48px clamp(24px, 4vw, 72px); -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 130%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M0 130 L0 57.35 A10.48 10.48 0 0 1 1.67 44.02 A10.48 10.48 0 0 1 6.58 31.52 A10.48 10.48 0 0 1 14.43 20.61 A10.48 10.48 0 0 1 24.72 11.98 A10.48 10.48 0 0 1 36.83 6.15 A47.02 47.02 0 0 1 50 3.5 A47.02 47.02 0 0 1 63.17 6.15 A10.48 10.48 0 0 1 75.28 11.98 A10.48 10.48 0 0 1 85.57 20.61 A10.48 10.48 0 0 1 93.42 31.52 A10.48 10.48 0 0 1 98.33 44.02 A10.48 10.48 0 0 1 100 57.35 L100 130Z M48 6.5 L50 0.3 L52 6.5Z%22 fill=%22%23000%22/%3E%3C/svg%3E") 0 0 / 100% 100%; mask: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 130%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M0 130 L0 57.35 A10.48 10.48 0 0 1 1.67 44.02 A10.48 10.48 0 0 1 6.58 31.52 A10.48 10.48 0 0 1 14.43 20.61 A10.48 10.48 0 0 1 24.72 11.98 A10.48 10.48 0 0 1 36.83 6.15 A47.02 47.02 0 0 1 50 3.5 A47.02 47.02 0 0 1 63.17 6.15 A10.48 10.48 0 0 1 75.28 11.98 A10.48 10.48 0 0 1 85.57 20.61 A10.48 10.48 0 0 1 93.42 31.52 A10.48 10.48 0 0 1 98.33 44.02 A10.48 10.48 0 0 1 100 57.35 L100 130Z M48 6.5 L50 0.3 L52 6.5Z%22 fill=%22%23000%22/%3E%3C/svg%3E") 0 0 / 100% 100%; }
 .gs__fig .gs__img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .gs__h span { color: #FFD48A; }
@@ -659,22 +659,22 @@ body { font-size: 17px; letter-spacing: 0; background: var(--ivory); }
 /* ---------- stories / FAQ / resources ---------- */
 .qc__q { font: 400 18px/1.5 var(--f-d); color: var(--ink); }
 .qa { position: relative; overflow: hidden; background: var(--teal); }
-.qa::before { content: ""; position: absolute; inset: 0; background: url(../assets/img/v22/buta.svg) 0 0 / 64px 64px; opacity: .05; pointer-events: none; }
+.qa::before { content: ""; position: absolute; inset: 0; background: url(../assets/img/patterns/buta.svg) 0 0 / 64px 64px; opacity: .05; pointer-events: none; }
 .qa > * { position: relative; }
 .qa p { color: #DCE7EC; }
 .ac { position: relative; overflow: hidden; padding-top: 34px; }
-.ac::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 15px; background: url(../assets/img/v22/kinari.svg) 0 0 / 20px 15px repeat-x; }
+.ac::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 15px; background: url(../assets/img/patterns/kinari.svg) 0 0 / 20px 15px repeat-x; }
 .more > .lbl__t { font-size: 15px; }
 
 /* ---------- contact: rangoli mandala instead of the rings ---------- */
 .contact::before { display: none; }
-.contact__mandala { position: absolute; left: calc(var(--px) - 20px); bottom: -170px; width: 600px; height: 600px; background: url(../assets/img/v22/mandala.svg) 0 0 / contain no-repeat; pointer-events: none; }
+.contact__mandala { position: absolute; left: calc(var(--px) - 20px); bottom: -170px; width: 600px; height: 600px; background: url(../assets/img/patterns/mandala.svg) 0 0 / contain no-repeat; pointer-events: none; }
 .contact__l { position: relative; }
 .contact__mandala { left: -20px; }
 
 /* ---------- locations ---------- */
 .loc__i { position: relative; overflow: hidden; }
-.loc__i::before { content: ""; position: absolute; inset: 0; background: url(../assets/img/v22/buta.svg) 0 0 / 64px 64px; opacity: .05; pointer-events: none; }
+.loc__i::before { content: ""; position: absolute; inset: 0; background: url(../assets/img/patterns/buta.svg) 0 0 / 64px 64px; opacity: .05; pointer-events: none; }
 .loc__i > * { position: relative; }
 .loc__i > p { font: 600 26px/1.1 var(--f-d); text-transform: none; letter-spacing: 0; color: var(--amber); }
 .loc__i dt { text-transform: none; font-size: 13.5px; }
@@ -750,8 +750,8 @@ body { font-size: 17px; letter-spacing: 0; background: var(--ivory); }
 @media (prefers-reduced-motion: reduce) { .hl { animation: none !important; translate: none; } }
 
 /* ---------- section eyebrows: a buta (paisley) instead of the lotus ---------- */
-.lbl__orn { background-image: url(../assets/img/v25/buta-orn.svg); }
-.lbl__orn--w { background-image: url(../assets/img/v25/buta-orn-white.svg); }
+.lbl__orn { background-image: url(../assets/img/patterns/buta-orn.svg); }
+.lbl__orn--w { background-image: url(../assets/img/patterns/buta-orn-white.svg); }
 /* General Studies: just "Our flagship programme" in the eyebrow, and a quieter print */
 .gs .lbl__hi, .gs .lbl > i, .gs .lbl__orn { display: none; }
 .gs > .pat { opacity: .035; }
@@ -853,7 +853,7 @@ body { font-size: 17px; letter-spacing: 0; background: var(--ivory); }
 /* the reference's background image: the Qutub Minar and Alai Darwaza cut-out, full height, anchored
    bottom left, as a faint ghost (12%) behind the text, exactly as in its dusk scene */
 .gs::before { content: ""; position: absolute; z-index: 0; left: 0; bottom: 0; height: 100%; aspect-ratio: 720 / 1239; pointer-events: none; opacity: .07;
-  background: url(../assets/img/v25/qutub-monument.webp) left bottom / cover no-repeat;
+  background: url(../assets/img/photos/qutub-monument.webp) left bottom / cover no-repeat;
   /* the photo's sky is opaque, so feather its right and top edges into the dusk instead of a hard cut */
   -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 22%, transparent 62%), linear-gradient(0deg, #000 0%, #000 55%, transparent 96%);
   -webkit-mask-composite: source-in;
@@ -1060,9 +1060,9 @@ body { font-size: 17px; letter-spacing: 0; background: var(--ivory); }
 }
 
 /* ---------- framed cards (results, why) ---------- */
-.kc, .rc { border: 16px solid transparent; border-image: url(../assets/img/v22/frame.svg) 16 stretch; border-radius: 0; background: #fff padding-box; box-shadow: none; }
+.kc, .rc { border: 16px solid transparent; border-image: url(../assets/img/patterns/frame.svg) 16 stretch; border-radius: 0; background: #fff padding-box; box-shadow: none; }
 .kc { padding: 14px 12px 12px; min-height: 0; }
-.kc--hi { border-image-source: url(../assets/img/v22/frame.svg); background: var(--brand) url(../assets/img/v22/buta.svg) 0 0 / 64px 64px padding-box; }
+.kc--hi { border-image-source: url(../assets/img/patterns/frame.svg); background: var(--brand) url(../assets/img/patterns/buta.svg) 0 0 / 64px 64px padding-box; }
 .kc--hi::before { background: var(--brand); opacity: .9; }
 .kc__lbl { font: 600 14px/1.2 var(--f); text-transform: none; color: var(--muted); }
 .kc--hi .kc__lbl { color: var(--marigold); }
@@ -1105,8 +1105,8 @@ body { font-size: 17px; letter-spacing: 0; background: var(--ivory); }
 .pcd__in { z-index: 1; }
 .pcd__clipbox--f { z-index: 2; }
 .pcd__clip { position: absolute; left: calc(15px + (100% - 26px) * .56 * .07); top: -11px; width: 19px; height: 56px; rotate: -8deg; background: center / contain no-repeat; }
-.pcd__clip--b { background-image: url(../assets/img/v25/clip.svg); filter: drop-shadow(.5px 1.5px .8px rgba(40, 20, 5, .35)); }
-.pcd__clip--f { background-image: url(../assets/img/v25/clip-front.svg); filter: drop-shadow(1px 1.5px 1px rgba(40, 20, 5, .38)); }
+.pcd__clip--b { background-image: url(../assets/img/patterns/clip.svg); filter: drop-shadow(.5px 1.5px .8px rgba(40, 20, 5, .35)); }
+.pcd__clip--f { background-image: url(../assets/img/patterns/clip-front.svg); filter: drop-shadow(1px 1.5px 1px rgba(40, 20, 5, .38)); }
 
 .pcd__stamp { position: absolute; z-index: 1; top: 10px; right: 10px; display: grid; place-content: center; justify-items: center; width: 62px; height: 74px; color: #fff; filter: drop-shadow(0 1px 1.5px rgba(70, 35, 10, .25)); transition: rotate .5s var(--spring); }
 .pcd:hover .pcd__stamp { rotate: 4deg; }
@@ -1147,14 +1147,14 @@ body { font-size: 17px; letter-spacing: 0; background: var(--ivory); }
 .pc__pat { position: absolute; inset: 0; z-index: 1; opacity: .17; background-repeat: repeat; background-position: 0 0; transition: background-position 2.4s cubic-bezier(.2, .7, .2, 1); pointer-events: none; }
 .pc:hover .pc__pat { background-position: 18px 12px; }
 .pc__art .el { z-index: 2; } .pc__art .hi { z-index: 3; }
-.pc__pat--buta { background-image: url(../assets/img/v22/buta.svg); background-size: 64px 64px; opacity: .14; }
-.pc__pat--phool { background-image: url(../assets/img/v22/phool.svg); background-size: 48px 48px; opacity: .1; }
-.pc__pat--leheriya { background-image: url(../assets/img/v22/leheriya.svg); background-size: 44px 44px; }
-.pc__pat--star { background-image: url(../assets/img/v22/star.svg); background-size: 44px 44px; opacity: .12; }
-.pc__pat--jaali { background-image: url(../assets/img/v25/jaali.svg); background-size: 36px 36px; }
-.pc__pat--bandhani { background-image: url(../assets/img/v25/bandhani.svg); background-size: 40px 40px; }
-.pc__pat--scallop { background-image: url(../assets/img/v25/scallop.svg); background-size: 28px 28px; }
-.pc__pat--chevron { background-image: url(../assets/img/v25/chevron.svg); background-size: 32px 24px; opacity: .2; }
+.pc__pat--buta { background-image: url(../assets/img/patterns/buta.svg); background-size: 64px 64px; opacity: .14; }
+.pc__pat--phool { background-image: url(../assets/img/patterns/phool.svg); background-size: 48px 48px; opacity: .1; }
+.pc__pat--leheriya { background-image: url(../assets/img/patterns/leheriya.svg); background-size: 44px 44px; }
+.pc__pat--star { background-image: url(../assets/img/patterns/star.svg); background-size: 44px 44px; opacity: .12; }
+.pc__pat--jaali { background-image: url(../assets/img/patterns/jaali.svg); background-size: 36px 36px; }
+.pc__pat--bandhani { background-image: url(../assets/img/patterns/bandhani.svg); background-size: 40px 40px; }
+.pc__pat--scallop { background-image: url(../assets/img/patterns/scallop.svg); background-size: 28px 28px; }
+.pc__pat--chevron { background-image: url(../assets/img/icons/chevron.svg); background-size: 32px 24px; opacity: .2; }
 @media (prefers-reduced-motion: reduce) { .pc__pat { transition: none; } }
 
 /* ---------- why: centred, medallion icons ---------- */
@@ -1168,7 +1168,7 @@ body { font-size: 17px; letter-spacing: 0; background: var(--ivory); }
 /* ---------- faculty: arch frames ---------- */
 .fc { text-align: center; }
 .fc__ph { position: relative; padding: 8px; overflow: visible; }
-.fc__ph::before { content: ""; position: absolute; inset: 0; background: url(../assets/img/v22/arch-line-b-100.svg) 0 0 / 100% 100%; opacity: .5; }
+.fc__ph::before { content: ""; position: absolute; inset: 0; background: url(../assets/img/patterns/arch-line-b-100.svg) 0 0 / 100% 100%; opacity: .5; }
 .fc h3 { margin-top: 14px; font-size: 21px; font-weight: 600; }
 .fc p { font-size: 15.5px; }
 /* "View on LinkedIn": rises over the foot of the photo on hover or focus; always shown on touch screens */
@@ -1188,12 +1188,12 @@ body { font-size: 17px; letter-spacing: 0; background: var(--ivory); }
 .ac { padding: 36px 22px 22px; border-radius: 4px; background: #fff; box-shadow: inset 0 0 0 1px var(--line); }
 .ac h3 { font-size: 23px; font-weight: 600; }
 /* each card gets its own border strip and colour: Prelims the saffron kinari, Mains a brown leheriya wave, Quest a haldi phool-bel */
-.agrid .ac:nth-child(2)::before { background-image: url(../assets/img/v25/strip-lahar.svg); }
-.agrid .ac:nth-child(3)::before { background-image: url(../assets/img/v25/strip-bel.svg); }
+.agrid .ac:nth-child(2)::before { background-image: url(../assets/img/patterns/strip-lahar.svg); }
+.agrid .ac:nth-child(3)::before { background-image: url(../assets/img/patterns/strip-bel.svg); }
 .ac li a { font-size: 16px; border-color: var(--line); }
 
 /* ---------- counsellor form: invitation frame ---------- */
-.form { border-radius: 0; border: 16px solid transparent; border-image: url(../assets/img/v22/frame.svg) 16 stretch; padding: 14px 14px 12px; box-shadow: none; background: #fff padding-box; }
+.form { border-radius: 0; border: 16px solid transparent; border-image: url(../assets/img/patterns/frame.svg) 16 stretch; padding: 14px 14px 12px; box-shadow: none; background: #fff padding-box; }
 
 /* ---------- FAQ: light panels instead of v23's dark teal ---------- */
 .qa { background: #fff; color: var(--ink); border-radius: 4px; box-shadow: inset 0 0 0 1px var(--line); border-left: 3px solid transparent; transition: border-color .3s, box-shadow .3s; }
@@ -1208,7 +1208,7 @@ body { font-size: 17px; letter-spacing: 0; background: var(--ivory); }
 .chip { height: 26px; border-radius: 2px; border-color: var(--line-2); background: var(--ivory); font: 600 12px/1 var(--f); text-transform: none; color: var(--brand); }
 
 /* ---------- GS: deep saffron behind the arch photo instead of teal ---------- */
-.kinari--gs { background-image: url(../assets/img/v22/kinari.svg); }
+.kinari--gs { background-image: url(../assets/img/patterns/kinari.svg); }
 
 /* ---------- batches: v24 invitation cards ---------- */
 .cards { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(14px, 2vw, 28px); perspective: 1200px; }
@@ -1292,7 +1292,7 @@ body { font-size: 17px; letter-spacing: 0; background: var(--ivory); }
 #courses.is-deal > .pat { display: none; }
 #courses.is-deal .band__in { isolation: isolate; min-height: calc(100vh + var(--stick, 0px)); }
 #courses.is-deal .band__in::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .03;
-  background: url(../assets/img/v22/phool-brand.svg) 0 0 / 56px 56px repeat; }
+  background: url(../assets/img/patterns/phool-brand.svg) 0 0 / 56px 56px repeat; }
 #courses.is-deal .pbk__b { transition: opacity .6s ease; }
 #courses.is-deal .pbk:not(.is-landed) .pbk__b { opacity: 0; visibility: hidden; transition: opacity .2s ease, visibility 0s .2s; }   /* each caption arrives as its book lands */
 

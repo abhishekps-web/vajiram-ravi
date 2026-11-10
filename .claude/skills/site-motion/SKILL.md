@@ -11,14 +11,14 @@ The client requirement: **nothing on this site appears or responds without motio
 
 | What | Required motion | Use |
 |---|---|---|
-| Section | Entrance as it scrolls in, and the scroll-focus fade | `.fx` (add the section id to the `MAP` in `js/v49.js`), or the `#toppers`-style `--f` cover if it slides over the previous section |
+| Section | Entrance as it scrolls in, and the scroll-focus fade | `.fx` (add the section id to the `MAP` in `js/page-motion.js`), or the `#toppers`-style `--f` cover if it slides over the previous section |
 | Heading / kicker / paragraph / button row | Reveal on scroll, staggered top to bottom | `.rv` + `style="--d:.05s"`, `.15s`, `.25s` … |
-| Grid / list of cards | Children rise in one by one | `.rise` on the grid (children get `--i`), or add the grid selector to the `.rise` list in `js/v49-base.js` |
-| Image / photo | Hover: eases in (`scale(1.04–1.06)` over .7s `--ease`), inside an `overflow: hidden` frame | see the topper cards in `css/np-toppers.css` (end of file) |
+| Grid / list of cards | Children rise in one by one | `.rise` on the grid (children get `--i`), or add the grid selector to the `.rise` list in `js/content.js` |
+| Image / photo | Hover: eases in (`scale(1.04–1.06)` over .7s `--ease`), inside an `overflow: hidden` frame | see the topper cards in `css/toppers.css` (end of file) |
 | Card | Hover: one accent (rule sweep, lift ≤ 6px, or seal/icon turn), never more than two effects | topper cards: brand bar sweeps along the caption rule |
-| Button / CTA | Rolling label + arrow swap | site buttons: classes `.bt .pbtn .talk .vbtn .inv__reg` are auto-enhanced by `js/v49.js`; v5 pill: `.rs-btn` markup (two `.rs-btn-t`, two arrow svgs) |
+| Button / CTA | Rolling label + arrow swap | site buttons: classes `.bt .pbtn .talk .vbtn .inv__reg` are auto-enhanced by `js/page-motion.js`; v5 pill: `.rs-btn` markup (two `.rs-btn-t`, two arrow svgs) |
 | Link / tab / chip | Hover + `:focus-visible` state (colour or underline draw), 0.2–0.3s | `.rs-yr-chips button`, `.rs-np-nav a` |
-| Content rendered later by JS (tabs, year views, dialogs) | Same reveals; `.rv` is collected once at load (`js/v45.js`), so add `.in` yourself or animate with a class toggled after insert | |
+| Content rendered later by JS (tabs, year views, dialogs) | Same reveals; `.rv` is collected once at load (`js/scroll.js`), so add `.in` yourself or animate with a class toggled after insert | |
 | Counters / numbers | Count up or rise when first in view (optional, for stat blocks) | |
 
 ## 2. Motion tokens: use these, do not invent new curves

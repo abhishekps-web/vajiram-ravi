@@ -12,7 +12,7 @@
 
 /* ---------- hero ---------- */
 .dl { position: relative; height: 100svh; min-height: 680px; max-height: 1000px; overflow: hidden; color: #fff; background: #3a1d0c; }
-.dl__bg { position: absolute; inset: -4% 0; background: linear-gradient(90deg, rgba(40, 16, 4, .78) 0%, rgba(40, 16, 4, .42) 46%, rgba(40, 16, 4, .08) 78%), url(../assets/img/v28/samvidhan-scene.jpg) 50% 60% / cover; transform: translate3d(0, var(--py, 0px), 0) scale(var(--sc, 1.06)); transition: transform .12s linear; will-change: transform; }
+.dl__bg { position: absolute; inset: -4% 0; background: linear-gradient(90deg, rgba(40, 16, 4, .78) 0%, rgba(40, 16, 4, .42) 46%, rgba(40, 16, 4, .08) 78%), url(../assets/img/photos/samvidhan-scene.jpg) 50% 60% / cover; transform: translate3d(0, var(--py, 0px), 0) scale(var(--sc, 1.06)); transition: transform .12s linear; will-change: transform; }
 .dl__grid { position: absolute; inset: 0; pointer-events: none;
   background:
     linear-gradient(rgba(255, 255, 255, .3), rgba(255, 255, 255, .3)) 67% 0 / 1px 100% no-repeat,
@@ -24,8 +24,8 @@
 .dl__v { margin: 8px 0 0; font: 600 14px/1.25 var(--f); color: #fff; }
 .dl__cell--a { left: 67%; width: 18%; top: 0; height: 30%; display: flex; flex-direction: column; justify-content: flex-end; }
 .dl__cell--o { left: 67%; width: 18%; top: 30%; height: 40%; background: linear-gradient(160deg, #FF8A1F 0%, #F26A0F 55%, #FFA13A 100%); display: grid; place-items: center; overflow: hidden; }
-.dl__cell--o::before { content: ""; position: absolute; inset: 0; background: url(../assets/img/v25/jaali.svg) 0 0 / 36px 36px; opacity: .22; }
-.dl__lotus { position: relative; width: 56px; height: 36px; background: url(../assets/img/v21/lotus-white.svg) center / contain no-repeat; opacity: .9; margin-bottom: 42px; }
+.dl__cell--o::before { content: ""; position: absolute; inset: 0; background: url(../assets/img/patterns/jaali.svg) 0 0 / 36px 36px; opacity: .22; }
+.dl__lotus { position: relative; width: 56px; height: 36px; background: url(../assets/img/brand/lotus-white.svg) center / contain no-repeat; opacity: .9; margin-bottom: 42px; }
 .dl__hi { position: absolute; bottom: 18px; left: 0; right: 0; text-align: center; font: 600 clamp(24px, 2.4vw, 40px)/1 var(--f-hi); color: #fff; }
 .dl__cell--b { left: 85%; width: 15%; top: 50%; height: 20%; display: flex; flex-direction: column; justify-content: flex-end; }
 .dl__bar { margin: 10px 0 0; display: flex; gap: 3px; width: 100px; } .dl__bar i { display: block; height: 7px; flex: 1; background: #fff; } .dl__bar i + i { background: rgba(255, 255, 255, .35); }
@@ -64,7 +64,7 @@
 .vp__side--madder { background: linear-gradient(170deg, var(--madder-a), var(--madder-b)); }
 .vp__side--peacock { background: linear-gradient(170deg, var(--peacock-a), var(--peacock-b)); }
 .vp__side--plain { background: transparent; }
-.vp__jaali { position: absolute; inset: 0; background: url(../assets/img/v25/jaali.svg) 0 0 / 40px 40px; opacity: .16; pointer-events: none; }
+.vp__jaali { position: absolute; inset: 0; background: url(../assets/img/patterns/jaali.svg) 0 0 / 40px 40px; opacity: .16; pointer-events: none; }
 .vp__jaali--ink { filter: invert(1) sepia(1) saturate(2) hue-rotate(-15deg); opacity: .08; }
 
 .vp__card { position: relative; width: min(100%, 330px); background: #FFF9F1; border-radius: 10px; overflow: hidden; box-shadow: 0 24px 50px -22px rgba(20, 8, 0, .6), 0 0 0 1px rgba(255, 255, 255, .5) inset; transform: translateY(var(--cy, 40px)); opacity: var(--co, 0); }
@@ -85,8 +85,8 @@
 
 /* ---------- how it works: full-bleed haldi, centred serif, rising cards ---------- */
 .hw { position: relative; overflow: hidden; padding: clamp(90px, 10vw, 160px) clamp(20px, 5.5vw, 100px) clamp(70px, 8vw, 120px); color: #fff; text-align: center; background: #B9611F; }
-.hw__bg { position: absolute; inset: -6% 0; background: linear-gradient(180deg, rgba(150, 70, 14, .55), rgba(110, 44, 8, .78)), url(../assets/img/v28/samvidhan-scene.jpg) 50% 40% / cover; transform: translate3d(0, var(--hy, 0px), 0); will-change: transform; }
-.hw::before { content: ""; position: absolute; inset: 0; z-index: 1; background: url(../assets/img/v25/jaali.svg) 0 0 / 48px 48px; opacity: .08; pointer-events: none; }
+.hw__bg { position: absolute; inset: -6% 0; background: linear-gradient(180deg, rgba(150, 70, 14, .55), rgba(110, 44, 8, .78)), url(../assets/img/photos/samvidhan-scene.jpg) 50% 40% / cover; transform: translate3d(0, var(--hy, 0px), 0); will-change: transform; }
+.hw::before { content: ""; position: absolute; inset: 0; z-index: 1; background: url(../assets/img/patterns/jaali.svg) 0 0 / 48px 48px; opacity: .08; pointer-events: none; }
 .hw__in, .hw__cards { position: relative; z-index: 2; }
 .hw__k { display: inline-flex; gap: 12px; align-items: baseline; color: #fff; }
 .hw__k span { font: 600 17px/1 var(--f-hi); letter-spacing: 0; text-transform: none; color: #FFD48A; }
