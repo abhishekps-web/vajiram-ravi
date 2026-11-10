@@ -1700,3 +1700,22 @@ footer.foot { padding-left: 76px; padding-right: 76px; }
   .sm__pill { height: 38px; padding: 0 12px 0 14px; font-size: 14px; }
 }
 @media (prefers-reduced-motion: reduce) { .sm__pill, .sm__pill svg { transition: none; } }
+
+/* Free resources cards: the same 4px corner radius as the Talk to us form card */
+.sm__card, .sm__card::before { border-radius: 4px; }
+.sm__card > a, .sm__card > a:focus-visible { border-radius: 4px; }
+
+/* batch tickets: the same 4px corner radius as the form and resource cards */
+.inv--ticket .inv__frame { border-radius: 4px; }
+.ticket__head::after { border-radius: 2px 2px 0 0; }
+
+/* Free resources cards: the action link in brand orange with a round brand arrow button (white on the orange hover state) */
+.sm__act { color: var(--brand); }
+.sm__act::after { content: ""; flex: none; width: 36px; height: 36px; border-radius: 50%; background: var(--brand) url(../assets/img/icons/arrow-white.svg) center / 16px no-repeat; transition: background-color .35s var(--ease), transform .35s var(--ease); }
+.sm__act:hover::after { transform: translateX(3px); }
+@media (hover: hover) and (pointer: fine) {
+  .sm__card--res:hover .sm__act { color: #fff; }
+  .sm__card--res:hover .sm__act::after { background-color: #fff; background-image: url(../assets/img/icons/arrow-brand.svg); }
+  .sm__act:hover { color: var(--brand); }
+  .sm__card--res:hover .sm__act:hover { color: #fff; }
+}
