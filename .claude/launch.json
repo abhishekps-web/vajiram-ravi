@@ -6,6 +6,12 @@
       "runtimeExecutable": "python",
       "runtimeArgs": ["-m", "http.server", "5178"],
       "port": 5178
+    },
+    {
+      "name": "v5-my-app",
+      "runtimeExecutable": "powershell",
+      "runtimeArgs": ["-NoProfile", "-Command", "Set-Location -LiteralPath 'E:\\workflows\\vajiram&ravi\\apps\\my-app'; node node_modules/next/dist/bin/next dev -p 3000"],
+      "port": 3000
     }
   ]
 }

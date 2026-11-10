@@ -46,6 +46,7 @@
       shift += e;
       const r = 30 * (1 - e);
       p.style.transform = r > .01 ? `rotate(${r.toFixed(3)}deg)` : '';
+      p.style.setProperty('--e', e.toFixed(4));   // css/story.css: the photo settles from a slight zoom as its chapter lands
     });
     track.style.setProperty('--tx', (-shift * 100).toFixed(3) + 'vw');
     const w = lerp(lerp(22, 92, g), SW, m) * W / 100, ht = lerp(lerp(49, 82, g), SH, m) * h / 100;
@@ -81,7 +82,7 @@
     } else {
       spacer.remove();
       stage.removeAttribute('style'); track.removeAttribute('style'); card.removeAttribute('style');
-      panels.forEach(p => { p.style.transform = ''; });
+      panels.forEach(p => { p.style.transform = ''; p.style.removeProperty('--e'); });
     }
   };
 
