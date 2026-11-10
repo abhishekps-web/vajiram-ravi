@@ -10,10 +10,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Geist:wght@500&family=Anek+Devanagari:wght@500&family=Geist+Mono:wght@400&family=Hanken+Grotesk:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300&family=League+Spartan:wght@600;700&family=Mukta:wght@400;500;600;700&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/v49.css?v=159">
-<link rel="stylesheet" href="css/why-choose.css?v=8">
+<link rel="stylesheet" href="css/v49.css?v=160">
+<link rel="stylesheet" href="css/story.css?v=6">
 <link rel="stylesheet" href="css/intro.css?v=2">
-<link rel="stylesheet" href="css/toppers.css?v=25">
+<link rel="stylesheet" href="css/toppers.css?v=30">
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -97,7 +97,15 @@
       </div>
       <p class="gz__ear gz__ear--r"><b class="gz__tag">Results special</b></p>
     </header>
-    <p class="gz__date rv" style="--d:.1s"><span>02 &middot; The results</span><span class="gz__ed"><label for="gzYear">UPSC Civil Services Examination</label><select id="gzYear" class="gz__yr"></select></span><span>Final result</span></p>
+    <div class="gz__date rv" style="--d:.1s"><span>02 &middot; The results</span>
+      <span class="gz__ed" id="gzEd">UPSC Civil Services Examination
+        <button type="button" class="gz__edb" id="gzEdBtn" aria-expanded="false" aria-controls="gzMenu"><b id="gzYearNow">2025</b><span class="sr-only"> edition, change year</span><svg viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg></button>
+        <span class="gz__menu" id="gzMenu" role="group" aria-label="Choose the results year">
+          <span class="gz__menu-k">Choose an edition</span>
+          <span class="gz__menu-list" id="gzYears"></span>
+        </span>
+      </span>
+      <span>Final result</span></div>
 
     <div class="gz__banner">
       <p class="gz__kicker rv" style="--d:.14s" id="gzKick">Union Public Service Commission</p>
@@ -123,13 +131,6 @@
     <section class="gz__roll rv" style="--d:.05s" aria-labelledby="gzRollH">
       <div class="gz__rollh">
         <h3 id="gzRollH">The first ten</h3>
-        <div class="gz__tabs" id="gzTabs" role="group" aria-label="Read the rank holders by rank or by programme">
-          <button type="button" class="gz__tab" aria-pressed="true" data-gz-cat="all">By rank</button>
-          <button type="button" class="gz__tab" aria-pressed="false" data-gz-cat="igp">Interview Guidance</button>
-          <button type="button" class="gz__tab" aria-pressed="false" data-gz-cat="test">Test series</button>
-          <button type="button" class="gz__tab" aria-pressed="false" data-gz-cat="gs">General Studies</button>
-          <button type="button" class="gz__tab" aria-pressed="false" data-gz-cat="opt">Optional</button>
-        </div>
       </div>
       <p class="gz__hint">Select a rank holder to bring their story to the front page.</p>
       <p class="gz__ct" id="gzCount" aria-live="polite"></p>
@@ -144,141 +145,87 @@
   </div>
 </section>
 
-<!-- ============ WHY (why-choose: intro column + two-tone heading, three numbered cards, "by the numbers" strip; css/why-choose.css, js/why-choose.js) ============ -->
-<section class="wc" id="why" aria-labelledby="whyH">
-  <div class="wc__bg" aria-hidden="true">
-    <div class="wc__ph wc__ph--a rv"><img src="assets/img/photos/building.webp" alt="" loading="lazy" decoding="async"></div>
-    <div class="wc__ph wc__ph--b rv" style="--d:.2s"><img src="assets/img/photos/campus.webp" alt="" loading="lazy" decoding="async"></div>
-    <div class="wc__ph wc__ph--c rv" style="--d:.35s"><img src="assets/img/photos/footer-classroom.webp" alt="" loading="lazy" decoding="async"></div>
-  </div>
-  <div class="wc__in">
-    <div class="wc__head">
-      <div class="wc__intro">
-        <p class="wc__p rv" style="--d:.05s">Fifty years of teaching the civil services examination from Old Rajinder Nagar, with programmes built around what the UPSC actually asks.</p>
-        <p class="wc__p rv" style="--d:.15s">Every stage, Foundation to Interview, in the classroom or LIVE-Online, with the same teachers, the same tests and a mentor who keeps your plan on track.</p>
-        <p class="wc__cta rv" style="--d:.25s"><a class="bt bt--brand" href="#contact">Let's talk<span class="sq sq--52 sq--white"><img src="assets/img/icons/arrow-brand.svg" alt="" width="16" height="16"></span></a></p>
+<!-- ============ WHY VAJIRAM & RAVI: a pinned photographic scene (after vajiram-ravi-homepage.vercel.app #campus), carrying the six reasons.
+     The gate photograph grows out of the full-bleed facade, "Why choose us?" splits apart, the card settles bottom-left and six chapters
+     swing in on the scroll. css/story.css, js/story.js (id stays "story": the older #why rules in v25/v49.css would restyle it). Without the
+     pinned stage (narrow, short or reduced motion) it is a stacked list. ============ -->
+<div class="cmp__pin"><!-- holds the scene and the scroll spacer js/story.js adds after it, so the sticky section lets go when its run ends -->
+<section class="cmp" id="story" aria-labelledby="storyH">
+  <div class="cmp__stage">
+    <div class="cmp__bg" aria-hidden="true"><img src="assets/img/photos/building.webp" alt="" width="1280" height="963" decoding="async"></div>
+    <div class="cmp__card" aria-hidden="true"><img src="assets/img/photos/campus.webp" alt="" width="1000" height="667" decoding="async"></div>
+    <p class="cmp__big" aria-hidden="true"><span class="cmp__l">Why choose</span><span class="cmp__r">us?</span></p>
+    <div class="cmp__ov">
+      <header class="cmp__hd">
+        <div class="lbl rv" style="--d:.05s"><span class="lbl__t">Your partner &middot; Since 1976</span><i></i><span class="lbl__orn" aria-hidden="true"></span></div>
+        <h2 id="storyH" class="cmp__h2 rv" style="--d:.12s"><span class="cmp__en">Why Vajiram &amp; Ravi?</span> <span class="cmp__h">Fifty years of teaching <em>the civil services examination</em>, built around what the UPSC actually asks.</span></h2>
+      </header>
+      <div class="cmp__track">
+        <article class="cmp__p" aria-labelledby="storyT0">
+          <figure class="cmp__ph"><img src="assets/img/photos/campus.webp" alt="The Vajiram &amp; Ravi building, seen from its front gate" width="1000" height="667" loading="lazy" decoding="async"></figure>
+          <div class="cmp__tx">
+            <p class="cmp__no" aria-hidden="true">01<small>/06</small></p>
+            <p class="cmp__lab">AIR 1 &middot; every result since 2016</p>
+            <h3 class="cmp__t" id="storyT0"><span>A proven track record</span><i aria-hidden="true"></i></h3>
+            <p class="cmp__d">AIR 1 in every UPSC result since 2016, and all ten of the top ten ranks in CSE 2025 prepared with us. Founded in 1976 by Prof. P.&nbsp;Velayutham.</p>
+            <a class="cmp__cta" href="#toppers">Meet the toppers<span class="cmp__cta-ic" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M2 8h11M9 4l4 4-4 4"/></svg></span></a>
+          </div>
+        </article>
+        <article class="cmp__p" aria-labelledby="storyT1">
+          <figure class="cmp__ph"><img src="assets/img/photos/faculty-1.jpg" alt="A Vajiram &amp; Ravi faculty member" width="1024" height="1024" loading="lazy" decoding="async" style="object-position:50% 22%"></figure>
+          <div class="cmp__tx">
+            <p class="cmp__no" aria-hidden="true">02<small>/06</small></p>
+            <p class="cmp__lab">The teaching</p>
+            <h3 class="cmp__t" id="storyT1"><span>Expert faculty</span><i aria-hidden="true"></i></h3>
+            <p class="cmp__d">Expert faculty for every GS paper, the optionals and the essay: an academic tradition shaped by educators and subject specialists.</p>
+            <a class="cmp__cta" href="#faculty">Meet our educators<span class="cmp__cta-ic" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M2 8h11M9 4l4 4-4 4"/></svg></span></a>
+          </div>
+        </article>
+        <article class="cmp__p" aria-labelledby="storyT2">
+          <figure class="cmp__ph"><img src="assets/img/photos/counsellor.png" alt="A Vajiram &amp; Ravi mentor" width="1024" height="1024" loading="lazy" decoding="async" style="object-position:50% 20%"></figure>
+          <div class="cmp__tx">
+            <p class="cmp__no" aria-hidden="true">03<small>/06</small></p>
+            <p class="cmp__lab">Your plan</p>
+            <h3 class="cmp__t" id="storyT2"><span>Personal guidance</span><i aria-hidden="true"></i></h3>
+            <p class="cmp__d">A plan shaped around your strengths and gaps, with a mentor who keeps it on track from Foundation to Interview.</p>
+            <a class="cmp__cta" href="#contact">Let&rsquo;s talk<span class="cmp__cta-ic" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M2 8h11M9 4l4 4-4 4"/></svg></span></a>
+          </div>
+        </article>
+        <article class="cmp__p" aria-labelledby="storyT3">
+          <figure class="cmp__ph"><img src="assets/img/photos/collage.png" alt="A collage of Indian monuments and open books" width="1536" height="864" loading="lazy" decoding="async" style="object-position:50% 50%"></figure>
+          <div class="cmp__tx">
+            <p class="cmp__no" aria-hidden="true">04<small>/06</small></p>
+            <p class="cmp__lab">Study material</p>
+            <h3 class="cmp__t" id="storyT3"><span>Complete study material</span><i aria-hidden="true"></i></h3>
+            <p class="cmp__d">Notes, test series and interview preparation in one place. 59 questions in Prelims 2025 came from our test series.</p>
+            <a class="cmp__cta" href="#resources">Explore study materials<span class="cmp__cta-ic" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M2 8h11M9 4l4 4-4 4"/></svg></span></a>
+          </div>
+        </article>
+        <article class="cmp__p" aria-labelledby="storyT4">
+          <figure class="cmp__ph"><img src="assets/img/photos/campus-entrance.webp" alt="The entrance of a Vajiram &amp; Ravi centre, with the institute&rsquo;s sign above the door" width="900" height="1600" loading="lazy" decoding="async" style="object-position:50% 34%"></figure>
+          <div class="cmp__tx">
+            <p class="cmp__no" aria-hidden="true">05<small>/06</small></p>
+            <p class="cmp__lab">Old Rajinder Nagar</p>
+            <h3 class="cmp__t" id="storyT4"><span>A prime location</span><i aria-hidden="true"></i></h3>
+            <p class="cmp__d">Over 50 years in Old Rajinder Nagar, New Delhi, at Gate 5 of Karol Bagh Metro.</p>
+            <a class="cmp__cta" href="#visit">Visit the campus<span class="cmp__cta-ic" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M2 8h11M9 4l4 4-4 4"/></svg></span></a>
+          </div>
+        </article>
+        <article class="cmp__p" aria-labelledby="storyT5">
+          <figure class="cmp__ph"><img src="assets/img/photos/footer-classroom.webp" alt="Students in a Vajiram &amp; Ravi classroom" width="1672" height="941" loading="lazy" decoding="async" style="object-position:50% 45%"></figure>
+          <div class="cmp__tx">
+            <p class="cmp__no" aria-hidden="true">06<small>/06</small></p>
+            <p class="cmp__lab">Classroom + LIVE-Online</p>
+            <h3 class="cmp__t" id="storyT5"><span>Learn the way that suits you</span><i aria-hidden="true"></i></h3>
+            <p class="cmp__d">12 UPSC CSE programmes in the classroom and LIVE-Online, with the same teachers and the same tests.</p>
+            <a class="cmp__cta" href="#courses">Find your programme<span class="cmp__cta-ic" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M2 8h11M9 4l4 4-4 4"/></svg></span></a>
+          </div>
+        </article>
       </div>
-      <div class="wc__title">
-        <div class="lbl rv" style="--d:.05s"><span class="lbl__t">Your partner</span><i></i><span class="lbl__orn" aria-hidden="true"></span></div>
-        <h2 id="whyH" class="wc__h"><span class="wc__ln rv" style="--d:.12s"><span class="wc__dim">Why Choose</span></span> <span class="wc__ln rv" style="--d:.22s">Vajiram &amp; Ravi?</span></h2>
-      </div>
-    </div>
-
-    <ul class="wc__cards" id="wcCards">
-      <!-- 01 track record: a podium, the tall block carrying the 1 -->
-      <li class="wc__card wc__card--a">
-        <span class="wc__num" aria-hidden="true">01</span>
-        <div class="wc__art" aria-hidden="true">
-          <svg viewBox="0 0 320 320"><defs>
-              <linearGradient id="wcL" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE1C7"/><stop offset="1" stop-color="#F99A5C"/></linearGradient>
-              <linearGradient id="wcM" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F57523"/><stop offset="1" stop-color="#C2410C"/></linearGradient>
-              <linearGradient id="wcD" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2410C"/><stop offset="1" stop-color="#7A2A0A"/></linearGradient>
-              <radialGradient id="wcs" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".6" stop-color="#FFD48A"/><stop offset="1" stop-color="#FEAA1C"/></radialGradient>
-            </defs>
-            <g class="wc__wire"><path d="M36 244 L284 244"/><path d="M160 40 L160 90"/><path d="M118 58 L138 84"/><path d="M202 58 L182 84"/></g>
-            <g class="wc__solid">
-              <path d="M60 176 L124 176 L124 244 L60 244 Z" fill="url(#wcM)"/><path d="M60 176 L124 176 L144 160 L80 160 Z" fill="url(#wcL)"/>
-              <path d="M212 192 L276 192 L276 244 L212 244 Z" fill="url(#wcM)"/><path d="M212 192 L276 192 L296 176 L232 176 Z" fill="url(#wcL)"/><path d="M276 192 L296 176 L296 228 L276 244 Z" fill="url(#wcD)"/>
-              <path d="M124 124 L212 124 L212 244 L124 244 Z" fill="url(#wcM)"/><path d="M124 124 L212 124 L232 108 L144 108 Z" fill="url(#wcL)"/><path d="M212 124 L232 108 L232 228 L212 244 Z" fill="url(#wcD)"/>
-              <path d="M158 150 L176 150 L176 214 L160 214 L160 166 L150 166 L150 158 Z" fill="#FFF2E6"/>
-            </g>
-            <circle class="wc__dot" cx="92" cy="156" r="18" fill="url(#wcs)"/>
-          </svg>
-        </div>
-        <h3 class="wc__t">Proven track record: AIR 1 in every result since 2016</h3>
-      </li>
-      <!-- 02 faculty: a mortarboard, the sphere as the tassel end -->
-      <li class="wc__card wc__card--b">
-        <h3 class="wc__t">Expert faculty for every GS paper, the optionals and the essay</h3>
-        <div class="wc__art" aria-hidden="true">
-          <svg viewBox="0 0 320 320">
-            <g class="wc__wire"><circle cx="160" cy="176" r="92"/><path d="M160 138 L248 146 L250 206"/></g>
-            <g class="wc__solid">
-              <path d="M112 152 L112 200 A48 20 0 0 0 208 200 L208 152 Z" fill="url(#wcD)"/>
-              <path d="M160 94 L262 136 L160 178 L58 136 Z" fill="url(#wcL)"/>
-              <path d="M160 178 L262 136 L262 148 L160 190 Z" fill="url(#wcM)"/><path d="M58 136 L160 178 L160 190 L58 148 Z" fill="#A8380A"/>
-            </g>
-            <circle class="wc__dot" cx="250" cy="220" r="16" fill="url(#wcs)"/>
-          </svg>
-        </div>
-        <span class="wc__num" aria-hidden="true">02</span>
-      </li>
-      <!-- 03 guidance: a compass, the sphere at its pivot -->
-      <li class="wc__card wc__card--a">
-        <span class="wc__num" aria-hidden="true">03</span>
-        <div class="wc__art" aria-hidden="true">
-          <svg viewBox="0 0 320 320">
-            <g class="wc__wire"><circle cx="160" cy="170" r="100"/><path d="M160 54 L160 72"/><path d="M160 268 L160 286"/><path d="M44 170 L62 170"/><path d="M258 170 L276 170"/></g>
-            <g class="wc__solid">
-              <circle cx="160" cy="170" r="80" fill="url(#wcL)"/><circle cx="160" cy="170" r="66" fill="url(#wcM)" opacity=".55"/>
-              <g transform="rotate(34 160 170)"><path d="M160 98 L178 170 L142 170 Z" fill="url(#wcD)"/><path d="M160 242 L178 170 L142 170 Z" fill="#FFF2E6"/></g>
-            </g>
-            <circle class="wc__dot" cx="160" cy="170" r="16" fill="url(#wcs)"/>
-          </svg>
-        </div>
-        <h3 class="wc__t">Personal guidance: a plan shaped around your strengths and gaps</h3>
-      </li>
-      <!-- 04 study material: a stack of three books -->
-      <li class="wc__card wc__card--b">
-        <h3 class="wc__t">Complete study material: notes, test series and interview prep</h3>
-        <div class="wc__art" aria-hidden="true">
-          <svg viewBox="0 0 320 320">
-            <g class="wc__wire"><path d="M40 254 L290 254"/><path d="M286 96 L286 236"/></g>
-            <g class="wc__solid">
-              <path d="M72 214 L232 214 L232 248 L72 248 Z" fill="url(#wcM)"/><path d="M72 214 L232 214 L262 194 L102 194 Z" fill="url(#wcL)"/><path d="M232 214 L262 194 L262 228 L232 248 Z" fill="url(#wcD)"/><path d="M78 232 L226 232" stroke="#FFE1C7" stroke-width="2"/>
-              <path d="M60 180 L220 180 L220 214 L60 214 Z" fill="url(#wcM)"/><path d="M60 180 L220 180 L250 160 L90 160 Z" fill="url(#wcL)"/><path d="M220 180 L250 160 L250 194 L220 214 Z" fill="url(#wcD)"/><path d="M66 198 L214 198" stroke="#FFE1C7" stroke-width="2"/>
-              <path d="M82 146 L242 146 L242 180 L82 180 Z" fill="url(#wcM)"/><path d="M82 146 L242 146 L272 126 L112 126 Z" fill="url(#wcL)"/><path d="M242 146 L272 126 L272 160 L242 180 Z" fill="url(#wcD)"/><path d="M88 164 L236 164" stroke="#FFE1C7" stroke-width="2"/>
-            </g>
-            <circle class="wc__dot" cx="246" cy="114" r="18" fill="url(#wcs)"/>
-          </svg>
-        </div>
-        <span class="wc__num" aria-hidden="true">04</span>
-      </li>
-      <!-- 05 location: a map pin over a tilted plate -->
-      <li class="wc__card wc__card--a">
-        <span class="wc__num" aria-hidden="true">05</span>
-        <div class="wc__art" aria-hidden="true">
-          <svg viewBox="0 0 320 320">
-            <g class="wc__wire"><path d="M56 234 L160 184 L264 234 L160 284 Z"/><path d="M96 214 L224 254"/></g>
-            <g class="wc__solid">
-              <ellipse cx="160" cy="234" rx="34" ry="11" fill="#C2410C" opacity=".35"/>
-              <path d="M160 232 C124 184, 106 158, 106 118 A54 54 0 1 1 214 118 C214 158, 196 184, 160 232 Z" fill="url(#wcL)"/>
-              <path d="M160 232 C160 200, 170 170, 190 150 C208 134, 214 128, 214 118 C214 158, 196 184, 160 232 Z" fill="url(#wcD)" opacity=".5"/>
-              <circle cx="160" cy="118" r="24" fill="url(#wcD)"/>
-            </g>
-            <circle class="wc__dot" cx="226" cy="246" r="18" fill="url(#wcs)"/>
-          </svg>
-        </div>
-        <h3 class="wc__t">Prime location: Old Rajinder Nagar, at Gate 5 of Karol Bagh Metro</h3>
-      </li>
-      <!-- 06 classroom + LIVE-Online: a screen with play, on a desk line -->
-      <li class="wc__card wc__card--b">
-        <h3 class="wc__t">Classroom and LIVE-Online, the same teachers and tests</h3>
-        <div class="wc__art" aria-hidden="true">
-          <svg viewBox="0 0 320 320">
-            <g class="wc__wire"><path d="M44 80 L276 80 L276 226 L44 226 Z"/><path d="M30 262 L290 262"/></g>
-            <g class="wc__solid">
-              <path d="M152 210 L168 210 L168 238 L152 238 Z" fill="url(#wcD)"/><ellipse cx="160" cy="242" rx="48" ry="10" fill="url(#wcM)"/>
-              <rect x="80" y="98" width="160" height="114" rx="14" fill="url(#wcL)"/><rect x="92" y="110" width="136" height="90" rx="8" fill="url(#wcD)"/>
-              <path d="M146 134 L188 155 L146 176 Z" fill="#FFF2E6"/>
-            </g>
-            <circle class="wc__dot" cx="242" cy="100" r="16" fill="url(#wcs)"/>
-          </svg>
-        </div>
-        <span class="wc__num" aria-hidden="true">06</span>
-      </li>
-    </ul>
-
-    <div class="wc__stats" id="wcStats" role="list" aria-label="Vajiram &amp; Ravi by the numbers">
-      <div class="wc__lead" role="presentation"><span class="wc__arr" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M2.5 8h11"/><path d="M8.6 3.6C9.4 5.9 11.2 7.4 13.5 8 11.2 8.6 9.4 10.1 8.6 12.4"/></svg></span><p>Vajiram &amp; Ravi<br>by the numbers</p></div>
-      <div class="wc__stat" role="listitem"><p class="wc__n"><b data-wc-count="50">50</b>+</p><p class="wc__l">Years<br>in Old Rajinder Nagar</p></div>
-      <div class="wc__stat" role="listitem"><p class="wc__n"><b data-wc-count="10">10</b><small>/10</small></p><p class="wc__l">Top 10 ranks<br>in UPSC CSE 2025</p></div>
-      <div class="wc__stat" role="listitem"><p class="wc__n"><b data-wc-count="59">59</b></p><p class="wc__l">Prelims 2025 questions<br>from our test series</p></div>
-      <div class="wc__stat" role="listitem"><p class="wc__n"><b data-wc-count="12">12</b></p><p class="wc__l">UPSC CSE programmes<br>Classroom and LIVE-Online</p></div>
-      <div class="wc__stat" role="listitem"><p class="wc__n"><b data-wc-count="10">10</b><span class="wc__star" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.2 6.8.8-5 4.7 1.3 6.8L12 17.6 6 21l1.3-6.8-5-4.7 6.8-.8z"/></svg></span></p><p class="wc__l"><span class="wc__em" aria-hidden="true"><img src="assets/img/brand/emblem.png" alt="" width="22" height="22"></span>AIR 1 in every result<br>since 2016</p></div>
     </div>
   </div>
 </section>
+</div>
 
 
 
@@ -407,40 +354,53 @@
         <span class="sm__tag">Updated daily</span>
         <h3 class="sm__t">Current affairs</h3>
         <p class="sm__d">Prelims, Mains and Quest articles, written the way UPSC asks.</p>
-        <a class="sm__act" href="#" data-rs>Read today&rsquo;s articles<span class="sm__go sq sq--38 sq--ink"><img src="assets/img/icons/arrow-white.svg" alt="" width="16" height="16"><img src="assets/img/icons/arrow-brand.svg" alt="" width="16" height="16"></span></a>
+        <a class="sm__act" href="#" data-rs>Read today&rsquo;s articles</a>
       </li>
       <li class="sm__card sm__card--res"><img class="sm__rays" src="assets/img/patterns/surya-rays.svg" alt="" width="300" height="300">
         <span class="sm__tag">Monthly</span>
         <h3 class="sm__t">The Recitals</h3>
         <p class="sm__d">UPSC current affairs monthly material, free to download.</p>
-        <a class="sm__act" href="#" data-rs>Download this month<span class="sm__go sq sq--38 sq--ink"><img src="assets/img/icons/arrow-white.svg" alt="" width="16" height="16"><img src="assets/img/icons/arrow-brand.svg" alt="" width="16" height="16"></span></a>
+        <a class="sm__act" href="#" data-rs>Download this month</a>
       </li>
       <li class="sm__card sm__card--res"><img class="sm__rays" src="assets/img/patterns/surya-rays.svg" alt="" width="300" height="300">
         <span class="sm__tag">Practice</span>
         <h3 class="sm__t">Previous year papers</h3>
         <p class="sm__d">Prelims and Mains papers, with the UPSC answer key.</p>
-        <a class="sm__act" href="#" data-rs>Browse papers<span class="sm__go sq sq--38 sq--ink"><img src="assets/img/icons/arrow-white.svg" alt="" width="16" height="16"><img src="assets/img/icons/arrow-brand.svg" alt="" width="16" height="16"></span></a>
+        <a class="sm__act" href="#" data-rs>Browse papers</a>
       </li>
       <li class="sm__card sm__card--res"><img class="sm__rays" src="assets/img/patterns/surya-rays.svg" alt="" width="300" height="300">
         <span class="sm__tag">Guide</span>
         <h3 class="sm__t">Syllabus &amp; exam pattern</h3>
         <p class="sm__d">What is asked at each stage, and how it is marked.</p>
-        <a class="sm__act" href="#" data-rs>Read the guide<span class="sm__go sq sq--38 sq--ink"><img src="assets/img/icons/arrow-white.svg" alt="" width="16" height="16"><img src="assets/img/icons/arrow-brand.svg" alt="" width="16" height="16"></span></a>
+        <a class="sm__act" href="#" data-rs>Read the guide</a>
       </li>
       <li class="sm__card sm__card--res"><img class="sm__rays" src="assets/img/patterns/surya-rays.svg" alt="" width="300" height="300">
         <span class="sm__tag">Study material</span>
         <h3 class="sm__t">GS postal books</h3>
         <p class="sm__d">Printed General Studies material for UPSC preparation.</p>
-        <a class="sm__act" href="#" data-rs>Buy now<span class="sm__go sq sq--38 sq--ink"><img src="assets/img/icons/arrow-white.svg" alt="" width="16" height="16"><img src="assets/img/icons/arrow-brand.svg" alt="" width="16" height="16"></span></a>
+        <a class="sm__act" href="#" data-rs>Buy now</a>
       </li>
       <li class="sm__card sm__card--res"><img class="sm__rays" src="assets/img/patterns/surya-rays.svg" alt="" width="300" height="300">
         <span class="sm__tag">Key dates</span>
         <h3 class="sm__t">UPSC Calendar 2027</h3>
         <p class="sm__d">Every stage date, plus the age limit and eligibility rules.</p>
         <ul class="sm__stages" aria-label="Stages with dates in the calendar"><li>Notification</li><li>Prelims</li><li>Mains</li><li>Interview</li></ul>
-        <a class="sm__act" href="#" data-rs>See the calendar<span class="sm__go sq sq--38 sq--ink"><img src="assets/img/icons/arrow-white.svg" alt="" width="16" height="16"><img src="assets/img/icons/arrow-brand.svg" alt="" width="16" height="16"></span></a>
+        <a class="sm__act" href="#" data-rs>See the calendar</a>
       </li>
     </ul>
+    <div class="sm__more rv" style="--d:.08s">
+      <p class="sm__more-k" id="smMoreK">More free resources</p>
+      <ul class="sm__more-list" aria-labelledby="smMoreK">
+        <li><a class="sm__pill" href="#" data-rs>Daily quiz<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></li>
+        <li><a class="sm__pill" href="#" data-rs>Editorial analysis<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></li>
+        <li><a class="sm__pill" href="#" data-rs>Answer writing practice<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></li>
+        <li><a class="sm__pill" href="#" data-rs>NCERT notes<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></li>
+        <li><a class="sm__pill" href="#" data-rs>Government schemes<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></li>
+        <li><a class="sm__pill" href="#" data-rs>Essay topics<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></li>
+        <li><a class="sm__pill" href="#" data-rs>Ethics case studies<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></li>
+        <li><a class="sm__pill" href="#" data-rs>Interview guidance tips<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></li>
+      </ul>
+    </div>
   </div>
 </section>
 
@@ -558,7 +518,7 @@
     <div class="foot__cols" id="footCols"></div>
   </div>
   <div class="foot__news" aria-labelledby="footNewsH">
-    <p class="foot__news-k" id="footNewsH">Latest current affairs</p>
+    <h3 class="foot__news-k" id="footNewsH">Latest current affairs</h3>
     <ul class="foot__news-list">
       <li><span>Mains</span><a href="https://vajiramandravi.com/" target="_blank" rel="noopener">Supreme Court redefines the meaning of &lsquo;industry&rsquo;</a></li>
       <li><span>Mains</span><a href="https://vajiramandravi.com/" target="_blank" rel="noopener">NITI Aayog flags gap between education and employment</a></li>
@@ -571,14 +531,14 @@
 
 <script src="js/data/toppers.js"></script>
 <script src="js/data/toppers-archive.js?v=3"></script>
-<script src="js/toppers.js?v=10"></script>
-<script src="js/content.js?v=15"></script>
+<script src="js/toppers.js?v=13"></script>
+<script src="js/content.js?v=21"></script>
 <script src="js/vendor/lenis.min.js"></script>
 <script src="js/hero-kit.js"></script>
 <script src="js/scroll.js"></script>
-<script src="js/page-motion.js?v=14"></script>
+<script src="js/page-motion.js?v=16"></script>
 <script src="js/visit-map.js?v=2"></script>
-<script src="js/why-choose.js?v=1"></script>
+<script src="js/story.js?v=2"></script>
 <script src="js/accordion.js"></script>
 <script src="js/footer-curtain.js"></script>
 <script src="js/footer-word.js?v=4"></script>

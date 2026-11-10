@@ -1412,6 +1412,7 @@ footer.foot { padding-left: 76px; padding-right: 76px; }
   .sm__card--res:hover .sm__list, .sm__card--res:hover .sm__list li { border-color: rgba(255, 255, 255, .28); }
   .sm__card--res:hover .sm__stages li { border-color: rgba(255, 255, 255, .5); color: #fff; }
   .sm__list a:hover { background-size: 100% 1px; }
+  .sm__act:hover { color: var(--brand); text-decoration: underline; text-underline-offset: 4px; }
 }
 @media (max-width: 640px) { .sm__card--res { min-height: 0; } }
 @media (prefers-reduced-motion: reduce) { .sm__d, .sm__list li, .sm__list span, .sm__list a, .sm__stages li, .sm__act { transition: none; } }
@@ -1602,3 +1603,100 @@ footer.foot { padding-left: 76px; padding-right: 76px; }
   .dl__cta.cta.cta.is-swap { opacity: 0 !important; pointer-events: none; transition: opacity .35s ease, box-shadow .35s, scale .15s !important; }
   .dl__cta.is-swap .btn__label { opacity: 1; }
 }
+
+/* nav: link labels never wrap onto two lines */
+.nav__a { white-space: nowrap; }
+/* the logo keeps its size; below 1360px the seven links no longer fit beside it and the language / CTA group, so the nav switches to the
+   burger menu there (it used to switch at 1100px, which left 1100-1360 with links wrapping onto two lines and a squashed logo) */
+.nav__logo { flex: none; }
+@media (max-width: 1360px) {
+  .nav__links { display: none; }
+  .nav__burger { display: block; }
+  .nav__pill { flex: 1; max-width: 360px; padding-right: 4px; }
+  .nav__end { margin-left: 10px; } .nav__end .talk { margin-left: 0; }
+}
+/* nav between 1361 and 1600px: slightly tighter links and logo spacing so all seven fit beside the language / CTA group */
+@media (max-width: 1600px) { .nav__a { padding: 0 10px; font-size: 14.5px; } .nav--hero .nav__logo, .nav__logo { margin-right: 10px; } .nav__links { gap: 0; } }
+
+/* footer news in the brand column, under the social links (the column was empty below them); heading like the link columns, each
+   headline under its Mains / Prelims tag */
+.foot__news--col { display: block; margin: 32px 0 0; padding: 22px 0 0; border: 0; border-top: 1px solid rgba(255, 255, 255, .22); max-width: 340px; }
+.foot__news--col .foot__news-k { margin: 0; font: 700 17px/1.3 var(--f-d); letter-spacing: 0; text-transform: none; color: #fff; }
+.foot__news--col .foot__news-list { display: grid; gap: 14px; margin-top: 14px; }
+.foot__news--col .foot__news-list li { display: grid; justify-items: start; gap: 5px; }
+.foot__news--col .foot__news-list a { font-size: 15px; line-height: 1.4; }
+@media (max-width: 900px) { .foot__news--col { max-width: none; } }
+
+/* ---- All courses dropdown (refined): anchored to the nav pill and as wide as the content column. Five numbered stage columns sit on one
+   connecting rule; each programme is a full row (name, one-line description, course count) that warms on hover; a guidance column with the
+   counsellor CTA ends the panel. Opens with a short fade-and-drop and the columns follow, staggered. Desktop only (the nav uses the
+   burger menu from 1360px down). ---- */
+.explore { position: static; }
+.mega { left: 0; right: auto; top: calc(100% + 12px); width: min(1180px, calc(100vw - 2 * var(--px))); box-sizing: border-box;
+  display: grid; grid-template-columns: minmax(0, 1fr) 248px; gap: 0; padding: 0; border-radius: 22px; overflow: hidden;
+  background: #fff; box-shadow: 0 0 0 1px rgba(38, 20, 8, .06), 0 30px 60px -24px rgba(60, 24, 6, .45);
+  opacity: 0; visibility: hidden; transform: translateY(-8px); transition: opacity .2s var(--ease), transform .25s var(--ease), visibility 0s .25s; }
+.explore.open .mega { opacity: 1; visibility: visible; transform: none; transition: opacity .22s var(--ease), transform .3s var(--ease), visibility 0s; }
+.mega__stages { position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); padding: 26px 12px 22px 26px; }
+.mega__stages::before { content: ""; position: absolute; left: 40px; right: 40px; top: 40px; height: 1px; background: rgba(194, 65, 12, .22); }
+.mega__col { position: relative; padding-right: 14px; }
+.mega p.mega__k { position: relative; display: flex; align-items: center; gap: 8px; margin: 0 0 12px; font: 700 12px/1.3 var(--f); letter-spacing: .12em; text-transform: uppercase; color: var(--brand); }
+.mega__k b { flex: none; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: #fff; box-shadow: inset 0 0 0 1px rgba(194, 65, 12, .35); font-size: 11px; letter-spacing: 0; }
+.mega__col .mega__k { padding-right: 8px; background: none; }
+.mega__col .mega__k span, .mega__col .mega__k { width: fit-content; }
+.mega ul { display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; }
+.mega li + li { margin-top: 0; }
+.mega a.mega__a { display: grid; justify-content: stretch; gap: 3px; margin: 0 0 0 -10px; padding: 10px 10px 11px; border-radius: 12px; color: var(--ink); text-decoration: none;
+  font-size: inherit; transition: background-color .2s var(--ease); }
+.mega a.mega__a span { font: inherit; color: inherit; line-height: inherit; }
+.mega a.mega__a .mega__t { font: 500 16px/1.25 var(--f-d); letter-spacing: -.005em; color: var(--ink); transition: color .2s var(--ease); }
+.mega a.mega__a .mega__d { font: 400 13px/1.45 var(--f); color: #6B5D52; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.mega a.mega__a .mega__n { justify-self: start; margin-top: 4px; padding: 2px 8px; border-radius: 999px; background: rgba(194, 65, 12, .08); font: 700 11px/1.5 var(--f); letter-spacing: .02em; color: var(--brand); transition: background-color .2s, color .2s; }
+.mega a.mega__a:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.mega__aside { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 26px 24px; background: var(--sand, #FFF2E6); border-left: 1px solid rgba(194, 65, 12, .12); }
+.mega__aside p.mega__k { margin: 0; letter-spacing: .1em; }
+.mega p.mega__p { margin: 0; font: 400 14px/1.5 var(--f); text-transform: none; color: #4A4038; }
+.mega .mega__cta.cta.cta { margin-top: 4px; height: 44px; font-size: 14px; }
+.mega a.mega__all { display: inline-flex; align-items: center; gap: 8px; margin: auto 0 0; padding: 0; font: 700 14px/1.2 var(--f); color: var(--brand); text-decoration: none; }
+.mega__all svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform .25s var(--ease); }
+.mega a.mega__all:focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; border-radius: 3px; }
+@keyframes megaIn { from { opacity: 0; transform: translateY(8px); } }
+.explore.open .mega__col, .explore.open .mega__aside { animation: megaIn .4s var(--ease) both; animation-delay: calc(var(--i, 5) * 35ms + 40ms); }
+@media (hover: hover) and (pointer: fine) {
+  .mega a.mega__a:hover { background: var(--sand, #FFF2E6); }
+  .mega a.mega__a:hover .mega__t { color: var(--brand); }
+  .mega a.mega__a:hover .mega__n { background: var(--brand); color: #fff; }
+  .mega a.mega__all:hover svg { transform: translateX(3px); }
+}
+@media (max-width: 1500px) { .mega { grid-template-columns: minmax(0, 1fr) 220px; } .mega__stages { padding-left: 22px; } .mega a.mega__a .mega__d { -webkit-line-clamp: 3; } }
+@media (prefers-reduced-motion: reduce) { .mega, .explore.open .mega { transition: none; transform: none; } .explore.open .mega__col, .explore.open .mega__aside { animation: none; } }
+.mega { width: min(1440px, calc(100vw - 2 * var(--px))); grid-template-columns: minmax(0, 1fr) 272px; }
+.mega .mega__cta.cta.cta { align-self: stretch; justify-content: space-between; margin: 4px 0 0; padding-left: 18px; color: #fff; font-size: 14px; }
+.mega .mega__cta.cta.cta .btn__t { color: #fff; }
+@media (max-width: 1500px) { .mega { grid-template-columns: minmax(0, 1fr) 248px; } }
+.mega .mega__cta.cta.cta { gap: 10px; padding-left: 16px; }
+.mega .mega__cta .btn__label, .mega .mega__cta .btn__t { font-size: 15px; white-space: nowrap; }
+.mega .mega__cta .sq { width: 36px; height: 36px; }
+.mega a.mega__a .mega__d { -webkit-line-clamp: 3; }
+#mega .mega__cta.cta.cta { width: 100%; font-size: 15px; }
+#mega .mega__cta.cta.cta .btn__label, #mega .mega__cta.cta.cta .btn__t { font-size: 15px !important; }
+
+/* ---- free resources: "More free resources" pills under the six cards ---- */
+.sm__more { display: flex; align-items: center; flex-wrap: wrap; gap: 14px 24px; margin-top: 40px; padding-top: 28px; border-top: 1px solid rgba(194, 65, 12, .18); }
+.sm__more-k { flex: none; margin: 0; font: 700 13px/1.3 var(--f); letter-spacing: .14em; text-transform: uppercase; color: var(--sm-mute, #6b5d52); }
+.sm__more-list { display: flex; flex-wrap: wrap; gap: 10px; flex: 1 1 0; min-width: 0; margin: 0; padding: 0; list-style: none; }
+.sm__pill { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 14px 0 16px; border: 1px solid rgba(194, 65, 12, .3); border-radius: 999px; background: #fff;
+  font: 600 14.5px/1 var(--f); color: var(--ink); text-decoration: none; white-space: nowrap;
+  transition: background-color .25s var(--ease), border-color .25s var(--ease), color .25s var(--ease), transform .25s var(--ease), box-shadow .25s var(--ease); }
+.sm__pill svg { width: 14px; height: 14px; fill: none; stroke: var(--brand); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; transition: transform .3s var(--ease), stroke .25s; }
+.sm__pill:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+@media (hover: hover) and (pointer: fine) {
+  .sm__pill:hover { background: var(--brand); border-color: var(--brand); color: #fff; transform: translateY(-2px); box-shadow: 0 10px 20px -12px rgba(194, 65, 12, .7); }
+  .sm__pill:hover svg { stroke: #fff; transform: translateX(3px); }
+}
+@media (max-width: 760px) {
+  .sm__more { flex-direction: column; align-items: flex-start; margin-top: 32px; padding-top: 22px; }
+  .sm__more-list { gap: 8px; }
+  .sm__pill { height: 38px; padding: 0 12px 0 14px; font-size: 14px; }
+}
+@media (prefers-reduced-motion: reduce) { .sm__pill, .sm__pill svg { transition: none; } }
