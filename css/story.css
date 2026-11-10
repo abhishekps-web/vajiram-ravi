@@ -19,8 +19,8 @@
 .cmp__p { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 64px); align-items: center; }
 .cmp__ph, .cmp__card { position: relative; margin: 0; }
 .cmp__ph { aspect-ratio: 4 / 3; }
-.cmp__ph img, .cmp__card img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 20px; box-shadow: inset 0 0 0 1px rgba(58, 30, 4, .12); }
-.cmp__ph::after, .cmp__card::after { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 20px; pointer-events: none;
+.cmp__ph img, .cmp__card img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 8px; box-shadow: inset 0 0 0 1px rgba(58, 30, 4, .12); }
+.cmp__ph::after, .cmp__card::after { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 8px; pointer-events: none;
   box-shadow: 0 26px 40px -10px rgba(92, 40, 4, .42), 0 3px 6px rgba(92, 40, 4, .18); }
 .cmp__lab { margin: 0 0 10px; font: 700 13px/1.3 var(--f); letter-spacing: .16em; text-transform: uppercase; color: var(--cmp-ink); }
 .cmp__t { position: relative; margin: 0 0 18px; padding-bottom: 16px; font: 400 clamp(28px, 2.5vw, 38px)/1.08 var(--f-title, Georgia), serif; letter-spacing: -.01em; color: var(--ink-d); text-wrap: balance; }
@@ -114,7 +114,7 @@
 
 /* ---------- photographs: a clipped frame with a fine light edge and a soft floor shade, per-photo crops (inline object-position),
    a settle-in zoom as each chapter lands (--e from js/story.js) and a slow zoom on hover ---------- */
-.cmp__ph { border-radius: 20px; }
+.cmp__ph { border-radius: 8px; }
 .cmp__ph::before { content: ""; position: absolute; inset: 0; z-index: 2; border-radius: inherit; pointer-events: none;
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .28); background: linear-gradient(180deg, transparent 62%, rgba(60, 15, 0, .22) 100%); }
 .cmp__ph > img { position: relative; border-radius: 0; box-shadow: none; transform-origin: 50% 60%;
@@ -126,7 +126,7 @@
 /* the shadow sits outside the clip: keep it on a wrapper-less frame by drawing it with filter instead */
 #story .cmp__ph { filter: drop-shadow(0 26px 30px rgba(60, 15, 0, .38)) drop-shadow(0 3px 5px rgba(60, 15, 0, .18)); }
 #story .cmp__ph::after { content: none; }
-.cmp__card img { border-radius: 20px; }
+.cmp__card img { border-radius: 8px; }
 /* the counsellor is a cut-out: give him a warm studio backdrop and room above his head */
 .cmp__ph--cut { background: radial-gradient(70% 85% at 50% 38%, #FFF3E1 0%, #FBD3A6 55%, #F2A766 100%); }
 .cmp__ph--cut > img { object-fit: contain; object-position: 50% 100%; padding-top: 6%; box-sizing: border-box; transform-origin: 50% 100%; }
@@ -150,3 +150,7 @@
 #story.cmp:not(.cmp--run)::before { -webkit-mask: linear-gradient(90deg, #000 0%, transparent 38%, transparent 62%, #000 100%); mask: linear-gradient(90deg, #000 0%, transparent 38%, transparent 62%, #000 100%); }   /* stacked layout is very tall: fade side to side instead */
 @media (max-width: 640px) { #story.cmp::before { background-size: 32px 32px; } }
 @media (prefers-reduced-motion: reduce) { #story.cmp::before { transition: none; opacity: .14; transform: none; } }
+/* grain: the closing CTA's film grain (.cl__card::after in css/v49.css) over the orange ground, above the lattice; behind the stage, so in the
+   pinned scene it comes up with the ground */
+#story.cmp::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: url(../assets/img/patterns/grain.png) repeat; background-size: 200px; mix-blend-mode: soft-light; opacity: .28; }
