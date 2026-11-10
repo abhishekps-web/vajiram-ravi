@@ -7,16 +7,19 @@
    Progress bars fill from the video time. Clicking a bar, the arrow keys or a swipe seek the video to that slide. */
 (() => {
   const hero = document.getElementById('dlPin'), reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const vid = document.getElementById('dlVid');
+  const vid = null, imgs = [...document.querySelectorAll('#dlSlides img')], DUR = 6;   // image carousel: each slide shows for DUR seconds
   if (!hero || reduce) return;
   const scs = [...hero.querySelectorAll('.sc')], bars = [...hero.querySelectorAll('#dlProg button')];
-  const N = 4, CUT = [0, 5.65, 10.65, 14.65];             // start time of each slide in the video (just before the cut, so the text is in as the picture changes)
-  let END = 20.04, cur = -1, raf = 0, introDone = !document.documentElement.classList.contains('vrv-lock'), inView = false, tabOn = !document.hidden;
+  const N = 4, CUT = [0, DUR, DUR * 2, DUR * 3];             // start time of each slide in the video (just before the cut, so the text is in as the picture changes)
+  let END = DUR * 4, cur = -1, raf = 0, introDone = !document.documentElement.classList.contains('vrv-lock'), inView = false, tabOn = !document.hidden;
   let clock = 0, last = 0;                                 // fallback clock, used only if the video is not playing (e.g. data saver)
   const bounds = () => CUT.concat(vid && vid.duration && isFinite(vid.duration) ? vid.duration : END);
   const slideAt = t => { const b = bounds(); for (let i = N - 1; i >= 0; i--) if (t >= b[i]) return i; return 0; };
+  const cta = document.getElementById('dlCta');
+  const CTAS = [['Explore our courses', '#courses'], ['Explore GS programmes', '#gs'], ['Explore Interview Guidance', '#contact'], ['Start Your UPSC Preparation', '#contact']];
   const show = n => {
-    cur = n; hero.dataset.s = n;
+    if (cta) { cta.href = CTAS[n][1]; cta.querySelectorAll('.btn__t').forEach(t => { t.textContent = CTAS[n][0]; }); }
+    cur = n; hero.dataset.s = n; imgs.forEach((im, i) => im.classList.toggle('on', i === n));
     scs.forEach((s, i) => s.classList.toggle('on', i === n - 1));
     bars.forEach((b, i) => b.setAttribute('aria-current', i === n ? 'true' : 'false'));
   };

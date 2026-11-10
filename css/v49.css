@@ -866,3 +866,20 @@ footer.foot .foot__bot { font-size: 15.5px; }
 .cover > #dlPin + section > * { opacity: var(--f, 1); transform: translate3d(0, calc((1 - var(--f, 1)) * 44px), 0); will-change: opacity, transform; }
 .fx-on .cover > #dlPin + section > .fx { opacity: calc(var(--f, 1) * var(--fx, .16)); }   /* keep the scroll-focus fade too */
 @media (prefers-reduced-motion: reduce) { .cover > #dlPin + section > * { opacity: 1; transform: none; } }
+
+/* hero image carousel (replaces the video) */
+.dl__slides { position: absolute; inset: 0; }
+.dl__slides img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.06); transition: opacity 1.1s ease, transform 7s ease-out; }
+.dl__slides img.on { opacity: 1; transform: scale(1); }
+
+/* hero: slightly darker scrim behind the copy for readability */
+.dl__bg::after { background: linear-gradient(90deg, rgba(30,12,2,.86) 0%, rgba(30,12,2,.62) 50%, rgba(30,12,2,.24) 100%), linear-gradient(0deg, rgba(30,12,2,.6) 0%, transparent 42%); }
+.dl--pin:not([data-s="0"]) .dl__bg::after { background: linear-gradient(90deg, rgba(30,12,2,.9) 0%, rgba(30,12,2,.82) 48%, rgba(30,12,2,.72) 100%), linear-gradient(0deg, rgba(30,12,2,.6) 0%, transparent 42%); }
+@media (max-width: 900px) { .dl__bg::after, .dl--pin:not([data-s="0"]) .dl__bg::after { background: linear-gradient(0deg, rgba(30,12,2,.86) 0%, rgba(30,12,2,.62) 60%, rgba(30,12,2,.46) 100%); } }
+
+/* hero copy v2: longer headlines wrap over up to three lines; subcopy up to four */
+.dl { --hh: clamp(32px, 3.7vw, 62px); --txt-h: calc(61px + 3.12 * var(--hh) + 6 * var(--pp)); }
+.dl__h span, .sc .vp__h .ln i { white-space: normal; text-wrap: balance; }
+.dl__h, .sc .vp__h { max-width: 17em; min-height: 3.12em; }
+.dl__p, .sc__p { max-width: 40em; min-height: 6em; text-wrap: pretty; }
+@media (max-width: 900px) { .dl__h, .sc .vp__h, .dl__p, .sc__p { min-height: 0; } .dl { --hh: clamp(28px, 7.4vw, 38px); } }
