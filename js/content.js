@@ -646,27 +646,38 @@
     tc.addEventListener('pointerout', e => { const c = e.target.closest('.pst'); if (c && !c.contains(e.relatedTarget)) { c.style.setProperty('--tx', 0); c.style.setProperty('--ty', 0); } });
   }
 
-  /* ---------------- batches: invitation cards (from v24) ---------------- */
-  const TILT = [-2, 1.2, -1, 1.8];
-  $('#price').innerHTML = BATCHES.map((b, i) => `<article class="inv${b.hi ? ' inv--hi' : ''}" style="--r:${TILT[i % 4]}deg;--i:${i}">
+  /* ---------------- batches: paper tickets (idea from the reference site's "Next batches"): a dyed head with the start date and a lotus line mark, the
+     batch details on cream paper, and a perforated stub with the Register button ---------------- */
+  const BYEAR = 2027;   // the start dates are for the 2027 attempt: confirm before launch
+  $('#price').innerHTML = BATCHES.map((b, i) => {
+    const [d, mon] = b.d.split(' ');
+    return `<article class="inv inv--ticket" style="--i:${i}">
       <div class="inv__frame">
-        <p class="inv__seal"><b>${b.d.split(' ')[0]}</b><small>${b.d.split(' ')[1] || ''}</small></p>
-        ${b.chip ? `<span class="chip inv__tag">${b.chip}</span>` : ''}
-        <h3>${esc(b.n)}</h3><p class="inv__w">${esc(b.what)}</p>
-        <dl><div><dt>Programme</dt><dd>${esc(b.full)}</dd></div><div><dt>Target</dt><dd>UPSC ${b.tgt}</dd></div><div><dt>Mode</dt><dd>Classroom and LIVE-Online</dd></div></dl>
-        <a class="inv__reg" href="#contact" data-prog="${esc(b.full)}">Register<span class="sq sq--38 sq--brand">${ico('arrow-white.svg')}</span></a>
-      </div></article>`).join('');
+        <div class="ticket__head">
+          <img class="ticket__lotus" src="assets/img/brand/lotus-line.svg" alt="" aria-hidden="true">
+          <div class="ticket__date"><span>Batch starts</span><time><b>${d}</b><span>${mon || ''}<small>${BYEAR}</small></span></time></div>
+          <span class="ticket__target">Target exam<strong>UPSC ${esc(b.tgt)}</strong></span>
+        </div>
+        <div class="ticket__body">
+          <span class="inv__tag">${esc(b.chip === 'Flagship' ? 'Flagship' : 'Admissions open')}</span>
+          <h3>${esc(b.n)}</h3><p class="inv__w">${esc(b.what)}</p>
+          <div class="ticket__meta"><dl><div><dt>Study mode</dt><dd>Classroom and LIVE&#8209;Online</dd></div></dl>${b.chip === 'Limited seats' ? '<span class="ticket__limited" aria-label="Limited seats"><span>Limited<br>seats</span></span>' : ''}</div>
+        </div>
+        <div class="ticket__stub"><a class="inv__reg" href="#contact" data-prog="${esc(b.full)}" aria-label="Register for ${esc(b.full)}">Register<span class="sq sq--38 sq--brand">${ico('arrow-white.svg')}</span></a></div>
+      </div></article>`;
+  }).join('');
   {
     const invs = $$('.inv');
-    // cards drop in, slightly tilted, as the section arrives
+    // the tickets are laid down one after another as the section arrives
     if (!reduce && 'IntersectionObserver' in window) {
       invs.forEach(c => c.classList.add('inv--pre'));
-      const io = new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); o.unobserve(e.target); } }), { threshold: .2 });
+      const io = new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { const c = e.target; c.classList.add('in'); o.unobserve(c); setTimeout(() => c.classList.remove('inv--pre', 'in'), 1500 + (+c.style.getPropertyValue('--i') || 0) * 110); } }), { threshold: .2 });   // the entrance classes drop away afterwards so they never touch the hover
       invs.forEach(c => io.observe(c));
     }
-    // and lean toward the pointer on hover
+    // on hover the ticket tilts toward the pointer like a card in the hand: a light glare and a shadow that move with it
     if (!reduce && matchMedia('(hover: hover) and (pointer: fine)').matches) invs.forEach(c => {
-      c.addEventListener('pointermove', e => { const r = c.getBoundingClientRect(); c.style.setProperty('--tx', ((e.clientX - r.left) / r.width - .5).toFixed(3)); c.style.setProperty('--ty', ((e.clientY - r.top) / r.height - .5).toFixed(3)); });
+      c.addEventListener('pointermove', e => { const r = c.getBoundingClientRect(), px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+        c.style.setProperty('--tx', (px - .5).toFixed(3)); c.style.setProperty('--ty', (py - .5).toFixed(3)); c.style.setProperty('--gx', (px * 100).toFixed(0) + '%'); c.style.setProperty('--gy', (py * 100).toFixed(0) + '%'); });
       c.addEventListener('pointerleave', () => { c.style.setProperty('--tx', 0); c.style.setProperty('--ty', 0); });
     });
   }
