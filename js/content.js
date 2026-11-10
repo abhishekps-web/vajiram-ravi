@@ -62,7 +62,9 @@
   // faculty carousel. Replace with the real faculty list and photos before launch.
   const FACULTY = [['SK Manocha', 'General Studies, Polity'], ['Brijender Singh', 'Essay'], ['Md. Rizwan', 'Geography optional'], ['Md. Tarique', 'History optional'],
     ['Rajeev Mehra', 'Indian Economy'], ['Anand Iyer', 'Ethics, GS IV'], ['Pranav Sethi', 'Modern History'], ['Vikram Rao', 'Public Administration'],
-    ['Harish Kumar', 'Science & Technology'], ['Suresh Nair', 'Sociology optional'], ['Alok Bansal', 'CSAT'], ['Deepak Chandra', 'Interview guidance']];
+    ['Harish Kumar', 'Science & Technology'], ['Suresh Nair', 'Sociology optional'], ['Alok Bansal', 'CSAT'], ['Deepak Chandra', 'Interview guidance'],
+    ['Kiran Malhotra', 'Indian Society'], ['Naveen Reddy', 'Disaster Management'], ['Sanjay Verma', 'Internal Security'], ['Ramesh Pillai', 'Ancient and Medieval History'],
+    ['Arvind Joshi', 'Environment and Ecology'], ['Manish Tiwari', 'International Relations'], ['Prakash Menon', 'Mathematics optional'], ['Tarun Saxena', 'Mains answer writing']];
   // LinkedIn profile URLs, in FACULTY order. Not known yet: until one is filled in, the button opens a
   // LinkedIn people search for the name, so the link works without pointing at a guessed profile.
   const FACULTY_LI = ['', '', '', ''];
@@ -435,7 +437,7 @@
   pageG.className = 'shelves';
   pageG.removeAttribute('role');
   const bookHTML = (p, i, k) => `<article class="pbk" id="prog${i}" style="--k:${k}">
-      <div class="gsbook gsbook--p gsbook--k${p.c}" ${p.cat != null ? `data-open="${p.cat}"` : `data-book-prog="${esc(p.prog)}"`} data-i="${i}" style="--i:${i}">
+      <div class="gsbook gsbook--p gsbook--k${p.c}" ${p.cat != null ? `data-open="${p.cat}"` : `data-book-prog="${esc(p.prog)}"`} data-i="${i}" style="--i:${i}" role="button" tabindex="0" aria-label="${esc(p.t)}: ${p.cat != null ? 'view courses' : 'enquire'}">
         <div class="gsbook__in">
           <div class="gsbook__back"></div><div class="gsbook__pages"></div><div class="gsbook__top"></div><div class="gsbook__bottom"></div>
           <div class="gsbook__spine" aria-hidden="true"><b>${esc(p.sp)}</b></div>
@@ -585,6 +587,7 @@
   }
 
   $('#pgrid').addEventListener('click', e => { const b = e.target.closest('[data-open]'); if (b) openCat(+b.dataset.open); });
+  $('#pgrid').addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('.gsbook')) { e.preventDefault(); e.target.click(); } });
   // mega menu and result-card links open the catalogue on that category
   document.addEventListener('click', e => { const a = e.target.closest('[data-cat]'); if (!a) return; e.preventDefault(); openCat(+a.dataset.cat); });
 
@@ -604,7 +607,8 @@
 
   /* ---------------- faculty ---------------- */
   const FTILT = [-1.6, 1.2, -0.8, 1.6];
-  $('#team').innerHTML = FACULTY.map(([n, s], i) => `<article class="fc pcd" style="--t:${FTILT[i % 4]}deg"><span class="pcd__clipbox pcd__clipbox--b" aria-hidden="true"><i class="pcd__clip pcd__clip--b"></i></span><div class="pcd__in"><span class="pcd__ph"><span class="pcd__paper"><img src="${PHOTO(`faculty-${i % 4 + 1}.jpg`)}" alt="${esc(n)}" loading="lazy"></span></span><div class="pcd__to"><h3 class="pcd__n">${esc(n)}</h3><p class="pcd__l">${esc(s)}</p><a class="pcd__l pcd__l--p fc__pf" href="${esc(liFor(n, i))}" target="_blank" rel="noopener" aria-label="View ${esc(n)}'s profile on LinkedIn">View on LinkedIn <span aria-hidden="true">&rarr;</span></a></div></div><span class="pcd__clipbox pcd__clipbox--f" aria-hidden="true"><i class="pcd__clip pcd__clip--f"></i></span></article>`).join('');
+  const facCard = ([n, s], i, dup) => `<article class="fc pcd"${dup ? ' aria-hidden="true"' : ''} style="--t:${FTILT[i % 4]}deg"><span class="pcd__clipbox pcd__clipbox--b" aria-hidden="true"><i class="pcd__clip pcd__clip--b"></i></span><div class="pcd__in"><span class="pcd__ph"><span class="pcd__paper"><img src="${PHOTO(`faculty-${i % 4 + 1}.jpg`)}" alt="${esc(n)}" loading="lazy"></span></span><div class="pcd__to"><h3 class="pcd__n">${esc(n)}</h3><p class="pcd__l">${esc(s)}</p><a class="pcd__l pcd__l--p fc__pf" href="${esc(liFor(n, i))}" target="_blank" rel="noopener"${dup ? ' tabindex="-1"' : ''} aria-label="View ${esc(n)}'s profile on LinkedIn">View on LinkedIn <span aria-hidden="true">&rarr;</span></a></div></div><span class="pcd__clipbox pcd__clipbox--f" aria-hidden="true"><i class="pcd__clip pcd__clip--f"></i></span></article>`;
+  $('#team').innerHTML = FACULTY.map((f, i) => facCard(f, i, false)).join('');
 
   /* ---------------- stories: postcards, as if dropped on a table ----------------
      The quotes come from the Figma and are attributed to real rankers: confirm them with the rankers before launch. */

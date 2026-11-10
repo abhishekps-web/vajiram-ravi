@@ -1151,3 +1151,41 @@ html.vrv-lock .wa { opacity: 0; pointer-events: none; }
    screens, while section backgrounds stay full-bleed. The side padding grows to take up the slack, so everything that reads --px follows. */
 :root { --px: max(clamp(16px, 2.71vw, 52px), calc((100vw - 1440px) / 2)); }
 @media (min-width: 901px) { #contact .contact__in { padding-left: max(clamp(40px, 8vw, 150px), calc((100vw - 1440px) / 2 + 40px)); padding-right: max(clamp(40px, 8vw, 150px), calc((100vw - 1440px) / 2 + 40px)); } }
+
+/* programme books on small or touch screens: no button under the shelf; the whole book is the click target */
+@media (max-width: 900px), (hover: none), (pointer: coarse) {
+  #courses .pbk__b { display: none; }
+  #courses .gsbook--p { cursor: pointer; }
+}
+
+/* ---- faculty: a carousel that runs edge to edge (cards overflow past both sides and fade out), scrolled by the arrows, dots, swipe or trackpad ---- */
+#faculty #team.rail__track { display: grid; grid-auto-flow: column; grid-template-columns: none; grid-auto-columns: 280px; gap: 28px; justify-content: start; overflow-x: auto; overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; margin: 0 calc(-1 * var(--px)); padding: 56px calc(var(--px) + 24px) 72px; scroll-padding-inline: calc(var(--px) + 24px);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 44px, #000 calc(100% - 44px), transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 44px, #000 calc(100% - 44px), transparent 100%); }
+#faculty #team.rail__track::-webkit-scrollbar { display: none; }
+#team .fc.pcd { width: auto; margin: 0; scroll-snap-align: start; }
+@media (max-width: 640px) { #faculty #team.rail__track { grid-auto-columns: 244px; gap: 20px; } }
+@media (prefers-reduced-motion: reduce) { #faculty #team.rail__track { scroll-behavior: auto; } }
+
+/* faculty cards and their photos sit straight (no resting tilt) */
+#team .fc.pcd, #team .fc.pcd:hover { rotate: 0deg; }
+#team .fc .pcd__ph, #team .fc:hover .pcd__ph { rotate: 0deg; }
+
+/* FAQ: a wider column so the list is in proportion with the heading and the other sections */
+#faq.faq { max-width: 1120px; }
+#faq .qa p { max-width: 48em; }
+
+/* tighter side padding on every section (was ~39px at 1440, now ~20px); the 1440px content cap is unchanged */
+:root { --px: max(clamp(14px, 1.4vw, 24px), calc((100vw - 1440px) / 2)); }
+@media (min-width: 901px) { #contact .contact__in { padding-left: max(clamp(20px, 3vw, 56px), calc((100vw - 1440px) / 2 + 20px)); padding-right: max(clamp(20px, 3vw, 56px), calc((100vw - 1440px) / 2 + 20px)); } }
+#faculty #team.rail__track { padding-left: calc(var(--px) + 16px); padding-right: calc(var(--px) + 16px); scroll-padding-inline: calc(var(--px) + 16px); }
+
+/* content cap raised from 1440px to 1680px, then 1800px so wide screens (1536, 1920 and up) no longer get a large empty margin each side; inner caps follow it */
+:root { --px: max(clamp(14px, 1.4vw, 24px), calc((100vw - 1800px) / 2)); }
+@media (min-width: 901px) { #contact .contact__in { padding-left: max(clamp(20px, 3vw, 56px), calc((100vw - 1800px) / 2 + 20px)); padding-right: max(clamp(20px, 3vw, 56px), calc((100vw - 1800px) / 2 + 20px)); } }
+.wc__in { max-width: none; }
+.vrnp .np-page { max-width: none; }
+.lv__in { max-width: none; }
+
+/* success stories: less space above the heading (the Faculty section above already ends with its own bottom padding) */
+#stories.sheet { padding-top: calc(var(--sec-y) * .4); }
