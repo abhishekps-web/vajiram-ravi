@@ -1360,8 +1360,8 @@ section#toppers.vrnp { padding-left: var(--px); padding-right: var(--px); }   /*
 #stories.sheet, #faq.sheet { margin-left: 0; margin-right: 0; }   /* the 12px sheet margin pushed these two off the shared edge */
 
 /* ===== merged 2026-11-10: rules below came after the block above and win where they overlap (incl. --px: 1440px cap, wider small-screen margins) ===== */
-/* FAQ cards: the site's card radius (24px, as the Free resources cards) instead of 4px; the open item's marigold marker is an inset shadow, so it follows the curve */
-#faq .qa { border-radius: 24px; overflow: hidden; }
+/* FAQ cards: 4px corner radius, the same as the Free resources and batch cards; the open item's marigold marker is an inset shadow, so it follows the corner */
+#faq .qa { border-radius: 4px; overflow: hidden; }
 
 /* global content container: max width 1440px (was 1800px). Every section reads --px, so all of them follow. */
 :root { --px: max(clamp(14px, 1.4vw, 24px), calc((100vw - 1440px) / 2)); }
@@ -1797,3 +1797,9 @@ footer.foot { padding-left: 76px; padding-right: 76px; }
   #visit .cm__item--chan > div { flex: 1 1 auto; min-width: 0; }
   #visit .cm__item--chan > .cm__cta { flex: none; white-space: nowrap; }
 }
+/* FAQ: a narrower, centred question list (was the full content width) */
+#faq .qas { max-width: 1000px; margin-left: auto; margin-right: auto; }
+/* Closing CTA card: 8px corner radius on every screen size (was 40px, 28px on phones) */
+.cl__card { border-radius: 8px; }
+/* Contact us card: 8px corner radius on every screen size, the same as the closing CTA card (was 28px, 22px on phones) */
+#visit .cm { border-radius: 8px; }
