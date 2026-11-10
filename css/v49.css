@@ -877,9 +877,11 @@ footer.foot .foot__bot { font-size: 15.5px; }
 .dl--pin:not([data-s="0"]) .dl__bg::after { background: linear-gradient(90deg, rgba(30,12,2,.9) 0%, rgba(30,12,2,.82) 48%, rgba(30,12,2,.72) 100%), linear-gradient(0deg, rgba(30,12,2,.6) 0%, transparent 42%); }
 @media (max-width: 900px) { .dl__bg::after, .dl--pin:not([data-s="0"]) .dl__bg::after { background: linear-gradient(0deg, rgba(30,12,2,.86) 0%, rgba(30,12,2,.62) 60%, rgba(30,12,2,.46) 100%); } }
 
-/* hero copy v2: longer headlines wrap over up to three lines; subcopy up to four */
-.dl { --hh: clamp(32px, 3.7vw, 62px); --txt-h: calc(61px + 3.12 * var(--hh) + 6 * var(--pp)); }
-.dl__h span, .sc .vp__h .ln i { white-space: normal; text-wrap: balance; }
-.dl__h, .sc .vp__h { max-width: 17em; min-height: 3.12em; }
-.dl__p, .sc__p { max-width: 40em; min-height: 6em; text-wrap: pretty; }
-@media (max-width: 900px) { .dl__h, .sc .vp__h, .dl__p, .sc__p { min-height: 0; } .dl { --hh: clamp(28px, 7.4vw, 38px); } }
+/* hero copy: long headlines must wrap (sizes and spacing stay as before) */
+.dl__h span, .sc .vp__h .ln i { white-space: normal; }
+.dl { --hh: clamp(32px, 4vw, 68px); }
+.dl__h span, .sc .vp__h .ln i { text-wrap: balance; }
+@media (max-width: 900px) { .dl { --hh: clamp(28px, 7.4vw, 38px); } }
+
+/* slide 1 eyebrow matches the eyebrow on slides 2-4 */
+.dl__k { display: block; margin: 0 0 24px; font: 600 16px/1 var(--f-hi); letter-spacing: 0; text-transform: none; color: #FFD48A; }
