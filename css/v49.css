@@ -738,12 +738,12 @@ footer.foot .foot__bot { font-size: 15.5px; }
 @media (prefers-reduced-motion: reduce) { .foot__word .fw-c { opacity: 1 !important; transform: none !important; } }
 
 /* curtain footer (user 2026-11-10: "footer should stick at the bottom, reveal like a curtain on scroll"). The footer is parked behind the
-   page at the bottom of the screen; the page slides up off it. js/footer-curtain.js sets html.foot-curtain only when the footer fits the
-   screen (a taller footer would never show its top), so short laptops and phones keep the normal flow. Less empty space so it fits 900px. */
+   page; the page slides up off it. js/footer-curtain.js sets html.foot-curtain on every screen, and --foot-off so a footer taller than the
+   screen sticks with its top at the top of the screen (then scrolls the rest of the way) instead of hiding its top. */
 footer.foot { padding-top: 40px; }
 .foot__word { margin-top: 28px; }
 html.foot-curtain main { position: relative; z-index: 1; background: var(--ivory, #FFF9F1); }
-html.foot-curtain footer.foot { position: sticky; bottom: 0; z-index: 0; margin-top: 0; }
+html.foot-curtain footer.foot { position: sticky; bottom: var(--foot-off, 0px); z-index: 0; margin-top: 0; }   /* --foot-off: 0, or negative when the footer is taller than the screen (js/footer-curtain.js) */
 
 /* ---- header language switcher: EN / हिं segmented pill, thumb slides under the active language ---- */
 .nav__end { display: flex; align-items: center; gap: 10px; }
@@ -1885,3 +1885,30 @@ footer.foot { padding-left: 76px; padding-right: 76px; }
 .shelves.is-swap .shelf { animation-name: shelfSwap; animation-duration: .45s; animation-delay: calc(var(--r, 0) * 60ms); }
 .shelves.is-size { transition: height .5s var(--ease); overflow: clip; }
 @media (prefers-reduced-motion: reduce) { #courses .ptabs .seg__ind, #courses .ptabs .seg button, #courses .ptabs .seg button small, .shelves.is-size { transition: none; } #courses .ptabs .seg button:active { scale: none; } }
+
+/* ---- General Studies: the heading in two lines ("General Studies decides" / "most of your UPSC score."), and the
+   label > heading > copy > button rhythm made even (the button sat flush against the copy: its 34px gap targeted .gs__in > .bt,
+   but the button is wrapped in .rv-btn). ---- */
+#gs .gs__in { max-width: none; }
+#gs .gs__h { max-width: none; margin-top: 28px; }
+#gs .gs__h span { display: block; }
+#gs .gs__p { margin-top: 28px; }
+#gs .gs__in > .rv-btn { margin-top: 36px; }
+@media (min-width: 1001px) { #gs .gs__h, #gs .gs__h span { white-space: nowrap; } #gs .gs__h { font-size: min(var(--h2), 4.7vw); } }   /* 64px from ~1360px up; a little smaller below so the two lines fit the text column */
+
+/* ---- Closing CTA section: the same jaali ground as the other light sections (it was left out of that list, so it showed the plain cream) ---- */
+#closing { background: linear-gradient(90deg, rgba(255, 250, 243, 0) 0%, rgba(255, 250, 243, .94) 30%, rgba(255, 250, 243, .94) 70%, rgba(255, 250, 243, 0) 100%), url(../assets/img/patterns/bg-jaali.svg) 0 0 / auto, var(--ground); background-size: 100% 100%, 36px 36px, auto; }
+
+/* ---- One continuous ground (user 2026-11-10: "blend every section, no cut-out feel"). Each light section used to paint its own
+   cream gradient + jaali from its own top edge, so a band and a pattern jump showed at every boundary, and Stories and FAQ had
+   rounded corners. The ground is now painted once on <main> (a flat cream, the jaali tile and the same side fade) and the light
+   sections are transparent over it. Solid-colour sections (Toppers, Why choose us, General Studies, Talk to us, footer) keep their hard edges. ---- */
+main { background: linear-gradient(90deg, rgba(255, 250, 243, 0) 0%, rgba(255, 250, 243, .94) 30%, rgba(255, 250, 243, .94) 70%, rgba(255, 250, 243, 0) 100%), url(../assets/img/patterns/bg-jaali.svg) 0 0 / 36px 36px repeat, #fffaf3;
+  background-size: 100% 100%, 36px 36px, auto; }
+html.foot-curtain main { background: linear-gradient(90deg, rgba(255, 250, 243, 0) 0%, rgba(255, 250, 243, .94) 30%, rgba(255, 250, 243, .94) 70%, rgba(255, 250, 243, 0) 100%), url(../assets/img/patterns/bg-jaali.svg) 0 0 / 36px 36px repeat, #fffaf3;
+  background-size: 100% 100%, 36px 36px, auto; }
+main :is(#courses, #batches, #faculty, #stories.sheet, #resources, #visit, #faq.sheet, #closing, section#why.wc, .sm) { background: transparent; border-radius: 0; }
+/* ...except the sheet that slides up over the hero (Programmes): it covers the pinned hero, so it keeps its own solid ground (the same
+   cream + jaali). Toppers follows it, so there is no light-to-light seam to hide. */
+main .cover > #dlPin + section { background: linear-gradient(90deg, rgba(255, 250, 243, 0) 0%, rgba(255, 250, 243, .94) 30%, rgba(255, 250, 243, .94) 70%, rgba(255, 250, 243, 0) 100%), url(../assets/img/patterns/bg-jaali.svg) 0 0 / 36px 36px repeat, #fffaf3;
+  background-size: 100% 100%, 36px 36px, auto; border-radius: 28px 28px 0 0; }
