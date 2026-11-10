@@ -179,3 +179,12 @@
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { f.classList.add('is-in'); io.disconnect(); } }), { threshold: .15 });
   io.observe(f.parentElement);
 })();
+
+/* card lists without a reveal of their own (batch cards, FAQ): stagger in when they reach the screen (css/v49.css .sg) */
+(() => {
+  if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12, rootMargin: '0px 0px -6% 0px' });
+  const arm = el => { if (!el || el.classList.contains('sg')) return; [...el.children].forEach((c, i) => c.style.setProperty('--i', Math.min(i, 8))); el.classList.add('sg'); io.observe(el); };
+  const go = () => ['#price', '#faqList'].forEach(s => { const el = document.querySelector(s); if (el && el.children.length) arm(el); });
+  go(); addEventListener('load', go);
+})();

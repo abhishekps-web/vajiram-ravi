@@ -1273,3 +1273,24 @@ footer.foot { padding-left: max(var(--px), 76px); padding-right: max(var(--px), 
 #visit .cta.cta.bt--line:hover { box-shadow: inset 0 0 0 1.5px var(--brand); color: var(--brand); }
 @media (max-width: 480px) { #visit .cm__cta { white-space: normal; } }
 
+
+/* ---- One light ground (user 2026-11-10): every light section takes the Free resources background, a cream gradient #fff7ee -> #fffbf5.
+   Dark and brand sections (hero, Toppers, General Studies, Talk to us) keep their own grounds. Patterns drawn on ::before / ::after stay. ---- */
+:root { --ground: linear-gradient(180deg, #fff7ee, #fffbf5); --ground-end: #fffbf5; }
+body { background-color: var(--ground-end); }
+:is(#courses, #why, #batches, #bnr, #faculty, #stories, #visit, #faq, #closing) { background: var(--ground); }
+section#why.wc, #stories.sheet, #faq.sheet { background: var(--ground); }   /* outranks css/why-choose.css (#why.wc, loads later) and an earlier #stories.sheet { background: none } */
+
+/* eyebrow badges: brand-orange fill everywhere (was dark brown #2B1206 on light grounds); shape, type and size unchanged */
+:is(#courses, #batches, #why, #gs, #faculty, #stories, #contact, #resources, #visit, #faq) .lbl__t, .lbl .lbl__t, .dl__k, .sc .vp__k > .ln, .hw__k {
+  border-image-source: url(../assets/img/brand/cartouche-brand.svg); }
+
+/* ---- Consistent scroll reveal (user 2026-11-10). Every section header uses the same .rv stagger: eyebrow .05s, heading .12s, intro .2s,
+   CTA / form .28s (.rv: 18px rise, .8-.9s ease). A button is wrapped in .rv-btn because the button's own transition list overrides .rv's.
+   Card lists that had no reveal (batch cards, FAQ) stagger in like the other grids, on opacity + translate (so the batch cards' resting
+   tilt, a transform, is untouched); js/page-motion.js adds .sg and then .in, items carry --i. ---- */
+.rv-btn { margin: 0; }
+#faq .faq__l .rv-btn { display: flex; justify-content: center; }
+.sg > * { opacity: 0; translate: 0 28px; transition: opacity .7s var(--ease), translate .85s var(--ease); transition-delay: calc(var(--i, 0) * 80ms); }
+.sg.in > * { opacity: 1; translate: 0 0; }
+@media (prefers-reduced-motion: reduce) { .sg > * { opacity: 1; translate: none; transition: none; } }

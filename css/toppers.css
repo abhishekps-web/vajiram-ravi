@@ -379,3 +379,15 @@ h2.rs-paper-head { letter-spacing: -0.05em; }
   .np-anim .np-r, .np-anim .np-r *, .np-anim .np-r::before, .np-anim .np-r *::before, .rs-yv.is-swap * { animation: none !important; }
   .np-anim .rs-np-hero-photo::before, .np-anim .rs-np-card-photo::before { content: none; }
 }
+
+/* ---- Toppers buttons, consistent with the site's pill buttons (.cta): 48px tall, 22px left padding, a 38px arrow disc, full pill.
+   The ad-box button (was 28px corners, 42px disc, no rolling label) matches the end-row one; it keeps wrapping only on narrow screens. ---- */
+.vrnp .rs-btn { min-height: 48px; padding: 0 5px 0 22px; gap: 14px; border-radius: 999px; align-items: center; }
+.vrnp .rs-btn .rs-btn-arrow { width: 38px !important; height: 38px !important; margin: 0; align-self: center; aspect-ratio: 1; }
+.vrnp .rs-paper-ad .rs-btn { border-radius: 999px; }
+.vrnp .rs-paper-ad .rs-btn .rs-btn-arrow { width: 38px !important; height: 38px !important; }
+@media (min-width: 900px) {
+  .vrnp .rs-paper-ad .rs-btn { white-space: nowrap; }
+  .vrnp .rs-paper-ad .rs-btn .rs-btn-label { display: inline-grid; }
+  .vrnp .rs-paper-ad .rs-btn .rs-btn-t + .rs-btn-t { display: block; }
+}
