@@ -1719,3 +1719,81 @@ footer.foot { padding-left: 76px; padding-right: 76px; }
   .sm__act:hover { color: var(--brand); }
   .sm__card--res:hover .sm__act:hover { color: #fff; }
 }
+
+/* Free resources cards: the action is the site's brand CTA (orange pill, label and round arrow button); on the orange hover state it turns white */
+.sm__act::after { content: none; }
+.sm__card--res > a.sm__act.cta { margin-top: auto; align-self: flex-start; width: auto; height: 48px; padding: 0 5px 0 22px; gap: 14px; color: #fff; }
+.sm__card--res .sm__stages + .sm__act, .sm__card--res .sm__act { margin-top: auto; }
+@media (hover: hover) and (pointer: fine) {
+  .sm__card--res:hover > a.sm__act.cta, .sm__card--res:hover > a.sm__act.cta:hover { background: #fff; color: var(--brand); text-shadow: none; box-shadow: 0 12px 22px -12px rgba(60, 15, 0, .55); }
+  .sm__card--res:hover > a.sm__act.cta::before { background: var(--sand); }
+  .sm__card--res:hover > a.sm__act.cta .sq { background: var(--brand); }
+  .sm__card--res:hover > a.sm__act.cta .sq svg { stroke: #fff; }
+  .sm__card--res:hover > a.sm__act.cta .sq img { filter: brightness(0) invert(1); }
+}
+
+/* Free resources cards: the site's link button (brand text, arrow, underline that draws in on hover), the same as "View all batches" */
+.sm__card--res > a.sm__act.tlink { margin-top: auto; align-self: flex-start; width: auto; height: auto; min-height: 0; padding: 6px 0 0; gap: 10px; background: none; box-shadow: none; font: 600 17px/1.3 var(--f-d); color: var(--brand); }
+.sm__act.tlink::after { content: ""; position: absolute; left: 0; right: 28px; bottom: -2px; height: 1.5px; background: currentColor; border-radius: 0; transform: scaleX(0); transform-origin: 0 50%; width: auto; transition: transform .4s cubic-bezier(.2, .8, .2, 1); }
+.sm__act.tlink:hover::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .sm__card--res:hover > a.sm__act.tlink, .sm__card--res:hover > a.sm__act.tlink:hover { background: none; box-shadow: none; color: #fff; }
+}
+
+/* ---- Free resources as a bento: the six cards differ in size and surface, using only the site's own colours (brand orange, deep brown, warm sand, white).
+   Four columns: row one is [wide orange][white][sand]; row two is [deep brown][white][wide white]. ---- */
+.sm__grid--res { grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-flow: dense; gap: 16px; }
+.sm__card--res { box-shadow: 0 0 0 1px rgba(194, 65, 12, .14), 0 18px 44px rgba(140, 64, 13, .06); }
+.sm__card--res:nth-child(1), .sm__card--res:nth-child(6) { grid-column: span 2; }
+.sm__card--res:nth-child(1) .sm__t, .sm__card--res:nth-child(6) .sm__t { font-size: 30px; line-height: 1.15; }
+.sm__card--res:nth-child(1) .sm__d, .sm__card--res:nth-child(6) .sm__d { font-size: 17px; max-width: 30em; }
+
+/* surfaces */
+.sm__card--res:nth-child(1) { background: linear-gradient(149deg, #e57512 14.3%, #ae3b0f 85.7%); box-shadow: 0 22px 44px -22px rgba(174, 59, 15, .6); }
+.sm__card--res:nth-child(3) { background: #FFF2E6; box-shadow: 0 0 0 1px rgba(194, 65, 12, .1); }
+.sm__card--res:nth-child(4) { background: #2A1208; box-shadow: 0 22px 44px -22px rgba(42, 18, 8, .7); }
+.sm__card--res:nth-child(1) .sm__t, .sm__card--res:nth-child(4) .sm__t { color: #fff; }
+.sm__card--res:nth-child(1) .sm__d, .sm__card--res:nth-child(4) .sm__d { color: rgba(255, 255, 255, .86); }
+.sm__card--res:nth-child(1) .sm__tag, .sm__card--res:nth-child(4) .sm__tag { background: rgba(255, 255, 255, .16); color: #fff; }
+.sm__card--res:nth-child(1) > a.sm__act.tlink, .sm__card--res:nth-child(4) > a.sm__act.tlink { color: #fff; }
+.sm__card--res:nth-child(4) > a.sm__act.tlink { color: #FFD48A; }
+.sm__card--res:nth-child(3) .sm__tag { background: #fff; }
+@media (max-width: 1000px) { .sm__grid--res { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .sm__grid--res { grid-template-columns: 1fr; } .sm__card--res:nth-child(1), .sm__card--res:nth-child(6) { grid-column: auto; } }
+
+/* bento colours, softened: no dark card. Brand orange for the lead card, then warm peach, sand and white in turn */
+.sm__card--res:nth-child(2) { background: #fff; }
+.sm__card--res:nth-child(3) { background: #FFE3CE; box-shadow: 0 0 0 1px rgba(194, 65, 12, .12); }
+.sm__card--res:nth-child(4) { background: #FFF2E6; box-shadow: 0 0 0 1px rgba(194, 65, 12, .1); }
+.sm__card--res:nth-child(5) { background: #fff; }
+.sm__card--res:nth-child(6) { background: linear-gradient(160deg, #FFE8D6, #FFF6EC); box-shadow: 0 0 0 1px rgba(194, 65, 12, .1); }
+.sm__card--res:nth-child(4) .sm__t { color: var(--ink); }
+.sm__card--res:nth-child(4) .sm__d { color: var(--body); }
+.sm__card--res:nth-child(4) .sm__tag, .sm__card--res:nth-child(3) .sm__tag, .sm__card--res:nth-child(6) .sm__tag { background: #fff; color: var(--brand); }
+.sm__card--res:nth-child(4) > a.sm__act.tlink { color: var(--brand); }
+
+/* bento, colour removed: every card is plain white with a hairline edge; only the sizes differ */
+.sm__card--res:nth-child(n) { background: #fff; box-shadow: 0 0 0 1px rgba(194, 65, 12, .14), 0 18px 44px rgba(140, 64, 13, .06); }
+.sm__card--res:nth-child(n) .sm__t { color: var(--ink); }
+.sm__card--res:nth-child(n) .sm__d { color: var(--body); opacity: 1; }
+.sm__card--res:nth-child(n) .sm__tag { background: rgba(194, 65, 12, .09); color: var(--brand); }
+.sm__card--res:nth-child(n) > a.sm__act.tlink { color: var(--brand); }
+@media (hover: hover) and (pointer: fine) {
+  .sm__card--res:nth-child(n):hover .sm__t, .sm__card--res:nth-child(n):hover .sm__d { color: #fff; }
+  .sm__card--res:nth-child(n):hover .sm__tag { background: rgba(255, 255, 255, .2); color: #fff; }
+  .sm__card--res:nth-child(n):hover > a.sm__act.tlink { color: #fff; }
+}
+
+/* "More free resources": the label sits centred above the pill row, and the pills are centred too */
+.sm__more { flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 18px; }
+.sm__more-k { text-align: center; }
+.sm__more-list { flex: none; justify-content: center; }
+.sm__more { border-top: 0; padding-top: 0; }   /* no rule above "More free resources" */
+/* Contact us: the call and email actions are the site's link button; the channel cards no longer need a column for a button */
+.cm__item--chan .tlink.cm__cta { align-self: flex-start; }
+/* Contact rows (directions, call, email): details on the left, the link button on the right, on one line above phone width */
+@media (min-width: 641px) {
+  #visit .cm__item--chan { flex-wrap: nowrap; }
+  #visit .cm__item--chan > div { flex: 1 1 auto; min-width: 0; }
+  #visit .cm__item--chan > .cm__cta { flex: none; white-space: nowrap; }
+}
