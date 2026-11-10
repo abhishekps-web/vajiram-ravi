@@ -115,9 +115,6 @@
     ['Do you offer coaching for optional subjects?', 'Yes. Optional coaching runs for 20 to 30 weeks in subjects including Geography, History, Sociology, Psychology, Economics and Political Science, with an Optional Test Series alongside.'],
     ['How do you prepare students for the UPSC interview?', 'The Interview Guidance Programme (IGP) prepares you for the Personality Test with mock interviews and DAF preparation, so you face the board with structure and confidence.'],
     ['Can I join a test series without a full course?', 'Yes. The Prelims, Mains and Optional test series can be taken on their own, alongside your own preparation.'],
-    ['Where are your centres?', 'The head campus is at 1-B/7, Pusa Road, Old Rajinder Nagar, New Delhi, next to Gate 5 of Karol Bagh Metro Station. There is also a campus in Egmore, Chennai.'],
-    ['Are online classes the same as classroom classes?', 'Yes. Every programme runs in the classroom and LIVE-Online, and live online and recorded classes carry the same faculty, the same tests and the same study plan.'],
-    ['How do I enrol or speak to a counsellor?', 'Book a free session with the form on this page, call 080-6220-6330 (Monday to Saturday, 9 am to 7 pm), or email admissions@vajiramandravi.com. There is no pressure to enrol.']
   ];
   const FOOTER = [
     ['Vajiram & Ravi', ['About us', 'Careers', 'Contact us', 'FAQs']],
@@ -763,6 +760,6 @@
   // card groups rise in once as they enter
   if (!reduce && 'IntersectionObserver' in window) {
     const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
-    $$('.kcards, .tgrid, .pgrid, .rcards, .fgrid, .qgrid, .bgrid, .agrid, .wc__cards, .wc__stats, .sm__grid').forEach(g => { g.classList.add('rise'); [...g.children].forEach((c, i) => c.style.setProperty('--i', i)); io.observe(g); });
+    $$('.kcards, .tgrid, .pgrid, .rcards, .fgrid, .qgrid, .bgrid, .agrid, .wc__cards, .wc__stats, .sm__grid, .sm__more-list').forEach(g => { g.classList.add('rise'); [...g.children].forEach((c, i) => c.style.setProperty('--i', i)); io.observe(g); });
   }
 })();
