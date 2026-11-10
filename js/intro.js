@@ -14,7 +14,6 @@
       '<span class="vrv__ring" aria-hidden="true"></span>' +
       '<div class="vrv__logo" role="img" aria-label="Vajiram &amp; Ravi, Institute for IAS Examination"><img class="lc" src="assets/img/brand/logo.png" alt="" width="966" height="227"><img class="lw" src="assets/img/brand/logo.png" alt="" width="966" height="227"></div>' +
       '<p class="vrv__tag"><span>Understanding India.</span> <span>Shaping its Future.</span></p>' +
-      '<p class="vrv__tag-hi" lang="hi">भारत को समझें। उसका भविष्य गढ़ें।</p>' +
     '</div>' +
     '<span class="vrv__bar" aria-hidden="true"></span>' +
     '<span class="vrv__edge" aria-hidden="true"></span>' +

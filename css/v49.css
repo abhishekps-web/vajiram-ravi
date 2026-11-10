@@ -1043,6 +1043,155 @@ html.vrv-lock .wa { opacity: 0; pointer-events: none; }
 #toppers.vrnp { --rs-title: "Newsreader"; }
 #toppers .rs-seal text { font-family: var(--f-title); font-weight: 600; }   /* the AIR rubber-stamp seals on the topper portraits (were Playfair Display) */
 
+/* ---- faculty v5: the toppers' postcard (buff card, clipped snapshot, perforated stamp, postmark, ruled lines) reused for faculty ---- */
+#faculty { --fcw: calc((100% - 3 * 28px) / 4); }
+#faculty .rail--fac { --cw: var(--fcw); }
+@media (max-width: 1200px) { #faculty .rail--fac { --cw: calc((100% - 2 * 28px) / 3); } }
+@media (max-width: 1000px) { #faculty .rail--fac { --cw: calc((100% - 28px) / 2.3); } }
+@media (max-width: 640px) { #faculty .rail--fac { --cw: calc(100% / 1.35); } }
+#faculty #team.rail__track { gap: 28px; padding-top: 40px; padding-bottom: 56px; margin-bottom: -20px; }
+#team .fc.pcd { display: block; padding: 0; background: none; box-shadow: none; border-radius: 0; overflow: visible; text-align: left; aspect-ratio: 3 / 4; }
+#team .fc.pcd::before, #team .fc.pcd::after { content: none; }
+#team .fc.pcd:hover { translate: 0 -8px; }
+#team .fc.pcd .pcd__in::before { inset: 5px; z-index: auto; border: 1px solid rgba(168, 56, 10, .28); border-radius: 2px; }
+#team .fc .pcd__stamp b { font-size: 17px; letter-spacing: -.01em; }
+#team .fc .pcd__stamp small { font-size: 9.5px; }
+#team .fc .pcd__n { position: static; margin: 0; color: var(--ink); font: 600 19px/1.2 var(--f-d); pointer-events: auto; }
+#team .fc .pcd__l { position: static; margin: 0; color: #6B4A30; font: 400 13px/1.35 var(--f); letter-spacing: 0; text-transform: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; pointer-events: auto; }
+#team .fc .pcd__to { gap: 0; }
+#team .fc .fc__pf { color: var(--brand-d); font-weight: 600; text-decoration: none; }
+#team .fc .fc__pf:hover, #team .fc .fc__pf:focus-visible { color: var(--brand); }
+/* faculty postcards: a larger snapshot so the portrait carries the card */
+#team .fc .pcd__ph { width: 66%; }
+
+/* faculty postcards, smaller (5 across) with a clear text hierarchy: name > subject > profile link */
+#faculty { --fcw: calc((100% - 4 * 22px) / 5); }
+@media (max-width: 1200px) { #faculty .rail--fac { --cw: calc((100% - 3 * 22px) / 4); } }
+@media (max-width: 1000px) { #faculty .rail--fac { --cw: calc((100% - 22px) / 2.6); } }
+@media (max-width: 640px) { #faculty .rail--fac { --cw: calc(100% / 1.6); } }
+#faculty #team.rail__track { gap: 22px; }
+#team .fc .pcd__in { padding: 11px 12px 13px; }
+#team .fc .pcd__ph { width: 70%; }
+#team .fc .pcd__stamp { top: 9px; right: 9px; width: 52px; height: 62px; }
+#team .fc .pcd__stamp::after { inset: 5px; }
+#team .fc .pcd__stamp b { font-size: 14px; }
+#team .fc .pcd__stamp small { font-size: 8px; }
+#team .fc .pcd__mark { top: 58px; right: 19px; width: 42px; height: 42px; font-size: 7px; }
+#team .fc .pcd__mark b { font-size: 9px; }
+#team .fc .pcd__to > small { font-size: 12px; margin-bottom: 5px; }
+#team .fc .pcd__to > * + * { padding: 6px 0 5px; }
+#team .fc .pcd__n { font-size: 18px; font-weight: 700; line-height: 1.15; padding-top: 0; }
+#team .fc .pcd__l:not(.pcd__l--p) { font: 700 11.5px/1.3 var(--f); letter-spacing: .07em; text-transform: uppercase; color: var(--brand-d); }
+#team .fc .pcd__l--p { font: 500 12.5px/1.3 var(--f); letter-spacing: 0; text-transform: none; color: #7A5A40; }
+#team .fc .fc__pf:hover, #team .fc .fc__pf:focus-visible { color: var(--brand); }
+
+/* faculty postcards: no stamp or postmark; the LinkedIn link reads as a link (LinkedIn blue), distinct from the subject line */
+#team .fc .pcd__ph { width: 68%; }
+#team .fc .fc__pf, #team .fc .pcd__l--p.fc__pf { color: #0A66C2; font-weight: 600; }
+#team .fc .fc__pf:hover, #team .fc .fc__pf:focus-visible { color: #084E96; text-decoration: underline; text-underline-offset: 3px; }
+
+/* faculty postcards: neutral subject line, brand-coloured link */
+#team .fc .pcd__l:not(.pcd__l--p) { color: #5A4030; }
+#team .fc .fc__pf, #team .fc .pcd__l--p.fc__pf { color: var(--brand); }
+#team .fc .fc__pf:hover, #team .fc .fc__pf:focus-visible { color: var(--brand-d); }
+
+/* testimonials: a bigger lift on hover, and the other cards soften behind it */
+.pst { transition: rotate .55s var(--ease), translate .55s var(--ease), scale .55s var(--ease), filter .45s var(--ease), opacity .45s var(--ease); }
+.pst:hover, .pst:focus-within { scale: 1.16; translate: 0 calc(var(--y) - 18px); }
+@media (hover: hover) and (pointer: fine) {
+  #tcar:has(.pst:hover) .pst:not(:hover), #tcar:has(.pst:focus-within) .pst:not(:focus-within) { filter: blur(3.5px); opacity: .55; }
+}
+@media (prefers-reduced-motion: reduce) { .pst { transition: none; } }
+
+/* testimonials: more headroom so a hovered (scaled and lifted) card is not clipped by the row's box; the margin offsets the extra padding */
+#tcar.ilgrid { padding: 92px 0 84px; margin-top: -16px; margin-bottom: -16px; }
+
+/* testimonials reveal: heading rises out of a masked line, then the cards are dealt onto the table (rise, tilt and settle with a spring), staggered */
+#stories .st-line { display: block; }
+#stories .st-line { margin-block: -.1em; padding-block: .1em; overflow: hidden; }
+#stories .st-line > span { display: block; }
+#stories:not([data-in]) .st-line > span, #stories:not([data-in]) .pst, #stories:not([data-in]) .lbl, #stories:not([data-in]) .st-line { opacity: 0; }
+#stories[data-in] .st-line > span { animation: stLine .8s cubic-bezier(.22, 1, .36, 1) calc(var(--i, 0) * 90ms) both; }
+#stories[data-in] .lbl { animation: stFade .7s ease both; }
+#stories[data-in] .pst { animation: stDeal .9s cubic-bezier(.34, 1.56, .64, 1) calc(.26s + var(--n, 0) * .13s) both; }
+@keyframes stLine { 0% { transform: translateY(105%); } }
+@keyframes stFade { 0% { opacity: 0; transform: translateY(8px); } }
+@keyframes stDeal { 0% { opacity: 0; transform: translateY(110px) rotate(var(--from-r, 8deg)) scale(.9); } 40% { opacity: 1; } 100% { transform: none; } }
+@media (prefers-reduced-motion: reduce) { #stories .st-line > span, #stories .pst, #stories .lbl, #stories .st-line { opacity: 1 !important; animation: none !important; } }
+
+/* toppers: the closing CTA uses the same label type as every other site button (Figtree 700, 18px, sentence case) */
+.vrnp .rs-btn .rs-btn-label, .vrnp .rs-btn .rs-btn-t { font-family: var(--f); font-weight: 700; font-size: 18px; line-height: 1.25; letter-spacing: .005em; text-transform: none; }
+
+/* flagship eyebrow: a smaller lotus, in proportion to the 12-13px label text */
+#gs .lbl__sym { width: 24px; height: 15px; }
+#gs .lbl--sym { gap: 9px; }
+/* flagship eyebrow: lotus centred on the label's cap height (it sat ~1.5px low) */
+#gs .lbl__sym { width: 21px; height: 13px; transform: translateY(-1.5px); }
+
+/* ---- eyebrow badges (Figma "eyebrow pill"): a dark-brown cartouche with pointed ends, white 12px bold caps, 0.96px tracking.
+   Replaces the plain eyebrow text and its rule/ornament. On dark backgrounds (hero, flagship, "why") the cartouche is brand orange so it still reads. ---- */
+:is(#courses, #batches, #why, #gs, #faculty, #stories, #contact, #resources, #visit, #faq) .lbl__t, .lbl .lbl__t, .dl__k, .sc .vp__k > .ln, .hw__k {
+  display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; height: 30px; margin: 0; padding: 0 11px; overflow: visible;
+  border: solid transparent; border-width: 0 13px; border-image: url(../assets/img/brand/cartouche.svg) 0 13 fill / 0 13px / 0 stretch;
+  background: none; color: #fff !important; font: 500 12px/16px "Geist", var(--f), sans-serif; letter-spacing: .96px; text-transform: uppercase; white-space: nowrap; text-shadow: none;
+}
+.lbl > i, .lbl__orn, .lbl__sym, .lbl--sym > img { display: none !important; }
+.lbl, .lbl--w { gap: 0; }
+.lbl--w .lbl__t, #gs .lbl__t, .dl__k, .sc .vp__k > .ln, #resources:not(.is-paper) .lbl__t { border-image-source: url(../assets/img/brand/cartouche-brand.svg); }
+.dl__k { display: inline-flex; width: fit-content; margin: 0 0 24px; }
+.sc .vp__k { display: block; margin: 0 0 24px; }
+.sc .vp__k > .ln { padding: 0 11px; margin: 0; }
+.sc .vp__k .ln i { display: block; font-style: normal; color: #fff !important; }
+.hw__k { margin-bottom: 14px; }
+
+/* form section: more breathing room at the sides (desktop) */
+@media (min-width: 901px) { #contact .contact__in { padding-left: clamp(40px, 8vw, 150px); padding-right: clamp(40px, 8vw, 150px); } }
+@media (max-width: 900px) { #contact .contact__in { padding-left: max(var(--px), 22px); padding-right: max(var(--px), 22px); } }
+
+/* one content width for every section: the content column stops at 1440px (what the Why section already used) and centres on wider
+   screens, while section backgrounds stay full-bleed. The side padding grows to take up the slack, so everything that reads --px follows. */
+:root { --px: max(clamp(16px, 2.71vw, 52px), calc((100vw - 1440px) / 2)); }
+@media (min-width: 901px) { #contact .contact__in { padding-left: max(clamp(40px, 8vw, 150px), calc((100vw - 1440px) / 2 + 40px)); padding-right: max(clamp(40px, 8vw, 150px), calc((100vw - 1440px) / 2 + 40px)); } }
+
+/* programme books on small or touch screens: no button under the shelf; the whole book is the click target */
+@media (max-width: 900px), (hover: none), (pointer: coarse) {
+  #courses .pbk__b { display: none; }
+  #courses .gsbook--p { cursor: pointer; }
+}
+
+/* ---- faculty: a carousel that runs edge to edge (cards overflow past both sides and fade out), scrolled by the arrows, dots, swipe or trackpad ---- */
+#faculty #team.rail__track { display: grid; grid-auto-flow: column; grid-template-columns: none; grid-auto-columns: 280px; gap: 28px; justify-content: start; overflow-x: auto; overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; margin: 0 calc(-1 * var(--px)); padding: 56px calc(var(--px) + 24px) 72px; scroll-padding-inline: calc(var(--px) + 24px);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 44px, #000 calc(100% - 44px), transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 44px, #000 calc(100% - 44px), transparent 100%); }
+#faculty #team.rail__track::-webkit-scrollbar { display: none; }
+#team .fc.pcd { width: auto; margin: 0; scroll-snap-align: start; }
+@media (max-width: 640px) { #faculty #team.rail__track { grid-auto-columns: 244px; gap: 20px; } }
+@media (prefers-reduced-motion: reduce) { #faculty #team.rail__track { scroll-behavior: auto; } }
+
+/* faculty cards and their photos sit straight (no resting tilt) */
+#team .fc.pcd, #team .fc.pcd:hover { rotate: 0deg; }
+#team .fc .pcd__ph, #team .fc:hover .pcd__ph { rotate: 0deg; }
+
+/* FAQ: a wider column so the list is in proportion with the heading and the other sections */
+#faq.faq { max-width: 1120px; }
+#faq .qa p { max-width: 48em; }
+
+/* tighter side padding on every section (was ~39px at 1440, now ~20px); the 1440px content cap is unchanged */
+:root { --px: max(clamp(14px, 1.4vw, 24px), calc((100vw - 1440px) / 2)); }
+@media (min-width: 901px) { #contact .contact__in { padding-left: max(clamp(20px, 3vw, 56px), calc((100vw - 1440px) / 2 + 20px)); padding-right: max(clamp(20px, 3vw, 56px), calc((100vw - 1440px) / 2 + 20px)); } }
+#faculty #team.rail__track { padding-left: calc(var(--px) + 16px); padding-right: calc(var(--px) + 16px); scroll-padding-inline: calc(var(--px) + 16px); }
+
+/* content cap raised from 1440px to 1680px, then 1800px so wide screens (1536, 1920 and up) no longer get a large empty margin each side; inner caps follow it */
+:root { --px: max(clamp(14px, 1.4vw, 24px), calc((100vw - 1800px) / 2)); }
+@media (min-width: 901px) { #contact .contact__in { padding-left: max(clamp(20px, 3vw, 56px), calc((100vw - 1800px) / 2 + 20px)); padding-right: max(clamp(20px, 3vw, 56px), calc((100vw - 1800px) / 2 + 20px)); } }
+.wc__in { max-width: none; }
+.vrnp .np-page { max-width: none; }
+.lv__in { max-width: none; }
+
+/* success stories: less space above the heading (the Faculty section above already ends with its own bottom padding) */
+#stories.sheet { padding-top: calc(var(--sec-y) * .4); }
+
+/* ===== merged 2026-11-10: the rules below came after the teammate's block above and take precedence where they overlap ===== */
 /* ---- Footer ornament border (Figma 2164:5557): an outer gold rule 24px in (1.2px), an inner one 6px further in (0.6px), and an 18px gold
    diamond on each outer corner. Built in CSS rather than the 1440 x 520 SVG so it fits any footer height without squashing the diamonds.
    The span's box is the diamonds' bounds (15px in); ::before is the double rule. Sits above the wash (::before, z -1) and under the content. ---- */
@@ -1117,5 +1266,3 @@ footer.foot { padding-left: max(var(--px), 76px); padding-right: max(var(--px), 
 #visit .cta.cta.bt--line:hover { box-shadow: inset 0 0 0 1.5px var(--brand); color: var(--brand); }
 @media (max-width: 480px) { #visit .cm__cta { white-space: normal; } }
 
-/* ---- Faculty: the card rail capped at the site's 1280px content container, centred (as Resources, Talk to us, the closing CTA) ---- */
-#faculty > .rail { max-width: 1280px; margin-left: auto; margin-right: auto; }

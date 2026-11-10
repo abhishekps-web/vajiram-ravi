@@ -46,7 +46,6 @@
     'Answer writing for your optional, evaluated paper by paper.'
   ];
   // Hindi name in each card's medallion (corrected from the Figma's set)
-  const CAT_HI = ['आधार', 'वैकल्पिक विषय', 'सीसैट', 'साक्षात्कार', 'मार्गदर्शन', 'मुख्य परीक्षा', 'प्रारंभिक परीक्षा', 'वैकल्पिक टेस्ट'];
   const STAGES = [
     { k: 'Foundation', cats: [0] },
     { k: 'Prelims', cats: [6, 2] },
@@ -63,7 +62,9 @@
   // faculty carousel. Replace with the real faculty list and photos before launch.
   const FACULTY = [['SK Manocha', 'General Studies, Polity'], ['Brijender Singh', 'Essay'], ['Md. Rizwan', 'Geography optional'], ['Md. Tarique', 'History optional'],
     ['Rajeev Mehra', 'Indian Economy'], ['Anand Iyer', 'Ethics, GS IV'], ['Pranav Sethi', 'Modern History'], ['Vikram Rao', 'Public Administration'],
-    ['Harish Kumar', 'Science & Technology'], ['Suresh Nair', 'Sociology optional'], ['Alok Bansal', 'CSAT'], ['Deepak Chandra', 'Interview guidance']];
+    ['Harish Kumar', 'Science & Technology'], ['Suresh Nair', 'Sociology optional'], ['Alok Bansal', 'CSAT'], ['Deepak Chandra', 'Interview guidance'],
+    ['Kiran Malhotra', 'Indian Society'], ['Naveen Reddy', 'Disaster Management'], ['Sanjay Verma', 'Internal Security'], ['Ramesh Pillai', 'Ancient and Medieval History'],
+    ['Arvind Joshi', 'Environment and Ecology'], ['Manish Tiwari', 'International Relations'], ['Prakash Menon', 'Mathematics optional'], ['Tarun Saxena', 'Mains answer writing']];
   // LinkedIn profile URLs, in FACULTY order. Not known yet: until one is filled in, the button opens a
   // LinkedIn people search for the name, so the link works without pointing at a guessed profile.
   const FACULTY_LI = ['', '', '', ''];
@@ -407,26 +408,25 @@
   const PAT = ['buta', 'jaali', 'phool', 'bandhani', 'leheriya', 'scallop', 'star', 'chevron'];
   // washes alternate orange / brown like a chequerboard, so neighbours in a row and a column differ
   const art = i => `<div class="pc__art pc__art--w${(i + Math.floor(i / 4)) % 2}"><img class="pc__bg" src="${PHOTO(`prog-${PROG_IMG[i]}.jpg`)}" alt="" loading="lazy"><span class="pc__pat pc__pat--${PAT[i]}" aria-hidden="true"></span>
-      <img class="el el--1" src="${PATTERN('ellipse-1.svg')}" alt=""><img class="el el--2" src="${PATTERN('ellipse-2.svg')}" alt=""><img class="el el--3" src="${PATTERN('ellipse-3.svg')}" alt=""><img class="el el--4" src="${PATTERN('ellipse-4.svg')}" alt="">
-      ${['tl', 'bl', 'tr', 'br'].map(p => `<span class="hi hi--${p}" lang="hi">${CAT_HI[i]}</span>`).join('')}</div>`;
+      <img class="el el--1" src="${PATTERN('ellipse-1.svg')}" alt=""><img class="el el--2" src="${PATTERN('ellipse-2.svg')}" alt=""><img class="el el--3" src="${PATTERN('ellipse-3.svg')}" alt=""><img class="el el--4" src="${PATTERN('ellipse-4.svg')}" alt=""></div>`;
   // programmes as books, grouped exactly as the "Our Featured UPSC CSE Courses" tabs the user shared:
   // All / IGP / General Studies / Optional / Module Courses / Test Series, twelve programmes, each in one tab.
   // cat: the catalogue category its "View courses" opens; without one the button enquires with the programme pre-selected.
   // c: cloth colour (.gsbook--k0..k11), so no two neighbours match
   const PTABS = ['All', 'IGP', 'General Studies', 'Optional', 'Module Courses', 'Test Series'];
   const PROGS = [
-    { t: 'General Studies PCM', tab: 'General Studies', hi: 'सामान्य अध्ययन', sp: 'GS PCM', c: 0, prog: 'General Studies Prelims cum Mains 2027 (1 year)', d: 'The whole General Studies syllabus for Prelims and Mains, in one year, for graduates.' },
-    { t: 'GS PCM – 2 Year Fledgling', tab: 'General Studies', hi: 'दो वर्षीय कार्यक्रम', sp: 'Fledgling', c: 5, prog: 'GS PCM 2-Year Fledgling 2028', d: 'The General Studies programme spread over two years, for college students.' },
-    { t: 'GS Mains Crash Course', tab: 'General Studies', hi: 'क्रैश कोर्स', sp: 'GS Mains Crash', c: 4, prog: 'GS Mains Crash Course', d: 'A short, intensive run through General Studies for the Mains papers.' },
-    { t: 'Optional Subjects', tab: 'Optional', hi: 'वैकल्पिक विषय', sp: 'Optional', c: 1, prog: 'Optional Subject Programme', d: 'Two papers, 500 marks, taught by a specialist in your optional subject.' },
-    { t: 'CSAT', tab: 'Module Courses', hi: 'सीसैट', sp: 'CSAT', c: 2, prog: 'CSAT Course', d: 'Prelims Paper II. Qualifying at 33%, but it has to be cleared.' },
-    { t: 'Interview Guidance Programme', tab: 'IGP', hi: 'साक्षात्कार', sp: 'Interview', c: 3, prog: 'UPSC CSE Interview Guidance Programme', d: 'Mock boards with detailed feedback, for the 275-mark personality test.' },
-    { t: 'Prelims Test Series', tab: 'Test Series', hi: 'प्रारंभिक परीक्षा', sp: 'Prelims Tests', c: 6, prog: 'PowerUp Prelims Test Series', d: 'Full-length tests with the reasoning behind every answer, plus current affairs.' },
-    { t: 'UPSC Mentorship Program', tab: 'IGP', hi: 'मार्गदर्शन', sp: 'Mentorship', c: 11, prog: 'StepUp Mentorship Programme 2027', d: 'A mentor keeps your plan on track, week by week, in English or Hindi.' },
-    { t: 'Module Courses', tab: 'Module Courses', hi: 'मॉड्यूल कोर्स', sp: 'Modules', c: 8, prog: 'Module Courses', d: 'Short courses that take one subject at a time, such as the Economics module.' },
-    { t: 'Mains Test Series', tab: 'Test Series', hi: 'मुख्य परीक्षा', sp: 'Mains Tests', c: 9, prog: 'Sure Shot Mains Programme 2027', d: 'Write to time, then read what an evaluator would change. English and Hindi.' },
-    { t: 'Optional Subject Crash Course', tab: 'Optional', hi: 'वैकल्पिक क्रैश कोर्स', sp: 'Optional Crash', c: 10, prog: 'Optional Subject Crash Course', d: 'A fast, focused revision of your optional before Mains.' },
-    { t: 'IFoS Programmes', tab: 'General Studies', hi: 'भारतीय वन सेवा', sp: 'IFoS', c: 7, prog: 'IFoS Programmes', d: 'Preparation for the Indian Forest Service examination.' }
+    { t: 'General Studies PCM', tab: 'General Studies', sp: 'GS PCM', c: 0, prog: 'General Studies Prelims cum Mains 2027 (1 year)', d: 'The whole General Studies syllabus for Prelims and Mains, in one year, for graduates.' },
+    { t: 'GS PCM – 2 Year Fledgling', tab: 'General Studies', sp: 'Fledgling', c: 5, prog: 'GS PCM 2-Year Fledgling 2028', d: 'The General Studies programme spread over two years, for college students.' },
+    { t: 'GS Mains Crash Course', tab: 'General Studies', sp: 'GS Mains Crash', c: 4, prog: 'GS Mains Crash Course', d: 'A short, intensive run through General Studies for the Mains papers.' },
+    { t: 'Optional Subjects', tab: 'Optional', sp: 'Optional', c: 1, prog: 'Optional Subject Programme', d: 'Two papers, 500 marks, taught by a specialist in your optional subject.' },
+    { t: 'CSAT', tab: 'Module Courses', sp: 'CSAT', c: 2, prog: 'CSAT Course', d: 'Prelims Paper II. Qualifying at 33%, but it has to be cleared.' },
+    { t: 'Interview Guidance Programme', tab: 'IGP', sp: 'Interview', c: 3, prog: 'UPSC CSE Interview Guidance Programme', d: 'Mock boards with detailed feedback, for the 275-mark personality test.' },
+    { t: 'Prelims Test Series', tab: 'Test Series', sp: 'Prelims Tests', c: 6, prog: 'PowerUp Prelims Test Series', d: 'Full-length tests with the reasoning behind every answer, plus current affairs.' },
+    { t: 'UPSC Mentorship Program', tab: 'IGP', sp: 'Mentorship', c: 11, prog: 'StepUp Mentorship Programme 2027', d: 'A mentor keeps your plan on track, week by week, in English or Hindi.' },
+    { t: 'Module Courses', tab: 'Module Courses', sp: 'Modules', c: 8, prog: 'Module Courses', d: 'Short courses that take one subject at a time, such as the Economics module.' },
+    { t: 'Mains Test Series', tab: 'Test Series', sp: 'Mains Tests', c: 9, prog: 'Sure Shot Mains Programme 2027', d: 'Write to time, then read what an evaluator would change. English and Hindi.' },
+    { t: 'Optional Subject Crash Course', tab: 'Optional', sp: 'Optional Crash', c: 10, prog: 'Optional Subject Crash Course', d: 'A fast, focused revision of your optional before Mains.' },
+    { t: 'IFoS Programmes', tab: 'General Studies', sp: 'IFoS', c: 7, prog: 'IFoS Programmes', d: 'Preparation for the Indian Forest Service examination.' }
   ];
   const pAct = p => p.cat != null
     ? `<button type="button" class="vbtn" data-open="${p.cat}"><span>View courses</span><span class="sq sq--30 sq--ink">${ico('arrow-white.svg')}</span></button>`
@@ -437,7 +437,7 @@
   pageG.className = 'shelves';
   pageG.removeAttribute('role');
   const bookHTML = (p, i, k) => `<article class="pbk" id="prog${i}" style="--k:${k}">
-      <div class="gsbook gsbook--p gsbook--k${p.c}" ${p.cat != null ? `data-open="${p.cat}"` : `data-book-prog="${esc(p.prog)}"`} data-i="${i}" style="--i:${i}">
+      <div class="gsbook gsbook--p gsbook--k${p.c}" ${p.cat != null ? `data-open="${p.cat}"` : `data-book-prog="${esc(p.prog)}"`} data-i="${i}" style="--i:${i}" role="button" tabindex="0" aria-label="${esc(p.t)}: ${p.cat != null ? 'view courses' : 'enquire'}">
         <div class="gsbook__in">
           <div class="gsbook__back"></div><div class="gsbook__pages"></div><div class="gsbook__top"></div><div class="gsbook__bottom"></div>
           <div class="gsbook__spine" aria-hidden="true"><b>${esc(p.sp)}</b></div>
@@ -587,6 +587,7 @@
   }
 
   $('#pgrid').addEventListener('click', e => { const b = e.target.closest('[data-open]'); if (b) openCat(+b.dataset.open); });
+  $('#pgrid').addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('.gsbook')) { e.preventDefault(); e.target.click(); } });
   // mega menu and result-card links open the catalogue on that category
   document.addEventListener('click', e => { const a = e.target.closest('[data-cat]'); if (!a) return; e.preventDefault(); openCat(+a.dataset.cat); });
 
@@ -605,20 +606,25 @@
   }
 
   /* ---------------- faculty ---------------- */
-  $('#team').innerHTML = FACULTY.map(([n, s], i) => `<article class="fc"><div class="fc__ph"><span class="fc__img"><img src="${PHOTO(`faculty-${i % 4 + 1}.jpg`)}" alt="${esc(n)}" loading="lazy"></span><a class="fc__li" href="${esc(liFor(n, i))}" target="_blank" rel="noopener" aria-label="View ${esc(n)} on LinkedIn"><svg viewBox="0 0 16 16" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M3.2 5.9h2.3v7.2H3.2zM4.35 2.6a1.35 1.35 0 1 1 0 2.7 1.35 1.35 0 0 1 0-2.7zM6.9 5.9h2.2v1c.4-.7 1.2-1.2 2.3-1.2 2.4 0 2.8 1.5 2.8 3.5v3.9h-2.3V9.5c0-.8 0-1.8-1.1-1.8s-1.3.9-1.3 1.8v3.6H6.9z"/></svg></a></div><h3>${esc(n)}</h3><p>${esc(s)}</p></article>`).join('');
+  const FTILT = [-1.6, 1.2, -0.8, 1.6];
+  const facCard = ([n, s], i, dup) => `<article class="fc pcd"${dup ? ' aria-hidden="true"' : ''} style="--t:${FTILT[i % 4]}deg"><span class="pcd__clipbox pcd__clipbox--b" aria-hidden="true"><i class="pcd__clip pcd__clip--b"></i></span><div class="pcd__in"><span class="pcd__ph"><span class="pcd__paper"><img src="${PHOTO(`faculty-${i % 4 + 1}.jpg`)}" alt="${esc(n)}" loading="lazy"></span></span><div class="pcd__to"><h3 class="pcd__n">${esc(n)}</h3><p class="pcd__l">${esc(s)}</p><a class="pcd__l pcd__l--p fc__pf" href="${esc(liFor(n, i))}" target="_blank" rel="noopener"${dup ? ' tabindex="-1"' : ''} aria-label="View ${esc(n)}'s profile on LinkedIn">View on LinkedIn <span aria-hidden="true">&rarr;</span></a></div></div><span class="pcd__clipbox pcd__clipbox--f" aria-hidden="true"><i class="pcd__clip pcd__clip--f"></i></span></article>`;
+  $('#team').innerHTML = FACULTY.map((f, i) => facCard(f, i, false)).join('');
 
   /* ---------------- stories: postcards, as if dropped on a table ----------------
      The quotes come from the Figma and are attributed to real rankers: confirm them with the rankers before launch. */
   const PST = [[-3.2, 12], [1.8, -14], [-1.5, 6], [2.6, -6]];
-  const pstCard = (p, i, dup) => `<article class="pst" ${dup ? 'aria-hidden="true" inert' : ''} style="--t:${PST[i % 4][0]}deg;--y:${PST[i % 4][1]}px;--z:${(i % 9) + 1}">
+  const pstCard = (p, i, dup) => `<article class="pst" ${dup ? 'aria-hidden="true" inert' : ''} style="--t:${PST[i % 4][0]}deg;--y:${PST[i % 4][1]}px;--z:${(i % 9) + 1};--n:${i};--from-r:${i % 2 ? -9 : 9}deg">
       <div class="pst__in">
-        <p class="pst__hd" aria-hidden="true">POST CARD</p>
+        <p class="pst__hd" aria-hidden="true">TESTIMONIAL</p>
         <blockquote class="pst__q"><img class="pst__ph" src="${esc(p.src)}" alt="${dup ? '' : esc(p.n)}" loading="lazy">${esc(TESTIMONIALS[p.r].replace(/^“|”$/g, ''))}</blockquote>
         <footer class="pst__who"><b>${esc(p.n)}</b><em>AIR ${p.r}, UPSC CSE ${p.y}</em></footer>
       </div></article>`;
   const pstList = top10.filter(p => TESTIMONIALS[p.r]).slice(0, 9);
   // two identical sets in one track: it slides left by exactly one set, so the loop has no seam; hovering pauses it
   $('#tcar').innerHTML = `<div class="pst__track" style="--dur:${(pstList.length * 370 / 48).toFixed(1)}s">${pstList.map((p, i) => pstCard(p, i, false)).join('')}${pstList.map((p, i) => pstCard(p, i, true)).join('')}</div>`;
+  // reveal: when the section scrolls into view the heading rises out of its line and the cards are dealt onto the table one after another
+  { const st = $('#stories');
+    if (st) { if ('IntersectionObserver' in window && !reduce) { const io = new IntersectionObserver(es => { if (es[0].isIntersecting) { st.setAttribute('data-in', ''); io.disconnect(); } }, { threshold: .25 }); io.observe(st); } else st.setAttribute('data-in', ''); } }
   if (!reduce && matchMedia('(hover: hover) and (pointer: fine)').matches) {
     const tc = $('#tcar');
     tc.addEventListener('pointermove', e => { const c = e.target.closest('.pst'); if (!c) return; const r = c.getBoundingClientRect(); c.style.setProperty('--tx', ((e.clientX - r.left) / r.width - .5).toFixed(3)); c.style.setProperty('--ty', ((e.clientY - r.top) / r.height - .5).toFixed(3)); });
