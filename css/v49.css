@@ -1294,3 +1294,21 @@ section#why.wc, #stories.sheet, #faq.sheet { background: var(--ground); }   /* o
 .sg > * { opacity: 0; translate: 0 28px; transition: opacity .7s var(--ease), translate .85s var(--ease); transition-delay: calc(var(--i, 0) * 80ms); }
 .sg.in > * { opacity: 1; translate: 0 0; }
 @media (prefers-reduced-motion: reduce) { .sg > * { opacity: 1; translate: none; transition: none; } }
+
+/* FAQ, open item: the answer runs to the same right inset as its question (the 48em cap left it ending mid-box on large screens) */
+#faq .qa p { max-width: none; padding-right: 20px; box-sizing: border-box; }
+/* FAQ cards: one outer edge whether open or closed. The marigold marker was a 3px left border, transparent when closed, so the closed card's
+   outline (an inset shadow, drawn inside the border) sat 3px in from the open one. The marker is now an inset shadow too. */
+#faq .qa { border-left: 0; }
+#faq .qa[open] { box-shadow: inset 3px 0 0 var(--marigold), inset 0 0 0 1px var(--line-2), 0 14px 30px -22px rgba(120, 50, 10, .35); }
+
+/* ---- One content container for every section (user 2026-11-10, screenshot: FAQ wider than the closing card on large screens). The global
+   container is the section padding --px (content stops at 1800px and centres). Blocks that still carried their own cap now follow it:
+   Free resources (1280), closing CTA (1280), Contact and campus panel (1240), Toppers paper (1320, css/toppers.css), Why (css/why-choose.css),
+   and Talk to us (its own padding formula). Stories and the banner carousel stay full-bleed by design. ---- */
+#resources .sm__in, #closing .cl__card, #visit .cm { max-width: none; }
+#toppers.vrnp .np-page { max-width: none; }
+#why.wc .wc__in { max-width: none; }
+#contact .contact__in { max-width: none; padding-left: var(--px); padding-right: var(--px); }
+#gs.gs { --gs-left: var(--px); }   /* text column starts on the container edge (was centred on an old 1240px container) */
+section#toppers.vrnp { padding-left: var(--px); padding-right: var(--px); }   /* the paper sits on the container (was 16 / 28px from the screen edge) */
