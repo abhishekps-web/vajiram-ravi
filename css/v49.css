@@ -1,7 +1,7 @@
 @import url("v48.css");
 
 /* v49: hero is a timed slideshow (intro -> Plan -> Learn -> Rank) with filling progress bars. Text/card alignment alternates as before. */
-.dl--pin { height: 100svh; min-height: 680px; max-height: 1000px; }
+.dl--pin { height: 100vh; height: 100svh; min-height: 0; max-height: none; }
 .dl__stick { position: relative; height: 100%; min-height: 0; }
 .dl__in { opacity: 1; transform: none; transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
 .dl--pin:not([data-s="0"]) .dl__in { opacity: 0; transform: translate3d(0,-40px,0); pointer-events: none; }

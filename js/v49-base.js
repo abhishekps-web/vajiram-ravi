@@ -265,6 +265,7 @@
 
   /* ---------------- toppers ---------------- */
   let year = YEARS[0];
+  if ($('#tgrid')) {   // the old "Toppers List" section; the newspaper toppers (js/np-toppers.js) replaced it
   $('#years').innerHTML = YEARS.map(y => `<button type="button" role="tab" data-y="${y}" aria-selected="${y === year}">${y}</button>`).join('');
   const renderYear = () => {
     // one newspaper page: masthead with ears, then equal ruled columns, one brief per topper
@@ -341,6 +342,7 @@
     if (matchMedia('(hover: hover)').matches) tg.addEventListener('pointerover', e => { const c = e.target.closest('.tp__i'); if (c && !c.contains(e.relatedTarget)) burst(c); });
     else tg.addEventListener('click', e => { const c = e.target.closest('.tp__i'); if (c) burst(c); });
   }
+  }   // end: old Toppers List (skipped when #tgrid is not on the page)
   {
     const stage = $('#heroStage'), hero = $('.hero');
     if (stage && !reduce) {
@@ -391,7 +393,7 @@
     $('#ydList').innerHTML = l.map(p => `<li><img src="${esc(p.src)}" alt="" loading="lazy"><span class="mono">AIR ${p.r}</span><b>${esc(p.n)}</b><small>${progOf(p)}</small></li>`).join('');
     yd.showModal();
   };
-  $('#allRanks').addEventListener('click', openRanks);
+  const allRanks = $('#allRanks'); if (allRanks) allRanks.addEventListener('click', openRanks);
   document.addEventListener('click', e => { if (e.target.closest('[data-allranks]')) { e.preventDefault(); year = YEARS[0]; openRanks(); } });
   $('#ydClose').addEventListener('click', () => yd.close());
   yd.addEventListener('click', e => { if (e.target === yd) yd.close(); });
