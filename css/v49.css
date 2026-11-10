@@ -1191,6 +1191,13 @@ html.vrv-lock .wa { opacity: 0; pointer-events: none; }
 /* success stories: less space above the heading (the Faculty section above already ends with its own bottom padding) */
 #stories.sheet { padding-top: calc(var(--sec-y) * .4); }
 
+/* FAQ: the full content width, like the other sections */
+#faq.faq { max-width: none; }
+#faq .qas { max-width: 100%; }
+
+/* FAQ: a readable width (about 70 characters of answer text per line), centred */
+#faq.faq { max-width: 1000px; }
+
 /* ===== merged 2026-11-10: the rules below came after the teammate's block above and take precedence where they overlap ===== */
 /* ---- Footer ornament border (Figma 2164:5557): an outer gold rule 24px in (1.2px), an inner one 6px further in (0.6px), and an 18px gold
    diamond on each outer corner. Built in CSS rather than the 1440 x 520 SVG so it fits any footer height without squashing the diamonds.
