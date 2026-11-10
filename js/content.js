@@ -669,11 +669,10 @@
      until the article pages exist. */
   const smGrid = $('#smGrid'), smTabs = $('#smTabs');
   if (smGrid && smTabs) {
-    const UR = c => `<img src="assets/img/icons/arrow-ur-${c}.svg" alt="" width="14" height="14">`;
     const card = (k, t, i, n) => `<li class="sm__card${!i && n === 5 ? ' sm__card--wide' : ''}" style="--i:${i}">
         <a href="${SITE}" target="_blank" rel="noopener">
           <img class="sm__rays" src="assets/img/patterns/surya-rays.svg" alt="" width="300" height="300">
-          <span class="sm__top"><span class="sm__tag">${esc(k.toUpperCase())} · ${String(i + 1).padStart(2, '0')}</span><span class="sm__go">${UR('white')}</span></span>
+          <span class="sm__top"><span class="sm__tag">${esc(k.toUpperCase())} · ${String(i + 1).padStart(2, '0')}</span><span class="sm__go sq sq--38 sq--ink"><img src="assets/img/icons/arrow-white.svg" alt="" width="16" height="16"><img src="assets/img/icons/arrow-brand.svg" alt="" width="16" height="16"></span></span>
           <span class="sm__t">${esc(t)}</span>
         </a></li>`;
     const show = (k, animate) => {

@@ -351,3 +351,31 @@ h2.rs-paper-head { letter-spacing: -0.05em; }
   #toppers.vrnp { background: linear-gradient(180deg, rgba(194, 65, 12, .8) 0, rgba(194, 65, 12, .88) 40vw, var(--brand, #C2410C) 75vw),
                               url(../assets/img/photos/toppers-collage.webp) center top / auto 75vw no-repeat, var(--brand, #C2410C); }
 }
+
+/* ---- Press-run reveal (user 2026-11-10: "when the user reaches the toppers section, reveal animations"). js/toppers.js adds .np-anim to the
+   section (only with motion allowed), tags each element .np-r with a stagger index --i, and adds .is-in to a group when it scrolls into view.
+   Keyframes animate the individual translate / scale / rotate properties with a backwards fill, so after they finish the existing hover
+   transforms (photo zoom, seal turn, caption rule) work untouched. Without the script nothing is hidden. ---- */
+@keyframes npRise { from { opacity: 0; translate: 0 18px; } }
+@keyframes npPop { from { opacity: 0; scale: .8; } }
+@keyframes npHead { from { opacity: 0; translate: 0 .35em; } }
+@keyframes npWipe { from { transform: scaleY(1); } to { transform: scaleY(0); } }
+@keyframes npSettle { from { scale: 1.14; } }
+@keyframes npStamp { 0% { opacity: 0; scale: 1.7; rotate: -22deg; } 65% { opacity: 1; scale: .94; rotate: 2deg; } 100% { scale: 1; rotate: 0deg; } }
+.np-anim .np-r:not(.is-in) { opacity: 0; }
+.np-anim .np-r.is-in { animation: npRise .75s var(--ease, cubic-bezier(.2, .7, .2, 1)) calc(var(--i, 0) * 70ms) backwards; }
+.np-anim .np-r.np-pop.is-in { animation-name: npPop; animation-duration: .5s; animation-timing-function: var(--spring, cubic-bezier(.34, 1.4, .5, 1)); animation-delay: calc(var(--i, 0) * 45ms + .1s); }
+.np-anim .np-r.np-head.is-in { animation-name: npHead; animation-duration: .9s; }
+/* portraits: a paper-coloured sheet lifts off the photo, the photo settles from a slight zoom, then the AIR seal is stamped */
+.np-anim .rs-np-hero-photo::before, .np-anim .rs-np-card-photo::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: #fef8ec; transform: scaleY(0); transform-origin: 50% 0; }
+.np-anim .np-r.is-in .rs-np-hero-photo::before, .np-anim .np-r.is-in .rs-np-card-photo::before { animation: npWipe .9s cubic-bezier(.7, 0, .2, 1) calc(var(--i, 0) * 110ms + .15s) both; }
+.np-anim .np-r.is-in .np-fill { animation: npSettle 1.3s var(--ease, cubic-bezier(.2, .7, .2, 1)) calc(var(--i, 0) * 110ms + .15s) backwards; }
+.np-anim .np-r.is-in .rs-np-seal { animation: npStamp .6s cubic-bezier(.3, 1.2, .5, 1) calc(var(--i, 0) * 110ms + .95s) backwards; }
+.np-anim .np-r:not(.is-in) .rs-np-seal { opacity: 0; }
+/* an earlier year swapped in from the chips: its cards rise in turn */
+.rs-yv.is-swap .rs-yv-card, .rs-yv.is-swap .rs-yv-head > * { animation: npRise .6s var(--ease, cubic-bezier(.2, .7, .2, 1)) calc(var(--i, 0) * 60ms) backwards; }
+@media (prefers-reduced-motion: reduce) {
+  .np-anim .np-r:not(.is-in) { opacity: 1; }
+  .np-anim .np-r, .np-anim .np-r *, .np-anim .np-r::before, .np-anim .np-r *::before, .rs-yv.is-swap * { animation: none !important; }
+  .np-anim .rs-np-hero-photo::before, .np-anim .rs-np-card-photo::before { content: none; }
+}

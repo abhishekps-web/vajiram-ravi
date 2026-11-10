@@ -913,35 +913,36 @@ html.vrv-lock .wa { opacity: 0; pointer-events: none; }
 /* ---- Free resources: "Study materials" (Figma 2256:4675). Header (mono kicker, two-tone title, Prelims / Mains / Quest tabs), six article
    cards in a 3 x 2 grid (the first one featured: orange gradient with the sun rays), and a foot row of other resources + "View more".
    Section padding follows the site rhythm (--sec-y, --px); the content is 1280px wide as in the frame. ---- */
-#resources.sm { --sm-ink: #161412; --sm-mute: #6b5d52; --sm-accent: #c2560c; --sm-flame: #e57512; --sm-line: #efe3d4;
+#resources.sm { --sm-ink: var(--ink); --sm-mute: #6b5d52; --sm-accent: var(--brand); --sm-flame: #e57512; --sm-line: rgba(194, 65, 12, .3);
   position: relative; margin-top: var(--sec-gap); padding: var(--sec-y) var(--px); background: linear-gradient(180deg, #fff7ee, #fffbf5); color: var(--sm-ink); }
 .sm__in { max-width: 1280px; margin: 0 auto; }
 #resources.sm .h2 { color: var(--ink); }
 .sm__head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px 40px; flex-wrap: wrap; }
-.sm__tabs { display: flex; gap: 6px; }
-.sm__tabs button { padding: 9px 16px; border: 0; border-radius: 999px; background: rgba(22, 20, 18, .05); font: 400 11.5px/1.2 "Geist Mono", ui-monospace, monospace; text-transform: uppercase; color: var(--sm-ink); cursor: pointer; transition: background-color .25s var(--ease), color .25s var(--ease); }
-.sm__tabs button[aria-selected="true"] { background: var(--sm-ink); color: #fff; }
-.sm__tabs button:focus-visible { outline: 2px solid var(--sm-accent); outline-offset: 2px; }
+.sm__tabs { display: flex; gap: 10px; flex-wrap: wrap; }   /* the site's pill tabs (as #courses .ptabs) */
+.sm__tabs button { height: 44px; padding: 0 20px; border: 1px solid rgba(194, 65, 12, .3); border-radius: 999px; background: #fff; font: 600 15px/1 var(--f); color: var(--ink); cursor: pointer; transition: background-color .2s, color .2s, border-color .2s; }
+.sm__tabs button[aria-selected="true"] { background: var(--brand); border-color: var(--brand); color: #fff; }
+.sm__tabs button:focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; }
 .sm__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; list-style: none; margin: 48px 0 0; padding: 0; }
 .sm__card { position: relative; min-height: 250px; border-radius: 24px; background: #fff; box-shadow: 0 18px 44px rgba(140, 64, 13, .08); overflow: hidden; transition: transform .4s var(--ease), box-shadow .4s var(--ease); }
 .sm__card > a { position: relative; display: flex; flex-direction: column; justify-content: space-between; gap: 24px; height: 100%; min-height: 250px; padding: 26px; box-sizing: border-box; color: inherit; text-decoration: none; }
 .sm__card > a:focus-visible { outline: 2px solid var(--sm-accent); outline-offset: -4px; border-radius: 24px; }
 .sm__card--wide { grid-column: span 2; }
 .sm__top { position: relative; display: flex; align-items: center; justify-content: space-between; }
-.sm__tag { padding: 7px 13px; border-radius: 999px; background: rgba(22, 20, 18, .05); font: 400 11.5px/1.2 "Geist Mono", ui-monospace, monospace; color: var(--sm-mute); }
-.sm__go { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 999px; background: var(--sm-ink); transition: transform .35s var(--ease), background-color .3s var(--ease); }
-.sm__t { position: relative; font: 600 19px/1.3 "Hanken Grotesk", var(--f); letter-spacing: -.01em; color: var(--sm-ink); }
+.sm__tag { padding: 6px 12px; border-radius: 999px; background: rgba(194, 65, 12, .08); font: 700 11.5px/1.2 var(--f); letter-spacing: .12em; color: var(--brand); }
+.sm__go.sq { position: relative; overflow: hidden; transition: background-color .3s var(--ease); }
+.sm__go img { grid-area: 1 / 1; transition: transform .45s cubic-bezier(.7, 0, .2, 1), opacity .3s var(--ease); }
+.sm__go img + img { opacity: 0; transform: translateX(-140%); }   /* the brand arrow waits off to the left; on hover it slides in as the white one leaves */
+.sm__t { position: relative; font: 500 22px/1.25 var(--f-d); letter-spacing: -.01em; color: var(--sm-ink); }
 .sm__rays { position: absolute; left: 210px; top: -90px; width: 300px; height: 300px; max-width: none; pointer-events: none; transform-origin: 50% 50%; transition: transform 1.2s var(--ease); }
 .sm__card--wide .sm__rays { left: auto; right: -90px; }
 /* hover: each card takes on the featured look (orange gradient + sun rays), faded in as a layer so only opacity animates */
 .sm__card::before { content: ""; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(149deg, #e57512 14.3%, #ae3b0f 85.7%); opacity: 0; transition: opacity .45s var(--ease); }
 .sm__card .sm__rays { opacity: 0; transition: opacity .45s var(--ease), transform 1.2s var(--ease); }
 .sm__tag, .sm__t { transition: background-color .35s var(--ease), color .35s var(--ease); }
-.sm__go img { transition: filter .3s var(--ease); }
 .sm__foot { display: flex; align-items: center; justify-content: space-between; gap: 20px 32px; flex-wrap: wrap; margin-top: 48px; }
 .sm__more { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.sm__morek { margin: 0; font: 400 11.5px/1.2 "Geist Mono", ui-monospace, monospace; letter-spacing: .46px; text-transform: uppercase; color: var(--sm-mute); }
-.sm__chip { display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border: 1px solid var(--sm-line); border-radius: 999px; background: #fff; font: 500 13.5px/1.2 "Hanken Grotesk", var(--f); color: var(--sm-ink); text-decoration: none; transition: border-color .25s var(--ease), color .25s var(--ease), transform .25s var(--ease); }
+.sm__morek { margin: 0; font: 700 12px/1.2 var(--f); letter-spacing: .14em; text-transform: uppercase; color: var(--brand); }
+.sm__chip { display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border: 1px solid var(--sm-line); border-radius: 999px; background: #fff; font: 600 14.5px/1.2 var(--f); color: var(--sm-ink); text-decoration: none; transition: border-color .25s var(--ease), color .25s var(--ease), transform .25s var(--ease); }
 .sm__chip img { transition: transform .3s var(--ease); }
 .sm__chip:focus-visible { outline: 2px solid var(--sm-accent); outline-offset: 2px; }
 /* motion: cards rise in (.rise from content.js); a tab switch re-runs a quick fade-up; hovers lift the card, turn the rays, nudge the arrows */
@@ -949,16 +950,16 @@ html.vrv-lock .wa { opacity: 0; pointer-events: none; }
 @keyframes smIn { from { opacity: 0; transform: translateY(14px); } }
 @media (hover: hover) and (pointer: fine) {
   .sm__card:hover { transform: translateY(-6px); box-shadow: 0 26px 54px rgba(174, 59, 15, .28); }
-  .sm__card:hover .sm__go { transform: rotate(45deg); }
   .sm__card:hover::before { opacity: 1; }
   .sm__card:hover .sm__rays { opacity: 1; transform: rotate(18deg) scale(1.06); }
   .sm__card:hover .sm__tag { background: rgba(255, 255, 255, .2); color: #fff; }
   .sm__card:hover .sm__t { color: #fff; }
   .sm__card:hover .sm__go { background: #fff; }
-  .sm__card:hover .sm__go img { filter: invert(1); }
-  .sm__tabs button[aria-selected="false"]:hover { background: rgba(22, 20, 18, .1); }
+  .sm__card:hover .sm__go img:first-child { transform: translateX(140%); opacity: 0; }
+  .sm__card:hover .sm__go img + img { transform: none; opacity: 1; }
+  .sm__tabs button[aria-selected="false"]:hover { border-color: var(--brand); color: var(--brand); }
   .sm__chip:hover { border-color: var(--sm-accent); color: var(--sm-accent); transform: translateY(-2px); }
-  .sm__chip:hover img { transform: translate(2px, -2px); }
+  .sm__chip:hover img { transform: translateX(3px); }
 }
 @media (max-width: 1000px) { .sm__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .sm__card--wide { grid-column: auto; } .sm__card--wide .sm__rays { left: 210px; right: auto; } }
 @media (max-width: 640px) { .sm__grid { grid-template-columns: 1fr; } .sm__card, .sm__card > a { min-height: 200px; } .sm__foot { flex-direction: column; align-items: flex-start; } }
@@ -997,12 +998,12 @@ html.vrv-lock .wa { opacity: 0; pointer-events: none; }
 .cl__call a { color: inherit; text-decoration: none; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size .3s var(--ease), color .25s var(--ease); }
 .cl__call a:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
 /* the two Figma buttons on the site's .bt: ink pill with a flame arrow circle, and a white outline pill */
-.cta.cta.bt--ink { height: 48px; padding: 0 6px 0 22px; gap: 12px; background: #161412; color: #fff; text-shadow: none; font: 500 15px/1.25 "Hanken Grotesk", var(--f); box-shadow: 0 12px 24px -14px rgba(22, 20, 18, .55); }
+.cta.cta.bt--ink { height: 48px; padding: 0 6px 0 22px; gap: 12px; background: #161412; color: #fff; text-shadow: none; box-shadow: 0 12px 24px -14px rgba(22, 20, 18, .55); }
 .cta.cta.bt--ink::before { background: #000; }
 .cta.cta.bt--ink:hover { background: #161412; color: #fff; box-shadow: 0 16px 30px -14px rgba(22, 20, 18, .6); }
 .cta.cta.bt--ink .sq { width: 36px; height: 36px; background: #e57512; box-shadow: none; }
 .cta.cta.bt--ink .sq svg { stroke: #fff; }
-.cta.cta.bt--line { height: 48px; padding: 0 22px; background: #fff; color: #161412; text-shadow: none; font: 500 15px/1.25 "Hanken Grotesk", var(--f); box-shadow: 0 12px 24px -14px rgba(60, 20, 0, .5); }
+.cta.cta.bt--line { height: 48px; padding: 0 22px; background: #fff; color: #161412; text-shadow: none; box-shadow: 0 12px 24px -14px rgba(60, 20, 0, .5); }
 .cta.cta.bt--line::before { background: #fbf8f3; }
 .cta.cta.bt--line:hover { background: #fff; color: #161412; box-shadow: 0 16px 30px -14px rgba(60, 20, 0, .55); }
 .cta.cta.bt--ink:focus-visible, .cta.cta.bt--line:focus-visible { box-shadow: 0 0 0 3px #ae3b0f, 0 0 0 5px #fff; }
@@ -1041,3 +1042,80 @@ html.vrv-lock .wa { opacity: 0; pointer-events: none; }
 :root { --f-d: var(--f-title); --f-n: var(--f-title); }
 #toppers.vrnp { --rs-title: "Newsreader"; }
 #toppers .rs-seal text { font-family: var(--f-title); font-weight: 600; }   /* the AIR rubber-stamp seals on the topper portraits (were Playfair Display) */
+
+/* ---- Footer ornament border (Figma 2164:5557): an outer gold rule 24px in (1.2px), an inner one 6px further in (0.6px), and an 18px gold
+   diamond on each outer corner. Built in CSS rather than the 1440 x 520 SVG so it fits any footer height without squashing the diamonds.
+   The span's box is the diamonds' bounds (15px in); ::before is the double rule. Sits above the wash (::before, z -1) and under the content. ---- */
+.foot__frame { position: absolute; inset: 15px; z-index: -1; pointer-events: none;
+  background: url(../assets/img/patterns/foot-diamond.svg) no-repeat 0 0 / 18px, url(../assets/img/patterns/foot-diamond.svg) no-repeat 100% 0 / 18px,
+              url(../assets/img/patterns/foot-diamond.svg) no-repeat 0 100% / 18px, url(../assets/img/patterns/foot-diamond.svg) no-repeat 100% 100% / 18px; }
+.foot__frame::before { content: ""; position: absolute; inset: 9px; border: 1.2px solid #D9A441; outline: .6px solid #D9A441; outline-offset: -6.6px; }
+footer.foot { padding-left: max(var(--px), 48px); padding-right: max(var(--px), 48px); }   /* content clears the inner rule (30px in) */
+.foot .foot__bot { margin-left: 0; margin-right: 0; padding: 18px 0 44px; }   /* divider stays inside the frame; the row clears the bottom rules */
+.foot .foot__word { margin-top: 8px; }   /* gives back the bottom bar's extra room, so the footer still fits the screen (the curtain needs that) */
+@media (max-width: 640px) {
+  .foot__frame { inset: 4px; }
+  footer.foot { padding-left: 30px; padding-right: 30px; }
+}
+/* reveal (js/page-motion.js adds .fb-anim, then .is-in when the footer shows): the frame settles in from a touch larger, diamonds turn in */
+.foot__frame.fb-anim { opacity: 0; transform: scale(1.012); transition: opacity .9s var(--ease), transform 1.1s var(--ease); }
+.foot__frame.fb-anim.is-in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .foot__frame.fb-anim { opacity: 1; transform: none; transition: none; } }
+
+/* footer social icons: the old hover (v25 .socials a:hover img { filter: none }) animated the white icon's filter from brightness(0) invert(1)
+   to none, which passes through a dark grey mid-way (a flash). Now the icon stays white and the hover is a clear one: the disc fills white,
+   the icon turns brand orange (fades in a second, orange copy is not needed: the white icon is recoloured with a constant-shape filter list)
+   and the disc lifts a touch. */
+.foot .socials a { transition: background-color .25s var(--ease), box-shadow .25s var(--ease), transform .25s var(--ease); }
+.foot .socials a img, .foot .socials a:hover img { filter: brightness(0) invert(1); opacity: .95; transition: filter .25s var(--ease), opacity .25s var(--ease); }
+@media (hover: hover) and (pointer: fine) {
+  .foot .socials a:hover { background: #fff; box-shadow: inset 0 0 0 1px #fff; transform: translateY(-2px); }
+  .foot .socials a:hover img { filter: brightness(0) invert(.32) sepia(1) saturate(9) hue-rotate(-18deg); opacity: 1; }
+}
+.foot .socials a:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .foot .socials a, .foot .socials a img { transition: none; } .foot .socials a:hover { transform: none; } }
+
+/* Talk to us: content capped at the site's 1280px content width, centred (the ground still runs full width) */
+#contact .contact__in { max-width: calc(1280px + 2 * var(--px)); margin-left: auto; margin-right: auto; box-sizing: border-box; }
+
+/* ---- Why cards in the brand colour (user 2026-11-10): the brand gradient used across the site (study-card hover, closing CTA), white type,
+   number discs outlined in white; on hover the disc fills white with brand numerals. css/why-choose.css loads after this file, hence #why. ---- */
+#why .wc__card { background: linear-gradient(149deg, #e57512 14.3%, #ae3b0f 85.7%); color: #fff; }
+#why .wc__card:hover { background: linear-gradient(149deg, #e57512 14.3%, #ae3b0f 85.7%); }
+#why .wc__card::after { box-shadow: 0 30px 50px -30px rgba(122, 42, 10, .7); }
+#why .wc__t { color: #fff; }
+#why .wc__num { border-color: rgba(255, 255, 255, .5); background: rgba(255, 255, 255, .14); color: #fff; }
+@media (hover: hover) and (pointer: fine) { #why .wc__card:hover .wc__num { border-color: #fff; background: #fff; color: var(--brand); } }
+
+/* card-title weight: Newsreader 500 for every card-level title (Why cards, study cards); Visit cards and FAQ questions came across at 600 */
+#visit .cm__item h3, #visit .cm__mail, .qa summary { font-weight: 500; }
+
+/* ---- FAQ on the same horizontal margins as the other sections (--px), not a narrow 880px column; heading stays centred ---- */
+#faq.faq { max-width: none; padding-left: var(--px); padding-right: var(--px); box-sizing: border-box; }
+#faq .qas { margin-left: 0; margin-right: 0; width: 100%; }
+
+/* ---- Free resources cards: scroll reveal. Each card rises 40px, scales up from .96 and fades in, staggered 90ms in reading order
+   (content.js tags the grid .rise with --i and adds .in on entry). Uses translate / scale so the hover lift (transform) is untouched;
+   per-property delays keep the hover itself instant once the card is in. ---- */
+.sm__grid.rise > .sm__card { opacity: 0; transform: none; translate: 0 40px; scale: .96;
+  transition: opacity .7s var(--ease), translate .9s var(--ease), scale .9s var(--ease), transform .4s var(--ease), box-shadow .4s var(--ease);
+  transition-delay: calc(var(--i, 0) * 90ms), calc(var(--i, 0) * 90ms), calc(var(--i, 0) * 90ms), 0s, 0s; }
+.sm__grid.rise.in > .sm__card { opacity: 1; translate: 0 0; scale: 1; }
+@media (prefers-reduced-motion: reduce) { .sm__grid.rise > .sm__card { opacity: 1; translate: none; scale: none; } }
+
+/* ---- Footer: more room between the content and the gold border (was 18px inside the inner rule) ---- */
+footer.foot { padding-left: max(var(--px), 76px); padding-right: max(var(--px), 76px); padding-top: 76px; }
+.foot .foot__bot { padding-bottom: 64px; }
+@media (max-width: 640px) { footer.foot { padding-left: 40px; padding-right: 40px; padding-top: 56px; } .foot .foot__bot { padding-bottom: 44px; } }
+
+/* ---- Contact and campus CTAs: the site's pill buttons instead of small underlined links; labels say what happens.
+   Primary (brand): directions, call. Secondary (white outline): ask about Chennai, email. Rolling label from js/page-motion.js. ---- */
+#visit .cm__cta { margin-top: 14px; }
+#visit .cm__item--chan .cm__cta { margin-top: 0; }
+#visit .cta.cta.bt--line { box-shadow: inset 0 0 0 1.5px rgba(194, 65, 12, .45); color: var(--brand); }
+#visit .cta.cta.bt--line::before { background: rgba(194, 65, 12, .08); }
+#visit .cta.cta.bt--line:hover { box-shadow: inset 0 0 0 1.5px var(--brand); color: var(--brand); }
+@media (max-width: 480px) { #visit .cm__cta { white-space: normal; } }
+
+/* ---- Faculty: the card rail capped at the site's 1280px content container, centred (as Resources, Talk to us, the closing CTA) ---- */
+#faculty > .rail { max-width: 1280px; margin-left: auto; margin-right: auto; }

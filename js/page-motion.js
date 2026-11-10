@@ -171,3 +171,11 @@
   card.addEventListener('pointermove', e => { at(e); go(); });
   card.addEventListener('pointerleave', () => { card.classList.remove('is-follow'); tx = w / 2; ty = h / 2; go(); });   // parallax settles back to centre
 })();
+
+/* footer ornament border: fades and settles in when the footer comes into view (css/v49.css .foot__frame) */
+(() => {
+  const f = document.querySelector('.foot__frame'); if (!f || !('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  f.classList.add('fb-anim');
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { f.classList.add('is-in'); io.disconnect(); } }), { threshold: .15 });
+  io.observe(f.parentElement);
+})();

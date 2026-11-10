@@ -23,8 +23,15 @@
   const check = () => {
     tick = false;
     const r = w.getBoundingClientRect(), edge = Math.min(innerHeight, main ? main.getBoundingClientRect().bottom : innerHeight);
-    if (r.top + r.height * .35 < edge) { w.classList.add('fw-in'); removeEventListener('scroll', onScroll); }
+    // uncovered: the page's bottom edge (or the viewport bottom) has passed above the word's lower 65%, and the word is on screen
+    const edgeNow = main ? main.getBoundingClientRect().bottom : -Infinity;
+    if (r.top < innerHeight && r.bottom > 0 && edgeNow < r.bottom - r.height * .35 && r.top + r.height * .35 < innerHeight) { w.classList.add('fw-in'); removeEventListener('scroll', onScroll); removeEventListener('resize', onScroll); }
   };
   const onScroll = () => { if (!tick) { tick = true; requestAnimationFrame(check); } };
   addEventListener('scroll', onScroll, { passive: true }); check();
+  // a reload at the footer: the browser restores the scroll position after this script ran and fires no scroll event, so the word stayed
+  // hidden; check again once the page has loaded (and restored), when it is shown from the back/forward cache, and on resize
+  addEventListener('load', () => requestAnimationFrame(check));
+  addEventListener('pageshow', () => requestAnimationFrame(check));
+  addEventListener('resize', onScroll, { passive: true });
 })();
