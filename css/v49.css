@@ -1867,3 +1867,13 @@ footer.foot { padding-left: 76px; padding-right: 76px; }
 .cl__card { border-radius: 8px; }
 /* Contact us card: 8px corner radius on every screen size, the same as the closing CTA card (was 28px, 22px on phones) */
 #visit .cm { border-radius: 8px; }
+
+/* ---- General Studies: the heading in two lines ("General Studies decides" / "most of your UPSC score."), and the
+   label > heading > copy > button rhythm made even (the button sat flush against the copy: its 34px gap targeted .gs__in > .bt,
+   but the button is wrapped in .rv-btn). ---- */
+#gs .gs__in { max-width: none; }
+#gs .gs__h { max-width: none; margin-top: 28px; }
+#gs .gs__h span { display: block; }
+#gs .gs__p { margin-top: 28px; }
+#gs .gs__in > .rv-btn { margin-top: 36px; }
+@media (min-width: 1001px) { #gs .gs__h, #gs .gs__h span { white-space: nowrap; } #gs .gs__h { font-size: min(var(--h2), 4.7vw); } }   /* 64px from ~1360px up; a little smaller below so the two lines fit the text column */
