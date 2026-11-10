@@ -21,13 +21,13 @@
     if (cta) {
       const apply = () => { cta.href = CTAS[n][1]; cta.querySelectorAll('.btn__t').forEach(t => { t.textContent = CTAS[n][0]; }); };
       if (cur < 0) apply();                                    // first paint: no fade
-      else { cta.classList.add('is-swap'); clearTimeout(cta._t); cta._t = setTimeout(() => { apply(); cta.classList.remove('is-swap'); }, 230); }   // the label fades out, changes, fades back in
+      else { cta.classList.add('is-swap'); clearTimeout(cta._t); cta._t = setTimeout(() => { apply(); cta.classList.remove('is-swap'); }, 400); }   // the whole button fades out with the old copy, changes, then fades back in with the new copy
     }
     cur = n; hero.dataset.s = n; imgs.forEach((im, i) => im.classList.toggle('on', i === n));
     // the slide that is leaving keeps .is-leaving for a moment so its copy can slide out before the next one rises in
     scs.forEach((s, i) => {
       const on = i === n - 1;
-      if (!on && s.classList.contains('on')) { s.classList.add('is-leaving'); clearTimeout(s._lt); s._lt = setTimeout(() => s.classList.remove("is-leaving"), 600); }
+      if (!on && s.classList.contains('on')) { s.classList.add('is-leaving'); clearTimeout(s._lt); s._lt = setTimeout(() => s.classList.remove("is-leaving"), 450); }
       if (on) { clearTimeout(s._lt); s.classList.remove('is-leaving'); }
       s.classList.toggle('on', on);
     });

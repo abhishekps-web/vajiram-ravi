@@ -156,6 +156,7 @@
      dots follow whichever banner is nearest the centre. */
   (() => {
     const view = $('#bnrView'), track = $('#bnrTrack'), dots = $('#bnrDots');
+    if (!view || !track) return;   // the banner carousel section has been removed from the page
     const orig = $$('.bnr__s', track), n = orig.length, START = 0;   // start with the GS banner (now the first slide) centred
     const HOLD = 3000, SLIDE = 900;                                   // ms on centre stage, ms to slide to the next
     dots.innerHTML = orig.map((_, i) => `<button type="button" role="tab" aria-label="Banner ${i + 1} of ${n}"></button>`).join('');
