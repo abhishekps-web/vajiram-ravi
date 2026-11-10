@@ -7,7 +7,7 @@
    Progress bars fill from the video time. Clicking a bar, the arrow keys or a swipe seek the video to that slide. */
 (() => {
   const hero = document.getElementById('dlPin'), reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const vid = null, imgs = [...document.querySelectorAll('#dlSlides img')], DUR = 6;   // image carousel: each slide shows for DUR seconds
+  const vid = null, imgs = [...document.querySelectorAll('#dlSlides img')], DUR = 3;   // image carousel: each slide shows for DUR seconds
   if (!hero || reduce) return;
   const scs = [...hero.querySelectorAll('.sc')], bars = [...hero.querySelectorAll('#dlProg button')];
   const N = 4, CUT = [0, DUR, DUR * 2, DUR * 3];             // start time of each slide in the video (just before the cut, so the text is in as the picture changes)
@@ -18,9 +18,19 @@
   const cta = document.getElementById('dlCta');
   const CTAS = [['Explore our courses', '#courses'], ['Explore GS programmes', '#gs'], ['Explore Interview Guidance', '#contact'], ['Start Your UPSC Preparation', '#contact']];
   const show = n => {
-    if (cta) { cta.href = CTAS[n][1]; cta.querySelectorAll('.btn__t').forEach(t => { t.textContent = CTAS[n][0]; }); }
+    if (cta) {
+      const apply = () => { cta.href = CTAS[n][1]; cta.querySelectorAll('.btn__t').forEach(t => { t.textContent = CTAS[n][0]; }); };
+      if (cur < 0) apply();                                    // first paint: no fade
+      else { cta.classList.add('is-swap'); clearTimeout(cta._t); cta._t = setTimeout(() => { apply(); cta.classList.remove('is-swap'); }, 230); }   // the label fades out, changes, fades back in
+    }
     cur = n; hero.dataset.s = n; imgs.forEach((im, i) => im.classList.toggle('on', i === n));
-    scs.forEach((s, i) => s.classList.toggle('on', i === n - 1));
+    // the slide that is leaving keeps .is-leaving for a moment so its copy can slide out before the next one rises in
+    scs.forEach((s, i) => {
+      const on = i === n - 1;
+      if (!on && s.classList.contains('on')) { s.classList.add('is-leaving'); clearTimeout(s._lt); s._lt = setTimeout(() => s.classList.remove("is-leaving"), 600); }
+      if (on) { clearTimeout(s._lt); s.classList.remove('is-leaving'); }
+      s.classList.toggle('on', on);
+    });
     bars.forEach((b, i) => b.setAttribute('aria-current', i === n ? 'true' : 'false'));
   };
   const timeNow = now => {

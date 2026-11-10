@@ -1321,6 +1321,62 @@ section#toppers.vrnp { padding-left: var(--px); padding-right: var(--px); }   /*
 .gsbook__ico .f { fill: rgba(255, 212, 138, .2); }
 .gsbook__ico .a { fill: currentColor; stroke: none; }
 
+/* hero: lighter scrim on the right so the subject of each photo gets more focus; the left, behind the copy, stays dark enough to read */
+@media (min-width: 901px) {
+  .dl__bg::after { background: linear-gradient(90deg, rgba(30,12,2,.86) 0%, rgba(30,12,2,.52) 50%, rgba(30,12,2,.1) 100%), linear-gradient(0deg, rgba(30,12,2,.5) 0%, transparent 40%); }
+  .dl--pin:not([data-s="0"]) .dl__bg::after { background: linear-gradient(90deg, rgba(30,12,2,.88) 0%, rgba(30,12,2,.62) 48%, rgba(30,12,2,.2) 100%), linear-gradient(0deg, rgba(30,12,2,.5) 0%, transparent 40%); }
+}
+
+/* ---- hero copy transitions ----
+   Leaving: the old copy lifts out (headline lines slide up behind their masks one after another, the text and badge fade up), about .45s.
+   Entering: after a short beat, the badge pops in, the headline lines rise from below their masks with a stagger, then the subcopy floats up.
+   The button stays put; only its label fades out, changes and fades back in (js/page-motion.js). */
+@media (prefers-reduced-motion: no-preference) {
+  :root { --hero-out: cubic-bezier(.5, 0, .75, 0); --hero-in: cubic-bezier(.22, 1, .36, 1); }
+
+  /* slides 2-4 */
+  .sc { visibility: hidden; transition: visibility 0s .55s; }
+  .sc.on, .sc.is-leaving { visibility: visible; transition: none; }
+  .sc .sc__txt { opacity: 1; transition: none; }
+  .sc .vp__k > .ln { opacity: 0; transform: translate3d(0, 14px, 0) scale(.92); transform-origin: 0 50%; transition: none; }
+  .sc .vp__k .ln i { opacity: 1; transform: none; transition: none; }
+  .sc .vp__h .ln i { opacity: 1; transform: translate3d(0, 108%, 0); transition: none; }
+  .sc .sc__p { opacity: 0; transform: translate3d(0, 22px, 0); transition: none; }
+
+  .sc.on .vp__k > .ln { opacity: 1; transform: none; transition: opacity .5s var(--hero-in) .3s, transform .7s var(--hero-in) .3s; }
+  .sc.on .vp__h .ln i { transform: none; transition: transform .85s var(--hero-in) calc(.36s + var(--n, 0) * .09s); }
+  .sc.on .vp__h .ln:nth-child(2) i { --n: 1; }
+  .sc.on .vp__h .ln:nth-child(3) i { --n: 2; }
+  .sc.on .sc__p { opacity: 1; transform: none; transition: opacity .7s var(--hero-in) .62s, transform .8s var(--hero-in) .62s; }
+
+  .sc.is-leaving .vp__k > .ln { opacity: 0; transform: translate3d(0, -10px, 0); transition: opacity .28s var(--hero-out), transform .38s var(--hero-out); }
+  .sc.is-leaving .vp__h .ln i { transform: translate3d(0, -108%, 0); transition: transform .5s var(--hero-out) calc(var(--n, 0) * .05s); }
+  .sc.is-leaving .vp__h .ln:nth-child(2) i { --n: 1; }
+  .sc.is-leaving .vp__h .ln:nth-child(3) i { --n: 2; }
+  .sc.is-leaving .sc__p { opacity: 0; transform: translate3d(0, -14px, 0); transition: opacity .3s var(--hero-out), transform .4s var(--hero-out); }
+
+  /* slide 1 (the static block): lifts out with a soft blur, comes back in after the beat */
+  .dl__in { transition: opacity .7s var(--hero-in) .32s, transform .8s var(--hero-in) .32s, filter .7s var(--hero-in) .32s; filter: none; }
+  .dl--pin:not([data-s="0"]) .dl__in { opacity: 0; transform: translate3d(0, -26px, 0); filter: blur(5px); transition: opacity .38s var(--hero-out), transform .45s var(--hero-out), filter .4s var(--hero-out); }
+
+  /* the button label swaps in place */
+  .dl__cta .btn__label { transition: opacity .22s ease, transform .22s ease; }
+  .dl__cta.is-swap .btn__label { opacity: 0; transform: translate3d(0, -6px, 0); }
+}
+
+/* ---- one horizontal system for the whole page ----
+   --px is the page margin: 20px on phones, growing gently with the screen (2.4vw) up to 44px, and beyond 1800px wide the content column stops
+   and centres (margin = half of the leftover). Sections, the hero copy, the nav and the footer all read it, so every left and right edge lines up. */
+:root { --px: max(clamp(20px, 2.4vw, 44px), calc((100vw - 1800px) / 2)); }
+.dl__in, .sc { padding-left: var(--px); padding-right: var(--px); }
+.dl__prog, .dl__cta.cta.cta { left: var(--px); }
+.hw { padding-left: var(--px); padding-right: var(--px); }
+.nav { left: var(--px); right: var(--px); }
+#contact .contact__in { padding-left: var(--px); padding-right: var(--px); }
+@media (min-width: 901px) { #contact .contact__in { padding-left: var(--px); padding-right: var(--px); } }
+#stories.sheet, #faq.sheet { margin-left: 0; margin-right: 0; }   /* the 12px sheet margin pushed these two off the shared edge */
+
+/* ===== merged 2026-11-10: rules below came after the block above and win where they overlap (incl. --px: 1440px cap, wider small-screen margins) ===== */
 /* FAQ cards: the site's card radius (24px, as the Free resources cards) instead of 4px; the open item's marigold marker is an inset shadow, so it follows the curve */
 #faq .qa { border-radius: 24px; overflow: hidden; }
 
