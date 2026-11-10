@@ -1867,3 +1867,21 @@ footer.foot { padding-left: 76px; padding-right: 76px; }
 .cl__card { border-radius: 8px; }
 /* Contact us card: 8px corner radius on every screen size, the same as the closing CTA card (was 28px, 22px on phones) */
 #visit .cm { border-radius: 8px; }
+
+/* ---- Programmes tabs, tab to tab (js/content.js showGroup): one brand pill slides under the labels to the chosen tab (transform + width over
+   .45s on the roll curve), and the labels change colour with it. The selected button itself stays transparent once the pill is in, so nothing
+   flashes; before the script runs (.has-ind absent) the button keeps its own brand fill. The panel: old shelves fade out (180ms), the height eases
+   from old to new (.5s) so the page below glides, then the shelves lay in (shelfIn). ---- */
+#courses .ptabs .seg { position: relative; isolation: isolate; }
+#courses .ptabs .seg__ind { position: absolute; left: 0; top: 4px; bottom: 4px; z-index: -1; width: 0; border-radius: 10px; background: var(--brand); pointer-events: none;
+  transition: transform .45s cubic-bezier(.7, 0, .2, 1), width .45s cubic-bezier(.7, 0, .2, 1); }
+#courses .ptabs .seg.has-ind button[aria-selected="true"], #courses .ptabs .seg.has-ind button[aria-selected="true"]:hover { background: transparent; }
+#courses .ptabs .seg button { transition: background-color .3s var(--ease), color .3s var(--ease) .05s; }
+#courses .ptabs .seg button small { transition: background-color .3s var(--ease) .05s, color .3s var(--ease) .05s; }
+#courses .ptabs .seg button:active { scale: .97; }
+@keyframes shelfOut { from { opacity: 1; translate: 0 0; } to { opacity: 0; translate: 0 -6px; } }
+.shelves.is-out .shelf { animation: shelfOut .14s ease-in both; }   /* an animation, not a transition: the shelves still hold the last shelfSwap fill, and a transition would not start from it */
+@keyframes shelfSwap { from { opacity: .001; translate: 0 10px; } 30% { opacity: 1; } to { opacity: 1; translate: 0 0; } }
+.shelves.is-swap .shelf { animation-name: shelfSwap; animation-duration: .45s; animation-delay: calc(var(--r, 0) * 60ms); }
+.shelves.is-size { transition: height .5s var(--ease); overflow: clip; }
+@media (prefers-reduced-motion: reduce) { #courses .ptabs .seg__ind, #courses .ptabs .seg button, #courses .ptabs .seg button small, .shelves.is-size { transition: none; } #courses .ptabs .seg button:active { scale: none; } }
