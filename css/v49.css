@@ -1189,3 +1189,10 @@ html.vrv-lock .wa { opacity: 0; pointer-events: none; }
 
 /* success stories: less space above the heading (the Faculty section above already ends with its own bottom padding) */
 #stories.sheet { padding-top: calc(var(--sec-y) * .4); }
+
+/* FAQ: the full content width, like the other sections */
+#faq.faq { max-width: none; }
+#faq .qas { max-width: 100%; }
+
+/* FAQ: a readable width (about 70 characters of answer text per line), centred */
+#faq.faq { max-width: 1000px; }
