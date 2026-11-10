@@ -97,15 +97,7 @@
       </div>
       <p class="gz__ear gz__ear--r"><b class="gz__tag">Results special</b></p>
     </header>
-    <div class="gz__date rv" style="--d:.1s"><span>02 &middot; The results</span>
-      <span class="gz__ed" id="gzEd">UPSC Civil Services Examination
-        <button type="button" class="gz__edb" id="gzEdBtn" aria-expanded="false" aria-controls="gzMenu"><b id="gzYearNow">2025</b><span class="sr-only"> edition, change year</span><svg viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg></button>
-        <span class="gz__menu" id="gzMenu" role="group" aria-label="Choose the results year">
-          <span class="gz__menu-k">Choose an edition</span>
-          <span class="gz__menu-list" id="gzYears"></span>
-        </span>
-      </span>
-      <span>Final result</span></div>
+    <p class="gz__date rv" style="--d:.1s"><span>02 &middot; The results</span><span class="gz__ed"><label for="gzYear">UPSC Civil Services Examination</label><select id="gzYear" class="gz__yr"></select></span><span>Final result</span></p>
 
     <div class="gz__banner">
       <p class="gz__kicker rv" style="--d:.14s" id="gzKick">Union Public Service Commission</p>
@@ -131,6 +123,13 @@
     <section class="gz__roll rv" style="--d:.05s" aria-labelledby="gzRollH">
       <div class="gz__rollh">
         <h3 id="gzRollH">The first ten</h3>
+        <div class="gz__tabs" id="gzTabs" role="group" aria-label="Read the rank holders by rank or by programme">
+          <button type="button" class="gz__tab" aria-pressed="true" data-gz-cat="all">By rank</button>
+          <button type="button" class="gz__tab" aria-pressed="false" data-gz-cat="igp">Interview Guidance</button>
+          <button type="button" class="gz__tab" aria-pressed="false" data-gz-cat="test">Test series</button>
+          <button type="button" class="gz__tab" aria-pressed="false" data-gz-cat="gs">General Studies</button>
+          <button type="button" class="gz__tab" aria-pressed="false" data-gz-cat="opt">Optional</button>
+        </div>
       </div>
       <p class="gz__hint">Select a rank holder to bring their story to the front page.</p>
       <p class="gz__ct" id="gzCount" aria-live="polite"></p>
@@ -530,7 +529,7 @@
 
 <script src="js/data/toppers.js"></script>
 <script src="js/data/toppers-archive.js?v=3"></script>
-<script src="js/toppers.js?v=13"></script>
+<script src="js/toppers.js?v=14"></script>
 <script src="js/content.js?v=21"></script>
 <script src="js/vendor/lenis.min.js"></script>
 <script src="js/hero-kit.js"></script>
