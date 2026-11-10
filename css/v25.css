@@ -771,9 +771,6 @@ body { font-size: 17px; letter-spacing: 0; background: var(--ivory); }
 #resources > .more, #resources > .more ul { justify-content: center; }
 #resources > .h2 { max-width: none; }   /* one line on wide screens (the 728px cap wrapped it at ~1920px) */
 /* visit a centre: the split header stacks, centred; the city switch sits centred above the card */
-#visit .sh--loc { grid-template-columns: 1fr; justify-items: center; gap: 14px; text-align: center; }
-#visit .sh--loc .sh__r p { margin: 0 auto; text-wrap: balance; }
-#visit .seg--city { display: flex; width: fit-content; margin-left: auto; margin-right: auto; }
 
 /* ---------- stories: inland letter cards ----------
    An opened inland letter card (white, no printed header, at the user's request): printed double border, a perforated tear edge on the right, a printed stamp with the rank and a postmark, the

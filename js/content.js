@@ -90,7 +90,7 @@
   ];
   const ARTICLES = [
     ['Prelims', ['United Kingdom Maritime Trade Operations (UKMTO)', 'Mauritius', 'Narwhals', 'Thiksey Monastery', 'Long Tailed Marmot']],
-    ['Mains', ['Mobile Phone Manufacturing Scheme (MPMS): From Assembly Hub to Indian-Owned Brands', 'US–India Trade Tensions: The Great Transhipment Scam and Tariff Allegations', "U.S.–India Electoral Systems: Trump's Voting ID Rules and the SAVE America Act", 'NITI Aayog Report Flags Large Gap Between Education and Employment for Indian Youth', "India's Sugar Price Hike: Causes, Government Response and the Ethanol Debate"]],
+    ['Mains', ['Mobile Phone Manufacturing Scheme (MPMS) – From Assembly Hub to Indian-Owned Brands', 'US–India Trade Tensions: The Great Transhipment Scam and Tariff Allegations', "U.S.–India Electoral Systems: Trump's Voting ID Rules and the SAVE America Act", 'NITI Aayog Report Flags Large Gap Between Education and Employment for Indian Youth', "India's Sugar Price Hike: Causes, Government Response and the Ethanol Debate", 'Census 2027 Questionnaire – New Questions, NPR Link and Concerns Over Data Collection']],
     ['Quest', ['UN Reforms, Need, Security Council, General Assembly, Challenges', 'World Meteorological Organization (WMO), Headquarters, Members', 'Article 21, Rights, Doctrines, Challenges, Case Laws, Way Forward', 'Reserve Bank of India (RBI), Governor, Structure, Functions', 'Federalism in Indian Polity, Significance, Features']]
   ];
   const FREE = ['Monthly magazine', 'Yojana and Kurukshetra', 'Previous year papers', "Toppers' answer sheets", 'Essay practice'];
@@ -117,11 +117,6 @@
     ['Which coaching is best for IAS in Delhi?', 'Vajiram & Ravi is highly regarded as one of the best coaching institutes for IAS preparation in Delhi due to its expert faculty and comprehensive study materials.'],
     ['Which coaching institute has the most UPSC toppers?', 'Vajiram & Ravi is known for producing a significant number of UPSC toppers, reflecting its strong track record in IAS coaching.'],
     ['Are all courses available online?', 'Yes. Every programme runs in the classroom and LIVE-Online, so you can learn from anywhere.']
-  ];
-  const CITIES = [
-    { n: 'New Delhi', addr: '1-B/7, Pusa Road, Old Rajinder Nagar, New Delhi 110060', mark: 'Next to Gate 5 of Karol Bagh Metro Station, near pillar 103', hours: 'Monday to Saturday, 9 am to 7 pm',
-      map: 'https://maps.google.com/maps?q=Vajiram%20%26%20Ravi%2C%201-B%2F7%20Pusa%20Road%2C%20Old%20Rajinder%20Nagar%2C%20New%20Delhi&z=16&output=embed', dir: 'https://maps.app.goo.gl/Qd3YkMoiknKT8J456' },
-    { n: 'Chennai', hours: 'Monday to Saturday, 9 am to 7 pm', map: 'https://maps.google.com/maps?q=Vajiram%20%26%20Ravi%20Chennai&z=13&output=embed', dir: 'https://www.google.com/maps/search/Vajiram+%26+Ravi+Chennai' }
   ];
   const FOOTER = [
     ['Vajiram & Ravi', ['About us', 'Careers', 'Contact us', 'FAQs']],
@@ -668,33 +663,34 @@
   $('#faqList').innerHTML = FAQS.map(([q, a], i) => `<details class="qa"${i ? '' : ' open'}><summary>${esc(q)}${ico('faq-plus.svg', 20)}</summary><p>${esc(a)}</p></details>`).join('');
   // one answer open at a time + the open/close motion: js/accordion.js
 
-  /* ---------------- resources ---------------- */
-  // newspaper faces for the front page: Old Standard TT (copy) and UnifrakturMaguntia (nameplate)
-  if (!document.querySelector('link[data-np-fonts]')) {
-    const l = document.createElement('link'); l.rel = 'stylesheet'; l.dataset.npFonts = '';
-    l.href = 'https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=swap';
-    document.head.append(l);
+  /* ---------------- resources: "Study materials" (Figma 2256:4675) ----------------
+     Six article cards per tab (Prelims / Mains / Quest) from ARTICLES; the first is the featured orange card with the sun rays.
+     With five articles the featured card spans two columns so the 3 x 2 grid stays full. Every link opens the Vajiram & Ravi site
+     until the article pages exist. */
+  const smGrid = $('#smGrid'), smTabs = $('#smTabs');
+  if (smGrid && smTabs) {
+    const UR = c => `<img src="assets/img/icons/arrow-ur-${c}.svg" alt="" width="14" height="14">`;
+    const card = (k, t, i, n) => `<li class="sm__card${!i && n === 5 ? ' sm__card--wide' : ''}" style="--i:${i}">
+        <a href="${SITE}" target="_blank" rel="noopener">
+          <img class="sm__rays" src="assets/img/patterns/surya-rays.svg" alt="" width="300" height="300">
+          <span class="sm__top"><span class="sm__tag">${esc(k.toUpperCase())} · ${String(i + 1).padStart(2, '0')}</span><span class="sm__go">${UR('white')}</span></span>
+          <span class="sm__t">${esc(t)}</span>
+        </a></li>`;
+    const show = (k, animate) => {
+      const list = (ARTICLES.find(a => a[0] === k) || ARTICLES[0])[1].slice(0, 6);
+      smGrid.innerHTML = list.map((t, i) => card(k, t, i, list.length)).join('');
+      smGrid.setAttribute('aria-labelledby', 'smTab-' + k);
+      $$('button', smTabs).forEach(b => b.setAttribute('aria-selected', b.dataset.tab === k));
+      if (animate) { smGrid.classList.remove('is-swap'); void smGrid.offsetWidth; smGrid.classList.add('is-swap'); }
+    };
+    show('Mains', false);
+    smTabs.addEventListener('click', e => { const b = e.target.closest('button[data-tab]'); if (b && b.getAttribute('aria-selected') !== 'true') show(b.dataset.tab, true); });
+    smTabs.addEventListener('keydown', e => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      const bs = $$('button', smTabs), i = bs.findIndex(b => b === document.activeElement); if (i < 0) return;
+      const n = bs[(i + (e.key === 'ArrowRight' ? 1 : bs.length - 1)) % bs.length]; n.focus(); n.click(); e.preventDefault();
+    });
   }
-  // free resources as a newspaper front page, "The V&R Daily" (user request: something creative, not the cards used
-  // elsewhere): masthead with today's date; Prelims briefs, the Mains lead story and Quest explainers as three
-  // columns; the other free resources indexed along the foot as "Also in this edition"
-  const RICO = {
-    mag: '<rect x="13" y="7" width="26" height="33" rx="2"/><path d="M9 13v29h25"/><path d="M18 14h15M18 19h10"/><circle cx="26" cy="30" r="5"/>',
-    paper: '<path d="M11 6h18l8 8v28H11z"/><path d="M29 6v8h8"/><path d="M16 21h15M16 26h15M16 31h9"/>',
-    sheet: '<rect x="9" y="6" width="28" height="36" rx="2"/><path d="M14 13h18M14 18h18M14 23h11"/><path d="M15 32l4.5 4.5L30 26"/>',
-    books: '<path d="M24 12c-4.5-3-10.5-4-16-3v27c5.5-1 11.5 0 16 3 4.5-3 10.5-4 16-3V9c-5.5-1-11.5 0-16 3z"/><path d="M24 12v27"/><path d="M12 17h7M12 22h7M29 17h7M29 22h6"/>'
-  };
-  const npIco = k => `<svg viewBox="0 0 48 48" aria-hidden="true">${RICO[k]}</svg>`;
-  const npMore = (t) => `<a class="np__more" href="${SITE}" target="_blank" rel="noopener">${t} ${ico('arrow-link-brand.svg')}</a>`;
-  const npA = t => `<a href="${SITE}" target="_blank" rel="noopener">${esc(t)}</a>`;
-  const [PRE, MAINS, QUEST] = ARTICLES.map(a => a[1]);
-  const qSplit = t => { const k = t.search(/[,:]/); return k < 0 ? [t, ''] : [t.slice(0, k), t.slice(k + 1).trim()]; };
-  const today = new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-  const NPIDX = [
-    ['mag', 'Monthly', 'Monthly magazine'], ['paper', 'Practice', 'Previous year papers'],
-    ['sheet', 'From the toppers', 'Toppers’ answer sheets'], ['books', 'Reading', 'Yojana & Kurukshetra']
-  ];
-  // free resources: every link opens the Vajiram & Ravi site
   $$('#resources [data-rs]').forEach(a => { a.href = SITE; a.target = '_blank'; a.rel = 'noopener'; });
 
   /* ---------------- contact form ---------------- */
@@ -742,24 +738,6 @@
     $('#contact').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
     setTimeout(() => $('#fName').focus({ preventScroll: true }), reduce ? 0 : 700);
   });
-
-  /* ---------------- locations ---------------- */
-  $('#cities').innerHTML = CITIES.map((c, i) => `<button type="button" role="tab" data-i="${i}" aria-selected="${!i}">${c.n}</button>`).join('');
-  const dirBtn = (c, label) => `<a class="bt bt--brand" href="${c.dir}" target="_blank" rel="noopener">${label}<span class="sq sq--52 sq--white">${ico('arrow-brand.svg')}</span></a>`;
-  const showCity = i => {
-    const c = CITIES[i];
-    $$('#cities button').forEach(b => b.setAttribute('aria-selected', +b.dataset.i === i));
-    $('#locCity').textContent = c.n;
-    const addr = c.addr ? esc(c.addr).replace(/, (?=New Delhi)/, ',<br>') : `Vajiram &amp; Ravi, ${c.n}`;
-    const side = c.mark ? esc(c.mark) : 'Call us and a counsellor will share the address and the best way to reach the centre.';
-    $('#loc').innerHTML = `<p class="lv__contact">${addr}<br><a href="tel:08062206330">${PHONE}</a></p>
-      ${dirBtn(c, c.addr ? 'Get directions' : 'Find on maps')}
-      <h3 class="lv__sub">Timings &amp; access</h3>
-      <p class="lv__txt">${esc(c.hours)}<br>${side}</p>`;
-    $('#locMap').innerHTML = `<iframe class="lv__frame" title="Map of Vajiram &amp; Ravi, ${c.n}" src="${c.map}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`;
-  };
-  $('#cities').addEventListener('click', e => { const b = e.target.closest('button'); if (b) showCity(+b.dataset.i); });
-  showCity(0);
 
   /* ---------------- footer ---------------- */
   const HREF = { 'About us': '#why', 'Contact us': '#contact', FAQs: '#faq' };
@@ -862,6 +840,6 @@
   // card groups rise in once as they enter
   if (!reduce && 'IntersectionObserver' in window) {
     const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
-    $$('.kcards, .tgrid, .pgrid, .rcards, .fgrid, .qgrid, .bgrid, .agrid, .wc__cards, .wc__stats').forEach(g => { g.classList.add('rise'); [...g.children].forEach((c, i) => c.style.setProperty('--i', i)); io.observe(g); });
+    $$('.kcards, .tgrid, .pgrid, .rcards, .fgrid, .qgrid, .bgrid, .agrid, .wc__cards, .wc__stats, .sm__grid').forEach(g => { g.classList.add('rise'); [...g.children].forEach((c, i) => c.style.setProperty('--i', i)); io.observe(g); });
   }
 })();

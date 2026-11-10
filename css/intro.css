@@ -22,7 +22,7 @@ html.vrv-lock, html.vrv-lock body { overflow: hidden; }
 .vrv__logo .lc { clip-path: inset(0 76% 0 0); }
 .vrv--fin .vrv__logo { animation: logo .85s .3s cubic-bezier(.2, .8, .2, 1) forwards; }
 @keyframes logo { from { opacity: 0; transform: translateY(14px) scale(.97); filter: blur(4px); } to { opacity: 1; transform: none; filter: none; } }
-.vrv__tag { position: relative; margin: 26px 0 0; font: 600 clamp(22px, 2.2vw, 34px)/1.2 "Eczar", Georgia, serif; letter-spacing: -.01em; color: #fff; }
+.vrv__tag { position: relative; margin: 26px 0 0; font: 400 clamp(22px, 2.2vw, 34px)/1.2 "Newsreader", Georgia, serif; letter-spacing: -.01em; color: #fff; }
 .vrv__tag span { display: inline-block; opacity: 0; }
 .vrv__tag span + span { color: #FFD48A; }
 .vrv--fin .vrv__tag span { animation: tin .6s .6s var(--e) forwards; }
