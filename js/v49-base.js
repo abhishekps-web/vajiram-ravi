@@ -452,10 +452,10 @@
       <div class="gsbook gsbook--p gsbook--k${p.c}" ${p.cat != null ? `data-open="${p.cat}"` : `data-book-prog="${esc(p.prog)}"`} data-i="${i}" style="--i:${i}">
         <div class="gsbook__in">
           <div class="gsbook__back"></div><div class="gsbook__pages"></div><div class="gsbook__top"></div><div class="gsbook__bottom"></div>
-          <div class="gsbook__spine" aria-hidden="true"><b>${esc(p.sp)}</b><i lang="hi">${p.hi}</i></div>
+          <div class="gsbook__spine" aria-hidden="true"><b>${esc(p.sp)}</b></div>
           <div class="gsbook__cover"><div class="gsbook__face">
             <p class="gsbook__brand">Vajiram &amp; Ravi</p>
-            <h3 class="gsbook__title">${esc(p.t)}<span lang="hi">${p.hi}</span></h3>
+            <h3 class="gsbook__title">${esc(p.t)}</h3>
             <p class="gsbook__orn" aria-hidden="true"><i></i></p>
             <p class="gsbook__desc">${esc(p.d)}</p>
             <p class="gsbook__foot">${esc(p.tab)}</p>
@@ -676,7 +676,7 @@
 
   /* ---------------- FAQ (one open at a time) ---------------- */
   $('#faqList').innerHTML = FAQS.map(([q, a], i) => `<details class="qa"${i ? '' : ' open'}><summary>${esc(q)}${ico('faq-plus.svg', 20)}</summary><p>${esc(a)}</p></details>`).join('');
-  $$('#faqList details').forEach(d => d.addEventListener('toggle', () => { if (d.open) $$('#faqList details').forEach(o => { if (o !== d) o.open = false; }); }));
+  // one answer open at a time + the open/close motion: js/accordion.js
 
   /* ---------------- resources ---------------- */
   // newspaper faces for the front page: Old Standard TT (copy) and UnifrakturMaguntia (nameplate)

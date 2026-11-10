@@ -847,3 +847,22 @@
 .blank--tel { flex: 1; min-width: 0; }
 .blank--tel input { flex: 1; width: 100%; min-width: 0; }
 @media (max-width: 600px) { .blank--tel input { width: 100%; } }
+
+/* footer text, larger (user 2026-11-10): logo 20 -> 24, intro 17 -> 19, column heads 17 -> 20, links 14.5 -> 16.5, bottom bar 14 -> 15.5 */
+footer.foot .foot__logo { font-size: 24px; }
+footer.foot .foot__brand p { font-size: 19px; line-height: 1.5; }
+footer.foot .foot__cols h3 { font-size: 20px; }
+footer.foot .foot__cols a { font-size: 16.5px; line-height: 1.4; }
+footer.foot .foot__bot { font-size: 15.5px; }
+
+/* accordions (js/accordion.js animates the height): the + turns back as soon as a panel starts closing, not when it has closed */
+.qa.is-closing summary img { transform: none; }
+.qa.is-closing summary { padding-bottom: 22px; transition: padding .38s cubic-bezier(.2, .7, .2, 1); }
+.rs-yv-more.is-closing summary::after { content: "+"; }
+
+/* the section right after the hero slides up over it (user 2026-11-10: Programmes moved under the hero; this used to be #toppers only).
+   js/v49.js sets --cover on the hero and --f on this section as it rises. */
+.cover > #dlPin + section { position: relative; z-index: 2; margin-top: 0; border-radius: 28px 28px 0 0; box-shadow: 0 -30px 60px -24px rgba(20, 8, 2, .55); }
+.cover > #dlPin + section > * { opacity: var(--f, 1); transform: translate3d(0, calc((1 - var(--f, 1)) * 44px), 0); will-change: opacity, transform; }
+.fx-on .cover > #dlPin + section > .fx { opacity: calc(var(--f, 1) * var(--fx, .16)); }   /* keep the scroll-focus fade too */
+@media (prefers-reduced-motion: reduce) { .cover > #dlPin + section > * { opacity: 1; transform: none; } }

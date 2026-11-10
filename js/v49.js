@@ -52,10 +52,10 @@
   addEventListener('resize', f); f();
 })();
 
-/* hero -> toppers: q = how far the Toppers sheet has risen into view (0 = just below the fold, 1 = at the top).
+/* hero -> next section: q = how far the section after the hero has risen into view (0 = just below the fold, 1 = at the top).
    q darkens the hero; the sheet is solid, its content fades and lifts in between q .12 and .7. */
 (() => {
-  const hero = document.getElementById('dlPin'), top = document.getElementById('toppers');
+  const hero = document.getElementById('dlPin'), top = document.querySelector('#dlPin + section');   // whichever section follows the hero slides over it (Programmes since 2026-11-10)
   if (!hero || !top || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   let tick = false;
   const c = (v) => Math.max(0, Math.min(1, v));
