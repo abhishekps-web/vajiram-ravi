@@ -194,7 +194,7 @@
     if (expanded) {
       extras.forEach((li, i) => { li.hidden = false; li.style.setProperty('--j', Math.min(i, 14)); li.classList.add('is-new'); });
     } else {
-      if (ten.getBoundingClientRect().top < 80) glideTo(sec.querySelector('.gz__rollh'));
+      if (ten.getBoundingClientRect().top < 80) glideTo(sec.querySelector('.gz__rollh') || sec.querySelector('.gz__roll'));
       extras.forEach(li => { li.hidden = true; });
     }
     const h1 = ten.offsetHeight;

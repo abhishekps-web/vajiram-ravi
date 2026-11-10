@@ -97,3 +97,56 @@
 .cmp__pin { position: relative; }
 /* the opening words are English: the site's serif title face, a touch tighter than the Devanagari it replaced */
 .cmp--run .cmp__big { font: 400 clamp(64px, 9.5vw, 148px)/1.05 var(--f-title, Georgia), serif; letter-spacing: -.025em; }
+
+/* ---------- ground: the exact Talk to us (#contact) brand-orange gradient, with its white copy and dark eyebrow badge ---------- */
+#story.cmp { color: #fff; background:
+  radial-gradient(48% 60% at 85% 20%, rgba(255, 170, 90, .45), transparent 70%),
+  radial-gradient(45% 55% at 8% 100%, rgba(150, 40, 8, .5), transparent 70%),
+  linear-gradient(135deg, #E85020 0%, #C2410C 55%, #A8380A 100%); }
+#story .lbl .lbl__t { border-image-source: url(../assets/img/brand/cartouche.svg); color: #fff !important; }
+#story .cmp__en, #story .cmp__h, #story .cmp__t { color: #fff; }
+#story .cmp__h, #story .cmp__d { color: rgba(255, 255, 255, .92); }
+#story .cmp__lab { color: #FFD48A; }
+#story .cmp__t i { background: rgba(255, 255, 255, .45); }
+#story .cmp__no { color: #FFF3E1; text-shadow: 0 2px 18px rgba(60, 15, 0, .25); }
+#story .cmp__no small { color: #fff; opacity: .75; }
+#story .cmp__ph::after, #story .cmp__card::after { box-shadow: 0 30px 50px -28px rgba(60, 15, 0, .6), 0 3px 6px rgba(60, 15, 0, .2); }
+
+/* ---------- photographs: a clipped frame with a fine light edge and a soft floor shade, per-photo crops (inline object-position),
+   a settle-in zoom as each chapter lands (--e from js/story.js) and a slow zoom on hover ---------- */
+.cmp__ph { border-radius: 20px; }
+.cmp__ph::before { content: ""; position: absolute; inset: 0; z-index: 2; border-radius: inherit; pointer-events: none;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .28); background: linear-gradient(180deg, transparent 62%, rgba(60, 15, 0, .22) 100%); }
+.cmp__ph > img { position: relative; border-radius: 0; box-shadow: none; transform-origin: 50% 60%;
+  transform: scale(calc((1.12 - .12 * var(--e, 1)) * var(--hz))); transition: --hz .8s var(--ease); }
+/* --hz is registered so the hover zoom eases on its own, while --e follows the scroll frame by frame with no transition lag */
+@property --hz { syntax: "<number>"; inherits: false; initial-value: 1; }
+.cmp__ph { overflow: hidden; isolation: isolate; }
+.cmp__ph::after { z-index: -1; }
+/* the shadow sits outside the clip: keep it on a wrapper-less frame by drawing it with filter instead */
+#story .cmp__ph { filter: drop-shadow(0 26px 30px rgba(60, 15, 0, .38)) drop-shadow(0 3px 5px rgba(60, 15, 0, .18)); }
+#story .cmp__ph::after { content: none; }
+.cmp__card img { border-radius: 20px; }
+/* the counsellor is a cut-out: give him a warm studio backdrop and room above his head */
+.cmp__ph--cut { background: radial-gradient(70% 85% at 50% 38%, #FFF3E1 0%, #FBD3A6 55%, #F2A766 100%); }
+.cmp__ph--cut > img { object-fit: contain; object-position: 50% 100%; padding-top: 6%; box-sizing: border-box; transform-origin: 50% 100%; }
+.cmp__ph--cut::before { background: linear-gradient(180deg, transparent 70%, rgba(60, 15, 0, .16) 100%); }
+@media (hover: hover) and (pointer: fine) { .cmp__p:hover .cmp__ph > img, .cmp__ph:hover > img { --hz: 1.04; } }
+@media (prefers-reduced-motion: reduce) { .cmp__ph > img { transform: none; transition: none; } }
+
+/* the CTAs must be clickable: z-index -1 (line 41) sank the pinned scene under its own .cmp__pin wrapper, which swallowed every click.
+   .cmp__pin already ends the pin with the scene, so nothing shows through the later sections at the normal stacking level. */
+#story.cmp--run { z-index: 0; }
+
+/* ---------- background pattern: the same white jaali lattice as Talk to us and the closing CTA (css/v49.css, end): 44px tile, 14%, clear through
+   the middle. It sits behind the stage, so in the pinned scene it appears as the orange ground fades up over the building photo; in the stacked
+   layout it settles in (fade + 18px rise) with the eyebrow. Hover drifts it half a tile. ---------- */
+#story.cmp::before { content: ""; position: absolute; inset: -44px; z-index: -1; pointer-events: none; opacity: .14;
+  background: url(../assets/img/patterns/jaali.svg) 0 0 / 44px 44px repeat;
+  -webkit-mask: radial-gradient(78% 70% at 50% 55%, transparent 40%, #000 100%); mask: radial-gradient(78% 70% at 50% 55%, transparent 40%, #000 100%);
+  transition: opacity .9s var(--ease), transform 1.2s var(--ease); }
+.fx-on #story.cmp:not(.cmp--run):not(:has(.cmp__hd .rv.in))::before { opacity: 0; transform: translateY(18px); }
+@media (hover: hover) and (pointer: fine) { #story.cmp:hover::before { transform: translate(22px, -22px); } }
+#story.cmp:not(.cmp--run)::before { -webkit-mask: linear-gradient(90deg, #000 0%, transparent 38%, transparent 62%, #000 100%); mask: linear-gradient(90deg, #000 0%, transparent 38%, transparent 62%, #000 100%); }   /* stacked layout is very tall: fade side to side instead */
+@media (max-width: 640px) { #story.cmp::before { background-size: 32px 32px; } }
+@media (prefers-reduced-motion: reduce) { #story.cmp::before { transition: none; opacity: .14; transform: none; } }
