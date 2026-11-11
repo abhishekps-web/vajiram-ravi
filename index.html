@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="css/v49.css?v=193">
 <link rel="stylesheet" href="css/story.css?v=14">
 <link rel="stylesheet" href="css/intro.css?v=2">
-<link rel="stylesheet" href="css/toppers.css?v=31">
+<link rel="stylesheet" href="css/toppers.css?v=54">
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -84,54 +84,45 @@
 
 </div>
 
-<!-- ============ TOPPERS: "The Civil Services Gazette", a results-special front page (layout after vajiram-ravi-homepage.vercel.app #results).
+<!-- ============ TOPPERS: a results-special newspaper front page (masthead removed 2026-11-11) (layout after vajiram-ravi-homepage.vercel.app #results).
      Static shell only: every topper, story, seal, fact and filter count is written by js/toppers.js from js/data/toppers-archive.js
      (plus programme names from js/data/toppers.js where the archive has none). Styles: css/toppers.css. ============ -->
 <section class="gz" id="toppers" aria-labelledby="gzHl">
   <div class="gz__sheet">
-    <header class="gz__mast rv" style="--d:.05s">
-      <p class="gz__ear"><span>Digital edition</span><span>New Delhi</span></p>
-      <div class="gz__title">
-        <p class="gz__name">The Civil Services Gazette</p>
-        <p class="gz__hin" lang="hi">सिविल सेवा समाचार &middot; स्थापित 1976</p>
-      </div>
-      <p class="gz__ear gz__ear--r"><b class="gz__tag">Results special</b></p>
-    </header>
-    <p class="gz__date rv" style="--d:.1s"><span>02 &middot; The results</span><span class="gz__ed"><label for="gzYear">UPSC Civil Services Examination</label><select id="gzYear" class="gz__yr"></select></span><span>Final result</span></p>
+    <p class="gz__date rv" style="--d:.1s"><span class="gz__ed">UPSC Civil Services Examination 2025</span></p>
 
     <div class="gz__banner">
-      <p class="gz__kicker rv" style="--d:.14s" id="gzKick">Union Public Service Commission</p>
       <h2 class="gz__hl rv" style="--d:.2s" id="gzHl">Behind every rank is <em>a different journey</em></h2>
       <p class="gz__deck rv" style="--d:.28s" id="gzDeck"></p>
     </div>
 
+    <div class="gz__front">
     <div class="gz__body rv" style="--d:.1s" id="gzLead">
       <figure class="gz__fig">
         <span class="gz__frame"><img id="gzImg" src="assets/img/toppers/portrait/2025/01-anuj-agnihotri.webp" alt="" width="768" height="768" decoding="async"></span>
         <span class="gz__seal" id="gzSeal" aria-hidden="true"></span>
-        <figcaption class="gz__cap" id="gzCap"></figcaption>
       </figure>
       <div class="gz__story">
-        <p class="gz__kicker gz__kicker--s" id="gzStKick"></p>
         <h3 class="gz__sub" id="gzSub"></h3>
-        <p class="gz__by">Results desk &middot; New Delhi</p>
         <div class="gz__cols" id="gzCols"></div>
-        <dl class="gz__facts" id="gzFacts"></dl>
       </div>
     </div>
 
     <section class="gz__roll rv" style="--d:.05s" aria-labelledby="gzRollH">
       <h3 class="sr-only" id="gzRollH">The first ten</h3>
-      <p class="gz__hint">Select a rank holder to bring their story to the front page.</p>
       <p class="gz__ct" id="gzCount" aria-live="polite"></p>
       <p class="sr-only" id="gzSay" aria-live="polite"></p>
-      <ol class="gz__ten" id="gzTen"></ol>
-      <button type="button" class="gz__all" id="gzAll" aria-expanded="false" aria-controls="gzTen" hidden></button>
+      <div class="gz__scroll"><div class="gz__scrolli" id="gzScroll" data-lenis-prevent>
+        <ol class="gz__ten" id="gzTen"></ol>
+        <button type="button" class="gz__all" id="gzAll" aria-expanded="false" aria-controls="gzTen" hidden></button>
+      </div></div>
+    </section>
+    </div>
+    <div class="gz__foot rv" style="--d:.05s">
       <div class="gz__more">
-        <span>Programme associations as published on the institute&rsquo;s results page.</span>
         <a class="bt bt--brand" href="https://vajiramandravi.com/ias-selections-from-vajiram/" target="_blank" rel="noopener">Explore all UPSC results<span class="sq sq--52 sq--white"><img src="assets/img/icons/arrow-brand.svg" alt="" width="16" height="16"></span></a>
       </div>
-    </section>
+    </div>
   </div>
 </section>
 
@@ -521,7 +512,7 @@
 
 <script src="js/data/toppers.js"></script>
 <script src="js/data/toppers-archive.js?v=3"></script>
-<script src="js/toppers.js?v=15"></script>
+<script src="js/toppers.js?v=28"></script>
 <script src="js/content.js?v=23"></script>
 <script src="js/vendor/lenis.min.js"></script>
 <script src="js/hero-kit.js"></script>

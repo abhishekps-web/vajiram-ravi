@@ -1,4 +1,4 @@
-/* Toppers: "The Civil Services Gazette", a results-special front page (layout and behaviour after vajiram-ravi-homepage.vercel.app #results).
+/* Toppers: a results-special newspaper front page (masthead removed 2026-11-11) (layout and behaviour after vajiram-ravi-homepage.vercel.app #results).
    Everything below the masthead is written from data, so adding a year, a rank holder or a programme is a data change only:
    - window.NP_ARCHIVE (js/data/toppers-archive.js): years, and per year {rank, name, programmes, photo (colour), img (b/w fallback)}
    - window.TOPPERS    (js/data/toppers.js): programme names for anyone the archive lists without them
@@ -28,6 +28,7 @@
   (window.TOPPERS || []).forEach(t => { if (t.c) extra[t.y + '-' + t.r] = t.c; });
 
   const YEARS = data.ARCHIVE_YEARS.slice().sort((a, b) => b - a);
+  const SHOW = YEARS.includes(2025) ? 2025 : YEARS[0];   // only CSE 2025 is shown for now (user 2026-11-11); the year picker is gone, other years stay in the data
   const yearList = y => (data.ARCHIVE[y] || []).slice().sort((a, b) => a.rank - b.rank).map((t, i) => {
     const progs = splitProgs(t.programmes || extra[y + '-' + t.rank]).map(name => ({ name, cat: catOf(name) }));
     return { key: y + '-' + i, y, rank: t.rank, name: tidyName(t.name), img: t.photo || t.img, progs, cats: [...new Set(progs.map(p => p.cat))] };
@@ -45,32 +46,34 @@
 
   /* ---------- elements ---------- */
   const yearSel = $('gzYear'), kickB = $('gzKick'), deck = $('gzDeck'), lead = $('gzLead');
-  const img = $('gzImg'), seal = $('gzSeal'), capEl = $('gzCap'), stKick = $('gzStKick'), sub = $('gzSub'), cols = $('gzCols'), facts = $('gzFacts');
+  const img = $('gzImg'), seal = $('gzSeal'), sub = $('gzSub'), cols = $('gzCols');
+  const scroller = $('gzScroll');   // the rank-holder column scrolls on its own on wide screens
   const ten = $('gzTen'), tabs = [...sec.querySelectorAll('.gz__tab')], count = $('gzCount'), say = $('gzSay'), allBtn = $('gzAll'), rollH = $('gzRollH');
-  yearSel.innerHTML = YEARS.map(y => `<option value="${y}">${y}</option>`).join('');
+  if (yearSel) yearSel.innerHTML = YEARS.map(y => `<option value="${y}">${y}</option>`).join('');
 
-  let list = [], year = YEARS[0], current = null, cat = 'all', expanded = false, stats = {};
+  let list = [], year = SHOW, current = null, cat = 'all', expanded = false, stats = {};
 
   /* ---------- the lead story ---------- */
   const fill = (t, withImg) => {
     const first = t === list[0];
     if (withImg) { img.src = t.img; img.alt = `${t.name}, All India Rank ${t.rank} in the Civil Services Examination ${t.y}`; }
-    seal.innerHTML = `<s>CSE ${t.y}</s><i>AIR</i><b>${t.rank}</b><s>${ord(t.rank)} in India</s>`;
-    capEl.innerHTML = `<b>${esc(t.name)}</b>, All India Rank ${t.rank}, UPSC CSE ${t.y}.`;
+    seal.innerHTML = `<s>CSE ${t.y}</s><span class="gz__air"><i>AIR</i><b>${t.rank}</b></span><s>${ord(t.rank)} in India</s>`;
     const n = t.progs.length;
-    stKick.innerHTML = `AIR ${t.rank} &middot; ` + (n > 1 ? `${n} programmes` : n ? esc(t.progs[0].name) : `CSE ${t.y}`);
+    // kept short (user 2026-11-11, "more minimal"): the headline, two paragraphs on this rank holder and one line on the year
     const paras = [];
     if (first && stats.igp10 > 1) sub.innerHTML = `${esc(t.name)} heads the list; ${words(stats.igp10)} of the top ten were associated with the Interview Guidance Programme`;
     else if (first) sub.innerHTML = `${esc(t.name)} heads the list in the Civil Services Examination ${t.y}`;
     else sub.innerHTML = `${esc(t.name)} secures All India Rank ${t.rank} in the Civil Services Examination ${t.y}`;
     paras.push(n ? `${esc(t.name)}, All India Rank ${t.rank} in the Civil Services Examination ${t.y}, was associated with Vajiram &amp; Ravi through the ${progList(t)}.`
                  : `${esc(t.name)}, All India Rank ${t.rank} in the Civil Services Examination ${t.y}, is among the rank holders who prepared with Vajiram &amp; Ravi.`);
+    // a second paragraph to fill the column (user 2026-11-11): AIR 1 names the next two rank holders; others get a line on the
+    // Interview Guidance Programme or, failing that, on their place in the top ten
     if (first) {
       const next = list.slice(1, 3).filter(x => x.progs.length);
       if (next.length) paras.push(next.map(x => `${esc(x.name)}, AIR ${x.rank}, was associated with the ${progList(x)}.`).join(' '));
     } else if (t.cats.includes('igp')) paras.push('The Interview Guidance Programme prepares candidates for the Personality Test, the final stage of the examination.');
-    if (stats.withProgs) paras.push('The programmes differ from candidate to candidate. Each rank holder&rsquo;s association is listed below as the institute publishes it.');
-    if (stats.n50 > 1) paras.push(`${cap(words(stats.n50))} of the first fifty ranks were associated with one or more of the institute&rsquo;s programmes.`);
+    else if (t.rank <= 10 && stats.top10 > 1) paras.push(`${esc(t.name)} is one of ${words(stats.top10)} rank holders in the top ten of CSE ${t.y} who prepared with Vajiram &amp; Ravi.`);
+    if (stats.n50 > 1) paras.push(`${stats.n50} of the top 50 ranks in CSE ${t.y} prepared with Vajiram &amp; Ravi.`);
     cols.innerHTML = paras.map(p => `<p>${p}</p>`).join('');
   };
   // the story box takes the height of the longest story in the year, so selecting a rank holder never moves the page below
@@ -84,10 +87,10 @@
 
   /* ---------- the roll ---------- */
   const firstTen = () => { const top = list.filter(t => t.rank <= 10); return top.length ? top : list.slice(0, 10); };
-  const card = (t, i, isExtra) => `<li class="gz__tp${isExtra ? ' is-extra' : ''}" data-key="${t.key}" data-cats="${t.cats.join(' ')}" style="--i:${Math.min(i, 9)}"${isExtra && !expanded ? ' hidden' : ''}>
+  const card = (t, i, isExtra) => `<li class="gz__tp${isExtra ? ' is-extra' : ''}${t.rank === 1 ? ' is-first' : ''}" data-key="${t.key}" data-cats="${t.cats.join(' ')}" style="--i:${Math.min(i, 9)}"${isExtra && !expanded ? ' hidden' : ''}>
       <button class="gz__pick" type="button" aria-pressed="false" aria-controls="gzLead">
         <span class="gz__mug" aria-hidden="true"><img src="${esc(t.img)}" alt="" width="360" height="450" loading="lazy" decoding="async"></span>
-        <span class="gz__txt"><span class="gz__rk">AIR&nbsp;${t.rank}</span><b class="gz__nm">${esc(t.name)}</b>${t.progs.length
+        <span class="gz__txt"><span class="gz__rk"><small>AIR</small>${t.rank}</span><b class="gz__nm">${esc(t.name)}</b>${t.progs.length
           ? `<span class="gz__pg">${t.progs.map(p => `<span data-gz-cat="${p.cat}">${esc(p.name)}</span>`).join(' <i aria-hidden="true">&middot;</i> ')}</span>` : ''}</span>
       </button></li>`;
 
@@ -100,14 +103,12 @@
       n50: list.filter(t => t.rank <= 50).length,
       withProgs: list.some(t => t.progs.length)
     };
-    kickB.innerHTML = `Union Public Service Commission &middot; Civil Services Examination ${year}`;
+    if (kickB) kickB.innerHTML = `Union Public Service Commission &middot; Civil Services Examination ${year}`;
     deck.innerHTML = stats.withProgs
       ? `The UPSC CSE ${year} top-ten rank holders were associated with Vajiram &amp; Ravi through different programmes, from General Studies preparation and test series to interview guidance.`
       : `The UPSC CSE ${year} rank holders who prepared with Vajiram &amp; Ravi, as the institute publishes them.`;
-    const f = [[stats.top10, 'Of the top ten'], [stats.igp10, 'Interview Guidance Programme'], [stats.n50, 'Of the first fifty ranks'], [1976, 'Preparing aspirants since']].filter(x => x[0]);
-    facts.innerHTML = f.map(([n, l]) => `<div><dt>${l}</dt><dd>${n}</dd></div>`).join('');
-    facts.style.setProperty('--n', f.length);
     ten.innerHTML = top.map((t, i) => card(t, i, false)).join('') + rest.map((t, i) => card(t, i, true)).join('');
+    if (scroller) scroller.scrollTop = 0;
     allBtn.hidden = !rest.length;
     allBtn.innerHTML = label();
     allBtn.setAttribute('aria-expanded', 'false');
@@ -140,13 +141,40 @@
       const y = scrollY + top - 96;
       if (window.__lenis) window.__lenis.scrollTo(y, { duration: reduce ? 0 : 1 }); else scrollTo({ top: y, behavior: reduce ? 'auto' : 'smooth' });
     }
-    const me = ++ask, im = new Image(); im.src = t.img;
-    Promise.race([(im.decode ? im.decode() : Promise.resolve()).catch(() => {}), new Promise(r => setTimeout(r, 350))]).then(() => {
+    // wait until the new portrait is decoded (up to 1.5s), then a mask reveal with counter-zoom: the new portrait rises in from the
+    // bottom through a growing clip while zooming from 1.2x to 1x; a copy of the old one, laid underneath, drifts up and dims
+    const me = ++ask;
+    Promise.race([warm(t.img), new Promise(r => setTimeout(r, 1500))]).then(() => {
       if (me !== ask) return;
+      const frame = img.parentNode;
+      frame.querySelectorAll('.gz__ghost').forEach(g => g.remove());
+      if (!reduce && img.currentSrc) {
+        const ghost = document.createElement('span'), old = img.cloneNode(false);
+        ghost.className = 'gz__ghost'; ghost.setAttribute('aria-hidden', 'true');
+        old.removeAttribute('id'); old.alt = ''; old.style.height = frame.offsetHeight + 'px';   // the picture keeps its size while the panel shortens
+        ghost.append(old); frame.insertBefore(ghost, img);
+        ghost.addEventListener('animationend', () => ghost.remove(), { once: true });
+        setTimeout(() => ghost.remove(), 1500);
+      }
       fill(t, true);
       if (!reduce) { lead.classList.remove('is-swap'); void lead.offsetWidth; lead.classList.add('is-swap'); }
     });
   };
+  // decode a portrait ahead of time; hovering or focusing a card warms its portrait so the swap is instant
+  const warmed = new Map();
+  const warm = src => {
+    if (!warmed.has(src)) {
+      const im = new Image(); im.decoding = 'async'; im.src = src;
+      warmed.set(src, (im.decode ? im.decode() : new Promise(r => { im.onload = im.onerror = r; })).catch(() => {}));
+    }
+    return warmed.get(src);
+  };
+  const warmCard = e => {
+    const li = e.target.closest && e.target.closest('.gz__tp'); if (!li) return;
+    const t = list.find(x => x.key === li.dataset.key); if (t) warm(t.img);
+  };
+  ten.addEventListener('pointerover', warmCard);
+  ten.addEventListener('focusin', warmCard);
   ten.addEventListener('click', e => {
     const li = e.target.closest('.gz__tp'); if (!li) return;
     const t = list.find(x => x.key === li.dataset.key);
@@ -194,6 +222,7 @@
     if (expanded) {
       extras.forEach((li, i) => { li.hidden = false; li.style.setProperty('--j', Math.min(i, 14)); li.classList.add('is-new'); });
     } else {
+      if (scroller) scroller.scrollTo({ top: 0, behavior: 'smooth' });
       if (ten.getBoundingClientRect().top < 80) glideTo(sec.querySelector('.gz__rollh') || sec.querySelector('.gz__roll'));
       extras.forEach(li => { li.hidden = true; });
     }
@@ -211,9 +240,9 @@
     };
     ten.addEventListener('transitionend', done); const t = setTimeout(done, 900);
   });
-  yearSel.addEventListener('change', () => renderYear(yearSel.value));
+  if (yearSel) yearSel.addEventListener('change', () => renderYear(yearSel.value));
 
-  renderYear(YEARS[0]);
+  renderYear(SHOW);
   let w = innerWidth, rz = 0;
   addEventListener('resize', () => { if (innerWidth === w) return; w = innerWidth; clearTimeout(rz); rz = setTimeout(sizeLead, 150); });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(sizeLead);

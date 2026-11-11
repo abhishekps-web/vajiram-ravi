@@ -1,8 +1,8 @@
 /* =====================================================================================================================================
    Toppers: "The Civil Services Gazette", a results-special front page. Layout, type scale, image treatment and interactions follow
    vajiram-ravi-homepage.vercel.app #results (measured there at 1440px): white paper with an 8px orange top rule, a three-part masthead,
-   a 3px ink date rule, an uppercase banner headline, then the lead (4:5 portrait + seal | ruled story with two columns and a facts
-   strip), then "The first ten" roll (orange bar with filter pills, 62 x 78 thumbnails). Google Sans there; Hanken Grotesk here.
+   a 3px ink date rule, an uppercase banner headline, then the lead (4:5 portrait + seal | ruled story; the facts strip was
+   removed 2026-11-11), then "The first ten" roll (orange bar with filter pills, 62 x 78 thumbnails). Google Sans there; Hanken Grotesk here.
    Markup: index.html #toppers. Content: js/toppers.js (from js/data/toppers-archive.js).
    ===================================================================================================================================== */
 #toppers.gz {
@@ -71,12 +71,6 @@
 .gz__cols { margin-top: 14px; column-count: 2; column-gap: 29px; column-rule: 1px solid var(--gz-line); }
 .gz__cols p { margin: 0 0 12px; font: 400 15px/1.58 var(--gz-sans); color: var(--gz-ink); text-align: justify; hyphens: auto; }
 .gz__cols p:first-child::first-letter { float: left; margin: 4px 6px 0 0; font: 800 48px/.8 var(--gz-sans); color: var(--gz-orange); }
-.gz__facts { display: grid; grid-template-columns: repeat(var(--n, 4), minmax(0, 1fr)); margin: 14px 0 0; border-top: 3px solid var(--gz-ink); border-bottom: 1px solid var(--gz-line); }
-.gz__facts div { display: flex; flex-direction: column-reverse; justify-content: flex-end; gap: 6px; padding: 10px 12px 10px 12px; }
-.gz__facts div:first-child { padding-left: 0; }
-.gz__facts div + div { border-left: 1px solid var(--gz-line); }
-.gz__facts dd { margin: 0; font: 800 36px/1 var(--gz-sans); letter-spacing: -.02em; color: var(--gz-num); }
-.gz__facts dt { font: 600 11px/1.3 var(--gz-sans); letter-spacing: .08em; text-transform: uppercase; color: var(--gz-mute); }
 
 /* ---------- the roll ---------- */
 .gz__roll { margin-top: 26px; }
@@ -126,7 +120,16 @@
 #gzLead.is-swap .gz__story > :nth-child(2) { animation-delay: .04s; }
 #gzLead.is-swap .gz__story > :nth-child(3) { animation-delay: .08s; }
 #gzLead.is-swap .gz__story > :nth-child(4) { animation-delay: .12s; }
-#gzLead.is-swap .gz__frame img { animation: gzImg .6s var(--ease) both; }
+/* portrait swap, mask reveal with counter-zoom (user 2026-11-11, the Awwwards-style reveal): the new portrait rises in from the bottom
+   through a growing clip while it zooms from 1.2x to 1x; a copy of the old one, laid underneath by js/toppers.js, drifts up and dims */
+@keyframes gzReveal { from { clip-path: inset(100% 0 0 0); scale: 1.2; } to { clip-path: inset(0); scale: 1; } }
+@keyframes gzRecede { to { translate: 0 -12%; filter: brightness(.45); } }
+.gz__frame { position: relative; isolation: isolate; }   /* keeps the swap layers inside the frame, under the AIR seal */
+#gzImg { position: relative; z-index: 1; }
+.gz__ghost { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; background: #16120E;
+  animation: gzRecede 1.2s cubic-bezier(.22, 1, .36, 1) both; }
+.gz__ghost img { position: absolute; top: 0; left: 0; display: block; width: 100%; object-fit: cover; object-position: 50% 0%; }
+#gzLead.is-swap .gz__frame #gzImg { animation: gzReveal 1.2s cubic-bezier(.22, 1, .36, 1) both; transform-origin: 50% 100%; }
 @media (hover: hover) and (pointer: fine) {
   .gz__tab:hover { border-color: #fff; background: rgba(255, 255, 255, .45); }
   .gz__tab[aria-pressed="true"]:hover { background: #fff; }
@@ -152,9 +155,6 @@
   .gz__ear--r { justify-content: center; }
   .gz__date { flex-direction: column; text-align: center; gap: 6px; }
   .gz__cols { column-count: 1; }
-  .gz__facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .gz__facts div:nth-child(odd) { padding-left: 0; border-left: 0; }
-  .gz__facts div:nth-child(n+3) { border-top: 1px solid var(--gz-line); }
   .gz__seal { width: 96px; height: 96px; }
   .gz__seal b { font-size: 38px; }
   .gz__rollh { flex-direction: column; align-items: flex-start; padding: 10px 12px; }
@@ -199,10 +199,6 @@
 @media (hover: hover) and (pointer: fine) { .gz__all:hover i { translate: 0 0; } .gz__all[aria-expanded="true"]:hover i { translate: 0 0; } }
 @media (prefers-reduced-motion: reduce) { .gz__tp.is-new { animation: none; } .gz__all i { transition: none; } }
 
-/* facts strip: the labels read clearly next to the numbers (were 11px muted caps): 13px, ink, sentence case */
-.gz__facts div { gap: 8px; padding-top: 12px; padding-bottom: 14px; }
-.gz__facts dt { font: 600 13.5px/1.35 var(--gz-sans); letter-spacing: 0; text-transform: none; color: var(--gz-ink); }
-.gz__facts dd { font-size: 40px; }
 
 /* ---------- paper clip (after vajiram-ravi-homepage.vercel.app #results .np__sheet::before): a wire clip over the top edge of the front page,
    near the left. A 21 x 52px rounded loop of 2.6px dark-brown wire, open at the bottom, upright, standing 13px above the paper (the top is
@@ -211,6 +207,71 @@
   border: 2.6px solid rgba(58, 30, 4, .46); border-bottom-color: transparent; border-radius: 11px; pointer-events: none;
   box-shadow: inset 0 0 0 4.4px transparent, 0 1px 2px rgba(58, 30, 4, .22);
   transition: opacity .5s var(--ease, ease) .15s, translate .6s var(--ease, ease) .15s; }
-.js .gz__sheet:not(:has(.gz__mast.in))::before { opacity: 0; translate: 0 -8px; }
+.js .gz__sheet:not(:has(.gz__date.in))::before { opacity: 0; translate: 0 -8px; }
 @media (max-width: 640px) { .gz__sheet::before { top: -19px; } }   /* the top border is 6px here */
+
+/* ---- front page in three equal columns (user 2026-11-11): portrait | story | the rank holders. The story runs as one column; the roll
+   takes the lead's height and scrolls inside itself (the absolute inner box keeps it from stretching the row). Below 961px it stacks as before. ---- */
+.gz__foot .gz__more { margin-top: 18px; border-top: 1px solid var(--gz-line); }
+@media (min-width: 961px) {
+  .gz__front { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); padding-top: 22px; }
+  .gz__front .gz__body { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); padding-top: 0; }
+  .gz__front .gz__story { padding-right: 29px; }   /* keeps the story off the roll's rule */
+  .gz__front .gz__sub { font-size: clamp(22px, 1.75vw, 26px); }
+  .gz__front .gz__cols { column-count: 1; }
+  .gz__front .gz__cols p { text-align: left; hyphens: manual; text-wrap: pretty; }   /* justified type opened wide gaps in the narrow column */
+  .gz__front .gz__roll { display: flex; flex-direction: column; min-height: 0; margin-top: 0; padding-left: 29px; border-left: 1px solid var(--gz-line); }
+  .gz__front .gz__hint { margin-top: 0; }
+  .gz__scroll { position: relative; flex: 1 1 0; min-height: 320px; margin-top: 12px; }
+  .gz__scrolli { position: absolute; inset: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--gz-line) transparent;
+    border-top: 3px solid var(--gz-ink); }
+  .gz__front .gz__ten { grid-template-columns: 1fr; margin-top: 0; }
+  .gz__front .gz__tp { padding: 12px 8px; }   /* room inside the scroll box for the 4px selection ring and the 6px focus outline */
+  .gz__front .gz__all { margin-bottom: 4px; }
+}
 @media (prefers-reduced-motion: reduce) { .gz__sheet::before { transition: none; opacity: 1; translate: none; } }
+
+/* ---- quieter front page (user 2026-11-11: "more minimal", same look and feel). Removed from the markup: the date line's side labels,
+   the banner kicker, the story kicker and byline, the photo caption, the roll hint and the footnote; the story is two short paragraphs.
+   These rules only re-seat what is left. ---- */
+.gz__date { justify-content: center; }
+.gz__story > .gz__sub:first-child { margin-top: 0; }
+.gz__banner > .gz__hl:first-child { margin-top: 0; }
+.gz__foot .gz__more { justify-content: flex-end; }
+@media (min-width: 961px) { .gz__scroll { margin-top: 0; } }
+@media (max-width: 640px) { .gz__foot .gz__more { align-items: stretch; } }
+/* masthead removed (user 2026-11-11): the section opens on the exam / year line, so it drops the heavy top rule it shared with the masthead */
+.gz__sheet > .gz__date:first-child { border-top: 0; padding-top: 0; }
+/* story fills its column (user 2026-11-11): beside the portrait the story runs the portrait's full height. The body is set larger, and the
+   closing line on the year (the last paragraph) sits at the foot of the column on a hairline rule, level with the bottom of the photo. */
+@media (min-width: 961px) {
+  .gz__front .gz__story { display: flex; flex-direction: column; }
+  .gz__front .gz__cols { display: flex; flex-direction: column; flex: 1; margin-top: 18px; }
+  .gz__front .gz__cols p { font-size: clamp(15px, 1.12vw, 16.5px); line-height: 1.58; margin-bottom: 12px; }
+  .gz__front .gz__cols p:first-child::first-letter { font-size: 64px; margin-top: 5px; }
+  .gz__front .gz__cols p:last-child:not(:first-child) { margin: auto 0 0; padding-top: 14px; border-top: 1px solid var(--gz-line); color: var(--gz-mute); }
+}
+/* the rank leads each card (user 2026-11-11: "AIR 1 should be prominent"): a large rank number with a small AIR label before it;
+   the selected card's rank turns into the red pill as before */
+.gz__rk { display: inline-flex; align-items: baseline; gap: 5px; padding: 1px 0; font: 800 26px/1 var(--gz-sans); letter-spacing: -.02em; color: var(--gz-red); }
+.gz__rk small { font: 700 11px/1 var(--gz-sans); letter-spacing: .16em; }
+.gz__tp.is-on .gz__rk { padding: 3px 8px 2px; margin-left: -1px; }
+/* rank in large type (user 2026-11-11: "AIR 1 should be large font"): AIR and the number both bigger on every card, AIR 1 the largest */
+.gz__rk { font-size: 34px; gap: 6px; }
+.gz__rk small { font-size: 15px; letter-spacing: .1em; }
+.gz__tp.is-first .gz__rk { font-size: 46px; }
+.gz__tp.is-first .gz__rk small { font-size: 18px; }
+/* seal: "AIR" and the rank on one line in the same size (user 2026-11-11) */
+.gz__seal .gz__air { display: flex; align-items: baseline; gap: 6px; margin: 4px 0 5px; }
+.gz__seal .gz__air i, .gz__seal .gz__air b { margin: 0; font: 800 32px/1 var(--gz-sans); letter-spacing: -.02em; }
+@media (max-width: 640px) { .gz__seal .gz__air i, .gz__seal .gz__air b { font-size: 24px; } .gz__seal .gz__air { gap: 4px; margin: 2px 0 3px; } }
+/* the portrait runs the full height of the story beside it, so both columns end on the same line (cropped from the top, never shorter than 4:5) */
+@media (min-width: 961px) {
+  .gz__front .gz__fig { display: flex; flex-direction: column; }
+  .gz__front .gz__frame { flex: 1; aspect-ratio: auto; min-height: 0; }
+  .gz__front .gz__frame::before { content: ""; display: block; aspect-ratio: 4 / 5; width: 100%; }
+  .gz__front .gz__frame #gzImg { position: absolute; inset: 0; }   /* the ::before holds the 4:5 minimum; the photo covers the frame */
+}
+/* "Explore all UPSC results" centred under the front page (user 2026-11-11), with the same 28px above and below the rule */
+.gz__foot .gz__more { justify-content: center; margin-top: 28px; padding-top: 28px; }
+@media (max-width: 640px) { .gz__foot .gz__more { align-items: center; margin-top: 22px; padding-top: 22px; } }
