@@ -2160,3 +2160,18 @@ main .cover > #dlPin + section { background: linear-gradient(90deg, rgba(255, 25
    General Studies (4), which re-placed the sliding pill without its slide. */
 #courses .ptabs .seg button small, #courses .ptabs .seg button:not([aria-selected="true"]) small { min-width: 24px; padding: 4px 7px; box-sizing: border-box; text-align: center; }
 #courses .ptabs .seg button:not([aria-selected="true"]) small { background: transparent; }
+
+/* ---- Study materials mega menu (js/content.js STUDY): the course menu's frame and rows, four groups (Current affairs, Exam essentials,
+   Practice, Books & notes) and the guidance aside. Current affairs is no longer its own nav link. Same open / stagger motion and row
+   hovers as All courses (.explore / .mega rules above). ---- */
+.mega--sm { width: min(1240px, calc(100vw - 2 * var(--px))); }
+.mega--sm .mega__stages { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+/* Mega menus (All courses, Study materials): no rule running through the numbered column headings */
+.mega__stages::before { content: none; }
+/* An open mega menu blurs and softly dims the page behind it (the hero when at the top): a fixed scrim just under the nav (z 50).
+   It fades in and out with the menu; it takes no pointer events, so moving off the menu still closes it. */
+.mega-scrim { position: fixed; inset: 0; z-index: 49; pointer-events: none; opacity: 0; visibility: hidden;
+  background: rgba(26, 10, 2, .16); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  transition: opacity .3s var(--ease), visibility 0s .3s; }
+.mega-open .mega-scrim { opacity: 1; visibility: visible; transition: opacity .3s var(--ease), visibility 0s; }
+@media (prefers-reduced-motion: reduce) { .mega-scrim { transition: none; } }

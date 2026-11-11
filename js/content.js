@@ -145,8 +145,27 @@
   const setDrawer = open => { drawer.hidden = !open; burger.setAttribute('aria-expanded', open); burger.classList.toggle('x', open); };
   burger.addEventListener('click', () => setDrawer(drawer.hidden));
   $$('a', drawer).forEach(a => a.addEventListener('click', () => setDrawer(false)));
-  const explore = $('#explore'), exBtn = $('#exploreBtn');
-  const setMega = open => { explore.classList.toggle('open', open); exBtn.setAttribute('aria-expanded', open); };
+  // nav mega menus (All courses, Study materials): open on hover with a mouse, on click / Enter, ArrowDown moves into the first link;
+  // one open at a time; they close on an outside click, on focus leaving, and on Escape
+  const megas = [];
+  document.body.insertAdjacentHTML('beforeend', '<div class="mega-scrim" aria-hidden="true"></div>');
+  const navMega = (wrap, btn) => {
+    const set = open => {
+      if (open) megas.forEach(m => m !== api && m.set(false));
+      wrap.classList.toggle('open', open); btn.setAttribute('aria-expanded', open);
+      document.documentElement.classList.toggle('mega-open', $$('.explore.open').length > 0);   // blurs the page behind the menu (.mega-scrim)
+    };
+    let t;
+    btn.addEventListener('click', () => set(!wrap.classList.contains('open')));
+    wrap.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') { clearTimeout(t); set(true); } });
+    wrap.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') t = setTimeout(() => set(false), 160); });
+    document.addEventListener('click', e => { if (!wrap.contains(e.target)) set(false); });
+    wrap.addEventListener('focusout', e => { if (!wrap.contains(e.relatedTarget)) set(false); });
+    btn.addEventListener('keydown', e => { if (e.key === 'ArrowDown') { e.preventDefault(); set(true); const f = $('.mega__a', wrap); if (f) f.focus(); } });
+    $$('.mega__a, .mega__cta, .mega__all', wrap).forEach(a => a.addEventListener('click', () => set(false)));
+    const api = { set }; megas.push(api); return api;
+  };
+  const setMega = open => megas.forEach(m => m.set(open && m === megas[0]));
   // All courses: the five stages as numbered columns along one line, each programme a row (name, one-line description, course count),
   // and a guidance column; programme rows open the catalogue on that category (the [data-cat] handler below)
   const total = CATS.reduce((n, c) => n + c.courses.length, 0);
@@ -161,15 +180,26 @@
       <a class="bt bt--brand mega__cta" href="#contact">Talk to a counsellor<span class="sq sq--52 sq--white"><img src="assets/img/icons/arrow-brand.svg" alt="" width="16" height="16"></span></a>
       <a class="mega__all" href="#courses">View all ${total} courses<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
     </aside>`;
-  $$('#mega .mega__cta, #mega .mega__all').forEach(a => a.addEventListener('click', () => setMega(false)));
-  exBtn.addEventListener('click', () => setMega(!explore.classList.contains('open')));
-  let megaT;
-  explore.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') { clearTimeout(megaT); setMega(true); } });
-  explore.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') megaT = setTimeout(() => setMega(false), 160); });
-  document.addEventListener('click', e => { if (!explore.contains(e.target)) setMega(false); });
-  explore.addEventListener('focusout', e => { if (!explore.contains(e.relatedTarget)) setMega(false); });
-  exBtn.addEventListener('keydown', e => { if (e.key === 'ArrowDown') { e.preventDefault(); setMega(true); const f = $('#mega .mega__a'); if (f) f.focus(); } });
-  addEventListener('keydown', e => { if (e.key === 'Escape') { setMega(false); setDrawer(false); } });
+  // Study materials: the free resources grouped like the course menu (Current affairs lives here now, no longer its own nav link);
+  // every row opens the resource on the Vajiram & Ravi site (the [data-rs] links below), the aside jumps to the Free resources section
+  const STUDY = [
+    { k: 'Current affairs', items: [['Daily current affairs', 'Prelims, Mains and Quest articles, written the way UPSC asks.', 'Updated daily'], ['The Recitals', 'UPSC current affairs monthly material, free to download.', 'Monthly'], ['Editorial analysis', 'The day&rsquo;s newspaper editorials, read for UPSC.'], ['Daily quiz', 'Prelims practice questions, set every day.']] },
+    { k: 'Exam essentials', items: [['Previous year papers', 'Prelims and Mains papers, with the UPSC answer key.'], ['Syllabus &amp; exam pattern', 'What is asked at each stage, and how it is marked.'], ['UPSC Calendar 2027', 'Every stage date, plus the age limit and eligibility rules.', 'Key dates']] },
+    { k: 'Practice', items: [['Answer writing practice', 'Mains questions to write and review.'], ['Essay topics', 'Past and practice topics for the Essay paper.'], ['Ethics case studies', 'GS Paper IV case studies to work through.'], ['Interview guidance tips', 'Getting ready for the personality test.']] },
+    { k: 'Books &amp; notes', items: [['GS postal books', 'Printed General Studies material for UPSC preparation.'], ['NCERT notes', 'The school textbooks, condensed into notes.'], ['Government schemes', 'Key schemes and what each is for.']] }
+  ];
+  $('#megaSm').innerHTML = `<div class="mega__stages">${STUDY.map((g, i) => `<section class="mega__col" style="--i:${i}">
+      <p class="mega__k"><b>${String(i + 1).padStart(2, '0')}</b>${g.k}</p>
+      <ul>${g.items.map(([t, d, n]) => `<li><a class="mega__a" href="#resources" data-rs><span class="mega__t">${t}</span><span class="mega__d">${d}</span>${n ? `<span class="mega__n">${n}</span>` : ''}</a></li>`).join('')}</ul>
+    </section>`).join('')}</div>
+    <aside class="mega__aside" style="--i:4">
+      <p class="mega__k">Free for every aspirant</p>
+      <p class="mega__p">Current affairs, papers and practice material from the Vajiram &amp; Ravi editorial desk, at no cost.</p>
+      <a class="bt bt--brand mega__cta" href="#resources">Free resources<span class="sq sq--52 sq--white"><img src="assets/img/icons/arrow-brand.svg" alt="" width="16" height="16"></span></a>
+    </aside>`;
+  navMega($('#explore'), $('#exploreBtn'));
+  navMega($('#studyNav'), $('#studyBtn'));
+  addEventListener('keydown', e => { if (e.key === 'Escape') { setMega(false); setDrawer(false); } });   // setMega(false) closes every menu
 
   /* ---------------- hero ---------------- */
   const names = top10.map(p => `<span><small>AIR ${p.r} · CSE ${p.y}</small>${esc(p.n)}<i aria-hidden="true"></i></span>`).join('');
@@ -683,7 +713,8 @@
   // one answer open at a time + the open/close motion: js/accordion.js
 
   /* ---------------- resources: six static cards in index.html; their links open the Vajiram & Ravi site until the pages exist ---------------- */
-  $$('#resources [data-rs]').forEach(a => { a.href = SITE; a.target = '_blank'; a.rel = 'noopener'; });
+  $$('[data-rs]').forEach(a => {   // Free resources cards and the Study materials menu
+    a.href = SITE; a.target = '_blank'; a.rel = 'noopener'; });
 
   /* ---------------- contact form ---------------- */
   const fProg = $('#fProg');
