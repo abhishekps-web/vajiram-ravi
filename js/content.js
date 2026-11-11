@@ -417,12 +417,41 @@
   pageG.insertAdjacentHTML('beforebegin', `<div class="ptabs">
       <div class="seg" id="ptabs" role="tablist" aria-label="Programme type">${PGROUPS.map((g, k) => `<button type="button" role="tab" data-g="${k}" aria-selected="${!k}" aria-controls="pgrid">${esc(g.t)}<small>${g.items.length}</small></button>`).join('')}</div></div>`);
   pageG.setAttribute('role', 'tabpanel');
-  const showGroup = k => {
-    $$('#ptabs button').forEach(b => b.setAttribute('aria-selected', +b.dataset.g === k));
-    const tb = $('#ptabs'), sel = tb.children[k]; tb.scrollTo({ left: sel.offsetLeft - (tb.clientWidth - sel.offsetWidth) / 2, behavior: reduce ? 'auto' : 'smooth' });
-    active = PGROUPS[k].items; renderShelves(true);
-    pageG.classList.remove('is-swap'); void pageG.offsetWidth; pageG.classList.add('is-swap');
+  /* tab to tab: one brand pill (.seg__ind) slides under the labels to the chosen tab; the shelves fade out (140ms), the panel eases from its old
+     height to the new one (so the page below glides instead of jumping), and the new shelves lay in. A newer click cancels an older swap. */
+  const tbar = $('#ptabs'), tbtns = $$('#ptabs button');
+  tbar.insertAdjacentHTML('beforeend', '<span class="seg__ind" aria-hidden="true"></span>');
+  const ind = $('.seg__ind', tbar);
+  const placeInd = instant => {
+    const sel = tbtns.find(b => b.getAttribute('aria-selected') === 'true'); if (!sel) return;
+    if (instant) ind.style.transition = 'none';
+    ind.style.transform = `translateX(${sel.offsetLeft}px)`; ind.style.width = sel.offsetWidth + 'px';
+    if (instant) { void ind.offsetWidth; ind.style.transition = ''; }
   };
+  placeInd(true); tbar.classList.add('has-ind');
+  if ('ResizeObserver' in window) new ResizeObserver(() => placeInd(true)).observe(tbar);   // web fonts and resizes change the label widths
+  let gCur = 0, swapT = 0, swapId = 0;
+  const showGroup = k => {
+    if (k === gCur) return; gCur = k;
+    tbtns.forEach(b => { const on = +b.dataset.g === k; b.setAttribute('aria-selected', on); b.tabIndex = on ? 0 : -1; });
+    placeInd(reduce);
+    const sel = tbtns[k]; tbar.scrollTo({ left: sel.offsetLeft - (tbar.clientWidth - sel.offsetWidth) / 2, behavior: reduce ? 'auto' : 'smooth' });
+    active = PGROUPS[k].items;
+    if (reduce) { renderShelves(true); return; }
+    const me = ++swapId; clearTimeout(swapT);
+    pageG.style.height = pageG.offsetHeight + 'px';   // hold the current height while the old shelves fade
+    pageG.classList.remove('is-swap'); pageG.classList.add('is-out');
+    swapT = setTimeout(() => {
+      if (me !== swapId) return;
+      const h0 = pageG.offsetHeight;
+      renderShelves(true);
+      pageG.style.height = 'auto'; const h1 = pageG.offsetHeight; pageG.style.height = h0 + 'px';
+      pageG.classList.remove('is-out'); void pageG.offsetWidth;
+      pageG.classList.add('is-swap', 'is-size'); pageG.style.height = h1 + 'px';
+      swapT = setTimeout(() => { if (me === swapId) { pageG.classList.remove('is-size'); pageG.style.height = ''; } }, 520);
+    }, 140);
+  };
+  tbtns.forEach((b, i) => { b.tabIndex = i ? -1 : 0; });
   $('#ptabs').addEventListener('click', e => { const b = e.target.closest('[data-g]'); if (b) showGroup(+b.dataset.g); });
   $('#ptabs').addEventListener('keydown', e => {
     const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0; if (!d) return;
