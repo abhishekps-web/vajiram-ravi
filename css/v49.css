@@ -2059,3 +2059,14 @@ main .cover > #dlPin + section { background: linear-gradient(90deg, rgba(255, 25
   #resources .sm__card--res:hover .sm__rays { transform: none; scale: 1.06; animation-play-state: running; }
 }
 @media (prefers-reduced-motion: reduce) { #resources .sm__card--res .sm__rays { animation: none; } }
+
+/* ---- Upcoming batches: one colour per programme family (set from BFAM in js/content.js as --ticket on each ticket: General Studies
+   orange, Prelims gold, Current affairs plum, Mains teal, Mentorship indigo). The ticket head and the tag (which names the family) take it. Eight tickets, four to a row. The nth-child colours from before are replaced by the inline --ticket. ---- */
+#batches .cards { row-gap: clamp(22px, 2.6vw, 36px); }
+
+
+/* Free resources, Contact us and FAQ read as one closing run: the padding where they meet is half the section rhythm
+   (resources bottom, Contact top and bottom, FAQ top). Their outer edges keep the full --sec-y. */
+#resources.sm { padding-bottom: calc(var(--sec-y) * .5); }
+#visit { padding-top: calc(var(--sec-y) * .5); padding-bottom: calc(var(--sec-y) * .5); }
+#faq.faq { padding-top: calc(var(--sec-y) * .5); }
