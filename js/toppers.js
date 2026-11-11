@@ -44,7 +44,7 @@
 
   /* ---------- elements ---------- */
   const yearSel = $('gzYear'), kickB = $('gzKick'), deck = $('gzDeck'), lead = $('gzLead');
-  const img = $('gzImg'), seal = $('gzSeal'), sub = $('gzSub'), cols = $('gzCols');
+  const img = $('gzImg'), seal = $('gzSeal'), sub = $('gzSub'), cols = $('gzCols'), progsEl = $('gzProgs');
   const scroller = $('gzScroll');   // the rank-holder column scrolls on its own on wide screens
   const ten = $('gzTen'), tabs = [...sec.querySelectorAll('.gz__tab')], count = $('gzCount'), say = $('gzSay'), allBtn = $('gzAll'), rollH = $('gzRollH');
   if (yearSel) yearSel.innerHTML = YEARS.map(y => `<option value="${y}">${y}</option>`).join('');
@@ -57,6 +57,8 @@
     if (withImg) { img.src = t.img; img.alt = `${t.name}, All India Rank ${t.rank} in the Civil Services Examination ${t.y}`; }
     seal.innerHTML = `<s>CSE ${t.y}</s><span class="gz__air"><i>AIR</i><b>${t.rank}</b></span>`;
     const n = t.progs.length;
+    // the programmes this rank holder prepared with, as labels across the foot of the photo (user 2026-11-11); none recorded: no strip
+    if (progsEl) { progsEl.innerHTML = n ? `<small>Prepared with</small>${t.progs.map(p => `<span>${esc(p.name)}</span>`).join('')}` : ''; progsEl.hidden = !n; }
     // kept short (user 2026-11-11, "more minimal"): the headline, two paragraphs on this rank holder and one line on the year
     const paras = [];
     if (first && stats.igp10 > 1) sub.innerHTML = `${esc(t.name)} heads the list; ${words(stats.igp10)} of the top ten were associated with the Interview Guidance Programme`;

@@ -276,6 +276,27 @@
 .gz__foot .gz__more { justify-content: center; margin-top: 28px; padding-top: 28px; }
 @media (max-width: 640px) { .gz__foot .gz__more { align-items: center; margin-top: 22px; padding-top: 22px; } }
 
+/* lead photo: the rank holder's programmes across the foot of the picture (user 2026-11-11, "show the programmes with the image").
+   A dark scrim rising from the bottom edge, a small "Prepared with" eyebrow, then one white label per programme; written by fill() in
+   js/toppers.js for whoever is on the front page, and absent for years with no programmes recorded. Rises in with the rest of the lead. */
+.gz__progs { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; display: flex; flex-wrap: wrap; align-items: flex-end; gap: 6px; padding: 56px 14px 14px;
+  background: linear-gradient(180deg, rgba(22, 12, 4, 0) 0%, rgba(22, 12, 4, .55) 45%, rgba(22, 12, 4, .78) 100%); pointer-events: none; }
+.gz__progs[hidden] { display: none; }
+.gz__progs small { flex: 0 0 100%; margin-bottom: 2px; font: 700 10.5px/1.2 var(--gz-sans); letter-spacing: .14em; text-transform: uppercase; color: #FFD48A; }
+.gz__progs span { padding: 5px 10px; border-radius: 999px; background: rgba(255, 255, 255, .94); font: 600 12.5px/1.25 var(--gz-sans); color: var(--gz-ink); }
+#gzLead.is-swap .gz__progs { animation: gzIn .45s var(--ease) .1s both; }
+@media (max-width: 640px) { .gz__progs { padding: 44px 10px 10px; } .gz__progs span { font-size: 12px; padding: 4px 9px; } }
+@media (prefers-reduced-motion: reduce) { #gzLead.is-swap .gz__progs { animation: none; } }
+
+/* lead story drop cap (user 2026-11-11): black, and it now spans whole lines so the text beside it lines up. Where initial-letter is
+   supported it sinks exactly three lines; elsewhere a two-line float whose box ends on the second line, so the third line runs full width. */
+.gz__cols p:first-child::first-letter,
+.gz__front .gz__cols p:first-child::first-letter { float: left; margin: 3px 8px 0 0; font: 800 3.1em/.8 var(--gz-sans); color: var(--gz-ink); }
+@supports (initial-letter: 3) or (-webkit-initial-letter: 3) {
+  .gz__cols p:first-child::first-letter,
+  .gz__front .gz__cols p:first-child::first-letter { float: none; margin: 0 10px 0 0; font-size: inherit; line-height: inherit;
+    -webkit-initial-letter: 3; initial-letter: 3; font-weight: 800; color: var(--gz-ink); }
+}
 /* Portrait swap with cut-out portraits (the 2025 set is transparent PNG-style webp): each layer gets the frame's light backdrop, so the
    outgoing portrait never shows through the transparent parts of the incoming one, and the frame no longer turns black mid-swap
    (the ghost's #16120E backdrop showed around both faces). The outgoing copy dims a little instead of going dark. */
