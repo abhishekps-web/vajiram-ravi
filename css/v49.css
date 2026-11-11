@@ -2070,3 +2070,20 @@ main .cover > #dlPin + section { background: linear-gradient(90deg, rgba(255, 25
 #resources.sm { padding-bottom: calc(var(--sec-y) * .5); }
 #visit { padding-top: calc(var(--sec-y) * .5); padding-bottom: calc(var(--sec-y) * .5); }
 #faq.faq { padding-top: calc(var(--sec-y) * .5); }
+
+/* Contact us: a live map of the Old Rajinder Nagar campus under its address (user 2026-11-11), full width of the row, 200px tall */
+.cm__item--chan .cm__map { flex: 1 0 100%; margin-top: 6px; height: 200px; overflow: hidden; border-radius: 8px; box-shadow: inset 0 0 0 1px rgba(46, 46, 46, .12); background: #F2EEE9; }
+.cm__map iframe { display: block; width: 100%; height: 100%; border: 0; }
+@media (max-width: 640px) { .cm__item--chan .cm__map { height: 180px; } }
+/* the address row wraps so the map takes its own line under the address and "Get directions" (the rows above were set to nowrap) */
+#visit .cm__item--chan[data-city="delhi"] { flex-wrap: wrap; }
+@media (min-width: 641px) { #visit .cm__item--chan[data-city="delhi"] > div:not(.cm__map) { flex: 1 1 0; } }   /* keeps "Get directions" beside the address */
+/* no hover highlight on the address row that holds the map (user 2026-11-11); the map keeps the full row width at every size
+   (an older .cm__map rule above capped it at 440px under 1000px) */
+#visit .cm__item--chan[data-city="delhi"]:hover { background: none; }
+#visit .cm__item--chan .cm__map { max-width: none; }
+/* js/visit-map.js (from the old dotted India map) still adds .is-on to the row under the pointer; the map row shows no left bar or tint for it */
+#visit .cm__item--chan[data-city="delhi"].is-on { border-left-color: transparent; background: none; }
+/* Contact photos: the progress indicators are short fixed segments in the bottom-left corner instead of stretching across the photo (user 2026-11-11) */
+.cm__prog { right: auto; }
+.cm__prog span { flex: none; width: 32px; }
