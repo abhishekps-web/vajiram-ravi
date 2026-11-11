@@ -2090,7 +2090,7 @@ main .cover > #dlPin + section { background: linear-gradient(90deg, rgba(255, 25
 @media (max-width: 640px) { .cm__item--chan .cm__map { height: 180px; } }
 /* the address row wraps so the map takes its own line under the address and "Get directions" (the rows above were set to nowrap) */
 #visit .cm__item--chan[data-city="delhi"] { flex-wrap: wrap; }
-@media (min-width: 641px) { #visit .cm__item--chan[data-city="delhi"] > div:not(.cm__map) { flex: 1 1 0; } }   /* keeps "Get directions" beside the address */
+@media (min-width: 641px) { #visit .cm__item--chan[data-city="delhi"] > div:not(.cm__map) { flex: 1 1 0; } }   /* the address takes the full row (the "Get directions" link was removed; the map below still opens in Google Maps) */
 /* no hover highlight on the address row that holds the map (user 2026-11-11); the map keeps the full row width at every size
    (an older .cm__map rule above capped it at 440px under 1000px) */
 #visit .cm__item--chan[data-city="delhi"]:hover { background: none; }
@@ -2302,3 +2302,38 @@ footer.foot .foot__cols > .foot__news--5th { grid-area: auto; grid-column: 1 / -
   transition: opacity .3s var(--ease), visibility 0s .3s; }
 .mega-open .mega-scrim { opacity: 1; visibility: visible; transition: opacity .3s var(--ease), visibility 0s; }
 @media (prefers-reduced-motion: reduce) { .mega-scrim { transition: none; } }
+
+/* ---- Footer, top-aligned (user 2026-11-11): no empty band beside the brand any more. Above 900px the brand and every column share one
+   grid that starts at the top: the brand block heads the first column with the "Vajiram & Ravi" links under it; Courses, UPSC exam,
+   Free resources and (1201px+) the "Latest current affairs" panel stand beside it from the top edge. .foot__cols dissolves into that
+   grid (display: contents); 901-1200px the news panel runs full width under the columns. Phones keep their stacked layout. ---- */
+@media (min-width: 901px) {
+  .foot__top { grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-areas: none; column-gap: 40px; row-gap: 28px; align-items: start; }
+  .foot__top > .foot__brand { grid-area: auto; grid-column: 1; grid-row: 1; }
+  .foot__top > .foot__cols { display: contents; }
+  .foot__cols > div:nth-child(1) { grid-column: 1; grid-row: 2; }
+  .foot__cols > div:nth-child(2) { grid-column: 2; grid-row: 1 / span 2; }
+  .foot__cols > div:nth-child(3) { grid-column: 3; grid-row: 1 / span 2; }
+  .foot__cols > div:nth-child(4) { grid-column: 4; grid-row: 1 / span 2; }
+  footer.foot .foot__cols > .foot__news--5th { grid-column: 1 / -1; grid-row: 3; margin: 8px 0 0; }
+}
+@media (min-width: 1201px) {
+  .foot__top { grid-template-columns: repeat(4, minmax(0, 1fr)) minmax(300px, 1.45fr); }
+  footer.foot .foot__cols > .foot__news--5th { grid-column: 5; grid-row: 1 / span 2; margin: 0; }
+}
+
+/* Footer photo a little more present (user 2026-11-11): the classroom photo is stronger and the orange wash over it lighter at the top,
+   still dense at the foot so the bottom row reads */
+.foot__scene { opacity: .68; }
+.foot::before { background:
+  radial-gradient(70% 60% at 50% 0%, rgba(255, 160, 90, .3), transparent 70%),
+  linear-gradient(180deg, rgba(232, 80, 32, .76) 0%, rgba(194, 65, 12, .82) 55%, rgba(168, 56, 10, .93) 100%); }
+/* Footer logo: the nav's logo for the orange ground (assets/img/brand/logo-white.png, made from logo-light.png): the colour emblem
+   with its white ring, and all the lettering, "VAJIRAM & RAVI" included, in white. (A flat white filter erased the emblem's detail.)
+   Hover lifts it a touch and lets it glow. */
+footer.foot .foot__logo--mark { display: inline-block; line-height: 0; transition: transform .35s var(--ease), filter .35s var(--ease); }
+footer.foot .foot__logo--mark img { width: auto; height: 52px; object-fit: contain; }
+footer.foot .foot__logo--mark:focus-visible { outline: 2px solid #fff; outline-offset: 6px; border-radius: 4px; }
+@media (hover: hover) and (pointer: fine) { footer.foot .foot__logo--mark:hover { transform: translateY(-2px); filter: drop-shadow(0 6px 14px rgba(60, 15, 0, .35)); } }
+@media (max-width: 640px) { footer.foot .foot__logo--mark img { height: 44px; } }
+@media (prefers-reduced-motion: reduce) { footer.foot .foot__logo--mark { transition: none; } }
