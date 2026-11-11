@@ -116,13 +116,15 @@
     ['How do you prepare students for the UPSC interview?', 'The Interview Guidance Programme (IGP) prepares you for the Personality Test with mock interviews and DAF preparation, so you face the board with structure and confidence.'],
     ['Can I join a test series without a full course?', 'Yes. The Prelims, Mains and Optional test series can be taken on their own, alongside your own preparation.'],
   ];
+  // footer menu, refined (user 2026-11-11): 6 columns / 37 links -> 5 / 25. Online and classroom versions and the Hindi-medium variants
+  // are one entry each (the course pages cover both), "UPSC exam" and "Exam updates" are one column, and the column
+  // heading carries the context, so the links drop the repeated "UPSC" prefix.
   const FOOTER = [
-    ['Vajiram & Ravi', ['About us', 'Careers', 'Contact us', 'FAQs']],
-    ['Courses', ['UPSC GS Course 2027', 'UPSC GS Online Course 2027', 'UPSC 2 Year Course', 'UPSC 2 Year Online Course', 'UPSC Online Coaching', 'UPSC CSAT Course', 'Current Affairs Course', 'UPSC Study Material']],
-    ['Test series', ['UPSC Prelims Test Series 2027', 'UPSC Mains Test Series 2027', 'UPSC Mains Test Series Hindi Medium', 'UPSC Optional Test Series', 'UPSC Mentorship Program 2027', 'UPSC Mentorship Program Hindi Medium', 'UPSC Interview Guidance Program']],
-    ['UPSC exam', ['UPSC 2027', 'UPSC Exam Pattern', 'UPSC Syllabus', 'UPSC CSAT Syllabus', 'UPSC Optional Subjects List', 'UPSC Selection Process', 'UPSC Interview', 'UPSC Age Limit', 'IAS Salary']],
-    ['Exam updates', ['UPSC Calendar 2027', 'UPSC Admit Card', 'UPSC Prelims Answer Key', 'UPSC Cut Off', 'UPSC Final Result 2025']],
-    ['Free resources', ['UPSC Current Affairs', 'UPSC Previous Year Papers', 'UPSC Books', 'Model Answers for UPSC Mains 2026']]
+    ['Vajiram & Ravi', ['About Us', 'Careers', 'Contact Us', 'FAQs']],
+    // Courses and Test series merged into one column (user 2026-11-11: 4 link columns + news); test series are programmes too
+    ['Courses & Test Series', ['GS Course 2027', '2 Year Course', 'Online Coaching', 'CSAT Course', 'Current Affairs Course', 'Prelims Test Series 2027', 'Mains Test Series 2027', 'Optional Test Series', 'Mentorship Program 2027', 'Interview Guidance Program']],
+    ['UPSC exam', ['Syllabus & Exam Pattern', 'Optional Subjects List', 'Eligibility & Age Limit', 'Exam Calendar 2027', 'Admit Card & Answer Key', 'Cut Off & Results', 'IAS Salary']],
+    ['Free resources', ['Current Affairs', 'Previous Year Papers', 'Books & Study Material', 'Model Answers for Mains 2026']]
   ];
   const SOCIAL = ['YouTube', 'Facebook', 'Instagram', 'Telegram', 'WhatsApp'];
 
@@ -698,10 +700,10 @@
   });
 
   /* ---------------- footer ---------------- */
-  const HREF = { 'About us': '#story', 'Contact us': '#contact', FAQs: '#faq' };
+  const HREF = { 'About Us': '#story', 'Contact Us': '#contact', FAQs: '#faq' };
   $('#footCols').innerHTML = FOOTER.map(([h, l]) => `<div><h3>${esc(h)}</h3><ul>${l.map(x => `<li><a href="${HREF[x] || SITE}"${HREF[x] ? '' : ' target="_blank" rel="noopener"'}>${esc(x)}</a></li>`).join('')}</ul></div>`).join('');
-  // the latest current-affairs headlines (markup in index.html) sit in the brand column, under the social links, where there was empty space
-  const news = $('.foot__news'), brand = $('.foot__brand'); if (news && brand) { news.classList.add('foot__news--col'); brand.append(news); }
+  // the latest current-affairs headlines (markup in index.html) are the right-hand column of the footer top: brand | link columns | news
+  const news = $('.foot__news'), fcols = $('#footCols'); if (news && fcols) { news.classList.add('foot__news--col', 'foot__news--side', 'foot__news--5th'); fcols.append(news); }   // the 5th column, after the four link columns
   $('#socials').innerHTML = SOCIAL.map(n => `<li><a href="${SITE}" target="_blank" rel="noopener" aria-label="${n}">${ico(`soc-${n.toLowerCase()}.svg`, 18)}</a></li>`).join('');
   $$('.foot__bot a').forEach(a => { a.href = SITE; a.target = '_blank'; a.rel = 'noopener'; });
 
