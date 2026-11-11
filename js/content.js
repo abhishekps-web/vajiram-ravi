@@ -140,7 +140,7 @@
     ['UPSC exam', ['Syllabus & Exam Pattern', 'Optional Subjects List', 'Eligibility & Age Limit', 'Exam Calendar 2027', 'Admit Card & Answer Key', 'Cut Off & Results', 'IAS Salary']],
     ['Free resources', ['Current Affairs', 'Previous Year Papers', 'Books & Study Material', 'Model Answers for Mains 2026']]
   ];
-  const SOCIAL = ['YouTube', 'Facebook', 'Instagram', 'Telegram', 'WhatsApp'];
+  const SOCIAL = ['YouTube', 'Facebook', 'Instagram', 'Telegram'];   // footer social links (the WhatsApp chat-bubble icon, which read as SMS, was removed)
 
   /* ---------------- navigation ---------------- */
   const drawer = $('#drawer'), burger = $('#burger');

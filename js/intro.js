@@ -2,8 +2,7 @@
    Skip button, Esc or scrolling ends it. Fires 'vr:intro-done' and clears html.vrv-lock. */
 (function () {
   'use strict';
-  // plays once per browser session: reloads (and pages opened later in the same tab session) skip it
-  try { if (sessionStorage.getItem('vr-intro-seen')) return; sessionStorage.setItem('vr-intro-seen', '1'); } catch (e) {}
+  // plays on every load, reloads included (user 2026-11-11; it used to play once per browser session)
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   var root = document.documentElement;
   var el = document.createElement('div');
