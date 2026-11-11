@@ -182,23 +182,43 @@
       <a class="bt bt--brand mega__cta" href="#contact">Talk to a counsellor<span class="sq sq--52 sq--white"><img src="assets/img/icons/arrow-brand.svg" alt="" width="16" height="16"></span></a>
       <a class="mega__all" href="#courses">View all ${total} courses<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
     </aside>`;
-  // Study materials: the free resources grouped like the course menu (Current affairs lives here now, no longer its own nav link);
-  // every row opens the resource on the Vajiram & Ravi site (the [data-rs] links below), the aside jumps to the Free resources section
-  const STUDY = [
-    { k: 'Current affairs', items: [['Daily current affairs', 'Prelims, Mains and Quest articles, written the way UPSC asks.', 'Updated daily'], ['The Recitals', 'UPSC current affairs monthly material, free to download.', 'Monthly'], ['Editorial analysis', 'The day&rsquo;s newspaper editorials, read for UPSC.'], ['Daily quiz', 'Prelims practice questions, set every day.']] },
-    { k: 'Exam essentials', items: [['Previous year papers', 'Prelims and Mains papers, with the UPSC answer key.'], ['Syllabus &amp; exam pattern', 'What is asked at each stage, and how it is marked.'], ['UPSC Calendar 2027', 'Every stage date, plus the age limit and eligibility rules.', 'Key dates']] },
-    { k: 'Practice', items: [['Answer writing practice', 'Mains questions to write and review.'], ['Essay topics', 'Past and practice topics for the Essay paper.'], ['Ethics case studies', 'GS Paper IV case studies to work through.'], ['Interview guidance tips', 'Getting ready for the personality test.']] },
-    { k: 'Books &amp; notes', items: [['GS postal books', 'Printed General Studies material for UPSC preparation.'], ['NCERT notes', 'The school textbooks, condensed into notes.'], ['Government schemes', 'Key schemes and what each is for.']] }
+  // Study materials (refined, user 2026-11-11): Current affairs as the featured first column (live dot, frequency prefixes), one-line rows,
+  // and today's three headlines (the footer's news) in the guidance column; every row opens the resource on the institute's site
+  // [title, one-line description, frequency]: descriptions are kept short enough for one line; only Current affairs shows its frequency
+  const SM = [
+    ['Current affairs', [['Daily current affairs', 'Prelims, Mains and Quest articles', 'Daily'],
+      ['The Recitals', 'The monthly current affairs magazine', 'Monthly'],
+      ['Editorial analysis', 'The day’s editorials, explained', 'Daily'],
+      ['Daily quiz', 'Ten quick questions on the news', 'Daily']]],
+    ['Practice', [['Previous year papers', 'Prelims and Mains, with answer keys'],
+      ['Answer writing practice', 'A Mains question to write each day'],
+      ['Model answers for Mains', 'Mains 2026, paper by paper'],
+      ['Essay topics', 'Past and probable essay themes']]],
+    ['Study material', [['GS postal books', 'Printed General Studies material'],
+      ['NCERT notes', 'The basics every paper builds on'],
+      ['Government schemes', 'Schemes and missions, summed up'],
+      ['Ethics case studies', 'GS Paper IV cases, with approaches']]],
+    ['Exam guide', [['Syllabus & exam pattern', 'Each stage, and how it is marked'],
+      ['UPSC Calendar 2027', 'Every date, the age limit, eligibility'],
+      ['Optional subjects list', 'All optionals, and how to choose'],
+      ['Interview guidance tips', 'Preparing for the Personality Test']]]
   ];
-  $('#megaSm').innerHTML = `<div class="mega__stages">${STUDY.map((g, i) => `<section class="mega__col" style="--i:${i}">
-      <p class="mega__k"><b>${String(i + 1).padStart(2, '0')}</b>${g.k}</p>
-      <ul>${g.items.map(([t, d, n]) => `<li><a class="mega__a" href="#resources" data-rs><span class="mega__t">${t}</span><span class="mega__d">${d}</span>${n ? `<span class="mega__n">${n}</span>` : ''}</a></li>`).join('')}</ul>
-    </section>`).join('')}</div>
-    <aside class="mega__aside" style="--i:4">
-      <p class="mega__k">Free for every aspirant</p>
-      <p class="mega__p">Current affairs, papers and practice material from the Vajiram &amp; Ravi editorial desk, at no cost.</p>
-      <a class="bt bt--brand mega__cta" href="#resources">Free resources<span class="sq sq--52 sq--white"><img src="assets/img/icons/arrow-brand.svg" alt="" width="16" height="16"></span></a>
-    </aside>`;
+  // refined (user 2026-11-11): one-line rows (title + tag, then a one-line description), no repeated "Free" tags, Current affairs as the
+  // featured first column with the live dot, and today's headlines (the footer's news) in the guidance column above the CTA
+  const heads = [...document.querySelectorAll('.foot__news-list li')].slice(0, 3).map(li => {
+    const a = li.querySelector('a'), k = li.querySelector('span');
+    return `<li><a class="mega__h" href="${a ? a.getAttribute('href') : SITE}" target="_blank" rel="noopener"><span class="mega__hk">${esc(k ? k.textContent : '')}</span><span class="mega__ht">${esc(a ? a.textContent : '')}</span></a></li>`;
+  }).join('');
+  $('#megaSm').innerHTML = `<div class="mega__stages">${SM.map(([k, items], i) => `<section class="mega__col${i ? '' : ' mega__col--feat'}" style="--i:${i}">
+    <p class="mega__k"><b>${String(i + 1).padStart(2, '0')}</b>${esc(k)}${i ? '' : '<span class="mega__live"><i aria-hidden="true"></i>Live</span>'}</p>
+    <ul>${items.map(([t, d, n]) => `<li><a class="mega__a" href="${SITE}" target="_blank" rel="noopener"><span class="mega__t">${esc(t)}</span><span class="mega__d">${n ? `<b class="mega__f">${esc(n)}</b>` : ''}${esc(d)}</span></a></li>`).join('')}</ul>
+  </section>`).join('')}</div>
+  <aside class="mega__aside" style="--i:${SM.length}">
+    <p class="mega__k">Today’s headlines</p>
+    ${heads ? `<ul class="mega__heads">${heads}</ul>` : ''}
+    <a class="bt bt--brand mega__cta" href="#resources">Explore free resources<span class="sq sq--52 sq--white"><img src="assets/img/icons/arrow-brand.svg" alt="" width="16" height="16"></span></a>
+    <a class="mega__all" href="${SITE}" target="_blank" rel="noopener">View all study materials<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
+  </aside>`;
   navMega($('#explore'), $('#exploreBtn'));
   navMega($('#studyNav'), $('#studyBtn'));
   addEventListener('keydown', e => { if (e.key === 'Escape') { setMega(false); setDrawer(false); } });   // setMega(false) closes every menu

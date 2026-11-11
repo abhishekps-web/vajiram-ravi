@@ -160,3 +160,5 @@
 #story .cmp__h, #story.cmp--run .cmp__h { max-width: 460px; font-family: var(--f); font-weight: 400; font-size: var(--body-fs); line-height: var(--body-lh); letter-spacing: -.01em; color: rgba(255, 255, 255, .92); text-wrap: pretty; }
 #story .cmp__h em { font-style: normal; }
 #story.cmp--run .cmp__h { flex: 0 1 460px; }
+/* Why: the subtitle beside the title reads left-aligned like the rest of the body text (user 2026-11-11); it keeps its place on the right */
+.cmp--run .cmp__h { text-align: left; }
