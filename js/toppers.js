@@ -35,8 +35,6 @@
   });
 
   /* ---------- words ---------- */
-  const ORD = ['First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth', 'Seventh', 'Eighth', 'Ninth', 'Tenth'];
-  const ord = n => ORD[n - 1] || n + (['th', 'st', 'nd', 'rd'][(n % 100 > 10 && n % 100 < 14) ? 0 : n % 10] || 'th');
   const ONES = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
   const TENS = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
   const words = n => n < 20 ? ONES[n] : n < 100 ? TENS[Math.floor(n / 10)] + (n % 10 ? '-' + ONES[n % 10] : '') : String(n);
@@ -57,7 +55,7 @@
   const fill = (t, withImg) => {
     const first = t === list[0];
     if (withImg) { img.src = t.img; img.alt = `${t.name}, All India Rank ${t.rank} in the Civil Services Examination ${t.y}`; }
-    seal.innerHTML = `<s>CSE ${t.y}</s><span class="gz__air"><i>AIR</i><b>${t.rank}</b></span><s>${ord(t.rank)} in India</s>`;
+    seal.innerHTML = `<s>CSE ${t.y}</s><span class="gz__air"><i>AIR</i><b>${t.rank}</b></span>`;
     const n = t.progs.length;
     // kept short (user 2026-11-11, "more minimal"): the headline, two paragraphs on this rank holder and one line on the year
     const paras = [];
