@@ -2337,3 +2337,53 @@ footer.foot .foot__logo--mark:focus-visible { outline: 2px solid #fff; outline-o
 @media (hover: hover) and (pointer: fine) { footer.foot .foot__logo--mark:hover { transform: translateY(-2px); filter: drop-shadow(0 6px 14px rgba(60, 15, 0, .35)); } }
 @media (max-width: 640px) { footer.foot .foot__logo--mark img { height: 44px; } }
 @media (prefers-reduced-motion: reduce) { footer.foot .foot__logo--mark { transition: none; } }
+
+/* ---- Study materials dropdown: the All courses panel (same .explore / .mega design and motion), four groups instead of five stages,
+   so it is narrower; the CTA spans the guidance column like the courses one ---- */
+.mega--sm { width: min(1180px, calc(100vw - 2 * var(--px))); }
+.mega--sm .mega__stages { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+#megaSm .mega__cta.cta.cta { width: 100%; font-size: 15px; }
+#megaSm .mega__cta.cta.cta .btn__label, #megaSm .mega__cta.cta.cta .btn__t { font-size: 15px !important; }
+
+/* ---- Study materials dropdown, refined: compact one-line rows (title with its tag, a one-line description), Current affairs as a featured
+   column on a warm tint with a live dot, and the guidance column carrying today's three headlines above the CTA. All courses is untouched. ---- */
+.mega--sm { width: min(1240px, calc(100vw - 2 * var(--px))); grid-template-columns: minmax(0, 1fr) 300px; }
+.mega--sm .mega__stages { gap: 0 6px; padding: 22px 18px 20px 22px; align-items: start; }
+.mega--sm .mega__stages::before { left: 36px; right: 36px; top: 36px; }
+.mega--sm .mega__col { padding: 0 8px 0 0; }
+.mega--sm .mega__col--feat { margin: -8px 8px -8px -8px; padding: 8px 10px 10px 8px; border-radius: 16px; background: linear-gradient(180deg, #FFF3E6, #FFF8F1); box-shadow: inset 0 0 0 1px rgba(194, 65, 12, .14); }
+.mega--sm .mega__col--feat .mega__k b { background: var(--brand); color: #fff; box-shadow: none; }
+.mega--sm p.mega__k { margin-bottom: 8px; }
+.mega__live { display: inline-flex; align-items: center; gap: 5px; margin-left: 2px; padding: 2px 7px 2px 6px; border-radius: 999px; background: #FFD48A; color: #7A2A0A; font: 700 9.5px/1.4 var(--f); letter-spacing: .1em; }
+.mega__live i { position: relative; width: 6px; height: 6px; border-radius: 50%; background: #C2410C; }
+.mega__live i::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: #C2410C; animation: footLive 1.8s var(--ease) infinite; }
+.mega--sm ul { gap: 2px; }
+.mega--sm a.mega__a { gap: 2px; padding: 8px 10px 9px; }
+.mega--sm a.mega__a .mega__t { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 8px; font-size: 15.5px; }
+.mega--sm a.mega__a .mega__t .mega__n { margin: 0; padding: 1px 7px; font-size: 10.5px; }
+.mega--sm a.mega__a .mega__d { -webkit-line-clamp: 1; font-size: 12.5px; }
+.mega--sm .mega__aside { gap: 14px; padding: 24px 22px 22px; }
+.mega__heads { display: grid; gap: 0; width: 100%; margin: -2px 0 4px; padding: 0; list-style: none; }
+.mega__heads li + li { border-top: 1px solid rgba(194, 65, 12, .14); }
+.mega a.mega__h { display: grid; gap: 3px; margin: 0 -10px; padding: 10px; border-radius: 10px; color: var(--ink); text-decoration: none; transition: background-color .2s var(--ease); }
+.mega__hk { justify-self: start; font: 700 10px/1.3 var(--f); letter-spacing: .12em; text-transform: uppercase; color: var(--brand); }
+.mega__ht { font: 500 14px/1.35 var(--f-d); color: var(--ink); transition: color .2s var(--ease); }
+.mega a.mega__h:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.mega--sm a.mega__all { margin: 0; }
+@media (hover: hover) and (pointer: fine) {
+  .mega a.mega__h:hover { background: #fff; }
+  .mega a.mega__h:hover .mega__ht { color: var(--brand); }
+}
+@media (max-width: 1500px) { .mega--sm { grid-template-columns: minmax(0, 1fr) 270px; } .mega--sm a.mega__a .mega__d { -webkit-line-clamp: 1; } }
+@media (prefers-reduced-motion: reduce) { .mega__live i::after { animation: none; opacity: 0; } .mega a.mega__h, .mega__ht { transition: none; } }
+/* Study materials rows: every row is title + one line; Current affairs prefixes its frequency in brand orange */
+.mega--sm .mega__f { margin-right: 6px; font: 700 10.5px/1 var(--f); letter-spacing: .08em; text-transform: uppercase; color: var(--brand); }
+.mega--sm a.mega__a .mega__d { font-size: 13px; }
+.mega--sm a.mega__a .mega__d, .mega--sm .mega__col a.mega__a .mega__d { -webkit-line-clamp: 2; }
+.mega--sm .mega__stages { grid-template-columns: minmax(0, 1.18fr) repeat(3, minmax(0, 1fr)); }
+.mega--sm .mega__col--feat p.mega__k { white-space: nowrap; }
+
+/* dropdown stage headings (All courses and Study materials): the connecting rule stops at each heading instead of running behind the
+   letters; the heading (number disc + label) gets the panel's white behind it, with a little air after the label */
+.mega .mega__col p.mega__k { position: relative; z-index: 1; padding-right: 12px; background: #fff; }
+.mega--sm .mega__col--feat p.mega__k { background: none; }   /* the featured column's tint already hides the rule */
