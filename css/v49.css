@@ -2087,3 +2087,28 @@ main .cover > #dlPin + section { background: linear-gradient(90deg, rgba(255, 25
 /* Contact photos: the progress indicators are short fixed segments in the bottom-left corner instead of stretching across the photo (user 2026-11-11) */
 .cm__prog { right: auto; }
 .cm__prog span { flex: none; width: 32px; }
+/* Faculty carousel: no page dots under the cards; the edge arrows (and swipe / arrow keys) move it */
+#faculty .rnav__dots { display: none; }
+#faculty .rnav { margin-top: 0; }
+/* Faculty -> testimonials: less air between them. The faculty band drops its bottom padding; the card row keeps 56px under it for
+   the cards' shadows, and the testimonials keep their own (reduced) top padding */
+#faculty.band--fac { padding-bottom: calc(var(--sec-y) * .45); }   /* some air back before the testimonials */
+#faculty #team.rail__track { padding-bottom: 56px; }
+/* faculty cards: name and subject sit just under the photo; "View on LinkedIn" stays on the card's bottom line; the name is a step larger */
+#team .fc .pcd__to { align-self: stretch; grid-template-rows: auto auto 1fr; padding-top: 14px; }
+#team .fc .pcd__to > .fc__pf { align-self: end; }
+#team .fc .pcd__n { font-size: 21px; line-height: 1.15; }
+@media (max-width: 640px) { #team .fc .pcd__n { font-size: 19px; } }
+/* Programme tabs: no outline or shadow on the bar; the bar is a sand a step darker than the section's cream; the counts on unselected
+   tabs are plain numbers (no light orange circle); the selected tab keeps its brand pill and its white-on-orange count */
+#courses .ptabs .seg { background: #F9F0E4; border: 0; box-shadow: none; }
+#courses .ptabs .seg button:not([aria-selected="true"]) small { background: none; padding-left: 0; padding-right: 0; min-width: 0; color: var(--brand); }
+/* "More free resources": a short hairline either side of the label. The lines draw outward from the label as the block reveals (.sm__more.rv.in) */
+#resources .sm__more-k { display: flex; align-items: center; justify-content: center; gap: 16px; }
+#resources .sm__more-k::before, #resources .sm__more-k::after { content: ""; flex: none; width: 56px; height: 1px; background: rgba(194, 65, 12, .28); }
+#resources .sm__more-k::before { transform-origin: 100% 50%; }
+#resources .sm__more-k::after { transform-origin: 0 50%; }
+#resources .sm__more.rv .sm__more-k::before, #resources .sm__more.rv .sm__more-k::after { transform: scaleX(0); transition: transform .8s var(--ease) .25s; }
+#resources .sm__more.rv.in .sm__more-k::before, #resources .sm__more.rv.in .sm__more-k::after { transform: scaleX(1); }
+@media (max-width: 640px) { #resources .sm__more-k::before, #resources .sm__more-k::after { width: 32px; } }
+@media (prefers-reduced-motion: reduce) { #resources .sm__more.rv .sm__more-k::before, #resources .sm__more.rv .sm__more-k::after { transform: none; transition: none; } }
