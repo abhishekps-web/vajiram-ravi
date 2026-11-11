@@ -742,10 +742,12 @@
   const fProg = $('#fProg');
   fProg.insertAdjacentHTML('beforeend', CATS.map(c => `<optgroup label="${esc(c.t)}">${c.courses.map(t => `<option>${esc(t)}</option>`).join('')}</optgroup>`).join('')
     + `<optgroup label="Upcoming batches">${BATCHES.map(b => `<option>${esc(b.full)}</option>`).join('')}</optgroup>`);
+  // the site's own dropdown in front of the native one (js/custom-select.js); the <select> stays the form value
+  if (window.enhanceSelect) { window.enhanceSelect(fProg); window.enhanceSelect($('#fTime')); }   // both dropdowns of the sentence form
   document.addEventListener('click', e => {
     const a = e.target.closest('[data-prog]'); if (!a) return;
     if (![...fProg.options].some(o => o.value === a.dataset.prog)) fProg.insertAdjacentHTML('beforeend', `<option>${esc(a.dataset.prog)}</option>`);
-    fProg.value = a.dataset.prog;
+    fProg.value = a.dataset.prog; fProg.dispatchEvent(new Event('change', { bubbles: true }));
   });
   const form = $('#form'), err = $('#formErr'), fBtn = $('#formBtn');
   const MSG = { fName: 'Enter your name.', fEmail: 'Enter an email like name@example.com, or leave it blank.', fPhone: 'Enter a 10-digit mobile number starting with 6, 7, 8 or 9.', fProg: 'Choose a programme, or "Not sure yet".', fTime: 'Choose a time for the call.' };

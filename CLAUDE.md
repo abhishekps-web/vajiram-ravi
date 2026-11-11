@@ -20,6 +20,7 @@ js/
   intro.js              logo intro
   toppers.js            Toppers year switch
   why-choose.js         Why section count-up
+  custom-select.js      window.enhanceSelect(select): the site's own accessible dropdown in front of a native <select> (used for "pick a programme"); styles .cs at the end of v49.css
   accordion.js, footer-curtain.js, footer-word.js, lang-switch.js
   data/                 toppers.js (top-10 portraits and quotes), toppers-archive.js (2016–2025 archive)
   vendor/               lenis.min.js

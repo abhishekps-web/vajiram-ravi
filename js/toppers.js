@@ -126,39 +126,62 @@
   };
 
   /* ---------- selecting ---------- */
-  let ask = 0;
-  const pick = (t, animate) => {
+  /* Topper switch (user 2026-11-11: no blank frame, no flicker, previous topper stays until the next is ready, always in sync).
+     1. Nothing changes until the next portrait is decoded (warm(); hovering a card starts this early). Meanwhile the clicked card shows
+        .is-pending and the lead stays as it is; a newer click supersedes an older one (ask counter).
+     2. Commit: a frozen copy of the current portrait (the "ghost", with whatever clip/zoom it has right now, so an interrupted reveal does
+        not jump) is laid UNDER the frame's <img>; the text dims to 25% (.is-out, 140ms).
+     3. The <img> is held clipped shut (.is-prep), its src and all the text are swapped (fill), the <img> is decoded, then the reveal runs
+        (.is-swap: the new portrait wipes in from the top over the still-visible previous one, the text rises back from 25%). The card
+        highlight moves in the same frame as the content. The ghosts are removed when the reveal ends. The story box keeps its min-height,
+        so nothing below moves. */
+  let ask = 0, revealT = 0, shown = null;   // shown: the topper on the front page right now (current: the latest one asked for)
+  const setOn = t => { shown = t; ten.querySelectorAll('.gz__tp').forEach(li => {
+    const on = li.dataset.key === t.key;
+    li.classList.toggle('is-on', on); li.classList.remove('is-pending');
+    li.querySelector('.gz__pick').setAttribute('aria-pressed', on ? 'true' : 'false');
+  }); };
+  const nextFrame = () => new Promise(r => requestAnimationFrame(() => r()));
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const pick = async (t, animate) => {
     current = t;
-    ten.querySelectorAll('.gz__tp').forEach(li => {
-      const on = li.dataset.key === t.key;
-      li.classList.toggle('is-on', on);
-      li.querySelector('.gz__pick').setAttribute('aria-pressed', on ? 'true' : 'false');
-    });
-    if (!animate) { fill(t, true); return; }
-    say.textContent = `Front page now shows ${t.name}, All India Rank ${t.rank}.`;
+    if (!animate) { ++ask; setOn(t); fill(t, true); return; }
+    if (t === shown) { ++ask; setOn(t); lead.removeAttribute('aria-busy'); return; }   // clicked back to the one still showing: cancel the pending switch
     const top = lead.getBoundingClientRect().top;
     if (top < 80 || top > innerHeight * .6) {
       const y = scrollY + top - 96;
       if (window.__lenis) window.__lenis.scrollTo(y, { duration: reduce ? 0 : 1 }); else scrollTo({ top: y, behavior: reduce ? 'auto' : 'smooth' });
     }
-    // wait until the new portrait is decoded (up to 1.5s), then a mask reveal with counter-zoom: the new portrait rises in from the
-    // bottom through a growing clip while zooming from 1.2x to 1x; a copy of the old one, laid underneath, drifts up and dims
     const me = ++ask;
-    Promise.race([warm(t.img), new Promise(r => setTimeout(r, 1500))]).then(() => {
-      if (me !== ask) return;
-      const frame = img.parentNode;
-      frame.querySelectorAll('.gz__ghost').forEach(g => g.remove());
-      if (!reduce && img.currentSrc) {
-        const ghost = document.createElement('span'), old = img.cloneNode(false);
-        ghost.className = 'gz__ghost'; ghost.setAttribute('aria-hidden', 'true');
-        old.removeAttribute('id'); old.alt = ''; old.style.height = frame.offsetHeight + 'px';   // the picture keeps its size while the panel shortens
-        ghost.append(old); frame.insertBefore(ghost, img);
-        ghost.addEventListener('animationend', () => ghost.remove(), { once: true });
-        setTimeout(() => ghost.remove(), 1500);
-      }
-      fill(t, true);
-      if (!reduce) { lead.classList.remove('is-swap'); void lead.offsetWidth; lead.classList.add('is-swap'); }
-    });
+    ten.querySelectorAll('.gz__tp').forEach(li => li.classList.toggle('is-pending', li.dataset.key === t.key && !li.classList.contains('is-on')));
+    lead.setAttribute('aria-busy', 'true');
+    await Promise.race([warm(t.img), wait(8000)]);   // a failed or very slow image still switches, after 8s at most
+    if (me !== ask) return;
+    const frame = img.parentNode;
+    if (reduce) { setOn(t); fill(t, true); lead.removeAttribute('aria-busy'); say.textContent = `Front page now shows ${t.name}, All India Rank ${t.rank}.`; return; }
+    clearTimeout(revealT);
+    // 2. freeze the current portrait under the frame image, exactly as it looks now
+    if (img.currentSrc) {
+      const cs = getComputedStyle(img), ghost = document.createElement('span'), old = img.cloneNode(false);
+      ghost.className = 'gz__ghost'; ghost.setAttribute('aria-hidden', 'true');
+      old.removeAttribute('id'); old.alt = ''; old.style.height = img.offsetHeight + 'px';
+      old.style.clipPath = cs.clipPath; old.style.scale = cs.scale; old.style.transformOrigin = cs.transformOrigin;
+      ghost.append(old); frame.insertBefore(ghost, img);
+    }
+    lead.classList.remove('is-swap'); lead.classList.add('is-out');
+    await wait(140);
+    if (me !== ask) return;
+    // 3. swap under cover, decode, reveal
+    lead.classList.add('is-prep');
+    setOn(t); fill(t, true);
+    try { await img.decode(); } catch (e) {}
+    if (me !== ask) return;
+    await nextFrame();
+    if (me !== ask) return;
+    lead.classList.remove('is-out', 'is-prep'); void lead.offsetWidth; lead.classList.add('is-swap');
+    lead.removeAttribute('aria-busy');
+    say.textContent = `Front page now shows ${t.name}, All India Rank ${t.rank}.`;
+    revealT = setTimeout(() => { if (me === ask) frame.querySelectorAll('.gz__ghost').forEach(g => g.remove()); }, 1000);
   };
   // decode a portrait ahead of time; hovering or focusing a card warms its portrait so the swap is instant
   const warmed = new Map();
