@@ -82,12 +82,26 @@
     8: '“The mock interviews showed me what a panel notices. I corrected it before the day.”',
     9: '“I walked into the interview having rehearsed the hard questions, not just the easy ones.”'
   };
-  // From the Figma. The year isn't given there; confirm before launch.
+  // Programme families for the batch tickets: every batch of a family wears its colour (ticket head, and the tag, which names the family). Colours come from the site's ticket palette plus one indigo.
+  const BFAM = {
+    gs:     { t: 'General Studies', c: '#C64613' },
+    pre:    { t: 'Prelims',         c: '#B47A20' },
+    ca:     { t: 'Current affairs', c: '#9D485B' },
+    mains:  { t: 'Mains',           c: '#326F66' },
+    mentor: { t: 'Mentorship',      c: '#3F5B87' }
+  };
+  // The first four are from the Figma (the year isn't given there; confirm before launch).
+  // The last four are STAND-INS: real programmes from the admission banners, but the start dates are placeholders. Replace them
+  // with the real batch dates before launch.
   const BATCHES = [
-    { n: 'GS Comprehensive', full: '11-Month Prelims cum Mains General Studies Comprehensive Programme', d: '29 Jan', tgt: 'CSE 2027', what: 'The full GS syllabus for Prelims and Mains, in 11 months.', chip: 'Flagship', hi: true },
-    { n: 'Prelims CAMP', full: 'Prelims CAMP, Batch 3', d: '3 Jan', tgt: 'CSE 2027', what: 'Prelims revision camp, batch 3.', chip: 'Limited seats' },
-    { n: 'SMART Prelims', full: 'SMART Prelims Current Affairs Programme 2026', d: '17 Jan', tgt: 'CSE 2027', what: 'Current affairs for Prelims.' },
-    { n: 'SMART', full: 'SMART Current Affairs Programme 2026', d: '17 Jan', tgt: 'CSE 2026', what: 'Current affairs for Prelims and Mains.', chip: 'Limited seats' }
+    { n: 'GS Comprehensive', fam: 'gs', full: '11-Month Prelims cum Mains General Studies Comprehensive Programme', d: '29 Jan', tgt: 'CSE 2027', what: 'The full GS syllabus for Prelims and Mains, in 11 months.', chip: 'Flagship', hi: true },
+    { n: 'Prelims CAMP', fam: 'pre', full: 'Prelims CAMP, Batch 3', d: '3 Jan', tgt: 'CSE 2027', what: 'Prelims revision camp, batch 3.', chip: 'Limited seats' },
+    { n: 'SMART Prelims', fam: 'ca', full: 'SMART Prelims Current Affairs Programme 2026', d: '17 Jan', tgt: 'CSE 2027', what: 'Current affairs for Prelims.' },
+    { n: 'SMART', fam: 'ca', full: 'SMART Current Affairs Programme 2026', d: '17 Jan', tgt: 'CSE 2026', what: 'Current affairs for Prelims and Mains.', chip: 'Limited seats' },
+    { n: 'GS 2-Year Fledgling', fam: 'gs', full: 'General Studies PCM 2-year Fledgling Programme 2028', d: '5 Feb', tgt: 'CSE 2028', what: 'The GS programme over two years, for college students.' },
+    { n: 'PowerUp Prelims Tests', fam: 'pre', full: 'PowerUp Prelims Test Series 2027', d: '8 Feb', tgt: 'CSE 2027', what: 'Full-length Prelims tests with the reasoning behind every answer.' },
+    { n: 'Sure Shot Mains', fam: 'mains', full: 'Sure Shot Mains Test Series 2027', d: '22 Feb', tgt: 'CSE 2027', what: 'Mains answer writing, evaluated, in English and Hindi.', chip: 'Limited seats' },
+    { n: 'StepUp Mentorship', fam: 'mentor', full: 'StepUp Mentorship Programme 2027', d: '15 Jan', tgt: 'CSE 2027', what: 'A mentor keeps your plan on track, week by week.' }
   ];
   const FREE = ['Monthly magazine', 'Yojana and Kurukshetra', 'Previous year papers', "Toppers' answer sheets", 'Essay practice'];
   // Admission banners (files in assets/img/banners) with the programme each one advertises
@@ -606,7 +620,8 @@
   const BYEAR = 2027;   // the start dates are for the 2027 attempt: confirm before launch
   $('#price').innerHTML = BATCHES.map((b, i) => {
     const [d, mon] = b.d.split(' ');
-    return `<article class="inv inv--ticket" style="--i:${i}">
+    const fam = BFAM[b.fam] || BFAM.gs;
+    return `<article class="inv inv--ticket inv--${b.fam}" style="--i:${i};--ticket:${fam.c}">
       <div class="inv__frame">
         <div class="ticket__head">
           <img class="ticket__lotus" src="assets/img/brand/lotus-ticket.svg" alt="" aria-hidden="true">
@@ -614,11 +629,11 @@
           <span class="ticket__target">Target exam<strong>UPSC ${esc(b.tgt)}</strong></span>
         </div>
         <div class="ticket__body">
-          <span class="inv__tag">${esc(b.chip === 'Flagship' ? 'Flagship' : 'Admissions open')}</span>
+          <span class="inv__tag">${esc(fam.t)}${b.chip === 'Flagship' ? ' · Flagship' : ''}</span>
           <h3>${esc(b.n)}</h3><p class="inv__w">${esc(b.what)}</p>
           <div class="ticket__meta"><dl><div><dt>Study mode</dt><dd>Classroom and LIVE&#8209;Online</dd></div></dl>${b.chip === 'Limited seats' ? '<span class="ticket__limited" aria-label="Limited seats"><span>Limited<br>seats</span></span>' : ''}</div>
         </div>
-        <div class="ticket__stub"><a class="inv__reg" href="#contact" data-prog="${esc(b.full)}" aria-label="Register for ${esc(b.full)}">Register<span class="sq sq--38 sq--brand">${ico('arrow-white.svg')}</span></a></div>
+        <div class="ticket__stub"><a class="inv__reg" href="#contact" data-prog="${esc(b.full)}" aria-label="Enroll now in ${esc(b.full)}">Enroll now<span class="sq sq--38 sq--brand">${ico('arrow-white.svg')}</span></a></div>
       </div></article>`;
   }).join('');
   {
