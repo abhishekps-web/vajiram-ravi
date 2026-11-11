@@ -2387,3 +2387,6 @@ footer.foot .foot__logo--mark:focus-visible { outline: 2px solid #fff; outline-o
    letters; the heading (number disc + label) gets the panel's white behind it, with a little air after the label */
 .mega .mega__col p.mega__k { position: relative; z-index: 1; padding-right: 12px; background: #fff; }
 .mega--sm .mega__col--feat p.mega__k { background: none; }   /* the featured column's tint already hides the rule */
+/* Contact card: the rows sit on the card's own 40px padding on both sides (the left had 4px of an unused accent border + 18px row padding,
+   so the text started 62px in against 40px on the right). The hover tint is unchanged. */
+#visit .cm__list .cm__item { padding-left: 0; border-left: 0; }
