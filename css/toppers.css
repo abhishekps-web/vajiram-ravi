@@ -297,3 +297,21 @@
   .gz__front .gz__cols p:first-child::first-letter { float: none; margin: 0 10px 0 0; font-size: inherit; line-height: inherit;
     -webkit-initial-letter: 3; initial-letter: 3; font-weight: 800; color: var(--gz-ink); }
 }
+/* Portrait swap with cut-out portraits (the 2025 set is transparent PNG-style webp): each layer gets the frame's light backdrop, so the
+   outgoing portrait never shows through the transparent parts of the incoming one, and the frame no longer turns black mid-swap
+   (the ghost's #16120E backdrop showed around both faces). The outgoing copy dims a little instead of going dark. */
+#gzImg, .gz__ghost, .gz__ghost img { background-color: #F2EEE9; }
+@keyframes gzRecede { to { translate: 0 -12%; filter: brightness(.82); } }
+/* Portrait swap as a crossfade (user 2026-11-11): the previous portrait (the ghost copy from js/toppers.js) now sits ON TOP and fades
+   out, revealing the next portrait already in place underneath, which settles from 1.04x to 1x. No wipe or clip any more. */
+@keyframes gzFadeOut { to { opacity: 0; } }
+@keyframes gzSettle { from { scale: 1.04; } to { scale: 1; } }
+.gz__ghost { z-index: 2; background-color: transparent; animation: gzFadeOut .7s cubic-bezier(.4, 0, .2, 1) both; }
+#gzLead.is-swap .gz__frame #gzImg { animation: gzSettle .9s cubic-bezier(.22, 1, .36, 1) both; transform-origin: 50% 40%; }
+/* Portrait swap in two beats (user 2026-11-11): first the previous portrait fades out (.4s, on top), then the next one rises in
+   from the bottom through the growing clip with the counter-zoom (the original reveal), starting as the fade ends. */
+.gz__ghost { z-index: 2; animation: gzFadeOut .4s cubic-bezier(.4, 0, .2, 1) both; }
+#gzLead.is-swap .gz__frame #gzImg { animation: gzReveal 1.1s cubic-bezier(.22, 1, .36, 1) .32s both; transform-origin: 50% 100%; }
+/* the next portrait wipes in from the TOP (user 2026-11-11): the clip opens downward from the top edge and the counter-zoom anchors there */
+@keyframes gzRevealTop { from { clip-path: inset(0 0 100% 0); scale: 1.2; } to { clip-path: inset(0); scale: 1; } }
+#gzLead.is-swap .gz__frame #gzImg { animation: gzRevealTop 1.1s cubic-bezier(.22, 1, .36, 1) .32s both; transform-origin: 50% 0%; }

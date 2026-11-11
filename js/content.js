@@ -420,6 +420,7 @@
         <div class="shelf__row">${idx.map((pi, k) => bookHTML(PROGS[pi], pi, (m > 1 ? (k - (m - 1) / 2) / ((m - 1) / 2) : 0).toFixed(2))).join('')}</div>
         <div class="shelf__board" aria-hidden="true"></div><div class="shelf__shadow" aria-hidden="true"></div></div>`;
     }).join('');
+    $$('.pbk', pageG).forEach((b, i) => b.style.setProperty('--bi', i));   // book order, for the staggered entrance on a tab switch
     setSp();
   };
   // vanishing point of the backward tilt = the middle of the shelf: each book needs its horizontal distance from it
@@ -445,28 +446,46 @@
     if (instant) { void ind.offsetWidth; ind.style.transition = ''; }
   };
   placeInd(true); tbar.classList.add('has-ind');
-  if ('ResizeObserver' in window) new ResizeObserver(() => placeInd(true)).observe(tbar);   // web fonts and resizes change the label widths
+  if ('ResizeObserver' in window) new ResizeObserver(() => placeInd(false)).observe(tbar);   // web fonts and resizes change the label widths; follow them smoothly (an instant snap here cut the pill's slide short)
   let gCur = 0, swapT = 0, swapId = 0;
   const showGroup = k => {
-    if (k === gCur) return; gCur = k;
+    if (k === gCur) return;
+    pageG.style.setProperty('--dir', k > gCur ? 1 : -1);   // books slide the way the tabs moved (right tab: in from the right)
+    gCur = k;
     tbtns.forEach(b => { const on = +b.dataset.g === k; b.setAttribute('aria-selected', on); b.tabIndex = on ? 0 : -1; });
     placeInd(reduce);
     const sel = tbtns[k]; tbar.scrollTo({ left: sel.offsetLeft - (tbar.clientWidth - sel.offsetWidth) / 2, behavior: reduce ? 'auto' : 'smooth' });
     active = PGROUPS[k].items;
     if (reduce) { renderShelves(true); return; }
     const me = ++swapId; clearTimeout(swapT);
-    pageG.style.height = pageG.offsetHeight + 'px';   // hold the current height while the old shelves fade
+    // shelves the new tab will not need fade out with their books (they are dropped at the swap)
+    const rowsNext = Math.ceil(active.length / (shelfCols || 4));
+    $$('.shelf', pageG).forEach((sh, r) => sh.classList.toggle('shelf--leave', r >= rowsNext));
     pageG.classList.remove('is-swap'); pageG.classList.add('is-out');
     swapT = setTimeout(() => {
       if (me !== swapId) return;
-      const h0 = pageG.offsetHeight;
+      const h0 = pageG.offsetHeight, rows0 = pageG.children.length;
       renderShelves(true);
-      pageG.style.height = 'auto'; const h1 = pageG.offsetHeight; pageG.style.height = h0 + 'px';
-      pageG.classList.remove('is-out'); void pageG.offsetWidth;
-      pageG.classList.add('is-swap', 'is-size'); pageG.style.height = h1 + 'px';
-      swapT = setTimeout(() => { if (me === swapId) { pageG.classList.remove('is-size'); pageG.style.height = ''; } }, 520);
-    }, 140);
+      $$('.shelf', pageG).forEach((sh, r) => sh.classList.toggle('shelf--new', r >= rows0));   // only shelves the new tab adds fade in; the rest stay put
+      pageG.classList.remove('is-out'); void pageG.offsetWidth; pageG.classList.add('is-swap');
+      // the section takes its new height at once (animating height re-laid and repainted the whole page below every frame, which is
+      // what made All / IGP / General Studies stutter); everything after it glides from where it was on the compositor instead
+      const dy = h0 - pageG.offsetHeight;
+      // only what is on screen glides (the rest moves unseen), so the browser never has to paint the whole page below into a layer
+      if (Math.abs(dy) > 1) followers().forEach(el => { const r = el.getBoundingClientRect(); if (r.top < innerHeight + Math.max(dy, 0) && r.bottom > -Math.abs(dy)) el.animate([{ translate: `0 ${dy}px` }, { translate: '0 0' }], { duration: 580, easing: SPRING_SOFT }); });
+    }, 190);
   };
+  // the page content after the Programmes section (siblings of it and of its ancestors), not fixed layers or dialogs
+  let follow = null;
+  const followers = () => follow || (follow = (() => {
+    const out = [];
+    for (let n = pageG.closest('section'); n && n !== document.body; n = n.parentElement)
+      for (let s = n.nextElementSibling; s; s = s.nextElementSibling)
+        if (!/^(SCRIPT|STYLE|DIALOG|TEMPLATE)$/.test(s.tagName) && !['fixed', 'sticky'].includes(getComputedStyle(s).position) && !s.hidden) out.push(s);
+    return out;
+  })());
+  // the books' spring (also in css/v49.css as --spring-soft), for the Web Animations call above
+  const SPRING_SOFT = CSS.supports('transition-timing-function', 'linear(0, 1)') ? getComputedStyle(document.documentElement).getPropertyValue('--spring-soft').trim() || 'cubic-bezier(.22, 1, .36, 1)' : 'cubic-bezier(.22, 1, .36, 1)';
   tbtns.forEach((b, i) => { b.tabIndex = i ? -1 : 0; });
   $('#ptabs').addEventListener('click', e => { const b = e.target.closest('[data-g]'); if (b) showGroup(+b.dataset.g); });
   $('#ptabs').addEventListener('keydown', e => {

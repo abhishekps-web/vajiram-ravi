@@ -2239,3 +2239,51 @@ footer.foot .foot__cols > .foot__news--5th { grid-area: auto; grid-column: 1 / -
 #resources .sm__more.rv.in .sm__more-k::before, #resources .sm__more.rv.in .sm__more-k::after { transform: scaleX(1); }
 @media (max-width: 640px) { #resources .sm__more-k::before, #resources .sm__more-k::after { width: 32px; } }
 @media (prefers-reduced-motion: reduce) { #resources .sm__more.rv .sm__more-k::before, #resources .sm__more.rv .sm__more-k::after { transform: none; transition: none; } }
+/* Programme tab switch: while the shelves ease to their new height they used to clip at their own box (overflow: clip), which cut the
+   cast shadow under the bottom shelf into a hard edge until the resize ended, then popped it back. The clip now reaches past the box
+   by the shadow's depth below (230px) and the wall glow's reach above and to the sides, so the shadow stays whole while the height moves. */
+.shelves.is-size { overflow: visible; clip-path: inset(-130px -80px -240px -80px); }
+
+/* ---- Programme tab switch, smoother (js/content.js showGroup): the shelves themselves stay put; only the books move.
+   Out (190ms): the current books sink 8px and fade together. In: the new books rise 18px from a touch smaller, one after another
+   (--bi, 45ms apart; --k is taken: it is the book's place on the shelf for the tilt) on a long ease-out; a shelf the new tab adds fades its board and shadow in; the height eases on the same curve.
+   Books animate translate / scale / opacity only, so the hover tilt (transform on the book inside) is untouched. ---- */
+@keyframes pbkOut { to { opacity: 0; translate: 0 8px; scale: .98; } }
+@keyframes pbkIn { from { opacity: 0; translate: 0 18px; scale: .97; } to { opacity: 1; translate: 0 0; scale: 1; } }
+@keyframes shelfNew { from { opacity: 0; } to { opacity: 1; } }
+.shelves.is-out .shelf, .shelves.is-swap .shelf { animation: none; }
+.shelves.is-out .shelf__row .pbk { animation: pbkOut .19s cubic-bezier(.4, 0, 1, 1) both; }
+.shelves.is-swap .shelf__row .pbk { animation: pbkIn .62s cubic-bezier(.22, 1, .36, 1) both; animation-delay: calc(var(--bi, 0) * 45ms + 30ms); }
+.shelves.is-swap .shelf--new { animation: shelfNew .5s cubic-bezier(.22, 1, .36, 1) both; animation-delay: calc(var(--r, 0) * 60ms); }
+.shelves.is-size { transition: height .6s cubic-bezier(.22, 1, .36, 1); }
+@media (prefers-reduced-motion: reduce) { .shelves.is-out .shelf__row .pbk, .shelves.is-swap .shelf__row .pbk, .shelves.is-swap .shelf--new { animation: none; } }
+
+/* ---- Programme tabs, Motion-style (after motion.dev "smooth tabs"): the pill and the books move on springs, and the books travel
+   the way the tabs moved (--dir from js/content.js: +1 to a tab on the right, -1 to the left).
+   Springs as CSS linear() curves, sampled from a damped spring until it settles: --spring-pill (damping 0.68, ~0.57s, ~5% overshoot)
+   for the sliding pill; --spring-soft (damping 0.82, ~0.58s, ~1% overshoot) for the books. Browsers without linear() keep the eases above.
+   Out (190ms): books drift 24px against the travel, blur 4px and fade. In: from 36px along the travel, blurred 6px and faded, they
+   spring into place one after another (35ms apart). ---- */
+:root { --spring-pill: linear(0, 0.0196, 0.0711, 0.1447, 0.2322, 0.327, 0.4236, 0.518, 0.6073, 0.6893, 0.7627, 0.827, 0.8819, 0.9277, 0.965, 0.9944, 1.0168, 1.033, 1.044, 1.0507, 1.0538, 1.0541, 1.0523, 1.0491, 1.0447, 1.0398, 1.0346, 1.0294, 1.0243, 1.0196, 1.0153, 1.0115, 1.0082, 1.0054, 1.0031, 1.0013, 0.9998, 0.9987, 0.998, 0.9975, 0.9972, 0.9971, 0.9971, 0.9972, 1); --spring-soft: linear(0, 0.0135, 0.0491, 0.1005, 0.1624, 0.2307, 0.302, 0.3737, 0.444, 0.5113, 0.5746, 0.6333, 0.687, 0.7356, 0.779, 0.8175, 0.8512, 0.8804, 0.9055, 0.9269, 0.9449, 0.9599, 0.9722, 0.9823, 0.9903, 0.9965, 1.0014, 1.005, 1.0076, 1.0093, 1.0104, 1.011, 1.0111, 1.0109, 1.0105, 1.0099, 1.0092, 1.0084, 1.0076, 1.0068, 1.0061, 1.0053, 1.0046, 1.004, 1); }
+@supports (transition-timing-function: linear(0, 1)) {
+  #courses .ptabs .seg__ind { transition: transform .57s var(--spring-pill), width .57s var(--spring-pill); }
+  @keyframes pbkOutX { to { opacity: 0; translate: calc(var(--dir, 1) * -24px) 0; filter: blur(4px); } }
+  @keyframes pbkInX { from { opacity: 0; translate: calc(var(--dir, 1) * 36px) 0; filter: blur(6px); } to { opacity: 1; translate: 0 0; filter: blur(0); } }
+  .shelves.is-out .shelf__row .pbk { animation: pbkOutX .19s cubic-bezier(.4, 0, 1, 1) both; }
+  .shelves.is-swap .shelf__row .pbk { animation: pbkInX .58s var(--spring-soft) both; animation-delay: calc(var(--bi, 0) * 35ms); }
+  .shelves.is-size { transition: height .58s var(--spring-soft); }
+}
+@media (prefers-reduced-motion: reduce) { #courses .ptabs .seg__ind { transition: none; } .shelves.is-out .shelf__row .pbk, .shelves.is-swap .shelf__row .pbk { animation: none; } }
+/* Programme tab switch, smooth on every tab (the All / IGP / General Studies switches change the shelf count and stuttered):
+   no height animation any more (js swaps the height in one step and glides the content below on the compositor); shelves a tab no
+   longer needs fade out with their books; the outgoing books no longer blur (blurring twelve 3D books each frame was the other cost). */
+.shelves.is-size { transition: none; }
+.shelves .shelf--leave { transition: opacity .19s cubic-bezier(.4, 0, 1, 1); opacity: 0; }
+@supports (transition-timing-function: linear(0, 1)) {
+  @keyframes pbkOutX { to { opacity: 0; translate: calc(var(--dir, 1) * -24px) 0; } }
+}
+/* Programme tabs: every count keeps the same box whether its tab is selected or not (only the circle's colour changes), so a tab
+   never changes width when picked. The plain-number counts had made the bar a pixel wider or narrower on All (12) and
+   General Studies (4), which re-placed the sliding pill without its slide. */
+#courses .ptabs .seg button small, #courses .ptabs .seg button:not([aria-selected="true"]) small { min-width: 24px; padding: 4px 7px; box-sizing: border-box; text-align: center; }
+#courses .ptabs .seg button:not([aria-selected="true"]) small { background: transparent; }
