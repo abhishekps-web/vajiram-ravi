@@ -21,6 +21,9 @@ import "./shelf.css";
 const BOOK = { w: 196, h: 260 };
 /** Where "View course" rests on a closed book: its bottom edge, px above the book's foot (above the category). */
 const FOLLOW_BOTTOM = 45;
+/** The hovered book's pose and shadow: the Batches tickets' 3D hover (public/css/v49.css, .inv--ticket:hover), the same angles. */
+const HOVER_TILT = "perspective(1000px) translateY(-8px) rotateX(calc(var(--ty, 0) * -7deg)) rotateY(calc(var(--tx, 0) * 9deg))";
+const HOVER_SHADOW = "drop-shadow(calc(var(--tx, 0) * -14px) calc(24px - var(--ty, 0) * 10px) 18px rgb(60 25 5 / 0.32))";
 const GAP = 60;
 const ROW_H = 352;
 const BOOK_TOP = 30;
@@ -451,15 +454,20 @@ export default function CourseShelf({ programmes }: { programmes: Programme[] })
       ...size,
       left: x,
       top: y,
-      transform: hovered === i && !away ? "translateY(-14px) rotate(-1deg)" : "none",
-      filter: away ? "blur(14px)" : "none",
+      // hover (user 2026-11-13): the Batches tickets' 3D tilt (v49.css .inv--ticket:hover): the book tips toward the pointer
+      // (--tx / --ty, set by Book), lifts 8px, and its shadow swings opposite the tilt
+      transform: hovered === i && !away ? HOVER_TILT : "none",
+      filter: away ? "blur(14px)" : hovered === i ? HOVER_SHADOW : "none",
       opacity: away ? 0.25 : 1,
       transition: shuffle?.arriving.includes(i)
         ? // Arriving: straight to its place; its motion stands it up.
           "none"
         : shuffle
             ? `left ${SLIDE_MS}ms ${EASE}, top ${SLIDE_MS}ms ${EASE}, width ${MOVE_MS}ms ${EASE}, height ${MOVE_MS}ms ${EASE}, transform 320ms ${EASE}, filter 700ms ${EASE}, opacity 700ms ${EASE}`
-            : `left ${MOVE_MS}ms ${EASE}, top ${MOVE_MS}ms ${EASE}, width ${MOVE_MS}ms ${EASE}, height ${MOVE_MS}ms ${EASE}, transform 320ms ${EASE}, filter 700ms ${EASE}, opacity 700ms ${EASE}`,
+            : hovered === i && !away
+              ? // while hovered the tilt follows the pointer closely, as the tickets' does (.14s linear)
+                `left ${MOVE_MS}ms ${EASE}, top ${MOVE_MS}ms ${EASE}, width ${MOVE_MS}ms ${EASE}, height ${MOVE_MS}ms ${EASE}, transform 140ms linear, filter 200ms linear, opacity 700ms ${EASE}`
+              : `left ${MOVE_MS}ms ${EASE}, top ${MOVE_MS}ms ${EASE}, width ${MOVE_MS}ms ${EASE}, height ${MOVE_MS}ms ${EASE}, transform 500ms ${EASE}, filter 400ms ${EASE}, opacity 700ms ${EASE}`,
     };
   };
 
@@ -634,6 +642,17 @@ function Book({ index, programme, hidden, out, open, away, style, onPick, onClos
     if (!entered.current) { el.style.transition = "none"; el.style.translate = `${x.toFixed(1)}px ${y.toFixed(1)}px`; void el.offsetWidth; el.style.transition = ""; entered.current = true; return; }
     el.style.translate = `${x.toFixed(1)}px ${y.toFixed(1)}px`;
   };
+  // the 3D hover's inputs, as the tickets' (Batches/batches.js): where the pointer is over the book, -0.5..0.5, and the glare's spot
+  const tilt = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (out || event.pointerType !== "mouse" || prefersReducedMotion()) return;
+    const el = event.currentTarget, r = el.getBoundingClientRect();
+    const px = (event.clientX - r.left) / r.width, py = (event.clientY - r.top) / r.height;
+    el.style.setProperty("--tx", (px - 0.5).toFixed(3));
+    el.style.setProperty("--ty", (py - 0.5).toFixed(3));
+    el.style.setProperty("--gx", `${(px * 100).toFixed(0)}%`);
+    el.style.setProperty("--gy", `${(py * 100).toFixed(0)}%`);
+  };
+  const untilt = (el: HTMLElement) => { el.style.setProperty("--tx", "0"); el.style.setProperty("--ty", "0"); };
   const unfollow = () => { entered.current = false; if (followRef.current) followRef.current.style.translate = ""; };
 
   useEffect(() => {
@@ -657,8 +676,8 @@ function Book({ index, programme, hidden, out, open, away, style, onPick, onClos
       className="group/book absolute"
       style={style}
       onMouseEnter={() => onHover(true)}
-      onMouseLeave={() => { onHover(false); unfollow(); }}
-      onPointerMove={follow}
+      onMouseLeave={(event) => { onHover(false); unfollow(); untilt(event.currentTarget); }}
+      onPointerMove={(event) => { tilt(event); follow(event); }}
     >
       <div data-cover className="absolute inset-0 origin-bottom [perspective:2200px]">
         {/* The shadow it casts on the wall while lifted off a plank or a stack (only in the entrance). */}
@@ -927,6 +946,12 @@ function CoverFront({ programme, large }: { programme: Programme; large: boolean
         aria-hidden="true"
         className="lp-glint pointer-events-none absolute inset-y-0 -left-[60%] z-10 w-[45%] bg-[linear-gradient(90deg,transparent,rgb(255_226_160/0.3)_50%,transparent)] mix-blend-screen"
         style={{ animationDelay: `${-glintOffset(programme.name)}s` }}
+      />
+      {/* The glare of the 3D hover (as the Batches tickets'): a soft light at the pointer (--gx / --gy, set by Book). */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-10 opacity-0 mix-blend-soft-light [transition:opacity_300ms] group-hover/book:opacity-100 motion-reduce:hidden"
+        style={{ background: "radial-gradient(circle at var(--gx, 50%) var(--gy, 30%), rgb(255 255 255 / 0.6), rgb(255 255 255 / 0.14) 34%, transparent 62%)" }}
       />
       {/* The shine: a band of light that sweeps across the cover on hover. */}
       <span
