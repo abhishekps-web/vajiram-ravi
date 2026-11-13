@@ -14,7 +14,7 @@ export const viewport = {
   themeColor: '#C2410C',
 };
 
-const FONTS = 'https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Geist:wght@500&family=Anek+Devanagari:wght@500&family=Geist+Mono:wght@400&family=Hanken+Grotesk:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300&family=League+Spartan:wght@600;700&family=Mukta:wght@400;500;600;700&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap';
+const FONTS = 'https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Geist:wght@500&family=Anek+Devanagari:wght@500&family=Geist+Mono:wght@400&family=Hanken+Grotesk:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400;1,6..72,500&family=League+Spartan:wght@600;700&family=Mukta:wght@400;500;600;700&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap';
 
 // Runs before paint: html.js (the CSS's JS-on hooks) and, with the preloader on (ENABLE_PRELOADER, lib/config.js), html.vrv-lock
 // (shows the intro overlay and holds scrolling until the intro lifts it; if the intro never starts, the lock is released so the
