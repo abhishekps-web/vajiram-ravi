@@ -8,7 +8,8 @@ export function initBatchTickets() {
   $('#price').innerHTML = BATCHES.map((b, i) => {
     const [d, mon] = b.d.split(' ');
     const fam = BFAM[b.fam] || BFAM.gs;
-    return `<article class="inv inv--ticket inv--${b.fam}" style="--i:${i};--ticket:${fam.c}">
+    // the family as inv--fam-<key>: a bare inv--pre (the Prelims key) is the old entrance class and hid those tickets
+    return `<article class="inv inv--ticket inv--fam-${b.fam}" style="--i:${i};--ticket:${fam.c}">
       <div class="inv__frame">
         <div class="ticket__head">
           <img class="ticket__lotus" src="assets/img/brand/lotus-ticket.svg" alt="" aria-hidden="true">
@@ -25,12 +26,7 @@ export function initBatchTickets() {
   }).join('');
   {
     const invs = $$('.inv');
-    // the tickets are laid down one after another as the section arrives
-    if (!reduce && 'IntersectionObserver' in window) {
-      invs.forEach(c => c.classList.add('inv--pre'));
-      const io = new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { const c = e.target; c.classList.add('in'); o.unobserve(c); setTimeout(() => c.classList.remove('inv--pre', 'in'), 1500 + (+c.style.getPropertyValue('--i') || 0) * 110); } }), { threshold: .05 });   // .05: in the carousel a ticket that only peeks in (about 14% on phones) still arrives   // the entrance classes drop away afterwards so they never touch the hover
-      invs.forEach(c => io.observe(c));
-    }
+    // no entrance (user 2026-11-13): the tickets are simply in place as the carousel arrives; only the hover tilt below remains
     // on hover the ticket tilts toward the pointer like a card in the hand: a light glare and a shadow that move with it
     if (!reduce && matchMedia('(hover: hover) and (pointer: fine)').matches) invs.forEach(c => {
       c.addEventListener('pointermove', e => { const r = c.getBoundingClientRect(), px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;

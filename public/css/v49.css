@@ -2366,15 +2366,15 @@ html main #contact .contact__in > * { margin-bottom: 0; }
 /* ---- Batches: one horizontal carousel (user 2026-11-13). The .rail primitive (v25.css) makes #price a single scroll-snapping
    row; its width per ticket keeps the old grid's 4 / 2 / 1 across, the next ticket peeking in on phones. The row keeps the
    page margin as scroll padding, and room above and below for the tickets' lift, tilt and shadow. Arrows: components/ui/rail.js
-   (one ticket per press, disabled at either end); beside the row in the page margin from 1280px, centred under it below. ---- */
+   (one ticket per press, disabled at either end); centred under the row at every width (user 2026-11-13), 12px apart. ---- */
 #batches .rail--batch { --bgap: clamp(14px, 2vw, 28px); --cw: calc((100% - 3 * var(--bgap)) / 4); margin-top: 0; }
 #batches .rail--batch > .rail__track { gap: var(--bgap); row-gap: 0; padding: 18px var(--px) 34px; scroll-padding-inline: var(--px); }
 #batches .rail--batch > .rail__track:focus-visible { outline: 2px solid var(--brand); outline-offset: -2px; border-radius: 12px; }
 #batches .rail__nav { display: flex; justify-content: center; gap: 12px; margin-top: 4px; }
-@media (min-width: 1280px) {
-  #batches .rail__nav { position: absolute; inset: 18px calc(-1 * var(--px)) 34px; margin: 0; justify-content: space-between; align-items: center; pointer-events: none; }
-  #batches .rail__nav .cbtn { pointer-events: auto; margin: 0 calc((var(--px) - var(--btn-h, 48px)) / 2); }
-}
+/* the left and right "smoke" of Success stories (#tcar, Stories.jsx): the full-bleed row fades out over its outer 7% each side,
+   the same gradient at every width; off with reduced motion, as there */
+#batches .rail--batch > .rail__track { -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%); }
 @media (max-width: 1180px) { #batches .rail--batch { --cw: calc((100% - var(--bgap)) / 2); } }
 @media (max-width: 640px) { #batches .rail--batch { --cw: 86%; } }
-@media (prefers-reduced-motion: reduce) { #batches .rail--batch > .rail__track { scroll-behavior: auto; } }
+@media (prefers-reduced-motion: reduce) { #batches .rail--batch > .rail__track { scroll-behavior: auto; -webkit-mask-image: none; mask-image: none; } }
