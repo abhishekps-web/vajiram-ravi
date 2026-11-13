@@ -93,3 +93,48 @@ export function initNavScrolled() {
   nav.addEventListener('focusin', () => nav.classList.remove('nav--away'));   // tabbing into the bar brings it back
   update();
 }
+
+// "More" (user 2026-11-13): a priority+ bar. Wherever the links show (1024px and up), the bar keeps at least MIN px between its last
+// link and the language switch / "Let's talk"; when they would come closer, the links move into the More menu one by one from the
+// right (ORDER). Each has a twin in the menu (NavigationBar.jsx) that shows only while it is out, so nothing in the DOM moves; the
+// two mega-menu buttons always stay. Re-measured on resize, when the fonts load and when the language changes (Hindi labels are
+// longer). The menu opens on click, closes on a click outside, Escape, a choice, or when a mega menu opens.
+export function initNavMore() {
+  const wrap = $('#navMore'), btn = $('#moreBtn'), menu = $('#moreMenu'), links = $('.nav__links'), end = $('#nav .nav__end');
+  if (!wrap || !btn || !menu || !links || !end) return;
+  const ORDER = ['faq', 'batches', 'gs', 'toppers'], MIN = 40;
+  const barLink = k => links.querySelector(`.nav__a[data-more="${k}"]`), twin = k => menu.querySelector(`[data-more="${k}"]`);
+  const isOpen = () => wrap.classList.contains('is-open');
+  const setOpen = open => {
+    wrap.classList.toggle('is-open', open); btn.setAttribute('aria-expanded', open);
+    if (open) setMega(false);
+  };
+  const free = () => {
+    const kids = [...links.children].filter(e => !e.hidden && e.getClientRects().length && getComputedStyle(e).display !== 'none');
+    const right = Math.max(...kids.map(e => e.getBoundingClientRect().right));
+    return end.getBoundingClientRect().left - right;
+  };
+  const fit = () => {
+    ORDER.forEach(k => { barLink(k)?.classList.remove('is-over'); const t = twin(k); if (t) t.hidden = true; });
+    wrap.hidden = true;
+    if (getComputedStyle(links).display !== 'none') {
+      for (const k of ORDER) {
+        if (free() >= MIN) break;
+        barLink(k)?.classList.add('is-over'); const t = twin(k); if (t) t.hidden = false; wrap.hidden = false;
+      }
+    }
+    if (wrap.hidden && isOpen()) setOpen(false);
+  };
+  let tick = 0;
+  const refit = () => { cancelAnimationFrame(tick); tick = requestAnimationFrame(fit); };
+  btn.addEventListener('click', e => { e.stopPropagation(); setOpen(!isOpen()); });
+  menu.addEventListener('click', e => { if (e.target.closest('a')) setOpen(false); });
+  document.addEventListener('click', e => { if (isOpen() && !wrap.contains(e.target)) setOpen(false); });
+  addEventListener('keydown', e => { if (e.key === 'Escape' && isOpen()) { setOpen(false); btn.focus(); } });
+  wrap.addEventListener('focusout', e => { if (isOpen() && !wrap.contains(e.relatedTarget)) setOpen(false); });
+  ['#exploreBtn', '#studyBtn'].forEach(s => $(s)?.addEventListener('click', () => setOpen(false)));
+  addEventListener('resize', refit);
+  document.addEventListener('langchange', refit);
+  document.fonts?.ready.then(refit);
+  fit();
+}

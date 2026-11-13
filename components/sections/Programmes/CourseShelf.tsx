@@ -18,7 +18,7 @@ import "./shelf.css";
  * little in from its front edge); and the open book, its pages PAGE in size with the spine at SPINE, which
  * needs OPEN_H of stage.
  */
-const BOOK = { w: 196, h: 260 };
+const BOOK = { w: 195, h: 260 };   // 3:4 (user 2026-11-13; was 196 x 260)
 /** Where "View course" rests on a closed book: its bottom edge, px above the book's foot (above the category). */
 const FOLLOW_BOTTOM = 45;
 /** The hovered book's pose and shadow: the Batches tickets' 3D hover (public/css/v49.css, .inv--ticket:hover), the same angles. */
@@ -28,7 +28,7 @@ const GAP = 60;
 const ROW_H = 352;
 const BOOK_TOP = 30;
 const PLANK_TOP = BOOK_TOP + BOOK.h - 8;
-const PAGE = { w: 380, h: 504 };
+const PAGE = { w: 378, h: 504 };   // the open book's cover and pages, 3:4 too (was 380 x 504)
 const OPEN_H = 2 * ROW_H;
 
 /**
@@ -907,16 +907,10 @@ function CoverFront({ programme, large }: { programme: Programme; large: boolean
       </span>
 
       <span className={cx("absolute flex flex-col items-center", large ? "px-6 pt-7 pb-6" : "px-2.5 pt-3.5 pb-3")} style={frame}>
-        {/* The cover's IA (user 2026-11-13): brand, name, foil rule, emblem, "View course", category. */}
+        {/* The cover's IA (user 2026-11-13): name, foil rule, emblem, "View course", category. The "Vajiram & Ravi" line that
+            repeated on every cover was removed (user 2026-11-13); the name now opens the cover. */}
         <span
-          aria-hidden="true"
-          className={cx("font-semibold tracking-[0.2em] uppercase", large ? "text-[13px]/[16px]" : "text-[10px]/[13px]")}
-          style={{ color: FOIL, opacity: 0.9 }}
-        >
-          Vajiram &amp; Ravi
-        </span>
-        <span
-          className={cx("block font-medium text-balance text-[#ffe3b0] [font-family:Newsreader,Georgia,serif]", large ? "mt-5 text-[36px]/[1.08]" : "mt-2 text-[20px]/[1.1]")}
+          className={cx("block font-medium text-balance text-[#ffe3b0] [font-family:Newsreader,Georgia,serif]", large ? "mt-2 text-[36px]/[1.08]" : "mt-1 text-[20px]/[1.1]")}
         >
           {programme.name}
         </span>
