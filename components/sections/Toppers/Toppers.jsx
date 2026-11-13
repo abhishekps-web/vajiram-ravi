@@ -1,3 +1,4 @@
+import Button from '@/components/ui/Button/Button';
 import Stylesheet from '@/components/ui/Stylesheet';
 // ============ TOPPERS: a results-special newspaper front page (masthead removed 2026-11-11) (layout after vajiram-ravi-homepage.vercel.app #results). Static shell only: every topper, story, seal, fact and filter count is written by ./toppers.js from ./data/toppers-archive.js (plus programme names from ./data/toppers.js where the archive has none). Styles: public/css/toppers.css. ============
 export default function Toppers() {
@@ -34,16 +35,14 @@ export default function Toppers() {
               <div className="gz__scroll">
                 <div className="gz__scrolli" id="gzScroll" data-lenis-prevent="">
                   <ol className="gz__ten" id="gzTen" />
-                  <button type="button" className="gz__all" id="gzAll" aria-expanded="false" aria-controls="gzTen" hidden />
+                  <Button variant="outline" size="sm" className="gz__all" id="gzAll" iconEnd="chevron" aria-expanded="false" aria-controls="gzTen" hidden>Show all rank holders</Button>
                 </div>
               </div>
             </section>
           </div>
           <div className="gz__foot rv" style={{ "--d": ".05s" }}>
             <div className="gz__more">
-              <a className="bt bt--brand" href="https://vajiramandravi.com/ias-selections-from-vajiram/" target="_blank" rel="noopener">Explore all UPSC results<span className="sq sq--52 sq--white">
-                <img src="/assets/img/icons/arrow-brand.svg" alt="" width="16" height="16" />
-              </span></a>
+              <Button href="https://vajiramandravi.com/ias-selections-from-vajiram/" target="_blank" rel="noopener" iconEnd="arrow">Explore all UPSC results</Button>
             </div>
           </div>
         </div>

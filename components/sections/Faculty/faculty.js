@@ -1,6 +1,7 @@
 // Faculty: the clip-board cards in #team and the carousel controls (chevrons and page dots) under the rail.
 import { $, esc, PHOTO } from '@/lib/site';
 import { FACULTY, FACULTY_LI } from './data';
+import { buttonHTML } from '@/components/ui/Button/button-core';
 
 const liFor = (n, i) => FACULTY_LI[i] || `https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(`${n} Vajiram & Ravi`)}`;
 
@@ -14,8 +15,7 @@ export function renderFaculty() {
 export function initFacultyCarousel() {
     const rail = $('#faculty .rail'), track = $('#team'), n = track.children.length;
     const nav = document.createElement('div'); nav.className = 'rnav';
-    const TEER = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 8h11"/><path d="M8.6 3.6C9.4 5.9 11.2 7.4 13.5 8 11.2 8.6 9.4 10.1 8.6 12.4"/></svg>';   // the CTA's arrow
-    const chev = d => `<button class="rnav__b rnav__b--${d}" type="button" aria-label="${d === 'prev' ? 'Previous' : 'Next'} faculty"><span class="rnav__a">${TEER}${TEER}</span></button>`;
+    const chev = d => buttonHTML({ iconOnly: true, iconStart: d === 'prev' ? 'arrow-left' : 'arrow', label: `${d === 'prev' ? 'Previous' : 'Next'} faculty`, className: `rnav__b rnav__b--${d}` });
     nav.innerHTML = `${chev('prev')}<div class="rnav__dots"></div>${chev('next')}`;
     rail.append(nav);
     const dots = $('.rnav__dots', nav), pv = $('.rnav__b--prev', nav), nx = $('.rnav__b--next', nav);

@@ -104,8 +104,6 @@
 .nav--hero .nav__a { color: rgba(255, 255, 255, .86); }
 .nav--hero .nav__a:hover, .nav--hero .explore.open .nav__a { color: #FFD48A; }
 .nav--hero .nav__burger span { background: #fff; }
-.nav--hero .talk { background: transparent; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .55); color: #fff; }
-.nav--hero .talk:hover { box-shadow: inset 0 0 0 1px #fff; }
 .nav--hero .explore.open .nav__a { color: #FFD48A; }
 @media (max-width: 900px) { .nav--hero { top: 20px; } .nav--hero .nav__logo .lg { height: 42px; } .nav__logo .lg { height: 34px; } .nav--hero .nav__pill { max-width: none; } }
 
@@ -164,59 +162,13 @@
 
 /* (the Why section now lives in css/why-choose.css) */
 
-
-/* ---- CTA: the reference site's button. One pill, a white circle with the arrow inside it; on hover the label rolls up to a fresh copy,
-   the arrow slides through its circle, the fill deepens, and the button leans toward the cursor ---- */
-.cta.cta { position: relative; display: inline-flex; align-items: center; gap: 14px; height: 48px; min-height: 0; padding: 0 5px 0 22px; border: 0; border-radius: 999px; overflow: hidden; cursor: pointer; white-space: nowrap;
-  font: 700 14.5px/1.25 var(--f); letter-spacing: .005em; color: #fff; text-shadow: 0 1px 1px rgba(110, 30, 0, .25);
-  background: linear-gradient(135deg, #F06A2C 0%, #E85020 45%, #C2410C 100%);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .25), 0 12px 24px -12px rgba(194, 65, 12, .65);
-  transition: box-shadow .35s, scale .15s; }
-.cta.cta::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, #D9480F, #A8380A); opacity: 0; transition: opacity .35s; pointer-events: none; }
-.cta.cta:hover { background: linear-gradient(135deg, #F06A2C 0%, #E85020 45%, #C2410C 100%); color: #fff; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .22), inset 0 -2px 0 rgba(110, 30, 0, .2), 0 16px 30px -12px rgba(168, 56, 10, .65); }
-.cta.cta:hover::before { opacity: 1; }
-.cta.cta:active { scale: .97; transform: none; }
-.cta.cta:focus-visible { outline: none; box-shadow: 0 0 0 3px #fff, 0 0 0 5.5px #E85020, 0 10px 22px -10px rgba(194, 65, 12, .55); }
-.cta .btn__label { position: relative; display: inline-grid; overflow: hidden; padding-top: 2px; }
-.cta .btn__t { grid-area: 1 / 1; display: block; transition: transform .5s cubic-bezier(.7, 0, .2, 1); }
-.cta .btn__t + .btn__t { transform: translateY(115%); }
-.cta .sq { position: relative; flex: none; display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; overflow: hidden; background: #fff; box-shadow: 0 1px 2px rgba(120, 30, 0, .2), 0 3px 8px rgba(120, 30, 0, .12); transition: transform .45s cubic-bezier(.2, .8, .2, 1); }
-.cta .sq svg { grid-area: 1 / 1; width: 16px; height: 16px; fill: none; stroke: #C2410C; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; transition: transform .5s cubic-bezier(.7, 0, .2, 1); }
-.cta .sq svg + svg { transform: translateX(-220%); }
-.cta .sq img { display: none; }
-@media (hover: hover) {
-  .cta:hover .btn__t { transform: translateY(-115%); }
-  .cta:hover .btn__t + .btn__t { transform: translateY(0); }
-  .cta:hover .sq svg { transform: translateX(220%); }
-  .cta:hover .sq svg + svg { transform: translateX(0); }
-  .cta:hover .sq { transform: scale(1.06); }
-}
-.cta.cta.bt--full { display: flex; width: 100%; justify-content: space-between; }
-/* white variant for orange / dark grounds */
-.cta.cta.bt--white { background: #fff; color: var(--ink); text-shadow: none; box-shadow: 0 12px 24px -14px rgba(60, 20, 0, .5); }
-.cta.cta.bt--white::before { background: var(--sand); }
-.cta.cta.bt--white:hover { background: #fff; color: var(--ink); box-shadow: 0 16px 30px -14px rgba(60, 20, 0, .55); }
-.cta.cta.bt--white .sq { background: #C2410C; box-shadow: none; }
-.cta.cta.bt--white .sq svg { stroke: #fff; }
-/* nav: over the hero it stays an outline pill, blended into the video */
-.nav .cta.cta { height: 44px; }
-.nav--hero .cta.cta.talk { background: transparent; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .55); }
-.nav--hero .cta.cta.talk::before { background: rgba(255, 255, 255, .14); }
-.nav--hero .cta.cta.talk:hover { background: transparent; box-shadow: inset 0 0 0 1px #fff; }
-@media (max-width: 480px) { .nav .cta.cta.talk { padding: 0 3px; gap: 0; } .nav .cta.cta.talk .btn__label { display: none; } .nav .cta.cta.talk .sq { width: 36px; height: 36px; } }
-@media (prefers-reduced-motion: reduce) { .cta .btn__t, .cta .sq svg, .cta.cta { transition: none; } }
+/* ---- Buttons: the button system lives in public/css/buttons.css (components/ui/Button). Only placements remain here. ---- */
+/* header "Let's talk": on phones the label hides and the disc alone stays (a round arrow button) */
+@media (max-width: 480px) { .nav .talk { padding: 0 3px; gap: 0; } .nav .talk .btn__label { display: none; } }
 
 /* the pinned background must not spill past the section into the gap below it (that was the orange-to-cream strip) */
 
 /* "View all toppers": a text link with an arrow, no pill. The arrow nudges forward and the underline draws in; nothing moves position. */
-.tlink { display: inline-flex; align-items: center; gap: 10px; padding: 6px 0; border: 0; background: none; cursor: pointer; font: 600 17px/1.3 var(--f-d); color: var(--brand); position: relative; }
-.tlink::after { content: ""; position: absolute; left: 0; right: 28px; bottom: 2px; height: 1.5px; background: currentColor; transform: scaleX(0); transform-origin: 0 50%; transition: transform .4s cubic-bezier(.2, .8, .2, 1); }
-.tlink svg { fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transition: transform .35s cubic-bezier(.2, .8, .2, 1); }
-.tlink:hover { color: var(--brand-d); }
-.tlink:hover::after { transform: scaleX(1); }
-.tlink:hover svg { transform: translateX(5px); }
-.tlink:focus-visible { outline: 2px solid var(--brand); outline-offset: 4px; border-radius: 4px; }
-@media (prefers-reduced-motion: reduce) { .tlink::after, .tlink svg { transition: none; } }
 
 /* ---- shelf scene, calibrated against the Shopify Editions wall (neutral greys, measured pixel by pixel) ----
    per shelf: .shelf__glow (the lit wall behind the row), .shelf__board (front face), .shelf__shadow (the cast shadow under it) ---- */
@@ -262,7 +214,6 @@
 .shelf .pbk__b .pc__tags { display: none; }
 @media (prefers-reduced-motion: reduce) { .shelf .gsbook--p, .shelf .gsbook--p .gsbook__ribbon { transition: none; } }
 
-
 /* the bookmark must not reach the shelf when the book is lifted */
 .shelf .gsbook--p .gsbook__ribbon { bottom: -15px; height: 28px; }
 
@@ -294,7 +245,6 @@
     linear-gradient(#DDDDDD, #DDDDDD) 0 0 / 100% 1.5px no-repeat,
     linear-gradient(rgba(0, 0, 0, .06), rgba(255, 255, 255, .06)),
     linear-gradient(#E4E4E4, #E4E4E4); }
-
 
 .shelf .pbk__b { margin-top: calc(var(--bh) + 8px); }
 
@@ -365,24 +315,15 @@
 
 /* faculty: the arrows sit on the left and right edges of the cards, level with their middle, always visible; the page dots stay centred below */
 #faculty .rail { position: relative; }
-#faculty .rnav__b { position: absolute; z-index: 4; top: var(--cy, 190px); width: 52px; height: 52px; border-radius: 50%; transform: translateY(-50%); box-shadow: 0 10px 24px -6px rgba(60, 20, 0, .55); }
+#faculty .rnav__b { position: absolute; z-index: 4; top: var(--cy, 190px); transform: translateY(-50%); }
 #faculty .rnav__b--prev { left: -26px; }
 #faculty .rnav__b--next { right: -26px; }
 #faculty .rnav__b:hover { transform: translateY(-50%) scale(1.06); }
 #faculty .rnav__b[disabled] { opacity: 0; pointer-events: none; }
 #faculty .rnav { gap: 0; }
-@media (max-width: 760px) { #faculty .rnav__b { width: 42px; height: 42px; } #faculty .rnav__b--prev { left: -8px; } #faculty .rnav__b--next { right: -8px; } }
+@media (max-width: 760px) { #faculty .rnav__b--prev { left: -8px; } #faculty .rnav__b--next { right: -8px; } }
 
 /* faculty arrows: the same teer arrow as the CTA buttons, and the same hover (it slides out of the circle as a fresh one slides in) */
-#faculty .rnav__b { background: linear-gradient(135deg, #F06A2C 0%, #E85020 45%, #C2410C 100%); }
-#faculty .rnav__b:hover { background: linear-gradient(180deg, #D9480F, #A8380A); }
-#faculty .rnav__b img { display: none; }
-#faculty .rnav__a { display: grid; place-items: center; width: 22px; height: 22px; overflow: hidden; }
-#faculty .rnav__b--prev .rnav__a { transform: scaleX(-1); }
-#faculty .rnav__a svg { grid-area: 1 / 1; width: 20px; height: 20px; fill: none; stroke: #fff; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; transition: transform .5s cubic-bezier(.7, 0, .2, 1); }
-#faculty .rnav__a svg + svg { transform: translateX(-220%); }
-@media (hover: hover) { #faculty .rnav__b:hover .rnav__a svg { transform: translateX(220%); } #faculty .rnav__b:hover .rnav__a svg + svg { transform: translateX(0); } }
-@media (prefers-reduced-motion: reduce) { #faculty .rnav__a svg { transition: none; } }
 
 /* faculty: the LinkedIn link is a white icon on the right of the card, always visible (no hover pill that follows the cursor) */
 #team .fc__li { position: absolute; z-index: 3; left: auto; top: auto; right: 16px; bottom: 18px; display: grid; place-items: center; width: 40px; height: 40px; padding: 0; gap: 0; border-radius: 50%; background: rgba(255, 255, 255, .14); box-shadow: none; color: #fff; font-size: 0; opacity: 1; transform: none; transition: background-color .25s, transform .3s var(--ease); }
@@ -429,7 +370,7 @@
 .blank--mail input { width: 100%; }
 .form__opt { display: block; margin-top: 4px; font-size: .74em; color: var(--muted); }
 .form--note .form__err { margin-top: 10px; }
-.form--note .bt--full { margin-top: 4px; }
+.form--note .btn--full { margin-top: 4px; }
 @media (max-width: 600px) { .blank--name input, .blank--prog select, .blank--time select, .blank--mail input { width: min(100%, 250px); } .form--note { padding: 34px 26px 30px; } }
 
 /* FAQ: no section background of its own */
@@ -482,9 +423,6 @@
 @media (max-width: 900px) { .dl__p { margin-top: 14px; font-size: 15px; } .dl__cta { margin-top: 22px; } }
 
 /* nav "Let's talk": the orange pill by default, including over the hero */
-.nav--hero .cta.cta.talk { background: linear-gradient(135deg, #F06A2C 0%, #E85020 45%, #C2410C 100%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .25), 0 12px 24px -12px rgba(194, 65, 12, .65); color: #fff; }
-.nav--hero .cta.cta.talk::before { background: linear-gradient(180deg, #D9480F, #A8380A); }
-.nav--hero .cta.cta.talk:hover { background: linear-gradient(135deg, #F06A2C 0%, #E85020 45%, #C2410C 100%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .22), inset 0 -2px 0 rgba(110, 30, 0, .2), 0 16px 30px -12px rgba(168, 56, 10, .65); }
 
 /* ---- nav menu: bigger, bolder links on a frosted bar, with a clear hover and a clear current section ---- */
 .nav__links { gap: 2px; }
@@ -527,30 +465,13 @@
 /* programme tabs: selected pill is flat brand orange, no gradient and no shadow */
 #courses .ptabs .seg button[aria-selected="true"] { background: var(--brand); border-color: var(--brand); box-shadow: none; }
 
-/* "View courses" / "View course" on the books: the same CTA as everywhere else (orange pill, white arrow circle, rolling label) */
-#courses .pbk__b .vbtn.cta { min-width: 0; height: 48px; padding: 0 5px 0 22px; gap: 14px; justify-content: flex-start; border: 0; border-radius: 999px; color: #fff;
   background: linear-gradient(135deg, #F06A2C 0%, #E85020 45%, #C2410C 100%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .25), 0 12px 24px -12px rgba(60, 20, 0, .7); font: 700 14.5px/1.25 var(--f); }
-#courses .pbk__b .vbtn.cta:hover { background: linear-gradient(135deg, #F06A2C 0%, #E85020 45%, #C2410C 100%); border-color: transparent; }
-#courses .pbk__b .vbtn.cta .sq { width: 38px; height: 38px; border-radius: 50%; background: #fff; }
-#courses .pbk__b .vbtn.cta .sq svg { stroke: #C2410C; }
 
 /* Why: no icon; the number takes its place at the top left of each card */
 
 /* batch cards: no Hindi line; the tag (Limited seats / Flagship) sits top right, where it was */
 .inv .chip.inv__tag { position: absolute; z-index: 2; right: 26px; top: 28px; align-self: auto; margin: 0; }
 .inv--hi .chip.inv__tag { background: rgba(255, 255, 255, .16); border-color: rgba(255, 212, 138, .55); color: #FFD48A; }
-
-/* batch cards: "Register" uses the new CTA (orange pill, white arrow circle, rolling label), full width */
-.inv .inv__reg.cta { width: 100%; justify-content: space-between; min-height: 0; height: 50px; padding: 0 6px 0 22px; border: 0; border-radius: 999px; color: #fff; background: linear-gradient(135deg, #F06A2C 0%, #E85020 45%, #C2410C 100%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .25), 0 12px 22px -12px rgba(194, 65, 12, .7); font: 700 15px/1.25 var(--f); }
-.inv:not(.inv--hi) .inv__reg.cta, .inv:not(.inv--hi) .inv__reg.cta:hover { background: linear-gradient(135deg, #F06A2C 0%, #E85020 45%, #C2410C 100%); }
-.inv .inv__reg.cta:hover { border-color: transparent; }
-.inv .inv__reg.cta .sq { width: 38px; height: 38px; border-radius: 50%; background: #fff; }
-.inv .inv__reg.cta .sq svg { stroke: #C2410C; }
-/* on the orange flagship card the button is white with an orange arrow, so it still shows */
-.inv--hi .inv__reg.cta, .inv--hi .inv__reg.cta:hover { background: #fff; color: var(--ink); text-shadow: none; box-shadow: 0 12px 22px -12px rgba(60, 20, 0, .6); }
-.inv--hi .inv__reg.cta::before { background: var(--sand); }
-.inv--hi .inv__reg.cta .sq { background: #C2410C; }
-.inv--hi .inv__reg.cta .sq svg { stroke: #fff; }
 
 /* counselling form section: full width, edge to edge */
 #contact.contact { margin-left: 0; margin-right: 0; border-radius: 0; }
@@ -595,12 +516,6 @@
   radial-gradient(70% 60% at 50% 0%, rgba(255, 160, 90, .35), transparent 70%),
   linear-gradient(180deg, rgba(232, 80, 32, .9) 0%, rgba(194, 65, 12, .93) 55%, rgba(168, 56, 10, .97) 100%); }
 
-/* hero CTA: larger, to suit the hero's scale */
-.dl__cta.cta.cta { height: 60px; padding: 0 7px 0 30px; gap: 18px; font-size: 17px; }
-.dl__cta .sq { width: 46px; height: 46px; }
-.dl__cta .sq svg { width: 19px; height: 19px; }
-@media (max-width: 900px) { .dl__cta.cta.cta { height: 54px; padding-left: 24px; font-size: 16px; } .dl__cta .sq { width: 42px; height: 42px; } }
-
 /* hero: every headline and every subline sits on exactly two lines (desktop) */
 .dl__p, .sc__p { max-width: 46em; text-wrap: balance; }
 .dl__h span { display: block; }
@@ -640,13 +555,13 @@
 .dl__h, .sc .vp__h { font-size: var(--hh); min-height: 2.08em; }
 .dl__p, .sc__p { font-size: var(--pp); min-height: 3em; }
 .dl__in, .sc { padding-bottom: 96px; }
-.dl__cta.cta.cta { position: absolute; z-index: 6; left: clamp(20px, 5.5vw, 100px); top: calc(50% - 48px + var(--txt-h) / 2 + 30px); margin: 0; opacity: 1 !important; transform: none !important; transition: none; pointer-events: auto; }
+.btn.dl__cta { position: absolute; z-index: 6; left: clamp(20px, 5.5vw, 100px); top: calc(50% - 48px + var(--txt-h) / 2 + 30px); margin: 0; opacity: 1 !important; transform: none !important; transition: none; pointer-events: auto; }
 @media (max-width: 900px) {
   .dl__h, .sc .vp__h, .dl__p, .sc__p { min-height: 0; }
   .dl__in, .sc { padding-bottom: 0; }
-  .dl__cta.cta.cta { top: auto; bottom: 74px; }
+  .btn.dl__cta { top: auto; bottom: 74px; }
 }
-@media (prefers-reduced-motion: reduce) { .dl__cta.cta.cta { position: relative; top: auto; left: auto; display: inline-flex; margin: 24px clamp(20px, 5.5vw, 100px); } }
+@media (prefers-reduced-motion: reduce) { .btn.dl__cta { position: relative; top: auto; left: auto; display: inline-flex; margin: 24px clamp(20px, 5.5vw, 100px); } }
 
 /* scroll focus (see js/page-motion.js): the opacity follows the scroll position through --fx, which the script sets per section */
 .fx-on .fx { opacity: var(--fx, .16); will-change: opacity; }
@@ -654,13 +569,6 @@
 
 /* more room under the last "Why" card before the next section */
 #gs .lbl__sym { width: 40px; height: 24px; }
-
-/* all CTA buttons share one label size: 18px */
-.cta.cta.cta.cta, .cta.cta.cta.cta .btn__label, .cta.cta.cta.cta .btn__t { font-size: 18px; }
-.tlink, .tlink span { font-size: 18px; }
-.nav .cta.cta.cta.cta { height: 48px; }
-.nav .cta.cta.talk { gap: 14px; padding-left: 20px; }
-@media (max-width: 480px) { .nav .cta.cta.talk .btn__label { display: none; } }
 
 /* hero headlines: the text column is wide enough for the largest headline size, so no line is ever clipped */
 .sc--r, .sc--l { grid-template-columns: minmax(0, 1200px); }
@@ -813,24 +721,17 @@ section#bnr.bnr { padding-top: 0; padding-bottom: 0; }
 #batches .cards { padding: 0 12px; }   /* the tilted invitation cards stay inside the page margin */
 
 /* ---- WhatsApp: a fixed contact button, bottom right, above everything; hidden while the intro plays ---- */
-.wa { position: fixed; right: max(20px, env(safe-area-inset-right)); bottom: max(20px, env(safe-area-inset-bottom)); z-index: 60; display: flex; align-items: center; gap: 0; height: 56px; padding: 0; border-radius: 999px; background: #25D366; color: #fff; text-decoration: none; box-shadow: 0 10px 24px -8px rgba(18, 140, 80, .55), 0 2px 6px rgba(0, 0, 0, .12);
-  opacity: 0; transform: translateY(24px) scale(.9); transition: opacity .6s var(--ease), transform .6s var(--spring, cubic-bezier(.34, 1.4, .5, 1)), box-shadow .3s, background-color .3s; }
+.wa { position: fixed; right: max(20px, env(safe-area-inset-right)); bottom: max(20px, env(safe-area-inset-bottom)); z-index: 60; overflow: visible;
+  --btn-bg: #25D366; --btn-bg-hover: #1EBE5A; --btn-fg: #fff; --btn-fs: 15px; --btn-ring: 0 0 0 3px #fff, 0 0 0 6px #128C7E;
+  --btn-shadow: 0 10px 24px -8px rgba(18, 140, 80, .55); --btn-shadow-hover: 0 16px 30px -10px rgba(18, 140, 80, .6), 0 2px 6px rgba(0, 0, 0, .12);
+  opacity: 0; transform: translateY(24px) scale(.9); transition: opacity .6s var(--ease), transform .6s var(--spring, cubic-bezier(.34, 1.4, .5, 1)), box-shadow .3s, scale .15s; }
 .wa.in { opacity: 1; transform: none; }
 html.vrv-lock .wa { opacity: 0; pointer-events: none; }
-.wa__ic { flex: none; display: grid; place-items: center; width: 56px; height: 56px; }
-.wa__ic svg { width: 30px; height: 30px; fill: #fff; transition: transform .45s var(--spring, cubic-bezier(.34, 1.4, .5, 1)); }
-.wa__t { display: inline-grid; max-width: 0; overflow: hidden; white-space: nowrap; font: 600 15px/1 var(--f); letter-spacing: -.01em; transition: max-width .45s var(--ease), padding .45s var(--ease); }
-.wa::before { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: 0 0 0 0 rgba(37, 211, 102, .55); animation: waPulse 2.6s ease-out infinite 1.2s; pointer-events: none; }
+/* the pulse ring (on ::after: ::before is the button's hover fill) */
+.wa::after { content: ""; position: absolute; inset: 0; z-index: -2; border-radius: inherit; box-shadow: 0 0 0 0 rgba(37, 211, 102, .55); animation: waPulse 2.6s ease-out infinite 1.2s; pointer-events: none; }
 @keyframes waPulse { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, .55); } 70% { box-shadow: 0 0 0 16px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
-.wa:focus-visible { outline: none; box-shadow: 0 0 0 3px #fff, 0 0 0 6px #128C7E, 0 10px 24px -8px rgba(18, 140, 80, .55); }
-.wa:active { transform: scale(.96); }
-@media (hover: hover) and (pointer: fine) {
-  .wa:hover { background: #1EBE5A; box-shadow: 0 16px 30px -10px rgba(18, 140, 80, .6), 0 2px 6px rgba(0, 0, 0, .12); }
-  .wa:hover .wa__t { max-width: 180px; padding-right: 22px; }
-  .wa:hover .wa__ic svg { transform: rotate(-10deg) scale(1.08); }
-}
-@media (max-width: 600px) { .wa { height: 52px; right: 16px; bottom: 16px; } .wa__ic { width: 52px; height: 52px; } .wa__ic svg { width: 28px; height: 28px; } }
-@media (prefers-reduced-motion: reduce) { .wa { opacity: 1; transform: none; transition: none; } .wa::before { animation: none; } .wa__ic svg, .wa__t { transition: none; } }
+@media (max-width: 600px) { .wa { right: 16px; bottom: 16px; } }
+@media (prefers-reduced-motion: reduce) { .wa { opacity: 1; transform: none; transition: none; } .wa::after { animation: none; } }
 
 /* ---- body text: one size, one line height, one colour for running copy; one smaller size for card detail text.
    Dark grounds (hero, GS, Contact, flagship batch card) keep their own light colours. The Toppers newspaper is its own typographic piece. ---- */
@@ -924,8 +825,8 @@ html.vrv-lock .wa { opacity: 0; pointer-events: none; }
 .sm__tabs button:focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; }
 .sm__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; list-style: none; margin: 48px 0 0; padding: 0; }
 .sm__card { position: relative; min-height: 250px; border-radius: 24px; background: #fff; box-shadow: 0 18px 44px rgba(140, 64, 13, .08); overflow: hidden; transition: transform .4s var(--ease), box-shadow .4s var(--ease); }
-.sm__card > a { position: relative; display: flex; flex-direction: column; justify-content: space-between; gap: 24px; height: 100%; min-height: 250px; padding: 26px; box-sizing: border-box; color: inherit; text-decoration: none; }
-.sm__card > a:focus-visible { outline: 2px solid var(--sm-accent); outline-offset: -4px; border-radius: 24px; }
+.sm__card > a:not(.btn) { position: relative; display: flex; flex-direction: column; justify-content: space-between; gap: 24px; height: 100%; min-height: 250px; padding: 26px; box-sizing: border-box; color: inherit; text-decoration: none; }
+.sm__card > a:not(.btn):focus-visible { outline: 2px solid var(--sm-accent); outline-offset: -4px; border-radius: 24px; }
 .sm__card--wide { grid-column: span 2; }
 .sm__top { position: relative; display: flex; align-items: center; justify-content: space-between; }
 .sm__tag { padding: 6px 12px; border-radius: 999px; background: rgba(194, 65, 12, .08); font: 700 11.5px/1.2 var(--f); letter-spacing: .12em; color: var(--brand); }
@@ -962,13 +863,12 @@ html.vrv-lock .wa { opacity: 0; pointer-events: none; }
   .sm__chip:hover img { transform: translateX(3px); }
 }
 @media (max-width: 1000px) { .sm__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .sm__card--wide { grid-column: auto; } .sm__card--wide .sm__rays { left: 210px; right: auto; } }
-@media (max-width: 640px) { .sm__grid { grid-template-columns: 1fr; } .sm__card, .sm__card > a { min-height: 200px; } .sm__foot { flex-direction: column; align-items: flex-start; } }
+@media (max-width: 640px) { .sm__grid { grid-template-columns: 1fr; } .sm__card, .sm__card > a:not(.btn) { min-height: 200px; } .sm__foot { flex-direction: column; align-items: flex-start; } }
 @media (prefers-reduced-motion: reduce) { .sm__grid.is-swap > .sm__card { animation: none; } .sm__card, .sm__card::before, .sm__go, .sm__go img, .sm__rays, .sm__tag, .sm__t, .sm__chip, .sm__chip img { transition: none; } }
-
 
 /* ---- Closing CTA (Figma 2088:3749): one white 40px-radius card, 1280px wide; centred copy (ranker pill, serif title, intro, two buttons,
    call line) over an orange glow and the line lotus rising from the bottom edge. The glow and lotus sit on the card's bottom edge, so a taller
-   card on phones keeps them under the buttons. Buttons are the site .bt (rolling label, js/page-motion.js) in two Figma colourways. ---- */
+   card on phones keeps them under the buttons. Buttons: <Button variant="secondary"> and <Button onDark> (components/ui/Button). ---- */
 .cl { padding: 0 var(--px) var(--sec-y); }
 .cl__card { position: relative; max-width: 1280px; min-height: 560px; margin: 0 auto; padding: 70px 24px 64px; box-sizing: border-box; border-radius: 40px; background: linear-gradient(149deg, #e57512 14.3%, #ae3b0f 85.7%); overflow: hidden; isolation: isolate; }
 .cl__glow, .cl__lotus { position: absolute; left: 50%; max-width: none; pointer-events: none; z-index: -1; }
@@ -997,16 +897,6 @@ html.vrv-lock .wa { opacity: 0; pointer-events: none; }
 .cl__call { font: 400 13.5px/1.4 "Hanken Grotesk", var(--f); color: rgba(255, 255, 255, .78); }
 .cl__call a { color: inherit; text-decoration: none; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size .3s var(--ease), color .25s var(--ease); }
 .cl__call a:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
-/* the two Figma buttons on the site's .bt: ink pill with a flame arrow circle, and a white outline pill */
-.cta.cta.bt--ink { height: 48px; padding: 0 6px 0 22px; gap: 12px; background: #161412; color: #fff; text-shadow: none; box-shadow: 0 12px 24px -14px rgba(22, 20, 18, .55); }
-.cta.cta.bt--ink::before { background: #000; }
-.cta.cta.bt--ink:hover { background: #161412; color: #fff; box-shadow: 0 16px 30px -14px rgba(22, 20, 18, .6); }
-.cta.cta.bt--ink .sq { width: 36px; height: 36px; background: #e57512; box-shadow: none; }
-.cta.cta.bt--ink .sq svg { stroke: #fff; }
-.cta.cta.bt--line { height: 48px; padding: 0 22px; background: #fff; color: #161412; text-shadow: none; box-shadow: 0 12px 24px -14px rgba(60, 20, 0, .5); }
-.cta.cta.bt--line::before { background: #fbf8f3; }
-.cta.cta.bt--line:hover { background: #fff; color: #161412; box-shadow: 0 16px 30px -14px rgba(60, 20, 0, .55); }
-.cta.cta.bt--ink:focus-visible, .cta.cta.bt--line:focus-visible { box-shadow: 0 0 0 3px #ae3b0f, 0 0 0 5px #fff; }
 @media (hover: hover) and (pointer: fine) {
   .cl__card:hover .cl__lotus { transform: translateX(-50%) rotate(8deg) scale(1.03); }
   .cl__card:hover .cl__glow--b { transform: translateX(-50%) scale(1.08); }
@@ -1268,11 +1158,7 @@ footer.foot { padding-left: max(var(--px), 76px); padding-right: max(var(--px), 
    Primary (brand): directions, call. Secondary (white outline): ask about Chennai, email. Rolling label from js/page-motion.js. ---- */
 #visit .cm__cta { margin-top: 14px; }
 #visit .cm__item--chan .cm__cta { margin-top: 0; }
-#visit .cta.cta.bt--line { box-shadow: inset 0 0 0 1.5px rgba(194, 65, 12, .45); color: var(--brand); }
-#visit .cta.cta.bt--line::before { background: rgba(194, 65, 12, .08); }
-#visit .cta.cta.bt--line:hover { box-shadow: inset 0 0 0 1.5px var(--brand); color: var(--brand); }
 @media (max-width: 480px) { #visit .cm__cta { white-space: normal; } }
-
 
 /* ---- One light ground (user 2026-11-10): every light section takes the Free resources background, a cream gradient #fff7ee -> #fffbf5.
    Dark and brand sections (hero, Toppers, General Studies, Talk to us) keep their own grounds. Patterns drawn on ::before / ::after stay. ---- */
@@ -1352,7 +1238,7 @@ section#toppers.vrnp { padding-left: var(--px); padding-right: var(--px); }   /*
    and centres (margin = half of the leftover). Sections, the hero copy, the nav and the footer all read it, so every left and right edge lines up. */
 :root { --px: max(clamp(20px, 2.4vw, 44px), calc((100vw - 1800px) / 2)); }
 .dl__in, .sc { padding-left: var(--px); padding-right: var(--px); }
-.dl__prog, .dl__cta.cta.cta { left: var(--px); }
+.dl__prog, .btn.dl__cta { left: var(--px); }
 .hw { padding-left: var(--px); padding-right: var(--px); }
 .nav { left: var(--px); right: var(--px); }
 #contact .contact__in { padding-left: var(--px); padding-right: var(--px); }
@@ -1403,19 +1289,17 @@ footer.foot { padding-left: 76px; padding-right: 76px; }
 .sm__list a { font: 500 14.5px/1.4 var(--f); color: var(--ink); text-decoration: none; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size .3s var(--ease), color .35s var(--ease); }
 .sm__stages { list-style: none; margin: 2px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
 .sm__stages li { padding: 5px 11px; border: 1px solid rgba(194, 65, 12, .3); border-radius: 999px; font: 600 13px/1.2 var(--f); color: var(--brand); transition: border-color .35s var(--ease), color .35s var(--ease); }
-.sm__act { margin-top: auto; padding-top: 8px; display: inline-flex; align-items: center; gap: 12px; font: 700 15.5px/1.2 var(--f); color: var(--ink); text-decoration: none; transition: color .35s var(--ease); }
-.sm__card--res > a.sm__act { flex-direction: row; justify-content: flex-start; height: auto; min-height: 0; padding: 8px 0 0; gap: 12px; }   /* undo the old whole-card link rule (.sm__card > a) */
-.sm__act:focus-visible, .sm__list a:focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; border-radius: 4px; }
+.sm__list a:focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; border-radius: 4px; }
 @media (hover: hover) and (pointer: fine) {
-  .sm__card--res:hover .sm__d, .sm__card--res:hover .sm__list a, .sm__card--res:hover .sm__act { color: #fff; }
+  .sm__card--res:hover .sm__d, .sm__card--res:hover .sm__list a { color: #fff; }
+  .sm__card--res:hover .sm__act { --btn-fg: #fff; --btn-fg-hover: #fff; }   /* the link button turns white on the orange hover card */
   .sm__card--res:hover .sm__list span { color: #FFD48A; }
   .sm__card--res:hover .sm__list, .sm__card--res:hover .sm__list li { border-color: rgba(255, 255, 255, .28); }
   .sm__card--res:hover .sm__stages li { border-color: rgba(255, 255, 255, .5); color: #fff; }
   .sm__list a:hover { background-size: 100% 1px; }
-  .sm__act:hover { color: var(--brand); text-decoration: underline; text-underline-offset: 4px; }
 }
 @media (max-width: 640px) { .sm__card--res { min-height: 0; } }
-@media (prefers-reduced-motion: reduce) { .sm__d, .sm__list li, .sm__list span, .sm__list a, .sm__stages li, .sm__act { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .sm__d, .sm__list li, .sm__list span, .sm__list a, .sm__stages li { transition: none; } }
 
 /* side margins on smaller desktops: they grow with the screen (5.5vw, up to 80px) instead of staying near 20px, so a 1440px screen gets
    comfortable margins like larger screens; from about 1600px the 1440px content cap centres as before. Every section reads --px. */
@@ -1504,7 +1388,6 @@ footer.foot { padding-left: 76px; padding-right: 76px; }
 .ticket__limited { flex: none; display: grid; place-items: center; width: 62px; height: 62px; border: 1.5px dashed var(--ticket); border-radius: 50%; rotate: -10deg; color: var(--ticket); font: 700 9.5px/1.2 var(--f); letter-spacing: .08em; text-transform: uppercase; text-align: center; }
 .ticket__stub { position: relative; flex: none; display: flex; align-items: center; height: 94px; padding: 0 24px; }
 .ticket__stub::before { content: ""; position: absolute; left: 18px; right: 18px; top: 0; border-top: 1.5px dashed #C9A98C; }
-.inv--ticket .inv__reg.cta { width: 100%; height: 48px; margin: 0; }
 @media (max-width: 700px) { .inv--ticket h3 { min-height: 0; } }
 @media (prefers-reduced-motion: reduce) { .inv--ticket, .inv--ticket.inv--pre, .inv--ticket.inv--pre.in { transform: none; opacity: 1; transition: none; } }
 .inv--ticket .inv__frame { background: #fff; }   /* white paper instead of cream */
@@ -1512,9 +1395,6 @@ footer.foot { padding-left: 76px; padding-right: 76px; }
 /* batch tickets: smooth hover (the entrance transition no longer replaces the hover's, and the delay only applies to the entrance) and the button label centred */
 .inv--ticket { will-change: translate; transition: translate .45s cubic-bezier(.22, 1, .36, 1); }
 .inv--ticket.inv--pre.in { transition: opacity .7s var(--ease) calc(var(--i) * 110ms), transform .9s var(--ease) calc(var(--i) * 110ms), translate .45s cubic-bezier(.22, 1, .36, 1) 0s; }
-.inv--ticket .inv__reg.cta { display: grid; grid-template-columns: 38px minmax(0, 1fr) 38px; align-items: center; gap: 0; padding: 0 5px; }
-.inv--ticket .inv__reg.cta .btn__label { grid-column: 2; justify-self: center; text-align: center; }
-.inv--ticket .inv__reg.cta .sq { grid-column: 3; grid-row: 1; justify-self: end; }
 
 /* batch tickets: "Limited seats" stamp as in the original design (solid rust double ring, tilted) */
 .ticket__meta { min-height: 98px; }
@@ -1529,14 +1409,14 @@ footer.foot { padding-left: 76px; padding-right: 76px; }
 .inv--ticket .inv__frame::after { content: ""; position: absolute; inset: 0; z-index: 4; pointer-events: none; opacity: 0; transition: opacity .3s;
   background: radial-gradient(circle at var(--gx, 50%) var(--gy, 30%), rgba(255, 255, 255, .6), rgba(255, 255, 255, .14) 34%, transparent 62%); mix-blend-mode: soft-light; }
 .inv--ticket .ticket__head { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .28), inset 0 -10px 18px -12px rgba(0, 0, 0, .3); }
-.inv--ticket .inv__reg.cta { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .4), inset 0 -3px 0 rgba(120, 30, 0, .25), 0 6px 10px -6px rgba(198, 70, 19, .5); transition: box-shadow .25s, translate .15s; }
+.inv--ticket .inv__reg { --btn-shadow: inset 0 1px 0 rgba(255, 255, 255, .4), inset 0 -3px 0 rgba(120, 30, 0, .25), 0 6px 10px -6px rgba(198, 70, 19, .5); transition: box-shadow .25s, translate .15s, scale .15s; }
 @media (hover: hover) and (pointer: fine) {
   .inv--ticket:hover { transform: perspective(1000px) rotateX(calc(var(--ty, 0) * -7deg)) rotateY(calc(var(--tx, 0) * 9deg)); translate: 0 -8px;
     filter: drop-shadow(calc(var(--tx, 0) * -14px) calc(24px - var(--ty, 0) * 10px) 18px rgba(102, 38, 13, .3)); transition: translate .45s cubic-bezier(.22, 1, .36, 1), transform .14s linear, filter .2s; }
   .inv--ticket:hover .inv__frame::after { opacity: 1; }
-  .inv--ticket:hover .inv__reg.cta { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), inset 0 -3px 0 rgba(120, 30, 0, .3), 0 12px 16px -8px rgba(198, 70, 19, .7); }
+  .inv--ticket:hover .inv__reg { --btn-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), inset 0 -3px 0 rgba(120, 30, 0, .3), 0 12px 16px -8px rgba(198, 70, 19, .7); }
 }
-.inv--ticket .inv__reg.cta:active { translate: 0 2px; box-shadow: inset 0 2px 5px rgba(120, 30, 0, .45), 0 2px 4px -2px rgba(198, 70, 19, .5); }
+.inv--ticket .inv__reg:active { translate: 0 2px; scale: 1; box-shadow: inset 0 2px 5px rgba(120, 30, 0, .45), 0 2px 4px -2px rgba(198, 70, 19, .5); }
 @media (prefers-reduced-motion: reduce) { .inv--ticket:hover { transform: none; } }
 
 /* ---- 64px between each section's heading block and the content it introduces ---- */
@@ -1567,11 +1447,6 @@ footer.foot { padding-left: 76px; padding-right: 76px; }
 /* Talk to us: the dark-brown eyebrow badge (an orange one disappears on the orange ground) */
 #contact .lbl .lbl__t { border-image-source: url(/assets/img/brand/cartouche.svg); color: #fff !important; }
 
-/* full-width CTAs: the label sits in the centre of the button, with the arrow circle on the right (a spacer column the width of the arrow balances it) */
-.cta.cta.bt--full, .cta.inv__reg { display: grid; grid-template-columns: 38px minmax(0, 1fr) 38px; align-items: center; gap: 0; padding: 0 5px; justify-content: stretch; }
-.cta.cta.bt--full .btn__label, .cta.inv__reg .btn__label { grid-column: 2; justify-self: center; text-align: center; }
-.cta.cta.bt--full .sq, .cta.inv__reg .sq { grid-column: 3; grid-row: 1; justify-self: end; }
-
 /* Free resources: everything centred like the other sections (heading block, tabs and the foot row) */
 .sm__head { justify-content: center; text-align: center; }
 .sm__titles { display: flex; flex-direction: column; align-items: center; text-align: center; }
@@ -1581,9 +1456,6 @@ footer.foot { padding-left: 76px; padding-right: 76px; }
 .sm__foot { justify-content: center; text-align: center; }
 .sm__more { justify-content: center; }
 
-/* a CTA whose label text is rewritten by script (the form's submit button) has a single label copy: the hover roll-up must not move it, or the label disappears */
-.cta .btn__label .btn__t:only-child, .cta:hover .btn__label .btn__t:only-child, .cta:focus-visible .btn__label .btn__t:only-child { transform: none !important; }
-
 /* hero subcopy: 18px on every slide and screen size (the reserved text height and the button position follow --pp) */
 .dl { --pp: 18px; }
 .dl__p, .sc__p { font-size: 18px; line-height: 1.55; }
@@ -1592,15 +1464,15 @@ footer.foot { padding-left: 76px; padding-right: 76px; }
 /* hero only: 80px of side padding for the copy, the progress bars and the button (the other sections keep the page margin; phones keep 20px) */
 @media (min-width: 901px) {
   .dl__in, .sc { padding-left: 80px; padding-right: 80px; }
-  .dl__prog, .dl__cta.cta.cta { left: 80px; }
+  .dl__prog, .btn.dl__cta { left: 80px; }
 }
 /* navigation: the same 80px side padding as the hero, so the logo lines up with the hero copy */
 @media (min-width: 901px) { .nav { left: 80px; right: 80px; } }
 
 /* hero CTA: the whole button fades with the copy (out with the old copy, back in with the new one); it used to be pinned with opacity forced to 1 */
 @media (prefers-reduced-motion: no-preference) {
-  .dl__cta.cta.cta { opacity: 1 !important; transition: opacity .6s ease, box-shadow .35s, scale .15s !important; }
-  .dl__cta.cta.cta.is-swap { opacity: 0 !important; pointer-events: none; transition: opacity .35s ease, box-shadow .35s, scale .15s !important; }
+  .btn.dl__cta { opacity: 1 !important; transition: opacity .6s ease, box-shadow .35s, scale .15s !important; }
+  .btn.dl__cta.is-swap { opacity: 0 !important; pointer-events: none; transition: opacity .35s ease, box-shadow .35s, scale .15s !important; }
   .dl__cta.is-swap .btn__label { opacity: 1; }
 }
 
@@ -1656,7 +1528,7 @@ footer.foot { padding-left: 76px; padding-right: 76px; }
 .mega__aside { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 26px 24px; background: var(--sand, #FFF2E6); border-left: 1px solid rgba(194, 65, 12, .12); }
 .mega__aside p.mega__k { margin: 0; letter-spacing: .1em; }
 .mega p.mega__p { margin: 0; font: 400 14px/1.5 var(--f); text-transform: none; color: #4A4038; }
-.mega .mega__cta.cta.cta { margin-top: 4px; height: 44px; font-size: 14px; }
+.mega .mega__cta { align-self: stretch; margin: 4px 0 0; }
 .mega a.mega__all { display: inline-flex; align-items: center; gap: 8px; margin: auto 0 0; padding: 0; font: 700 14px/1.2 var(--f); color: var(--brand); text-decoration: none; }
 .mega__all svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform .25s var(--ease); }
 .mega a.mega__all:focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; border-radius: 3px; }
@@ -1671,15 +1543,8 @@ footer.foot { padding-left: 76px; padding-right: 76px; }
 @media (max-width: 1500px) { .mega { grid-template-columns: minmax(0, 1fr) 220px; } .mega__stages { padding-left: 22px; } .mega a.mega__a .mega__d { -webkit-line-clamp: 3; } }
 @media (prefers-reduced-motion: reduce) { .mega, .explore.open .mega { transition: none; transform: none; } .explore.open .mega__col, .explore.open .mega__aside { animation: none; } }
 .mega { width: min(1440px, calc(100vw - 2 * var(--px))); grid-template-columns: minmax(0, 1fr) 272px; }
-.mega .mega__cta.cta.cta { align-self: stretch; justify-content: space-between; margin: 4px 0 0; padding-left: 18px; color: #fff; font-size: 14px; }
-.mega .mega__cta.cta.cta .btn__t { color: #fff; }
 @media (max-width: 1500px) { .mega { grid-template-columns: minmax(0, 1fr) 248px; } }
-.mega .mega__cta.cta.cta { gap: 10px; padding-left: 16px; }
-.mega .mega__cta .btn__label, .mega .mega__cta .btn__t { font-size: 15px; white-space: nowrap; }
-.mega .mega__cta .sq { width: 36px; height: 36px; }
 .mega a.mega__a .mega__d { -webkit-line-clamp: 3; }
-#mega .mega__cta.cta.cta { width: 100%; font-size: 15px; }
-#mega .mega__cta.cta.cta .btn__label, #mega .mega__cta.cta.cta .btn__t { font-size: 15px !important; }
 
 /* ---- free resources: "More free resources" pills under the six cards ---- */
 .sm__more { display: flex; align-items: center; flex-wrap: wrap; gap: 14px 24px; margin-top: 40px; padding-top: 28px; border-top: 1px solid rgba(194, 65, 12, .18); }
@@ -1703,22 +1568,11 @@ footer.foot { padding-left: 76px; padding-right: 76px; }
 
 /* Free resources cards: the same 4px corner radius as the Talk to us form card */
 .sm__card, .sm__card::before { border-radius: 4px; }
-.sm__card > a, .sm__card > a:focus-visible { border-radius: 4px; }
+.sm__card > a:not(.btn), .sm__card > a:not(.btn):focus-visible { border-radius: 4px; }
 
 /* batch tickets: the same 4px corner radius as the form and resource cards */
 .inv--ticket .inv__frame { border-radius: 4px; }
 .ticket__head::after { border-radius: 2px 2px 0 0; }
-
-/* Free resources cards: the action link in brand orange with a round brand arrow button (white on the orange hover state) */
-.sm__act { color: var(--brand); }
-.sm__act::after { content: ""; flex: none; width: 36px; height: 36px; border-radius: 50%; background: var(--brand) url(/assets/img/icons/arrow-white.svg) center / 16px no-repeat; transition: background-color .35s var(--ease), transform .35s var(--ease); }
-.sm__act:hover::after { transform: translateX(3px); }
-@media (hover: hover) and (pointer: fine) {
-  .sm__card--res:hover .sm__act { color: #fff; }
-  .sm__card--res:hover .sm__act::after { background-color: #fff; background-image: url(/assets/img/icons/arrow-brand.svg); }
-  .sm__act:hover { color: var(--brand); }
-  .sm__card--res:hover .sm__act:hover { color: #fff; }
-}
 
 /* "More free resources": centred, the label above the pills on every width */
 .sm__more { flex-direction: column; align-items: center; gap: 18px; text-align: center; }
@@ -1784,25 +1638,8 @@ footer.foot { padding-left: 76px; padding-right: 76px; }
 #contact.contact::before { -webkit-mask: radial-gradient(78% 70% at 50% 55%, transparent 40%, #000 100%); -webkit-mask-composite: source-over;
   mask: radial-gradient(78% 70% at 50% 55%, transparent 40%, #000 100%); mask-composite: add; }
 
-/* Free resources cards: the action is the site's brand CTA (orange pill, label and round arrow button); on the orange hover state it turns white */
-.sm__act::after { content: none; }
-.sm__card--res > a.sm__act.cta { margin-top: auto; align-self: flex-start; width: auto; height: 48px; padding: 0 5px 0 22px; gap: 14px; color: #fff; }
-.sm__card--res .sm__stages + .sm__act, .sm__card--res .sm__act { margin-top: auto; }
-@media (hover: hover) and (pointer: fine) {
-  .sm__card--res:hover > a.sm__act.cta, .sm__card--res:hover > a.sm__act.cta:hover { background: #fff; color: var(--brand); text-shadow: none; box-shadow: 0 12px 22px -12px rgba(60, 15, 0, .55); }
-  .sm__card--res:hover > a.sm__act.cta::before { background: var(--sand); }
-  .sm__card--res:hover > a.sm__act.cta .sq { background: var(--brand); }
-  .sm__card--res:hover > a.sm__act.cta .sq svg { stroke: #fff; }
-  .sm__card--res:hover > a.sm__act.cta .sq img { filter: brightness(0) invert(1); }
-}
-
-/* Free resources cards: the site's link button (brand text, arrow, underline that draws in on hover), the same as "View all batches" */
-.sm__card--res > a.sm__act.tlink { margin-top: auto; align-self: flex-start; width: auto; height: auto; min-height: 0; padding: 6px 0 0; gap: 10px; background: none; box-shadow: none; font: 600 17px/1.3 var(--f-d); color: var(--brand); }
-.sm__act.tlink::after { content: ""; position: absolute; left: 0; right: 28px; bottom: -2px; height: 1.5px; background: currentColor; border-radius: 0; transform: scaleX(0); transform-origin: 0 50%; width: auto; transition: transform .4s cubic-bezier(.2, .8, .2, 1); }
-.sm__act.tlink:hover::after { transform: scaleX(1); }
-@media (hover: hover) and (pointer: fine) {
-  .sm__card--res:hover > a.sm__act.tlink, .sm__card--res:hover > a.sm__act.tlink:hover { background: none; box-shadow: none; color: #fff; }
-}
+/* Free resources cards: the action is the link button (<Button variant="link">), at the card's foot */
+.sm__card--res .sm__act { margin-top: auto; align-self: flex-start; }
 
 /* ---- Free resources as a bento: the six cards differ in size and surface, using only the site's own colours (brand orange, deep brown, warm sand, white).
    Four columns: row one is [wide orange][white][sand]; row two is [deep brown][white][wide white]. ---- */
@@ -1854,7 +1691,7 @@ footer.foot { padding-left: 76px; padding-right: 76px; }
 .sm__more-list { flex: none; justify-content: center; }
 .sm__more { border-top: 0; padding-top: 0; }   /* no rule above "More free resources" */
 /* Contact us: the call and email actions are the site's link button; the channel cards no longer need a column for a button */
-.cm__item--chan .tlink.cm__cta { align-self: flex-start; }
+.cm__item--chan .cm__cta { align-self: flex-start; }
 /* Contact rows (directions, call, email): details on the left, the link button on the right, on one line above phone width */
 @media (min-width: 641px) {
   #visit .cm__item--chan { flex-wrap: nowrap; }
@@ -2035,19 +1872,14 @@ main .cover > #dlPin + section { background: linear-gradient(90deg, rgba(255, 25
    The card's link stretches over the card (::before, inset 0), so a click anywhere opens it. Its underline is now a background line
    under the label (the old ::after line needed the link to be its own positioning box, and the old text-decoration underline on hover
    drew a second line). Hovering anywhere on the card draws the line and nudges the arrow; keyboard focus outlines the whole card. ---- */
-#resources .sm__card--res > a.sm__act.tlink { position: static; padding-bottom: 3px; text-decoration: none;
-  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1.5px no-repeat;
-  transition: background-size .4s cubic-bezier(.2, .8, .2, 1), color .35s var(--ease); }
-#resources .sm__card--res > a.sm__act.tlink:hover { text-decoration: none; }
-#resources .sm__card--res > a.sm__act.tlink::after { content: none; }
-#resources .sm__card--res > a.sm__act.tlink::before { content: ""; position: absolute; inset: 0; z-index: 3; border-radius: inherit; }
-#resources .sm__card--res > a.sm__act.tlink:focus-visible { outline: none; }
-#resources .sm__card--res:has(> a.sm__act:focus-visible) { outline: 2px solid var(--brand); outline-offset: 3px; }
+#resources .sm__card--res > .sm__act { position: static; }
+#resources .sm__card--res > .sm__act::before { content: ""; position: absolute; inset: 0; z-index: 3; border-radius: inherit; background: none; opacity: 1; }
+#resources .sm__card--res > .sm__act:focus-visible { outline: none; }
+#resources .sm__card--res:has(> .sm__act:focus-visible) { outline: 2px solid var(--brand); outline-offset: 3px; }
 @media (hover: hover) and (pointer: fine) {
-  #resources .sm__card--res:hover > a.sm__act.tlink { background-size: calc(100% - 28px) 1.5px; }
-  #resources .sm__card--res:hover > a.sm__act.tlink svg { transform: translateX(5px); }
+  #resources .sm__card--res:hover > .sm__act .btn__label { background-size: 100% 1.5px; }
+  #resources .sm__card--res:hover > .sm__act .btn__icon--end { transform: translateX(5px); }
 }
-@media (prefers-reduced-motion: reduce) { #resources .sm__card--res > a.sm__act.tlink { transition: none; } }
 /* the hover gradient (card ::before) sits behind all the card's content, so the link label (now not its own positioning box) stays above it */
 #resources .sm__card--res { isolation: isolate; }
 #resources .sm__card--res::before { z-index: -1; }
@@ -2076,7 +1908,6 @@ main .cover > #dlPin + section { background: linear-gradient(90deg, rgba(255, 25
 /* ---- Upcoming batches: one colour per programme family (set from BFAM in js/content.js as --ticket on each ticket: General Studies
    orange, Prelims gold, Current affairs plum, Mains teal, Mentorship indigo). The ticket head and the tag (which names the family) take it. Eight tickets, four to a row. The nth-child colours from before are replaced by the inline --ticket. ---- */
 #batches .cards { row-gap: clamp(22px, 2.6vw, 36px); }
-
 
 /* Free resources, Contact us and FAQ read as one closing run: the padding where they meet is half the section rhythm
    (resources bottom, Contact top and bottom, FAQ top). Their outer edges keep the full --sec-y. */
@@ -2342,8 +2173,6 @@ footer.foot .foot__logo--mark:focus-visible { outline: 2px solid #fff; outline-o
    so it is narrower; the CTA spans the guidance column like the courses one ---- */
 .mega--sm { width: min(1180px, calc(100vw - 2 * var(--px))); }
 .mega--sm .mega__stages { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-#megaSm .mega__cta.cta.cta { width: 100%; font-size: 15px; }
-#megaSm .mega__cta.cta.cta .btn__label, #megaSm .mega__cta.cta.cta .btn__t { font-size: 15px !important; }
 
 /* ---- Study materials dropdown, refined: compact one-line rows (title with its tag, a one-line description), Current affairs as a featured
    column on a warm tint with a live dot, and the guidance column carrying today's three headlines above the CTA. All courses is untouched. ---- */
@@ -2432,3 +2261,24 @@ footer.foot .foot__logo--mark:focus-visible { outline: 2px solid #fff; outline-o
 /* Contact card: the rows sit on the card's own 40px padding on both sides (the left had 4px of an unused accent border + 18px row padding,
    so the text started 62px in against 40px on the right). The hover tint is unchanged. */
 #visit .cm__list .cm__item { padding-left: 0; border-left: 0; }
+
+/* Hero height: a fixed 680px on every screen (user 2026-11-13; it was the full screen height, 100svh, and on phones at least that).
+   lib/motion/page-motion.js measures the Programmes cover against the hero's own height, so the cover effect still starts at 0.
+   With reduced motion the slides stack instead of cycling, so there the hero keeps growing with them (680px at least). */
+.dl--pin, .dl--pin .dl__stick { height: 680px; min-height: 0; max-height: none; }
+@media (prefers-reduced-motion: reduce) { .dl--pin, .dl--pin .dl__stick { height: auto; min-height: 680px; } }
+
+/* Site header (band, spacing to the hero, scrolled bar, typography): public/css/navigation-bar.css, declared by the
+   NavigationBar component (components/layout/NavigationBar/). */
+
+/* Hero frame: a wrapper inside the hero section (.dl__frame, components/sections/Hero/Hero.jsx) insets the hero 20px on every
+   side (user 2026-11-13). It sits inside #dlPin so the "#dlPin + section" cover selectors and the sticky pin keep working;
+   the slides (.dl__stick) fill the frame, and the 20px gutter is white like the header band above it. */
+.dl--pin { background: #fff; }
+.dl__frame { height: 100%; padding: 0 20px 20px; box-sizing: border-box; }   /* no top padding: the header's --hdr-gap is the space above */
+.dl--pin .dl__frame > .dl__stick { height: 100%; }
+@media (prefers-reduced-motion: reduce) { .dl__frame { height: auto; } .dl--pin .dl__frame > .dl__stick { height: auto; min-height: 640px; } }
+
+/* Hero corners: a 20px radius on every screen (user 2026-11-13). It used to grow from 0 to 36px as Programmes covered the hero;
+   now it stays 20px. The rounded box is the hero card itself (.dl__stick, which clips the slides), inside the white frame. */
+.dl--pin .dl__stick { border-radius: 20px; }

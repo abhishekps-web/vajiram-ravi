@@ -18,7 +18,7 @@ npm start          # serve the production build
 |---|---|
 | `app/` | `layout.jsx` (head, base stylesheet, intro, behaviour loader) and `page.jsx` (the sections in order). |
 | `components/sections/<Section>/` | One folder per section: `<Section>.jsx`, `data.js` for its content, and its behaviour modules. |
-| `components/layout/` | Site chrome: `Nav`, `Footer`, `Intro`, `WhatsAppButton`, and `SiteBehaviour` (starts the behaviours after hydration). |
+| `components/layout/` | Site chrome: `NavigationBar` (the header), `Footer`, `Intro`, `WhatsAppButton`, and `SiteBehaviour` (starts the behaviours after hydration). |
 | `components/dialogs/` | The ranks and course-catalogue dialogs. |
 | `components/ui/` | Shared pieces: `SectionLabel`, `ArrowIcon`, `Dialog`, `Stylesheet`, the custom select, accordion and rails. |
 | `lib/` | `behaviour.js` (the order behaviours run in), `site.js` (helpers), `data/courses.js` (course catalogue), `motion/` (site-wide motion), `vendor/` (Lenis). |

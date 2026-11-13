@@ -26,15 +26,6 @@
 .cmp__t { position: relative; margin: 0 0 18px; padding-bottom: 16px; font: 400 clamp(28px, 2.5vw, 38px)/1.08 var(--f-title, Georgia), serif; letter-spacing: -.01em; color: var(--ink-d); text-wrap: balance; }
 .cmp__t i { position: absolute; left: 0; right: 0; bottom: 0; height: 1.5px; background: rgba(58, 30, 4, .4); transform-origin: left center; }
 .cmp__d { max-width: 44ch; margin: 0 0 26px; font: 400 17px/1.65 var(--f); color: var(--cmp-ink); }
-.cmp__cta { display: inline-flex; align-items: center; gap: 12px; height: 48px; padding: 0 6px 0 22px; border-radius: 999px; background: var(--ink-d); color: #FFF6EA;
-  font: 700 15.5px/1 var(--f); text-decoration: none; white-space: nowrap; box-shadow: 0 12px 26px -14px rgba(38, 18, 5, .6); transition: background-color .2s, transform .2s var(--ease), box-shadow .2s; }
-.cmp__cta-ic { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: #FFF6EA; }
-.cmp__cta-ic svg { width: 16px; height: 16px; fill: none; stroke: #C2410C; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transition: transform .25s var(--ease); }
-.cmp__cta:focus-visible { outline: 3px solid var(--ink-d); outline-offset: 3px; }
-@media (hover: hover) and (pointer: fine) {
-  .cmp__cta:hover { background: #3A1E0A; transform: translateY(-1px); box-shadow: 0 16px 30px -14px rgba(38, 18, 5, .66); }
-  .cmp__cta:hover .cmp__cta-ic svg { transform: translateX(3px); }
-}
 @media (max-width: 760px) { .cmp__p { grid-template-columns: minmax(0, 1fr); } }
 
 /* ---------- the pinned stage (js/story.js adds .cmp--run and a spacer after the section that the scene plays over) ---------- */
@@ -65,7 +56,6 @@
 .cmp__run { display: block; pointer-events: none; }
 /* the Why section follows the scene directly */
 #story + .cmp__run + #why, #story + #why { margin-top: 0; }
-@media (prefers-reduced-motion: reduce) { .cmp__cta, .cmp__cta-ic svg { transition: none; } }
 /* stacked layout (phones / reduced motion): chapters rise in one after another (js/page-motion.js .sg); the pinned scene draws its own */
 .cmp--run .cmp__track.sg > * { opacity: 1; translate: none; }
 

@@ -1,3 +1,4 @@
+import Button from '@/components/ui/Button/Button';
 import SectionLabel from '@/components/ui/SectionLabel';
 
 // ============ FACULTY ============
@@ -9,12 +10,8 @@ export default function Faculty() {
       <p className="intro rv" style={{ "--d": ".2s" }}>Specialists for every GS paper, the essay, the optionals and the interview.</p>
       <div className="rail rail--fac">
         <div className="fgrid rail__track" id="team" tabIndex="0" aria-label="Faculty" />
-        <button className="cbtn cbtn--prev" type="button" aria-label="Previous faculty">
-          <img src="/assets/img/icons/chev-white.svg" alt="" width="18" height="18" />
-        </button>
-        <button className="cbtn cbtn--next" type="button" aria-label="Next faculty">
-          <img src="/assets/img/icons/chev-white.svg" alt="" width="18" height="18" />
-        </button>
+        <Button className="cbtn cbtn--prev" iconOnly iconStart="arrow-left" label="Previous faculty" />
+        <Button className="cbtn cbtn--next" iconOnly iconStart="arrow" label="Next faculty" />
       </div>
     </section>
   );

@@ -1,7 +1,16 @@
-// ============ floating navigation ============
-export default function Nav() {
+import Button from '@/components/ui/Button/Button';
+import Stylesheet from '@/components/ui/Stylesheet';
+
+// ============ Navigation Bar: the site header ============
+// At the top of the page it sits in its own white band above the hero (.nav-band, scrolls away with the page). The nav itself is
+// fixed in one place the whole time and always sits on a white bar with 20px corners; nothing about it changes on scroll.
+// Behaviour in this folder: nav-menus.js (drawer, mega menus, the .scrolled state), lang-switch.js (EN / हिं), data.js (menu content).
+// Styles: public/css/navigation-bar.css (header level) on top of the nav rules in the base cascade.
+export default function NavigationBar() {
   return (
     <>
+      <Stylesheet href="/css/navigation-bar.css" />
+      <div className="nav-band" aria-hidden="true" />
       <header className="nav" id="nav">
         <div className="nav__pill">
           <a className="nav__logo" href="#top" aria-label="Vajiram & Ravi home">
@@ -33,9 +42,7 @@ export default function Nav() {
             <button className="lang__b" type="button" data-lang="en" lang="en" aria-pressed="true" title="English">EN</button>
             <button className="lang__b" type="button" data-lang="hi" lang="hi" aria-pressed="false" title="हिन्दी">हिं</button>
           </div>
-          <a className="talk" href="#contact">Let's talk<span className="sq sq--34 sq--brand">
-            <img src="/assets/img/icons/arrow-white.svg" alt="" width="16" height="16" />
-          </span></a>
+          <Button className="talk" href="#contact" iconEnd="arrow">Let's talk</Button>
         </div>
       </header>
       <div className="drawer" id="drawer" hidden>

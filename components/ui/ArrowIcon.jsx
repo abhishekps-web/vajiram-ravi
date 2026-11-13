@@ -1,5 +1,5 @@
 // The site's arrows.
-// ArrowIcon: the brush-stroke arrow on text links and CTAs (.tlink, .sm__mini-go …), 18px.
+// ArrowIcon: the brush-stroke arrow (bare, e.g. .sm__mini-go), 18px. Buttons draw their own: <Button iconEnd="arrow">.
 export function ArrowIcon({ className }) {
   return (
     <svg className={className} viewBox="0 0 16 16" width="18" height="18" aria-hidden="true">

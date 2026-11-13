@@ -3,12 +3,13 @@
 import { $, $$, esc, ico, reduce, clamp } from '@/lib/site';
 import { openCat } from '@/components/dialogs/course-catalog';
 import { PTABS, PICON, PROGS } from './data';
+import { buttonHTML } from '@/components/ui/Button/button-core';
 
 export function initProgrammes() {
   const bookFx = !reduce && matchMedia('(hover: hover) and (pointer: fine)').matches;
   const pAct = p => p.cat != null
-    ? `<button type="button" class="vbtn" data-open="${p.cat}"><span>View courses</span><span class="sq sq--30 sq--ink">${ico('arrow-white.svg')}</span></button>`
-    : `<a class="vbtn" href="#contact" data-prog="${esc(p.prog)}"><span>View course</span><span class="sq sq--30 sq--ink">${ico('arrow-white.svg')}</span></a>`;
+    ? buttonHTML({ label: 'View courses', iconEnd: 'arrow', className: 'vbtn', attrs: { 'data-open': p.cat } })
+    : buttonHTML({ href: '#contact', label: 'View course', iconEnd: 'arrow', className: 'vbtn', attrs: { 'data-prog': p.prog } });
   // programmes: the original book cards (cover, spine, pages, ribbon, tag line, the button that rides on the book),
   // now standing on shelves lit like the Shopify Editions wall. Shelves of 4 on desktop, fewer on narrower screens.
   const pageG = $('#pgrid');

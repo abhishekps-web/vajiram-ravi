@@ -1,3 +1,4 @@
+import Button from '@/components/ui/Button/Button';
 import SectionLabel from '@/components/ui/SectionLabel';
 
 // ============ CONTACT ============
@@ -39,12 +40,7 @@ export default function Contact() {
             </span></span>
           </p>
           <p className="form__err" id="formErr" role="alert" />
-          <button className="bt bt--brand bt--full" type="submit" id="formBtn">
-            <span id="formBtnT">Book a free session</span>
-            <span className="sq sq--52 sq--white">
-              <img src="/assets/img/icons/arrow-brand.svg" alt="" width="16" height="16" />
-            </span>
-          </button>
+          <Button type="submit" id="formBtn" fullWidth iconEnd="arrow">Book a free session</Button>
           <div className="form__ok" role="status" tabIndex="-1">
             <h3>Request received</h3>
             <p id="okMsg" />

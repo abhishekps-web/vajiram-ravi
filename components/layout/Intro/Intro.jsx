@@ -1,3 +1,4 @@
+import Button from '@/components/ui/Button/Button';
 import Stylesheet from '@/components/ui/Stylesheet';
 // brand intro: Vajiram & Ravi reveal on orange, plays on every load (public/css/intro.css, driven by ./intro.js).
 // Rendered on the server so the overlay is in the first paint; intro.css shows it only while html.vrv-lock is set,
@@ -17,7 +18,7 @@ export default function Intro() {
         </div>
         <span className="vrv__bar" aria-hidden="true" />
         <span className="vrv__edge" aria-hidden="true" />
-        <button className="vrv__skip" type="button">Skip intro</button>
+        <Button variant="outline" onDark size="xs" className="vrv__skip">Skip intro</Button>
       </div>
     </>
   );

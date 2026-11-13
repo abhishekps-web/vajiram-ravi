@@ -1,3 +1,4 @@
+import Button from '@/components/ui/Button/Button';
 // ============ CLOSING CTA (Figma 2088:3749): orange gradient card, orange glow + line lotus rising from the bottom; styles/v49.css .cl ============
 export default function Closing() {
   return (
@@ -32,10 +33,8 @@ export default function Closing() {
           <h2 id="clH" className="h2 cl__h rv" style={{ "--d": ".12s" }}>Ready to start your UPSC preparation?</h2>
           <p className="cl__p rv" style={{ "--d": ".2s" }}>Find the programme that fits your stage, or talk to a counsellor who will help you choose. No pressure to enrol.</p>
           <p className="cl__btns rv" style={{ "--d": ".28s" }}>
-            <a className="bt bt--ink" href="#courses">Find your course<span className="sq">
-              <img src="/assets/img/icons/arrow-ur-white.svg" alt="" width="14" height="14" />
-            </span></a>
-            <a className="bt bt--line" href="#contact">Talk to a counsellor</a>
+            <Button variant="secondary" href="#courses" iconEnd="arrow">Find your course</Button>
+            <Button onDark href="#contact">Talk to a counsellor</Button>
           </p>
           <p className="cl__call rv" style={{ "--d": ".36s" }}>{"Prefer to call? "}<a href="tel:+918062206330">080-6220-6330</a>{" · Mon – Sat, 9 AM – 7 PM"}</p>
         </div>

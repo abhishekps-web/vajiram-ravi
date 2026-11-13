@@ -1,4 +1,4 @@
-import { ArrowIcon } from '@/components/ui/ArrowIcon';
+import Button from '@/components/ui/Button/Button';
 
 // ============ VISIT: contact and campus; a photo gallery of the campus beside the contact rows; styles/v49.css .cm, .cm__gal ============
 export default function Visit() {
@@ -53,14 +53,14 @@ export default function Visit() {
               <h3 className="cm__tel">080-6220-6330</h3>
               <p className="cm__near">Monday to Saturday, 9 am to 7 pm</p>
             </div>
-            <a className="tlink cm__cta" href="tel:+918062206330" aria-label="Call us on 080-6220-6330">Call us<ArrowIcon /></a>
+            <Button variant="link" className="cm__cta" href="tel:+918062206330" ariaLabel="Call us on 080-6220-6330" iconEnd="arrow">Call us</Button>
           </li>
           <li className="cm__item cm__item--chan">
             <div>
               <h3 className="cm__mail">admissions@vajiramandravi.com</h3>
               <p className="cm__near">Admissions and course questions</p>
             </div>
-            <a className="tlink cm__cta" href="mailto:admissions@vajiramandravi.com" aria-label="Email us at admissions@vajiramandravi.com">Email us<ArrowIcon /></a>
+            <Button variant="link" className="cm__cta" href="mailto:admissions@vajiramandravi.com" ariaLabel="Email us at admissions@vajiramandravi.com" iconEnd="arrow">Email us</Button>
           </li>
         </ul>
       </div>

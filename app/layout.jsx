@@ -30,6 +30,9 @@ export default function RootLayout({ children }) {
         <link rel="stylesheet" href={FONTS} />
         {/* the site stylesheet, served as-is from public/css: v49.css @imports the earlier layers (v48 -> ... -> v25) in
             cascade order. Sections add their own sheets after it (components/ui/Stylesheet.jsx, precedence "sections"). */}
+        {/* the button system (components/ui/Button) comes first: placement rules in the layers after it always win, so
+            sections position buttons without restyling them */}
+        <link rel="stylesheet" href="/css/buttons.css" precedence="base" />
         <link rel="stylesheet" href="/css/v49.css" precedence="base" />
         <script dangerouslySetInnerHTML={{ __html: BOOT }} />
       </head>

@@ -3,6 +3,7 @@
 import { $, $$, esc, PHONE } from '@/lib/site';
 import { CATS } from '@/lib/data/courses';
 import { BATCHES } from '@/components/sections/Batches/data';
+import { setButtonLoading } from '@/components/ui/Button/button-core';
 
 export function initContactForm() {
   const fProg = $('#fProg');
@@ -32,7 +33,7 @@ export function initContactForm() {
     $('#fName').value = $('#fName').value.trim();
     const bad = ['fName', 'fPhone', 'fEmail', 'fProg', 'fTime'].map(id => $('#' + id)).find(el => !el.checkValidity());
     if (bad) { bad.setAttribute('aria-invalid', 'true'); err.textContent = MSG[bad.id]; bad.focus(); return; }
-    err.textContent = ''; fBtn.disabled = true; $('#formBtnT').textContent = 'Sending…';
+    err.textContent = ''; setButtonLoading(fBtn, true, 'Sending…');
     const data = Object.fromEntries(new FormData(form)); data.phone = '+91' + data.phone; data.source = 'homepage';
     try {
       await send(data);
@@ -42,6 +43,6 @@ export function initContactForm() {
       err.textContent = ex.message === 'not-configured'
         ? `Online booking isn't connected yet, so nothing was sent. Please call ${PHONE}, Monday to Saturday, 9 am to 7 pm.`
         : `We couldn't send your request. Try again, or call ${PHONE}.`;
-    } finally { fBtn.disabled = false; $('#formBtnT').textContent = 'Book a free session'; }
+    } finally { setButtonLoading(fBtn, false); }
   });
 }

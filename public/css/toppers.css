@@ -107,10 +107,8 @@
 /* filtered */
 .gz__tp.is-dim .gz__pick { opacity: .32; }
 .gz__pg .is-hit { color: var(--gz-ink); font-weight: 700; background: rgba(249, 135, 31, .32); box-decoration-break: clone; -webkit-box-decoration-break: clone; }
-.gz__all { display: block; margin: 14px auto 0; padding: 9px 18px; border: 1px solid var(--gz-line); border-radius: 999px; background: #fff; cursor: pointer;
-  font: 600 14px/1 var(--gz-sans); color: var(--gz-ink); transition: border-color .25s var(--ease), color .25s var(--ease); }
+.gz__all { display: flex; width: fit-content; margin: 14px auto 0; }
 .gz__all[hidden] { display: none; }
-.gz__all:focus-visible { outline: 2px solid var(--gz-orange); outline-offset: 2px; }
 .gz__more { display: flex; align-items: center; justify-content: space-between; gap: 14px 24px; flex-wrap: wrap; padding-top: 12px; font: 400 14px/1.45 var(--gz-sans); color: var(--gz-mute); }
 
 /* ---------- motion ---------- */
@@ -136,7 +134,6 @@
   .gz__pick:hover .gz__mug img { transform: scale(1.06); }
   .gz__pick:hover .gz__nm { background-size: 100% 100%; }
   .gz__tp.is-dim .gz__pick:hover { opacity: .7; }
-  .gz__all:hover { border-color: var(--gz-orange); color: var(--gz-red); }
 }
 
 /* ---------- responsive ---------- */
@@ -188,16 +185,14 @@
 @media (max-width: 640px) { .gz__rollh { padding: 12px 0 10px; } .gz__rollh h3 { font-size: 17px; } }
 
 /* "Show all" toggle: a site pill with a chevron that turns; revealed cards rise in staggered, hidden ones fade out as the list closes */
-.gz__all { display: inline-flex; align-items: center; gap: 10px; height: 44px; padding: 0 18px 0 22px; border: 1px solid rgba(194, 65, 12, .3); font-size: 15px; }
 .gz__roll .gz__all { display: flex; }
 .gz__all[hidden] { display: none !important; }
-.gz__all i { width: 8px; height: 8px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; rotate: 45deg; translate: 0 -2px; transition: rotate .4s var(--ease), translate .4s var(--ease); }
-.gz__all[aria-expanded="true"] i { rotate: 225deg; translate: 0 2px; }
+.gz__all .btn__icon--end { transition: rotate .4s var(--ease); }
+.gz__all[aria-expanded="true"] .btn__icon--end { rotate: 180deg; }
 @keyframes gzRise { from { opacity: 0; translate: 0 22px; } }
 .gz__tp.is-new { animation: gzRise .6s var(--ease) calc(var(--j, 0) * 45ms + .05s) both; }
 .gz__tp.is-out { opacity: 0; transition: opacity .3s var(--ease); }
-@media (hover: hover) and (pointer: fine) { .gz__all:hover i { translate: 0 0; } .gz__all[aria-expanded="true"]:hover i { translate: 0 0; } }
-@media (prefers-reduced-motion: reduce) { .gz__tp.is-new { animation: none; } .gz__all i { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .gz__tp.is-new { animation: none; } .gz__all .btn__icon--end { transition: none; } }
 
 
 /* ---------- paper clip (after vajiram-ravi-homepage.vercel.app #results .np__sheet::before): a wire clip over the top edge of the front page,

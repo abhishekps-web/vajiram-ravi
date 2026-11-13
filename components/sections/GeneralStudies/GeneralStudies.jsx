@@ -1,3 +1,4 @@
+import Button from '@/components/ui/Button/Button';
 import SectionLabel from '@/components/ui/SectionLabel';
 
 // ============ GENERAL STUDIES ============
@@ -15,9 +16,7 @@ export default function GeneralStudies() {
         <h2 id="gsH" className="h2 gs__h rv" style={{ "--d": ".12s" }}>{"General Studies decides "}<span>most of your UPSC score.</span></h2>
         <p className="gs__p rv" style={{ "--d": ".2s" }}>Our GS Prelims cum Mains Programme covers the full syllabus with daily classes, printed study material, Prelims and Mains tests and mentoring, in the classroom or LIVE-Online. Graduates take the 1-year programme; college students start with the 2-year Fledgling.</p>
         <div className="rv-btn rv" style={{ "--d": ".28s" }}>
-          <a className="bt bt--white" href="#courses" data-cat="0">View GS courses<span className="sq sq--52 sq--brand">
-            <img src="/assets/img/icons/arrow-white.svg" alt="" width="16" height="16" />
-          </span></a>
+          <Button onDark href="#courses" data-cat="0" iconEnd="arrow">View GS courses</Button>
         </div>
       </div>
       <div className="gsbook" role="img" aria-label="General Studies in numbers: 200 of 200 Prelims marks and 1,000 of 1,750 Mains marks come from General Studies; a 1-year programme for graduates and the 2-year Fledgling for college students.">

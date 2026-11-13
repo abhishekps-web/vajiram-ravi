@@ -2,6 +2,7 @@
 // the batch details on cream paper, and a perforated stub with the Register button; and the "all batches" dialog.
 import { $, $$, esc, ico, reduce } from '@/lib/site';
 import { BFAM, BATCHES, BYEAR, BANNERS } from './data';
+import { buttonHTML } from '@/components/ui/Button/button-core';
 
 export function initBatchTickets() {
   $('#price').innerHTML = BATCHES.map((b, i) => {
@@ -19,7 +20,7 @@ export function initBatchTickets() {
           <h3>${esc(b.n)}</h3><p class="inv__w">${esc(b.what)}</p>
           <div class="ticket__meta"><dl><div><dt>Study mode</dt><dd>Classroom and LIVE&#8209;Online</dd></div></dl>${b.chip === 'Limited seats' ? '<span class="ticket__limited" aria-label="Limited seats"><span>Limited<br>seats</span></span>' : ''}</div>
         </div>
-        <div class="ticket__stub"><a class="inv__reg" href="#contact" data-prog="${esc(b.full)}" aria-label="Enroll now in ${esc(b.full)}">Enroll now<span class="sq sq--38 sq--brand">${ico('arrow-white.svg')}</span></a></div>
+        <div class="ticket__stub">${buttonHTML({ href: '#contact', label: 'Enroll now', ariaLabel: `Enroll now in ${b.full}`, iconEnd: 'arrow', fullWidth: true, className: 'inv__reg', attrs: { 'data-prog': b.full } })}</div>
       </div></article>`;
   }).join('');
   {

@@ -2,6 +2,7 @@
 import { $, $$, esc, SITE } from '@/lib/site';
 import { CATS, CAT_D, STAGES } from '@/lib/data/courses';
 import { STUDY_MENU } from './data';
+import { buttonHTML } from '@/components/ui/Button/button-core';
 
 let drawer, burger;
 const megas = [];
@@ -45,7 +46,7 @@ export function initNavMenus() {
     <aside class="mega__aside">
       <p class="mega__k">Not sure where to start?</p>
       <p class="mega__p">A counsellor will match you to a programme for your stage, with no pressure to enrol.</p>
-      <a class="bt bt--brand mega__cta" href="#contact">Talk to a counsellor<span class="sq sq--52 sq--white"><img src="assets/img/icons/arrow-brand.svg" alt="" width="16" height="16"></span></a>
+      ${buttonHTML({ href: '#contact', label: 'Talk to a counsellor', size: 'sm', iconEnd: 'arrow', fullWidth: true, className: 'mega__cta' })}
       <a class="mega__all" href="#courses">View all ${total} courses<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
     </aside>`;
 
@@ -61,7 +62,7 @@ export function initNavMenus() {
   <aside class="mega__aside" style="--i:${STUDY_MENU.length}">
     <p class="mega__k">Today’s headlines</p>
     ${heads ? `<ul class="mega__heads">${heads}</ul>` : ''}
-    <a class="bt bt--brand mega__cta" href="#resources">Explore free resources<span class="sq sq--52 sq--white"><img src="assets/img/icons/arrow-brand.svg" alt="" width="16" height="16"></span></a>
+    ${buttonHTML({ href: '#resources', label: 'Explore free resources', size: 'sm', iconEnd: 'arrow', fullWidth: true, className: 'mega__cta' })}
     <a class="mega__all" href="${SITE}" target="_blank" rel="noopener">View all study materials<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
   </aside>`;
   navMega($('#explore'), $('#exploreBtn'));

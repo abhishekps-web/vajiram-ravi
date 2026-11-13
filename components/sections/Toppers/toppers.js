@@ -6,6 +6,7 @@
    Selecting a rank holder brings them to the lead story; the filters dim the others and mark the matching programme. */
 import { TOPPERS } from './data/toppers';
 import { NP_ARCHIVE } from './data/toppers-archive';
+import { setButtonLabel } from '@/components/ui/Button/button-core';
 
 export default function init() {
   const sec = document.getElementById('toppers'), data = NP_ARCHIVE;
@@ -113,7 +114,7 @@ export default function init() {
     ten.innerHTML = top.map((t, i) => card(t, i, false)).join('') + rest.map((t, i) => card(t, i, true)).join('');
     if (scroller) scroller.scrollTop = 0;
     allBtn.hidden = !rest.length;
-    allBtn.innerHTML = label();
+    setButtonLabel(allBtn, label());
     allBtn.setAttribute('aria-expanded', 'false');
     rollH.textContent = 'The first ten';
     tabs.forEach(b => {
@@ -229,7 +230,7 @@ export default function init() {
   /* ---------- show all / edition ---------- */
   /* Show all / Show the first ten: the list grows or shrinks smoothly (its height animates), the new cards rise in one after another,
      and on collapse the page glides back to the roll header if it has scrolled past it. The button label rolls to its new text. */
-  const label = () => `<span>${expanded ? 'Show the first ten' : `Show all ${list.length} rank holders`}</span><i aria-hidden="true"></i>`;
+  const label = () => expanded ? 'Show the first ten' : `Show all ${list.length} rank holders`;
   let busy = false;
   const glideTo = el => {
     const y = scrollY + el.getBoundingClientRect().top - 96;
@@ -241,7 +242,7 @@ export default function init() {
     const h0 = ten.offsetHeight;
     expanded = !expanded;
     allBtn.setAttribute('aria-expanded', String(expanded));
-    allBtn.innerHTML = label();
+    setButtonLabel(allBtn, label());
     rollH.textContent = expanded ? 'All rank holders' : 'The first ten';
     if (reduce) { extras.forEach(li => { li.hidden = !expanded; }); return; }
     busy = true;

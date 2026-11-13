@@ -1,3 +1,4 @@
+import Button from '@/components/ui/Button/Button';
 import { ArrowIcon } from '@/components/ui/ArrowIcon';
 import SectionLabel from '@/components/ui/SectionLabel';
 import { RESOURCES, MORE_RESOURCES } from './data';
@@ -17,7 +18,7 @@ function ResourceCard({ title, desc, action, stages, ill }) {
           {stages.map(s => <li key={s}>{s}</li>)}
         </ul>
       )}
-      <a className="tlink sm__act" href="#" data-rs="">{action}<ArrowIcon /></a>
+      <Button variant="link" className="sm__act" href="#" data-rs="" iconEnd="arrow">{action}</Button>
     </li>
   );
 }

@@ -1,0 +1,33 @@
+/* =====================================================================================================================
+   NAVIGATION BAR: the site header (components/layout/NavigationBar/NavigationBar.jsx), which declares this sheet.
+   Loaded after the base cascade (v49.css), so these rules settle the header. The nav's own pieces (pill, links, mega menus,
+   language switch, burger, drawer) are still styled in the base cascade; this sheet holds the header-level layout and states.
+
+   The nav is fixed in one place (--hdr-pt from the top) the whole time and always sits on its white bar with 20px corners: it does
+   not move, shrink, hide or change on scroll (user 2026-11-13). At the top of the page the white band above the hero (.nav-band)
+   is behind it and scrolls away with the page.
+   ===================================================================================================================== */
+
+/* Band and header -> hero spacing (user 2026-11-13): the header has a top padding only (--hdr-pt above the 52px nav, no bottom
+   padding) and the hero frame no top padding, so the one space between them is --hdr-gap: 20px, the same as the hero frame's side
+   and bottom gutters. The band paints that gap white too, so header and hero frame read as one white ground. No bottom border. */
+:root { --hdr-pt: 22px; --hdr-h: calc(var(--hdr-pt) + 52px); --hdr-gap: 20px; }
+@media (max-width: 900px) { :root { --hdr-pt: 16px; } }
+.nav-band { position: absolute; top: 0; left: 0; right: 0; z-index: 2; height: calc(var(--hdr-h) + var(--hdr-gap)); background: #fff; }
+main#top { padding-top: calc(var(--hdr-h) + var(--hdr-gap)); }
+/* one position in both states: the scrolled state used to move it up (top 16px, 12px on phones) and hide it on scroll down */
+.nav, .nav.scrolled { top: var(--hdr-pt); }
+.nav .nav__pill { box-shadow: none; }
+
+/* The bar: white (#FFF) with 20px corners behind the whole navigation (logo and links, language switch, Let's talk), at all times
+   (user 2026-11-13; it used to appear only once the page scrolled). It is a layer behind the nav's items (inset 8px / 10px past
+   them), so their layout and positions do not move. It carries the soft shadow that lifts the header off the page (the pill itself
+   stays flat). */
+.nav::after { content: ""; position: absolute; inset: -8px -10px; z-index: -1; background: #fff; border-radius: 20px;
+  box-shadow: 0 0 0 1px rgba(38, 38, 38, .06), 0 10px 30px -10px rgba(38, 38, 38, .22); pointer-events: none; }
+
+/* Typography = the Button component's (user 2026-11-13): font, weight, line height and letter spacing are the button system's own
+   tokens (public/css/buttons.css :root), and the size is the default (md) button's, 18px (.btn--md --btn-fs). Spacing, colours and
+   hover/focus states are unchanged. Covers the bar's links and menu buttons (.nav__a) and the phone drawer's links. */
+.nav .nav__a, .drawer a { font-family: var(--btn-font); font-weight: var(--btn-weight); font-size: 18px; line-height: var(--btn-lh); letter-spacing: var(--btn-ls); }
+html[lang="hi"] .nav .nav__a, html[lang="hi"] .drawer a { font-family: "Mukta", var(--btn-font); }

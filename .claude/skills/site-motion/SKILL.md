@@ -18,7 +18,7 @@ The client requirement: **nothing on this site appears or responds without motio
 | Grid / list of cards | Children rise in one by one | `.rise` on the grid (children get `--i`), or add the grid selector to the `.rise` list in `js/content.js` |
 | Image / photo | Hover: eases in (`scale(1.04–1.06)` over .7s `--ease`), inside an `overflow: hidden` frame | see the topper cards in `css/toppers.css` (end of file) |
 | Card | Hover: one accent (rule sweep, lift ≤ 6px, or seal/icon turn), never more than two effects | topper cards: brand bar sweeps along the caption rule |
-| Button / CTA | Rolling label + arrow swap | site buttons: classes `.bt .pbtn .talk .vbtn .inv__reg` are auto-enhanced by `js/page-motion.js`; v5 pill: `.rs-btn` markup (two `.rs-btn-t`, two arrow svgs) |
+| Button / CTA | Rolling label + arrow swap, hover/focus/press states | `<Button>` / `buttonHTML()` (`components/ui/Button`, styles `public/css/buttons.css`) render all of it; never hand-build button markup or styles |
 | Link / tab / chip | Hover + `:focus-visible` state (colour or underline draw), 0.2–0.3s | `.rs-yr-chips button`, `.rs-np-nav a` |
 | Content rendered later by JS (tabs, year views, dialogs) | Same reveals; `.rv` is collected once at load (`js/scroll.js`), so add `.in` yourself or animate with a class toggled after insert | |
 | Counters / numbers | Count up or rise when first in view (optional, for stat blocks) | |

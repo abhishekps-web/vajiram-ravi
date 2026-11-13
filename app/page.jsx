@@ -1,4 +1,4 @@
-import Nav from '@/components/layout/Nav/Nav';
+import NavigationBar from '@/components/layout/NavigationBar/NavigationBar';
 import Footer from '@/components/layout/Footer/Footer';
 import WhatsAppButton from '@/components/layout/WhatsAppButton/WhatsAppButton';
 import Hero from '@/components/sections/Hero/Hero';
@@ -23,7 +23,7 @@ import CourseCatalogDialog from '@/components/dialogs/CourseCatalogDialog';
 export default function Home() {
   return (
     <>
-      <Nav />
+      <NavigationBar />
       <main id="top">
         {/* the hero and Programmes share the cover: Programmes slides up over the pinned hero */}
         <div className="cover" id="cover">

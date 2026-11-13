@@ -1,5 +1,5 @@
+import Button from '@/components/ui/Button/Button';
 import Dialog from '@/components/ui/Dialog';
-import { ArrowIcon } from '@/components/ui/ArrowIcon';
 
 // ============ BATCHES ============
 export default function Batches() {
@@ -9,10 +9,7 @@ export default function Batches() {
         <h2 id="batH" className="h2 h2--sec rv" style={{ "--d": ".08s" }}>Next batches starting soon.</h2>
         <div className="bhead rv" style={{ "--d": ".16s" }}>
           <p className="intro">{"Register online, or call "}<a href="tel:08062206330">080-6220-6330</a>{" for registration or seat allotment, Monday to Saturday, 9 am to 7 pm."}</p>
-          <button className="tlink" id="allBatches" type="button">
-            <span>View all batches</span>
-            <ArrowIcon />
-          </button>
+          <Button variant="link" id="allBatches" iconEnd="arrow">View all batches</Button>
         </div>
         <div className="cards" id="price" />
       </section>
