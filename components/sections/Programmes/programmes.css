@@ -164,7 +164,7 @@
   #courses .prog__flag-btns { flex-wrap: wrap; }
 }
 @media (max-width: 900px) {
-  #courses .prog__canvas { padding-top: 72px; }
+  #courses .prog__canvas { padding-top: calc(var(--sec-y) - 20px); }   /* the rhythm, less the hero frame gutter (Programmes.tsx) */
   #courses .prog__flag { grid-template-columns: minmax(0, 1fr); }
   #courses .prog__flag-photo { min-height: 340px; }
   #courses .prog__flag-body { padding: 32px 28px; }
@@ -172,7 +172,7 @@
   #courses .prog__help { flex-wrap: wrap; gap: 18px 20px; padding: 24px; }
 }
 @media (max-width: 640px) {
-  #courses .prog__canvas { padding-top: 56px; }
+  #courses .prog__canvas { padding-top: calc(var(--sec-y) - 20px); }
   #courses .prog__flag { border-radius: 20px; }
   #courses .prog__flag-photo { min-height: 260px; }
   #courses .prog__flag-body { padding: 28px 20px 24px; }

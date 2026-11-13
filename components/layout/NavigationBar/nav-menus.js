@@ -31,6 +31,7 @@ const navMega = (wrap, btn) => {
 
 export function initNavMenus() {
   drawer = $('#drawer'); burger = $('#burger');
+  if (!drawer || !burger) return;   // a page without the header (the 404)
   burger.addEventListener('click', () => setDrawer(drawer.hidden));
   $$('a', drawer).forEach(a => a.addEventListener('click', () => setDrawer(false)));
   document.body.insertAdjacentHTML('beforeend', '<div class="mega-scrim" aria-hidden="true"></div>');

@@ -3,11 +3,10 @@
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from "react";
 import Button from "@/components/ui/Button/Button";
 import IndianLink from "@/components/sections/Programmes/ui/IndianLink";
-import { programmeCategories, type Programme, type ProgrammeCategory } from "@/components/sections/Programmes/data/programmes";
+import { coursePageHref, programmeCategories, type Programme, type ProgrammeCategory } from "@/components/sections/Programmes/data/programmes";
 import { cx } from "@/components/sections/Programmes/lib/cx";
 import { pressRipple } from "@/components/sections/Programmes/lib/pressRipple";
 import { prefersReducedMotion } from "@/components/sections/Programmes/lib/motion";
-import { whenVisible } from "@/components/sections/Programmes/lib/reveal";
 import CoverArt from "./CoverArt";
 import GeoArt from "./GeoArt";
 import "./shelf.css";
@@ -390,28 +389,43 @@ export default function CourseShelf({ programmes }: { programmes: Programme[] })
     return () => window.removeEventListener("keydown", onKey);
   });
 
-  // The entrance: the books arrive as a stack lying on the middle of the lowest plank, then are dealt off
-  // it, the top one first, into their places, the upper plank first. Held until the shelf is in view.
+  // The entrance (user 2026-11-13): the testimonials' scroll reveal, exactly (Stories: stories.css @keyframes st-deal and the
+  // postcards' animation): each book is dealt onto the shelf, rising 110px from 90% with a tilt of +-9deg (alternating, as the
+  // postcards'), its opacity full by 40%, and settles with the same spring, cubic-bezier(.34, 1.56, .64, 1), in 0.9s; the first
+  // at 0.26s, then one every 0.13s. As in the testimonials it starts once a quarter of the shelf is in view (theirs: threshold
+  // .25 on the section). Played on each book's [data-cover] (Web Animations, the per-keyframe easing as CSS applies it), so the
+  // hover tilt on the book and the open / close motions are untouched. Nothing plays with reduced motion.
   useEffect(() => {
     const root = rootRef.current;
     if (!root || prefersReducedMotion() || typeof root.animate !== "function") return;
-    const box = root.getBoundingClientRect();
-    if (box.top < window.innerHeight * 0.85 && box.bottom > 0) return;
-
-    const books = [...root.querySelectorAll<HTMLElement>("[data-book]")];
-    const n = books.length;
-    const foot = stackFoot(n, g);
-    const animations = books.flatMap((book, k) => {
-      const level = n - 1 - k;
-      const wait = (n - 1) * PILE_DROP_MS + PILE_IN_MS + k * DEAL_GAP_MS;
-      return moveBook(book, dealSteps(spot(k, n, g), foot, level, 0.92, level * PILE_DROP_MS, wait, { x: 0, y: -40 }), { z: 1 + level });
-    });
+    const covers = [...root.querySelectorAll<HTMLElement>("[data-book]")]
+      .filter((book) => book.getAttribute("aria-hidden") !== "true")
+      .map((book) => book.querySelector<HTMLElement>("[data-cover]"))
+      .filter((cover): cover is HTMLElement => !!cover);
+    const DEAL_EASE = "cubic-bezier(.34, 1.56, .64, 1)";
+    const animations = covers.map((cover, n) =>
+      cover.animate(
+        [
+          { offset: 0, opacity: 0, transform: `translateY(110px) rotate(${n % 2 ? -9 : 9}deg) scale(.9)`, easing: DEAL_EASE },
+          { offset: 0.4, opacity: 1, easing: DEAL_EASE },
+          { offset: 1, opacity: 1, transform: "none" },
+        ],
+        { duration: 900, delay: 260 + n * 130, fill: "both" },
+      ),
+    );
     animations.forEach((animation) => animation.pause());
     stacking.current = animations;
-    // Well in view first (over half the shelf, or most of the screen), so the stacking plays where the visitor is looking.
-    const cancel = whenVisible(root, 0.55, () => animations.forEach((animation) => animation.play()));
+    let seen: IntersectionObserver | null = null;
+    if ("IntersectionObserver" in window) {
+      seen = new IntersectionObserver((entries) => {
+        if (!entries[0].isIntersecting) return;
+        animations.forEach((animation) => animation.play());
+        seen?.disconnect();
+      }, { threshold: 0.25 });
+      seen.observe(root);
+    } else animations.forEach((animation) => animation.play());
     return () => {
-      cancel();
+      seen?.disconnect();
       animations.forEach((animation) => animation.cancel());
     };
   }, [cols]);   // re-armed when the screen's books-per-plank is known (it starts at four, then follows the screen)
@@ -809,14 +823,15 @@ function Book({ index, programme, hidden, out, open, away, style, onPick, onClos
         </button>
 
         {/* "View course" on the closed book (the cover's IA, user 2026-11-13): the site's design-system button, shown only while
-            the book is hovered (or the button has keyboard focus), following the cursor (Book: follow); it opens the book. */}
+            the book is hovered (or the button has keyboard focus), following the cursor (Book: follow). It links to the programme's
+            course detail page (coursePageHref, a placeholder for now; user 2026-11-13); a click on the cover still opens the book. */}
         {!out && (
           <span
             ref={followRef}
             className="pointer-events-none absolute inset-x-0 z-[101] flex justify-center scale-75 opacity-0 [transition:translate_450ms_cubic-bezier(.22,1,.36,1),opacity_250ms_var(--ease-out),scale_350ms_cubic-bezier(.22,1,.36,1)] group-hover/book:scale-100 group-hover/book:opacity-100 group-hover/book:[&>*]:pointer-events-auto has-[:focus-visible]:scale-100 has-[:focus-visible]:opacity-100 has-[:focus-visible]:[&>*]:pointer-events-auto motion-reduce:transition-none"
             style={{ bottom: FOLLOW_BOTTOM }}
           >
-            <Button size="xs" iconEnd="arrow" onClick={onPick} ariaLabel={`View course: ${programme.name}`}>
+            <Button size="xs" iconEnd="arrow" href={coursePageHref(programme)} ariaLabel={`View course: ${programme.name}`}>
               View course
             </Button>
           </span>

@@ -22,7 +22,9 @@ export default function Programmes() {
     <section id="courses" aria-labelledby="programmes-h" className="prog relative overflow-clip bg-cream">
       {/* soloboy's text and scroll motion (data-zoom, data-split, data-fade, data-drift …), held to this section */}
       <TextMotion rootId="courses" />
-      <div className="prog__canvas relative mx-auto flex w-canvas flex-col items-start px-20 pt-[var(--sec-y)]">
+      {/* top padding: --sec-y less the hero frame's 20px bottom gutter, so the hero card's edge -> this eyebrow is --sec-y, the
+          site's section spacing (user 2026-11-13) */}
+      <div className="prog__canvas relative mx-auto flex w-canvas flex-col items-start px-20 pt-[calc(var(--sec-y)-20px)]">
         {/* The course shelf: its heading, then the filter and the books on their planks (CourseShelf). */}
         <div className="relative w-full">
           {/* the section's heading (the flagship card and the "Find the right UPSC programme" heading above it were removed, user 2026-11-13) */}
