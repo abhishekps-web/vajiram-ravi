@@ -56,3 +56,12 @@ html[lang="hi"] .nav .nav__a, html[lang="hi"] .drawer a { font-family: "Mukta", 
 /* ...and the logo + links group drops its own white pill at rest, so the whole header is clear; it returns with the white bar */
 .nav .nav__pill { transition: background-color .35s var(--ease, ease); }
 .nav:not(.scrolled) .nav__pill { background-color: transparent; }
+
+/* Smart header (user 2026-11-13): hidden while the page scrolls down, back as soon as it scrolls up (.nav--away, set by
+   initNavScrolled in nav-menus.js). The fixed bar slides up past the top of the screen with its white bar (::after, 8px above
+   it) on its own layer: `translate` only, so its styling, size and position, and the page's layout, never change. The band at
+   the top of the page is not affected (it scrolls away with the page). Reduced motion: it appears and disappears without sliding. */
+.nav { transition: translate .38s cubic-bezier(.22, 1, .36, 1), opacity .25s ease; will-change: translate; }
+.nav.nav--away { translate: 0 calc(-100% - var(--hdr-pt) - 16px); }
+.nav.nav--away .nav__pill, .nav.nav--away > * { pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .nav { transition: none; } }

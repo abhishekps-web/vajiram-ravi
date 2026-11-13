@@ -2285,3 +2285,20 @@ html #stories [class*="postcard-paper"] { border-radius: var(--r-box); }
 @media (min-width: 1280px) and (prefers-reduced-motion: no-preference) {
   .dl--pin { height: calc(var(--txt-h) + 290px + 20px); }
 }
+
+/* Hero height with a peek of Programmes (user 2026-11-13): every first screen ends with a preview of the Programmes sheet under the
+   hero: its rounded top, its ground and its eyebrow label (which sits 90px into the sheet). So the hero takes the screen minus the
+   header and --hero-peek (the 20px frame gutter + the sheet's 90px top + the 30px label + ~36px of air: 176px), but never less than
+   --hero-min, the least that keeps the hero's own layout: the copy block and CTA centred as before, with at least ~40px above the
+   copy and room under the CTA for the slide indicators (26px off the card's bottom). On a short screen the content wins.
+   From 1280px wide it is never taller than the content-fit height above (--hero-fit), so wide screens that already show the
+   label are unchanged. Reduced motion keeps its flowing layout (above). */
+:root { --hero-peek: 176px; }
+.dl { --hero-fit: calc(var(--txt-h) + 290px + 20px); --hero-min: calc(var(--txt-h) + 230px + 20px); }
+@media (prefers-reduced-motion: no-preference) {
+  .dl--pin { height: max(var(--hero-min), calc(100vh - var(--hdr-h) - var(--hdr-gap) - var(--hero-peek)));
+             height: max(var(--hero-min), calc(100svh - var(--hdr-h) - var(--hdr-gap) - var(--hero-peek))); }
+}
+@media (min-width: 1280px) and (prefers-reduced-motion: no-preference) {
+  .dl--pin { height: min(var(--hero-fit), max(var(--hero-min), calc(100svh - var(--hdr-h) - var(--hdr-gap) - var(--hero-peek)))); }
+}

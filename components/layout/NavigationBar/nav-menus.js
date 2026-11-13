@@ -70,11 +70,26 @@ export function initNavMenus() {
   addEventListener('keydown', e => { if (e.key === 'Escape') { setMega(false); setDrawer(false); } });   // setMega(false) closes every menu
 }
 
-// the bar takes its solid "scrolled" style once the page leaves the top
+// the bar takes its solid "scrolled" style once the page leaves the top, and (user 2026-11-13) hides while the page scrolls down and
+// comes back as soon as it scrolls up (.nav--away, public/css/navigation-bar.css). It slides out of view on its own layer (a
+// transform on the fixed bar), so nothing on the page moves. It always shows near the top of the page, while a menu or the drawer
+// is open, and while focus is inside it; a few px of travel in one direction (TRAVEL) are needed first, so jitter does not flicker it.
 export function initNavScrolled() {
-  let navTick = false;
-  addEventListener('scroll', () => {
-    if (!navTick) { navTick = true; requestAnimationFrame(() => { navTick = false; $('#nav').classList.toggle('scrolled', scrollY > 20); }); }
-  }, { passive: true });
-  $('#nav').classList.toggle('scrolled', scrollY > 20);
+  const nav = $('#nav'); if (!nav) return;
+  const TRAVEL = 10, TOP = 120;
+  let navTick = false, lastY = scrollY, run = 0;
+  const update = () => {
+    navTick = false;
+    const y = Math.max(0, scrollY), dy = y - lastY; lastY = y;
+    nav.classList.toggle('scrolled', y > 20);
+    const hold = y < TOP || $('#nav [aria-expanded="true"]') || (drawer && !drawer.hidden) || nav.contains(document.activeElement);
+    if (hold) { run = 0; nav.classList.remove('nav--away'); return; }
+    if (!dy) return;
+    run = Math.sign(dy) === Math.sign(run) ? run + dy : dy;   // travel in the current direction
+    if (run > TRAVEL) nav.classList.add('nav--away');
+    else if (run < -TRAVEL) nav.classList.remove('nav--away');
+  };
+  addEventListener('scroll', () => { if (!navTick) { navTick = true; requestAnimationFrame(update); } }, { passive: true });
+  nav.addEventListener('focusin', () => nav.classList.remove('nav--away'));   // tabbing into the bar brings it back
+  update();
 }

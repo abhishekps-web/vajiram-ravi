@@ -93,73 +93,119 @@ export default function init() {
     }
   };
 
-  // a focused link brings its chapter to rest on screen
-  sec.addEventListener('focusin', e => {
-    if (!on) return;
-    const p = e.target.closest('.cmp__p'); if (!p) return;
-    const k = panels.indexOf(p), u = (k ? S0 + (k - 1) * STEP + DUR : S0) - OFF;
-    const y0 = spacer.getBoundingClientRect().top + scrollY - H();
-    const y = y0 + u / 100 * H();
-    if (window.__lenis) window.__lenis.scrollTo(y, { immediate: true }); else scrollTo({ top: y, behavior: 'auto' });
-  });
   // ---- one step per gesture (user 2026-11-13): while the scene is pinned, one wheel flick, swipe or key press moves exactly one
-  // chapter (its swing plays out), and past the last chapter it carries on to the next section (back past the first: to the one
-  // before). A gesture's trailing wheel events (trackpad inertia) are swallowed until the wheel has been quiet for QUIET ms.
-  const SNAP_S = 1.05, QUIET = 180;
+  // chapter (its swing plays out); past the last chapter it carries on to the next section, and back past the first the page
+  // scrolls up as usual (never trapped). Positions are read live (yAt), so resizes and content above changing height are safe.
+  //   entering:  normal scrolling that would carry past the scene's first chapter (or, from below, into its tail) stops on it
+  //   inertia:   a gesture's trailing wheel events are swallowed until the wheel is quiet for QUIET ms, unless a new flick clearly
+  //              starts (a delta well above the dying tail), so a quick second flick is not lost
+  //   settling:  if the scroll comes to rest between chapters by any other means (scrollbar, Home/End, an anchor, find in page,
+  //              a resize), it eases to the nearest chapter; never while a pointer is held down (a scrollbar drag)
+  const SNAP_S = 1.05, QUIET = 160, SETTLE_MS = 180;
   const stops = panels.map((_, k) => (k ? S0 + (k - 1) * STEP + DUR : S0) - OFF);   // vh into the run where each chapter rests
   const yAt = s => spacer.getBoundingClientRect().top + scrollY - H() + s / 100 * H();
-  const curY = () => (window.__lenis ? window.__lenis.animatedScroll ?? scrollY : scrollY);
-  let busy = false, quietUntil = 0;
-  // the scene's zone: from a little before it pins until the next section reaches the top (a gesture there is ours)
-  const inZone = y => y >= yAt(0) - H() * .5 - 1 && y <= yAt(RUN) + H() - 1;   // up to the next section reaching the top
+  const lenis = () => window.__lenis;
+  const curY = () => (lenis() ? lenis().animatedScroll ?? scrollY : scrollY);
+  const zoneA = () => yAt(0);                     // the first chapter at rest (the scene has just pinned)
+  const zoneB = () => yAt(RUN) + H();             // the next section at the top of the screen
+  const inside = y => y >= zoneA() - 1 && y <= zoneB() - 1;
+  const restPoints = () => [...stops.map(yAt), zoneB()];
+  let busy = false, quietUntil = 0, lastAbs = 0, held = false, settleT = 0, safetyT = 0;
+
   const target = (y, dir) => {
     if (dir > 0) {
-      if (y < yAt(0) - 1) return yAt(0);
       const next = stops.find(s => yAt(s) > y + 2);
-      return next === undefined ? yAt(RUN) + H() : yAt(next);   // after the last chapter: the next section at the top
+      return next === undefined ? zoneB() : yAt(next);              // after the last chapter: the next section at the top
     }
-    if (y <= yAt(0) + 2) return null;                              // at the first chapter: let the page scroll up as usual
+    if (y <= zoneA() + 2) return null;                               // at the first chapter: the page scrolls up as usual
     const prev = [...stops].reverse().find(s => yAt(s) < y - 2);
-    return prev === undefined ? yAt(0) : yAt(prev);
+    return prev === undefined ? zoneA() : yAt(prev);
   };
   const go = y => {
-    busy = true;
-    const done = () => { busy = false; quietUntil = performance.now() + QUIET; };
-    if (window.__lenis) window.__lenis.scrollTo(y, { duration: SNAP_S, lock: true, force: true, onComplete: done });
-    else { scrollTo({ top: y, behavior: 'smooth' }); setTimeout(done, SNAP_S * 1000); }
+    busy = true; clearTimeout(settleT); clearTimeout(safetyT);
+    const done = () => { if (!busy) return; busy = false; clearTimeout(safetyT); quietUntil = performance.now() + QUIET; };
+    safetyT = setTimeout(done, SNAP_S * 1000 + 250);                 // in case the scroller never reports the end
+    if (lenis()) lenis().scrollTo(y, { duration: SNAP_S, lock: true, force: true, onComplete: done });
+    else { scrollTo({ top: y, behavior: 'smooth' }); }
   };
-  const step = (dir, e) => {
-    if (!on) return false;
-    const y = curY();
-    if (!inZone(y)) return false;
-    const now = performance.now();
-    if (busy || now < quietUntil) { quietUntil = Math.max(quietUntil, now + QUIET); e?.preventDefault(); e?.stopImmediatePropagation(); return true; }
-    const t = target(y, dir);
-    if (t === null) return false;
-    e?.preventDefault(); e?.stopImmediatePropagation();
-    go(t);
-    return true;
-  };
+  const swallow = e => { if (e) { e.preventDefault(); e.stopImmediatePropagation(); } };
+
   // capture on window, so the smooth scroller (Lenis listens on window too) never sees a gesture the scene takes
-  addEventListener('wheel', e => { if (Math.abs(e.deltaY) < 2 || e.ctrlKey) return; step(Math.sign(e.deltaY), e); }, { passive: false, capture: true });
+  addEventListener('wheel', e => {
+    if (!on || e.ctrlKey || Math.abs(e.deltaY) < Math.abs(e.deltaX)) return;   // pinch-zoom and sideways swipes are not ours
+    const now = performance.now(), d = e.deltaY * (e.deltaMode === 1 ? 33 : e.deltaMode === 2 ? H() : 1), abs = Math.abs(d);
+    if (busy) { swallow(e); quietUntil = now + QUIET; lastAbs = abs; return; }
+    if (now < quietUntil && !(abs >= 24 && abs > lastAbs * 1.6)) { swallow(e); quietUntil = now + QUIET; lastAbs = abs; return; }
+    lastAbs = abs;
+    if (abs < 1) return;
+    const y = curY(), dir = Math.sign(d), A = zoneA(), B = zoneB();
+    if (!inside(y)) {
+      // entering: stop on the first chapter (from above) or the last (from below) instead of scrolling past it
+      const T = (lenis() ? lenis().targetScroll : y) + d;
+      if (dir > 0 && y < A && T >= A - 1) { swallow(e); go(A); }
+      else if (dir < 0 && y > B - 1 && T < B - 1) { swallow(e); go(yAt(stops[N - 1])); }
+      return;
+    }
+    const t = target(y, dir);
+    if (t === null) return;
+    swallow(e); go(t);
+  }, { passive: false, capture: true });
+
+  // keys: arrows, Page Up/Down and Space (not Space on a button or link, which it activates)
   addEventListener('keydown', e => {
-    if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName || '')) return;
+    if (!on || e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
+    const el = document.activeElement;
+    if (el && (el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName))) return;
+    if (e.key === ' ' && el?.closest?.('button, a[href], summary, [role="button"]')) return;
     const dir = { ArrowDown: 1, PageDown: 1, ' ': e.shiftKey ? -1 : 1, ArrowUp: -1, PageUp: -1 }[e.key];
-    if (dir) step(dir, e);
+    if (!dir) return;
+    const y = curY();
+    if (busy) { if (inside(y)) swallow(e); return; }
+    if (!inside(y)) return;
+    const t = target(y, dir);
+    if (t === null) return;
+    swallow(e); go(t);
   }, { capture: true });
+
+  // touch: only once the scene is pinned (the section above scrolls by touch as usual); a swipe of 30px or more is one step
   let touchY = null;
-  addEventListener('touchstart', e => { touchY = on && inZone(curY()) ? e.touches[0].clientY : null; }, { passive: true, capture: true });
+  addEventListener('touchstart', e => { touchY = on && inside(curY()) && e.touches.length === 1 ? e.touches[0].clientY : null; }, { passive: true, capture: true });
   addEventListener('touchmove', e => {
     if (touchY === null) return;
-    // pulling back down at the first chapter (or before the scene pins): the page scrolls up as usual
-    if (e.touches[0].clientY > touchY && curY() <= yAt(0) + 2) { touchY = null; return; }
+    // pulling back down at the first chapter: the page scrolls up as usual
+    if (e.touches[0].clientY > touchY && curY() <= zoneA() + 2 && !busy) { touchY = null; return; }
     e.preventDefault();
   }, { passive: false, capture: true });
   addEventListener('touchend', e => {
     if (touchY === null) return;
     const dy = touchY - (e.changedTouches[0]?.clientY ?? touchY); touchY = null;
-    if (Math.abs(dy) > 30) step(Math.sign(dy));
+    if (busy || Math.abs(dy) < 30) return;
+    const t = target(curY(), Math.sign(dy));
+    if (t !== null) go(t);
   }, { passive: true, capture: true });
+
+  // settling: a scroll that comes to rest between chapters eases to the nearest one
+  const settle = () => {
+    if (!on || busy || held) return;
+    const y = curY();
+    if (!inside(y)) return;
+    const pts = restPoints(), near = pts.reduce((a, b) => (Math.abs(b - y) < Math.abs(a - y) ? b : a));
+    if (Math.abs(near - y) > 3) go(near);
+  };
+  const armSettle = () => { clearTimeout(settleT); if (on && !busy) settleT = setTimeout(settle, SETTLE_MS); };
+  addEventListener('scroll', armSettle, { passive: true });
+  addEventListener('pointerdown', () => { held = true; clearTimeout(settleT); }, { capture: true, passive: true });
+  addEventListener('pointerup', () => { held = false; armSettle(); }, { capture: true, passive: true });
+  addEventListener('pointercancel', () => { held = false; armSettle(); }, { capture: true, passive: true });
+  addEventListener('resize', armSettle);
+
+  // a focused link brings its chapter to rest on screen (smoothly, as a gesture would)
+  sec.addEventListener('focusin', e => {
+    if (!on || busy) return;
+    const p = e.target.closest('.cmp__p'); if (!p) return;
+    const y = yAt(stops[panels.indexOf(p)]);
+    if (Math.abs(curY() - y) > 3) go(y);
+  });
 
   addEventListener('scroll', queue, { passive: true });
   addEventListener('resize', () => { if (on) size(); queue(); });
