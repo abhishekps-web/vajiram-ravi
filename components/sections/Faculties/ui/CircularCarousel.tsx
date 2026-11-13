@@ -44,11 +44,14 @@ import { whenVisible } from "@/components/sections/Faculties/lib/reveal";
 const STRIPS = 8;
 /** The ring holds at least this many cards; fewer items are repeated round it. */
 const MIN_CARDS = 10;
-/** Camera tilt, degrees: negative looks down onto the ring. */
-const TILT = -6;
+/**
+ * Camera tilt, degrees: negative looks down onto the ring. 0 (user 2026-11-13: a straight, front-facing view): the ring is seen
+ * level, at eye height, so it shows its arc as before but with no tilt; it was -6.
+ */
+const TILT = 0;
 const PERSPECTIVE = 2400;
-/** How far the camera leans toward the pointer, degrees. */
-const LEAN = 3.5;
+/** How far the camera leans toward the pointer, degrees: none (user 2026-11-13, no tilt); it was 3.5. */
+const LEAN = 0;
 /** Spring stiffness (rad/s) of a move made by hand, of the autoplay and of the entrance. */
 const SNAP_HAND = 9;
 const SNAP_AUTO = 6.5;
