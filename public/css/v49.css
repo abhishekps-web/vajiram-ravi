@@ -2330,3 +2330,14 @@ html main #gs .lbl + .gs__h { margin-top: var(--hd-lbl); }
 html main #batches .bhead { margin-bottom: var(--hd-gap); }
 html main .sm__grid, html main #faq .qas { margin-top: var(--hd-gap); }
 html main #visit .cm { margin-top: var(--hd-gap); }
+/* Contact on the same rhythm (user 2026-11-13): --sec-y above and below the split card (it had 90px above and the bottom space
+   as each column's own margin), the copy column aligned to the top instead of centred against the taller form, so the eyebrow
+   sits --sec-y from the top as in every other section, and the form's top lines up with the eyebrow. */
+html main #contact .contact__in { padding-top: var(--sec-y); padding-bottom: var(--sec-y); }
+html main #contact .contact__in > * { margin-bottom: 0; }
+@media (min-width: 901px) {
+  html main #contact .contact__in { align-items: start; }
+  html main #contact .contact__l { justify-content: flex-start; }
+  html main #contact .contact__in > .form { margin-top: 0; }
+}
+@media (max-width: 900px) { html main #contact .contact__in { row-gap: var(--hd-gap); } }   /* stacked: heading block -> form = --hd-gap */
