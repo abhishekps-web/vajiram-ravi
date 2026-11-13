@@ -102,6 +102,65 @@ export default function init() {
     const y = y0 + u / 100 * H();
     if (window.__lenis) window.__lenis.scrollTo(y, { immediate: true }); else scrollTo({ top: y, behavior: 'auto' });
   });
+  // ---- one step per gesture (user 2026-11-13): while the scene is pinned, one wheel flick, swipe or key press moves exactly one
+  // chapter (its swing plays out), and past the last chapter it carries on to the next section (back past the first: to the one
+  // before). A gesture's trailing wheel events (trackpad inertia) are swallowed until the wheel has been quiet for QUIET ms.
+  const SNAP_S = 1.05, QUIET = 180;
+  const stops = panels.map((_, k) => (k ? S0 + (k - 1) * STEP + DUR : S0) - OFF);   // vh into the run where each chapter rests
+  const yAt = s => spacer.getBoundingClientRect().top + scrollY - H() + s / 100 * H();
+  const curY = () => (window.__lenis ? window.__lenis.animatedScroll ?? scrollY : scrollY);
+  let busy = false, quietUntil = 0;
+  // the scene's zone: from a little before it pins until the next section reaches the top (a gesture there is ours)
+  const inZone = y => y >= yAt(0) - H() * .5 - 1 && y <= yAt(RUN) + H() - 1;   // up to the next section reaching the top
+  const target = (y, dir) => {
+    if (dir > 0) {
+      if (y < yAt(0) - 1) return yAt(0);
+      const next = stops.find(s => yAt(s) > y + 2);
+      return next === undefined ? yAt(RUN) + H() : yAt(next);   // after the last chapter: the next section at the top
+    }
+    if (y <= yAt(0) + 2) return null;                              // at the first chapter: let the page scroll up as usual
+    const prev = [...stops].reverse().find(s => yAt(s) < y - 2);
+    return prev === undefined ? yAt(0) : yAt(prev);
+  };
+  const go = y => {
+    busy = true;
+    const done = () => { busy = false; quietUntil = performance.now() + QUIET; };
+    if (window.__lenis) window.__lenis.scrollTo(y, { duration: SNAP_S, lock: true, force: true, onComplete: done });
+    else { scrollTo({ top: y, behavior: 'smooth' }); setTimeout(done, SNAP_S * 1000); }
+  };
+  const step = (dir, e) => {
+    if (!on) return false;
+    const y = curY();
+    if (!inZone(y)) return false;
+    const now = performance.now();
+    if (busy || now < quietUntil) { quietUntil = Math.max(quietUntil, now + QUIET); e?.preventDefault(); e?.stopImmediatePropagation(); return true; }
+    const t = target(y, dir);
+    if (t === null) return false;
+    e?.preventDefault(); e?.stopImmediatePropagation();
+    go(t);
+    return true;
+  };
+  // capture on window, so the smooth scroller (Lenis listens on window too) never sees a gesture the scene takes
+  addEventListener('wheel', e => { if (Math.abs(e.deltaY) < 2 || e.ctrlKey) return; step(Math.sign(e.deltaY), e); }, { passive: false, capture: true });
+  addEventListener('keydown', e => {
+    if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName || '')) return;
+    const dir = { ArrowDown: 1, PageDown: 1, ' ': e.shiftKey ? -1 : 1, ArrowUp: -1, PageUp: -1 }[e.key];
+    if (dir) step(dir, e);
+  }, { capture: true });
+  let touchY = null;
+  addEventListener('touchstart', e => { touchY = on && inZone(curY()) ? e.touches[0].clientY : null; }, { passive: true, capture: true });
+  addEventListener('touchmove', e => {
+    if (touchY === null) return;
+    // pulling back down at the first chapter (or before the scene pins): the page scrolls up as usual
+    if (e.touches[0].clientY > touchY && curY() <= yAt(0) + 2) { touchY = null; return; }
+    e.preventDefault();
+  }, { passive: false, capture: true });
+  addEventListener('touchend', e => {
+    if (touchY === null) return;
+    const dy = touchY - (e.changedTouches[0]?.clientY ?? touchY); touchY = null;
+    if (Math.abs(dy) > 30) step(Math.sign(dy));
+  }, { passive: true, capture: true });
+
   addEventListener('scroll', queue, { passive: true });
   addEventListener('resize', () => { if (on) size(); queue(); });
   wide.addEventListener?.('change', set);

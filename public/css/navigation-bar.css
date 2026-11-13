@@ -45,3 +45,14 @@ html[lang="hi"] .nav .nav__a, html[lang="hi"] .drawer a { font-family: "Mukta", 
    its pattern continues the page's tiling; the rounded bar (20px corners, no shadow or border) carries the same ground, so the
    header reads the same at the top of the page and once scrolled. Layout and positions are unchanged. */
 .nav-band, .nav::after { background: var(--ground-jaali); background-size: 100% 100%, 36px 36px, auto; }
+
+/* Transparent at rest, white once scrolled (user 2026-11-13; replaces the always-on bar above): at the top of the page the band
+   and the bar are clear, so the page's ground shows through; once the page leaves the top (.scrolled, nav-menus.js, past 20px)
+   the bar fades to white (#FFF, 16px corners, as before). Position, layout, links, menus and the language switch are unchanged. */
+.nav-band { background: transparent; }
+.nav::after { background: transparent none; transition: background-color .35s var(--ease, ease), box-shadow .35s var(--ease, ease); }
+.nav.scrolled::after { background-color: #fff; box-shadow: 0 6px 24px -14px rgba(60, 25, 5, .28); }
+@media (prefers-reduced-motion: reduce) { .nav::after { transition: none; } }
+/* ...and the logo + links group drops its own white pill at rest, so the whole header is clear; it returns with the white bar */
+.nav .nav__pill { transition: background-color .35s var(--ease, ease); }
+.nav:not(.scrolled) .nav__pill { background-color: transparent; }
