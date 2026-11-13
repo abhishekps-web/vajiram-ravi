@@ -31,10 +31,7 @@ export default function Programmes() {
             {/* the previous website's heading (user 2026-11-13) */}
             Programmes for every stage of UPSC.
           </h2>
-          {/* the previous website's body text (user 2026-11-13) */}
-          <p className="prog__intro intro rv" style={{ "--d": ".16s" } as CSSProperties}>
-            Choose the stage you&apos;re preparing for, then the programme. Every programme runs in the classroom and LIVE-Online.
-          </p>
+          {/* no intro line under the heading (user 2026-11-13: removed) */}
           <div className="mt-[40px]">
             <CourseShelf programmes={programmes} />
           </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from "react";
 import Button from "@/components/ui/Button/Button";
 import IndianLink from "@/components/sections/Programmes/ui/IndianLink";
 import { programmeCategories, type Programme, type ProgrammeCategory } from "@/components/sections/Programmes/data/programmes";
@@ -19,6 +19,8 @@ import "./shelf.css";
  * needs OPEN_H of stage.
  */
 const BOOK = { w: 196, h: 260 };
+/** Where "View course" rests on a closed book: its bottom edge, px above the book's foot (above the category). */
+const FOLLOW_BOTTOM = 45;
 const GAP = 60;
 const ROW_H = 352;
 const BOOK_TOP = 30;
@@ -617,6 +619,23 @@ function Book({ index, programme, hidden, out, open, away, style, onPick, onClos
   const turn = (by: number) => setTurned((t) => Math.min(last, Math.max(0, t + by)));
   const { deep } = programme.cover;
 
+  // "View course" shows only while a closed book is hovered, under the cursor, and follows it (user 2026-11-13); keyboard focus
+  // shows it at its place above the category. Fine pointers with motion only; the stage may be zoomed, so the offset is in its own px.
+  const followRef = useRef<HTMLSpanElement>(null);
+  const entered = useRef(false);
+  const follow = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const el = followRef.current;
+    if (!el || out || event.pointerType !== "mouse" || prefersReducedMotion()) return;
+    const box = event.currentTarget.getBoundingClientRect();
+    const k = box.width / BOOK.w || 1;
+    const rest = { x: BOOK.w / 2, y: BOOK.h - FOLLOW_BOTTOM - 18 };
+    const x = (event.clientX - box.left) / k - rest.x, y = (event.clientY - box.top) / k - rest.y;
+    // on entering, it appears under the pointer (no slide in from its resting place); after that it eases after it
+    if (!entered.current) { el.style.transition = "none"; el.style.translate = `${x.toFixed(1)}px ${y.toFixed(1)}px`; void el.offsetWidth; el.style.transition = ""; entered.current = true; return; }
+    el.style.translate = `${x.toFixed(1)}px ${y.toFixed(1)}px`;
+  };
+  const unfollow = () => { entered.current = false; if (followRef.current) followRef.current.style.translate = ""; };
+
   useEffect(() => {
     if (!open) {
       setTurned(0);
@@ -638,7 +657,8 @@ function Book({ index, programme, hidden, out, open, away, style, onPick, onClos
       className="group/book absolute"
       style={style}
       onMouseEnter={() => onHover(true)}
-      onMouseLeave={() => onHover(false)}
+      onMouseLeave={() => { onHover(false); unfollow(); }}
+      onPointerMove={follow}
     >
       <div data-cover className="absolute inset-0 origin-bottom [perspective:2200px]">
         {/* The shadow it casts on the wall while lifted off a plank or a stack (only in the entrance). */}
@@ -769,6 +789,20 @@ function Book({ index, programme, hidden, out, open, away, style, onPick, onClos
           </span>
         </button>
 
+        {/* "View course" on the closed book (the cover's IA, user 2026-11-13): the site's design-system button, shown only while
+            the book is hovered (or the button has keyboard focus), following the cursor (Book: follow); it opens the book. */}
+        {!out && (
+          <span
+            ref={followRef}
+            className="pointer-events-none absolute inset-x-0 z-[101] flex justify-center scale-75 opacity-0 [transition:translate_450ms_cubic-bezier(.22,1,.36,1),opacity_250ms_var(--ease-out),scale_350ms_cubic-bezier(.22,1,.36,1)] group-hover/book:scale-100 group-hover/book:opacity-100 group-hover/book:[&>*]:pointer-events-auto has-[:focus-visible]:scale-100 has-[:focus-visible]:opacity-100 has-[:focus-visible]:[&>*]:pointer-events-auto motion-reduce:transition-none"
+            style={{ bottom: FOLLOW_BOTTOM }}
+          >
+            <Button size="xs" iconEnd="arrow" onClick={onPick} ariaLabel={`View course: ${programme.name}`}>
+              View course
+            </Button>
+          </span>
+        )}
+
         {/* Under the open spread: previous and next, and where you are. */}
         {out && (
           <div
@@ -854,15 +888,16 @@ function CoverFront({ programme, large }: { programme: Programme; large: boolean
       </span>
 
       <span className={cx("absolute flex flex-col items-center", large ? "px-6 pt-7 pb-6" : "px-2.5 pt-3.5 pb-3")} style={frame}>
+        {/* The cover's IA (user 2026-11-13): brand, name, foil rule, emblem, "View course", category. */}
         <span
           aria-hidden="true"
-          className={cx("tracking-[0.04em]", large ? "text-[13px]/[16px]" : "text-[12px]/[15px]")}
-          style={{ color: FOIL, opacity: 0.88 }}
+          className={cx("font-semibold tracking-[0.2em] uppercase", large ? "text-[13px]/[16px]" : "text-[10px]/[13px]")}
+          style={{ color: FOIL, opacity: 0.9 }}
         >
           Vajiram &amp; Ravi
         </span>
         <span
-          className={cx("block font-heading font-medium text-balance text-[#ffe3b0]", large ? "mt-5 text-[34px]/[1.1]" : "mt-2.5 text-[17px]/[1.12]")}
+          className={cx("block font-medium text-balance text-[#ffe3b0] [font-family:Newsreader,Georgia,serif]", large ? "mt-5 text-[36px]/[1.08]" : "mt-2 text-[20px]/[1.1]")}
         >
           {programme.name}
         </span>
@@ -872,17 +907,15 @@ function CoverFront({ programme, large }: { programme: Programme; large: boolean
           <span className={cx("rotate-45 bg-current", large ? "size-1.5" : "size-1")} />
           <span className={cx("h-px bg-current opacity-70", large ? "w-10" : "w-5")} />
         </span>
-        <span aria-hidden="true" className="flex flex-1 items-center justify-center">
+        <span aria-hidden="true" className="flex min-h-0 flex-1 items-center justify-center">
           <CoverArt emblem={emblem} size={large ? 128 : 66} />
         </span>
-        {/* The foot: the category and the course count; on hover, "Open the book". */}
-        <span className={cx("relative grid tracking-[0.02em] whitespace-nowrap", large ? "text-[12px]/[16px]" : "text-[12px]/[15px]")} style={{ color: FOIL }}>
-          <span className="col-start-1 row-start-1 [transition:opacity_300ms_var(--ease-out)] group-hover/book:opacity-0">
-            {programme.category} · {programme.count} courses
-          </span>
-          <span aria-hidden="true" className="col-start-1 row-start-1 text-[#ffe3b0] opacity-0 [transition:opacity_300ms_var(--ease-out)] group-hover/book:opacity-100">
-            Open the book
-          </span>
+        {/* The foot: the category. */}
+        <span
+          className={cx("block font-semibold tracking-[0.18em] whitespace-nowrap uppercase", large ? "text-[12px]/[16px]" : "mt-2.5 text-[10px]/[13px]")}
+          style={{ color: FOIL }}
+        >
+          {programme.category}
         </span>
       </span>
 

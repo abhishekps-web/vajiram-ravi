@@ -197,4 +197,3 @@
 #courses #programmes-help-h { font: 500 26px/1.2 "Newsreader", Georgia, serif; letter-spacing: -.01em; color: var(--ink); }
 #courses .prog__help p { font: 400 16.5px/1.55 var(--f); letter-spacing: -.01em; color: var(--body); }
 /* the intro under the shelf heading: the site's .intro, centred, 16px under the heading (as every other section) */
-#courses .prog__intro { margin: 16px auto 0; text-align: center; text-wrap: balance; }

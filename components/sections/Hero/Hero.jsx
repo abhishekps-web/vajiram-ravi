@@ -85,10 +85,6 @@ export default function Hero() {
               <i />
             </button>
           </p>
-          <a className="dl__scroll" href="#toppers" aria-label="Scroll down">
-            <span>Scroll</span>
-            <i aria-hidden="true" />
-          </a>
         </div>
       </div>
     </section>
