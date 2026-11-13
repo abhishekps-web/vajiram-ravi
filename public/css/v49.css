@@ -2378,3 +2378,16 @@ html main #contact .contact__in > * { margin-bottom: 0; }
 @media (max-width: 1180px) { #batches .rail--batch { --cw: calc((100% - var(--bgap)) / 2); } }
 @media (max-width: 640px) { #batches .rail--batch { --cw: 86%; } }
 @media (prefers-reduced-motion: reduce) { #batches .rail--batch > .rail__track { scroll-behavior: auto; -webkit-mask-image: none; mask-image: none; } }
+
+/* ---- Contact us: three tiles (user 2026-11-13, after the wireframe). The campus photos are the large square on the left; on the right
+   the campus tile (address and map) over the channels tile (call, email); one 20px gutter between all three. Each right-hand tile is
+   the white contact card it was; the photo fills the full height. 1000px and under: photos, campus, channels, one under the other. ---- */
+html main #visit .cm { --tile-gap: clamp(14px, 1.4vw, 20px); grid-template-areas: "gal place" "gal chan"; grid-template-rows: auto auto;
+  column-gap: var(--tile-gap); row-gap: var(--tile-gap); align-items: stretch; }
+html main #visit .cm__gal { grid-area: gal; }
+html main #visit .cm__list--place { grid-area: place; }
+html main #visit .cm__list--chan { grid-area: chan; }
+/* the rows still arrive top to bottom across the two tiles */
+.cm.rv .cm__list--chan .cm__item:nth-child(1) { transition-delay: .5s, .5s, 0s, 0s; }
+.cm.rv .cm__list--chan .cm__item:nth-child(2) { transition-delay: .6s, .6s, 0s, 0s; }
+@media (max-width: 1000px) { html main #visit .cm { grid-template-columns: minmax(0, 1fr); grid-template-areas: "gal" "place" "chan"; } }
