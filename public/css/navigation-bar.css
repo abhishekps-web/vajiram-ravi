@@ -21,13 +21,27 @@ main#top { padding-top: calc(var(--hdr-h) + var(--hdr-gap)); }
 
 /* The bar: white (#FFF) with 20px corners behind the whole navigation (logo and links, language switch, Let's talk), at all times
    (user 2026-11-13; it used to appear only once the page scrolled). It is a layer behind the nav's items (inset 8px / 10px past
-   them), so their layout and positions do not move. It carries the soft shadow that lifts the header off the page (the pill itself
-   stays flat). */
-.nav::after { content: ""; position: absolute; inset: -8px -10px; z-index: -1; background: #fff; border-radius: 20px;
-  box-shadow: 0 0 0 1px rgba(38, 38, 38, .06), 0 10px 30px -10px rgba(38, 38, 38, .22); pointer-events: none; }
+   them), so their layout and positions do not move. No shadow and no border (user 2026-11-13): it is a flat white bar, and the
+   pill inside it is flat too. */
+.nav::after { content: ""; position: absolute; inset: -8px -10px; z-index: -1; background: #fff; border-radius: 20px; box-shadow: none; border: 0; pointer-events: none; }
 
 /* Typography = the Button component's (user 2026-11-13): font, weight, line height and letter spacing are the button system's own
    tokens (public/css/buttons.css :root), and the size is the default (md) button's, 18px (.btn--md --btn-fs). Spacing, colours and
    hover/focus states are unchanged. Covers the bar's links and menu buttons (.nav__a) and the phone drawer's links. */
 .nav .nav__a, .drawer a { font-family: var(--btn-font); font-weight: var(--btn-weight); font-size: 18px; line-height: var(--btn-lh); letter-spacing: var(--btn-ls); }
 html[lang="hi"] .nav .nav__a, html[lang="hi"] .drawer a { font-family: "Mukta", var(--btn-font); }
+
+/* Horizontal alignment (user 2026-11-13): the bar's left and right edges line up with the hero's content container, the photo card
+   (20px in from the centred 1440px column, .dl__frame in v49.css). The bar reaches 10px past the nav's items (::after above), so the
+   nav sits 30px in: bar edge = --cap + 20px, the card's edge, on every screen size. */
+.nav, .nav.scrolled { left: calc(var(--cap, 0px) + 20px + 10px); right: calc(var(--cap, 0px) + 20px + 10px); }
+
+/* The white band covers the header only (user 2026-11-13): the 20px gap below it belongs to the hero's frame and shows the hero's
+   ground (the Programmes ground, v49.css --ground-jaali). */
+.nav-band { height: var(--hdr-h); }
+
+/* Background = the Programmes ground (user 2026-11-13; it was white): the jaali pattern under the cream veil on #fffaf3, the shared
+   --ground-jaali token (v49.css) also used by the hero and Programmes. The band at the top of the page starts at the page's top, so
+   its pattern continues the page's tiling; the rounded bar (20px corners, no shadow or border) carries the same ground, so the
+   header reads the same at the top of the page and once scrolled. Layout and positions are unchanged. */
+.nav-band, .nav::after { background: var(--ground-jaali); background-size: 100% 100%, 36px 36px, auto; }

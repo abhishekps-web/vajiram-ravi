@@ -1,6 +1,6 @@
 /* =====================================================================================================================================
    Our story: the opening of the Why section, a pinned photographic scene after vajiram-ravi-homepage.vercel.app #campus (itself after
-   rebelliously-optimistic.com "the EXPERIENCE"). Per 100vh of scroll once pinned: the gate card grows out of the full-bleed facade (0-168),
+   rebelliously-optimistic.com "the EXPERIENCE"). Per 100vh of scroll once pinned (js/story.js enters this timeline 140vh in): the gate card is shown at full size (no zoom-in),
    "हमारी कहानी" splits apart (140-196), the card settles bottom-left as the orange ground fades up (182-280), the caption blurs in (280-322),
    then each next chapter swings in about its bottom-left corner from 30deg while the track slides a screen (112vh each).
    js/story.js drives the custom properties. Without the pinned stage (under 900 x 600, or reduced motion) it is a plain stacked list.
@@ -30,11 +30,11 @@
 
 /* ---------- the pinned stage (js/story.js adds .cmp--run and a spacer after the section that the scene plays over) ---------- */
 #story.cmp--run { position: sticky; top: 0; padding: 0; z-index: -1; }   /* behind the sheets: the pinned scene must not show through the --sec-gap bands between sections */
-.cmp--run .cmp__stage { height: 100vh; height: 100svh; margin: 0; overflow: hidden; --g: 0; --s: 0; --bo: 1; --ov: 0; --ti: 0; --tr: 0; --tb: 0; }
+.cmp--run .cmp__stage { height: 100vh; height: 100svh; margin: 0; overflow: hidden; --g: 1; --s: 0; --bo: 1; --ov: 0; --ti: 0; --tr: 0; --tb: 0; }
 .cmp--run .cmp__bg { display: block; position: absolute; inset: 0; z-index: 1; opacity: calc(1 - var(--g)); }
 .cmp--run .cmp__bg img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
 .cmp--run .cmp__bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(240, 127, 26, .42), rgba(138, 68, 9, .62)); mix-blend-mode: multiply; }
-.cmp--run .cmp__card { display: block; position: absolute; z-index: 5; left: 50%; top: 50%; width: 22vw; height: 49vh; transform: translate(-50%, -50%); will-change: width, height, transform; }
+.cmp--run .cmp__card { display: block; position: absolute; z-index: 5; left: 50%; top: 50%; width: 92vw; height: 82vh; transform: translate(-50%, -50%); will-change: width, height, transform; }
 .cmp--run .cmp__big { display: flex; position: absolute; inset: 0; z-index: 10; margin: 0; align-items: center; justify-content: center; gap: .28em; pointer-events: none;
   font: 400 clamp(64px, 10vw, 144px)/1.2 "Tiro Devanagari Hindi", serif; opacity: var(--bo); }
 .cmp__big > span { display: block; color: #FFF3E1; text-shadow: 0 2px 3px rgba(42, 24, 6, .35), 0 6px 40px rgba(42, 24, 6, .6); will-change: transform; }
@@ -103,13 +103,13 @@
 #story .cmp__ph::after, #story .cmp__card::after { box-shadow: 0 30px 50px -28px rgba(60, 15, 0, .6), 0 3px 6px rgba(60, 15, 0, .2); }
 
 /* ---------- photographs: a clipped frame with a fine light edge and a soft floor shade, per-photo crops (inline object-position),
-   a settle-in zoom as each chapter lands (--e from js/story.js) and a slow zoom on hover ---------- */
+   no settle-in zoom as a chapter lands (user 2026-11-13: shown at its final size), a slow zoom on hover only ---------- */
 .cmp__ph { border-radius: 8px; }
 .cmp__ph::before { content: ""; position: absolute; inset: 0; z-index: 2; border-radius: inherit; pointer-events: none;
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .28); background: linear-gradient(180deg, transparent 62%, rgba(60, 15, 0, .22) 100%); }
 .cmp__ph > img { position: relative; border-radius: 0; box-shadow: none; transform-origin: 50% 60%;
-  transform: scale(calc((1.12 - .12 * var(--e, 1)) * var(--hz))); transition: --hz .8s var(--ease); }
-/* --hz is registered so the hover zoom eases on its own, while --e follows the scroll frame by frame with no transition lag */
+  transform: scale(var(--hz)); transition: --hz .8s var(--ease); }
+/* --hz is registered so the hover zoom eases on its own */
 @property --hz { syntax: "<number>"; inherits: false; initial-value: 1; }
 .cmp__ph { overflow: hidden; isolation: isolate; }
 .cmp__ph::after { z-index: -1; }
@@ -135,7 +135,6 @@
   background: url(/assets/img/patterns/jaali.svg) 0 0 / 44px 44px repeat;
   -webkit-mask: radial-gradient(78% 70% at 50% 55%, transparent 40%, #000 100%); mask: radial-gradient(78% 70% at 50% 55%, transparent 40%, #000 100%);
   transition: opacity .9s var(--ease), transform 1.2s var(--ease); }
-.fx-on #story.cmp:not(.cmp--run):not(:has(.cmp__hd .rv.in))::before { opacity: 0; transform: translateY(18px); }
 @media (hover: hover) and (pointer: fine) { #story.cmp:hover::before { transform: translate(22px, -22px); } }
 #story.cmp:not(.cmp--run)::before { -webkit-mask: linear-gradient(90deg, #000 0%, transparent 38%, transparent 62%, #000 100%); mask: linear-gradient(90deg, #000 0%, transparent 38%, transparent 62%, #000 100%); }   /* stacked layout is very tall: fade side to side instead */
 @media (max-width: 640px) { #story.cmp::before { background-size: 32px 32px; } }
@@ -152,3 +151,13 @@
 #story.cmp--run .cmp__h { flex: 0 1 460px; }
 /* Why: the subtitle beside the title reads left-aligned like the rest of the body text (user 2026-11-11); it keeps its place on the right */
 .cmp--run .cmp__h { text-align: left; }
+
+/* ---------- photo and text in two equal halves (user 2026-11-13) ----------
+   Stacked layout: two equal columns, one column under 760px (above). Pinned scene: the content width (the panel less --px each side)
+   less the gap, split in two; the photo takes the left half and the text the right. js/story.js measures the photo slot, so the
+   scene's card still lands exactly on it. */
+.cmp__p { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+@media (max-width: 760px) { .cmp__p { grid-template-columns: minmax(0, 1fr); } }
+.cmp--run .cmp__p { --cmp-gap: clamp(40px, 5vw, 88px); --cmp-half: calc((100% - 2 * var(--px) - var(--cmp-gap)) / 2); }
+.cmp--run .cmp__ph { left: var(--px); width: var(--cmp-half); }
+.cmp--run .cmp__tx { left: calc(var(--px) + var(--cmp-half) + var(--cmp-gap)); right: var(--px); width: auto; }

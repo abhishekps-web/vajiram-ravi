@@ -1,0 +1,91 @@
+// Ported from the Soloman build (Downloads/solo/Vajiram-ravi, src/data/faculty.ts), user 2026-11-13.
+/** A link, or null while the page does not exist. */
+export type Href = string | null;
+
+/** "Meet our educators" (IA 7; Figma "06 · Meet Our Educators", 2377:4795). Copy: the client's homepage content, §07. */
+export const facultyIntro = {
+  /** The H2; the emphasis is its second beat, set in orange (Mukta has no italics). */
+  // the site's pattern (user 2026-11-13): a one-line heading and a two-line intro, as Faculty and Free resources
+  heading: { lead: "Learn from examination", emphasis: "specialists." },
+  /** Under the heading. */
+  lead: "Experienced educators and subject specialists, teaching every paper with the examination in mind.",
+  /** Shown under the heading once the faculty page exists (links.faculty is null today). */
+  cta: { label: "Meet our faculty", href: null as Href },
+};
+
+export type Educator = {
+  name: string;
+  /** The subject or area of expertise, under the name. */
+  focus: string;
+  /** A colour portrait, 400 × 600; the carousel shows it in black and white away from the front. */
+  photo: string;
+  /** The educator's profile page; null while it does not exist (the card then is not a link). */
+  profile: Href;
+  /** Academic qualifications, as the institute words them. Shown under the carousel for the educator at the front (with the two below), only when given. */
+  qualifications?: string;
+  /** Relevant teaching experience, as the institute words it. Shown only when given. */
+  experience?: string;
+  /** A short introduction, a sentence or two. Shown only when given. */
+  introduction?: string;
+};
+
+// TODO: profile pages (`profile`), and the rest of the ~30 GS educators.
+// TODO: placeholder — every `qualifications`, `experience` and `introduction` below is dummy copy written to
+// show the layout (the client allowed placeholders, 10 Nov 2026). They are not facts about these
+// educators: replace each with the institute's own wording before launch.
+export const educators: Educator[] = [
+  {
+    name: "SK Manocha",
+    focus: "General Studies · Polity & Governance",
+    photo: "/assets/img/educators/sk-manocha-portrait.webp",
+    profile: null,
+    qualifications: "Postgraduate, Political Science",
+    experience: "20+ years teaching UPSC",
+    introduction: "Builds Polity from the Constitution up, and ties every topic to the way the examination asks about it.",
+  },
+  {
+    name: "Brijender Singh",
+    focus: "Essay",
+    photo: "/assets/img/educators/brijender-singh-portrait.webp",
+    profile: null,
+    qualifications: "Postgraduate, English Literature",
+    experience: "15+ years teaching UPSC",
+    introduction: "Helps you find a clear argument, shape it into a structure and write it out within the time.",
+  },
+  {
+    name: "Md. Rizwan",
+    focus: "Geography optional",
+    photo: "/assets/img/educators/md-rizwan-portrait.webp",
+    profile: null,
+    qualifications: "Postgraduate, Geography",
+    experience: "15+ years teaching UPSC",
+    introduction: "Teaches Geography through maps, diagrams and examples you can carry straight into the answer.",
+  },
+  {
+    name: "Md. Tarique",
+    focus: "History optional",
+    photo: "/assets/img/educators/md-tarique-portrait.webp",
+    profile: null,
+    qualifications: "Postgraduate, History",
+    experience: "15+ years teaching UPSC",
+    introduction: "Turns long stretches of History into connected themes that are easier to revise and to write about.",
+  },
+  {
+    name: "Mukul Pathak",
+    focus: "Psychology optional",
+    photo: "/assets/img/educators/mukul-pathak-portrait.webp",
+    profile: null,
+    qualifications: "Postgraduate, Psychology",
+    experience: "10+ years teaching UPSC",
+    introduction: "Links psychological theory to everyday examples, so the concepts stay with you in the examination hall.",
+  },
+  {
+    name: "Shyam Sundar",
+    focus: "Economics optional",
+    photo: "/assets/img/educators/shyam-sundar-portrait.webp",
+    profile: null,
+    qualifications: "Postgraduate, Economics",
+    experience: "15+ years teaching UPSC",
+    introduction: "Explains Economics from first principles and then applies it to the questions India faces today.",
+  },
+];

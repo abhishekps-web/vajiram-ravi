@@ -7,15 +7,13 @@ import Toppers from '@/components/sections/Toppers/Toppers';
 import WhyChoose from '@/components/sections/WhyChoose/WhyChoose';
 import Batches from '@/components/sections/Batches/Batches';
 import GeneralStudies from '@/components/sections/GeneralStudies/GeneralStudies';
-import Faculty from '@/components/sections/Faculty/Faculty';
+import Faculties from '@/components/sections/Faculties/Faculties';
 import Stories from '@/components/sections/Stories/Stories';
 import Contact from '@/components/sections/Contact/Contact';
 import Resources from '@/components/sections/Resources/Resources';
 import Visit from '@/components/sections/Visit/Visit';
 import Faq from '@/components/sections/Faq/Faq';
 import Closing from '@/components/sections/Closing/Closing';
-import Parked from '@/components/sections/Parked/Parked';
-import RanksDialog from '@/components/dialogs/RanksDialog';
 import CourseCatalogDialog from '@/components/dialogs/CourseCatalogDialog';
 
 // The homepage: the sections in page order. Each section owns its markup, data, styles and behaviour in
@@ -25,25 +23,25 @@ export default function Home() {
     <>
       <NavigationBar />
       <main id="top">
-        {/* the hero and Programmes share the cover: Programmes slides up over the pinned hero */}
+        {/* Order from the 11 Nov 2026 direction session (WEBSITE-DIRECTION-2026-11-11.md): 1 banners (hero),
+            2 courses, 3 toppers, 4 topper testimonials, 5 faculty, 6 why choose us, then the rest */}
         <div className="cover" id="cover">
           <Hero />
           <Programmes />
         </div>
         <Toppers />
+        <Stories />
+        <Faculties />
         <WhyChoose />
-        <RanksDialog />
-        <CourseCatalogDialog />
         <Batches />
         <GeneralStudies />
-        <Faculty />
-        <Stories />
-        <Contact />
         <Resources />
+        <Contact />
         <Visit />
         <Faq />
         <Closing />
-        <Parked />
+        {/* the "All courses" pop-up (not a section): the nav's course menu and "View GS courses" open it */}
+        <CourseCatalogDialog />
       </main>
       <WhatsAppButton />
       <Footer />

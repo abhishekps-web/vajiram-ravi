@@ -1,0 +1,98 @@
+/* =====================================================================================================================
+   EDUCATORS (#educators): the Faculty section ported from the Soloman build (Downloads/solo/Vajiram-ravi,
+   src/components/sections/Faculty: "Meet our educators", the circular carousel), user 2026-11-13. Set up as the Programmes
+   port is (components/sections/Programmes/programmes.css): Tailwind v4 utilities generated from this folder only, soloboy's
+   theme, and its base reset applied inside #educators only. The eyebrow, heading, intro and the caption's copy use this site's
+   global type (SectionLabel, .h2, .intro, Newsreader card titles); see Faculties.tsx and EducatorFlow.tsx.
+   ===================================================================================================================== */
+
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" source(none);
+@source "./**/*.{ts,tsx}";
+
+@theme {
+  /* soloboy's palette only (src/app/globals.css): no default Tailwind colours. */
+  --color-*: initial;
+  --color-white: #fff;
+  --color-ink: #2a1a12;
+  --color-mahogany: #2b1206;
+  --color-cream: #fff8ec;
+  --color-parchment: #fff6e8;
+  --color-paper: #fffdf9;
+  --color-saffron: #f4c430;
+  --color-burnt: #cc5500;
+  --color-orange: #e57512;
+  --color-clay: #6b4a3a;
+  --color-charcoal: #1a1a1a;
+
+  /* soloboy: Mukta for headings, Source Sans 3 for text. Here: Mukta (already loaded by this site) and this site's text face. */
+  --font-sans: var(--f, "Mukta"), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-heading: "Mukta", ui-sans-serif, system-ui, "Segoe UI", Arial, sans-serif;
+
+  --container-canvas: 1440px;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --default-transition-timing-function: ease;
+
+  --shadow-rest: 0 10px 22px rgba(77, 31, 8, 0.12);
+  --shadow-hover: 0 18px 36px rgba(77, 31, 8, 0.2);
+}
+
+/* soloboy's motion tokens (its :root), held on the section. */
+#educators {
+  --dur-instant: 120ms;
+  --dur-fast: 200ms;
+  --dur-base: 320ms;
+  --dur-slow: 600ms;
+  --dur-ambient: 40s;
+  --rise: 24px;
+  --rise-sm: 8px;
+  --lift: -4px;
+  --stagger: 60ms;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  line-height: 1.45;
+}
+
+/* Tailwind's preflight and soloboy's base rules, inside the section only, at the lowest weight (:where, base layer). */
+@layer base {
+  #educators :where(*, ::before, ::after) { box-sizing: border-box; margin: 0; padding: 0; border: 0 solid; }
+  #educators :where(h1, h2, h3, h4, h5, h6) { font-size: inherit; font-weight: inherit; }
+  #educators :where(a) { color: inherit; text-decoration: inherit; }
+  #educators :where(b, strong) { font-weight: bolder; }
+  #educators :where(ol, ul, menu) { list-style: none; }
+  #educators :where(img, svg, video, canvas) { display: block; vertical-align: middle; }
+  #educators :where(img, video) { max-width: 100%; height: auto; }
+  #educators :where(button, input, select, textarea) { font: inherit; letter-spacing: inherit; color: inherit; background-color: transparent; border-radius: 0; }
+  #educators :where(button) { cursor: pointer; }
+  #educators :where(svg) { flex-shrink: 0; }
+  #educators :where(h1, h2, h3) { text-wrap: balance; }
+  #educators :where(p, li, blockquote) { text-wrap: pretty; }
+  #educators :where(:focus-visible) { outline: 2px solid var(--color-saffron); outline-offset: 3px; }
+}
+
+
+/* ---- soloboy's global rules the section uses, scoped to it ---- */
+#educators .tm-mask { display: inline-block; overflow: clip; vertical-align: top; padding-block: 0.14em; margin-block: -0.14em; }
+#educators .tm-ch { display: inline-block; }
+#educators .press-ripple { position: absolute; border-radius: 9999px; pointer-events: none; background: var(--ripple, currentColor); opacity: 0.28;
+  transform: translate(-50%, -50%) scale(0); animation: press-ripple 520ms var(--ease-out) forwards; }
+@keyframes press-ripple { to { transform: translate(-50%, -50%) scale(1); opacity: 0; } }
+#educators .press-pulse { position: absolute; inset: -1px; border-radius: inherit; pointer-events: none;
+  box-shadow: 0 0 0 0 color-mix(in srgb, var(--press-ring, currentColor) 45%, transparent); animation: press-pulse 600ms var(--ease-out) forwards; }
+@keyframes press-pulse { to { box-shadow: 0 0 0 10px color-mix(in srgb, var(--press-ring, currentColor) 0%, transparent); } }
+#educators .press-pulse-late { animation-delay: 180ms; animation-fill-mode: both; }
+@media (prefers-reduced-motion: reduce) { #educators :is(.press-ripple, .press-pulse) { display: none; } }
+
+/* ---- this site's section rhythm and type (as Faculty, Free resources): eyebrow 90px from the top, heading 30px under it,
+   intro 16px under the heading; the eyebrow, .h2 and .intro come from the site's own stylesheets ---- */
+#educators { padding: 90px 0 72px; }
+#educators .edu__head { display: flex; flex-direction: column; align-items: center; text-align: center; }
+#educators .edu__head .h2 { margin: 30px auto 0; text-align: center; }
+#educators .edu__head .intro { margin: 16px auto 0; text-align: center; text-wrap: balance; }
+/* the caption under the ring: the name as the site's card title, the introduction as its body copy */
+#educators .edu__name { font: 500 30px/1.15 "Newsreader", Georgia, serif; letter-spacing: -.01em; color: var(--ink); }
+#educators .edu__intro { font: 400 16.5px/1.55 var(--f); letter-spacing: -.01em; color: var(--body); }
+#educators .edu__facts { font: 400 15px/20px var(--f); color: var(--body); }

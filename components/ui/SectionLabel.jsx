@@ -1,7 +1,7 @@
 // The section eyebrow (.lbl in styles/v49.css): a brand label with its ornament line.
 //   reveal  rises in with the section (.rv, after --d)       light  for dark grounds (.lbl--w)
 //   symbol  an image before the label (.lbl--sym)            delay  the reveal delay (default .05s)
-export default function SectionLabel({ children, reveal = true, delay = '.05s', light = false, symbol }) {
+export default function SectionLabel({ children, reveal = true, delay = '.05s', light = false, symbol = undefined }) {
   const cls = ['lbl', light && 'lbl--w', symbol && 'lbl--sym', reveal && 'rv'].filter(Boolean).join(' ');
   return (
     <div className={cls} style={reveal ? { '--d': delay } : undefined}>

@@ -261,36 +261,6 @@
 #courses .ptabs { margin-top: 36px; }
 @media (prefers-reduced-motion: reduce) { .shelves.is-swap .shelf { animation: none; } }
 
-/* ---- testimonials v3: larger postcards; the sender's photo sits where a stamp would, the quote wraps around it, name and rank are written below ---- */
-#tcar.ilgrid { display: block; overflow: hidden; margin: 28px calc(var(--px) * -1) 0; padding: 48px 0 60px;
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%); }
-.pst__track { display: flex; width: max-content; align-items: flex-start; animation: pstSlide var(--dur, 80s) linear infinite; will-change: transform; }
-@keyframes pstSlide { to { transform: translate3d(-50%, 0, 0); } }
-#tcar:hover .pst__track { animation-play-state: paused; }
-.pst { --t: 0deg; --y: 0px; --z: 1; --tx: 0; --ty: 0; position: relative; z-index: var(--z); flex: none; width: 418px; margin: 0 -24px; rotate: var(--t); translate: 0 var(--y); transition: rotate .55s var(--ease), translate .55s var(--ease), scale .55s var(--ease); }
-.pst:hover, .pst:focus-within { z-index: 30; rotate: 0deg; scale: 1.07; translate: 0 calc(var(--y) - 14px); }
-.pst__in { position: relative; aspect-ratio: 1.41; border-radius: 4px; color: #1B2A52;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, .55), rgba(255, 255, 255, 0) 45%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .36 0 0 0 0 .2 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E"),
-    #FBF7EC;
-  box-shadow: 0 0 0 1px rgba(120, 95, 55, .16), inset 0 0 0 1px rgba(255, 255, 255, .7), 0 1px 1px rgba(40, 25, 10, .18), 0 6px 10px -4px rgba(40, 25, 10, .3), 0 26px 30px -18px rgba(40, 25, 10, .5);
-  transform: perspective(1000px) rotateX(calc(var(--ty) * -3deg)) rotateY(calc(var(--tx) * 4deg)); transition: transform .5s var(--ease); }
-.pst:hover .pst__in { transition-duration: .2s; }
-.pst__hd { position: absolute; top: 16px; left: 28px; margin: 0; font: 600 9px/1 var(--f); letter-spacing: .32em; color: rgba(27, 42, 82, .5); }
-.pst__q { position: absolute; left: 28px; right: 28px; top: 40px; bottom: 84px; margin: 0; overflow: hidden; font: 500 22px/28px "Caveat", "Segoe Script", cursive; color: #1B2A52; text-wrap: pretty; }
-/* the photo, in the stamp's place: a passport print stuck on the card; the handwriting wraps around it */
-.pst__ph { float: right; width: 78px; height: 96px; margin: -6px -2px 8px 16px; object-fit: cover; object-position: 50% 18%; border: 5px solid #FFFDF6; rotate: 3deg; box-shadow: 0 1px 1px rgba(40, 25, 10, .25), 0 6px 10px -4px rgba(40, 25, 10, .5); background: #fff; shape-outside: margin-box; }
-/* name and rank, written below the message */
-.pst__who { position: absolute; left: 28px; right: 28px; bottom: 20px; display: grid; gap: 0; padding-top: 8px; border-top: 1px solid rgba(27, 42, 82, .25); }
-.pst__who b { font: 600 25px/28px "Caveat", "Segoe Script", cursive; color: #1B2A52; }
-.pst__who em { font: 500 18px/22px "Caveat", "Segoe Script", cursive; font-style: normal; color: rgba(27, 42, 82, .75); }
-@media (max-width: 900px) { .pst { width: min(380px, 86vw); } }
-@media (max-width: 460px) { .pst__q { font-size: 19px; line-height: 24px; } .pst__ph { width: 62px; height: 78px; } }
-@media (prefers-reduced-motion: reduce) { .pst, .pst__in { transition: none; } }
-/* reduced motion: no sliding; the row scrolls by hand instead */
-@media (prefers-reduced-motion: reduce) { .pst__track { animation: none; } #tcar.ilgrid { overflow-x: auto; -webkit-mask-image: none; mask-image: none; } .pst[aria-hidden="true"] { display: none; } }
-
 /* ---- counselling form: a brand-orange section (the form card itself stays white) ---- */
 #contact.contact { border: 0; color: #fff; background:
   radial-gradient(48% 60% at 85% 20%, rgba(255, 170, 90, .45), transparent 70%),
@@ -536,7 +506,6 @@
 .gsbook__brand, .gsbook--p .gsbook__brand { font-size: 11px; }
 .gsbook__foot, .gsbook--p .gsbook__foot { font-size: 11px; }
 .gsbook__page-hd { font-size: 11.5px; }
-.pst__hd { font-size: 11px; }
 .gsbook__title span, .gsbook--p .gsbook__title span { font-size: max(12px, 1em); }
 
 /* phones: headlines may wrap (two lines is not possible at this width), forms stay inside their card */
@@ -558,8 +527,21 @@
 .btn.dl__cta { position: absolute; z-index: 6; left: clamp(20px, 5.5vw, 100px); top: calc(50% - 48px + var(--txt-h) / 2 + 30px); margin: 0; opacity: 1 !important; transform: none !important; transition: none; pointer-events: auto; }
 @media (max-width: 900px) {
   .dl__h, .sc .vp__h, .dl__p, .sc__p { min-height: 0; }
-  .dl__in, .sc { padding-bottom: 0; }
+  /* the copy centres in the space above the CTA's zone (CTA 74px from the bottom + its 54px + a 22px gap), so on short screens
+     (the hero is 100svh minus the header) the paragraph can never run under the button */
+  .dl__in, .sc { padding-bottom: calc(74px + 54px + 22px); }
+  /* no top padding: the slides' 80px (v48) cleared the nav when it floated over the hero; the header has its own bar now.
+     The slides' paragraph matches the first slide's on phones (15px, .dl__p above) */
+  .dl__in, .sc { padding-top: 0; }
+  .sc__p { font-size: 15px; }
   .btn.dl__cta { top: auto; bottom: 74px; }
+}
+/* very short phones (600px tall or less, e.g. 320 x 568): the longer slides' copy tightens so it still fits above the CTA */
+@media (max-width: 900px) and (max-height: 600px) {
+  .sc .vp__k { margin-bottom: 12px; }
+  .sc .vp__h.vp__h { font-size: 24px; }
+  .sc .sc__p { margin-top: 8px; line-height: 1.45; }
+  .dl__in, .sc { padding-bottom: calc(74px + 54px + 12px); }   /* a 12px gap above the CTA instead of 22px */
 }
 @media (prefers-reduced-motion: reduce) { .btn.dl__cta { position: relative; top: auto; left: auto; display: inline-flex; margin: 24px clamp(20px, 5.5vw, 100px); } }
 
@@ -985,30 +967,6 @@ html.vrv-lock .wa { opacity: 0; pointer-events: none; }
 #team .fc .fc__pf, #team .fc .pcd__l--p.fc__pf { color: var(--brand); }
 #team .fc .fc__pf:hover, #team .fc .fc__pf:focus-visible { color: var(--brand-d); }
 
-/* testimonials: a bigger lift on hover, and the other cards soften behind it */
-.pst { transition: rotate .55s var(--ease), translate .55s var(--ease), scale .55s var(--ease), filter .45s var(--ease), opacity .45s var(--ease); }
-.pst:hover, .pst:focus-within { scale: 1.16; translate: 0 calc(var(--y) - 18px); }
-@media (hover: hover) and (pointer: fine) {
-  #tcar:has(.pst:hover) .pst:not(:hover), #tcar:has(.pst:focus-within) .pst:not(:focus-within) { filter: blur(3.5px); opacity: .55; }
-}
-@media (prefers-reduced-motion: reduce) { .pst { transition: none; } }
-
-/* testimonials: more headroom so a hovered (scaled and lifted) card is not clipped by the row's box; the margin offsets the extra padding */
-#tcar.ilgrid { padding: 92px 0 84px; margin-top: -16px; margin-bottom: -16px; }
-
-/* testimonials reveal: heading rises out of a masked line, then the cards are dealt onto the table (rise, tilt and settle with a spring), staggered */
-#stories .st-line { display: block; }
-#stories .st-line { margin-block: -.1em; padding-block: .1em; overflow: hidden; }
-#stories .st-line > span { display: block; }
-#stories:not([data-in]) .st-line > span, #stories:not([data-in]) .pst, #stories:not([data-in]) .lbl, #stories:not([data-in]) .st-line { opacity: 0; }
-#stories[data-in] .st-line > span { animation: stLine .8s cubic-bezier(.22, 1, .36, 1) calc(var(--i, 0) * 90ms) both; }
-#stories[data-in] .lbl { animation: stFade .7s ease both; }
-#stories[data-in] .pst { animation: stDeal .9s cubic-bezier(.34, 1.56, .64, 1) calc(.26s + var(--n, 0) * .13s) both; }
-@keyframes stLine { 0% { transform: translateY(105%); } }
-@keyframes stFade { 0% { opacity: 0; transform: translateY(8px); } }
-@keyframes stDeal { 0% { opacity: 0; transform: translateY(110px) rotate(var(--from-r, 8deg)) scale(.9); } 40% { opacity: 1; } 100% { transform: none; } }
-@media (prefers-reduced-motion: reduce) { #stories .st-line > span, #stories .pst, #stories .lbl, #stories .st-line { opacity: 1 !important; animation: none !important; } }
-
 /* toppers: the closing CTA uses the same label type as every other site button (Figtree 700, 18px, sentence case) */
 .vrnp .rs-btn .rs-btn-label, .vrnp .rs-btn .rs-btn-t { font-family: var(--f); font-weight: 700; font-size: 18px; line-height: 1.25; letter-spacing: .005em; text-transform: none; }
 
@@ -1314,7 +1272,6 @@ footer.foot { padding-left: 76px; padding-right: 76px; }
 #batches .bhead { margin-bottom: 24px; }
 #faculty .rail { margin-top: 16px; }
 #faculty #team.rail__track { padding-top: 28px; }
-#tcar.ilgrid { padding-top: 64px; margin-top: -48px; }   /* the row keeps its headroom for the hover lift, but the visible gap under the heading is about 16px */
 .sm__grid { margin-top: 24px; }
 #faq .qas { margin-top: 24px; }
 #why .wc__cards { margin-top: 32px; }
@@ -1424,13 +1381,10 @@ footer.foot { padding-left: 76px; padding-right: 76px; }
 #batches .bhead { margin-bottom: 64px; }
 #faculty .rail { margin-top: 36px; }                 /* + 28px padding inside the carousel = 64px to the cards */
 #faculty #team.rail__track { padding-top: 28px; }
-#tcar.ilgrid { padding-top: 64px; margin-top: 0; }   /* 64px of headroom, which the hover lift needs anyway */
 .sm__grid { margin-top: 64px; }
 #faq .qas { margin-top: 64px; }
 #why .wc__cards { margin-top: 64px; }
 #why .wc__cta { margin-top: 40px; }
-/* success stories: more air between the heading and the postcards (the cards sit tilted and some are raised, so they read closer than the number says) */
-#tcar.ilgrid { padding-top: 112px; }
 
 /* ---- one very subtle Indian background pattern on every light section: the jaali (lattice) tile, a faint brown motif (its opacity is baked into the SVG)
    laid over the cream ground ---- */
@@ -2262,11 +2216,13 @@ footer.foot .foot__logo--mark:focus-visible { outline: 2px solid #fff; outline-o
    so the text started 62px in against 40px on the right). The hover tint is unchanged. */
 #visit .cm__list .cm__item { padding-left: 0; border-left: 0; }
 
-/* Hero height: a fixed 680px on every screen (user 2026-11-13; it was the full screen height, 100svh, and on phones at least that).
-   lib/motion/page-motion.js measures the Programmes cover against the hero's own height, so the cover effect still starts at 0.
-   With reduced motion the slides stack instead of cycling, so there the hero keeps growing with them (680px at least). */
-.dl--pin, .dl--pin .dl__stick { height: 680px; min-height: 0; max-height: none; }
-@media (prefers-reduced-motion: reduce) { .dl--pin, .dl--pin .dl__stick { height: auto; min-height: 680px; } }
+/* Hero height: the navigation bar and the hero together fill the first screen exactly, 100svh (user 2026-11-13; it was a fixed 680px).
+   The hero takes what the header leaves: 100svh minus the header (--hdr-h) and the gap below it (--hdr-gap), both defined in
+   public/css/navigation-bar.css. svh (the small viewport: phone browser bars shown) so it never runs under the mobile toolbar;
+   100vh first as the fallback. lib/motion/page-motion.js measures the Programmes cover against the hero's own height.
+   With reduced motion the slides stack instead of cycling, so there the hero grows with them (the first screen at least). */
+.dl--pin, .dl--pin .dl__stick { height: calc(100vh - var(--hdr-h) - var(--hdr-gap)); height: calc(100svh - var(--hdr-h) - var(--hdr-gap)); min-height: 0; max-height: none; }
+@media (prefers-reduced-motion: reduce) { .dl--pin, .dl--pin .dl__stick { height: auto; min-height: calc(100svh - var(--hdr-h) - var(--hdr-gap)); } }
 
 /* Site header (band, spacing to the hero, scrolled bar, typography): public/css/navigation-bar.css, declared by the
    NavigationBar component (components/layout/NavigationBar/). */
@@ -2279,6 +2235,50 @@ footer.foot .foot__logo--mark:focus-visible { outline: 2px solid #fff; outline-o
 .dl--pin .dl__frame > .dl__stick { height: 100%; }
 @media (prefers-reduced-motion: reduce) { .dl__frame { height: auto; } .dl--pin .dl__frame > .dl__stick { height: auto; min-height: 640px; } }
 
-/* Hero corners: a 20px radius on every screen (user 2026-11-13). It used to grow from 0 to 36px as Programmes covered the hero;
-   now it stays 20px. The rounded box is the hero card itself (.dl__stick, which clips the slides), inside the white frame. */
-.dl--pin .dl__stick { border-radius: 20px; }
+/* Hero corners: a 16px radius on every screen (user 2026-11-13: 20px, then 16px to match the Programmes help card). It used to grow from 0 to 36px as Programmes covered the hero;
+   now it stays 16px. The rounded box is the hero card itself (.dl__stick, which clips the slides), inside the white frame. */
+.dl--pin .dl__stick { border-radius: 16px; }
+
+/* 1440px content column on wide screens (user 2026-11-13). --cap is half of whatever the screen has beyond 1440px (0 up to 1440), so
+   every left/right edge = --cap + its usual inset: section content (--px), the hero card (20px frame), the footer (76px) and the
+   navigation bar (public/css/navigation-bar.css). Up to 1440px wide nothing changes; wider, the whole 1440 layout centres, and
+   section backgrounds still run edge to edge. (--px was max(inset, half the slack), which dropped the inset beyond ~1600px.) */
+/* the column is 1440px wide (user 2026-11-13: briefly 1920px, then back to 1440px): --cap is half of what the screen has beyond 1440px */
+:root { --cap: max(0px, calc((100vw - 1440px) / 2)); --px: calc(var(--cap) + clamp(16px, 5.5vw, 80px)); }
+.dl__frame { padding-left: calc(var(--cap) + 20px); padding-right: calc(var(--cap) + 20px); }
+footer.foot { padding-left: calc(var(--cap) + 76px); padding-right: calc(var(--cap) + 76px); }
+@media (max-width: 640px) { footer.foot { padding-left: 40px; padding-right: 40px; } }
+
+/* Hero height above 1440px wide: a fixed 680px instead of filling the screen (user 2026-11-13); up to 1440px the header + hero
+   still fill the first screen exactly (100svh, above). */
+@media (min-width: 1441px) {
+  .dl--pin, .dl--pin .dl__stick { height: 680px; }
+}
+@media (min-width: 1441px) and (prefers-reduced-motion: reduce) { .dl--pin, .dl--pin .dl__stick { height: auto; min-height: 680px; } }
+
+/* Programmes (the section that slides up over the hero): no top shadow (user 2026-11-13). Its rounded top, background and the
+   slide-over motion are unchanged. */
+.cover > #dlPin + section { box-shadow: none; }
+
+/* Hero ground = the Programmes ground, exactly (user 2026-11-13): the jaali pattern (36px tiles) under a horizontal cream veil on
+   #fffaf3, the same declaration as "main .cover > #dlPin + section" above, held once in --ground-jaali so the two cannot drift.
+   It fills the hero section around the photo card (its 20px frame) and the 20px gap above it, which belongs to the hero's frame;
+   the header's white band covers the header only (public/css/navigation-bar.css). The pattern is offset by the header's height so
+   it continues the page's own tiling (main has the same ground) with no seam. The hero card, copy and layout are unchanged. */
+:root { --ground-jaali: linear-gradient(90deg, rgba(255, 250, 243, 0) 0%, rgba(255, 250, 243, .94) 30%, rgba(255, 250, 243, .94) 70%, rgba(255, 250, 243, 0) 100%), url(/assets/img/patterns/bg-jaali.svg) 0 0 / 36px 36px repeat, #fffaf3; }
+main .cover > #dlPin + section { background: var(--ground-jaali); background-size: 100% 100%, 36px 36px, auto; }
+.dl--pin { background: var(--ground-jaali); background-size: 100% 100%, 36px 36px, auto;
+  background-position: 0 0, 0 calc(-1 * (var(--hdr-h, 74px) + var(--hdr-gap, 20px))), 0 0; }
+
+/* ===== corner radius: one 16px radius for every container (user 2026-11-13): the header bar, the hero frame, the sheets that slide
+   over the hero (top corners), the mega menus, cards, frames, forms, panels and photos. Buttons, pills, chips, avatars and the GS book
+   covers keep their own shapes. `html` lifts these over the section sheets (toppers.css, story.css …) that load after this one. ===== */
+:root { --r-box: 16px; }
+html .nav::after, html .dl__stick, html .mega, html .mega--sm, html .mega a.mega__a, html .mega__col--feat { border-radius: var(--r-box); }
+html main .cover > #dlPin + section, html #toppers, html #toppers.gz { border-radius: var(--r-box) var(--r-box) 0 0; }
+html .gz__sheet, html .gz__frame, html .inv__frame, html .inv--ticket .inv__frame, html .sm__card, html .form--note, html #faqList .qa,
+html #story .cmp__ph, html #story .cmp__ph img, html #story .cmp__card, html #story .cmp__card img,
+html #visit .cm, html #visit .cm__track, html #visit .cm__list, html #visit .cm__map,
+html .cl__card, html footer.foot .foot__news, html #tcar > div, html #courses .prog__help,
+html #stories [class*="postcard-paper"] { border-radius: var(--r-box); }
+@media (max-width: 900px) { html .cl__card, html #visit .cm { border-radius: var(--r-box); } }

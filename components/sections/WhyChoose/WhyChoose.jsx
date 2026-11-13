@@ -2,7 +2,7 @@ import Button from '@/components/ui/Button/Button';
 import Stylesheet from '@/components/ui/Stylesheet';
 import SectionLabel from '@/components/ui/SectionLabel';
 
-// ============ WHY VAJIRAM & RAVI: a pinned photographic scene (after vajiram-ravi-homepage.vercel.app #campus), carrying the six reasons. The gate photograph grows out of the full-bleed facade, "Why choose us?" splits apart, the card settles bottom-left and six chapters swing in on the scroll. css/story.css, ./story.js (id stays "story": the older #why rules in v25/v49.css would restyle it). Without the pinned stage (narrow, short or reduced motion) it is a stacked list. ============
+// ============ WHY VAJIRAM & RAVI: a pinned photographic scene (after vajiram-ravi-homepage.vercel.app #campus) carrying the six reasons. No entrance (user 2026-11-13): it pins already settled (heading, first photo, first chapter in place) and each next chapter swings in on the scroll (./story.js). Without the pinned stage (narrow, short or reduced motion) it is a static stacked list. css/story.css (id stays "story": the older #why rules in v25/v49.css would restyle it). ============
 export default function WhyChoose() {
   return (
     <>
@@ -20,8 +20,8 @@ export default function WhyChoose() {
             </p>
             <div className="cmp__ov">
               <header className="cmp__hd">
-                <SectionLabel>Your UPSC partner · Since 1976</SectionLabel>
-                <h2 id="storyH" className="cmp__h2 rv" style={{ "--d": ".12s" }}>
+                <SectionLabel reveal={false}>Your UPSC partner · Since 1976</SectionLabel>
+                <h2 id="storyH" className="cmp__h2">
                   <span className="cmp__en">Why Vajiram & Ravi?</span>
                   {" "}
                   <span className="cmp__h">{"Fifty years of teaching "}<em>the civil services examination</em>, built around what the UPSC actually asks.</span>
@@ -55,7 +55,7 @@ export default function WhyChoose() {
                       <i aria-hidden="true" />
                     </h3>
                     <p className="cmp__d">Expert faculty for every GS paper, the optionals and the essay: an academic tradition shaped by educators and subject specialists.</p>
-                    <Button variant="secondary" size="sm" className="cmp__cta" href="#faculty" iconEnd="arrow">Meet our educators</Button>
+                    <Button variant="secondary" size="sm" className="cmp__cta" href="#educators" iconEnd="arrow">Meet our educators</Button>
                   </div>
                 </article>
                 <article className="cmp__p" aria-labelledby="storyT2">

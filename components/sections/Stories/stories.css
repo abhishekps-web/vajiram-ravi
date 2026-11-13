@@ -1,0 +1,46 @@
+/* =====================================================================================================================
+   SUCCESS STORIES (#stories): Tailwind v4 entry for this section only (user 2026-11-13).
+   - Utilities are generated from this folder's files only (source(none) + @source) and carry the `st:` prefix, so they can
+     never collide with the Programmes section's Tailwind sheet or this site's plain stylesheets in public/css.
+   - No preflight: the section keeps the site's base styles; its shell (padding --sec-y, ground, eyebrow, .h2) stays in
+     public/css like every other section's.
+   - What a utility cannot say cleanly lives here: the postcard paper, the keyframes and three state variants.
+   ===================================================================================================================== */
+
+@import "tailwindcss/theme.css" layer(theme) prefix(st);
+@import "tailwindcss/utilities.css" source(none);
+@source "./**/*.{js,jsx}";
+
+/* section states, set by stories.js: `waiting` until the section scrolls in (only when JS runs, so the page reads without it),
+   `dealt` once it has; `dimmed` is every other postcard while one is hovered or focused (real pointers only) */
+/* hover as the section always had it: a plain :hover (Tailwind's default also requires @media (hover: hover)) */
+@custom-variant hover (&:hover);
+@custom-variant waiting (html.js #stories:not([data-in]) &);
+@custom-variant dealt (#stories[data-in] &);
+@custom-variant dimmed {
+  @media (hover: hover) and (pointer: fine) {
+    #tcar:has(.pst:hover) &:not(:hover), #tcar:has(.pst:focus-within) &:not(:focus-within) { @slot; }
+  }
+}
+
+/* the postcard: cream card stock with a faint fibre grain and a printed edge */
+@utility postcard-paper {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, .55), rgba(255, 255, 255, 0) 45%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .36 0 0 0 0 .2 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E"),
+    #FBF7EC;
+  box-shadow: 0 0 0 1px rgba(120, 95, 55, .16), inset 0 0 0 1px rgba(255, 255, 255, .7), 0 1px 1px rgba(40, 25, 10, .18),
+    0 6px 10px -4px rgba(40, 25, 10, .3), 0 26px 30px -18px rgba(40, 25, 10, .5);
+}
+
+/* the eyebrow is the shared SectionLabel, so its reveal is stated here rather than on its markup */
+html.js #stories:not([data-in]) > .lbl { opacity: 0; }
+@media (prefers-reduced-motion: no-preference) { #stories[data-in] > .lbl { animation: st-fade .7s ease both; } }
+
+/* the track slides left by exactly one of its two identical sets, so the loop has no seam */
+@keyframes st-slide { to { transform: translate3d(-50%, 0, 0); } }
+/* the heading rises out of its masked line */
+@keyframes st-line { 0% { transform: translateY(105%); } }
+@keyframes st-fade { 0% { opacity: 0; transform: translateY(8px); } }
+/* each postcard is dealt onto the table: rises, tilts and settles with a spring */
+@keyframes st-deal { 0% { opacity: 0; transform: translateY(110px) rotate(var(--from-r, 8deg)) scale(.9); } 40% { opacity: 1; } 100% { transform: none; } }

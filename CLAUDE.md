@@ -22,8 +22,8 @@ components/
     SiteBehaviour.jsx     client component: after hydration, imports lib/behaviour.js and starts it
   sections/<Section>/     one folder per section: <Section>.jsx (markup), data.js (content), *.js (behaviour)
                           Hero, Programmes, Toppers (data/ holds the archive and rankers), WhyChoose, Batches, GeneralStudies,
-                          Faculty, Stories, Contact, Resources (data.jsx: the cards), Visit, Faq, Closing, Parked (hidden)
-  dialogs/                RanksDialog, CourseCatalogDialog (+ their behaviours; the catalogue's openCat is used by Programmes)
+                          Faculties (the faculty section, id "educators"; TS + Tailwind, ported from Soloman), Stories, Contact, Resources (data.jsx: the cards), Visit, Faq, Closing, Parked (hidden)
+  dialogs/                RanksDialog, CourseCatalogDialog (+ their behaviours; course-catalog.js also opens the catalogue for any [data-cat] link)
   ui/                     shared pieces: Button/ (the button system: Button.jsx, button-core.js, README.md), SectionLabel (.lbl eyebrow),
                           ArrowIcon/StraightArrow, Dialog, Stylesheet,
                           custom-select.js (accessible dropdown), accordion.js, rail.js
@@ -43,11 +43,27 @@ public/
 ## How a section is put together
 
 - **Markup**: `<Section>.jsx` is a static server component. Shared markup comes from `components/ui` (`SectionLabel`, `ArrowIcon`, `Dialog`) — reuse those rather than copying markup.
-- **Content**: lists and copy that a behaviour renders, or that repeats, live in the section's `data.js` (e.g. `Faq/data.js`, `Batches/data.js`, `Faculty/data.js`, `Resources/data.jsx`). Editing content means editing data only.
+- **Content**: lists and copy that a behaviour renders, or that repeats, live in the section's `data.js` (e.g. `Faq/data.js`, `Batches/data.js`, `Faculties/data/educators.ts`, `Resources/data.jsx`). Editing content means editing data only.
 - **Behaviour**: the section's `*.js` modules export `init…()` functions that work on the server-rendered DOM (they build lists, bind events, animate). Register a new one in `lib/behaviour.js` at the right point in the sequence. They run once, in the browser, after hydration; React never re-renders those nodes, so they may change them freely.
 - **Buttons**: every button and button-styled link is `<Button>` (`components/ui/Button/Button.jsx`) or, in a behaviour, `buttonHTML()` (`button-core.js`); its look lives only in `public/css/buttons.css`. Pick a variant/size, never restyle: section rules may only place a button (margin, position, display) or override its `--btn-*` tokens. Reference: `components/ui/Button/README.md`.
 - **Never change the DOM before hydration** (a script that does breaks it: render that markup in a component instead and have the behaviour find it).
 - JSX from HTML: `className`, `style={{ "--d": ".1s" }}`, `htmlFor`, `tabIndex`; keep meaningful spaces between inline elements as `{" "}`.
+
+## The Programmes section (#courses) is different: TypeScript + Tailwind
+
+Ported from the soloboy branch of C:UsersVonnueDownloadssoloVajiram-ravi (user 2026-11-13). It is the one section written in
+TypeScript and styled with Tailwind v4 utilities, kept close to soloboy's code; everything it needs lives in its folder
+(`components/sections/Programmes/`: `ui/` its Cta, Medallion, IndianLink and a section-scoped TextMotion; `lib/`; `data/`), images
+in `public/assets/img/programmes/`.
+- `programmes.css` is its Tailwind entry: utilities generated from that folder only and unlayered, soloboy's theme, and Tailwind's
+  preflight plus soloboy's global rules scoped to `#courses`. Nothing in it reaches other sections; keep it that way (this site's
+  buttons also use a `.cta` class).
+- Its section title, eyebrow and body copy use this site's styles (`SectionLabel`, `.h2.h2--sec`); its ground is this site's
+  (`--ground-jaali`, shared with the hero and the header).
+- Responsive (soloboy is a fixed, zoomed 1440 canvas): the rules at the end of `programmes.css` and the shelf's geometry in
+  `CourseShelf.tsx` (4 / 3 / 2 books to a plank, the stage scaled to fit). At 1440px and up it is soloboy's layout unchanged.
+- Its motion is soloboy's (`ui/TextMotion`, Web Animations: the site-motion check cannot see it and lists those elements as static).
+- "Enrol" opens this site's contact form with the programme chosen (`lib/enquiry.ts`).
 
 ## Styles
 
@@ -68,8 +84,25 @@ The client wants **every section and every element animated**. For any change to
 
 ## Working notes
 
-- Header and hero (user 2026-11-13): the header is the NavigationBar component (`components/layout/NavigationBar/`, styles `public/css/navigation-bar.css`). At the top it sits in its own white band (`.nav-band`), then one 20px gap (`--hdr-gap`, the hero frame's gutter) to the hero, which is a fixed 680px (`public/css/v49.css`). The nav stays fixed in one place and always sits on a white bar with 20px corners (no move, shrink, hide or change on scroll). It never turns transparent over the hero (`.nav--hero` is unused). The hero carousel's autoplay holds while the pointer is over the hero or focus is inside it (`lib/motion/page-motion.js`).
+- Client direction: `WEBSITE-DIRECTION-2026-11-11.md` (root) holds the 11 Nov 2026 direction session with the client (the
+  agreed section order, a short page, two-row courses, about 10 toppers, a cylinder faculty carousel, no zoom/scroll effects in
+  Why choose us, a PageSpeed target of 90 to 95, mobile first, the review workflow), plus the full transcript; the original
+  .docx is next to it. Read its "For the build" list before changing the page's structure. Where the user's later
+  instructions differ (e.g. a section order dated after 11 Nov), the user's instruction wins.
+- Global config: `lib/config.js` (`ENABLE_PRELOADER`: the logo intro on or off).
+- Content column: 1440px, centred on wider screens (`--cap` / `--px`, end of `public/css/v49.css`); section backgrounds stay full-bleed.
+  Up to 1440px wide the header + hero fill the first screen exactly (100svh); wider, the hero is a fixed 680px.
+- One ground for the header, the hero frame and Programmes: `--ground-jaali` (v49.css).
+- Header and hero (user 2026-11-13): the header is the NavigationBar component (`components/layout/NavigationBar/`, styles `public/css/navigation-bar.css`). At the top it sits in its own white band (`.nav-band`), then one 20px gap (`--hdr-gap`, the hero frame's gutter) to the hero, which is a fixed 680px (`public/css/v49.css`). The nav stays fixed in one place and always sits on a white bar with 16px corners (no move, shrink, hide or change on scroll). It never turns transparent over the hero (`.nav--hero` is unused). The hero carousel's autoplay holds while the pointer is over the hero or focus is inside it (`lib/motion/page-motion.js`).
 
 - The Toppers section (`#toppers`) is "The Civil Services Gazette", a results-special front page modelled on vajiram-ravi-homepage.vercel.app `#results`: a static shell in `Toppers.jsx`, styles `public/css/toppers.css`, everything else written by `Toppers/toppers.js` from `Toppers/data/toppers-archive.js` (per year: rank, name, programmes, `photo` colour portrait, `img` b/w fallback; programme names fall back to `Toppers/data/toppers.js`). Add or edit a rank holder in the data only. Its filters use `data-gz-cat` because the catalogue treats any `[data-cat]` click as "open the course catalogue".
+- Success stories (`#stories`, user 2026-11-13) is also styled with Tailwind v4: `Stories/stories.css` is its entry, with utilities
+  generated from that folder only and **prefixed `st:`** (so they never collide with Programmes' sheet), no preflight, plus its
+  keyframes, the `postcard-paper` utility and the `waiting` / `dealt` / `dimmed` variants. The postcards are server-rendered
+  from `Stories/data.js` (`POSTCARDS`), portraits through `next/image`; `stories.js` only adds the reveal, the tilt and the
+  off-screen pause. Its section shell (padding, ground, eyebrow, `.h2`) stays in `public/css` like every other section's.
+- Why choose us (`#story`) has no entrance (user 2026-11-13): the pinned scene (`WhyChoose/story.js`) is entered at its settled
+  point (`OFF` = `S0`), so the heading, first photo and first chapter are in place when it pins (no zoom, word split, fade or
+  reveal). Only the chapter swing plays on the scroll, plus the hover effects. Do not add an entrance back.
 - The "How it works" and results sections are in `sections/Parked/Parked.jsx`, inside `<div id="parked" hidden>`; they are not shown.
 - `public/css/why-choose.css` and `public/js/why-choose.js` are leftovers the page does not load (they were not loaded before the Next.js conversion either).

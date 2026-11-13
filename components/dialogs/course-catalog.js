@@ -20,4 +20,7 @@ export function initCourseCatalog() {
   courseDlg = $('#courseDlg');
   $('#courseDlgX').addEventListener('click', () => courseDlg.close());
   courseDlg.addEventListener('click', e => { if (e.target === courseDlg || e.target.closest('[data-prog]')) courseDlg.close(); });
+  // any [data-cat] link on the page (the nav's All courses menu, the GS "View GS courses" button, the results cards) opens the
+  // catalogue on that category (this lived in the old Programmes behaviour, which the ported section replaced, 2026-11-13)
+  document.addEventListener('click', e => { const a = e.target.closest('[data-cat]'); if (!a) return; e.preventDefault(); openCat(+a.dataset.cat); });
 }
