@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Motion check for the Vajiram & Ravi site (site-motion skill). Headless Chrome over the DevTools protocol, no npm packages.
-// Usage: node motion-check.js "<section selector>" [--hover "<selector>"] [--out <path prefix>] [--width 1440] [--height 900] [--mobile] [--url <url>]
+// Usage: node motion-check.js "<section selector>" [--hover "<selector>"] [--out <path prefix>] [--width 1440] [--height 900] [--mobile] [--url <url, default http://localhost:3000/>]
 // Reports console errors, content elements in the section with no transition/animation on themselves or any ancestor inside the
 // section, and (with --hover) the computed transform of the first match before/after a forced :hover. Writes <out>.png and <out>-hover.png.
 const { spawn } = require('child_process');
@@ -12,7 +12,7 @@ const sel = argv[0] && !argv[0].startsWith('--') ? argv[0] : 'main';
 const hover = opt('--hover');
 const W = +opt('--width', 1440), H = +opt('--height', 900), mobile = argv.includes('--mobile');
 const out = opt('--out', path.join(os.tmpdir(), 'motion-check'));
-const url = opt('--url', 'file:///' + path.resolve(__dirname, '../../../../index.html').replace(/\\/g, '/'));
+const url = opt('--url', 'http://localhost:3000/');   // the Next dev server (npm run dev); pass --url for another port or a deployment
 const CHROME = [process.env.CHROME, 'C:/Program Files/Google/Chrome/Application/chrome.exe', 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',
   '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', '/usr/bin/google-chrome', '/usr/bin/chromium'].find(p => p && fs.existsSync(p));
 if (!CHROME) { console.error('No Chrome/Edge found; set CHROME=<path>.'); process.exit(2); }

@@ -1,11 +1,13 @@
 ---
 name: site-motion
-description: Animation rules for the Vajiram & Ravi site. The client wants every section and every element animated. Use this on EVERY change to index.html, css/ or js/ (new section, new element, restyle, copy or layout edit, ported section): give each section an entrance, each element a reveal, each interactive element a hover/focus state, keep the site's motion tokens and primitives, respect reduced motion, and verify in headless Chrome before reporting.
+description: Animation rules for the Vajiram & Ravi site. The client wants every section and every element animated. Use this on EVERY change to app/, components/, lib/ or public/css/ (new section, new element, restyle, copy or layout edit, ported section): give each section an entrance, each element a reveal, each interactive element a hover/focus state, keep the site's motion tokens and primitives, respect reduced motion, and verify in headless Chrome before reporting.
 ---
 
 # Site motion: every section, every element
 
 The client requirement: **nothing on this site appears or responds without motion.** Every section has an entrance, every element inside it is revealed, and everything a person can point at answers the pointer. Apply this to whatever the current task touches, then run the audit below.
+
+> The site is a Next.js app: each section is a folder in `components/sections/<Section>/` (markup, `data.js`, behaviour modules), composed in `app/page.jsx`; site-wide motion is in `lib/motion/` and runs in the order set by `lib/behaviour.js`. Paths below: `css/…` is `public/css/…`; `js/content.js` is now split into the section behaviour modules, `js/page-motion.js` and `js/scroll.js` are `lib/motion/`, and `js/toppers.js` is `components/sections/Toppers/toppers.js`.
 
 ## 1. The checklist (apply to everything you add or change)
 
@@ -37,7 +39,7 @@ The client requirement: **nothing on this site appears or responds without motio
 3. **Compositor-only:** animate `transform` and `opacity` (and `filter` on images). Never animate `width/height/top/left/margin` or box-shadow on many elements.
 4. **No layout shift, no hidden content without JS:** reveal styles only hide content when the reveal JS runs (`.js` on `<html>` or the IntersectionObserver path), so the page is readable if a script fails.
 5. **Subtle beats busy:** one entrance per element, one or two hover effects per card. If the client says "over animated", reduce distance and duration before removing.
-6. **Cache-bust:** after editing a CSS/JS file linked from `index.html`, bump its `?v=` query so the browser does not serve the old file (the user previews `index.html` straight from disk).
+6. **Preview on the dev server:** run `npm run dev` and check http://localhost:3000 (the motion check targets it by default). Files in `public/` are served uncached in dev, so no `?v=` cache-busting is needed.
 
 ## 4. Audit + verify before reporting (every run)
 
