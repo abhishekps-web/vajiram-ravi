@@ -565,8 +565,10 @@ export default function CircularCarousel<T>({
                           style={{
                             borderRadius: round(edge),
                             backgroundImage: `url("${src}")`,
-                            backgroundSize: `${width}px ${height}px`,
-                            backgroundPosition: `${-strip.offset}px 0`,
+                            // the picture at the card's width and its own height (never stretched to the card's ratio), cropped
+                            // top and bottom around a point 30% down so the face stays in frame
+                            backgroundSize: `${width}px auto`,
+                            backgroundPosition: `${-strip.offset}px 30%`,
                             backgroundColor: backColor,
                           }}
                         >
@@ -600,7 +602,7 @@ export default function CircularCarousel<T>({
                     )}
                     style={{ left: -width / 2, top: -height / 2, width, height, transform: "translateZ(2px)" }}
                   >
-                    <span className="absolute inset-x-0 bottom-0 flex flex-col gap-1 px-5 pb-5 text-left">
+                    <span className="absolute inset-x-0 bottom-0 flex flex-col gap-0.5 px-4 pb-4 text-left">
                       <span className="cc-plate__name">{label.title}</span>
                       {label.sub && <span className="cc-plate__sub">{label.sub}</span>}
                     </span>

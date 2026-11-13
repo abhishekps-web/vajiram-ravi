@@ -31,13 +31,14 @@ export default function EducatorFlow({ educators }: { educators: Educator[] }) {
       // the name and position on each card (user 2026-11-13)
       cardLabel={(educator) => ({ title: educator.name, sub: educator.focus })}
       width={264}
-      height={372}
+      // compact cards (user 2026-11-13): 340 tall (was 372); the 2:3 portraits are cropped, not squeezed, to fit
+      height={340}
       gap={30}
       interval={AUTOPLAY_MS}
       fadeColor="#fff8ec"
       backColor="#ead9c2"
       tone="light"
-      spacing={28}
+      spacing={20}
       // The ring's visible ends are about 467px either side of the centre; the arrows sit 32px clear of them.
       arrowReach={523}
     />
@@ -69,7 +70,7 @@ function Caption({ educator }: { educator: Educator }) {
     <div className="mx-auto flex w-[620px] flex-col items-center text-center">
       {introduction && <p className="edu__intro">{introduction}</p>}
       {(qualifications || experience) && (
-        <div className="edu__facts mt-5 flex items-center gap-4 border-t border-[#eadbc4] pt-4">
+        <div className="edu__facts mt-3.5 flex items-center gap-4 border-t border-[#eadbc4] pt-3">
           {qualifications && (
             <span className="flex items-center gap-2">
               <svg aria-hidden="true" viewBox="0 0 20 20" width={18} height={18} fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="text-burnt">
