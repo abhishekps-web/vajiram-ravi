@@ -28,7 +28,7 @@ export function initBatchTickets() {
     // the tickets are laid down one after another as the section arrives
     if (!reduce && 'IntersectionObserver' in window) {
       invs.forEach(c => c.classList.add('inv--pre'));
-      const io = new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { const c = e.target; c.classList.add('in'); o.unobserve(c); setTimeout(() => c.classList.remove('inv--pre', 'in'), 1500 + (+c.style.getPropertyValue('--i') || 0) * 110); } }), { threshold: .2 });   // the entrance classes drop away afterwards so they never touch the hover
+      const io = new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { const c = e.target; c.classList.add('in'); o.unobserve(c); setTimeout(() => c.classList.remove('inv--pre', 'in'), 1500 + (+c.style.getPropertyValue('--i') || 0) * 110); } }), { threshold: .05 });   // .05: in the carousel a ticket that only peeks in (about 14% on phones) still arrives   // the entrance classes drop away afterwards so they never touch the hover
       invs.forEach(c => io.observe(c));
     }
     // on hover the ticket tilts toward the pointer like a card in the hand: a light glare and a shadow that move with it
