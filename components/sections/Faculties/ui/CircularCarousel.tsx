@@ -84,6 +84,8 @@ type CircularCarouselProps<T> = {
   href?: (item: T) => string | null;
   /** The slide's content for assistive technology (visually hidden): the card itself is only a picture. */
   renderSlide: (item: T) => ReactNode;
+  /** A name plate on the card itself (user 2026-11-13): the title and a line under it, at the card's foot. Visual only. */
+  cardLabel?: (item: T) => { title: string; sub?: string };
   /** Shown under the ring for the item at the front, cross-fading as it changes. Visual only. */
   renderCaption?: (item: T, index: number) => ReactNode;
   /** A card, canvas px. */
@@ -131,6 +133,7 @@ export default function CircularCarousel<T>({
   href,
   renderSlide,
   renderCaption,
+  cardLabel,
   width,
   height,
   gap = 32,
@@ -567,6 +570,14 @@ export default function CircularCarousel<T>({
                             backgroundColor: backColor,
                           }}
                         >
+                          {/* the name plate's shade, on every strip so it follows the bend; only on the active card (user 2026-11-13),
+                              fading in as a card comes to the front, a little deeper on hover / focus */}
+                          {cardLabel && (
+                            <span
+                              className={cx("absolute inset-0 [transition:opacity_400ms_var(--ease-out)]", isFront ? "opacity-80 group-hover/cc:opacity-100 group-focus-within/cc:opacity-100" : "opacity-0")}
+                              style={{ backgroundImage: "linear-gradient(180deg, transparent 52%, rgb(30 14 6 / 0.55) 76%, rgb(30 14 6 / 0.88) 100%)", backgroundSize: `${width}px ${height}px`, backgroundPosition: `${-strip.offset}px 0` }}
+                            />
+                          )}
                           <span className="absolute inset-0" style={{ background: fadeColor, opacity: "calc(var(--cc-depth, 0) * 0.9)" }} />
                         </span>
                       </span>
@@ -574,7 +585,27 @@ export default function CircularCarousel<T>({
                   );
                 });
                 const cardStyle: CSSProperties = { transform: `rotateY(${(slot * step).toFixed(3)}deg) translateZ(${radius.toFixed(2)}px)` };
-                const cardClass = "group/cc absolute top-0 left-0 size-0 [transform-style:preserve-3d]";
+                // hover / keyboard focus (user 2026-11-13): the card lifts 10px (the `translate` property, so the ring's transform is untouched)
+                const cardClass = "group/cc absolute top-0 left-0 size-0 [transform-style:preserve-3d] [translate:0_0] [transition:translate_450ms_var(--ease-out)] hover:[translate:0_-10px] focus-within:[translate:0_-10px] motion-reduce:transition-none";
+                const label = cardLabel?.(item);
+                // the name plate: name and position at the card's foot, on the card's face (a hair in front of the strips), never
+                // seen from behind. Only the active card shows it (user 2026-11-13: "only the active person needed the details"):
+                // it fades and rises in as a card comes to the front and out as it leaves
+                const plate = label ? (
+                  <span
+                    aria-hidden="true"
+                    className={cx(
+                      "pointer-events-none absolute [backface-visibility:hidden] [transition:opacity_350ms_var(--ease-out),translate_450ms_var(--ease-out)] motion-reduce:transition-none",
+                      isFront ? "[translate:0_0] opacity-100" : "[translate:0_8px] opacity-0",
+                    )}
+                    style={{ left: -width / 2, top: -height / 2, width, height, transform: "translateZ(2px)" }}
+                  >
+                    <span className="absolute inset-x-0 bottom-0 flex flex-col gap-1 px-5 pb-5 text-left">
+                      <span className="cc-plate__name">{label.title}</span>
+                      {label.sub && <span className="cc-plate__sub">{label.sub}</span>}
+                    </span>
+                  </span>
+                ) : null;
                 return (
                   <div
                     key={slot}
@@ -597,11 +628,13 @@ export default function CircularCarousel<T>({
                     {link !== null ? (
                       <a href={link} draggable={false} tabIndex={copy ? -1 : undefined} className="absolute top-0 left-0 size-0 [transform-style:preserve-3d]">
                         {faces}
+                        {plate}
                         <div className="sr-only">{renderSlide(item)}</div>
                       </a>
                     ) : (
                       <>
                         {faces}
+                        {plate}
                         {!copy && <div className="sr-only">{renderSlide(item)}</div>}
                       </>
                     )}
