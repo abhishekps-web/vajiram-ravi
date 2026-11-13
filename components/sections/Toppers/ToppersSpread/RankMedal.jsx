@@ -64,17 +64,11 @@ export function RankMedal({ rank, size = "m" }) {
       <circle cx="50" cy="50" r="41" fill="none" stroke="#7a2806" strokeOpacity=".35" />
       <path d="M19 44 A32 32 0 0 1 81 44" fill="none" stroke="#fff" strokeOpacity=".13" strokeWidth="10" strokeLinecap="round" />
 
-      <text x="50" y={big ? 31 : 32} textAnchor="middle" className="tsp-medal__air"
-        fontSize={big ? 8.5 : 10} letterSpacing={big ? 2.2 : 2}>AIR</text>
-      <text x={two ? 48 : 47} y={big ? 66 : 70} textAnchor="middle" className="tsp-medal__num"
-        fontSize={two ? (big ? 34 : 36) : big ? 42 : 44}>{rank}</text>
-
       {big && (
-        <>
-          <line x1="38" y1="72" x2="62" y2="72" stroke="#FFE3CF" strokeOpacity=".6" strokeWidth=".7" />
-          <text x="50" y="80.5" textAnchor="middle" className="tsp-medal__air" fontSize="5.6" letterSpacing="1.6">CSE 2025</text>
-        </>
+        <text x="50" y="31" textAnchor="middle" className="tsp-medal__air" fontSize="8.5" letterSpacing="2.2">AIR</text>
       )}
+      <text x={two ? 48 : 47} y={big ? 70 : two ? 67 : 69} textAnchor="middle" className="tsp-medal__num"
+        fontSize={two ? (big ? 38 : 46) : big ? 48 : 54}>{rank}</text>
     </svg>
   );
 }

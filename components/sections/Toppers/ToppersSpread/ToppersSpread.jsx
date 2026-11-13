@@ -32,7 +32,6 @@ export default function ToppersSpread() {
   const cover = TOPPERS_2025.slice(0, 3);
   const topTen = TOPPERS_2025.slice(3, 10);
   const also = TOPPERS_2025.slice(10, 26);
-  const lastAlso = also[also.length - 1]?.rank;
 
   return (
     <>
@@ -53,7 +52,6 @@ export default function ToppersSpread() {
         <section className="tsp-ten" aria-labelledby="tsp-ten-h">
           <div className="tsp-hd">
             <span className="tsp-k" id="tsp-ten-h">The top ten, continued</span>
-            <span className="tsp-r"><em>10 of 10</em> top-ten ranks prepared with Vajiram &amp; Ravi</span>
           </div>
           <div className="tsp-strip">
             {topTen.map((t) => (
@@ -70,7 +68,6 @@ export default function ToppersSpread() {
         <section className="tsp-also" aria-labelledby="tsp-also-h">
           <div className="tsp-hd">
             <span className="tsp-k" id="tsp-also-h">Also in the top 50</span>
-            <span className="tsp-r">Ranks 11–{lastAlso}</span>
           </div>
           <ol>
             {also.map((t) => (
@@ -90,7 +87,7 @@ export default function ToppersSpread() {
         <div className="tsp-ft">
           <q><em>{TOTAL_IN_TOP_50} of the top 50</em> ranks in CSE 2025 prepared with Vajiram &amp; Ravi.</q>
           <a className="tsp-cta" href={TOPPERS_PAGE} target="_blank" rel="noopener">
-            See all {TOTAL_IN_TOP_50} toppers <i aria-hidden="true">→</i>
+            See all toppers <i aria-hidden="true">→</i>
           </a>
         </div>
       </div>
