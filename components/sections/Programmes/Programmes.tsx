@@ -22,7 +22,7 @@ export default function Programmes() {
     <section id="courses" aria-labelledby="programmes-h" className="prog relative overflow-clip bg-cream">
       {/* soloboy's text and scroll motion (data-zoom, data-split, data-fade, data-drift …), held to this section */}
       <TextMotion rootId="courses" />
-      <div className="prog__canvas relative mx-auto flex w-canvas flex-col items-start px-20 pt-[90px]">
+      <div className="prog__canvas relative mx-auto flex w-canvas flex-col items-start px-20 pt-[var(--sec-y)]">
         {/* The course shelf: its heading, then the filter and the books on their planks (CourseShelf). */}
         <div className="relative w-full">
           {/* the section's heading (the flagship card and the "Find the right UPSC programme" heading above it were removed, user 2026-11-13) */}
@@ -32,12 +32,12 @@ export default function Programmes() {
             Programmes for every stage of UPSC.
           </h2>
           {/* no intro line under the heading (user 2026-11-13: removed) */}
-          <div className="mt-[40px]">
+          <div className="mt-[var(--hd-gap)]">
             <CourseShelf programmes={programmes} />
           </div>
         </div>
 
-        <div className="relative w-full pt-14 pb-24">
+        <div className="relative w-full pt-14 pb-[var(--sec-y)]">
           {/*
             The client's closing line, as a card under the shelf: a counsellor's headset in
             a burnt disc, the question and the line, then the phone number and the button to the counselling form.

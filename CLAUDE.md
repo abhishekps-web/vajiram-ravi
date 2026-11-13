@@ -78,7 +78,10 @@ The client wants **every section and every element animated**. For any change to
 ## Design tokens that must stay consistent
 
 - Section titles: `--h2` (64px on desktop, 40px on phones) for every section heading.
-- Section rhythm: `--sec-y` vertical padding and `--sec-gap` between sheets (end of `public/css/v49.css`). Do not give a section its own padding.
+- Section rhythm (audited 2026-11-13, "Vertical rhythm, standardised" at the end of `public/css/v49.css`): `--sec-y` (64-90px)
+  above and below every section, half on top for a light section that follows another light one (Faculty, FAQ, closing);
+  eyebrow -> heading `--hd-lbl` (24px), heading -> intro `--hd-in` (16px), heading block -> content `--hd-gap` (36-48px). The
+  Tailwind sections use the same variables (`pt-[var(--sec-y)]`, `mt-[var(--hd-gap)]`). Do not give a section its own padding.
 - Eyebrows: the `SectionLabel` component (`.lbl`: 14px semibold brand label). Dark grounds use `<SectionLabel light>`.
 - `--f` is the font-family variable. Never reuse that name for a scroll progress value (an earlier `--f` clash broke every font in Programmes).
 

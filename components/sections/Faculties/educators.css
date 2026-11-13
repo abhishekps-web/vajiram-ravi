@@ -88,7 +88,7 @@
 
 /* ---- this site's section rhythm and type (as Faculty, Free resources): eyebrow 90px from the top, heading 30px under it,
    intro 16px under the heading; the eyebrow, .h2 and .intro come from the site's own stylesheets ---- */
-#educators { padding: 90px 0 72px; }
+#educators { padding: calc(var(--sec-y) * .5) 0 var(--sec-y); }   /* the site rhythm (v49.css, end): half on top after Success stories */
 #educators .edu__head { display: flex; flex-direction: column; align-items: center; text-align: center; }
 #educators .edu__head .h2 { margin: 30px auto 0; text-align: center; }
 #educators .edu__head .intro { margin: 16px auto 0; text-align: center; text-wrap: balance; }

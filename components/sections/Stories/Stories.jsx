@@ -78,7 +78,7 @@ export default function Stories() {
       <div
         id="tcar"
         className={[
-          'st:group/tcar st:block st:overflow-hidden st:mx-[calc(var(--px)*-1)] st:mt-0 st:mb-[-16px] st:pt-[112px] st:pb-[84px]',
+          'st:group/tcar st:block st:overflow-hidden st:mx-[calc(var(--px)*-1)] st:mt-0 st:mb-[-16px] st:pt-[76px] st:pb-[84px]',
           'st:[-webkit-mask-image:linear-gradient(90deg,transparent_0,#000_7%,#000_93%,transparent_100%)] st:[mask-image:linear-gradient(90deg,transparent_0,#000_7%,#000_93%,transparent_100%)]',
           'st:max-[1000px]:snap-x st:max-[1000px]:snap-mandatory st:max-[1000px]:[scrollbar-width:none]',
           'st:motion-reduce:overflow-x-auto st:motion-reduce:[-webkit-mask-image:none] st:motion-reduce:[mask-image:none]',
