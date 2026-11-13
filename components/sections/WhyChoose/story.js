@@ -107,15 +107,17 @@ export default function init() {
   const lenis = () => window.__lenis;
   const curY = () => (lenis() ? lenis().animatedScroll ?? scrollY : scrollY);
   const zoneA = () => yAt(0);                     // the first chapter at rest (the scene has just pinned)
-  const zoneB = () => yAt(RUN) + H();             // the next section at the top of the screen
-  const inside = y => y >= zoneA() - 1 && y <= zoneB() - 1;
-  const restPoints = () => [...stops.map(yAt), zoneB()];
+  // the last chapter at rest. Past it the page scrolls freely, in both directions (user 2026-11-13: no jump into Batches): the scene's
+  // tail and the hand-off to the next section are ordinary scrolling, never one locked leap of a screen and a half
+  const zoneL = () => yAt(stops[N - 1]);
+  const inside = y => y >= zoneA() - 1 && y <= zoneL() + 1;
+  const restPoints = () => stops.map(yAt);
   let busy = false, quietUntil = 0, lastAbs = 0, held = false, settleT = 0, safetyT = 0;
 
   const target = (y, dir) => {
     if (dir > 0) {
       const next = stops.find(s => yAt(s) > y + 2);
-      return next === undefined ? zoneB() : yAt(next);              // after the last chapter: the next section at the top
+      return next === undefined ? null : yAt(next);                  // at the last chapter: the page scrolls on as usual
     }
     if (y <= zoneA() + 2) return null;                               // at the first chapter: the page scrolls up as usual
     const prev = [...stops].reverse().find(s => yAt(s) < y - 2);
@@ -138,12 +140,13 @@ export default function init() {
     if (now < quietUntil && !(abs >= 24 && abs > lastAbs * 1.6)) { swallow(e); quietUntil = now + QUIET; lastAbs = abs; return; }
     lastAbs = abs;
     if (abs < 1) return;
-    const y = curY(), dir = Math.sign(d), A = zoneA(), B = zoneB();
+    const y = curY(), dir = Math.sign(d), A = zoneA(), L = zoneL();
     if (!inside(y)) {
-      // entering: stop on the first chapter (from above) or the last (from below) instead of scrolling past it
+      // entering: stop on the first chapter (from above) or, scrolling back up, on the last one just as it is reached, instead of
+      // scrolling past it (from below this is a short ease onto the chapter, not a leap)
       const T = (lenis() ? lenis().targetScroll : y) + d;
       if (dir > 0 && y < A && T >= A - 1) { swallow(e); go(A); }
-      else if (dir < 0 && y > B - 1 && T < B - 1) { swallow(e); go(yAt(stops[N - 1])); }
+      else if (dir < 0 && y > L + 1 && T <= L + 1) { swallow(e); go(L); }
       return;
     }
     const t = target(y, dir);
@@ -172,8 +175,9 @@ export default function init() {
   addEventListener('touchstart', e => { touchY = on && inside(curY()) && e.touches.length === 1 ? e.touches[0].clientY : null; }, { passive: true, capture: true });
   addEventListener('touchmove', e => {
     if (touchY === null) return;
-    // pulling back down at the first chapter: the page scrolls up as usual
+    // pulling back down at the first chapter, or pushing on up at the last: the page scrolls as usual
     if (e.touches[0].clientY > touchY && curY() <= zoneA() + 2 && !busy) { touchY = null; return; }
+    if (e.touches[0].clientY < touchY && curY() >= zoneL() - 2 && !busy) { touchY = null; return; }
     e.preventDefault();
   }, { passive: false, capture: true });
   addEventListener('touchend', e => {
