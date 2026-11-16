@@ -190,6 +190,10 @@
 .btn--fab > .btn__label { max-width: 0; padding-top: 0; opacity: 0; transition: max-width .45s var(--ease), padding .45s var(--ease), opacity .3s; }
 @media (max-width: 600px) { .btn--fab { --btn-h: 52px; --btn-ic: 26px; } }
 
+/* ICON-ONLY hover (user 2026-11-16): every icon-only button fills with the brand colour on hover / keyboard focus, the icon turning
+   white, on light and dark grounds alike (the resting look stays its variant's: outline, sm). */
+.btn.btn--icon, .btn.btn--icon.btn--on-dark { --btn-bg-hover: var(--brand); --btn-fg-hover: #fff; --btn-edge-hover: inset 0 0 0 1.5px var(--brand); }
+
 /* ---------------------------------------------------------------- states ---------------------------------------------------------------- */
 /* HOVER: real pointers only (touch gets the resting look, and the press). Fill deepens, shadow lifts, label rolls, arrow swaps. */
 @media (hover: hover) and (pointer: fine) {
