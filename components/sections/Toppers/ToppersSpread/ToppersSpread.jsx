@@ -1,3 +1,4 @@
+import Button from "@/components/ui/Button/Button";
 import Stylesheet from "@/components/ui/Stylesheet";
 import { RankMedal } from "./RankMedal";
 import { TOPPERS_2025, TOTAL_IN_TOP_50 } from "./data";
@@ -65,9 +66,7 @@ export default function ToppersSpread() {
 
         <div className="tsp-ft">
           <q><em>{TOTAL_IN_TOP_50} of the top 50</em> ranks in CSE 2025 prepared with Vajiram &amp; Ravi.</q>
-          <a className="tsp-cta" href={TOPPERS_PAGE} target="_blank" rel="noopener">
-            See all toppers <i aria-hidden="true">→</i>
-          </a>
+          <Button href={TOPPERS_PAGE} target="_blank" iconEnd="arrow">See all toppers</Button>
         </div>
       </div>
     </>

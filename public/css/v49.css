@@ -2477,3 +2477,13 @@ html main #closing .cl__faces { flex: none; }
 /* the section itself cropped both axes too (.sheet, v25.css overflow: hidden), cutting the shadows at its bottom edge: on the shared ground
    it only crops sideways, so the shadows fall onto Faculty's (transparent) top. Older browsers keep overflow: hidden. */
 @supports (overflow: clip) { .ground-merge > #stories.sheet { overflow: visible; overflow-x: clip; } }
+
+/* General Studies (user 2026-11-16): the heading a step smaller, the book on the right scaled down a little */
+@media (min-width: 1001px) { #gs .gs__h { font-size: min(56px, 4.1vw); } #gs .gsbook { --w: 292px; --h: 390px; --t: 41px; } }
+@media (max-width: 1000px) { #gs .gs__h { font-size: calc(var(--h2) * .9); } }
+
+/* Contact us: the three white tiles take less padding (user 2026-11-16) */
+#visit .cm__list { padding: 16px 28px; }
+#visit .cm__list .cm__item { padding-top: 12px; padding-bottom: 12px; }
+@media (max-width: 1000px) { #visit .cm__list { padding: 10px 20px; } }
+@media (max-width: 480px) { #visit .cm__list { padding: 6px 14px; } }
