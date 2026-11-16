@@ -90,16 +90,14 @@ html body .dl .hx__mark { top: 7%; right: 3%; }
   .dl .hx__mark-exam { font-size: 12px; line-height: 16px; }
 }
 
-/* ---------- the dots, centred at the foot in a dark pill ---------- */
-.dl .hx__dots { position: absolute; left: 50%; bottom: 28px; z-index: 6; display: flex; align-items: center; gap: 8px; margin: 0; padding: 10px 12px;
-  border-radius: 999px; translate: -50% 0; background: rgba(0, 0, 0, .25); }
-@media (max-width: 900px) { .dl .hx__dots { bottom: 22px; } }
-
-/* ---------- previous / next, one centred on each side edge of the card, half outside it. The card clips its contents, so the
-   arrows' layer is outside it (a sibling in .dl__frame) and page-motion.js lays it exactly over the card; it shrinks with the card as
-   Programmes slides over the hero (the card's scale, v49.css) ---------- */
+/* ---------- the controls' layer (Hero.jsx .hx__navs): the card clips its contents, so the layer is outside it (a sibling in
+   .dl__frame) and page-motion.js lays it exactly over the card; it shrinks with the card as Programmes slides over the hero (the
+   card's scale, v49.css). Previous / next centred on the card's two side edges, half outside it; the dots centred at its foot ---------- */
 .dl .hx__navs { position: absolute; top: 0; left: 0; z-index: 7; pointer-events: none;
   transform: scale(calc(1 - var(--cover, 0) * .2)); transform-origin: 50% 35%; }
+.dl .hx__dots { position: absolute; left: 50%; bottom: 28px; display: flex; align-items: center; gap: 8px; margin: 0; padding: 10px 12px;
+  border-radius: 999px; translate: -50% 0; background: rgba(0, 0, 0, .25); pointer-events: auto; }
+@media (max-width: 900px) { .dl .hx__dots { bottom: 22px; } }
 .dl .hx__nav { position: absolute; top: 50%; display: flex; translate: -50% -50%; pointer-events: auto; transition: opacity .3s ease; }
 .dl .hx__nav--prev { left: 0; }
 .dl .hx__nav--next { left: 100%; }
@@ -109,11 +107,21 @@ html body .dl .hx__mark { top: 7%; right: 3%; }
   .dl .hx__nav { opacity: 0; pointer-events: none; }
   .dl:has(.dl__stick:hover) .hx__nav, .dl .hx__navs:hover .hx__nav, .dl .hx__navs:focus-within .hx__nav { opacity: 1; pointer-events: auto; }
 }
-/* touch screens: a swipe changes the slide; phones show the arrows on the card's edges beside the portrait, clear of the words */
-@media (hover: none), (pointer: coarse) { .dl .hx__navs { display: none; } }
+/* touch screens wider than a phone: a swipe changes the slide, so no arrows (the dots stay) */
+@media (hover: none), (pointer: coarse) { .dl .hx__nav { display: none; } }
+
+/* ---------- phones (user 2026-11-16, "make the hero full width and height and the controls move under the hero banner"): the card
+   edge to edge with square corners, the screen less the header and the controls' row tall (taller only if its copy needs it); the
+   controls one row under it on the hero's ground: previous, the dots, next (64px: the 44px arrows on 10px) ---------- */
 @media (max-width: 760px) {
-  .dl .hx__navs { display: block; }
-  .dl .hx__nav { top: 34%; opacity: 1; pointer-events: auto; }
+  html .dl { --hx-ctrl: 64px; --hx-foot: 40px; }
+  html .dl { --card-h: calc(100svh - var(--hdr-h) - var(--hdr-gap) - var(--hx-ctrl)); }
+  html body .dl--pin .dl__frame > .dl__stick { margin-left: calc(-1 * var(--hx-side)); margin-right: calc(-1 * var(--hx-side));
+    border-radius: 0; box-shadow: none; }
+  .dl .hx__navs { position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; gap: 20px;
+    height: var(--hx-ctrl); transform: none; pointer-events: auto; }
+  .dl .hx__nav { position: static; display: flex; translate: none; opacity: 1; pointer-events: auto; }
+  .dl .hx__dots { position: static; translate: none; }
 }
 
 /* reduced motion: the slides do not run (page-motion.js), so neither do their controls */
@@ -124,5 +132,5 @@ html body .dl .hx__mark { top: 7%; right: 3%; }
 
 /* ---------- fit (measured against Kevin's at 1440, 1280 and 390 wide) ---------- */
 @media (min-width: 901px) { .dl { --hx-side: max(80px, calc((100vw - 1280px) / 2)); } }
-html body .dl--pin .dl__frame > .dl__stick { margin-left: 0; margin-right: 0; }
+@media (min-width: 761px) { html body .dl--pin .dl__frame > .dl__stick { margin-left: 0; margin-right: 0; } }
 .dl .hx__mark-air b { line-height: .7; }

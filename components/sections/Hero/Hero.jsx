@@ -67,8 +67,14 @@ export default function Hero() {
               <Button onDark size="md" href="#contact">Get expert guidance</Button>
             </p>
           </div>
-          {/* the dots, Kevin's: centred at the card's foot in a dark pill, the current one filling with the slide's time (the site's
-              .cdots, filled by page-motion.js through --p) */}
+        </div>
+        {/* the banner's controls, outside the card (it clips its contents). From 761px, Kevin's: page-motion.js lays this layer exactly
+            over the card, previous / next centred on its two side edges, half outside it (shown while the pointer is over the card;
+            hidden on touch screens, where a swipe changes the slide), the dots centred at its foot in a dark pill. Phones (user
+            2026-11-16, "the controls move under the hero banner"): one row under the full-bleed card, previous, the dots, next.
+            The dots are the site's .cdots, the current one filling with the slide's time (page-motion.js, through --p). */}
+        <div className="hx__navs" role="group" aria-label="Change topper">
+          <span className="hx__nav hx__nav--prev"><Button variant="outline" iconOnly size="sm" iconStart="arrow-left" label="Previous topper" className="dl__arrow dl__arrow--prev" /></span>
           <p className="hx__dots cdots" id="dlProg" role="group" aria-label="Choose a topper">
             {HERO_TOPPER_SLIDES.map(t => (
               <button key={t.rank} type="button" aria-label={`AIR ${t.rank}: ${t.name}`}>
@@ -76,12 +82,6 @@ export default function Hero() {
               </button>
             ))}
           </p>
-        </div>
-        {/* previous / next, Kevin's: one centred on each side edge of the card, half outside it, shown while the pointer is over the
-            card (the site's icon buttons; the spans place them). The card clips its contents, so this layer sits outside it and
-            page-motion.js lays it exactly over the card. Hidden on touch screens wider than a phone, where a swipe changes the slide. */}
-        <div className="hx__navs" role="group" aria-label="Change topper">
-          <span className="hx__nav hx__nav--prev"><Button variant="outline" iconOnly size="sm" iconStart="arrow-left" label="Previous topper" className="dl__arrow dl__arrow--prev" /></span>
           <span className="hx__nav hx__nav--next"><Button variant="outline" iconOnly size="sm" iconStart="arrow" label="Next topper" className="dl__arrow dl__arrow--next" /></span>
         </div>
         <Stylesheet href="/css/hero-banner.css" />
