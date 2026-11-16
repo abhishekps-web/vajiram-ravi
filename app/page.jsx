@@ -40,10 +40,10 @@ export default function Home() {
         <WhyChoose />
         <Batches />
         <GeneralStudies />
-        <Resources />
         <Contact />
-        <Visit />
+        <Resources />
         <LifeGallery />
+        <Visit />
         <Faq />
         <Closing />
         <CourseCatalogDialog />
