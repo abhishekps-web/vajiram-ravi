@@ -1,4 +1,3 @@
-@import url("v48.css");
 
 /* v49: hero is a timed slideshow (intro -> Plan -> Learn -> Rank) with filling progress bars. Text/card alignment alternates as before. */
 .dl--pin { height: 100vh; height: 100svh; min-height: 0; max-height: none; }

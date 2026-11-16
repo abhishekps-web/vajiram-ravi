@@ -71,7 +71,7 @@ in `public/assets/img/programmes/`.
 ## Styles
 
 - The stylesheets are plain files in `public/css`, **not imported through the bundler**: Next's CSS minifier rewrites `transform: none; translate: …; scale: …` into one `transform`, which breaks reveals that animate `translate`/`scale` separately (it froze the Resources cards mid-rise). Keep it that way.
-- `app/layout.jsx` links `buttons.css` (the button system, first so placement rules after it win) and then `v49.css` (precedence "base"); it `@import`s v48 → … → v25 in cascade order (order matters; they keep their names). A section with its own sheet declares it with `<Stylesheet href="/css/…" />` (precedence "sections", hoisted after the base).
+- `app/layout.jsx` links `buttons.css` (the button system, first so placement rules after it win) and then the layers v25 → v26 → … → v49 (`CSS_LAYERS`, precedence "base"), each its own `<link>` in cascade order (order matters; they keep their names). No `@import` between them: the old chain held first paint about 3s on phones. A new layer goes into `CSS_LAYERS`. A section with its own sheet declares it with `<Stylesheet href="/css/…" />` (precedence "sections", hoisted after the base).
 - Asset URLs in CSS are root-relative (`url(/assets/img/…)`); in JSX `/assets/img/…`; in behaviour modules `assets/img/…` (the page is at `/`).
 
 ## Every change: apply the `site-motion` skill
@@ -95,7 +95,9 @@ The client wants **every section and every element animated**. For any change to
   Why choose us, a PageSpeed target of 90 to 95, mobile first, the review workflow), plus the full transcript; the original
   .docx is next to it. Read its "For the build" list before changing the page's structure. Where the user's later
   instructions differ (e.g. a section order dated after 11 Nov), the user's instruction wins.
-- Global config: `lib/config.js` (`ENABLE_PRELOADER`: the logo intro on or off).
+- Global config: `lib/config.js` (`ENABLE_PRELOADER`: the logo intro on or off; `INTRO_ONCE_PER_SESSION`: every load, or only the
+  first page of a session). The intro runs from the inline boot script `components/layout/Intro/boot.js` from the first paint,
+  never waiting for hydration, and never under reduced motion.
 - Content column: 1440px, centred on wider screens (`--cap` / `--px`, end of `public/css/v49.css`); section backgrounds stay full-bleed.
   Hero height (user 2026-11-13): every first screen ends with a preview of Programmes (its sheet top and eyebrow label): the hero
   is the screen minus the header and `--hero-peek` (176px), never less than `--hero-min` (its copy, CTA and slide indicators) and,

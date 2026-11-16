@@ -1,4 +1,3 @@
-@import url("v46.css");
 
 /* v48: hero stays pinned; scrolling morphs it into Plan -> Learn -> Rank over the same video */
 .dl--pin { height: 520svh; max-height: none; min-height: 0; overflow: clip; }

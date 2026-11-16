@@ -1,23 +1,13 @@
 /* v49 intro: the original logo reveal (iris, mandala ring, logo, tagline, curtain lifts) in brand orange. No video.
-   Skip button, Esc or scrolling ends it. Fires 'vr:intro-done' and clears html.vrv-lock.
-   The overlay markup is server-rendered (components/Intro.jsx) and html.vrv-lock is set before paint (app/layout.jsx);
-   this script starts the reveal and lifts it. It hides the overlay rather than removing it, since React owns that node. */
+   The overlay markup is server-rendered (Intro.jsx) and the whole intro runs from the inline boot script (./boot.js, put in
+   <head> by app/layout.jsx): it starts at the first paint, not after hydration. By the time this runs (after hydration) the
+   intro has often ended. If it is still playing, the page behind it is made inert, so Tab reaches only "Skip intro", until
+   it lifts ('vr:intro-done'). */
 export default function init() {
   'use strict';
-  // plays on every load, reloads included (user 2026-11-11; it used to play once per browser session)
-  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   var root = document.documentElement;
-  var el = document.querySelector('.vrv');
-  if (!el) { root.classList.remove('vrv-lock'); return; }
-  root.classList.add('vrv-lock');
-  var done = false, t = 0;
-  var finish = function () {
-    if (done) return; done = true; clearTimeout(t);
-    el.classList.add('vrv--out');
-    setTimeout(function () { el.hidden = true; root.classList.remove('vrv-lock'); document.dispatchEvent(new CustomEvent('vr:intro-done')); }, reduce ? 420 : 850);
-  };
-  el.querySelector('.vrv__skip').addEventListener('click', finish);
-  addEventListener('keydown', function k(e) { if (e.key === 'Escape') { removeEventListener('keydown', k); finish(); } });
-  ['wheel', 'touchmove'].forEach(function (ev) { addEventListener(ev, finish, { passive: true, once: true }); });
-  requestAnimationFrame(function () { el.classList.add('vrv--fin'); t = setTimeout(finish, reduce ? 1500 : 2500); });
+  if (!document.querySelector('.vrv') || !root.classList.contains('vrv-lock')) return;
+  var behind = [].filter.call(document.body.children, function (n) { return !n.classList.contains('vrv') && !n.inert; });
+  behind.forEach(function (n) { n.inert = true; });
+  document.addEventListener('vr:intro-done', function () { behind.forEach(function (n) { n.inert = false; }); }, { once: true });
 }
