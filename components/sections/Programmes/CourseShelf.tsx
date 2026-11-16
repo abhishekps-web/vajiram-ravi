@@ -726,8 +726,7 @@ function Book({ index, programme, hidden, out, open, away, style, onPick, onClos
 
         {/* A round close button at the open book's top right corner, for those who do not think to click away. */}
         {out && (
-          // the site's icon-only Button (outline, sm; user 2026-11-16: every icon-only button looks the same), on a cream backing
-          // so it reads where it overhangs the book's corner
+          // the site's icon-only Button (outline, sm; user 2026-11-16: every icon-only button looks the same)
           <span
             className={cx(
               "absolute -top-5 -right-5 z-[130] flex [transition:opacity_400ms_var(--ease-out),scale_400ms_var(--ease-out)]",
@@ -743,7 +742,6 @@ function Book({ index, programme, hidden, out, open, away, style, onPick, onClos
               onClick={onClose}
               tabIndex={open ? 0 : -1}
               aria-hidden={!open || undefined}
-              style={{ "--btn-bg": "rgb(255 250 243 / .95)" } as CSSProperties}
             />
           </span>
         )}

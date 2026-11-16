@@ -1,5 +1,6 @@
 import Button from '@/components/ui/Button/Button';
 import { HERO_STATS } from './data';
+import Trending from './Trending';
 
 // Hero slides: WebP at three widths each (public/assets/img/hero/<name>-<width>.webp). The slides cover the hero
 // (object-fit: cover), so on a portrait phone the image is scaled to the hero's height and drawn about 2.5x the screen width.
@@ -125,6 +126,8 @@ export default function Hero() {
             </li>
           ))}
         </ul>
+        {/* What's trending (user 2026-11-16, from Kevin's build): the banner carousel under the stats (Trending.jsx) */}
+        <Trending />
       </div>
     </section>
   );

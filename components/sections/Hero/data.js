@@ -6,3 +6,27 @@ export const HERO_STATS = [
   { pre: 'AIR ', count: 1, label: 'In every UPSC result since 2016' },
   { count: 59, label: 'Prelims 2025 questions from our Test Series' },
 ];
+
+// What's trending (user 2026-11-16, from Kevin's build, eclectic-alfajores-975fab.netlify.app): the banners of the carousel under
+// the hero stats (Trending.jsx). `tone` picks the banner's tint (public/css/trending.css); `prog` pre-selects that programme in the
+// contact form; pictures are the Free resources cut-outs (public/assets/img/resources/cutout/).
+const RES = 'https://vajiramandravi.com/';
+const CUT = '/assets/img/resources/cutout';
+export const TRENDING = [
+  { tone: 'butter', k: 'New batch · Starts 29 Jan', h: 'The full GS syllabus, in 11 months.',
+    d: '11-Month Prelims cum Mains General Studies Comprehensive Programme, for CSE 2027.', cta: 'Enroll now', href: '#contact',
+    prog: '11-Month Prelims cum Mains General Studies Comprehensive Programme',
+    img: { src: `${CUT}/gs-postal-books.png`, alt: 'Vajiram & Ravi General Studies books', w: 640, h: 624 } },
+  { tone: 'sand', k: 'Free · Monthly magazine', h: 'A month of current affairs, in one magazine.',
+    d: 'The Recitals: UPSC current affairs monthly material, free to download.', cta: 'Download this month', href: RES, external: true,
+    img: { src: `${CUT}/the-recitals.png`, alt: 'Issues of The Recitals magazine', w: 640, h: 520 } },
+  { tone: 'cream', k: 'UPSC Calendar 2027', h: 'Every stage date for CSE 2027, in one place.',
+    d: 'Prelims, Mains and the interview, plus the age limit and eligibility rules.', cta: 'See the calendar', href: RES, external: true,
+    img: { src: `${CUT}/upsc-calendar.png`, alt: 'A desk calendar with the UPSC dates marked', w: 640, h: 612 } },
+  { tone: 'latte', k: 'Daily current affairs', h: 'Today’s news, written the way UPSC asks.',
+    d: 'Prelims, Mains and Quest articles, every day.', cta: 'Read today’s articles', href: RES, external: true,
+    img: { src: `${CUT}/current-affairs.png`, alt: 'Folded newspapers', w: 640, h: 410 } },
+  { tone: 'honey', k: 'New batch · Starts 8 Feb', h: 'Full-length Prelims tests, with the reasoning behind every answer.',
+    d: 'PowerUp Prelims Test Series 2027.', cta: 'Enroll now', href: '#contact', prog: 'PowerUp Prelims Test Series 2027',
+    img: { src: `${CUT}/previous-year-papers.png`, alt: 'An examination question booklet', w: 640, h: 595 } },
+];

@@ -193,6 +193,8 @@
 /* ICON-ONLY hover (user 2026-11-16): every icon-only button fills with the brand colour on hover / keyboard focus, the icon turning
    white, on light and dark grounds alike (the resting look stays its variant's: outline, sm). */
 .btn.btn--icon, .btn.btn--icon.btn--on-dark { --btn-bg-hover: var(--brand); --btn-fg-hover: #fff; --btn-edge-hover: inset 0 0 0 1.5px var(--brand); }
+/* ...and rests on a white fill (user 2026-11-16), the icon in the brand colour, on light and dark grounds alike */
+.btn.btn--icon, .btn.btn--icon.btn--on-dark { --btn-bg: #fff; --btn-fg: var(--brand); --btn-edge: inset 0 0 0 1.5px rgba(194, 65, 12, .3); }
 
 /* ---------------------------------------------------------------- states ---------------------------------------------------------------- */
 /* HOVER: real pointers only (touch gets the resting look, and the press). Fill deepens, shadow lifts, label rolls, arrow swaps. */

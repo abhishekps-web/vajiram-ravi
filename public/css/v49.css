@@ -2661,3 +2661,16 @@ html .nav-band, .dl__ground { overflow: hidden; isolation: isolate;
 .dl__stat-l { color: rgba(255, 246, 236, .86); }
 .dl__stats li + li { border-left-color: rgba(255, 255, 255, .28); }
 @media (max-width: 760px) { .dl__stats li:nth-child(3) { border-left: 0; } }
+
+/* Hero with the trending banners (user 2026-11-16, as in Kevin's build): the section now holds the card, the stats and the banner
+   carousel (Trending.jsx), so it grows to fit them (height auto) and the card keeps the height it had (--card-h: what the section's
+   height rules above gave it, less the stats row and the frame's 20px gutter). It is taller than the screen, so it scrolls until its
+   foot reaches the bottom of the screen and is pinned there while Programmes slides over it (--hx-stick, hero-ground.js). */
+.dl { --card-h: calc(max(var(--hero-min), calc(100svh - var(--hdr-h) - var(--hdr-gap) - var(--hero-peek) - var(--stats-h))) - 20px); }
+@media (min-width: 1280px) { .dl { --card-h: calc(min(var(--hero-fit), max(var(--hero-min), calc(100svh - var(--hdr-h) - var(--hdr-gap) - var(--hero-peek) - var(--stats-h)))) - 20px); } }
+@media (max-width: 760px) { .dl { --card-h: calc(max(var(--hero-min), calc(100svh - var(--hdr-h) - var(--hdr-gap) - var(--hero-peek))) - 20px); } }
+@media (prefers-reduced-motion: no-preference) {
+  html .dl--pin { height: auto; top: var(--hx-stick, 0px); }
+  html .dl--pin .dl__frame { height: auto; }
+  html .dl--pin .dl__frame > .dl__stick { flex: none; height: var(--card-h); }
+}
