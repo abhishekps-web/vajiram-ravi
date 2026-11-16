@@ -2585,3 +2585,42 @@ footer.foot .foot__bot span:last-child { gap: 8px 20px; }
     padding-inline: max(4px, calc((var(--px) - 48px) / 2)); pointer-events: none; }
   #batches .rail--batch > .rail__nav .cbtn { pointer-events: auto; }
 }
+
+/* Batch tickets, tighter (user 2026-11-16): less height and evenly spaced rows. Head 132 -> 106px, body padding and the gaps between
+   tag, title, text and the date/seat row trimmed, the "Limited seats" stamp and the stub smaller (the stub is 76px, so the
+   two notches of the tear line move up with it). */
+.ticket__head { min-height: 106px; padding: 16px 22px; }
+.ticket__date time { margin-top: 4px; }
+.ticket__date time b { font-size: 44px; }
+.ticket__lotus { width: 170px; height: 90px; }
+.ticket__body { padding: 16px 22px 12px; }
+.inv--ticket h3 { margin-top: 8px; font-size: 22px; }
+.inv--ticket .inv__w { margin-top: 8px; font-size: 14.5px; line-height: 1.45; }
+.ticket__meta { min-height: 0; padding-top: 12px; }
+.ticket__meta dd { margin-top: 2px; }
+.ticket__stub { height: 76px; padding: 0 22px; }
+.inv--ticket .inv__frame {
+  -webkit-mask: radial-gradient(circle at 0 calc(100% - 76px), transparent 11px, #000 11.6px) left, radial-gradient(circle at 100% calc(100% - 76px), transparent 11px, #000 11.6px) right; -webkit-mask-size: 51% 100%; -webkit-mask-repeat: no-repeat;
+  mask: radial-gradient(circle at 0 calc(100% - 76px), transparent 11px, #000 11.6px) left, radial-gradient(circle at 100% calc(100% - 76px), transparent 11px, #000 11.6px) right; mask-size: 51% 100%; mask-repeat: no-repeat; }
+
+/* Batch tickets, tighter still (user 2026-11-16): head 92px, stub 66px (notches at 66px), smaller type and gaps */
+.ticket__head { min-height: 92px; padding: 13px 20px; }
+.ticket__date > span, .ticket__target { font-size: 11.5px; }
+.ticket__date time { margin-top: 2px; }
+.ticket__date time b { font-size: 38px; }
+.ticket__date time > span { padding-bottom: 4px; font-size: 14px; }
+.ticket__lotus { width: 140px; height: 74px; }
+.ticket__body { padding: 12px 20px 8px; }
+.inv--ticket h3 { margin-top: 6px; min-height: 2.3em; font-size: 20px; }
+.inv--ticket .inv__w { margin-top: 6px; font-size: 14px; line-height: 1.4; }
+.ticket__meta { padding-top: 8px; }
+.ticket__meta dt { font-size: 10.5px; }
+.ticket__meta dd { font-size: 13.5px; line-height: 1.35; }
+.ticket__stub { height: 66px; padding: 0 20px; }
+.inv--ticket .inv__frame {
+  -webkit-mask: radial-gradient(circle at 0 calc(100% - 66px), transparent 10px, #000 10.6px) left, radial-gradient(circle at 100% calc(100% - 66px), transparent 10px, #000 10.6px) right; -webkit-mask-size: 51% 100%; -webkit-mask-repeat: no-repeat;
+  mask: radial-gradient(circle at 0 calc(100% - 66px), transparent 10px, #000 10.6px) left, radial-gradient(circle at 100% calc(100% - 66px), transparent 10px, #000 10.6px) right; mask-size: 51% 100%; mask-repeat: no-repeat; }
+
+/* Batch tickets: the description sits right under its title as one block (user 2026-11-16): the title no longer reserves two lines */
+.inv--ticket h3 { min-height: 0; }
+.inv--ticket .inv__w { margin-top: 4px; }

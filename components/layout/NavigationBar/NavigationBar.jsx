@@ -56,7 +56,7 @@ export default function NavigationBar() {
             <button className="lang__b" type="button" data-lang="en" lang="en" aria-pressed="true" title="English">EN</button>
             <button className="lang__b" type="button" data-lang="hi" lang="hi" aria-pressed="false" title="हिन्दी">हिं</button>
           </div>
-          <Button className="talk" href="#contact" iconEnd="arrow">Let's talk</Button>
+          <Button className="talk" size="xs" href="#contact" iconEnd="arrow">Let's talk</Button>
         </div>
       </header>
       <div className="drawer" id="drawer" hidden>
