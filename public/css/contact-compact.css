@@ -2,7 +2,7 @@
    declared by components/sections/Visit/Visit.jsx. Changes from the original: root-relative asset URLs; "View on maps" is the site's
    primary Button (only placed here) with the map icon at its end; the gallery arrows are the site's icon-only Button inside a span
    that places them and fades them in (the button keeps its own look). */
-#visit .cx { --cx-r: 16px; --cx-gap: 14px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--cx-gap);
+#visit .cx { --cx-r: 16px; --cx-gap: 14px; display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: var(--cx-gap);
   width: 100%; max-width: 1180px; margin: clamp(28px, 3.4vw, 44px) auto 0; text-align: left; }
 
 .cx__l { display: flex; flex-direction: column; gap: var(--cx-gap); min-width: 0; }

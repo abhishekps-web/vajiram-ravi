@@ -84,13 +84,15 @@ Values come from the existing buttons (audit, 2026-11-13); the only new colour i
 
 All from existing buttons. Every size is a pill (`border-radius: 999px`); icon-only is a circle.
 
+Every size's label is 16px (user 2026-11-16: one font size for all buttons).
+
 | Size | Height | Padding-x | Disc-side padding | Font | Gap | Disc | Disc arrow | Bare icon |
 |---|---|---|---|---|---|---|---|---|
-| XS | 36px (40px on touch) | 16px | 4px | 14px | 8px | 28px | 13px | 16px |
-| SM | 44px | 18px | 4px | 15px | 10px | 36px | 15px | 18px |
-| MD | 48px | 22px | 5px | 18px | 14px | 38px | 16px | 20px |
-| LG | 54px | 24px | 6px | 17px | 16px | 42px | 18px | 22px |
-| XL | 60px (→ LG at ≤900px) | 30px | 7px | 18px | 18px | 46px | 19px | 24px |
+| XS | 36px (40px on touch) | 16px | 4px | 16px | 8px | 28px | 13px | 16px |
+| SM | 44px | 18px | 4px | 16px | 10px | 36px | 15px | 18px |
+| MD | 48px | 22px | 5px | 16px | 14px | 38px | 16px | 20px |
+| LG | 54px | 24px | 6px | 16px | 16px | 42px | 18px | 22px |
+| XL | 60px (→ LG at ≤900px) | 30px | 7px | 16px | 18px | 46px | 19px | 24px |
 
 Vertical padding is 0: the height is fixed and content is centred, so labels and icons sit on the same line in every size.
 Weight 700 for every size (link: 600). The link variant has an auto height (6px vertical padding) and no horizontal padding.

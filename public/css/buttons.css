@@ -46,7 +46,7 @@
 /* ---------------------------------------------------------------- base ---------------------------------------------------------------- */
 .btn {
   /* size tokens (md); the size classes below set them */
-  --btn-h: 48px; --btn-px: 22px; --btn-pe: 5px; --btn-fs: 18px; --btn-gap: 14px; --btn-disc: 38px; --btn-glyph: 16px; --btn-ic: 20px;
+  --btn-h: 48px; --btn-px: 22px; --btn-pe: 5px; --btn-fs: 16px; --btn-gap: 14px; --btn-disc: 38px; --btn-glyph: 16px; --btn-ic: 20px;
   /* colour tokens (primary); the variant classes below set them */
   --btn-bg: var(--btn-brand-grad); --btn-bg-hover: var(--btn-brand-deep); --btn-fg: #fff; --btn-fg-hover: var(--btn-fg);
   --btn-edge: 0 0 0 0 transparent; --btn-edge-hover: var(--btn-edge);
@@ -92,13 +92,13 @@
 
 /* ---------------------------------------------------------------- sizes ---------------------------------------------------------------- */
 /*            height  padding-x  disc-side  font  gap   disc  disc-glyph  icon        (all from existing buttons)             */
-.btn--xs { --btn-h: 36px; --btn-px: 16px; --btn-pe: 4px; --btn-fs: 14px; --btn-gap: 8px;  --btn-disc: 28px; --btn-glyph: 13px; --btn-ic: 16px; }
-.btn--sm { --btn-h: 44px; --btn-px: 18px; --btn-pe: 4px; --btn-fs: 15px; --btn-gap: 10px; --btn-disc: 36px; --btn-glyph: 15px; --btn-ic: 18px; }
-.btn--md { --btn-h: 48px; --btn-px: 22px; --btn-pe: 5px; --btn-fs: 18px; --btn-gap: 14px; --btn-disc: 38px; --btn-glyph: 16px; --btn-ic: 20px; }
-.btn--lg { --btn-h: 54px; --btn-px: 24px; --btn-pe: 6px; --btn-fs: 17px; --btn-gap: 16px; --btn-disc: 42px; --btn-glyph: 18px; --btn-ic: 22px; }
-.btn--xl { --btn-h: 60px; --btn-px: 30px; --btn-pe: 7px; --btn-fs: 18px; --btn-gap: 18px; --btn-disc: 46px; --btn-glyph: 19px; --btn-ic: 24px; }
+.btn--xs { --btn-h: 36px; --btn-px: 16px; --btn-pe: 4px; --btn-fs: 16px; --btn-gap: 8px;  --btn-disc: 28px; --btn-glyph: 13px; --btn-ic: 16px; }
+.btn--sm { --btn-h: 44px; --btn-px: 18px; --btn-pe: 4px; --btn-fs: 16px; --btn-gap: 10px; --btn-disc: 36px; --btn-glyph: 15px; --btn-ic: 18px; }
+.btn--md { --btn-h: 48px; --btn-px: 22px; --btn-pe: 5px; --btn-fs: 16px; --btn-gap: 14px; --btn-disc: 38px; --btn-glyph: 16px; --btn-ic: 20px; }
+.btn--lg { --btn-h: 54px; --btn-px: 24px; --btn-pe: 6px; --btn-fs: 16px; --btn-gap: 16px; --btn-disc: 42px; --btn-glyph: 18px; --btn-ic: 22px; }
+.btn--xl { --btn-h: 60px; --btn-px: 30px; --btn-pe: 7px; --btn-fs: 16px; --btn-gap: 18px; --btn-disc: 46px; --btn-glyph: 19px; --btn-ic: 24px; }
 /* tablet and phone: XL steps down to LG (the hero CTA did this at 900px) */
-@media (max-width: 900px) { .btn--xl { --btn-h: 54px; --btn-px: 24px; --btn-pe: 6px; --btn-fs: 17px; --btn-gap: 16px; --btn-disc: 42px; --btn-glyph: 18px; --btn-ic: 22px; } }
+@media (max-width: 900px) { .btn--xl { --btn-h: 54px; --btn-px: 24px; --btn-pe: 6px; --btn-fs: 16px; --btn-gap: 16px; --btn-disc: 42px; --btn-glyph: 18px; --btn-ic: 22px; } }
 /* touch: no target under 40px; SM and up already meet 44px */
 @media (pointer: coarse) { .btn--xs { --btn-h: 40px; } }
 
