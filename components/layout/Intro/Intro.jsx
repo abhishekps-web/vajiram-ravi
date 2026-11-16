@@ -1,9 +1,9 @@
-import Button from '@/components/ui/Button/Button';
 import Stylesheet from '@/components/ui/Stylesheet';
 // brand intro: Vajiram & Ravi reveal on orange (public/css/intro.css), run by the inline boot script ./boot.js from the first
 // paint; every load, or once per session (INTRO_ONCE_PER_SESSION, lib/config.js); never under reduced motion.
 // Rendered on the server so the overlay is in the first paint; intro.css shows it only while html.vrv-lock is set,
-// which the boot script adds before paint (so without JS it never covers the page).
+// which the boot script adds before paint (so without JS it never covers the page). No skip button (user 2026-11-16):
+// Esc or a scroll still ends it early.
 export default function Intro() {
   return (
     <>
@@ -19,7 +19,6 @@ export default function Intro() {
         </div>
         <span className="vrv__bar" aria-hidden="true" />
         <span className="vrv__edge" aria-hidden="true" />
-        <Button variant="outline" onDark size="xs" className="vrv__skip">Skip intro</Button>
       </div>
     </>
   );

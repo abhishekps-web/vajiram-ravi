@@ -154,7 +154,7 @@ Per-button tokens a context may override: `--btn-bg`, `--btn-bg-hover`, `--btn-f
 `talk` (header), `dl__cta` (hero: position and slide-change fade), `vbtn` (programme books: follows the cursor), `inv__reg`
 (batch tickets: raised-key shadow), `mega__cta` (menus), `gz__all` (Toppers: chevron turns on expand), `cmp__cta` (Why: scroll
 entrance), `sm__act` (Free resources: stretched over the card), `cm__cta` (Visit), `rnav__b` / `cbtn` (Faculty carousel),
-`dlg__x` (dialogs), `vrv__skip` (intro), `wa` (WhatsApp: position, entrance, pulse, green). Their rules only place the button
+`dlg__x` (dialogs), `wa` (WhatsApp: position, entrance, pulse, green). Their rules only place the button
 or set its tokens.
 
 ## Not buttons

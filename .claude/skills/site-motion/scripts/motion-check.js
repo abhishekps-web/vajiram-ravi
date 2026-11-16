@@ -42,7 +42,7 @@ const done = code => { try { chrome.kill(); } catch {} setTimeout(() => { try { 
   await send('Emulation.setDeviceMetricsOverride', { width: W, height: H, deviceScaleFactor: 1, mobile });
   await send('Page.navigate', { url });
   await sleep(3000);
-  await ev(`(document.querySelector('.vrv__skip')||{click(){}}).click()`);
+  await ev(`dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))`);  // ends the intro (no skip button)
   await sleep(1200);
   const S = JSON.stringify(sel);
   const ok = await ev(`!!document.querySelector(${S})`);
