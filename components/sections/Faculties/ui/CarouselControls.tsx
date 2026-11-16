@@ -53,7 +53,7 @@ export function CarouselArrow({ direction, onClick, label, hidden = false, disab
       disabled={disabled}
       aria-hidden={hidden || undefined}
       tabIndex={hidden ? -1 : undefined}
-      className={cx(hidden && "pointer-events-none opacity-0", className)}
+      className={cx("carousel-arrow", hidden && "pointer-events-none opacity-0", className)}
     />
   );
 }

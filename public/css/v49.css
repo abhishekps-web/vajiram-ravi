@@ -2536,15 +2536,8 @@ footer.foot .foot__bot span:last-child { gap: 8px 20px; }
 @media (max-width: 1000px) { #visit .cm__list { padding: 10px 20px; } }
 @media (max-width: 480px) { #visit .cm__list { padding: 6px 14px; } }
 
-/* Upcoming batches: the previous / next arrows placed as Faculty's (user 2026-11-16): either side of the row, level with the middle of
-   the tickets (the overlay spans the track's 18px / 34px padding, so its centre is the cards' centre), each centred in the side margin (the row is inset by --px; the overlay reaches out over it).
-   From 1024px only, where the side margin (--px, 56px+) holds the 44px arrow; narrower screens keep them in a row under the tickets. */
-@media (min-width: 1024px) {
-  #batches .rail--batch { position: relative; }
-  #batches .rail--batch > .rail__nav { position: absolute; inset: 18px calc(var(--px) * -1) 34px; z-index: 2; margin: 0; justify-content: space-between; align-items: center;
-    padding-inline: max(4px, calc((var(--px) - 44px) / 2)); pointer-events: none; }
-  #batches .rail--batch > .rail__nav .cbtn { pointer-events: auto; }
-}
+/* Upcoming batches: the previous / next arrows stay in a centred row under the tickets at every width (user 2026-11-16; they were
+   at the sides from 1024px, which is reverted). The row is `#batches .rail__nav` above. */
 
 /* Batch tickets, tighter (user 2026-11-16): less height and evenly spaced rows. Head 132 -> 106px, body padding and the gaps between
    tag, title, text and the date/seat row trimmed, the "Limited seats" stamp and the stub smaller (the stub is 76px, so the

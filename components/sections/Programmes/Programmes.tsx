@@ -37,6 +37,10 @@ export default function Programmes() {
           <div className="mt-[var(--hd-gap)]">
             <CourseShelf programmes={programmes} />
           </div>
+          {/* "See all": opens the course catalogue (any [data-cat] link does, components/dialogs/course-catalog.js), user 2026-11-16 */}
+          <div data-fade className="mt-10 flex justify-center">
+            <Button variant="secondary" href="#courses" data-cat="0" iconEnd="arrow">See all programmes</Button>
+          </div>
         </div>
 
         <div className="relative w-full pt-14 pb-[var(--sec-y)]">

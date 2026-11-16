@@ -7,15 +7,20 @@ import { RESOURCES } from './data';
 // ============ FREE RESOURCES: six resource cards, each with its own action, and more resources as small links;
 // styles/v49.css .sm / .sm__card--res, the folders public/css/resources.css. Content in ./data.jsx; links rewritten by ./resource-links.js.
 // Each card is a manila file folder from the editorial desk: the back with a coloured index tab, the resource itself
-// (./ResourceMock) sticking out of it, and the front flap with the copy and a rubber "Free" stamp. ============
+// (./ResourceMock) sticking out of it, and the front flap with the copy. ============
 
-function ResourceCard({ title, desc, action, stages, mock }) {
+function ResourceCard({ title, desc, action, stages, mock, tab, image }) {
   return (
     <li className="sm__card sm__card--res rf">
       <span className="rf__back" aria-hidden="true" />
-      <ResourceMock kind={mock} />
+      {image ? (
+        // an illustrated cutout of the resource (public/assets/img/resources), in the same slot as the drawn mock-ups
+        <div className="rmk rmk--photo" aria-hidden="true">
+          <div className="rmk__obj"><img src={image.src} alt="" width={image.w} height={image.h} decoding="async" /></div>
+        </div>
+      ) : <ResourceMock kind={mock} />}
       <div className="rf__front">
-        <span className="rf__stamp" aria-hidden="true">Free</span>
+        <span className="rf__tag">{tab}</span>
         <h3 className="sm__t">{title}</h3>
         <p className="sm__d">{desc}</p>
         {stages && (
@@ -23,7 +28,9 @@ function ResourceCard({ title, desc, action, stages, mock }) {
             {stages.map(s => <li key={s}>{s}</li>)}
           </ul>
         )}
-        <Button variant="link" className="sm__act" href="#" data-rs="" iconEnd="arrow">{action}</Button>
+        <div className="rf__stub">
+          <Button onDark className="sm__act" href="#" data-rs="" iconEnd="arrow">{action}</Button>
+        </div>
       </div>
     </li>
   );

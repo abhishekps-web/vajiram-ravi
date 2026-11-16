@@ -54,9 +54,9 @@
   transition: box-shadow .45s var(--ease); }
 #resources .rf__front::after { content: ""; position: absolute; left: 1px; right: 1px; bottom: 12px; height: 5px; pointer-events: none;
   border-top: 1px solid rgba(110, 66, 18, .2); border-bottom: 1px solid rgba(110, 66, 18, .2); box-shadow: 0 1px 0 rgba(255, 250, 235, .6), inset 0 1px 0 rgba(255, 250, 235, .6); }
-#resources .rf .sm__t { margin: 0; padding-right: 76px; color: #2A2016; }
+#resources .rf .sm__t { margin: 0; color: #2A2016; }
 #resources .rf .sm__d { color: #5a4632; }
-#resources .rf .sm__act { margin-top: auto; --btn-fg: var(--brand); --btn-fg-hover: var(--brand); }
+#resources .rf .sm__act { margin-top: auto; --btn-fg: var(--ink); --btn-fg-hover: var(--ink); }   /* the white pill (onDark primary), as the GS button */
 #resources .rf > .rf__front > a.sm__act.tlink { color: var(--brand); }
 #resources .rf .sm__stages li { border-color: rgba(110, 66, 18, .3); background: rgba(255, 252, 240, .5); color: #6E4413; }
 
@@ -148,21 +148,21 @@
   /* keep the folder's own colours (the old cards turned white on an orange ground) */
   #resources .rf:hover .sm__t { color: var(--ink); }
   #resources .rf:hover .sm__d { color: #5a4a3c; }
-  #resources .rf:hover .sm__act { --btn-fg: var(--brand); --btn-fg-hover: var(--brand); }
+  #resources .rf:hover .sm__act { --btn-fg: var(--ink); --btn-fg-hover: var(--ink); }
   #resources .rf:hover > .rf__front > a.sm__act.tlink { color: var(--brand); }
   #resources .rf:hover .sm__stages li { border-color: rgba(120, 70, 20, .3); color: #7a4a14; }
 }
-@media (max-width: 640px) { #resources .rf__front { min-height: 0; padding: 22px 20px; } #resources .rf .sm__t { padding-right: 64px; } }
+@media (max-width: 640px) { #resources .rf__front { min-height: 0; padding: 22px 20px; } }
 @media (prefers-reduced-motion: reduce) {
-  #resources .rmk__obj, #resources .rf__tab, #resources .rf__stamp, #resources .rf__front { transition: none; }
+  #resources .rf, #resources .rmk__obj, #resources .rf__tab, #resources .rf__stamp, #resources .rf__front { transition: none; }
   #resources .sm__grid.rise .rmk__obj { opacity: 1; translate: none; }
 }
 
 /* all six folders the same size (user 2026-11-13): three to a row, equal rows; no wide cards, no larger titles on 1 and 6 */
 #resources .sm__grid--res { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: 1fr; }
 #resources .sm__grid--res > .rf { grid-column: auto; }
-#resources .sm__grid--res > .rf .sm__t { font-size: 22px; line-height: 1.25; }
-#resources .sm__grid--res > .rf .sm__d { font-size: 16px; max-width: none; }
+#resources .sm__grid--res > .rf .sm__t { font-size: 22px; line-height: 1.2; }
+#resources .sm__grid--res > .rf .sm__d { font-size: 14.5px; max-width: none; }
 @media (max-width: 1000px) { #resources .sm__grid--res { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 640px) { #resources .sm__grid--res { grid-template-columns: 1fr; grid-auto-rows: auto; } }
 
@@ -233,7 +233,14 @@
 #resources .rmk__obj { transition: transform .6s cubic-bezier(.33, 0, .2, 1), opacity .6s var(--ease), translate .8s var(--ease); will-change: transform; }
 #resources .sm__grid.rise .rmk__obj { transition-delay: 0s, calc(var(--i, 0) * 80ms + 300ms), calc(var(--i, 0) * 80ms + 300ms); }
 #resources .sm__grid.rise.in .rmk__obj { transition-delay: 0s, calc(var(--i, 0) * 80ms + 300ms), calc(var(--i, 0) * 80ms + 300ms); }
-#resources .rf { transition: rotate .6s cubic-bezier(.33, 0, .2, 1); }
+/* the folder card itself (user 2026-11-16: its hover jumped). This rule used to be `transition: rotate` alone, which replaced the
+   card's own transitions (v49.css: .sm__card, .sm__grid.rise > .sm__card), so the hover lift and scale (transform) and the
+   shadow snapped. Every property that moves on the card is listed here: the entrance (opacity, translate, scale) keeps its
+   stagger delay, the hover (transform, box-shadow, rotate) has none and eases in and out on the same soft curve. */
+#resources .rf { transition: opacity .7s var(--ease), translate .9s var(--ease), scale .9s var(--ease),
+    transform .6s cubic-bezier(.33, 0, .2, 1), box-shadow .6s cubic-bezier(.33, 0, .2, 1), rotate .6s cubic-bezier(.33, 0, .2, 1);
+  transition-delay: calc(var(--i, 0) * 90ms), calc(var(--i, 0) * 90ms), calc(var(--i, 0) * 90ms), 0s, 0s, 0s; will-change: transform; }
+@media (prefers-reduced-motion: reduce) { #resources .rf { transition: none; will-change: auto; } }
 #resources .rf__front { transition: box-shadow .6s cubic-bezier(.33, 0, .2, 1); }
 #resources .rf__stamp { transition: scale .5s cubic-bezier(.33, 0, .2, 1), opacity .5s ease; }
 @media (hover: hover) and (pointer: fine) {
@@ -259,7 +266,45 @@
 
 /* link buttons sit a little lower on every card, all on the same line (the card's last row, pushed down by margin-top: auto) */
 #resources .rf__front { padding-bottom: 26px; }
-#resources .rf .sm__act { margin-top: auto; padding-top: 6px; }
+#resources .rf .sm__act { margin-top: auto; align-self: flex-start; --btn-shadow: 0 0 0 0 transparent; --btn-shadow-hover: 0 0 0 0 transparent; }   /* no shadow on the CTA (user 2026-11-16) */
 
 /* the whole folder is clickable (resource-links.js) */
 #resources .rf { cursor: pointer; }
+
+/* Same content hierarchy as the batch tickets (user 2026-11-16): a small uppercase tag in the folder's colour, the serif title
+   (600, 22px), the description (14.5px), then the action under a dashed tear line, as the ticket's stub. */
+#resources .rf .rf__tag { margin: 0; color: var(--tab); font: 700 12px/1.2 var(--f); text-transform: uppercase; letter-spacing: .06em; }
+#resources .rf .sm__t { margin: -2px 0 0; font: 600 22px/1.2 var(--f-d); letter-spacing: -.015em; }
+#resources .rf .sm__d { margin: 0; font-size: 14.5px; line-height: 1.5; }
+#resources .rf .rf__stub { align-self: stretch; margin-top: auto; padding-top: 18px; border-top: 1.5px dashed #C9A98C; }
+#resources .rf .rf__stub::before { content: none; }
+#resources .rf .sm__act { margin-top: 0; }
+
+/* Illustrated cutouts (user 2026-11-16, after the reference site's Free resources): the resource as a picture, standing out of the
+   folder with its lower part behind the front flap. The slot is taller (150px) for every card so the folders stay level. */
+#resources .rmk { height: 150px; }
+#resources .rmk--photo { padding-top: 0; }
+#resources .rmk--photo .rmk__obj img { display: block; width: auto; height: 172px; max-width: none; filter: drop-shadow(0 10px 14px rgba(60, 30, 5, .28)); pointer-events: none; user-select: none; }
+
+/* Lower in the folder (user 2026-11-16): the resource and the white sheets filed behind it sit 24px lower, so they read as tucked
+   inside the folder rather than standing on it. The sheets' height shrinks by the same 24px so their foot stays at the flap. */
+#resources .rmk--photo .rmk__obj { margin-top: 24px; }
+#resources .rf__back::after { top: 106px; height: 46px; }   /* foot at the front flap (back top 30px + 106 + 46 = the flap at 182px) */
+
+/* Hovering anywhere on the folder plays the CTA's own hover (user 2026-11-16): the same states as `.btn:hover` (buttons.css): the
+   fill, the label roll, the arrow swap and the disc. The whole card is the link (resource-links.js), so the button answers it. */
+@media (hover: hover) and (pointer: fine) {
+  #resources .rf:hover .sm__act { color: var(--btn-fg-hover); box-shadow: var(--btn-edge-hover), var(--btn-shadow-hover); }
+  #resources .rf:hover .sm__act::before { opacity: 1; }
+  #resources .rf:hover .sm__act .btn__t { transform: translateY(-115%); }
+  #resources .rf:hover .sm__act .btn__t + .btn__t { transform: translateY(0); }
+  #resources .rf:hover .sm__act .btn__t:only-child { transform: none; }
+  #resources .rf:hover .sm__act .btn__disc { transform: scale(1.06); }
+  #resources .rf:hover .sm__act .btn__disc svg { transform: translateX(220%); }
+  #resources .rf:hover .sm__act .btn__disc svg + svg { transform: translateX(0); }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: reduce) {
+  #resources .rf:hover .sm__act .btn__t, #resources .rf:hover .sm__act .btn__disc, #resources .rf:hover .sm__act .btn__disc svg { transform: none; }
+  #resources .rf:hover .sm__act .btn__t + .btn__t { transform: translateY(115%); }
+  #resources .rf:hover .sm__act .btn__disc svg + svg { transform: translateX(-220%); }
+}
