@@ -14,27 +14,12 @@ export default function Hero() {
   return (
     <section className="dl dl--pin" id="dlPin" aria-labelledby="dlH">
       <div className="dl__frame">
-        {/* card under card (user 2026-11-16): the previous and next slides as cards tucked under the active one, their edges showing at
-            either side. Decorative (the arrows and indicators are the controls); a click on one still changes the slide (page-motion.js).
-            Small images, loaded at low priority: only a strip of each shows. */}
-        <div className="dl__peek" aria-hidden="true">
-          {['prev', 'next'].map((side, k) => (
-            <div key={side} className={`dl__peek-card dl__peek-card--${side}`}>
-              {SLIDES.map((s, i) => (
-                <img
-                  key={s.name}
-                  className={i === (k ? 1 : SLIDES.length - 1) ? 'on' : undefined}
-                  src={`${HERO}/${s.name}-768.webp`}
-                  alt=""
-                  width={768}
-                  height={Math.round((768 * s.h) / s.w)}
-                  loading="lazy"
-                  decoding="async"
-                  fetchPriority="low"
-                />
-              ))}
-            </div>
-          ))}
+        {/* stacked cards (user 2026-11-16): three cards behind the active one, their top edges showing above it (v49.css, end).
+            Decorative (the arrows and indicators are the controls); a click on one still moves on that many slides (page-motion.js). */}
+        <div className="dl__deck" aria-hidden="true">
+          <i className="dl__deck-card" />
+          <i className="dl__deck-card" />
+          <i className="dl__deck-card" />
         </div>
         <div className="dl__stick">
           <div className="dl__bg" id="dlBg" aria-hidden="true">
