@@ -30,8 +30,12 @@ export default function Home() {
           <Programmes />
         </div>
         <Toppers />
-        <Stories />
-        <Faculties />
+        {/* one shared ground (jaali lattice) behind Success stories and Faculty, so the postcard shadows fall across an unbroken
+            background (public/css/v49.css .ground-merge) */}
+        <div className="ground-merge">
+          <Stories />
+          <Faculties />
+        </div>
         <WhyChoose />
         <Batches />
         <GeneralStudies />

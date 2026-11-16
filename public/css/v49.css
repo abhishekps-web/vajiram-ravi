@@ -2457,3 +2457,18 @@ html main #closing .cl__faces { flex: none; }
   html main #closing .cl__faces img:nth-child(5) { display: none; }
   html main #closing .cl__faces img + img { margin-left: -12px; }
 }
+
+/* Success stories + Faculty share one ground (user 2026-11-16: "merge the background", the postcard shadows looked clipped by the next
+   section): the jaali lattice that Success stories drew on its own ::before ended in a hard line at its bottom edge, right under the
+   cards' shadows. It is now one layer on the wrapper round both sections (app/page.jsx .ground-merge): the same 96px tile, 14% and side
+   fade as .sheet::before (v25.css), running unbroken through the join; Success stories' own copy is off. */
+.ground-merge { position: relative; isolation: isolate; }
+.ground-merge::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' fill='none' stroke='%23C2410C' stroke-width='1.1'%3E%3Cpath d='M48 26L70 48 48 70 26 48z'/%3E%3Cpath d='M48 36L60 48 48 60 36 48z'/%3E%3Cpath d='M48 0v26M48 70v26M0 48h26M70 48h26'/%3E%3Cpath d='M0 14A14 14 0 0 0 14 0M82 0a14 14 0 0 0 14 14M96 82a14 14 0 0 0-14 14M14 96A14 14 0 0 0 0 82'/%3E%3Ccircle cx='48' cy='48' r='3' fill='%23C2410C' stroke='none'/%3E%3C/svg%3E") 50% 0 / 96px 96px repeat;
+  opacity: .14;
+  -webkit-mask: linear-gradient(90deg, #000 0%, rgba(0, 0, 0, .55) 14%, transparent 34%, transparent 66%, rgba(0, 0, 0, .55) 86%, #000 100%);
+  mask: linear-gradient(90deg, #000 0%, rgba(0, 0, 0, .55) 14%, transparent 34%, transparent 66%, rgba(0, 0, 0, .55) 86%, #000 100%); }
+.ground-merge > #stories.sheet::before { display: none; }
+/* the section itself cropped both axes too (.sheet, v25.css overflow: hidden), cutting the shadows at its bottom edge: on the shared ground
+   it only crops sideways, so the shadows fall onto Faculty's (transparent) top. Older browsers keep overflow: hidden. */
+@supports (overflow: clip) { .ground-merge > #stories.sheet { overflow: visible; overflow-x: clip; } }
