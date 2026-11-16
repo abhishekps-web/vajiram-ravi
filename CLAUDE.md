@@ -122,5 +122,10 @@ The client wants **every section and every element animated**. For any change to
   Natural scroll (user 2026-11-16, replacing "one step per gesture"): the page scrolls through the pinned scene like anywhere else,
   with no gesture capture, snapping or settling; the six chapters play over about two screens of scroll (two gestures at most)
   and the page carries on into Batches (`story.js`, "natural scroll").
+- Hero banner types (user 2026-11-16): `/hero-banners` (`app/hero-banners/page.jsx`, not linked, noindex) shows ten hero carousel
+  ideas side by side for the client to pick from: A toppers, B course highlights, C both. Components in `components/hero-banners/`
+  (`HeroTypes.jsx`, the shared engine `carousel.jsx`: the timer bar's CSS animation drives the autoplay; `data.js` builds every
+  slide from the site's own toppers, programmes and batches), styles `public/css/hero-banners.css`. The chosen one moves into
+  `components/sections/Hero`; the page can then go.
 - The "How it works" and results sections are in `sections/Parked/Parked.jsx`, inside `<div id="parked" hidden>`; they are not shown.
 - `public/css/why-choose.css` and `public/js/why-choose.js` are leftovers the page does not load (they were not loaded before the Next.js conversion either).
