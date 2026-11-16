@@ -2479,46 +2479,6 @@ html main #closing .cl__faces { flex: none; }
    it only crops sideways, so the shadows fall onto Faculty's (transparent) top. Older browsers keep overflow: hidden. */
 @supports (overflow: clip) { .ground-merge > #stories.sheet { overflow: visible; overflow-x: clip; } }
 
-/* Hero carousel, card stack (user 2026-11-16, after the Dribbble "Card stack UI interaction" shot): the active slide is the front
-   card and the next two slides are fanned out behind it to the right, each smaller (92%, 84%), fainter (80%, 50%) and one
-   --stk-step further right, so a strip of each shows past the card's right edge. They look as their slides do at the front: the
-   same image files and crop and the hero's own scrim (data-s: slide 1's lighter one, the others' darker one). On a change
-   (page-motion.js, stackMove) the old front card slides off to the left and fades while the next card comes forward over it into
-   the front, the stack moves up and a new card fades in at the back; previous plays it in reverse. So the card carries the
-   change, the slide pictures switch at once instead of crossfading. The deck (.dl__deck, Hero.jsx) and the ghost of the old card
-   share the hero card's box and transform origin, so everything scales with the card as Programmes covers it. Hover: a card
-   behind brightens; a click on one moves on that many slides. The frame clips the card that leaves. The card's bottom shadow ends
-   inside the frame's 20px gutter (Programmes starts at its edge and would cut a longer one). Reduced motion: no deck, old frame. */
-.dl { --stk-step: clamp(9px, 1.6vw, 24px); --stk-out: clamp(6px, 1.4vw, 20px); }
-.dl__deck, .dl__ghost { display: none; }
-@media (prefers-reduced-motion: no-preference) {
-  .dl__frame { position: relative; overflow: clip; padding-right: calc(var(--cap) + var(--stk-out) + var(--stk-step) * 2); }
-  .dl--pin .dl__frame > .dl__stick { z-index: 1; box-shadow: 10px 0 24px -14px rgba(30, 12, 2, .45), 0 10px 20px -12px rgba(30, 12, 2, .32); }
-  .dl--pin .dl__slides img { transition: transform 7s ease-out; }   /* the card carries the change: no crossfade */
-  .dl__deck { display: block; position: absolute; z-index: 0; top: 0; bottom: 20px; left: calc(var(--cap) + 20px);
-    right: calc(var(--cap) + var(--stk-out) + var(--stk-step) * 2);
-    transform: scale(calc(1 - var(--cover, 0) * .2)); transform-origin: 50% 35%; pointer-events: none; }
-  .dl__deck-card, .dl__ghost { position: absolute; overflow: hidden; border-radius: var(--r-box); background: #2a1408; transform-origin: 50% 35%; }
-  .dl__deck-card { inset: 0; z-index: calc(3 - var(--k)); pointer-events: auto; cursor: pointer;
-    scale: var(--s); opacity: var(--o); translate: calc(var(--k) * var(--stk-step) + (1 - var(--s)) * 50%) calc((1 - var(--s)) * 15%);
-    box-shadow: 8px 0 18px -12px rgba(30, 12, 2, .4); transition: filter .35s var(--ease); }
-  .dl__deck-card:nth-child(1) { --k: 1; --s: .92; --o: .8; }
-  .dl__deck-card:nth-child(2) { --k: 2; --s: .84; --o: .5; }
-  .dl__ghost { display: block; pointer-events: none; }
-  .dl__deck-card img, .dl__ghost img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  .dl__deck-card img { opacity: 0; } .dl__deck-card img.on { opacity: 1; }
-  /* the hero's own scrims (.dl__bg::after above): phones and tablets one vertical scrim, from 901px a lighter right side */
-  .dl__deck-card::after, .dl__ghost::after { content: ""; position: absolute; inset: 0;
-    background: linear-gradient(0deg, rgba(30,12,2,.86) 0%, rgba(30,12,2,.62) 60%, rgba(30,12,2,.46) 100%); }
-}
-@media (prefers-reduced-motion: no-preference) and (min-width: 901px) {
-  .dl__deck-card::after, .dl__ghost::after { background: linear-gradient(90deg, rgba(30,12,2,.86) 0%, rgba(30,12,2,.52) 50%, rgba(30,12,2,.1) 100%), linear-gradient(0deg, rgba(30,12,2,.5) 0%, transparent 40%); }
-  .dl__deck-card:not([data-s="0"])::after, .dl__ghost:not([data-s="0"])::after { background: linear-gradient(90deg, rgba(30,12,2,.88) 0%, rgba(30,12,2,.62) 48%, rgba(30,12,2,.2) 100%), linear-gradient(0deg, rgba(30,12,2,.5) 0%, transparent 40%); }
-}
-@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
-  .dl__deck-card:hover { filter: brightness(1.25); }
-}
-
 /* FAQ toggle (user 2026-11-16): a chevron (inline SVG, currentColor), down when closed and up when open.
    Closed: an outlined ring in the brand colour; open: filled with the brand colour with a white chevron. */
 #faq .qa summary .qa__ic { flex: none; box-sizing: content-box; width: 16px; height: 16px; padding: 5px; border-radius: 50%;
@@ -2630,3 +2590,41 @@ footer.foot .foot__bot span:last-child { gap: 8px 20px; }
 #dlProg.dl__prog button i::after { background: #fff; }
 @media (max-width: 1440px) { #dlProg.dl__prog { left: clamp(20px, 5.5vw, 80px); } }
 @media (max-width: 900px) { #dlProg.dl__prog { left: 20px; bottom: 27px; } }
+
+/* Hero stats (user 2026-11-16): a row of four key numbers under the hero card (.dl__stats, Hero.jsx; figures in Hero/data.js),
+   on the hero's jaali ground inside the frame. The section grows by the row's height (--stats-h) and the card gives up the same
+   amount, so the first screen still ends with the Programmes peek; the card never goes below --hero-min (its own layout).
+   Phones keep the card's full height and let the row push the peek down.
+   Motion: the items reveal in turn (.rv) and the numbers count up once the intro has lifted (hero-stats.js); a pointer over an
+   item draws a brand rule under its number. Phones: two by two. */
+.dl { --stats-h: 92px; }
+@media (max-width: 760px) { .dl { --stats-h: 168px; } }
+.dl--pin .dl__frame { display: flex; flex-direction: column; }
+.dl--pin .dl__frame > .dl__stick { flex: 1 1 auto; height: auto; min-height: 0; }
+.dl__stats { flex: none; height: var(--stats-h); box-sizing: border-box; margin: 0; padding: 14px 0 0; list-style: none;
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); align-items: center; color: var(--ink); }
+.dl__stats li { position: relative; display: flex; align-items: center; gap: 14px; min-width: 0; padding: 0 clamp(14px, 2vw, 32px); }
+.dl__stats li + li { border-left: 1px solid rgba(46, 46, 46, .14); }
+.dl__stats li:first-child { padding-left: clamp(4px, 1vw, 12px); }
+.dl__num { position: relative; flex: none; font: 400 clamp(32px, 3vw, 46px)/1 var(--f-title); letter-spacing: -.02em; color: var(--brand); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.dl__num::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px; background: var(--brand); transform: scaleX(0); transform-origin: 0 50%; transition: transform .45s cubic-bezier(.7, 0, .2, 1); }
+.dl__stat-l { font-size: 14px; line-height: 1.35; color: var(--muted); max-width: 17em; }
+@media (hover: hover) and (pointer: fine) { .dl__stats li:hover .dl__num::after { transform: scaleX(1); } }
+@media (max-width: 1100px) { .dl__stats li { flex-direction: column; align-items: flex-start; gap: 6px; } .dl__stat-l { font-size: 13px; } }
+@media (max-width: 760px) {
+  .dl__stats { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 16px; align-content: center; padding-top: 16px; }
+  .dl__stats li:nth-child(3) { border-left: 0; padding-left: clamp(4px, 1vw, 12px); }
+}
+/* heights: the card takes what it had minus the row (never below --hero-min); the section adds the row back */
+@media (prefers-reduced-motion: no-preference) {
+  .dl--pin { height: calc(var(--stats-h) + max(var(--hero-min), calc(100vh - var(--hdr-h) - var(--hdr-gap) - var(--hero-peek) - var(--stats-h))));
+             height: calc(var(--stats-h) + max(var(--hero-min), calc(100svh - var(--hdr-h) - var(--hdr-gap) - var(--hero-peek) - var(--stats-h)))); }
+}
+@media (min-width: 1280px) and (prefers-reduced-motion: no-preference) {
+  .dl--pin { height: calc(var(--stats-h) + min(var(--hero-fit), max(var(--hero-min), calc(100svh - var(--hdr-h) - var(--hdr-gap) - var(--hero-peek) - var(--stats-h))))); }
+}
+/* phones: the card keeps its full height (squeezed it crowded the copy) and the row follows under it, ahead of the Programmes peek */
+@media (max-width: 760px) and (prefers-reduced-motion: no-preference) {
+  .dl--pin { height: calc(var(--stats-h) + max(var(--hero-min), calc(100svh - var(--hdr-h) - var(--hdr-gap) - var(--hero-peek)))); }
+}
+@media (prefers-reduced-motion: reduce) { .dl__stats { height: auto; padding: 20px 0 4px; } }

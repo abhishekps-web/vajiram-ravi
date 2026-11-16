@@ -1,4 +1,5 @@
 import Button from '@/components/ui/Button/Button';
+import { HERO_STATS } from './data';
 
 // Hero slides: WebP at three widths each (public/assets/img/hero/<name>-<width>.webp). The slides cover the hero
 // (object-fit: cover), so on a portrait phone the image is scaled to the hero's height and drawn about 2.5x the screen width.
@@ -14,31 +15,6 @@ export default function Hero() {
   return (
     <section className="dl dl--pin" id="dlPin" aria-labelledby="dlH">
       <div className="dl__frame">
-        {/* stacked cards (user 2026-11-16, the Dribbble "Card stack UI interaction" shot): the next two slides as cards fanned out
-            behind the active one to its right
-            (v49.css, end); page-motion.js moves the pictures along with the slides. Each looks exactly as that slide does at the
-            front (user 2026-11-16): the same image files and crop, and the same scrim. Decorative (the arrows and indicators are the
-            controls); a click on one still moves on that many slides. */}
-        <div className="dl__deck" aria-hidden="true">
-          {[1, 2].map(k => (
-            <div key={k} className="dl__deck-card" data-s={k}>
-              {SLIDES.map((s, i) => (
-                <img
-                  key={s.name}
-                  className={i === k ? 'on' : undefined}
-                  src={`${HERO}/${s.name}-1200.webp`}
-                  srcSet={s.widths.map(w => `${HERO}/${s.name}-${w}.webp ${w}w`).join(', ')}
-                  sizes={SIZES}
-                  alt=""
-                  width={s.w}
-                  height={s.h}
-                  loading="lazy"
-                  decoding="async"
-                />
-              ))}
-            </div>
-          ))}
-        </div>
         <div className="dl__stick">
           <div className="dl__bg" id="dlBg" aria-hidden="true">
             <div className="dl__slides" id="dlSlides">
@@ -138,6 +114,15 @@ export default function Hero() {
             </button>
           </p>
         </div>
+        {/* key numbers under the hero card (user 2026-11-16): data.js; hero-stats.js counts them up, the CSS is at the end of v49.css */}
+        <ul className="dl__stats" aria-label="Vajiram & Ravi in numbers">
+          {HERO_STATS.map((s, i) => (
+            <li key={s.label} className="rv" style={{ '--d': `${0.3 + i * 0.08}s` }}>
+              <b className="dl__num">{s.pre}<span data-count={s.count}>{s.count}</span>{s.suf}</b>
+              <span className="dl__stat-l">{s.label}</span>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
