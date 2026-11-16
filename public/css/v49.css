@@ -2481,11 +2481,12 @@ html main #closing .cl__faces { flex: none; }
 /* Hero carousel, stacked cards at the sides (user 2026-11-16, after the Essential Addons "Stacked Cards" reference, turned on its
    side): the active slide is the full card, centred, and the next three slides are stacked behind it, each one --stk-x wider on
    both sides and --stk-y shorter at the top and bottom, so their edges show at the left and right of the card. Each shows the
-   slide that comes k after the active one (crossfading as the slides change), under a veil that deepens towards the back.
+   slide that comes k after the active one (crossfading as the slides change) exactly as it looks at the front: the same image
+   files and crop, and the same scrim (the hero's .dl__bg::after, slide 1's lighter one or the other slides' darker one, data-s).
    The frame gives the stack its room at the sides (--stk-out, the gutter outside it, + 3 steps); on phones the two together keep
    the old 20px, so the active card is no narrower there. The deck (.dl__deck, Hero.jsx) has the card's own box, so it scales with
    the card as Programmes covers it (same origin). On every slide change the stack tucks in behind the card and comes back out,
-   front to back (page-motion.js); on hover a card's veil lifts, and a click on one moves on that many slides. The active card's
+   front to back (page-motion.js); on hover a card's scrim lightens, and a click on one moves on that many slides. The active card's
    design, copy and controls are unchanged; it gains a soft shadow so it reads as the top card. Its bottom shadow ends ~8px under
    it, inside the frame's 20px gutter: Programmes starts at the gutter's edge and sits above the hero, cutting anything longer.
    Reduced motion: no deck and the old frame (the slides stack there). */
@@ -2501,13 +2502,19 @@ html main #closing .cl__faces { flex: none; }
     left: calc(var(--k) * var(--stk-x) * -1); right: calc(var(--k) * var(--stk-x) * -1); z-index: calc(4 - var(--k));
     overflow: hidden; border-radius: var(--r-box); background: #2a1408; pointer-events: auto; cursor: pointer;
     box-shadow: -4px 0 12px -6px rgba(30, 12, 2, .35), 4px 0 12px -6px rgba(30, 12, 2, .35); }
-  .dl__deck-card:nth-child(1) { --k: 1; --veil: .15; }
-  .dl__deck-card:nth-child(2) { --k: 2; --veil: .32; }
-  .dl__deck-card:nth-child(3) { --k: 3; --veil: .48; }
+  .dl__deck-card:nth-child(1) { --k: 1; }
+  .dl__deck-card:nth-child(2) { --k: 2; }
+  .dl__deck-card:nth-child(3) { --k: 3; }
   .dl__deck-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .9s ease; }
   .dl__deck-card img.on { opacity: 1; }
-  .dl__deck-card::after { content: ""; position: absolute; inset: 0; background: rgba(30, 12, 2, var(--veil)); transition: background-color .35s var(--ease); }
+  /* the hero's own scrims (.dl__bg::after above): phones and tablets one vertical scrim, from 901px a lighter right side */
+  .dl__deck-card::after { content: ""; position: absolute; inset: 0; transition: opacity .35s var(--ease);
+    background: linear-gradient(0deg, rgba(30,12,2,.86) 0%, rgba(30,12,2,.62) 60%, rgba(30,12,2,.46) 100%); }
+}
+@media (prefers-reduced-motion: no-preference) and (min-width: 901px) {
+  .dl__deck-card::after { background: linear-gradient(90deg, rgba(30,12,2,.86) 0%, rgba(30,12,2,.52) 50%, rgba(30,12,2,.1) 100%), linear-gradient(0deg, rgba(30,12,2,.5) 0%, transparent 40%); }
+  .dl__deck-card:not([data-s="0"])::after { background: linear-gradient(90deg, rgba(30,12,2,.88) 0%, rgba(30,12,2,.62) 48%, rgba(30,12,2,.2) 100%), linear-gradient(0deg, rgba(30,12,2,.5) 0%, transparent 40%); }
 }
 @media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
-  .dl__deck-card:hover::after { background: rgba(30, 12, 2, 0); }
+  .dl__deck-card:hover::after { opacity: .6; }
 }

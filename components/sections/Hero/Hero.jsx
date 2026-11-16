@@ -15,22 +15,24 @@ export default function Hero() {
     <section className="dl dl--pin" id="dlPin" aria-labelledby="dlH">
       <div className="dl__frame">
         {/* stacked cards (user 2026-11-16): the next three slides as cards behind the active one, their edges showing at its left and right
-            (v49.css, end); page-motion.js moves the pictures along with the slides. Decorative (the arrows and indicators are the
-            controls); a click on one still moves on that many slides. Small images at low priority: only a strip of each shows. */}
+            (v49.css, end); page-motion.js moves the pictures along with the slides. Each looks exactly as that slide does at the
+            front (user 2026-11-16): the same image files and crop, and the same scrim. Decorative (the arrows and indicators are the
+            controls); a click on one still moves on that many slides. */}
         <div className="dl__deck" aria-hidden="true">
           {[1, 2, 3].map(k => (
-            <div key={k} className="dl__deck-card">
+            <div key={k} className="dl__deck-card" data-s={k}>
               {SLIDES.map((s, i) => (
                 <img
                   key={s.name}
                   className={i === k ? 'on' : undefined}
-                  src={`${HERO}/${s.name}-768.webp`}
+                  src={`${HERO}/${s.name}-1200.webp`}
+                  srcSet={s.widths.map(w => `${HERO}/${s.name}-${w}.webp ${w}w`).join(', ')}
+                  sizes={SIZES}
                   alt=""
-                  width={768}
-                  height={Math.round((768 * s.h) / s.w)}
+                  width={s.w}
+                  height={s.h}
                   loading="lazy"
                   decoding="async"
-                  fetchPriority="low"
                 />
               ))}
             </div>
