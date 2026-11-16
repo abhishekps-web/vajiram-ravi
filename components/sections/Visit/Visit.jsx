@@ -2,7 +2,7 @@ import Button from '@/components/ui/Button/Button';
 import Stylesheet from '@/components/ui/Stylesheet';
 
 // ============ VISIT: "Contact us", the compact layout from Kevin's build (user 2026-11-16; eclectic-alfajores-975fab.netlify.app, its
-// index.html #visit .cx and css/contact-compact.css): two equal columns close together. Left, the centre's card (a badge, the address
+// index.html #visit .cx and css/contact-compact.css): two columns close together, 40:60 (the card and map 40%, the gallery 60%; user 2026-11-16). Left, the centre's card (a badge, the address
 // as the heading, the landmark, the hours, then phone and email) framed like the "Book your free session" form, and under it the map
 // with "View on maps" on its lower left. Right, the campus photos cross-fading (visit-gallery.js) with the caption and dots along the
 // foot and arrows at the sides on hover. Stacked on narrower screens. Styles public/css/contact-compact.css. ============

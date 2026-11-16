@@ -26,7 +26,7 @@ main#top { padding-top: calc(var(--hdr-h) + var(--hdr-gap)); }
 .nav::after { content: ""; position: absolute; inset: -8px -10px; z-index: -1; background: #fff; border-radius: 20px; box-shadow: none; border: 0; pointer-events: none; }
 
 /* Typography = the Button component's (user 2026-11-13): font, weight, line height and letter spacing are the button system's own
-   tokens (public/css/buttons.css :root), and the size is the default (md) button's, 18px (.btn--md --btn-fs). Spacing, colours and
+   tokens (public/css/buttons.css :root), and the size is the default (md) button's, 16px (.btn--md --btn-fs). Spacing, colours and
    hover/focus states are unchanged. Covers the bar's links and menu buttons (.nav__a) and the phone drawer's links. */
 .nav .nav__a, .drawer a { font-family: var(--btn-font); font-weight: var(--btn-weight); font-size: 18px; line-height: var(--btn-lh); letter-spacing: var(--btn-ls); }
 html[lang="hi"] .nav .nav__a, html[lang="hi"] .drawer a { font-family: "Mukta", var(--btn-font); }

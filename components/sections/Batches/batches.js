@@ -9,7 +9,7 @@ export function initBatchTickets() {
     const [d, mon] = b.d.split(' ');
     const fam = BFAM[b.fam] || BFAM.gs;
     // the family as inv--fam-<key>: a bare inv--pre (the Prelims key) is the old entrance class and hid those tickets
-    return `<article class="inv inv--ticket inv--fam-${b.fam}" style="--i:${i};--ticket:${fam.c}">
+    return `<article class="inv inv--ticket inv--fam-${b.fam}${b.chip === 'Flagship' ? ' inv--flagship' : ''}" style="--i:${i};--ticket:${fam.c}">
       <div class="inv__frame">
         <div class="ticket__head">
           <img class="ticket__lotus" src="assets/img/brand/lotus-ticket.svg" alt="" aria-hidden="true">

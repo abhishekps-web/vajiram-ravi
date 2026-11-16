@@ -96,7 +96,7 @@ export default function Hero() {
           {HERO_STATS.map((s, i) => (
             <li key={s.label} className="rv" style={{ '--d': `${0.3 + i * 0.08}s` }}>
               <b className="dl__num">{s.pre}<span data-count={s.count}>{s.count}</span>{s.suf}</b>
-              <span className="dl__stat-l">{s.label}</span>
+              <span className="dl__stat-l">{s.label}{s.sub && <span className="dl__stat-s">{s.sub}</span>}</span>
             </li>
           ))}
         </ul>
