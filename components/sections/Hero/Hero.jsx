@@ -9,11 +9,10 @@ const RESULT_LINE = 'Anuj Agnihotri · AIR 1, UPSC CSE 2025 · See all the resul
 // (object-fit: cover), so on a portrait phone the image is scaled to the hero's height and drawn about 2.5x the screen width.
 const HERO = '/assets/img/hero';
 const SIZES = '(max-width: 767px) 250vw, 100vw';
+// three banners (user 2026-11-16, "just needed the 3 banners in hero: 2 toppers + one normal"): the campus photo, then AIR 1 and AIR 2
+// (HERO_TOPPER_SLIDES in data.js)
 const SLIDES = [
   { name: 'hero-1', w: 1672, h: 941, widths: [768, 1200, 1672] },
-  { name: 'hero-prelims', w: 1672, h: 941, widths: [768, 1200, 1672] },
-  { name: 'hero-interview', w: 1536, h: 1024, widths: [768, 1200, 1536] },
-  { name: 'hero-result', w: 1672, h: 941, widths: [768, 1200, 1672] },
 ];
 export default function Hero() {
   return (
