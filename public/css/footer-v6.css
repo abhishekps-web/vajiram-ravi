@@ -95,9 +95,10 @@ html.foot-curtain footer.vf { position: sticky; bottom: var(--foot-off, 0px); z-
 }
 @media (prefers-reduced-motion: reduce) { .vf__col a, .vf__legal a, .vf__socials a, .vf__nt, .vf__arw { transition: none; } .vf__live i { animation: none; } }
 
-/* the footer's type is Kevin's build's body face, IBM Plex Sans (loaded in app/layout.jsx), here only: --f is set on the footer, so the
-   rest of the site keeps its own */
-.vf { --f: "IBM Plex Sans", system-ui, sans-serif; }
+/* the footer in the site's own type (user 2026-11-16, "the footer font should match the website font style"): the body face (--f) for
+   links, news and the legal bar, and the column heads and the pressed-in name in it too, instead of Kevin's IBM Plex Sans */
+.vf .vf__h { font-family: var(--f); }
+.vf__word text { font-family: var(--f); }
 
 /* compact (user 2026-11-16, "compact the footer"): the same content and layout, tighter: less padding inside the frame, smaller gaps
    between the rows, the links and the columns closer, a smaller news card, and the pressed-in name about two thirds of its size */
