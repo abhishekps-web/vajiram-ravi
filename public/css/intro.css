@@ -1,7 +1,11 @@
 /* v49 intro: the original "logo frame" (iris opens, mandala ring, logo, tagline, curtain lifts), recoloured to brand orange. No video.
    Driven by classes on <html> set by the inline boot script (components/layout/Intro/boot.js): vrv-lock shows it, vrv-play runs
    the reveal, vrv-out lifts it. */
-html.vrv-lock, html.vrv-lock body { overflow: hidden; }
+/* the lock keeps the scrollbar (user 2026-11-16, a jump as the intro lifted: hiding the scrollbar and bringing it back made the page
+   ~15px narrower in one frame): the scrollbar stays, and the page is held to one screen's height under the overlay, so there is nothing
+   to scroll; the page is the same width with the lock on and off */
+html.vrv-lock { overflow-y: scroll; }
+html.vrv-lock body { height: 100vh; overflow: hidden; }
 html:not(.vrv-lock) .vrv { display: none; }   /* the overlay is server-rendered; it shows only while the intro holds the lock (never without JS) */
 .vrv { --verm: #C2410C; --mari: #FEAA1C; --ink: #120D09; --e: cubic-bezier(.45, .05, .25, 1);
   position: fixed; inset: 0; z-index: 1000; overflow: visible; background: var(--ink); color: #fff;
