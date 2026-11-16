@@ -98,3 +98,20 @@ html.foot-curtain footer.vf { position: sticky; bottom: var(--foot-off, 0px); z-
 /* the footer's type is Kevin's build's body face, IBM Plex Sans (loaded in app/layout.jsx), here only: --f is set on the footer, so the
    rest of the site keeps its own */
 .vf { --f: "IBM Plex Sans", system-ui, sans-serif; }
+
+/* compact (user 2026-11-16, "compact the footer"): the same content and layout, tighter: less padding inside the frame, smaller gaps
+   between the rows, the links and the columns closer, a smaller news card, and the pressed-in name about two thirds of its size */
+.vf__in { gap: 28px; padding-top: 52px; padding-bottom: 40px; }
+.vf__bar { padding-bottom: 18px; }
+.vf__top { gap: 28px 48px; }
+.vf__col, .vf__col ul { gap: 9px; }
+.vf__col a { line-height: 20px; }
+.vf__news { padding: 16px 20px 4px 23px; }
+.vf__news-list { margin-top: 8px; }
+.vf__news-list a { padding: 10px 0; row-gap: 4px; }
+.vf__word { max-width: 860px; margin: -6px auto -10px; }
+.vf__legal { padding-top: 18px; }
+@media (max-width: 640px) {
+  .vf__in { gap: 26px; padding: 40px 28px 34px; }
+  .vf__col, .vf__col ul { gap: 8px; }
+}
