@@ -2412,4 +2412,18 @@ html main #visit .cm__list--chan { grid-area: chan; }
 
 /* Success stories -> Faculty (user 2026-11-16: a smaller gap): no bottom padding under the postcard row (its own 56px foot,
    Stories.jsx #tcar, already holds the cards' shadow and tilt), so the last postcard -> the Faculty eyebrow is about 60px */
+
+/* VR-102 (user 2026-11-16): Contact, a shorter section. The note-style form set the height (477px of a 657px section): its padding,
+   a 2.35 line height across five sentence lines, and an empty error line that still took 42px. Now: the error line takes no
+   room until it has something to say, the sentence lines sit at 1.85 (2 on phones, where the fields need a comfortable tap
+   area), and the padding is 34 / 30px. Every field, the label, the heading and the intro stay; the rhythm around the card too. */
+html main #contact .form--note { padding: 34px 40px 30px; }
+html main #contact .form--note .form__sent { line-height: 1.85; margin-top: 10px; }
+html main #contact .form--note .form__err:empty { display: none; }
+html main #contact .form--note .form__err { margin: 10px 0 0; }
+html main #contact .form--note .btn--full { margin-top: 18px; }
+@media (max-width: 600px) {
+  html main #contact .form--note { padding: 30px 28px 26px; }   /* clear of the note's inner border */
+  html main #contact .form--note .form__sent { line-height: 2; }
+}
 html main #stories.sheet { padding-bottom: 0; }
