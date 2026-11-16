@@ -94,8 +94,6 @@
 #educators .edu__head .intro { margin: 16px auto 0; text-align: center; text-wrap: balance; }
 /* the caption under the ring: the name as the site's card title, the introduction as its body copy */
 #educators .edu__name { font: 500 30px/1.15 "Newsreader", Georgia, serif; letter-spacing: -.01em; color: var(--ink); }
-#educators .edu__intro { font: 400 16.5px/1.55 var(--f); letter-spacing: -.01em; color: var(--body); }
-#educators .edu__facts { font: 400 15px/20px var(--f); color: var(--body); }
 
 /* the name plate on each card (CircularCarousel cardLabel, user 2026-11-13): the name in the site's serif, the position under it */
 #educators .cc-plate__name { font: 500 22px/1.15 "Newsreader", Georgia, serif; letter-spacing: -.01em; color: #fff; text-shadow: 0 1px 12px rgb(20 8 2 / .35); }
