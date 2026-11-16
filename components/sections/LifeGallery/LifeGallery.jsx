@@ -16,6 +16,9 @@ export default function LifeGallery() {
         <h2 className="lg__h rv" id="lifeH" style={{ '--d': '.05s' }}>Life at Vajiram &amp; Ravi</h2>
       </div>
       <div className="lg__rail">
+        {/* smoke at both sides of the row (user 2026-11-16): the cards drift into a soft orange mist (public/css/life-gallery.css) */}
+        <span className="lg__smoke lg__smoke--l" aria-hidden="true" />
+        <span className="lg__smoke lg__smoke--r" aria-hidden="true" />
         <span className="lg__arw lg__prev"><Button variant="outline" size="sm" iconOnly iconStart="arrow-left" label="Previous photo" /></span>
         <span className="lg__arw lg__next"><Button variant="outline" size="sm" iconOnly iconStart="arrow" label="Next photo" /></span>
         <ul className="lg__track" id="lifeTrack" aria-labelledby="lifeH">

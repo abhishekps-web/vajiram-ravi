@@ -130,3 +130,36 @@
 @media (prefers-reduced-motion: reduce) { .lg__slide:not(.is-mid) .lg__cap { opacity: 1; } }
 /* the All / Images / Videos tabs under the row (user 2026-11-16) */
 .lgal > .lg__tabs { margin: clamp(28px, 3vw, 40px) auto 0; }
+
+/* Smoke at both sides of the row (user 2026-11-16): the cards drift into a soft mist of the section's orange at the left and right
+   edges. Each side is a fade from the ground's orange to clear (.lg__smoke) with pale wisps inside it (::before, a blurred cloud of
+   soft ellipses) that drift and breathe slowly. The wisps move by transform only, so the blur is drawn once and the motion stays on the
+   compositor. Above the cards, under the arrows; never catches the pointer. Still with reduced motion. */
+.lg__smoke { position: absolute; top: 0; bottom: 0; z-index: 3; width: clamp(90px, 15vw, 260px); overflow: hidden; pointer-events: none; }
+.lg__smoke--l { left: 0; background: linear-gradient(90deg, rgba(214, 74, 22, .96) 0%, rgba(210, 72, 20, .7) 35%, rgba(205, 70, 18, .25) 70%, rgba(205, 70, 18, 0) 100%); }
+.lg__smoke--r { right: 0; background: linear-gradient(270deg, rgba(186, 60, 12, .96) 0%, rgba(186, 60, 12, .7) 35%, rgba(186, 60, 12, .25) 70%, rgba(186, 60, 12, 0) 100%); }
+.lg__smoke::before { content: ""; position: absolute; inset: -20% -40%; filter: blur(18px); opacity: .85; will-change: transform;
+  background:
+    radial-gradient(38% 22% at 30% 22%, rgba(255, 232, 214, .30), transparent 70%),
+    radial-gradient(30% 18% at 62% 48%, rgba(255, 240, 228, .22), transparent 70%),
+    radial-gradient(42% 24% at 38% 74%, rgba(255, 226, 204, .26), transparent 70%),
+    radial-gradient(26% 16% at 70% 88%, rgba(255, 236, 220, .18), transparent 70%);
+  animation: lgSmoke 16s ease-in-out infinite alternate; }
+.lg__smoke--r::before { animation-duration: 19s; animation-delay: -6s; transform: scaleX(-1); }
+@keyframes lgSmoke {
+  0%   { transform: translate3d(-6%, 4%, 0) scale(1); opacity: .7; }
+  50%  { transform: translate3d(4%, -3%, 0) scale(1.08); opacity: .95; }
+  100% { transform: translate3d(-2%, -6%, 0) scale(1.02); opacity: .75; }
+}
+.lg__smoke--r::before { animation-name: lgSmokeR; }
+@keyframes lgSmokeR {
+  0%   { transform: scaleX(-1) translate3d(-6%, 4%, 0) scale(1); opacity: .7; }
+  50%  { transform: scaleX(-1) translate3d(4%, -3%, 0) scale(1.08); opacity: .95; }
+  100% { transform: scaleX(-1) translate3d(-2%, -6%, 0) scale(1.02); opacity: .75; }
+}
+@media (max-width: 760px) { .lg__smoke { width: 18vw; } }
+@media (prefers-reduced-motion: reduce) { .lg__smoke::before { animation: none; } }
+/* no edges to the smoke: it fades out towards the top and bottom of the row, and is lighter, so the section's grain shows through */
+.lg__smoke { -webkit-mask: linear-gradient(180deg, transparent 0%, #000 22%, #000 78%, transparent 100%); mask: linear-gradient(180deg, transparent 0%, #000 22%, #000 78%, transparent 100%); }
+.lg__smoke--l { background: linear-gradient(90deg, rgba(214, 74, 22, .82) 0%, rgba(210, 72, 20, .55) 38%, rgba(205, 70, 18, .18) 72%, rgba(205, 70, 18, 0) 100%); }
+.lg__smoke--r { background: linear-gradient(270deg, rgba(186, 60, 12, .82) 0%, rgba(186, 60, 12, .55) 38%, rgba(186, 60, 12, .18) 72%, rgba(186, 60, 12, 0) 100%); }
