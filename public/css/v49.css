@@ -2628,3 +2628,10 @@ footer.foot .foot__bot span:last-child { gap: 8px 20px; }
   .dl--pin { height: calc(var(--stats-h) + max(var(--hero-min), calc(100svh - var(--hdr-h) - var(--hdr-gap) - var(--hero-peek)))); }
 }
 @media (prefers-reduced-motion: reduce) { .dl__stats { height: auto; padding: 20px 0 4px; } }
+
+/* Success stories + Faculty ground = the Programmes ground, exactly (user 2026-11-16): the same --ground-jaali declaration and size
+   as "main .cover > #dlPin ~ section:where(#courses)" (the 36px jaali tile under the cream side veil on #fffaf3), on the wrapper round
+   both sections, so it runs unbroken through the join (the postcard shadows fall across it, as before). The 96px lattice that was
+   there (.ground-merge::before above) is off. */
+.ground-merge { background: var(--ground-jaali); background-size: 100% 100%, 36px 36px, auto; }
+.ground-merge::before { display: none; }
