@@ -74,8 +74,11 @@ type CarouselDotsProps = {
 };
 
 export function CarouselDots({ count, active, onSelect, label, itemName, tone = "light", fillRef, className }: CarouselDotsProps) {
+  // The site's carousel indicator (user 2026-11-16: one look for every carousel; .cdots at the end of public/css/v49.css): 9px dots,
+  // the current one a 32px pill whose fill shows the autoplay's progress (the clock sets its transform through `fillRef`; without a
+  // clock it is full). Brand orange on light grounds, white on dark ones.
   return (
-    <div role="group" aria-label={label} className={cx("flex items-center gap-2", className)}>
+    <div role="group" aria-label={label} className={cx("cdots", tone === "light" && "cdots--light", className)}>
       {Array.from({ length: count }, (_, i) => {
         const isActive = i === active;
         return (
@@ -83,33 +86,11 @@ export function CarouselDots({ count, active, onSelect, label, itemName, tone = 
             key={i}
             type="button"
             aria-label={`${itemName} ${i + 1} of ${count}`}
-            aria-current={isActive || undefined}
+            aria-current={isActive ? "true" : undefined}
             onClick={() => onSelect(i)}
-            className={cx(
-              "relative h-2 cursor-pointer overflow-hidden rounded-full [transition:width_var(--dur-base)_var(--ease-in-out),background-color_var(--dur-fast)_var(--ease-out)] after:absolute after:-inset-2",
-              isActive ? "w-6" : "w-2",
-              tone === "light"
-                ? isActive
-                  ? fillRef
-                    ? "bg-burnt/25"
-                    : "bg-burnt"
-                  : "bg-clay/30 hover:bg-clay/60"
-                : isActive
-                  ? fillRef
-                    ? "bg-white/30"
-                    : "bg-white"
-                  : "bg-cream/65 hover:bg-cream/90",
-            )}
           >
-            {isActive && fillRef && (
-              <span
-                ref={fillRef}
-                aria-hidden="true"
-                className={cx("absolute inset-0 origin-left rounded-full", tone === "light" ? "bg-burnt" : "bg-white")}
-                // Starts empty; the clock sets the fill (not a scale class, which would multiply with it).
-                style={{ transform: "scaleX(0)" }}
-              />
-            )}
+            {/* Starts empty under a clock (it sets the fill; not a scale class, which would multiply with it); full without one. */}
+            <i ref={isActive ? fillRef : undefined} aria-hidden="true" style={isActive && fillRef ? { transform: "scaleX(0)" } : undefined} />
           </button>
         );
       })}

@@ -38,7 +38,7 @@ export default function Trending() {
           <span className="tr__nav tr__nav--prev"><Button variant="outline" size="sm" iconOnly iconStart="arrow-left" label="Previous banner" /></span>
           <span className="tr__nav tr__nav--next"><Button variant="outline" size="sm" iconOnly iconStart="arrow" label="Next banner" /></span>
         </div>
-        <p className="tr__dots" role="group" aria-label="Choose a banner">
+        <p className="tr__dots cdots cdots--timed" role="group" aria-label="Choose a banner">
           {TRENDING.map((s, i) => (
             <button key={s.h} type="button" aria-label={`Show banner ${i + 1}`} aria-current={i === 0 ? 'true' : undefined}><i /></button>
           ))}

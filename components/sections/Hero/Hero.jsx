@@ -76,7 +76,7 @@ export default function Hero() {
             <Button variant="outline" onDark iconOnly size="sm" iconStart="arrow-left" label="Previous slide" className="dl__arrow dl__arrow--prev" />
             <Button variant="outline" onDark iconOnly size="sm" iconStart="arrow" label="Next slide" className="dl__arrow dl__arrow--next" />
           </div>
-          <p className="dl__prog" id="dlProg" role="group" aria-label="Hero slides">
+          <p className="dl__prog cdots" id="dlProg" role="group" aria-label="Hero slides">
             <button type="button" aria-label="Slide 1">
               <i />
             </button>

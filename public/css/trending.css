@@ -51,19 +51,10 @@
   .tr__stage:hover .tr__nav, .tr__stage:focus-within .tr__nav { opacity: 1; translate: 0 0; }
 }
 
-/* the dots: which banner is on, the current one filling with its time */
-.tr__dots { display: flex; justify-content: center; gap: 10px; margin: 22px 0 0; }
-.tr__dots button { position: relative; width: 9px; height: 9px; padding: 0; overflow: hidden; border: 0; border-radius: 999px; background: rgba(255, 255, 255, .42); cursor: pointer;
-  transition: width .35s cubic-bezier(.65, 0, .35, 1), background-color .2s; }
-.tr__dots button::after { content: ""; position: absolute; inset: -8px; }
-.tr__dots button:hover { background: rgba(255, 255, 255, .7); }
-.tr__dots button[aria-current="true"] { width: 32px; background: rgba(255, 255, 255, .35); }
-.tr__dots i { position: absolute; inset: 0; border-radius: inherit; background: #fff; transform: scaleX(0); transform-origin: left; }
-.tr__dots button[aria-current="true"] i { transform: scaleX(1); }
-.tr.is-auto .tr__dots button[aria-current="true"] i { transform: scaleX(0); animation: trFill 6s linear forwards; }
-.tr.is-auto.is-paused .tr__dots i { animation-play-state: paused; }
-@keyframes trFill { to { transform: scaleX(1); } }
-.tr__dots button:focus-visible { outline: 2px solid #FFD48A; outline-offset: 3px; }
+/* the dots: the site's carousel indicator (.cdots, end of v49.css; the current one fills over the banner's 6 s, .cdots--timed); here
+   only its place under the banners */
+.tr__dots { justify-content: center; margin: 22px 0 0; }
+.tr:not(.is-auto) .tr__dots > button[aria-current="true"] > i { animation: none; transform: none; }
 
 /* the hero settles back as Programmes rises over it; the banners go with it */
 .tr { scale: calc(1 - var(--cover, 0) * .06); transform-origin: 50% 0; }

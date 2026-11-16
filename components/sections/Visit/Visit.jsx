@@ -54,9 +54,9 @@ export default function Visit() {
             </figure>
           ))}
           <p className="cx__cap" aria-live="polite">{PHOTOS[0].cap}</p>
-          <div className="cx__dots" role="group" aria-label="Choose photo">
+          <div className="cx__dots cdots cdots--timed" role="group" aria-label="Choose photo" style={{ "--cd-t": "5s" }}>
             {PHOTOS.map((p, i) => (
-              <button key={p.src} type="button" aria-label={`Photo ${i + 1} of ${PHOTOS.length}`} aria-current={i === 0 ? 'true' : undefined} className={i === 0 ? 'is-on' : undefined} />
+              <button key={p.src} type="button" aria-label={`Photo ${i + 1} of ${PHOTOS.length}`} aria-current={i === 0 ? 'true' : undefined} className={i === 0 ? 'is-on' : undefined}><i /></button>
             ))}
           </div>
           {/* previous / next: the site's icon-only button, at the photo's sides on hover; the span places it and fades it in */}
