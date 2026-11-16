@@ -39,7 +39,7 @@ export default function Programmes() {
           </div>
           {/* "See all": opens the course catalogue (any [data-cat] link does, components/dialogs/course-catalog.js), user 2026-11-16 */}
           <div data-fade className="mt-10 flex justify-center">
-            <Button variant="secondary" href="#courses" data-cat="0" iconEnd="arrow">See all programmes</Button>
+            <Button variant="outline" href="#courses" data-cat="0" iconEnd="arrow">See all programmes</Button>
           </div>
         </div>
 

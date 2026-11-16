@@ -56,7 +56,7 @@
   border-top: 1px solid rgba(110, 66, 18, .2); border-bottom: 1px solid rgba(110, 66, 18, .2); box-shadow: 0 1px 0 rgba(255, 250, 235, .6), inset 0 1px 0 rgba(255, 250, 235, .6); }
 #resources .rf .sm__t { margin: 0; color: #2A2016; }
 #resources .rf .sm__d { color: #5a4632; }
-#resources .rf .sm__act { margin-top: auto; --btn-fg: var(--ink); --btn-fg-hover: var(--ink); }   /* the white pill (onDark primary), as the GS button */
+#resources .rf .sm__act { margin-top: auto; --btn-fg: var(--ink); --btn-fg-hover: var(--ink); }   /* v49.css would turn its label white on the card hover */
 #resources .rf > .rf__front > a.sm__act.tlink { color: var(--brand); }
 #resources .rf .sm__stages li { border-color: rgba(110, 66, 18, .3); background: rgba(255, 252, 240, .5); color: #6E4413; }
 
@@ -319,3 +319,9 @@
   #resources .sm__grid.sm__grid--res::-webkit-scrollbar { display: none; }
   #resources .sm__grid--res > .rf { flex: 0 0 min(82%, 340px); width: auto; scroll-snap-align: start; }
 }
+
+/* The white CTA again, but blended into the folder (user 2026-11-16: the pure white looked harsh on the cream): a translucent warm
+   white with a hairline edge of the folder's own brown, so the paper shows through a little; a touch brighter on hover. Token
+   overrides only; the disc and label roll are the button's. */
+#resources .rf .sm__act { --btn-bg: rgba(255, 252, 244, .76); --btn-bg-hover: rgba(255, 252, 244, .76);
+  --btn-edge: inset 0 0 0 1px rgba(120, 70, 20, .16); --btn-edge-hover: inset 0 0 0 1px rgba(120, 70, 20, .16); }   /* no colour change on hover (user 2026-11-16): the label roll and the disc still play */
