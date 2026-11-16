@@ -2427,3 +2427,9 @@ html main #contact .form--note .btn--full { margin-top: 18px; }
   html main #contact .form--note .form__sent { line-height: 2; }
 }
 html main #stories.sheet { padding-bottom: 0; }
+
+/* Our flagship programme (#gs) as a contained card like the closing CTA (user 2026-11-16: "a container like the CTA section instead of a
+   full-width section"): it sits on the content column (--px either side) with the shared --r-box corners; its gradient, collage cut-outs,
+   kinari and pattern are clipped to the card; the text column and the book take the card's inner padding (--gs-left). The section rhythm
+   around it is unchanged: Upcoming batches above and Free resources below keep their own --sec-y. */
+html main #gs.gs { margin-inline: var(--px); --gs-left: clamp(24px, 4.6vw, 72px); border-radius: var(--r-box); overflow: clip; isolation: isolate; }
