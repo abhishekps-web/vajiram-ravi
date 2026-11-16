@@ -11,6 +11,7 @@ import Faculties from '@/components/sections/Faculties/Faculties';
 import Stories from '@/components/sections/Stories/Stories';
 import Contact from '@/components/sections/Contact/Contact';
 import Resources from '@/components/sections/Resources/Resources';
+import LifeGallery from '@/components/sections/LifeGallery/LifeGallery';
 import Visit from '@/components/sections/Visit/Visit';
 import Faq from '@/components/sections/Faq/Faq';
 import Closing from '@/components/sections/Closing/Closing';
@@ -40,6 +41,8 @@ export default function Home() {
         <Batches />
         <GeneralStudies />
         <Resources />
+        {/* Life at Vajiram & Ravi (user 2026-11-16, from Kevin's branch, where it follows Free resources) */}
+        <LifeGallery />
         <Contact />
         <Visit />
         <Faq />
