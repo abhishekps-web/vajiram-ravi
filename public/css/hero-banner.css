@@ -134,3 +134,8 @@ html body .dl .hx__mark { top: 7%; right: 3%; }
 @media (min-width: 901px) { .dl { --hx-side: max(80px, calc((100vw - 1280px) / 2)); } }
 @media (min-width: 761px) { html body .dl--pin .dl__frame > .dl__stick { margin-left: 0; margin-right: 0; } }
 .dl .hx__mark-air b { line-height: .7; }
+
+/* ---------- the results pill (user 2026-11-16, screenshot: the dark gap left of the orange tag): the tag nests into the pill's pointed
+   left end, its tip 8px from the pill's (6px on phones), so the dark rim reads evenly round it, as it does above and below (6px) ---------- */
+html body .dl .hx__ticker { padding-left: 0; }
+html body .dl .hx__tag { margin-left: -10px; }
