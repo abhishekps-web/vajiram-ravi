@@ -2411,6 +2411,7 @@ html main #visit .cm__list--chan { grid-area: chan; }
 
 /* Success stories -> Faculty (user 2026-11-16: a smaller gap): no bottom padding under the postcard row (its own 56px foot,
    Stories.jsx #tcar, already holds the cards' shadow and tilt), so the last postcard -> the Faculty eyebrow is about 60px */
+html main #stories.sheet { padding-bottom: 0; }
 
 /* VR-102 (user 2026-11-16): Contact, a shorter section. The note-style form set the height (477px of a 657px section): its padding,
    a 2.35 line height across five sentence lines, and an empty error line that still took 42px. Now: the error line takes no
@@ -2425,12 +2426,12 @@ html main #contact .form--note .btn--full { margin-top: 18px; }
   html main #contact .form--note { padding: 30px 28px 26px; }   /* clear of the note's inner border */
   html main #contact .form--note .form__sent { line-height: 2; }
 }
-html main #stories.sheet { padding-bottom: 0; }
 
 /* Our flagship programme (#gs) as a contained card like the closing CTA (user 2026-11-16: "a container like the CTA section instead of a
    full-width section"): it sits on the content column (--px either side) with the shared --r-box corners; its gradient, collage cut-outs,
    kinari and pattern are clipped to the card; the text column and the book take the card's inner padding (--gs-left). The section rhythm
    around it is unchanged: Upcoming batches above and Free resources below keep their own --sec-y. */
+html main #gs.gs { margin-inline: var(--px); --gs-left: clamp(24px, 4.6vw, 72px); border-radius: var(--r-box); overflow: clip; isolation: isolate; }
 
 /* VR-103 (user 2026-11-16): the closing call to action, a shorter card. On desktop a min-height of 560px held about 118px of empty
    card under the call line (the copy needs ~440px); on tablets and phones the topper portraits stand in a band under the copy
@@ -2446,7 +2447,6 @@ html main #closing .cl__card { min-height: 480px; padding-top: 56px; padding-bot
   html main #closing .cl__card { padding-top: 40px; padding-bottom: 176px; }
   html main #closing .cl__tp { width: min(40vw, 164px); }
 }
-html main #gs.gs { margin-inline: var(--px); --gs-left: clamp(24px, 4.6vw, 72px); border-radius: var(--r-box); overflow: clip; isolation: isolate; }
 
 /* Closing: the "36/50 CSE 2025 rankers" pill on phones (user 2026-11-16). The pill is one line (nowrap) and was wider than the
    card, so the faces' group was squeezed and its fixed-size faces spilled over the text. The faces never shrink now, and on
