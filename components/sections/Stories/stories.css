@@ -44,3 +44,10 @@ html.js #stories:not([data-in]) > .lbl { opacity: 0; }
 @keyframes st-fade { 0% { opacity: 0; transform: translateY(8px); } }
 /* each postcard is dealt onto the table: rises, tilts and settles with a spring */
 @keyframes st-deal { 0% { opacity: 0; transform: translateY(110px) rotate(var(--from-r, 8deg)) scale(.9); } 40% { opacity: 1; } 100% { transform: none; } }
+
+/* the postcards' shadows (and their tilt / hover lift) reach below the track; the track only needs to crop sideways, where the
+   loop slides past (user 2026-11-16: "the shadow gets clipped"). Where overflow: clip is supported the track crops the x axis
+   alone and lets the shadows fall below it, so the tighter gap to Faculty stays. Older browsers keep overflow: hidden. */
+@supports (overflow: clip) {
+  #tcar { overflow: visible; overflow-x: clip; }
+}
