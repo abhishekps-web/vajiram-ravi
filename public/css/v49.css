@@ -2524,3 +2524,41 @@ html main #closing .cl__faces { flex: none; }
 #faq .qa:not([open]) summary:hover .qa__ic { transform: translateY(2px); background: rgba(194, 65, 12, .08); }
 #faq .qa[open] summary .qa__ic { transform: rotate(180deg); background: var(--brand); border-color: var(--brand); color: #fff; }
 #faq .qa.is-closing summary .qa__ic { transform: none; }
+
+/* ---- Footer, compact (user 2026-11-16): the same content and layout, packed tighter. Less padding above and below, a smaller brand
+   line, tighter link lists and column headings, a slimmer news panel, a smaller wordmark and a shorter bottom row. The bottom row still
+   clears the frame's inner rule (30px in). The curtain re-measures the height itself (footer-curtain.js). ---- */
+footer.foot { padding-top: 48px; }
+footer.foot .foot__top { padding-bottom: 0; row-gap: 20px; }
+footer.foot .foot__logo--mark img { height: 44px; }
+footer.foot .foot__brand p { margin: 14px 0 16px; font-size: 16px; line-height: 1.45; }
+footer.foot .foot__cols h3 { margin-bottom: 12px; font-size: 13px; }
+footer.foot .foot__cols ul { gap: 6px; }
+footer.foot .foot__cols a { font-size: 15px; line-height: 1.35; }
+footer.foot .socials a { width: 36px; height: 36px; }
+footer.foot .foot__news--side { padding: 16px 20px 8px 24px; }
+footer.foot .foot__news--side .foot__news-list { margin-top: 8px; }
+footer.foot .foot__news--side .foot__news-list li { padding: 8px 28px 8px 0; }
+footer.foot .foot__news--col .foot__news-list a { font-size: 14.5px; }
+footer.foot .foot__word { margin-top: 20px; font-size: min(8vw, 120px); }
+footer.foot .foot__bot { padding: 14px 0 40px; font-size: 14px; }
+footer.foot .foot__bot a { font-size: 14px; }
+footer.foot .foot__bot span:last-child { gap: 8px 20px; }
+@media (max-width: 900px) {
+  footer.foot .foot__cols { gap: 24px 20px; }
+  footer.foot .foot__cols > .foot__news--5th { margin-top: 0; }
+  footer.foot .foot__news--side { padding: 14px 16px 6px 20px; }
+}
+@media (max-width: 640px) {
+  footer.foot { padding-top: 40px; padding-left: 28px; padding-right: 28px; }
+  footer.foot .foot__logo--mark img { height: 38px; }
+  footer.foot .foot__brand p { margin: 12px 0 14px; font-size: 15px; }
+  footer.foot .foot__cols { gap: 22px 16px; }
+  footer.foot .foot__cols h3 { margin-bottom: 10px; font-size: 12px; }
+  footer.foot .foot__cols ul { gap: 5px; }
+  footer.foot .foot__cols a { font-size: 14px; }
+  footer.foot .foot__word { margin-top: 14px; font-size: 13vw; }
+  footer.foot .foot__bot { gap: 8px; padding: 12px 0 38px; font-size: 13px; }
+  footer.foot .foot__bot span:last-child { gap: 4px 16px; }
+  footer.foot .foot__bot a { font-size: 13px; }
+}
