@@ -2391,3 +2391,17 @@ html main #visit .cm__list--chan { grid-area: chan; }
 .cm.rv .cm__list--chan .cm__item:nth-child(1) { transition-delay: .5s, .5s, 0s, 0s; }
 .cm.rv .cm__list--chan .cm__item:nth-child(2) { transition-delay: .6s, .6s, 0s, 0s; }
 @media (max-width: 1000px) { html main #visit .cm { grid-template-columns: minmax(0, 1fr); grid-template-areas: "gal" "place" "chan"; } }
+
+/* ---- hero carousel controls right-aligned (user 2026-11-13): the slide indicators sit at the right with the arrows, 20px to their left
+   and centred on them, instead of at the copy's left edge. --dl-ar repeats the arrows' right offset (above); 98px is the two 44px
+   arrows and their 10px gap. Shorter bars on phones so the group fits beside the arrows. ---- */
+.dl__prog { --dl-ar: var(--px); left: auto; right: calc(var(--dl-ar) + 98px + 20px); bottom: 29px; transform: none; }
+@media (max-width: 1440px) { .dl__prog { --dl-ar: clamp(20px, 5.5vw, 100px); } }
+@media (min-width: 901px) { .dl__prog { left: auto; } }
+@media (max-width: 900px) { .dl__prog { --dl-ar: 20px; bottom: 27px; } }
+@media (max-width: 600px) { .dl__prog { gap: 8px; } .dl__prog button i { width: 36px; } }
+/* the indicators are buttons: the bar brightens under the pointer and on keyboard focus */
+.dl__prog button i { transition: background-color .25s var(--ease); }
+.dl__prog button:focus-visible i { background: rgba(255, 255, 255, .7); }
+@media (hover: hover) and (pointer: fine) { .dl__prog button:hover i { background: rgba(255, 255, 255, .7); } }
+@media (prefers-reduced-motion: reduce) { .dl__prog button i { transition: none; } }
