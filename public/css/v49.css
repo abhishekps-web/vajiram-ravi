@@ -2432,4 +2432,19 @@ html main #stories.sheet { padding-bottom: 0; }
    full-width section"): it sits on the content column (--px either side) with the shared --r-box corners; its gradient, collage cut-outs,
    kinari and pattern are clipped to the card; the text column and the book take the card's inner padding (--gs-left). The section rhythm
    around it is unchanged: Upcoming batches above and Free resources below keep their own --sec-y. */
+
+/* VR-103 (user 2026-11-16): the closing call to action, a shorter card. On desktop a min-height of 560px held about 118px of empty
+   card under the call line (the copy needs ~440px); on tablets and phones the topper portraits stand in a band under the copy
+   that set the height. Now: desktop min-height 480px with 56 / 48px padding (the 389px portraits still stand on the card's foot);
+   tablets and phones get slightly smaller portraits and a band to match. The proof line, heading, intro, both buttons, the call
+   line, the portraits and their hover / reveal motion are unchanged. */
+html main #closing .cl__card { min-height: 480px; padding-top: 56px; padding-bottom: 48px; }
+@media (max-width: 1100px) {
+  html main #closing .cl__card { min-height: 0; padding-bottom: 196px; }
+  html main #closing .cl__tp { width: clamp(170px, 20vw, 210px); }
+}
+@media (max-width: 640px) {
+  html main #closing .cl__card { padding-top: 40px; padding-bottom: 176px; }
+  html main #closing .cl__tp { width: min(40vw, 164px); }
+}
 html main #gs.gs { margin-inline: var(--px); --gs-left: clamp(24px, 4.6vw, 72px); border-radius: var(--r-box); overflow: clip; isolation: isolate; }
