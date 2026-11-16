@@ -16,14 +16,14 @@ import "./shelf.css";
  * little in from its front edge); and the open book, its pages PAGE in size with the spine at SPINE, which
  * needs OPEN_H of stage.
  */
-const BOOK = { w: 195, h: 260 };   // 3:4 (user 2026-11-13; was 196 x 260)
+const BOOK = { w: 195, h: 230 };   // shorter (user 2026-11-16; was 195 x 260, 3:4)
 /** Where "View course" rests on a closed book: its bottom edge, px above the book's foot (above the category). */
 const FOLLOW_BOTTOM = 45;
 /** The hovered book's pose and shadow: the Batches tickets' 3D hover (public/css/v49.css, .inv--ticket:hover), the same angles. */
 const HOVER_TILT = "perspective(1000px) translateY(-8px) rotateX(calc(var(--ty, 0) * -7deg)) rotateY(calc(var(--tx, 0) * 9deg))";
 const HOVER_SHADOW = "drop-shadow(calc(var(--tx, 0) * -14px) calc(24px - var(--ty, 0) * 10px) 18px rgb(60 25 5 / 0.32))";
-const GAP = 60;
-const ROW_H = 352;
+const GAP = 32;   // compact (user 2026-11-16; was 60)
+const ROW_H = 300;   // compact (user 2026-11-16; was 352): ~70px from a plank to the books above the next (books 230px tall)
 const BOOK_TOP = 30;
 const PLANK_TOP = BOOK_TOP + BOOK.h - 8;
 const PAGE = { w: 378, h: 504 };   // the open book's cover and pages, 3:4 too (was 380 x 504)
