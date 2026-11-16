@@ -160,3 +160,9 @@ html[lang="hi"] .more__a { font-family: "Mukta", var(--btn-font); }
 .nav:not(.scrolled) .talk { --btn-bg: #fff; --btn-bg-hover: var(--sand); --btn-fg: var(--ink); --btn-fg-hover: var(--ink); --btn-text-shadow: none;
   --btn-disc-bg: #C2410C; --btn-disc-fg: #fff; --btn-disc-shadow: none; }
 .nav .nav__a, .nav__burger span { transition: color .35s var(--ease, ease), background-color .2s; }
+
+/* "Let's talk" the height of the language switch (user 2026-11-16: the English / Hindi controls side by side the same height): 44px,
+   the switch's height, through the button's own height token only; its width, padding, disc and look are unchanged. */
+.nav .talk { --btn-h: 44px; }
+/* on phones "Let's talk" is its arrow disc only (v49.css): at 44px tall it stays a circle, 44px wide (its side padding 8px, was 3px) */
+@media (max-width: 480px) { .nav .talk { padding: 0 8px; } }
