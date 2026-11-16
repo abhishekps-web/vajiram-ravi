@@ -14,7 +14,7 @@ export default function initDiamondReel() {
   const track = dr.querySelector('.dr__track'), view = dr.querySelector('.dr__view'), head = document.getElementById('drHead');
   const tabs = [...dr.querySelectorAll('.dr__tab')];
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const PIC = 'assets/img/toppers/portrait/placeholder-man.png';
+  const PIC = 'assets/img/toppers/portrait/placeholder-man.webp';   // WebP (was a 143KB PNG; user 2026-11-16, performance)
   const data = window.NP_ARCHIVE;
 
   /* ---------- the data, tidied as the rest of the page tidies it ---------- */

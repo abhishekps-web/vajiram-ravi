@@ -400,3 +400,6 @@
 .dr__h { font-size: 24px; letter-spacing: .12em; color: #fff; text-shadow: 0 2px 14px rgba(80, 20, 0, .35); }
 .dr__h::before, .dr__h::after { height: 2px; width: min(200px, 18vw); }
 @media (max-width: 640px) { .dr__h { font-size: 17px; letter-spacing: .08em; gap: 10px; } .dr__h::before, .dr__h::after { width: 24px; } }
+
+/* performance (user 2026-11-16): the looping animations rest while the section is off screen (.pd--off, set by stars.js) */
+#toppers.pd--off, #toppers.pd--off *, #toppers.pd--off *::before, #toppers.pd--off *::after { animation-play-state: paused !important; }

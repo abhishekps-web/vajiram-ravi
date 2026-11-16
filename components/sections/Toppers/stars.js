@@ -6,7 +6,10 @@
    - it lights up like one: mostly dim, then every few seconds (each on its own beat) it swells into a warm glow, holds a moment and
      fades, a touch larger while lit
    Stops while the section is off screen or the tab is hidden; one still frame, every sparkle softly lit, for people who ask for
-   reduced motion. */
+   reduced motion.
+   Performance (user 2026-11-16): the glow is no longer a canvas shadowBlur on every star in every frame (the costliest thing a 2D
+   canvas does); each star is drawn from three sprites made once (its ember, its full glow and its white core), mixed by how lit it
+   is. The canvas is at most 1.5x the screen's pixels and redraws about 30 times a second (a slow drift needs no more). */
 export default function initStars() {
   var box = document.querySelector('[data-stars]');
   if (!box) return;
@@ -36,10 +39,11 @@ export default function initStars() {
     var w = box.clientWidth, h = box.clientHeight;
     if (!w || !h) return;
     var regrow = !flies.length || Math.abs(w - W) > 40 || Math.abs(h - H) > 40;
-    W = w; H = h; dpr = Math.min(2, window.devicePixelRatio || 1);
+    W = w; H = h; dpr = Math.min(1.5, window.devicePixelRatio || 1);
     cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
     cx.setTransform(dpr, 0, 0, dpr, 0, 0);
     if (regrow) make(Math.max(24, Math.min(90, Math.round(W * H / 22000))));
+    sprites();
     draw(0);
   }
 
@@ -64,9 +68,34 @@ export default function initStars() {
     cx.restore();
   }
 
+  // the three sprites, drawn once per size change: a star of reach R with a short soft edge (the ember), the same with the full warm
+  // glow, and the white core; each is drawn scaled to a star's size and faded by how lit it is
+  var R = 12, PAD = 30, spr = null;
+  function sprite(blur, colour, alpha) {
+    var c = document.createElement('canvas'), n = Math.ceil((R + PAD) * 2 * dpr);
+    c.width = c.height = n;
+    var g = c.getContext('2d'), keep = cx;
+    g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cx = g;   // sparkle() draws on cx
+    g.shadowBlur = blur * dpr; g.shadowColor = 'rgba(' + colour + ',' + alpha + ')'; g.fillStyle = 'rgba(' + colour + ',1)';
+    sparkle(R + PAD, R + PAD, R, 0);
+    cx = keep;
+    return c;
+  }
+  function sprites() { spr = { ember: sprite(4, rgb, 0), glow: sprite(26, rgb, .95), core: sprite(0, '255,255,255', 0) }; }
+  function stamp(img, x, y, r, rot, alpha) {
+    if (alpha < .01) return;
+    var k = r / R, s = (R + PAD) * 2 * k;
+    cx.globalAlpha = alpha;
+    cx.save(); cx.translate(x, y); cx.rotate(rot);
+    cx.drawImage(img, -s / 2, -s / 2, s, s);
+    cx.restore();
+  }
+
   function draw(dt) {
     var t = performance.now() / 1000;
     cx.clearRect(0, 0, W, H);
+    if (!spr) sprites();
     for (var i = 0; i < flies.length; i++) {
       var f = flies[i];
       if (dt) {   // wander: the heading turns a little, as a firefly's
@@ -78,22 +107,20 @@ export default function initStars() {
       }
       var g = still ? .7 : glow(((t / f.period) + f.phase) % 1);
       var o = .14 + g * .86;                               // never quite gone: a faint ember between lightings
-      cx.shadowBlur = 4 + g * 22;
-      cx.shadowColor = 'rgba(' + rgb + ',' + (g * .95).toFixed(3) + ')';
-      cx.fillStyle = 'rgba(' + rgb + ',' + o.toFixed(3) + ')';
-      sparkle(f.x, f.y, f.r * (.85 + g * .35), f.rot);
-      if (g > .05) {                                       // a bright core while lit
-        cx.shadowBlur = 0;
-        cx.fillStyle = 'rgba(255,255,255,' + (g * .85).toFixed(3) + ')';
-        sparkle(f.x, f.y, f.r * .45 * (.85 + g * .35), f.rot);
-      }
+      var r = f.r * (.85 + g * .35);
+      stamp(spr.ember, f.x, f.y, r, f.rot, o * (1 - g));
+      stamp(spr.glow, f.x, f.y, r, f.rot, o * g);
+      if (g > .05) stamp(spr.core, f.x, f.y, r * .45, f.rot, g * .85);   // a bright core while lit
     }
+    cx.globalAlpha = 1;
   }
   function loop(now) {
     raf = 0;
     if (!onScreen || document.hidden) return;
-    var dt = Math.min(3, (now - last) / 16.67); last = now;   // in 60fps frames, so the pace holds on any screen
-    draw(dt);
+    if (now - last >= 32) {   // about 30 redraws a second
+      var dt = Math.min(3, (now - last) / 16.67); last = now;   // in 60fps frames, so the pace holds on any screen
+      draw(dt);
+    }
     raf = requestAnimationFrame(loop);
   }
   function start() { if (!still && !raf && onScreen && !document.hidden) { last = performance.now(); raf = requestAnimationFrame(loop); } }
@@ -101,7 +128,12 @@ export default function initStars() {
   size();
   if ('ResizeObserver' in window) new ResizeObserver(size).observe(box);
   else window.addEventListener('resize', size);
-  if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { onScreen = e[0].isIntersecting; start(); }).observe(host);
+  if ('IntersectionObserver' in window) new IntersectionObserver(function (e) {
+    onScreen = e[0].isIntersecting;
+    // the section's looping CSS animations (shine, sway, sparks, rays: css/podium.css) rest too while it is off screen
+    var sec = host.closest('#toppers'); if (sec) sec.classList.toggle('pd--off', !onScreen);
+    start();
+  }).observe(host);
   document.addEventListener('visibilitychange', start);
   start();
 }

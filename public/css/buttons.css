@@ -143,9 +143,8 @@
   --btn-disc-bg: #fff; --btn-disc-fg: #C2410C;
 }
 
-/* Carousel arrows (Batches `.cbtn`, Faculty `.carousel-arrow`; user 2026-11-16): the outline arrow fills black on hover, the icon turns white.
-   Token override only. */
-.btn--outline.cbtn:not(.btn--on-dark), .btn--outline.carousel-arrow:not(.btn--on-dark) { --btn-bg-hover: #000; --btn-fg-hover: #fff; --btn-edge-hover: inset 0 0 0 1.5px #000; }
+/* Carousel arrows (Batches `.cbtn`, Faculty `.carousel-arrow`): no override of their own; like every icon-only button they fill with
+   the brand colour on hover (user 2026-11-16, "the icon only btn should follow the brand color when hover"; they were black). */
 
 /* GHOST: no fill until hover (menu, toolbar and quiet actions) */
 .btn--ghost {
