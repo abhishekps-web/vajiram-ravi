@@ -308,3 +308,14 @@
   #resources .rf:hover .sm__act .btn__t + .btn__t { transform: translateY(115%); }
   #resources .rf:hover .sm__act .btn__disc svg + svg { transform: translateX(-220%); }
 }
+
+/* Phones: the six folders as one horizontal carousel (user 2026-11-16, instead of a single column): a scroll-snapping row that
+   bleeds to the screen's edges, the next folder peeking in, turned by a swipe. The padding below and above keeps the folders'
+   shadows and the index tab from being cut by the scroll box. */
+@media (max-width: 640px) {
+  #resources .sm__grid.sm__grid--res { display: flex; gap: 14px; grid-template-columns: none; grid-auto-rows: auto; align-items: stretch;
+    margin-inline: calc(var(--px) * -1); padding: 8px var(--px) 36px; overflow-x: auto; overflow-y: hidden;
+    scroll-snap-type: x mandatory; scroll-padding-inline: var(--px); overscroll-behavior-x: contain; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  #resources .sm__grid.sm__grid--res::-webkit-scrollbar { display: none; }
+  #resources .sm__grid--res > .rf { flex: 0 0 min(82%, 340px); width: auto; scroll-snap-align: start; }
+}

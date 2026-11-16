@@ -111,6 +111,18 @@
 .btn--full.btn--disc > .btn__label { grid-column: 2; justify-self: center; }
 .btn--full.btn--disc > .btn__disc { grid-column: 3; grid-row: 1; }
 .btn--full.btn--disc > .btn__icon--start { grid-column: 1; grid-row: 1; justify-self: center; }
+/* phones: every arrow-disc CTA is full width with the label centred and the disc at the right, the same everywhere on the page (user
+   2026-11-16: "consistent across the page"). The header's compact "Let's talk" (.talk) and the old hero CTA (.dl__cta) keep their own shape. */
+@media (max-width: 640px) {
+  .btn.btn--disc:not(.btn--full):not(.btn--icon):not(.btn--link):not(.btn--fab):not(.talk):not(.dl__cta) { display: grid; width: 100%; box-sizing: border-box;
+    grid-template-columns: var(--btn-disc) minmax(0, 1fr) var(--btn-disc); padding: 0 var(--btn-pe); gap: 0; }
+  .btn.btn--disc:not(.btn--full):not(.btn--icon):not(.btn--link):not(.btn--fab):not(.talk):not(.dl__cta) > .btn__label { grid-column: 2; justify-self: center; }
+  .btn.btn--disc:not(.btn--full):not(.btn--icon):not(.btn--link):not(.btn--fab):not(.talk):not(.dl__cta) > .btn__disc { grid-column: 3; grid-row: 1; }
+}
+/* ...and a CTA without a disc (the white "Talk to a counsellor" and the like) is full width with its label centred too, so every CTA has one shape. */
+@media (max-width: 640px) {
+  .btn:not(.btn--disc):not(.btn--full):not(.btn--icon):not(.btn--link):not(.btn--fab):not(.btn--ghost):not(.talk):not(.dl__cta):not(.cx__go):not(.cbtn) { width: 100%; justify-content: center; box-sizing: border-box; }
+}
 /* long labels may wrap rather than overflow a narrow screen */
 @media (max-width: 480px) { .btn--full .btn__t { white-space: normal; } }
 

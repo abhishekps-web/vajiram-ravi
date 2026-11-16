@@ -161,3 +161,21 @@
 .cmp--run .cmp__p { --cmp-gap: clamp(40px, 5vw, 88px); --cmp-half: calc((100% - 2 * var(--px) - var(--cmp-gap)) / 2); }
 .cmp--run .cmp__ph { left: var(--px); width: var(--cmp-half); }
 .cmp--run .cmp__tx { left: calc(var(--px) + var(--cmp-half) + var(--cmp-gap)); right: var(--px); width: auto; }
+
+/* ---------- phones and small tablets: the chapters overlap (user 2026-11-16) ----------
+   The stacked layout (under 900px wide, where the pinned scene does not run; the desktop scene is unchanged) turns each chapter into
+   a card that sticks near the top of the screen while the next one slides up over it, each a little lower than the one beneath so a
+   sliver of it shows. `overflow: clip` (not hidden) on the section keeps sticky working. */
+@media (max-width: 899px) {
+  #story.cmp:not(.cmp--run) { overflow: clip; }
+  #story:not(.cmp--run) .cmp__track { gap: 22px; margin-top: 32px; padding-bottom: 8px; }
+  #story:not(.cmp--run) .cmp__p { --k: 0; position: sticky; top: calc(var(--hdr-h, 74px) + 14px + var(--k) * 12px); padding: 16px; border-radius: 22px;
+    border: 1px solid rgba(255, 255, 255, .24); box-shadow: 0 -14px 34px -12px rgba(40, 12, 2, .5), 0 18px 34px -18px rgba(40, 12, 2, .45);
+    background: linear-gradient(160deg, #D24A14 0%, #B23A0C 60%, #962F08 100%); }
+  #story:not(.cmp--run) .cmp__p:nth-child(2) { --k: 1; }
+  #story:not(.cmp--run) .cmp__p:nth-child(3) { --k: 2; }
+  #story:not(.cmp--run) .cmp__p:nth-child(4) { --k: 3; }
+  #story:not(.cmp--run) .cmp__p:nth-child(5) { --k: 4; }
+  #story:not(.cmp--run) .cmp__p:nth-child(6) { --k: 5; }
+}
+@media (prefers-reduced-motion: reduce) { #story:not(.cmp--run) .cmp__p { position: relative; top: auto; } }

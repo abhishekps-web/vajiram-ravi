@@ -2,8 +2,8 @@
    (js/life-gallery.js) as is: a row of photo and video cards that scrolls sideways, snaps to
    a card and loops: copies of the shown cards sit before and after them, and whenever the row comes to rest among the copies it is
    moved, unseen, by exactly one set to the same picture among the originals. Tabs above it show all the cards, only the images or
-   only the videos (the copies are made again for each). The arrows move it a card at a time. It glides on by itself, slowly and
-   without stopping, while in view (the drift, below). A video card plays muted and looping while most of it is on screen. With
+   only the videos (the copies are made again for each). The arrows move it a card at a time. It no longer glides on by itself (DRIFT = false, user
+   2026-11-16); the drift code below stays, switched off. A video card plays muted and looping while most of it is on screen. With
    prefers-reduced-motion nothing moves or plays on its own. A video with an empty data-src is a placeholder: its poster stands in. */
 export default function initLifeGallery() {
   const gal = document.getElementById('lifeGal'); if (!gal) return;
@@ -123,7 +123,8 @@ export default function initLifeGallery() {
     }
     raf = requestAnimationFrame(drift);
   };
-  const schedule = () => { if (!raf && auto && inView && !document.hidden) { prevT = 0; raf = requestAnimationFrame(drift); } };
+  const DRIFT = false;   // user 2026-11-16: no auto scroll; the row moves only by hand (swipe, drag, arrows, tabs). Set true to bring the drift back.
+  const schedule = () => { if (DRIFT && !raf && auto && inView && !document.hidden) { prevT = 0; raf = requestAnimationFrame(drift); } };
   const rail = gal.querySelector('.lg__rail') || track;   // the row and its arrows
   rail.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') hovered = true; });
   rail.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') hovered = false; });
