@@ -29,35 +29,35 @@
 @media (max-width: 760px) { .cmp__p { grid-template-columns: minmax(0, 1fr); } }
 
 /* ---------- the pinned stage (js/story.js adds .cmp--run and a spacer after the section that the scene plays over) ---------- */
-#story.cmp--run { position: sticky; top: 0; padding: 0; z-index: -1; }   /* behind the sheets: the pinned scene must not show through the --sec-gap bands between sections */
-.cmp--run .cmp__stage { height: 100vh; height: 100svh; margin: 0; overflow: hidden; --g: 1; --s: 0; --bo: 1; --ov: 0; --ti: 0; --tr: 0; --tb: 0; }
-.cmp--run .cmp__bg { display: block; position: absolute; inset: 0; z-index: 1; opacity: calc(1 - var(--g)); }
-.cmp--run .cmp__bg img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
-.cmp--run .cmp__bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(240, 127, 26, .42), rgba(138, 68, 9, .62)); mix-blend-mode: multiply; }
-.cmp--run .cmp__card { display: block; position: absolute; z-index: 5; left: 50%; top: 50%; width: 92vw; height: 82vh; transform: translate(-50%, -50%); will-change: width, height, transform; }
-.cmp--run .cmp__big { display: flex; position: absolute; inset: 0; z-index: 10; margin: 0; align-items: center; justify-content: center; gap: .28em; pointer-events: none;
+#story:is(.cmp--run, :where(.story-run) *) { position: sticky; top: 0; padding: 0; z-index: -1; }   /* behind the sheets: the pinned scene must not show through the --sec-gap bands between sections */
+:is(.cmp--run, :where(.story-run) .cmp) .cmp__stage { height: 100vh; height: 100svh; margin: 0; overflow: hidden; --g: 1; --s: 0; --bo: 1; --ov: 0; --ti: 0; --tr: 0; --tb: 0; }
+:is(.cmp--run, :where(.story-run) .cmp) .cmp__bg { display: block; position: absolute; inset: 0; z-index: 1; opacity: calc(1 - var(--g)); }
+:is(.cmp--run, :where(.story-run) .cmp) .cmp__bg img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
+:is(.cmp--run, :where(.story-run) .cmp) .cmp__bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(240, 127, 26, .42), rgba(138, 68, 9, .62)); mix-blend-mode: multiply; }
+:is(.cmp--run, :where(.story-run) .cmp) .cmp__card { display: block; position: absolute; z-index: 5; left: 50%; top: 50%; width: 92vw; height: 82vh; transform: translate(-50%, -50%); will-change: width, height, transform; }
+:is(.cmp--run, :where(.story-run) .cmp) .cmp__big { display: flex; position: absolute; inset: 0; z-index: 10; margin: 0; align-items: center; justify-content: center; gap: .28em; pointer-events: none;
   font: 400 clamp(64px, 10vw, 144px)/1.2 "Tiro Devanagari Hindi", serif; opacity: var(--bo); }
 .cmp__big > span { display: block; color: #FFF3E1; text-shadow: 0 2px 3px rgba(42, 24, 6, .35), 0 6px 40px rgba(42, 24, 6, .6); will-change: transform; }
 .cmp__big .cmp__l { transform: translateX(calc(var(--s) * -60vw)); }
 .cmp__big .cmp__r { transform: translateX(calc(var(--s) * 60vw)); }
-.cmp--run .cmp__ov { position: absolute; inset: 0; z-index: 20; opacity: var(--ov); }
-.cmp--run .cmp__hd { position: absolute; z-index: 2; left: var(--px); top: calc(96px + 2vh); }
-.cmp--run .cmp__hd .rv { opacity: 1; transform: none; }
-.cmp--run .cmp__en { font-size: clamp(44px, 4.6vw, 72px); }
-.cmp--run .cmp__track { position: absolute; inset: 0; z-index: 3; display: flex; gap: 0; margin: 0; width: max-content; will-change: transform; transform: translateX(var(--tx, 0vw)); }
-.cmp--run .cmp__p { position: relative; display: block; flex: 0 0 100vw; height: 100vh; height: 100svh; transform-origin: left bottom; }
-.cmp--run .cmp__ph { position: absolute; left: var(--px); top: 42vh; width: 40vw; height: 52vh; aspect-ratio: auto; }
-.cmp--run .cmp__p:first-child .cmp__ph { visibility: hidden; }
-.cmp--run .cmp__tx { position: absolute; right: var(--px); top: 56%; width: min(38vw, 470px); transform: translateY(-50%); text-align: right;
+:is(.cmp--run, :where(.story-run) .cmp) .cmp__ov { position: absolute; inset: 0; z-index: 20; opacity: var(--ov); }
+:is(.cmp--run, :where(.story-run) .cmp) .cmp__hd { position: absolute; z-index: 2; left: var(--px); top: calc(96px + 2vh); }
+:is(.cmp--run, :where(.story-run) .cmp) .cmp__hd .rv { opacity: 1; transform: none; }
+:is(.cmp--run, :where(.story-run) .cmp) .cmp__en { font-size: clamp(44px, 4.6vw, 72px); }
+:is(.cmp--run, :where(.story-run) .cmp) .cmp__track { position: absolute; inset: 0; z-index: 3; display: flex; gap: 0; margin: 0; width: max-content; will-change: transform; transform: translateX(var(--tx, 0vw)); }
+:is(.cmp--run, :where(.story-run) .cmp) .cmp__p { position: relative; display: block; flex: 0 0 100vw; height: 100vh; height: 100svh; transform-origin: left bottom; }
+:is(.cmp--run, :where(.story-run) .cmp) .cmp__ph { position: absolute; left: var(--px); top: 42vh; width: 40vw; height: 52vh; aspect-ratio: auto; }
+:is(.cmp--run, :where(.story-run) .cmp) .cmp__p:first-child .cmp__ph { visibility: hidden; }
+:is(.cmp--run, :where(.story-run) .cmp) .cmp__tx { position: absolute; right: var(--px); top: 56%; width: min(38vw, 470px); transform: translateY(-50%); text-align: right;
   opacity: var(--ti); filter: blur(calc((1 - var(--ti)) * 6px)); translate: 0 calc((1 - var(--ti)) * 18px); }
-.cmp--run .cmp__t i { transform: scaleX(var(--tr)); }
-.cmp--run .cmp__d { margin-left: auto; }
-.cmp--run .cmp__cta { opacity: var(--tb); translate: 0 calc((1 - var(--tb)) * 10px); }
+:is(.cmp--run, :where(.story-run) .cmp) .cmp__t i { transform: scaleX(var(--tr)); }
+:is(.cmp--run, :where(.story-run) .cmp) .cmp__d { margin-left: auto; }
+:is(.cmp--run, :where(.story-run) .cmp) .cmp__cta { opacity: var(--tb); translate: 0 calc((1 - var(--tb)) * 10px); }
 .cmp__run { display: block; pointer-events: none; }
 /* the Why section follows the scene directly */
 #story + .cmp__run + #why, #story + #why { margin-top: 0; }
 /* stacked layout (phones / reduced motion): chapters rise in one after another (js/page-motion.js .sg); the pinned scene draws its own */
-.cmp--run .cmp__track.sg > * { opacity: 1; translate: none; }
+:is(.cmp--run, :where(.story-run) .cmp) .cmp__track.sg > * { opacity: 1; translate: none; }
 
 /* ---------- refinement: editorial spacing. Title left with the subtitle beside it; photo and text share one baseline; chapter numbers ---------- */
 .cmp__no { margin: 0 0 14px; font: 400 clamp(52px, 5vw, 72px)/.9 var(--f-title, Georgia), serif; letter-spacing: -.03em; color: #FFF3E1; text-shadow: 0 2px 18px rgba(92, 40, 4, .18); }
@@ -68,25 +68,25 @@
 .cmp__h { max-width: 34ch; }
 .cmp__track { gap: clamp(64px, 9vh, 96px); }
 
-.cmp--run .cmp__hd { left: var(--px); right: var(--px); top: calc(84px + 2vh); }
-.cmp--run .cmp__h2 { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px 6vw; margin-top: 16px; }
-.cmp--run .cmp__en { flex: none; }
-.cmp--run .cmp__h { flex: 0 1 30ch; margin: 0 0 .35em; font-size: clamp(18px, 1.5vw, 23px); line-height: 1.35; text-align: right; }
-.cmp--run .cmp__ph { top: 36vh; width: 44vw; height: 54vh; }
-.cmp--run .cmp__tx { left: calc(var(--px) + 44vw + clamp(40px, 5vw, 88px)); right: var(--px); top: 36vh; width: auto; height: 54vh; transform: none;
+:is(.cmp--run, :where(.story-run) .cmp) .cmp__hd { left: var(--px); right: var(--px); top: calc(84px + 2vh); }
+:is(.cmp--run, :where(.story-run) .cmp) .cmp__h2 { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px 6vw; margin-top: 16px; }
+:is(.cmp--run, :where(.story-run) .cmp) .cmp__en { flex: none; }
+:is(.cmp--run, :where(.story-run) .cmp) .cmp__h { flex: 0 1 30ch; margin: 0 0 .35em; font-size: clamp(18px, 1.5vw, 23px); line-height: 1.35; text-align: right; }
+:is(.cmp--run, :where(.story-run) .cmp) .cmp__ph { top: 36vh; width: 44vw; height: 54vh; }
+:is(.cmp--run, :where(.story-run) .cmp) .cmp__tx { left: calc(var(--px) + 44vw + clamp(40px, 5vw, 88px)); right: var(--px); top: 36vh; width: auto; height: 54vh; transform: none;
   display: flex; flex-direction: column; justify-content: flex-end; text-align: left; }
-.cmp--run .cmp__no { margin-bottom: auto; font-size: clamp(72px, 8vw, 128px); }
-.cmp--run .cmp__d { margin-left: 0; }
-.cmp--run .cmp__cta { align-self: flex-start; }
-@media (max-height: 760px) { .cmp--run .cmp__no { font-size: clamp(56px, 6vw, 88px); } .cmp--run .cmp__d { margin-bottom: 22px; } }
+:is(.cmp--run, :where(.story-run) .cmp) .cmp__no { margin-bottom: auto; font-size: clamp(72px, 8vw, 128px); }
+:is(.cmp--run, :where(.story-run) .cmp) .cmp__d { margin-left: 0; }
+:is(.cmp--run, :where(.story-run) .cmp) .cmp__cta { align-self: flex-start; }
+@media (max-height: 760px) { :is(.cmp--run, :where(.story-run) .cmp) .cmp__no { font-size: clamp(56px, 6vw, 88px); } :is(.cmp--run, :where(.story-run) .cmp) .cmp__d { margin-bottom: 22px; } }
 @media (max-width: 760px) { .cmp__no { font-size: 48px; } .cmp__t { font-size: 30px; } }
 /* short screens: the title shrinks with the height too, so it always clears the photo row (36vh) */
-.cmp--run .cmp__en { font-size: clamp(40px, min(4.6vw, 7.4vh), 72px); }
-@media (max-height: 760px) { .cmp--run .cmp__hd { top: calc(76px + 1vh); } .cmp--run .cmp__h2 { margin-top: 12px; } }
+:is(.cmp--run, :where(.story-run) .cmp) .cmp__en { font-size: clamp(40px, min(4.6vw, 7.4vh), 72px); }
+@media (max-height: 760px) { :is(.cmp--run, :where(.story-run) .cmp) .cmp__hd { top: calc(76px + 1vh); } :is(.cmp--run, :where(.story-run) .cmp) .cmp__h2 { margin-top: 12px; } }
 /* the sticky scene is held by .cmp__pin (section + spacer), so it unpins when the run ends instead of staying behind every later section */
 .cmp__pin { position: relative; }
 /* the opening words are English: the site's serif title face, a touch tighter than the Devanagari it replaced */
-.cmp--run .cmp__big { font: 400 clamp(64px, 9.5vw, 148px)/1.05 var(--f-title, Georgia), serif; letter-spacing: -.025em; }
+:is(.cmp--run, :where(.story-run) .cmp) .cmp__big { font: 400 clamp(64px, 9.5vw, 148px)/1.05 var(--f-title, Georgia), serif; letter-spacing: -.025em; }
 
 /* ---------- ground: the exact Talk to us (#contact) brand-orange gradient, with its white copy and dark eyebrow badge ---------- */
 #story.cmp { color: #fff; background:
@@ -126,7 +126,7 @@
 
 /* the CTAs must be clickable: z-index -1 (line 41) sank the pinned scene under its own .cmp__pin wrapper, which swallowed every click.
    .cmp__pin already ends the pin with the scene, so nothing shows through the later sections at the normal stacking level. */
-#story.cmp--run { z-index: 0; }
+#story:is(.cmp--run, :where(.story-run) *) { z-index: 0; }
 
 /* ---------- background pattern: the same white jaali lattice as Talk to us and the closing CTA (css/v49.css, end): 44px tile, 14%, clear through
    the middle. It sits behind the stage, so in the pinned scene it appears as the orange ground fades up over the building photo; in the stacked
@@ -136,7 +136,7 @@
   -webkit-mask: radial-gradient(78% 70% at 50% 55%, transparent 40%, #000 100%); mask: radial-gradient(78% 70% at 50% 55%, transparent 40%, #000 100%);
   transition: opacity .9s var(--ease), transform 1.2s var(--ease); }
 @media (hover: hover) and (pointer: fine) { #story.cmp:hover::before { transform: translate(22px, -22px); } }
-#story.cmp:not(.cmp--run)::before { -webkit-mask: linear-gradient(90deg, #000 0%, transparent 38%, transparent 62%, #000 100%); mask: linear-gradient(90deg, #000 0%, transparent 38%, transparent 62%, #000 100%); }   /* stacked layout is very tall: fade side to side instead */
+#story.cmp:not(.cmp--run, .story-run *)::before { -webkit-mask: linear-gradient(90deg, #000 0%, transparent 38%, transparent 62%, #000 100%); mask: linear-gradient(90deg, #000 0%, transparent 38%, transparent 62%, #000 100%); }   /* stacked layout is very tall: fade side to side instead */
 @media (max-width: 640px) { #story.cmp::before { background-size: 32px 32px; } }
 @media (prefers-reduced-motion: reduce) { #story.cmp::before { transition: none; opacity: .14; transform: none; } }
 /* grain: the closing CTA's film grain (.cl__card::after in css/v49.css) over the orange ground, above the lattice; behind the stage, so in the
@@ -146,11 +146,11 @@
 
 /* the intro line beside "Why Vajiram & Ravi?" uses the site's body / intro text (user 2026-11-11): body font, --body-fs / --body-lh,
    no italics, the same 460px measure as .intro; white at 92% on this ground, like the Contact intro */
-#story .cmp__h, #story.cmp--run .cmp__h { max-width: 460px; font-family: var(--f); font-weight: 400; font-size: var(--body-fs); line-height: var(--body-lh); letter-spacing: -.01em; color: rgba(255, 255, 255, .92); text-wrap: pretty; }
+#story .cmp__h, #story:is(.cmp--run, :where(.story-run) *) .cmp__h { max-width: 460px; font-family: var(--f); font-weight: 400; font-size: var(--body-fs); line-height: var(--body-lh); letter-spacing: -.01em; color: rgba(255, 255, 255, .92); text-wrap: pretty; }
 #story .cmp__h em { font-style: normal; }
-#story.cmp--run .cmp__h { flex: 0 1 460px; }
+#story:is(.cmp--run, :where(.story-run) *) .cmp__h { flex: 0 1 460px; }
 /* Why: the subtitle beside the title reads left-aligned like the rest of the body text (user 2026-11-11); it keeps its place on the right */
-.cmp--run .cmp__h { text-align: left; }
+:is(.cmp--run, :where(.story-run) .cmp) .cmp__h { text-align: left; }
 
 /* ---------- photo and text in two equal halves (user 2026-11-13) ----------
    Stacked layout: two equal columns, one column under 760px (above). Pinned scene: the content width (the panel less --px each side)
@@ -158,24 +158,36 @@
    scene's card still lands exactly on it. */
 .cmp__p { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 @media (max-width: 760px) { .cmp__p { grid-template-columns: minmax(0, 1fr); } }
-.cmp--run .cmp__p { --cmp-gap: clamp(40px, 5vw, 88px); --cmp-half: calc((100% - 2 * var(--px) - var(--cmp-gap)) / 2); }
-.cmp--run .cmp__ph { left: var(--px); width: var(--cmp-half); }
-.cmp--run .cmp__tx { left: calc(var(--px) + var(--cmp-half) + var(--cmp-gap)); right: var(--px); width: auto; }
+:is(.cmp--run, :where(.story-run) .cmp) .cmp__p { --cmp-gap: clamp(40px, 5vw, 88px); --cmp-half: calc((100% - 2 * var(--px) - var(--cmp-gap)) / 2); }
+:is(.cmp--run, :where(.story-run) .cmp) .cmp__ph { left: var(--px); width: var(--cmp-half); }
+:is(.cmp--run, :where(.story-run) .cmp) .cmp__tx { left: calc(var(--px) + var(--cmp-half) + var(--cmp-gap)); right: var(--px); width: auto; }
 
 /* ---------- phones and small tablets: the chapters overlap (user 2026-11-16) ----------
    The stacked layout (under 900px wide, where the pinned scene does not run; the desktop scene is unchanged) turns each chapter into
    a card that sticks near the top of the screen while the next one slides up over it, each a little lower than the one beneath so a
    sliver of it shows. `overflow: clip` (not hidden) on the section keeps sticky working. */
 @media (max-width: 899px) {
-  #story.cmp:not(.cmp--run) { overflow: clip; }
-  #story:not(.cmp--run) .cmp__track { gap: 22px; margin-top: 32px; padding-bottom: 8px; }
-  #story:not(.cmp--run) .cmp__p { --k: 0; position: sticky; top: calc(var(--hdr-h, 74px) + 14px + var(--k) * 12px); padding: 16px; border-radius: 22px;
+  #story.cmp:not(.cmp--run, .story-run *) { overflow: clip; }
+  #story:not(.cmp--run, .story-run *) .cmp__track { gap: 22px; margin-top: 32px; padding-bottom: 8px; }
+  #story:not(.cmp--run, .story-run *) .cmp__p { --k: 0; position: sticky; top: calc(var(--hdr-h, 74px) + 14px + var(--k) * 12px); padding: 16px; border-radius: 22px;
     border: 1px solid rgba(255, 255, 255, .24); box-shadow: 0 -14px 34px -12px rgba(40, 12, 2, .5), 0 18px 34px -18px rgba(40, 12, 2, .45);
     background: linear-gradient(160deg, #D24A14 0%, #B23A0C 60%, #962F08 100%); }
-  #story:not(.cmp--run) .cmp__p:nth-child(2) { --k: 1; }
-  #story:not(.cmp--run) .cmp__p:nth-child(3) { --k: 2; }
-  #story:not(.cmp--run) .cmp__p:nth-child(4) { --k: 3; }
-  #story:not(.cmp--run) .cmp__p:nth-child(5) { --k: 4; }
-  #story:not(.cmp--run) .cmp__p:nth-child(6) { --k: 5; }
+  #story:not(.cmp--run, .story-run *) .cmp__p:nth-child(2) { --k: 1; }
+  #story:not(.cmp--run, .story-run *) .cmp__p:nth-child(3) { --k: 2; }
+  #story:not(.cmp--run, .story-run *) .cmp__p:nth-child(4) { --k: 3; }
+  #story:not(.cmp--run, .story-run *) .cmp__p:nth-child(5) { --k: 4; }
+  #story:not(.cmp--run, .story-run *) .cmp__p:nth-child(6) { --k: 5; }
 }
-@media (prefers-reduced-motion: reduce) { #story:not(.cmp--run) .cmp__p { position: relative; top: auto; } }
+@media (prefers-reduced-motion: reduce) { #story:not(.cmp--run, .story-run *) .cmp__p { position: relative; top: auto; } }
+/* ---------- pinned from the first paint (user 2026-11-16, "page jumps / pin late") ----------
+   The boot script in <head> (app/layout.jsx) sets html.story-run before the first paint when the scene will pin (900 x 600 and up, motion
+   on), so every pinned rule above applies at once, and the scroll spacer (.cmp__run, rendered in WhyChoose.jsx) has its height from the
+   start: the page keeps one height and nothing jumps when js/story.js takes over (it used to swap a tall stacked list for the pinned
+   scene and add the spacer only once it ran, seconds after load on a slow phone). Until it does (no .cmp--run yet) the stage shows its
+   settled values and the first chapter's own photo stands in for the card, which sits on exactly that spot once the script draws it. */
+.cmp__run { display: none; }
+.story-run .cmp__run, .cmp--run + .cmp__run { display: block; height: 180vh; }   /* the run: (6 - 1) chapters x 32vh + 20vh (story.js RUN) */
+.story-run #story:not(.cmp--run) .cmp__stage { --s: 1; --bo: 0; --ov: 1; --ti: 1; --tr: 1; --tb: 1; }
+.story-run #story:not(.cmp--run) .cmp__card { visibility: hidden; }
+.story-run #story:not(.cmp--run) .cmp__p:first-child .cmp__ph { visibility: visible; }
+.story-run #story:not(.cmp--run) .cmp__p + .cmp__p { transform: rotate(30deg); }

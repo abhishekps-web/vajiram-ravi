@@ -29,8 +29,12 @@ export default function init() {
   // the timeline keeps its original numbers and is entered OFF vh in: at S0 everything before the chapter swing has finished
   const OFF = S0;
   const RUN = S0 + (N - 1) * STEP + TAIL - OFF;
-  const spacer = document.createElement('div');
-  spacer.className = 'cmp__run'; spacer.setAttribute('aria-hidden', 'true');
+  // the scroll spacer is rendered after the section (WhyChoose.jsx) and sized by css/story.css from the first paint (html.story-run,
+  // set by the boot script in app/layout.jsx), so the page height never changes when this takes over
+  let spacer = sec.nextElementSibling;
+  if (!spacer || !spacer.classList.contains('cmp__run')) {
+    spacer = document.createElement('div'); spacer.className = 'cmp__run'; spacer.setAttribute('aria-hidden', 'true'); sec.after(spacer);
+  }
   const H = () => document.documentElement.clientHeight || innerHeight;
   let on = false, raf = 0, last = 0, su = null, slotW = 0, slotL = 0;
 
@@ -83,13 +87,14 @@ export default function init() {
     if (want === on) return;
     on = want;
     sec.classList.toggle('cmp--run', on);
+    document.documentElement.classList.toggle('story-run', on);   // css/story.css: the pinned layout and the spacer's height
     if (on) {
-      sec.after(spacer); size(); su = null;
+      size(); su = null;
       draw(aim());   // settled at once, before the first frame
       sec.querySelectorAll('img[loading="lazy"]').forEach(i => { i.loading = 'eager'; });   // off-screen chapters would never intersect
       queue();
     } else {
-      spacer.remove();
+      spacer.style.height = '';   // hidden by css/story.css without html.story-run
       stage.removeAttribute('style'); track.removeAttribute('style'); card.removeAttribute('style');
       panels.forEach(p => { p.style.transform = ''; });
     }

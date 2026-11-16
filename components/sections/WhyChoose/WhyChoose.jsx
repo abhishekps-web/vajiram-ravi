@@ -122,6 +122,8 @@ export default function WhyChoose() {
             </div>
           </div>
         </section>
+        {/* the scroll the pinned scene plays over: sized by css/story.css from the first paint (html.story-run), so the page never jumps */}
+        <div className="cmp__run" aria-hidden="true" />
       </div>
     </>
   );
