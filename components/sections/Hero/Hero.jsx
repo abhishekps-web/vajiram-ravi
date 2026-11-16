@@ -1,6 +1,7 @@
 import Button from '@/components/ui/Button/Button';
 import { HERO_STATS, HERO_TOPPER_SLIDES } from './data';
 import Trending from './Trending';
+import Stylesheet from '@/components/ui/Stylesheet';
 
 // the results pill's line (Kevin's hero: the topper on show; here the CSE 2025 AIR 1)
 const RESULT_LINE = 'Anuj Agnihotri · AIR 1, UPSC CSE 2025 · See all the results';
@@ -98,12 +99,17 @@ export default function Hero() {
             ))}
           </p>
         </div>
-        {/* key numbers under the hero card (user 2026-11-16): data.js; hero-stats.js counts them up, the CSS is at the end of v49.css */}
-        <ul className="dl__stats" aria-label="Vajiram & Ravi in numbers">
-          {HERO_STATS.map((s, i) => (
-            <li key={s.label} className="rv" style={{ '--d': `${0.3 + i * 0.08}s` }}>
-              <b className="dl__num">{s.pre}<span data-count={s.count}>{s.count}</span>{s.suf}</b>
-              <span className="dl__stat-l">{s.label}{s.sub && <span className="dl__stat-s">{s.sub}</span>}</span>
+        {/* key numbers under the hero card, Kevin's (user 2026-11-16): figures in data.js, the roll-up and entrance in hero-stats.js,
+            styles public/css/hero-stats.css. The hidden copy of each figure holds its width while it rolls up. */}
+        <Stylesheet href="/css/hero-stats.css" />
+        <ul className="hx__stats is-pre" aria-label="Vajiram & Ravi at a glance">
+          {HERO_STATS.map((s) => (
+            <li key={s.label} className="hx__stat hx__in" style={{ '--at': `${s.at}ms` }}>
+              <span className="hx__num">
+                <b className="hx__fig" data-fig={s.fig}>{s.fig}</b>
+                <span className="hx__fig hx__fig--room" aria-hidden="true">{s.fig}</span>
+              </span>
+              <span className="hx__stat-t">{s.label}</span>
             </li>
           ))}
         </ul>

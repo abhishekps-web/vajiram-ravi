@@ -1,10 +1,11 @@
-// Hero stats (user 2026-11-16): the row of key numbers under the hero card. The figures are the site's own claims (the parked
-// results cards, components/sections/Parked/results-cards.js). `count` counts up from 0 (hero-stats.js); `pre`/`suf` stay fixed.
+// Hero stats (user 2026-11-16: "copy the same code from kevins"): Kevin's four points (branch `kevin`, index.html .hx__stats), each a
+// large figure beside its line. `fig` is the final value; its first number rolls up from 0 (hero-stats.js), so "36/50" rolls its 36.
+// `at` is when the point rises in, in ms after the hero starts (Kevin's --at).
 export const HERO_STATS = [
-  { count: 50, suf: '+', label: 'Years experience', sub: 'since 1976' },
-  { count: 10, suf: '/10', label: 'Top ranks in UPSC CSE 2025' },
-  { pre: 'AIR ', count: 1, label: 'In every UPSC result since 2016' },
-  { count: 59, label: 'Prelims 2025 questions from our tests' },
+  { fig: '50+', label: 'Years of experience since 1976', at: 780 },
+  { fig: '59', label: 'Questions reflected in Prelims', at: 860 },
+  { fig: '10/10', label: 'Top rankers from V&R courses', at: 940 },
+  { fig: '36/50', label: 'CSE 2025 rankers from V&R', at: 1100 },
 ];
 
 // What's trending (user 2026-11-16, from Kevin's build, eclectic-alfajores-975fab.netlify.app): the banners of the carousel under
