@@ -2477,3 +2477,32 @@ html main #closing .cl__faces { flex: none; }
 /* the section itself cropped both axes too (.sheet, v25.css overflow: hidden), cutting the shadows at its bottom edge: on the shared ground
    it only crops sideways, so the shadows fall onto Faculty's (transparent) top. Older browsers keep overflow: hidden. */
 @supports (overflow: clip) { .ground-merge > #stories.sheet { overflow: visible; overflow-x: clip; } }
+
+/* Hero carousel, card under card (user 2026-11-16): the active slide stays the full card, centred; the previous and next slides sit
+   under it as slightly shorter cards (6% off the top and bottom) whose edges show at either side (.dl__peek, Hero.jsx). --pk is the
+   strip that shows, --pk-out the gutter outside it; on phones the two together keep the old 20px, so the active card is no narrower
+   there. The side cards scale with the hero card as Programmes covers it (same box height, same origin), crossfade with the slides,
+   tuck in under the card on every change (page-motion.js) and lean out on hover, as does the side the arrow under the pointer goes
+   to. The active card's design, copy and controls are unchanged; it gains a soft shadow so it reads as the top card.
+   Reduced motion: no side cards and the old 20px frame (the slides stack there). */
+.dl { --pk: clamp(10px, 2vw, 28px); --pk-out: clamp(10px, 1.4vw, 20px); }
+.dl__peek { display: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .dl__frame { position: relative; padding-left: calc(var(--cap) + var(--pk-out) + var(--pk)); padding-right: calc(var(--cap) + var(--pk-out) + var(--pk)); }
+  .dl--pin .dl__frame > .dl__stick { z-index: 1; box-shadow: 0 22px 44px -24px rgba(30, 12, 2, .55); }
+  .dl__peek { display: block; position: absolute; z-index: 0; top: 0; bottom: 20px; left: calc(var(--cap) + var(--pk-out)); right: calc(var(--cap) + var(--pk-out));
+    transform: scale(calc(1 - var(--cover, 0) * .2)); transform-origin: 50% 35%; pointer-events: none; }
+  .dl__peek-card { position: absolute; top: 6%; bottom: 6%; width: 40%; overflow: hidden; border-radius: var(--r-box); background: #2a1408;
+    pointer-events: auto; cursor: pointer; transition: translate .5s var(--ease); }
+  .dl__peek-card--prev { left: 0; } .dl__peek-card--next { right: 0; }
+  .dl__peek-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .9s ease; }
+  .dl__peek-card--prev img { object-position: 0 50%; } .dl__peek-card--next img { object-position: 100% 50%; }
+  .dl__peek-card img.on { opacity: 1; }
+  .dl__peek-card::after { content: ""; position: absolute; inset: 0; background: rgba(30, 12, 2, .5); transition: background-color .4s var(--ease); }
+}
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+  .dl__peek-card--prev:hover, .dl--pin:has(.dl__arrow--prev:hover) .dl__peek-card--prev { translate: -4px 0; }
+  .dl__peek-card--next:hover, .dl--pin:has(.dl__arrow--next:hover) .dl__peek-card--next { translate: 4px 0; }
+  .dl__peek-card:hover::after, .dl--pin:has(.dl__arrow--prev:hover) .dl__peek-card--prev::after,
+  .dl--pin:has(.dl__arrow--next:hover) .dl__peek-card--next::after { background: rgba(30, 12, 2, .28); }
+}
