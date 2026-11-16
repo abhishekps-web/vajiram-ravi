@@ -2950,3 +2950,10 @@ html main #closing .cl__card { background:
   radial-gradient(45% 55% at 8% 100%, rgba(150, 40, 8, .5), transparent 70%),
   linear-gradient(135deg, #E85020 0%, #C2410C 55%, #A8380A 100%); }
 html main #closing .cl__glow { display: none; }
+
+/* The first screen ends with the stats (user 2026-11-16, "still I can see some carousel elements under the stats"): the trending
+   banners start below the bottom of the first screen on every screen size. Their gap under the stats is at least what is left of the
+   screen after the header, the card and the stats, plus the 40px their pictures rise above them and 16px of air; never less than the
+   72px it was (40px on phones). Same structure; only the gap grows on tall screens. */
+html .dl .tr { margin-top: max(72px, calc(100svh - var(--hdr-h) - var(--hdr-gap) - var(--card-h) - var(--stats-h) + 56px)); }
+@media (max-width: 760px) { html .dl .tr { margin-top: max(40px, calc(100svh - var(--hdr-h) - var(--hdr-gap) - var(--card-h) - var(--stats-h) + 56px)); } }
