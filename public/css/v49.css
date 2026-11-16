@@ -2667,3 +2667,48 @@ html .nav-band, .dl__ground { overflow: hidden; isolation: isolate;
   html .dl--pin .dl__frame { height: auto; }
   html .dl--pin .dl__frame > .dl__stick { flex: none; height: var(--card-h); }
 }
+
+/* Hero copy, Kevin's IA (user 2026-11-16; branch kevin, css/hero-v6.css .hx__copy): the CSE 2025 results pill (an orange tag, a window in
+   which the line glides past, faded at both ends, and an arrow), the headline in the title face at 44px, one line per phrase, the lead
+   and two buttons (the site's primary and the white on-dark pill). One copy for every slide: it no longer fades out after slide 1, and
+   the slides change only the photo. --hh / --pp feed the card's content-fit height (--txt-h) with the new sizes. */
+.dl { --hh: 44px; --pp: 17px; }
+/* the card fits the copy block (pill, three headline lines, the lead, the buttons): --txt-h is that block's height, so the card's
+   content-fit and minimum heights (--hero-fit, --hero-min) follow it; phones stack the lead and buttons taller */
+.dl { --txt-h: 360px; }
+@media (max-width: 900px) { .dl { --txt-h: 400px; } }
+@media (max-width: 640px) { .dl { --txt-h: 440px; } }
+html body .dl--pin.dl .dl__in { opacity: 1; transform: none; filter: none; pointer-events: auto; }
+.hx__tick { margin: 0 0 22px; max-width: 100%; }
+.hx__ticker { display: inline-flex; align-items: center; gap: 16px; width: 490px; max-width: 100%; box-sizing: border-box; padding: 6px 16px 6px 6px; border-radius: 999px;
+  background: rgba(43, 18, 6, .8); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .2); color: #fff; text-decoration: none; transition: background-color .2s ease; }
+.hx__ticker:hover { background: #2B1206; }
+.hx__ticker:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.hx__tag { flex: none; display: flex; align-items: center; height: 28px; padding: 0 14px; border-radius: 999px;
+  background: linear-gradient(135deg, #F06A2C 0%, #E85020 55%, #C2410C 100%); color: #fff; font: 700 15px/1 var(--f); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .25); }
+.hx__win { position: relative; flex: 1; min-width: 0; height: 20px; overflow: hidden;
+  -webkit-mask: linear-gradient(90deg, transparent, #000 24px, #000 calc(100% - 24px), transparent); mask: linear-gradient(90deg, transparent, #000 24px, #000 calc(100% - 24px), transparent); }
+.hx__glide { position: absolute; top: 0; left: 0; display: flex; height: 100%; align-items: center; white-space: nowrap; font: 500 15px/20px var(--f); animation: hxGlide 14s linear infinite; }
+.hx__glide > span { padding-right: 40px; }
+@keyframes hxGlide { to { transform: translateX(-50%); } }
+.hx__tick-arw { flex: none; width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; transition: translate .2s ease; }
+.hx__ticker:hover .hx__tick-arw { translate: 2px 0; }
+.hx__h { margin: 0; font: 400 44px/1.1 var(--f-title, Georgia), serif; letter-spacing: -.02em; color: #fff; }
+.hx__line { display: block; white-space: nowrap; }
+.hx__lead { max-width: 760px; margin: 24px 0 0; font: 400 17px/1.6 var(--f); color: rgba(255, 255, 255, .92); text-wrap: pretty; }
+.hx__btns { display: flex; flex-wrap: wrap; gap: 12px; margin: 28px 0 0; }
+.hx__btns .btn { margin: 0; }
+@media (max-width: 900px) {
+  .hx__h { font-size: clamp(30px, 6.4vw, 44px); line-height: 1.08; }
+  .hx__lead { font-size: 16px; margin-top: 16px; }
+}
+@media (max-width: 640px) {
+  .hx__tick { margin-bottom: 16px; }
+  .hx__ticker { gap: 12px; padding-right: 12px; }
+  .hx__tag { height: 26px; padding: 0 11px; font-size: 13.5px; }
+  .hx__glide { font-size: 14px; }
+  .hx__line { white-space: normal; display: inline; }
+  .hx__btns { width: 100%; }
+  .hx__btns .btn { width: 100%; justify-content: space-between; }
+}
+@media (prefers-reduced-motion: reduce) { .hx__glide { animation: none; } }

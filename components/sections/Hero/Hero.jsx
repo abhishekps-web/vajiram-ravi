@@ -2,6 +2,9 @@ import Button from '@/components/ui/Button/Button';
 import { HERO_STATS } from './data';
 import Trending from './Trending';
 
+// the results pill's line (Kevin's hero: the topper on show; here the CSE 2025 AIR 1)
+const RESULT_LINE = 'Anuj Agnihotri · AIR 1, UPSC CSE 2025 · See all the results';
+
 // Hero slides: WebP at three widths each (public/assets/img/hero/<name>-<width>.webp). The slides cover the hero
 // (object-fit: cover), so on a portrait phone the image is scaled to the hero's height and drawn about 2.5x the screen width.
 const HERO = '/assets/img/hero';
@@ -39,64 +42,35 @@ export default function Hero() {
             </div>
           </div>
           <div id="heroNames" hidden aria-hidden="true" />
+          {/* the hero's copy, Kevin's hero IA (user 2026-11-16; branch kevin, index.html .hx__copy): the CSE 2025 results pill with its
+              gliding line, the headline, the lead and two buttons. One copy for every slide (the slides change only the photo).
+              Styles at the end of v49.css ("Hero copy, Kevin's IA"). */}
           <div className="dl__in">
-            <p className="mono dl__k rv">50 Years Legacy</p>
-            <h1 className="dl__h" id="dlH">
-              <span className="rv" style={{ "--d": ".05s" }}>Preparing India’s civil servants,</span>
+            <p className="hx__tick rv">
+              <a className="hx__ticker" href="https://vajiramandravi.com/ias-selections-from-vajiram/" target="_blank" rel="noopener">
+                <span className="hx__tag">CSE 2025 results</span>
+                <span className="hx__win">
+                  <span className="hx__glide">
+                    <span>{RESULT_LINE}</span>
+                    <span aria-hidden="true">{RESULT_LINE}</span>
+                  </span>
+                </span>
+                <svg className="hx__tick-arw" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8H13M9 4L13 8L9 12" /></svg>
+              </a>
+            </p>
+            <h1 className="hx__h" id="dlH">
+              <span className="hx__line rv" style={{ "--d": ".05s" }}>Prepare for the UPSC with</span>
               {" "}
-              <span className="rv" style={{ "--d": ".15s" }}>since 1976.</span>
+              <span className="hx__line rv" style={{ "--d": ".12s" }}>the institute behind</span>
+              {" "}
+              <span className="hx__line rv" style={{ "--d": ".19s" }}>India’s top rank-holders.</span>
             </h1>
-            <p className="dl__p rv" style={{ "--d": ".25s" }}>Five decades of guiding civil services aspirants through expert faculty, structured classroom programmes and comprehensive preparation for Prelims, Mains and the Personality Test.</p>
+            <p className="hx__lead rv" style={{ "--d": ".27s" }}>Since 1976, Vajiram & Ravi has brought 50 years of Civil Services teaching experience to your preparation, with expert faculty, structured programmes, comprehensive study resources and flexible learning options.</p>
+            <p className="hx__btns rv" style={{ "--d": ".34s" }}>
+              <Button size="md" href="#courses" iconEnd="arrow">Explore programmes</Button>
+              <Button onDark size="md" href="#contact">Get expert guidance</Button>
+            </p>
           </div>
-          <div className="sc sc--r" data-i="0">
-            <div className="sc__txt">
-              <p className="mono vp__k">
-                <span className="ln">
-                  <i>Prelims & Mains</i>
-                </span>
-              </p>
-              <h2 className="vp__h">
-                <span className="ln">
-                  <i>One syllabus, multiple subjects.</i>
-                </span>
-                <span className="ln">
-                  <i>A preparation that covers it all.</i>
-                </span>
-              </h2>
-              <p className="sc__p">From Indian Polity and History to Economy, Geography and Environment, build your General Studies knowledge through daily classes, comprehensive printed material and regular tests.</p>
-            </div>
-          </div>
-          <div className="sc sc--r" data-i="1">
-            <div className="sc__txt">
-              <p className="mono vp__k">
-                <span className="ln">
-                  <i>UPSC Interview</i>
-                </span>
-              </p>
-              <h2 className="vp__h">
-                <span className="ln">
-                  <i>Cleared Prelims and Mains? Prepare for the Personality Test.</i>
-                </span>
-              </h2>
-              <p className="sc__p">The final stage is about more than what you know. Build confidence, articulate your thoughts and prepare for the board with mock interviews, DAF analysis and personalised guidance.</p>
-            </div>
-          </div>
-          <div className="sc sc--r" data-i="2">
-            <div className="sc__txt">
-              <p className="mono vp__k">
-                <span className="ln">
-                  <i>The Result</i>
-                </span>
-              </p>
-              <h2 className="vp__h">
-                <span className="ln">
-                  <i>The next name on the UPSC final list could be yours.</i>
-                </span>
-              </h2>
-              <p className="sc__p">Every year, aspirants turn years of preparation into a place on the Civil Services merit list. With ranks 1 to 10 in CSE 2025 prepared with us, your story could be the next one we celebrate.</p>
-            </div>
-          </div>
-          <Button onDark size="xl" className="dl__cta" id="dlCta" href="#courses" iconEnd="arrow">Explore our courses</Button>
           {/* previous / next (user 2026-11-13): the site's icon buttons, at the card's bottom right; page-motion.js moves the slides */}
           <div className="dl__arrows" role="group" aria-label="Change slide">
             <Button variant="outline" onDark iconOnly size="sm" iconStart="arrow-left" label="Previous slide" className="dl__arrow dl__arrow--prev" />
