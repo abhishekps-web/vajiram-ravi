@@ -42,10 +42,11 @@ export const HERO_TOPPERS = [2, 1, 3].map(r => {
   return { rank: r, name: t.name, first: first(t.name), photo: t.photo };
 });
 
-// The toppers' slides (user 2026-11-16: "for seeing the toppers use Kevin's banner"; branch kevin, index.html .hx__slide): AIR 1 and
-// AIR 2 (the hero is three banners: the campus photo and these two), each a full photo with the AIR card (Hero.jsx .hx__mark), after the institute photos. page-motion.js fills the card and
-// the results ticker's line from the slide on show. Photos public/assets/img/hero-v6/.
+// The hero's slides, Kevin's banner (user 2026-11-16, "banner same as kevin's version"; branch kevin, index.html .hx__slide): the top
+// three of UPSC CSE 2025, each a full photo with the AIR card (Hero.jsx .hx__mark). page-motion.js fills the card and the results
+// ticker's line from the slide on show. Photos public/assets/img/hero-v6/ (the first is the LCP image).
 export const HERO_TOPPER_SLIDES = [
   { rank: 1, name: 'Anuj Agnihotri', src: '/assets/img/hero-v6/slide-anuj-agnihotri.webp' },
   { rank: 2, name: 'Rajeshwari Suve M', src: '/assets/img/hero-v6/slide-rajeshwari-suve-m.webp' },
+  { rank: 3, name: 'Akansh Dhull', src: '/assets/img/hero-v6/slide-akansh-dhull.webp' },
 ];

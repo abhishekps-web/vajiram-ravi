@@ -1,0 +1,32 @@
+/* The hero banner. Its slides are Kevin's (user 2026-11-16, "banner same as kevin's version"; branch `kevin` of
+   github.com/solomonmathai-coder/Vajiram-ravi, css/hero-v6.css): the top three of UPSC CSE 2025 in turn, 6.5 s each with a 1 s
+   crossfade, each portrait pushing in slowly (to 107% over 7.5 s), a warm brown wash from the left for the type.
+   Its layout and spacing are those of vajiram-ravi.abhishek-ps.workers.dev (user 2026-11-16, "copy the same layout and same spacing"):
+   the card's 16px corners, the copy 80px in, the dots at its bottom left and previous / next at its bottom right (.dl__prog,
+   .dl__arrows in v49.css), the copy over the photo on phones too. Markup components/sections/Hero/Hero.jsx; page-motion.js runs the
+   slides. Loaded after the base layers (precedence "sections"), so it wins over the hero's earlier rules in v49.css. */
+
+/* ---------- the card's height: 600px wherever the screen has room for it and the stats row under it (the reference's card at
+   1440 x 900). The stats row carries its own 48px above and below (hero-stats.css), so no extra gutters are taken off ---------- */
+@media (min-width: 761px) {
+  html .dl { --card-h: clamp(var(--card-min), calc(100svh - var(--hdr-h) - var(--hdr-gap) - var(--stats-h)), 600px); }
+}
+
+/* ---------- the slides: crossfade and a slow push-in ---------- */
+#dlSlides > .dl__topper { transition: opacity 1s ease-out; }
+#dlSlides > .dl__topper img { transform: none; scale: 1; transition: scale 0s linear 1s; }
+#dlSlides > .dl__topper.on img { transform: none; scale: 1.07; transition: scale 7.5s linear; }
+
+/* ---------- the wash: warm brown from the left for the type (never pitch black, so each portrait keeps the tone of its room).
+   Below 901px the copy spans the card and v49.css's wash holds ---------- */
+@media (min-width: 901px) {
+  #dlPin.dl--pin .dl__bg::after, #dlPin.dl--pin[data-s] .dl__bg::after {
+    background:
+      linear-gradient(0deg, rgba(46, 17, 6, .42), transparent 112px),
+      linear-gradient(90deg, rgba(46, 17, 6, .72), rgba(46, 17, 6, .34) 50%, transparent); }
+}
+
+/* reduced motion: the slides do not run (page-motion.js) */
+@media (prefers-reduced-motion: reduce) {
+  #dlSlides > .dl__topper.on img { scale: 1; transition: none; }
+}

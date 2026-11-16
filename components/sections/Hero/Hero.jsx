@@ -6,15 +6,10 @@ import Stylesheet from '@/components/ui/Stylesheet';
 // the results pill's line (Kevin's hero: the topper on show; here the CSE 2025 AIR 1)
 const RESULT_LINE = 'Anuj Agnihotri · AIR 1, UPSC CSE 2025 · See all the results';
 
-// Hero slides: WebP at three widths each (public/assets/img/hero/<name>-<width>.webp). The slides cover the hero
-// (object-fit: cover), so on a portrait phone the image is scaled to the hero's height and drawn about 2.5x the screen width.
-const HERO = '/assets/img/hero';
-const SIZES = '(max-width: 767px) 250vw, 100vw';
-// three banners (user 2026-11-16, "just needed the 3 banners in hero: 2 toppers + one normal"): the campus photo, then AIR 1 and AIR 2
-// (HERO_TOPPER_SLIDES in data.js)
-const SLIDES = [
-  { name: 'hero-1', w: 1672, h: 941, widths: [768, 1200, 1672] },
-];
+// The banner is Kevin's (user 2026-11-16, "banner same as kevin's version"; branch kevin, index.html .hx__panel): the top three of
+// UPSC CSE 2025 in turn (6.5 s each, a 1 s crossfade, each portrait pushing in slowly), a warm wash from the left for the type, the
+// AIR card top right. The card's layout and spacing (16px corners, up to 600px tall, the dots bottom left, previous / next bottom right)
+// are those of vajiram-ravi.abhishek-ps.workers.dev (user 2026-11-16). Styles public/css/hero-banner.css; page-motion.js runs the slides.
 export default function Hero() {
   return (
     <section className="dl dl--pin" id="dlPin" aria-labelledby="dlH">
@@ -24,26 +19,11 @@ export default function Hero() {
         <div className="dl__stick">
           <div className="dl__bg" id="dlBg" aria-hidden="true">
             <div className="dl__slides" id="dlSlides">
-              {/* the first slide is the LCP image: loaded eagerly at high priority; the rest load lazily */}
-              {SLIDES.map((s, i) => (
-                <img
-                  key={s.name}
-                  className={i === 0 ? 'on' : undefined}
-                  src={`${HERO}/${s.name}-1200.webp`}
-                  srcSet={s.widths.map(w => `${HERO}/${s.name}-${w}.webp ${w}w`).join(', ')}
-                  sizes={SIZES}
-                  alt=""
-                  width={s.w}
-                  height={s.h}
-                  decoding="async"
-                  {...(i === 0 ? { fetchPriority: 'high' } : { loading: 'lazy' })}
-                />
-              ))}
-              {/* the toppers (user 2026-11-16, Kevin's banner): one full photo each, AIR 1 to 3, after the institute photos; the AIR card
-                  (.hx__mark below) and the results ticker follow the topper on show (page-motion.js) */}
-              {HERO_TOPPER_SLIDES.map(t => (
-                <div key={t.rank} className="dl__topper" data-rank={t.rank} data-name={t.name}>
-                  <img src={t.src} alt="" width="1920" height="822" loading="lazy" decoding="async" />
+              {/* the toppers, AIR 1 to 3, one full photo each; the AIR card (.hx__mark below) and the results ticker follow the topper on
+                  show (page-motion.js). The first is the LCP image: loaded eagerly at high priority; the rest load lazily */}
+              {HERO_TOPPER_SLIDES.map((t, i) => (
+                <div key={t.rank} className={i === 0 ? 'dl__topper on' : 'dl__topper'} data-rank={t.rank} data-name={t.name}>
+                  <img src={t.src} alt="" width="1920" height="822" decoding="async" {...(i === 0 ? { fetchPriority: 'high' } : { loading: 'lazy' })} />
                 </div>
               ))}
             </div>
@@ -86,19 +66,22 @@ export default function Hero() {
               <Button onDark size="md" href="#contact">Get expert guidance</Button>
             </p>
           </div>
-          {/* previous / next (user 2026-11-13): the site's icon buttons, at the card's bottom right; page-motion.js moves the slides */}
-          <div className="dl__arrows" role="group" aria-label="Change slide">
-            <Button variant="outline" onDark iconOnly size="sm" iconStart="arrow-left" label="Previous slide" className="dl__arrow dl__arrow--prev" />
-            <Button variant="outline" onDark iconOnly size="sm" iconStart="arrow" label="Next slide" className="dl__arrow dl__arrow--next" />
+          {/* the banner's controls, laid out as on vajiram-ravi.abhishek-ps.workers.dev (user 2026-11-16, "copy the same layout and
+              same spacing"): previous / next, the site's icon buttons, at the card's bottom right; the dots at its bottom left, in line
+              with the copy (both v49.css). page-motion.js moves the slides */}
+          <div className="dl__arrows" role="group" aria-label="Change topper">
+            <Button variant="outline" onDark iconOnly size="sm" iconStart="arrow-left" label="Previous topper" className="dl__arrow dl__arrow--prev" />
+            <Button variant="outline" onDark iconOnly size="sm" iconStart="arrow" label="Next topper" className="dl__arrow dl__arrow--next" />
           </div>
-          <p className="dl__prog cdots" id="dlProg" role="group" aria-label="Hero slides">
-            {[...SLIDES.map((_, i) => `Slide ${i + 1}`), ...HERO_TOPPER_SLIDES.map(t => `AIR ${t.rank}: ${t.name}`)].map(label => (
-              <button key={label} type="button" aria-label={label}>
+          <p className="dl__prog cdots" id="dlProg" role="group" aria-label="Choose a topper">
+            {HERO_TOPPER_SLIDES.map(t => (
+              <button key={t.rank} type="button" aria-label={`AIR ${t.rank}: ${t.name}`}>
                 <i />
               </button>
             ))}
           </p>
         </div>
+        <Stylesheet href="/css/hero-banner.css" />
         {/* key numbers under the hero card, Kevin's (user 2026-11-16): figures in data.js, the roll-up and entrance in hero-stats.js,
             styles public/css/hero-stats.css. The hidden copy of each figure holds its width while it rolls up. */}
         <Stylesheet href="/css/hero-stats.css" />
