@@ -8,8 +8,9 @@ const RESULT_LINE = 'Anuj Agnihotri · AIR 1, UPSC CSE 2025 · See all the resul
 
 // The banner is Kevin's (user 2026-11-16, "banner same as kevin's version"; branch kevin, index.html .hx__panel): the top three of
 // UPSC CSE 2025 in turn (6.5 s each, a 1 s crossfade, each portrait pushing in slowly), a warm wash from the left for the type, the
-// AIR card top right. The card's layout and spacing (16px corners, up to 600px tall, the dots bottom left, previous / next bottom right)
-// are those of vajiram-ravi.abhishek-ps.workers.dev (user 2026-11-16). Styles public/css/hero-banner.css; page-motion.js runs the slides.
+// AIR card top right. Layout and spacing are Kevin's too (user 2026-11-16, eclectic-alfajores-975fab.netlify.app; css/hero-v6.css and
+// css/mobile.css): the card on the 1280px column, the copy centred in it, the dots centred in a dark pill at the foot and previous /
+// next on the card's two side edges. Styles public/css/hero-banner.css; page-motion.js runs the slides.
 export default function Hero() {
   return (
     <section className="dl dl--pin" id="dlPin" aria-labelledby="dlH">
@@ -66,20 +67,22 @@ export default function Hero() {
               <Button onDark size="md" href="#contact">Get expert guidance</Button>
             </p>
           </div>
-          {/* the banner's controls, laid out as on vajiram-ravi.abhishek-ps.workers.dev (user 2026-11-16, "copy the same layout and
-              same spacing"): previous / next, the site's icon buttons, at the card's bottom right; the dots at its bottom left, in line
-              with the copy (both v49.css). page-motion.js moves the slides */}
-          <div className="dl__arrows" role="group" aria-label="Change topper">
-            <Button variant="outline" onDark iconOnly size="sm" iconStart="arrow-left" label="Previous topper" className="dl__arrow dl__arrow--prev" />
-            <Button variant="outline" onDark iconOnly size="sm" iconStart="arrow" label="Next topper" className="dl__arrow dl__arrow--next" />
-          </div>
-          <p className="dl__prog cdots" id="dlProg" role="group" aria-label="Choose a topper">
+          {/* the dots, Kevin's: centred at the card's foot in a dark pill, the current one filling with the slide's time (the site's
+              .cdots, filled by page-motion.js through --p) */}
+          <p className="hx__dots cdots" id="dlProg" role="group" aria-label="Choose a topper">
             {HERO_TOPPER_SLIDES.map(t => (
               <button key={t.rank} type="button" aria-label={`AIR ${t.rank}: ${t.name}`}>
                 <i />
               </button>
             ))}
           </p>
+        </div>
+        {/* previous / next, Kevin's: one centred on each side edge of the card, half outside it, shown while the pointer is over the
+            card (the site's icon buttons; the spans place them). The card clips its contents, so this layer sits outside it and
+            page-motion.js lays it exactly over the card. Hidden on touch screens wider than a phone, where a swipe changes the slide. */}
+        <div className="hx__navs" role="group" aria-label="Change topper">
+          <span className="hx__nav hx__nav--prev"><Button variant="outline" iconOnly size="sm" iconStart="arrow-left" label="Previous topper" className="dl__arrow dl__arrow--prev" /></span>
+          <span className="hx__nav hx__nav--next"><Button variant="outline" iconOnly size="sm" iconStart="arrow" label="Next topper" className="dl__arrow dl__arrow--next" /></span>
         </div>
         <Stylesheet href="/css/hero-banner.css" />
         {/* key numbers under the hero card, Kevin's (user 2026-11-16): figures in data.js, the roll-up and entrance in hero-stats.js,

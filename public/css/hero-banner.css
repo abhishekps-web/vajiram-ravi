@@ -1,32 +1,128 @@
-/* The hero banner. Its slides are Kevin's (user 2026-11-16, "banner same as kevin's version"; branch `kevin` of
-   github.com/solomonmathai-coder/Vajiram-ravi, css/hero-v6.css): the top three of UPSC CSE 2025 in turn, 6.5 s each with a 1 s
-   crossfade, each portrait pushing in slowly (to 107% over 7.5 s), a warm brown wash from the left for the type.
-   Its layout and spacing are those of vajiram-ravi.abhishek-ps.workers.dev (user 2026-11-16, "copy the same layout and same spacing"):
-   the card's 16px corners, the copy 80px in, the dots at its bottom left and previous / next at its bottom right (.dl__prog,
-   .dl__arrows in v49.css), the copy over the photo on phones too. Markup components/sections/Hero/Hero.jsx; page-motion.js runs the
-   slides. Loaded after the base layers (precedence "sections"), so it wins over the hero's earlier rules in v49.css. */
+/* The hero banner, Kevin's in layout and spacing (user 2026-11-16: "https://eclectic-alfajores-975fab.netlify.app/ check this link and
+   do", the banner only; branch `kevin` of github.com/solomonmathai-coder/Vajiram-ravi, css/hero-v6.css and css/mobile.css). Markup
+   components/sections/Hero/Hero.jsx; page-motion.js runs the slides and lays the arrows' layer over the card.
+   - The card (.dl__stick, Kevin's .hx__panel): on the 1280px column (80px in at 1440, the page margin on phones), 24px corners (20px
+     from 900px down) and his deep shadow; the screen less the header and the stats row tall, 520 to 820px. Tablets and phones: no
+     taller than 760px and 24px short of the screen, growing if the copy needs more.
+   - The copy (.dl__in, Kevin's .hx__copy): clamp(24px, 4vw, 64px) in, centred in the card; pill -> headline 22px, headline -> lead
+     24px (lead up to 760px), lead -> buttons 28px. Tablets and phones: at the card's foot under the portrait; phones centre it.
+   - The slides: the top three of UPSC CSE 2025 in turn, 6.5 s each with a 1 s crossfade, each portrait pushing in slowly.
+   - The AIR card: top right (7% / 3%); tablets and phones small in the top left corner.
+   - The dots centred at the card's foot in a dark pill; previous / next centred on the card's two side edges, half outside it.
+   Loaded after the base layers (precedence "sections"), so it wins over the hero's earlier rules in v49.css. */
 
-/* ---------- the card's height: 600px wherever the screen has room for it and the stats row under it (the reference's card at
-   1440 x 900). The stats row carries its own 48px above and below (hero-stats.css), so no extra gutters are taken off ---------- */
-@media (min-width: 761px) {
-  html .dl { --card-h: clamp(var(--card-min), calc(100svh - var(--hdr-h) - var(--hdr-gap) - var(--stats-h)), 600px); }
+/* ---------- the column and the card ---------- */
+.dl { --hx-side: max(clamp(16px, 5.5vw, 80px), calc((100vw - 1280px) / 2)); --hx-in: clamp(24px, 4vw, 64px); --hx-foot: 8px; }
+html body .dl--pin .dl__frame { padding-left: var(--hx-side); padding-right: var(--hx-side); }
+html body .dl--pin .dl__frame > .dl__stick { border-radius: 24px; box-shadow: 0 30px 60px -34px rgba(60, 15, 0, .7); }
+@media (min-width: 901px) {
+  html .dl { --card-h: clamp(max(520px, var(--card-min)), calc(100svh - var(--hdr-h) - var(--hdr-gap) - var(--stats-h)), 820px); }
+}
+@media (max-width: 900px) {
+  html .dl { --card-h: min(760px, calc(100svh - var(--hdr-h) - var(--hdr-gap) - 24px)); --hx-in: 24px; --hx-foot: 84px; }
+  html body .dl--pin .dl__frame > .dl__stick { height: auto; min-height: var(--card-h); border-radius: 20px; }
+  html body .dl--pin .dl__in { min-height: var(--card-h); box-sizing: border-box; justify-content: flex-end; padding-top: 120px; }
+}
+@media (max-width: 560px) {
+  html .dl { --hx-in: 18px; --hx-foot: 80px; }
+  html body .dl--pin .dl__in { padding-top: 140px; }
+}
+
+/* ---------- the copy ---------- */
+html body .dl .hx__tick { margin: 0 0 22px; }
+html body .dl .hx__lead { max-width: 760px; margin: 24px 0 0; font-size: 17px; line-height: 1.6; }
+html body .dl .hx__btns { margin: 28px 0 0; gap: 12px; }
+@media (max-width: 900px) {
+  html body .dl .hx__h { font-size: clamp(34px, 6.4vw, 44px); line-height: 1.08; }
+  html body .dl .hx__lead { font-size: 16px; }
+}
+@media (max-width: 640px) { html body .dl .hx__tick { margin-bottom: 16px; } }
+@media (max-width: 560px) { html body .dl .hx__h { font-size: 32px; } }
+/* phones: centred (Kevin's mobile.css) */
+@media (max-width: 760px) {
+  html body .dl--pin .dl__in { align-items: center; text-align: center; }
+  html body .dl .hx__tick { display: flex; justify-content: center; }
+  html body .dl .hx__lead { margin-left: auto; margin-right: auto; }
+  html body .dl .hx__btns { justify-content: center; }
 }
 
 /* ---------- the slides: crossfade and a slow push-in ---------- */
 #dlSlides > .dl__topper { transition: opacity 1s ease-out; }
-#dlSlides > .dl__topper img { transform: none; scale: 1; transition: scale 0s linear 1s; }
+#dlSlides > .dl__topper img { object-position: 80% 18%; transform: none; scale: 1; transition: scale 0s linear 1s; }
 #dlSlides > .dl__topper.on img { transform: none; scale: 1.07; transition: scale 7.5s linear; }
 
-/* ---------- the wash: warm brown from the left for the type (never pitch black, so each portrait keeps the tone of its room).
-   Below 901px the copy spans the card and v49.css's wash holds ---------- */
-@media (min-width: 901px) {
+/* ---------- the wash: warm brown from the left for the type, a light one along the foot for the dots (never pitch black, so each
+   portrait keeps the tone of its room) ---------- */
+#dlPin.dl--pin .dl__bg::after, #dlPin.dl--pin[data-s] .dl__bg::after {
+  background:
+    linear-gradient(0deg, rgba(46, 17, 6, .42), transparent 112px),
+    linear-gradient(90deg, rgba(46, 17, 6, .72), rgba(46, 17, 6, .34) 50%, transparent); }
+/* tablets and phones: the portrait fills the top of the card and fades into the brown under the type, so the topper's face stays in
+   view; the type sits over a wash from below */
+@media (max-width: 900px) {
+  html body .dl--pin .dl__stick { background: #2b1206; }
+  #dlSlides > .dl__topper img { height: 64%; object-position: 74% 12%;
+    -webkit-mask: linear-gradient(180deg, #000 60%, transparent 100%); mask: linear-gradient(180deg, #000 60%, transparent 100%); }
   #dlPin.dl--pin .dl__bg::after, #dlPin.dl--pin[data-s] .dl__bg::after {
-    background:
-      linear-gradient(0deg, rgba(46, 17, 6, .42), transparent 112px),
-      linear-gradient(90deg, rgba(46, 17, 6, .72), rgba(46, 17, 6, .34) 50%, transparent); }
+    background: linear-gradient(0deg, rgba(46, 17, 6, .55) 0%, rgba(46, 17, 6, .45) 40%, rgba(46, 17, 6, .1) 62%, transparent 75%); }
 }
 
-/* reduced motion: the slides do not run (page-motion.js) */
+/* ---------- the AIR card ---------- */
+html body .dl .hx__mark { top: 7%; right: 3%; }
+.dl .hx__mark-card { padding: 28px 28px 24px; }
+.dl .hx__mark-air span { font-size: 34px; }
+.dl .hx__mark-air b { font-size: 124px; }
+.dl .hx__mark-name { margin-top: 16px; font-size: 21px; line-height: 26px; }
+.dl .hx__mark-exam { font-size: 15px; line-height: 20px; }
+@media (max-width: 1180px) {
+  .dl .hx__mark-card { padding: 22px 22px 20px; }
+  .dl .hx__mark-air span { font-size: 26px; }
+  .dl .hx__mark-air b { font-size: 92px; }
+  .dl .hx__mark-name { margin-top: 12px; font-size: 18px; line-height: 23px; }
+}
+@media (max-width: 900px) {
+  html body .dl .hx__mark { display: flex; top: 18px; right: auto; left: 18px; }
+  .dl .hx__mark-card { padding: 16px 16px 14px; border-radius: 16px; text-align: left; }
+  .dl .hx__mark-air { justify-content: flex-start; gap: 8px; }
+  .dl .hx__mark-air span { font-size: 18px; }
+  .dl .hx__mark-air b { font-size: 56px; }
+  .dl .hx__mark-name { margin-top: 8px; font-size: 15px; line-height: 19px; }
+  .dl .hx__mark-exam { font-size: 12px; line-height: 16px; }
+}
+
+/* ---------- the dots, centred at the foot in a dark pill ---------- */
+.dl .hx__dots { position: absolute; left: 50%; bottom: 28px; z-index: 6; display: flex; align-items: center; gap: 8px; margin: 0; padding: 10px 12px;
+  border-radius: 999px; translate: -50% 0; background: rgba(0, 0, 0, .25); }
+@media (max-width: 900px) { .dl .hx__dots { bottom: 22px; } }
+
+/* ---------- previous / next, one centred on each side edge of the card, half outside it. The card clips its contents, so the
+   arrows' layer is outside it (a sibling in .dl__frame) and page-motion.js lays it exactly over the card; it shrinks with the card as
+   Programmes slides over the hero (the card's scale, v49.css) ---------- */
+.dl .hx__navs { position: absolute; top: 0; left: 0; z-index: 7; pointer-events: none;
+  transform: scale(calc(1 - var(--cover, 0) * .2)); transform-origin: 50% 35%; }
+.dl .hx__nav { position: absolute; top: 50%; display: flex; translate: -50% -50%; pointer-events: auto; transition: opacity .3s ease; }
+.dl .hx__nav--prev { left: 0; }
+.dl .hx__nav--next { left: 100%; }
+.dl .hx__nav .btn { --btn-bg: rgba(255, 249, 241, .92); --btn-fg: #C2410C; --btn-edge: inset 0 0 0 1px rgba(255, 255, 255, .8);
+  --btn-shadow: 0 12px 24px -12px rgba(58, 20, 6, .6); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+@media (hover: hover) and (pointer: fine) {
+  .dl .hx__nav { opacity: 0; pointer-events: none; }
+  .dl:has(.dl__stick:hover) .hx__nav, .dl .hx__navs:hover .hx__nav, .dl .hx__navs:focus-within .hx__nav { opacity: 1; pointer-events: auto; }
+}
+/* touch screens: a swipe changes the slide; phones show the arrows on the card's edges beside the portrait, clear of the words */
+@media (hover: none), (pointer: coarse) { .dl .hx__navs { display: none; } }
+@media (max-width: 760px) {
+  .dl .hx__navs { display: block; }
+  .dl .hx__nav { top: 34%; opacity: 1; pointer-events: auto; }
+}
+
+/* reduced motion: the slides do not run (page-motion.js), so neither do their controls */
 @media (prefers-reduced-motion: reduce) {
   #dlSlides > .dl__topper.on img { scale: 1; transition: none; }
+  .dl .hx__navs, .dl .hx__dots { display: none; }
 }
+
+/* ---------- fit (measured against Kevin's at 1440, 1280 and 390 wide) ---------- */
+@media (min-width: 901px) { .dl { --hx-side: max(80px, calc((100vw - 1280px) / 2)); } }
+html body .dl--pin .dl__frame > .dl__stick { margin-left: 0; margin-right: 0; }
+.dl .hx__mark-air b { line-height: .7; }
