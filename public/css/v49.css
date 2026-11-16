@@ -2993,3 +2993,19 @@ html .dl .tr { margin-top: max(72px, calc(100svh - var(--hdr-h) - var(--hdr-gap)
 /* Offscreen pause (performance audit 2026-11-16): lib/motion/offscreen-pause.js sets .anim-off on a section (or the footer) while it
    is more than a screen away; its CSS animations hold where they are and carry on when it comes back. */
 .anim-off, .anim-off *, .anim-off *::before, .anim-off *::after { animation-play-state: paused !important; }
+
+/* Spacing: Our flagship programme and Talk to us (user 2026-11-16, "fix the spacing").
+   - #gs is a contained card on the content column (above), but it had no margin, so its foot sat right on the full-bleed Talk to us
+     section. It now has --sec-y of page ground under it, the same as the gap above it (Upcoming batches' own --sec-y padding).
+   - Talk to us between 901px and 1279px: the 600px form left the heading column about 240px wide at 1024px, so the heading ran
+     to six lines and the column hung far below the form. Up to 1100px the section stacks as it does on tablets (heading block,
+     then --hd-gap, then the form); from 1101px to 1279px the two columns share the width equally. 1280px and up is unchanged. */
+html main #gs.gs { margin-bottom: var(--sec-y); }
+@media (min-width: 901px) and (max-width: 1100px) {
+  html main #contact .contact__in { grid-template-columns: minmax(0, 1fr); row-gap: var(--hd-gap); }
+  html main #contact .contact__l { margin-bottom: 0; }
+  html main #contact .contact__in > .form { width: 100%; max-width: 720px; }
+}
+@media (min-width: 1101px) and (max-width: 1279px) {
+  html main #contact .contact__in { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 48px; }
+}
