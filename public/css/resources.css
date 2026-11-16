@@ -273,7 +273,8 @@
 
 /* Same content hierarchy as the batch tickets (user 2026-11-16): a small uppercase tag in the folder's colour, the serif title
    (600, 22px), the description (14.5px), then the action under a dashed tear line, as the ticket's stub. */
-#resources .rf .rf__tag { margin: 0; color: var(--tab); font: 700 12px/1.2 var(--f); text-transform: uppercase; letter-spacing: .06em; }
+#resources .rf .rf__tag { margin: 0; color: #E57512; font: 700 12px/1.2 var(--f); text-transform: uppercase; letter-spacing: .06em; }
+/* every card's tag in the sixth card's orange (user 2026-11-16: "the eyebrow of each card should be the color of the sixth card"); the folder tabs keep their own colours (--tab) */
 #resources .rf .sm__t { margin: -2px 0 0; font: 600 22px/1.2 var(--f-d); letter-spacing: -.015em; }
 #resources .rf .sm__d { margin: 0; font-size: 14.5px; line-height: 1.5; }
 #resources .rf .rf__stub { align-self: stretch; margin-top: auto; padding-top: 18px; border-top: 1.5px dashed #C9A98C; }
