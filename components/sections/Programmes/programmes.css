@@ -173,7 +173,7 @@
 }
 @media (max-width: 640px) {
   #courses .prog__canvas { padding-top: 56px; }
-  #courses .prog__flag { border-radius: 20px; }
+  #courses .prog__flag { border-radius: 8px; }
   #courses .prog__flag-photo { min-height: 260px; }
   #courses .prog__flag-body { padding: 28px 20px 24px; }
   #courses .prog__flag-h { font-size: 30px; }

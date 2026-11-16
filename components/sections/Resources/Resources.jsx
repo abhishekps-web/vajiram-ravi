@@ -1,24 +1,31 @@
 import Button from '@/components/ui/Button/Button';
 import { ArrowIcon } from '@/components/ui/ArrowIcon';
 import SectionLabel from '@/components/ui/SectionLabel';
+import Stylesheet from '@/components/ui/Stylesheet';
+import ResourceMock from './ResourceMock';
 import { RESOURCES, MORE_RESOURCES } from './data';
 
 // ============ FREE RESOURCES: six resource cards, each with its own action, and more resources as small links;
-// styles/v49.css .sm / .sm__card--res. Content in ./data.jsx; links rewritten by ./resource-links.js. ============
+// styles/v49.css .sm / .sm__card--res, the folders public/css/resources.css. Content in ./data.jsx; links rewritten by ./resource-links.js.
+// Each card is a manila file folder from the editorial desk: the back with a coloured index tab, the resource itself
+// (./ResourceMock) sticking out of it, and the front flap with the copy and a rubber "Free" stamp. ============
 
-function ResourceCard({ title, desc, action, stages, ill }) {
+function ResourceCard({ title, desc, action, stages, mock, tab }) {
   return (
-    <li className="sm__card sm__card--res">
-      <img className="sm__rays" src="/assets/img/patterns/surya-rays.svg" alt="" width="300" height="300" />
-      <svg className="sm__ill" viewBox="0 0 96 96" aria-hidden="true">{ill}</svg>
-      <h3 className="sm__t">{title}</h3>
-      <p className="sm__d">{desc}</p>
-      {stages && (
-        <ul className="sm__stages" aria-label="Stages with dates in the calendar">
-          {stages.map(s => <li key={s}>{s}</li>)}
-        </ul>
-      )}
-      <Button variant="link" className="sm__act" href="#" data-rs="" iconEnd="arrow">{action}</Button>
+    <li className="sm__card sm__card--res rf">
+      <span className="rf__back" aria-hidden="true"><span className="rf__tab">{tab}</span></span>
+      <ResourceMock kind={mock} />
+      <div className="rf__front">
+        <span className="rf__stamp" aria-hidden="true">Free</span>
+        <h3 className="sm__t">{title}</h3>
+        <p className="sm__d">{desc}</p>
+        {stages && (
+          <ul className="sm__stages" aria-label="Stages with dates in the calendar">
+            {stages.map(s => <li key={s}>{s}</li>)}
+          </ul>
+        )}
+        <Button variant="link" className="sm__act" href="#" data-rs="" iconEnd="arrow">{action}</Button>
+      </div>
     </li>
   );
 }
@@ -26,6 +33,7 @@ function ResourceCard({ title, desc, action, stages, ill }) {
 export default function Resources() {
   return (
     <section className="sm" id="resources" aria-labelledby="resrcH">
+      <Stylesheet href="/css/resources.css" />
       <div className="sm__in">
         <div className="sm__head">
           <div className="sm__titles">

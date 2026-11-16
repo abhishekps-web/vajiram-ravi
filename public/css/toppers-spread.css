@@ -51,12 +51,17 @@
   border-top: 3px double var(--rule); padding-top: 24px;
 }
 .tsp-three a { position: relative; display: flex; flex-direction: column; }
-.tsp-three a + a::before {
+.tsp-three a + a::before, .tsp-three a:nth-child(1)::before {
   content: ""; position: absolute; left: -24px; top: 0; bottom: 0; border-left: 1px solid var(--hair);
 }
 .tsp-three .tsp-ph { aspect-ratio: 4 / 4.3; }
 .tsp-three h3 { font: 500 32px/1.05 var(--serif); letter-spacing: -.01em; margin: 18px 0 8px; padding-right: 130px; }
 .tsp-three .tsp-cap { padding-right: 130px; }
+/* podium: AIR 1 in the middle, AIR 2 on the left and AIR 3 on the right, both set a little lower (DOM order stays 1, 2, 3) */
+.tsp-three a:nth-child(1) { order: 2; }
+.tsp-three a:nth-child(2) { order: 1; padding-top: 56px; }
+.tsp-three a:nth-child(3) { order: 3; padding-top: 56px; }
+.tsp-three a:nth-child(2)::before { display: none; }
 
 /* AIR 4–10 */
 .tsp-ten { border-top: 1px solid var(--rule); margin-top: 28px; padding-top: 14px; }
@@ -107,7 +112,8 @@
 }
 @media (max-width: 760px) {
   .tsp-three { grid-template-columns: 1fr; row-gap: 48px; }
-  .tsp-three a + a::before { display: none; }
+  .tsp-three a + a::before, .tsp-three a:nth-child(1)::before { display: none; }
+  .tsp-three a:nth-child(n) { order: 0; padding-top: 0; }
   .tsp-strip { grid-template-columns: repeat(2, 1fr); }
   .tsp-also ol { grid-template-columns: 1fr; }
   .tsp-also li:nth-last-child(-n + 2) { border-bottom: 1px solid var(--hair); }

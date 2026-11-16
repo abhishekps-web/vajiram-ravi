@@ -2276,9 +2276,15 @@ main .cover > #dlPin + section { background: var(--ground-jaali); background-siz
 :root { --r-box: 16px; }
 html .nav::after, html .dl__stick, html .mega, html .mega--sm, html .mega a.mega__a, html .mega__col--feat { border-radius: var(--r-box); }
 html main .cover > #dlPin + section, html #toppers, html #toppers.gz { border-radius: var(--r-box) var(--r-box) 0 0; }
-html .gz__sheet, html .gz__frame, html .inv__frame, html .inv--ticket .inv__frame, html .sm__card, html .form--note, html #faqList .qa,
+html .gz__sheet { border-radius: var(--r-box); }
+/* cards: 8px (user 2026-11-13). The containers above (header, hero frame, sheets, mega menus) keep --r-box. */
+:root { --r-card: 8px; }
+html .gz__frame, html .inv__frame, html .inv--ticket .inv__frame, html .sm__card, html #faqList .qa,
 html #story .cmp__ph, html #story .cmp__ph img, html #story .cmp__card, html #story .cmp__card img,
 html #visit .cm, html #visit .cm__track, html #visit .cm__list, html #visit .cm__map,
-html .cl__card, html footer.foot .foot__news, html #tcar > div, html #courses .prog__help,
-html #stories [class*="postcard-paper"] { border-radius: var(--r-box); }
-@media (max-width: 900px) { html .cl__card, html #visit .cm { border-radius: var(--r-box); } }
+html .cl__card, html footer.foot .foot__news, html #tcar > div, html #courses .prog__help, html #courses .prog__flag,
+html #stories [class*="postcard-paper"] { border-radius: var(--r-card); }
+@media (max-width: 900px) { html .cl__card, html #visit .cm { border-radius: var(--r-card); } }
+/* the contact form: 4px (user 2026-11-13) */
+:root { --r-form: 4px; }
+html .form--note { border-radius: var(--r-form); }
