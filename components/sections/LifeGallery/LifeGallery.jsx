@@ -3,8 +3,8 @@ import Stylesheet from '@/components/ui/Stylesheet';
 import { LIFE } from './data';
 
 // ============ LIFE AT VAJIRAM & RAVI (user 2026-11-16): ported from Kevin's branch (index.html #lifeGal, css/life-gallery.css,
-// js/life-gallery.js). On the brand ground with grain: the heading, All / Images / Videos tabs, and a curved row of photo and video
-// cards that glides on slowly and loops (life-gallery.js), each with its caption; arrows at the sides on hover (the site's icon-only
+// js/life-gallery.js). On the brand ground with grain: the heading, a curved row of photo and video
+// cards that glides on slowly and loops (life-gallery.js), the centre card's caption under it, All / Images / Videos tabs under the row; arrows at the sides on hover (the site's icon-only
 // button in a placing span). Content in data.js, styles public/css/life-gallery.css. ============
 const PLAY = 'M8 5.5v13l11-6.5z';
 
@@ -14,12 +14,6 @@ export default function LifeGallery() {
       <Stylesheet href="/css/life-gallery.css" />
       <div className="lg__hd">
         <h2 className="lg__h rv" id="lifeH" style={{ '--d': '.05s' }}>Life at Vajiram &amp; Ravi</h2>
-        <div className="lg__tabs rv" role="tablist" aria-label="Show" style={{ '--d': '.15s' }}>
-          <button type="button" className="lg__tab" role="tab" data-f="all" aria-selected="true" aria-controls="lifeTrack">All</button>
-          <button type="button" className="lg__tab" role="tab" data-f="img" aria-selected="false" aria-controls="lifeTrack" tabIndex={-1}>Images</button>
-          <button type="button" className="lg__tab" role="tab" data-f="vid" aria-selected="false" aria-controls="lifeTrack" tabIndex={-1}>Videos</button>
-          <span className="lg__ind" aria-hidden="true" />
-        </div>
       </div>
       <div className="lg__rail">
         <span className="lg__arw lg__prev"><Button variant="outline" size="sm" iconOnly iconStart="arrow-left" label="Previous photo" /></span>
@@ -41,6 +35,13 @@ export default function LifeGallery() {
             </li>
           ))}
         </ul>
+      </div>
+      {/* All / Images / Videos, under the row (user 2026-11-16) */}
+      <div className="lg__tabs rv" role="tablist" aria-label="Show" style={{ '--d': '.1s' }}>
+        <button type="button" className="lg__tab" role="tab" data-f="all" aria-selected="true" aria-controls="lifeTrack">All</button>
+        <button type="button" className="lg__tab" role="tab" data-f="img" aria-selected="false" aria-controls="lifeTrack" tabIndex={-1}>Images</button>
+        <button type="button" className="lg__tab" role="tab" data-f="vid" aria-selected="false" aria-controls="lifeTrack" tabIndex={-1}>Videos</button>
+        <span className="lg__ind" aria-hidden="true" />
       </div>
     </section>
   );

@@ -122,3 +122,11 @@
    is not cropped, on phones no wider than the screen's text column */
 .lg__slide--vid { flex-basis: calc(var(--ch) * 16 / 9); }
 @media (max-width: 760px) { .lg__slide--vid { flex-basis: min(calc(var(--ch) * 16 / 9), calc(100vw - 2 * var(--px, 20px))); } }
+
+/* only the centre card's caption shows (user 2026-11-16; .is-mid set by life-gallery.js as the row moves); the others fade out, keeping
+   their space so the row does not jump. With reduced motion nothing moves, so every caption shows. */
+.lg__cap { transition: opacity .35s ease; }
+.lg__slide:not(.is-mid) .lg__cap { opacity: 0; }
+@media (prefers-reduced-motion: reduce) { .lg__slide:not(.is-mid) .lg__cap { opacity: 1; } }
+/* the All / Images / Videos tabs under the row (user 2026-11-16) */
+.lgal > .lg__tabs { margin: clamp(28px, 3vw, 40px) auto 0; }

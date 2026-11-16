@@ -73,9 +73,12 @@ export default function initLifeGallery() {
       const off = half - (u[k] + f * ((u[k + 1] ?? u[k]) - u[k]));
       at = u.map(v => v + off);
     }
+    // only the card nearest the middle of the row shows its caption (user 2026-11-16, "just need the text label for the centre items")
+    let mid = 0; ts.forEach((t, k) => { if (Math.abs(t) < Math.abs(ts[mid])) mid = k; });
     all.forEach((s, k) => {
       const t = ts[k];
       s.style.transform = `translateX(${(at[k] - pos[k]).toFixed(1)}px) perspective(${PERSP}px) translateZ(${(t * t * NEAR).toFixed(1)}px) rotateY(${(-t * ANG).toFixed(2)}deg)`;
+      if ((k === mid) !== s.classList.contains('is-mid')) s.classList.toggle('is-mid', k === mid);
     });
   }
   track.addEventListener('scroll', () => { if (!cf) cf = requestAnimationFrame(curve); }, { passive: true });
