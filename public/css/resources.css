@@ -208,7 +208,7 @@
 #resources .rmk__card--b2 { rotate: 7deg; background: #E9F0EE; }
 #resources .rmk__fck { font: 700 7.5px/1 var(--f); letter-spacing: .16em; text-transform: uppercase; color: var(--brand); }
 #resources .rmk__fct { font: 600 15px/1.1 var(--f-d); color: var(--ink); }
-#resources .rmk__fcn { margin-top: auto; align-self: flex-start; padding: 3px 6px; border-radius: 99px; background: #326F66; color: #fff; font: 600 8.5px/1 var(--f); }
+#resources .rmk__fcn { margin-top: auto; align-self: flex-start; padding: 3px 6px; border-radius: 999px; background: #326F66; color: #fff; font: 600 8.5px/1 var(--f); }
 
 /* Kurukshetra Magazine: the same cover in green, a touch smaller title */
 #resources .rmk__mag[style*="--mag"] .rmk__cover:not(.rmk__cover--back) { background: radial-gradient(circle at 50% 72%, rgba(255, 255, 255, .22) 0 22px, transparent 23px), var(--mag); }
