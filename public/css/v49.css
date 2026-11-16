@@ -2734,6 +2734,9 @@ html body .dl--pin.dl .dl__in { opacity: 1; transform: none; filter: none; point
 .cdots > button > i { position: absolute; inset: 0; display: block; width: auto; height: auto; border-radius: inherit; background: var(--cd-fill);
   transform: scaleX(var(--p, 1)); transform-origin: 0 50%; }
 .cdots > button > i::after { display: none; }
+/* the fill is square (user 2026-11-16, "fix this issue": a fully rounded fill squeezed by scaleX showed as a thin half-moon at the start
+   of each slide); the pill clips it (overflow: hidden, its own radius), so it grows as a bar from the pill's rounded left end */
+.cdots > button > i { border-radius: 0; }
 .cdots > button:not([aria-current="true"]) > i { transform: scaleX(0); }
 .cdots--timed > button[aria-current="true"] > i { transform: scaleX(0); animation: cdFill var(--cd-t, 6s) linear forwards; }
 .is-paused .cdots--timed > button > i, .cdots--timed.is-paused > button > i { animation-play-state: paused; }
@@ -2746,6 +2749,15 @@ html body .dl--pin.dl .dl__in { opacity: 1; transform: none; filter: none; point
 /* the hero's row sits where its bars did, centred on the arrows' line */
 #dlProg.dl__prog.cdots { gap: 10px; }
 #dlProg.dl__prog.cdots > button { padding: 0; }
+/* tap targets (Lighthouse "target-size", 2026-11-16): each dot is a 25px target, the dot itself still 9px (32px current). A
+   transparent border (8px: Chrome rounds 7.5px down) makes the box; the ground and the fill are clipped to the padding box (the dot). No gap: the borders space the
+   dots 16px apart. The negative block margin keeps the row's height at 9px, so the pills and placements around it do not grow. */
+.cdots.cdots, #dlProg.dl__prog.cdots { gap: 0; }
+.cdots > button { box-sizing: content-box; border: 8px solid transparent; background-clip: padding-box; margin: -8px 0; }
+/* the current and hovered dots set `background` with the shorthand, which put the clip back to the border box: the current pill's track
+   then filled the whole 25px tap target (a big pale pill around a small fill, user 2026-11-16 "fix this issue"). Keep it in the dot. */
+.cdots > button:hover, .cdots > button[aria-current="true"] { background-clip: padding-box; }
+.cdots > button:focus-visible { outline-offset: -5px; }
 
 /* the "CSE 2025 results" tag in the eyebrow's shape (user 2026-11-16): the brand cartouche with pointed ends (cartouche-brand.svg as a
    border image) and the eyebrow's type, 12px spaced capitals, exactly as .dl__k / .lbl__t above; the dark ticker pill around it stays */

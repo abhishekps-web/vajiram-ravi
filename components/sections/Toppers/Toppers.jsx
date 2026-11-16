@@ -113,43 +113,43 @@ export default function Toppers() {
     <div className="dr__view rv" style={{"--d":".12s"}} id="drList" aria-labelledby="drHead">
       <ul className="dr__track">
         <li className="dr__item">
-          <div className="dr__fig"><span className="dr__gem" aria-hidden="true"><i></i></span><span className="dr__pic"><img src="/assets/img/toppers/portrait/2025/04-raghav-jhunjhunwala.webp" alt="Raghav Jhunjhunwala" width="360" height="360" loading="lazy" decoding="async"/></span></div>
+          <div className="dr__fig"><span className="dr__gem" aria-hidden="true"><i></i></span><span className="dr__pic"><img src="/assets/img/toppers/portrait/2025/04-raghav-jhunjhunwala-460.webp" srcSet="/assets/img/toppers/portrait/2025/04-raghav-jhunjhunwala-460.webp 460w, /assets/img/toppers/portrait/2025/04-raghav-jhunjhunwala.webp 768w" sizes="(max-width: 640px) 156px, 228px" alt="Raghav Jhunjhunwala" width="360" height="360" loading="lazy" decoding="async"/></span></div>
           <p className="dr__n" aria-hidden="true"><small>AIR</small> 4</p>
           <h4 className="dr__name">Raghav Jhunjhunwala<span className="pd__vh">, All India Rank 4</span></h4>
           <p className="dr__prog">Interview Guidance Programme</p>
         </li>
         <li className="dr__item">
-          <div className="dr__fig"><span className="dr__gem" aria-hidden="true"><i></i></span><span className="dr__pic"><img src="/assets/img/toppers/portrait/2025/05-ishan-bhatnagar.webp" alt="Ishan Bhatnagar" width="360" height="360" loading="lazy" decoding="async"/></span></div>
+          <div className="dr__fig"><span className="dr__gem" aria-hidden="true"><i></i></span><span className="dr__pic"><img src="/assets/img/toppers/portrait/2025/05-ishan-bhatnagar-460.webp" srcSet="/assets/img/toppers/portrait/2025/05-ishan-bhatnagar-460.webp 460w, /assets/img/toppers/portrait/2025/05-ishan-bhatnagar.webp 768w" sizes="(max-width: 640px) 156px, 228px" alt="Ishan Bhatnagar" width="360" height="360" loading="lazy" decoding="async"/></span></div>
           <p className="dr__n" aria-hidden="true"><small>AIR</small> 5</p>
           <h4 className="dr__name">Ishan Bhatnagar<span className="pd__vh">, All India Rank 5</span></h4>
           <p className="dr__prog">Sociology Optional Crash Course&nbsp;&middot; Sociology Enrichment Course +2 more</p>
         </li>
         <li className="dr__item">
-          <div className="dr__fig"><span className="dr__gem" aria-hidden="true"><i></i></span><span className="dr__pic"><img src="/assets/img/toppers/portrait/2025/06-zinnia-aurora.webp" alt="Zinnia Aurora" width="360" height="360" loading="lazy" decoding="async"/></span></div>
+          <div className="dr__fig"><span className="dr__gem" aria-hidden="true"><i></i></span><span className="dr__pic"><img src="/assets/img/toppers/portrait/2025/06-zinnia-aurora-460.webp" srcSet="/assets/img/toppers/portrait/2025/06-zinnia-aurora-460.webp 460w, /assets/img/toppers/portrait/2025/06-zinnia-aurora.webp 768w" sizes="(max-width: 640px) 156px, 228px" alt="Zinnia Aurora" width="360" height="360" loading="lazy" decoding="async"/></span></div>
           <p className="dr__n" aria-hidden="true"><small>AIR</small> 6</p>
           <h4 className="dr__name">Zinnia Aurora<span className="pd__vh">, All India Rank 6</span></h4>
           <p className="dr__prog">GS Ethics Module&nbsp;&middot; Interview Guidance Programme +1 more</p>
         </li>
         <li className="dr__item">
-          <div className="dr__fig"><span className="dr__gem" aria-hidden="true"><i></i></span><span className="dr__pic"><img src="/assets/img/toppers/portrait/2025/07-a-r-rajah-mohaideen.webp" alt="A R Rajah Mohaideen" width="360" height="360" loading="lazy" decoding="async"/></span></div>
+          <div className="dr__fig"><span className="dr__gem" aria-hidden="true"><i></i></span><span className="dr__pic"><img src="/assets/img/toppers/portrait/2025/07-a-r-rajah-mohaideen-460.webp" srcSet="/assets/img/toppers/portrait/2025/07-a-r-rajah-mohaideen-460.webp 460w, /assets/img/toppers/portrait/2025/07-a-r-rajah-mohaideen.webp 768w" sizes="(max-width: 640px) 156px, 228px" alt="A R Rajah Mohaideen" width="360" height="360" loading="lazy" decoding="async"/></span></div>
           <p className="dr__n" aria-hidden="true"><small>AIR</small> 7</p>
           <h4 className="dr__name">A R Rajah Mohaideen<span className="pd__vh">, All India Rank 7</span></h4>
           <p className="dr__prog">Interview Guidance Programme</p>
         </li>
         <li className="dr__item">
-          <div className="dr__fig"><span className="dr__gem" aria-hidden="true"><i></i></span><span className="dr__pic"><img src="/assets/img/toppers/portrait/2025/08-pakshal-secretry.webp" alt="Pakshal Secretry" width="360" height="360" loading="lazy" decoding="async"/></span></div>
+          <div className="dr__fig"><span className="dr__gem" aria-hidden="true"><i></i></span><span className="dr__pic"><img src="/assets/img/toppers/portrait/2025/08-pakshal-secretry-460.webp" srcSet="/assets/img/toppers/portrait/2025/08-pakshal-secretry-460.webp 460w, /assets/img/toppers/portrait/2025/08-pakshal-secretry.webp 768w" sizes="(max-width: 640px) 156px, 228px" alt="Pakshal Secretry" width="360" height="360" loading="lazy" decoding="async"/></span></div>
           <p className="dr__n" aria-hidden="true"><small>AIR</small> 8</p>
           <h4 className="dr__name">Pakshal Secretry<span className="pd__vh">, All India Rank 8</span></h4>
           <p className="dr__prog">Mains Camp&nbsp;&middot; Interview Guidance Programme</p>
         </li>
         <li className="dr__item">
-          <div className="dr__fig"><span className="dr__gem" aria-hidden="true"><i></i></span><span className="dr__pic"><img src="/assets/img/toppers/portrait/2025/09-astha-jain.webp" alt="Astha Jain" width="360" height="360" loading="lazy" decoding="async"/></span></div>
+          <div className="dr__fig"><span className="dr__gem" aria-hidden="true"><i></i></span><span className="dr__pic"><img src="/assets/img/toppers/portrait/2025/09-astha-jain-460.webp" srcSet="/assets/img/toppers/portrait/2025/09-astha-jain-460.webp 460w, /assets/img/toppers/portrait/2025/09-astha-jain.webp 768w" sizes="(max-width: 640px) 156px, 228px" alt="Astha Jain" width="360" height="360" loading="lazy" decoding="async"/></span></div>
           <p className="dr__n" aria-hidden="true"><small>AIR</small> 9</p>
           <h4 className="dr__name">Astha Jain<span className="pd__vh">, All India Rank 9</span></h4>
           <p className="dr__prog">Interview Guidance Programme</p>
         </li>
         <li className="dr__item">
-          <div className="dr__fig"><span className="dr__gem" aria-hidden="true"><i></i></span><span className="dr__pic"><img src="/assets/img/toppers/portrait/2025/10-ujjwal-priyank.webp" alt="Ujjwal Priyank" width="360" height="360" loading="lazy" decoding="async"/></span></div>
+          <div className="dr__fig"><span className="dr__gem" aria-hidden="true"><i></i></span><span className="dr__pic"><img src="/assets/img/toppers/portrait/2025/10-ujjwal-priyank-460.webp" srcSet="/assets/img/toppers/portrait/2025/10-ujjwal-priyank-460.webp 460w, /assets/img/toppers/portrait/2025/10-ujjwal-priyank.webp 768w" sizes="(max-width: 640px) 156px, 228px" alt="Ujjwal Priyank" width="360" height="360" loading="lazy" decoding="async"/></span></div>
           <p className="dr__n" aria-hidden="true"><small>AIR</small> 10</p>
           <h4 className="dr__name">Ujjwal Priyank<span className="pd__vh">, All India Rank 10</span></h4>
           <p className="dr__prog">Interview Guidance Programme</p>

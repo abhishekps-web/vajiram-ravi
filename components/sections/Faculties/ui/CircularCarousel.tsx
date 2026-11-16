@@ -161,6 +161,16 @@ export default function CircularCarousel<T>({
   const [shown, setShown] = useState(true);
   const [playing, setPlaying] = useState(interval > 0);
   const [grabbing, setGrabbing] = useState(false);
+  // The photos load only once the ring is within a screen and a half of the viewport (performance audit 2026-11-16: they are CSS
+  // backgrounds, so loading="lazy" cannot defer them, and Lighthouse counted ~160 KB of offscreen images).
+  const [near, setNear] = useState(false);
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!stage || near) return;
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setNear(true); io.disconnect(); } }, { rootMargin: "150% 0px" });
+    io.observe(stage);
+    return () => io.disconnect();
+  }, [near]);
   const active = count ? mod(front, count) : 0;
 
   const regionRef = useRef<HTMLDivElement>(null);
@@ -694,7 +704,7 @@ export default function CircularCarousel<T>({
                           )}
                           style={{
                             borderRadius: round(edge),
-                            backgroundImage: `url("${src}")`,
+                            backgroundImage: near ? `url("${src}")` : undefined,
                             // the picture at the card's width and its own height (never stretched to the card's ratio), cropped
                             // top and bottom around a point 30% down so the face stays in frame
                             backgroundSize: `${width}px auto`,

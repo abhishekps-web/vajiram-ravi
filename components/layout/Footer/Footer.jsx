@@ -16,7 +16,7 @@ export default function Footer() {
       <div className="vf__in">
         <div className="vf__bar">
           <a className="vf__logo" href="#top" aria-label="Vajiram & Ravi, back to top">
-            <img src="/assets/img/brand/logo-v6.webp" alt="" width="617" height="206" loading="lazy" decoding="async" />
+            <img src="/assets/img/brand/logo-v6-320.webp" alt="" width="320" height="107" loading="lazy" decoding="async" />
           </a>
           <ul className="vf__socials" aria-label="Vajiram & Ravi on social media">
             {SOCIAL.map(([label, key]) => (
