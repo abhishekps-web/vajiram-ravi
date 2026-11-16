@@ -101,3 +101,33 @@ html[lang="hi"] .more__a { font-family: "Mukta", var(--btn-font); }
 .nav .nav__links .more .more__a:hover, .nav .nav__links .more .more__a:focus-visible { background: rgba(194, 65, 12, .08); color: var(--brand); }
 .nav .nav__links .more .more__a:focus-visible { box-shadow: inset 0 0 0 2px var(--brand); }
 .nav .nav__links .more li + li { margin-top: 2px; }
+
+/* Sleeker bar (user 2026-11-16): a slimmer pill (46px, was 52), links at 16px (was 18) and 34px tall, a smaller logo and the
+   smaller "Let's talk" button. --hdr-h follows the pill, so the band and the hero's top spacing shrink with it. */
+:root { --hdr-h: calc(var(--hdr-pt) + 46px); }
+.nav .nav__pill { height: 46px; padding: 5px 10px 5px 12px; }
+.nav .nav__a { height: 34px; padding: 0 13px; font-size: 16px; }
+.nav__logo { height: 38px; margin-right: 14px; }
+.nav__logo .lg { height: 33px; }
+.nav .nav__a.is-current { font-size: 16px; }
+
+/* Reveal instead of slide (user 2026-11-16): the bar closes to its centre line and opens again from the centre out to the left and
+   right (a clip-path, not a move). The clip box is generous (room for the shadow, and the mega menus that hang below the bar), so
+   nothing is cut when it is open. */
+.nav { transition: clip-path .6s cubic-bezier(.22, 1, .36, 1), opacity .35s ease; will-change: clip-path;
+  clip-path: inset(-40px -40px -2000px -40px); }
+.nav.nav--away { translate: none; opacity: 0; clip-path: inset(-40px 50% -2000px 50%); transition: clip-path .45s cubic-bezier(.5, 0, .75, 0), opacity .3s ease .1s; }
+@media (prefers-reduced-motion: reduce) { .nav, .nav.nav--away { transition: none; } }
+
+/* Make the reveal readable (user 2026-11-16): no fade that hides it. Opening: the clip runs 0.8s from the centre out, fully opaque
+   from the first frame. Closing is that same motion in reverse (the same symmetric ease and length, so it is the exact mirror), and only fades in its last moments. */
+.nav { transition: clip-path .8s cubic-bezier(.65, 0, .35, 1), opacity 0s; }
+.nav.nav--away { transition: clip-path .8s cubic-bezier(.65, 0, .35, 1), opacity .12s linear .68s; }
+@media (prefers-reduced-motion: reduce) { .nav, .nav.nav--away { transition: none; } }
+
+/* Rounded reveal (user 2026-11-16): the clip is the bar's own box (the white bar is .nav::after, inset -8px -10px, 20px corners) with
+   the same radius, so the four corners keep their curve as it opens from the centre and closes to it. Once open, nav-menus.js adds
+   .nav--open and the clip goes (nothing then cuts the bar's shadow or the menus that hang below it). */
+.nav { clip-path: inset(-8px -10px -8px -10px round 20px); }
+.nav.nav--open { clip-path: none; }
+.nav.nav--away { clip-path: inset(-8px 50% -8px 50% round 20px); }
