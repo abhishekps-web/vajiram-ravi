@@ -4,7 +4,7 @@
    ink, one line under it and the site's primary button; the picture (a Free resources cut-out) on the right, rising a little out of
    the top of the banner. Under it, dots, the current one filling with the banner's time (6 s); previous and next on the banner's edges
    while the pointer is over it (the site's icon-only buttons). Markup components/sections/Hero/Trending.jsx, behaviour trending.js. */
-.tr { --tr-gap: 24px; --tr-h: 300px; position: relative; margin-top: 36px; padding: 0 0 64px; }
+.tr { --tr-gap: 24px; --tr-h: 300px; position: relative; margin-top: 64px; padding: 0 0 64px; }
 
 .tr__stage { position: relative; display: flow-root; }   /* flow-root: the track's -40px top margin (room for the pictures) stays inside */
 .tr__track { display: flex; gap: var(--tr-gap); overflow-x: clip; overflow-y: visible; padding-top: 40px; margin-top: -40px; touch-action: pan-y; }
@@ -69,7 +69,7 @@
 }
 /* phones and small tablets: the picture goes under the type, the banner grows to fit; no side buttons (swipe or the dots) */
 @media (max-width: 760px) {
-  .tr { margin-top: 20px; padding-bottom: 48px; }
+  .tr { margin-top: 36px; padding-bottom: 48px; }
   .tr__track { padding-top: 0; margin-top: 0; }
   .tr__slide { --tr-h: 0px; flex-direction: column; align-items: stretch; border-radius: 20px; }
   .tr__copy { width: 100%; padding: 26px 22px 0; }

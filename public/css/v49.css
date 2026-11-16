@@ -2709,7 +2709,12 @@ html body .dl--pin.dl .dl__in { opacity: 1; transform: none; filter: none; point
   .hx__glide { font-size: 14px; }
   .hx__line { white-space: normal; display: inline; }
   .hx__btns { width: 100%; }
-  .hx__btns .btn { width: 100%; justify-content: space-between; }
+  /* label centred, arrow disc at the right (user 2026-11-16; was label left): the same grid as .btn--full.btn--disc (buttons.css), a spacer
+     column the disc's width on the left keeps the label truly centred */
+  .hx__btns .btn { width: 100%; justify-content: center; }
+  .hx__btns .btn.btn--disc { display: grid; grid-template-columns: var(--btn-disc) minmax(0, 1fr) var(--btn-disc); padding: 0 var(--btn-pe); gap: 0; }
+  .hx__btns .btn.btn--disc > .btn__label { grid-column: 2; justify-self: center; }
+  .hx__btns .btn.btn--disc > .btn__disc { grid-column: 3; grid-row: 1; }
 }
 @media (prefers-reduced-motion: reduce) { .hx__glide { animation: none; } }
 
@@ -2873,3 +2878,30 @@ html body .dl__stat-l { max-width: 15em; }
   100%  { --fs: -20%; --fb: -20%; --fr: 0deg; --fz: 1; }
 }
 @media (prefers-reduced-motion: reduce) { .inv--flagship { animation: none; } .inv--flagship .inv__frame { transform: none; } }
+
+/* General Studies, stacked layout (user 2026-11-16): the book first, the copy below it, and the book smaller (it looked enormous
+   on a phone). Same breakpoint as the stack (max 1000px, v25.css). `zoom` shrinks the whole book with its type, as the shelf's books
+   do; the book's tilt and float are unchanged. */
+@media (max-width: 1000px) {
+  #gs.gs { row-gap: 24px; }
+  #gs .gsbook { grid-row: 1; zoom: .7; margin: 4px auto 12px; }
+  #gs .gs__in { grid-row: 2; }
+}
+@media (max-width: 480px) { #gs .gsbook { zoom: .62; } }
+
+/* Phones: the hero card full width and full height (user 2026-11-16). The card bleeds past the frame's 20px side gutters to the screen's
+   edges with square corners (the stats and the banner carousel keep the gutters), and it is the whole first screen under the header
+   (no Programmes peek, no clamp to 600px). The stats and the carousel start below the fold. Never shorter than --hero-min (the copy
+   block, CTA and indicators). */
+@media (max-width: 760px) {
+  html .dl { --card-h: max(var(--hero-min), calc(100svh - var(--hdr-h) - var(--hdr-gap))); }
+  html .dl--pin .dl__frame > .dl__stick { margin-inline: -20px; border-radius: 0; }
+}
+
+/* Phones: air between the full-bleed hero card and the stats (user 2026-11-16: the numbers sat against the card's edge). The row
+   gets 28px above it, and its height grows to hold the two rows of figures and labels plus that, so nothing spills over the card
+   or the banner carousel below. */
+@media (max-width: 760px) {
+  .dl { --stats-h: 212px; }
+  .dl__stats { padding: 28px 0 0; row-gap: 18px; }
+}

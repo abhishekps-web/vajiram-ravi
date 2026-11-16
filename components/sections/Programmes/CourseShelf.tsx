@@ -31,7 +31,7 @@ const OPEN_H = 2 * ROW_H;
 
 /**
  * Responsive (this site, 2026-11-13; soloboy is a fixed 1440px canvas): up to four books to a plank on wide screens, three on
- * tablets, two on phones (shelfCols). The stage is as wide as soloboy's for four (1180, planks 1080, spine in the middle) and
+ * tablets and phones (shelfCols; phones had two until 2026-11-16). The stage is as wide as soloboy's for four (1180, planks 1080, spine in the middle) and
  * narrower for fewer, but never narrower than the open book (two pages and a margin); it is then scaled to fit its column
  * (CSS zoom, CourseShelf), so on a 1440px screen nothing differs from soloboy.
  */
@@ -41,7 +41,7 @@ function geomFor(cols: number): Geom {
   const stageW = Math.max(books + 216, 2 * PAGE.w);
   return { cols, stageW, plankW: books + 116, spine: { x: stageW / 2, y: OPEN_H / 2 } };
 }
-const shelfCols = (width: number) => (width >= 1024 ? 4 : width >= 700 ? 3 : 2);
+const shelfCols = (width: number) => (width >= 1024 ? 4 : 3);   // phones too: three books to a plank (user 2026-11-16, was two)
 
 /** A book coming forward (and going back), and its cover swinging open (and shut). */
 const MOVE_MS = 650;
