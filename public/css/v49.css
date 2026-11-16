@@ -2409,3 +2409,7 @@ html main #visit .cm__list--chan { grid-area: chan; }
    centring margin of wide screens, which pushed them toward the middle: 1920px, 320px in). 16px from the card's right edge at every
    width (user 2026-11-16) */
 .dl__arrows { right: 16px; } .dl__prog { --dl-ar: 16px; }
+
+/* Success stories -> Faculty (user 2026-11-16: a smaller gap): no bottom padding under the postcard row (its own 56px foot,
+   Stories.jsx #tcar, already holds the cards' shadow and tilt), so the last postcard -> the Faculty eyebrow is about 60px */
+html main #stories.sheet { padding-bottom: 0; }
