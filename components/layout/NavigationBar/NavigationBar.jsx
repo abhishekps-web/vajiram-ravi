@@ -14,8 +14,8 @@ export default function NavigationBar() {
       <header className="nav" id="nav">
         <div className="nav__pill">
           <a className="nav__logo" href="#top" aria-label="Vajiram & Ravi home">
-            <img className="lg lg--d" src="/assets/img/brand/logo.png" alt="Vajiram & Ravi, Institute for IAS Examination" width="966" height="227" />
-            <img className="lg lg--l" src="/assets/img/brand/logo-white.png" alt="" width="966" height="227" />
+            <img className="lg lg--d" src="/assets/img/brand/logo.webp" alt="Vajiram & Ravi, Institute for IAS Examination" width="966" height="227" />
+            <img className="lg lg--l" src="/assets/img/brand/logo-white.webp" alt="" width="966" height="227" />
           </a>
           <nav className="nav__links" aria-label="Main">
             <div className="explore" id="explore">

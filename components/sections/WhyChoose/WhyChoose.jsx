@@ -12,7 +12,7 @@ export default function WhyChoose() {
         <section className="cmp" id="story" aria-labelledby="storyH">
           <div className="cmp__stage">
             <div className="cmp__card" aria-hidden="true">
-              <img src="/assets/img/photos/why-1-track-record.webp" alt="" width="1536" height="1024" decoding="async" style={{ objectPosition: "50% 55%" }} />
+              <img src="/assets/img/photos/why-1-track-record.webp" srcSet="/assets/img/photos/why-1-track-record-800.webp 800w, /assets/img/photos/why-1-track-record.webp 1536w" sizes="(max-width: 900px) 92vw, 45vw" alt="" width="1536" height="1024" loading="lazy" decoding="async" style={{ objectPosition: "50% 55%" }} />
             </div>
             <p className="cmp__big" aria-hidden="true">
               <span className="cmp__l">Why choose</span>
@@ -30,7 +30,7 @@ export default function WhyChoose() {
               <div className="cmp__track">
                 <article className="cmp__p" aria-labelledby="storyT0">
                   <figure className="cmp__ph">
-                    <img src="/assets/img/photos/why-1-track-record.webp" alt="The Vajiram & Ravi building, seen from its front gate" width="1536" height="1024" loading="lazy" decoding="async" style={{ objectPosition: "50% 55%" }} />
+                    <img src="/assets/img/photos/why-1-track-record.webp" srcSet="/assets/img/photos/why-1-track-record-800.webp 800w, /assets/img/photos/why-1-track-record.webp 1536w" sizes="(max-width: 900px) 92vw, 45vw" alt="The Vajiram & Ravi building, seen from its front gate" width="1536" height="1024" loading="lazy" decoding="async" style={{ objectPosition: "50% 55%" }} />
                   </figure>
                   <div className="cmp__tx">
                     <p className="cmp__no" aria-hidden="true">01<small>/06</small></p>
@@ -45,7 +45,7 @@ export default function WhyChoose() {
                 </article>
                 <article className="cmp__p" aria-labelledby="storyT1">
                   <figure className="cmp__ph">
-                    <img src="/assets/img/photos/why-2-faculty.webp" alt="A Vajiram & Ravi professor teaching a General Studies class" width="1536" height="1024" loading="lazy" decoding="async" style={{ objectPosition: "50% 30%" }} />
+                    <img src="/assets/img/photos/why-2-faculty.webp" srcSet="/assets/img/photos/why-2-faculty-800.webp 800w, /assets/img/photos/why-2-faculty.webp 1536w" sizes="(max-width: 900px) 92vw, 45vw" alt="A Vajiram & Ravi professor teaching a General Studies class" width="1536" height="1024" loading="lazy" decoding="async" style={{ objectPosition: "50% 30%" }} />
                   </figure>
                   <div className="cmp__tx">
                     <p className="cmp__no" aria-hidden="true">02<small>/06</small></p>
@@ -60,7 +60,7 @@ export default function WhyChoose() {
                 </article>
                 <article className="cmp__p" aria-labelledby="storyT2">
                   <figure className="cmp__ph">
-                    <img src="/assets/img/photos/why-3-guidance.webp" alt="A mentor going through a study plan with an aspirant" width="1536" height="1024" loading="lazy" decoding="async" style={{ objectPosition: "45% 40%" }} />
+                    <img src="/assets/img/photos/why-3-guidance.webp" srcSet="/assets/img/photos/why-3-guidance-800.webp 800w, /assets/img/photos/why-3-guidance.webp 1536w" sizes="(max-width: 900px) 92vw, 45vw" alt="A mentor going through a study plan with an aspirant" width="1536" height="1024" loading="lazy" decoding="async" style={{ objectPosition: "45% 40%" }} />
                   </figure>
                   <div className="cmp__tx">
                     <p className="cmp__no" aria-hidden="true">03<small>/06</small></p>
@@ -75,7 +75,7 @@ export default function WhyChoose() {
                 </article>
                 <article className="cmp__p" aria-labelledby="storyT3">
                   <figure className="cmp__ph">
-                    <img src="/assets/img/photos/why-4-study-material.webp" alt="Vajiram & Ravi study material, test series sheets and notes on a desk" width="1536" height="1024" loading="lazy" decoding="async" style={{ objectPosition: "50% 50%" }} />
+                    <img src="/assets/img/photos/why-4-study-material.webp" srcSet="/assets/img/photos/why-4-study-material-800.webp 800w, /assets/img/photos/why-4-study-material.webp 1536w" sizes="(max-width: 900px) 92vw, 45vw" alt="Vajiram & Ravi study material, test series sheets and notes on a desk" width="1536" height="1024" loading="lazy" decoding="async" style={{ objectPosition: "50% 50%" }} />
                   </figure>
                   <div className="cmp__tx">
                     <p className="cmp__no" aria-hidden="true">04<small>/06</small></p>
@@ -90,7 +90,7 @@ export default function WhyChoose() {
                 </article>
                 <article className="cmp__p" aria-labelledby="storyT4">
                   <figure className="cmp__ph">
-                    <img src="/assets/img/photos/why-5-location.webp" alt="Aspirants walking to the Vajiram & Ravi gate in Old Rajinder Nagar" width="1286" height="1024" loading="lazy" decoding="async" style={{ objectPosition: "55% 50%" }} />
+                    <img src="/assets/img/photos/why-5-location.webp" srcSet="/assets/img/photos/why-5-location-800.webp 800w, /assets/img/photos/why-5-location.webp 1286w" sizes="(max-width: 900px) 92vw, 45vw" alt="Aspirants walking to the Vajiram & Ravi gate in Old Rajinder Nagar" width="1286" height="1024" loading="lazy" decoding="async" style={{ objectPosition: "55% 50%" }} />
                   </figure>
                   <div className="cmp__tx">
                     <p className="cmp__no" aria-hidden="true">05<small>/06</small></p>
@@ -105,7 +105,7 @@ export default function WhyChoose() {
                 </article>
                 <article className="cmp__p" aria-labelledby="storyT5">
                   <figure className="cmp__ph">
-                    <img src="/assets/img/photos/why-6-classroom-online.webp" alt="A Vajiram & Ravi classroom with the lecture streaming live to online students" width="1536" height="1024" loading="lazy" decoding="async" style={{ objectPosition: "50% 40%" }} />
+                    <img src="/assets/img/photos/why-6-classroom-online.webp" srcSet="/assets/img/photos/why-6-classroom-online-800.webp 800w, /assets/img/photos/why-6-classroom-online.webp 1536w" sizes="(max-width: 900px) 92vw, 45vw" alt="A Vajiram & Ravi classroom with the lecture streaming live to online students" width="1536" height="1024" loading="lazy" decoding="async" style={{ objectPosition: "50% 40%" }} />
                   </figure>
                   <div className="cmp__tx">
                     <p className="cmp__no" aria-hidden="true">06<small>/06</small></p>

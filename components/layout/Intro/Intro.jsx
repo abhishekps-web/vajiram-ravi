@@ -12,8 +12,8 @@ export default function Intro() {
         <div className="vrv__fin">
           <span className="vrv__ring" aria-hidden="true" />
           <div className="vrv__logo" role="img" aria-label="Vajiram & Ravi, Institute for IAS Examination">
-            <img className="lc" src="/assets/img/brand/logo.png" alt="" width="966" height="227" />
-            <img className="lw" src="/assets/img/brand/logo.png" alt="" width="966" height="227" />
+            <img className="lc" src="/assets/img/brand/logo-966.webp" alt="" width="966" height="227" />
+            <img className="lw" src="/assets/img/brand/logo-966.webp" alt="" width="966" height="227" />
           </div>
           <p className="vrv__tag"><span>Understanding India.</span>{' '}<span>Shaping its Future.</span></p>
         </div>

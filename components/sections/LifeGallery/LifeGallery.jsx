@@ -1,3 +1,4 @@
+import { photoSrcSet } from '@/lib/photo';
 import Button from '@/components/ui/Button/Button';
 import Stylesheet from '@/components/ui/Stylesheet';
 import { LIFE } from './data';
@@ -31,7 +32,7 @@ export default function LifeGallery() {
                     <span className="lg__badge" aria-hidden="true"><svg viewBox="0 0 24 24" width="12" height="12"><path d={PLAY} /></svg>Video</span>
                   </>
                 ) : (
-                  <img src={c.img} alt={c.alt} width={c.w} height={c.h} loading="lazy" decoding="async" style={c.pos ? { objectPosition: c.pos } : undefined} />
+                  <img src={c.img} srcSet={photoSrcSet(c.img, c.w)} sizes="(max-width: 760px) 80vw, 260px" alt={c.alt} width={c.w} height={c.h} loading="lazy" decoding="async" style={c.pos ? { objectPosition: c.pos } : undefined} />
                 )}
               </figure>
               <p className="lg__cap"><b>{c.name}</b><span>{c.detail}</span></p>

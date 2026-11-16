@@ -16,7 +16,7 @@ function ResourceCard({ title, desc, action, stages, mock, tab, image }) {
       {image ? (
         // an illustrated cutout of the resource (public/assets/img/resources), in the same slot as the drawn mock-ups
         <div className="rmk rmk--photo" aria-hidden="true">
-          <div className="rmk__obj"><img src={image.src} alt="" width={image.w} height={image.h} decoding="async" /></div>
+          <div className="rmk__obj"><img src={image.src} alt="" width={image.w} height={image.h} loading="lazy" decoding="async" /></div>
         </div>
       ) : <ResourceMock kind={mock} />}
       <div className="rf__front">

@@ -41,13 +41,11 @@ export default function Home() {
         <Batches />
         <GeneralStudies />
         <Resources />
-        {/* Life at Vajiram & Ravi (user 2026-11-16, from Kevin's branch, where it follows Free resources) */}
-        <LifeGallery />
         <Contact />
         <Visit />
+        <LifeGallery />
         <Faq />
         <Closing />
-        {/* the "All courses" pop-up (not a section): the nav's course menu and "View GS courses" open it */}
         <CourseCatalogDialog />
       </main>
       <WhatsAppButton />

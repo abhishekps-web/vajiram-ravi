@@ -1,3 +1,4 @@
+import { photoSrcSet } from '@/lib/photo';
 import Button from '@/components/ui/Button/Button';
 import Stylesheet from '@/components/ui/Stylesheet';
 
@@ -50,7 +51,7 @@ export default function Visit() {
         <div className="cx__gal" id="cmGal" role="region" aria-roledescription="carousel" aria-label="Photos of the Old Rajinder Nagar campus">
           {PHOTOS.map((p, i) => (
             <figure key={p.src} className={`cx__ph${i === 0 ? ' is-on' : ''}`} data-cap={p.cap} aria-hidden={i ? true : undefined}>
-              <img src={p.src} alt={p.alt} width={p.w} height={p.h} loading="lazy" decoding="async" style={p.pos ? { objectPosition: p.pos } : undefined} />
+              <img src={p.src} srcSet={photoSrcSet(p.src, p.w)} sizes="(max-width: 760px) 92vw, 40vw" alt={p.alt} width={p.w} height={p.h} loading="lazy" decoding="async" style={p.pos ? { objectPosition: p.pos } : undefined} />
             </figure>
           ))}
           <p className="cx__cap" aria-live="polite">{PHOTOS[0].cap}</p>

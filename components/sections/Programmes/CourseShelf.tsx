@@ -817,7 +817,7 @@ function Book({ index, programme, hidden, out, open, away, style, onPick, onClos
             {/* At the foot: "Since 1976", and the Vajiram & Ravi emblem in the bottom right corner of every book's cover. */}
             <span className="flex items-end justify-between">
               <span className="font-heading text-[22px]/[1.15] opacity-90">Since 1976</span>
-              <img src="/assets/img/programmes/logo-mark.webp" alt="" width={487} height={508} className="h-[76px] w-[73px] drop-shadow-[0_4px_10px_rgb(0_0_0/0.35)]" />
+              <img src="/assets/img/programmes/logo-mark-160.webp" alt="" width={160} height={167} loading="lazy" decoding="async" className="h-[76px] w-[73px] drop-shadow-[0_4px_10px_rgb(0_0_0/0.35)]" />
             </span>
           </span>
         </button>
