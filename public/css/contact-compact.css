@@ -98,3 +98,9 @@
 /* the centre's card (user 2026-11-16, screenshot): one line, not two: the decorative frame (::before) stays, the thin outer outline
    goes; a light grey ground (#f5f5f5) for the cream */
 #visit .cx__card { background: #f5f5f5; box-shadow: none; }
+
+/* the centre's card's border (user 2026-11-16, screenshot of the "Not sure which programme" card: "try this border style, only the
+   border style"): the programme card's own edge (1px #eadbc4, 8px corners, its resting shadow) with one inner line 6px inside it,
+   in the frame's tan (#E9B48A), in place of the diamond frame. The ground (#f5f5f5) and the content are unchanged */
+#visit .cx__card { border: 1px solid #eadbc4; border-radius: 8px; box-shadow: 0 10px 22px rgba(77, 31, 8, .12); }
+#visit .cx__card::before { inset: 6px; border: 1px solid #E9B48A; border-image: none; border-radius: 4px; }
