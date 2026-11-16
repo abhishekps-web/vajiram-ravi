@@ -2448,3 +2448,12 @@ html main #closing .cl__card { min-height: 480px; padding-top: 56px; padding-bot
   html main #closing .cl__tp { width: min(40vw, 164px); }
 }
 html main #gs.gs { margin-inline: var(--px); --gs-left: clamp(24px, 4.6vw, 72px); border-radius: var(--r-box); overflow: clip; isolation: isolate; }
+
+/* Closing: the "36/50 CSE 2025 rankers" pill on phones (user 2026-11-16). The pill is one line (nowrap) and was wider than the
+   card, so the faces' group was squeezed and its fixed-size faces spilled over the text. The faces never shrink now, and on
+   narrow phones the pill shows four faces, a little more overlapped, so the whole line fits. */
+html main #closing .cl__faces { flex: none; }
+@media (max-width: 420px) {
+  html main #closing .cl__faces img:nth-child(5) { display: none; }
+  html main #closing .cl__faces img + img { margin-left: -12px; }
+}
