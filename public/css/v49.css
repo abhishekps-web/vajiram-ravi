@@ -2773,3 +2773,9 @@ html .dl { --card-min: calc(var(--txt-h) + 110px);
     padding-inline: max(4px, calc((var(--px) - 44px) / 2)); pointer-events: none; }
   #batches .rail--batch > .rail__nav .cbtn { pointer-events: auto; }
 }
+
+/* closing CTA on phones (user 2026-11-16): no AIR 1 / AIR 2 portraits, and so no bottom band kept for them; the card ends under its copy */
+@media (max-width: 640px) {
+  .cl__tp { display: none; }
+  html main #closing .cl__card { padding-bottom: 48px; }
+}
