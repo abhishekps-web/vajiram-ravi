@@ -26,16 +26,18 @@ export function RankMedal({ rank, size = "m" }) {
       aria-label={`All India Rank ${rank}`}
     >
       <defs>
-        <linearGradient id={`${id}rim`} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#FFB27A" />
-          <stop offset=".35" stopColor="#F06A2C" />
-          <stop offset=".75" stopColor="#D2490F" />
-          <stop offset="1" stopColor="#9E3408" />
+        <linearGradient id={`${id}rim`} x1=".2" y1="0" x2=".8" y2="1">
+          <stop offset="0" stopColor="#F6A428" />
+          <stop offset=".45" stopColor="#F37623" />
+          <stop offset="1" stopColor="#E0461B" />
         </linearGradient>
-        <radialGradient id={`${id}face`} cx=".38" cy=".3" r=".8">
-          <stop offset="0" stopColor="#F7843F" />
-          <stop offset=".55" stopColor="#E35A1E" />
-          <stop offset="1" stopColor="#B8420D" />
+        {/* the logo emblem: a sun glowing yellow-orange from the middle out to a red-orange edge */}
+        <radialGradient id={`${id}face`} cx=".5" cy=".5" r=".55">
+          <stop offset="0" stopColor="#FFB82E" />
+          <stop offset=".3" stopColor="#F6A428" />
+          <stop offset=".62" stopColor="#F37623" />
+          <stop offset=".85" stopColor="#EF641F" />
+          <stop offset="1" stopColor="#ED5121" />
         </radialGradient>
         {big && (
           <>
@@ -65,10 +67,10 @@ export function RankMedal({ rank, size = "m" }) {
       <path d="M19 44 A32 32 0 0 1 81 44" fill="none" stroke="#fff" strokeOpacity=".13" strokeWidth="10" strokeLinecap="round" />
 
       {big && (
-        <text x="50" y="31" textAnchor="middle" className="tsp-medal__air" fontSize="8.5" letterSpacing="2.2">AIR</text>
+        <text x="50" y="36" textAnchor="middle" className="tsp-medal__air" fontSize="15" letterSpacing="2.6">AIR</text>
       )}
-      <text x={two ? 48 : 47} y={big ? 70 : two ? 67 : 69} textAnchor="middle" className="tsp-medal__num"
-        fontSize={two ? (big ? 38 : 46) : big ? 48 : 54}>{rank}</text>
+      <text x={two ? 48 : 47} y={big ? 73 : two ? 67 : 69} textAnchor="middle" className="tsp-medal__num"
+        fontSize={two ? (big ? 34 : 46) : big ? 44 : 54}>{rank}</text>
     </svg>
   );
 }

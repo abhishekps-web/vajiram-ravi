@@ -26,12 +26,11 @@ function Photo({ t, size, lazy }) {
   );
 }
 
-// The "Behind every rank is a different journey" spread: AIR 1-3, the top ten continued, and the rest of the top 50.
+// The "Behind every rank is a different journey" spread: AIR 1-3, then the rest in rows of seven.
 // Content: ./data.js. Styles: public/css/toppers-spread.css (needs Newsreader, loaded in app/layout.jsx).
 export default function ToppersSpread() {
   const cover = TOPPERS_2025.slice(0, 3);
-  const topTen = TOPPERS_2025.slice(3, 10);
-  const also = TOPPERS_2025.slice(10, 26);
+  const continued = TOPPERS_2025.slice(3, 17); // two rows of seven: AIR 4-10, then the next seven
 
   return (
     <>
@@ -48,13 +47,13 @@ export default function ToppersSpread() {
           ))}
         </div>
 
-        {/* AIR 4-10 */}
+        {/* AIR 4-10, then the next row */}
         <section className="tsp-ten" aria-labelledby="tsp-ten-h">
           <div className="tsp-hd">
-            <span className="tsp-k" id="tsp-ten-h">The top ten, continued</span>
+            <span className="tsp-k" id="tsp-ten-h">Toppers, continued</span>
           </div>
           <div className="tsp-strip">
-            {topTen.map((t) => (
+            {continued.map((t) => (
               <a key={t.rank} href={TOPPERS_PAGE} target="_blank" rel="noopener">
                 <Photo t={t} size="m" lazy />
                 <b>{t.name}</b>
@@ -62,26 +61,6 @@ export default function ToppersSpread() {
               </a>
             ))}
           </div>
-        </section>
-
-        {/* AIR 11+ */}
-        <section className="tsp-also" aria-labelledby="tsp-also-h">
-          <div className="tsp-hd">
-            <span className="tsp-k" id="tsp-also-h">Also in the top 50</span>
-          </div>
-          <ol>
-            {also.map((t) => (
-              <li key={t.rank}>
-                <a href={TOPPERS_PAGE} target="_blank" rel="noopener">
-                  <Photo t={t} size="s" lazy />
-                  <div>
-                    <b>{t.name}</b>
-                    <Programmes t={t} />
-                  </div>
-                </a>
-              </li>
-            ))}
-          </ol>
         </section>
 
         <div className="tsp-ft">

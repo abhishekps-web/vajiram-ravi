@@ -1,19 +1,18 @@
 import Button from '@/components/ui/Button/Button';
-import { ArrowIcon } from '@/components/ui/ArrowIcon';
 import SectionLabel from '@/components/ui/SectionLabel';
 import Stylesheet from '@/components/ui/Stylesheet';
 import ResourceMock from './ResourceMock';
-import { RESOURCES, MORE_RESOURCES } from './data';
+import { RESOURCES } from './data';
 
 // ============ FREE RESOURCES: six resource cards, each with its own action, and more resources as small links;
 // styles/v49.css .sm / .sm__card--res, the folders public/css/resources.css. Content in ./data.jsx; links rewritten by ./resource-links.js.
 // Each card is a manila file folder from the editorial desk: the back with a coloured index tab, the resource itself
 // (./ResourceMock) sticking out of it, and the front flap with the copy and a rubber "Free" stamp. ============
 
-function ResourceCard({ title, desc, action, stages, mock, tab }) {
+function ResourceCard({ title, desc, action, stages, mock }) {
   return (
     <li className="sm__card sm__card--res rf">
-      <span className="rf__back" aria-hidden="true"><span className="rf__tab">{tab}</span></span>
+      <span className="rf__back" aria-hidden="true" />
       <ResourceMock kind={mock} />
       <div className="rf__front">
         <span className="rf__stamp" aria-hidden="true">Free</span>
@@ -45,19 +44,6 @@ export default function Resources() {
         <ul className="sm__grid sm__grid--res">
           {RESOURCES.map(r => <ResourceCard key={r.title} {...r} />)}
         </ul>
-        <div className="sm__more rv" style={{ "--d": ".08s" }}>
-          <p className="sm__more-k" id="smMoreK">More free resources</p>
-          <ul className="sm__more-list sm__more-list--bento" aria-labelledby="smMoreK">
-            {MORE_RESOURCES.map(t => (
-              <li key={t}>
-                <a className="sm__mini" href="#" data-rs="">
-                  <span className="sm__mini-t">{t}</span>
-                  <ArrowIcon className="sm__mini-go" />
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
       </div>
     </section>
   );

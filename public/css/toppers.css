@@ -342,3 +342,6 @@
 @media (hover: hover) and (pointer: fine) { .gz__tp:not(.is-on):hover { background: #FFFBF7; } }
 @media (prefers-reduced-motion: reduce) { .gz__tp { transition: none; } }
 
+
+/* CSE 2025 label a little more evident (user 2026-11-16): brand colour, slightly larger */
+.gz__ed { color: var(--gz-ink); font-size: 18px; font-weight: 800; letter-spacing: 0; }

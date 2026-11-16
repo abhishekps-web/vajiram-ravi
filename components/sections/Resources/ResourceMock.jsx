@@ -1,5 +1,5 @@
 // The small object at the top of each Free resources card: a drawing in HTML of what the resource is (a newspaper page,
-// the magazine cover, a stack of question papers, the three stages, a pile of books, a calendar page). Decorative only.
+// the magazine cover, a stack of question papers, an infographic poster, a pile of books, a fan of revision cards). Decorative only.
 // Styles: public/css/resources.css (.rmk).
 
 const lines = (n, cls = 'rmk__ln') => Array.from({ length: n }, (_, i) => <i key={i} className={cls} />);
@@ -22,15 +22,31 @@ function Paper() {
   );
 }
 
-function Magazine() {
+function Magazine({ kick = 'Monthly', title = 'The Recitals', tone }) {
   return (
-    <div className="rmk__obj rmk__mag">
+    <div className="rmk__obj rmk__mag" style={tone ? { '--mag': tone } : undefined}>
       <div className="rmk__cover rmk__cover--back" />
       <div className="rmk__cover">
-        <span className="rmk__kick">Monthly</span>
-        <b className="rmk__mt">The Recitals</b>
+        <span className="rmk__kick">{kick}</span>
+        <b className="rmk__mt">{title}</b>
         <span className="rmk__seal" />
         <i className="rmk__ln rmk__ln--w" /><i className="rmk__ln rmk__ln--w rmk__ln--s" />
+      </div>
+      <span className="rmk__badge">PDF</span>
+    </div>
+  );
+}
+
+function Recitals() {
+  // The Recitals cover, drawn: white page, brand strip, the title, a wheel of photo wedges, a "Current Affairs / July 2026" band
+  return (
+    <div className="rmk__obj rmk__mag rmk__mag--rec">
+      <div className="rmk__cover rmk__cover--back" />
+      <div className="rmk__cover rmk__rc">
+        <span className="rmk__rcbrand">Vajiram &amp; Ravi</span>
+        <b className="rmk__rct"><i>the</i>recitals</b>
+        <span className="rmk__wheel"><span className="rmk__hub" /></span>
+        <span className="rmk__band"><b>Current Affairs</b><i>July 2026</i></span>
       </div>
       <span className="rmk__badge">PDF</span>
     </div>
@@ -53,16 +69,18 @@ function Papers() {
   );
 }
 
-function Stages() {
+function Poster() {
+  // an infographic poster: a banner, three icon rows and a footer strip
   return (
-    <div className="rmk__obj rmk__steps">
-      {['Prelims', 'Mains', 'Interview'].map((s, i) => (
-        <div key={s} className="rmk__step" style={{ '--s': i }}>
-          <span className="rmk__bar" />
-          <b>{s}</b>
-        </div>
-      ))}
-      <span className="rmk__flag" />
+    <div className="rmk__obj rmk__poster">
+      <div className="rmk__sheet rmk__sheet--back" />
+      <div className="rmk__pbody">
+        <b className="rmk__pt">Know the Basics</b>
+        {[0, 1, 2].map(i => (
+          <div key={i} className="rmk__prow"><span className={`rmk__dot rmk__dot--${i}`} /><div className="rmk__col">{lines(2)}</div></div>
+        ))}
+        <span className="rmk__pfoot" />
+      </div>
     </div>
   );
 }
@@ -77,20 +95,25 @@ function Books() {
   );
 }
 
-function Calendar() {
-  // 35 cells; the marked ones stand for the stages' dates (not real dates).
-  const marked = { 9: 'a', 19: 'b', 26: 'c', 31: 'd' };
+function Cards() {
+  // a fan of revision flash-cards
   return (
-    <div className="rmk__obj rmk__cal">
-      <div className="rmk__calhd"><span /><b>UPSC 2027</b><span /></div>
-      <div className="rmk__grid">
-        {Array.from({ length: 35 }, (_, i) => <i key={i} className={marked[i] ? `rmk__day rmk__day--${marked[i]}` : 'rmk__day'} />)}
+    <div className="rmk__obj rmk__fc">
+      <div className="rmk__card rmk__card--b2" />
+      <div className="rmk__card rmk__card--b1" />
+      <div className="rmk__card">
+        <span className="rmk__fck">Quick revision</span>
+        <b className="rmk__fct">Fundamental Rights</b>
+        {lines(3)}
+        <span className="rmk__fcn">Art. 12–35</span>
       </div>
     </div>
   );
 }
 
-const KINDS = { paper: Paper, magazine: Magazine, papers: Papers, stages: Stages, books: Books, calendar: Calendar };
+const Kurukshetra = () => <Magazine kick="Monthly journal" title="Kurukshetra" tone="linear-gradient(160deg, #3F8A5F, #25583B)" />;
+
+const KINDS = { kurukshetra: Kurukshetra, paper: Paper, magazine: Recitals, papers: Papers, poster: Poster, books: Books, cards: Cards };
 
 export default function ResourceMock({ kind }) {
   const Kind = KINDS[kind];
