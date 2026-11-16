@@ -14,12 +14,27 @@ export default function Hero() {
   return (
     <section className="dl dl--pin" id="dlPin" aria-labelledby="dlH">
       <div className="dl__frame">
-        {/* stacked cards (user 2026-11-16): three cards behind the active one, their top edges showing above it (v49.css, end).
-            Decorative (the arrows and indicators are the controls); a click on one still moves on that many slides (page-motion.js). */}
+        {/* stacked cards (user 2026-11-16): the next three slides as cards behind the active one, their edges showing at its left and right
+            (v49.css, end); page-motion.js moves the pictures along with the slides. Decorative (the arrows and indicators are the
+            controls); a click on one still moves on that many slides. Small images at low priority: only a strip of each shows. */}
         <div className="dl__deck" aria-hidden="true">
-          <i className="dl__deck-card" />
-          <i className="dl__deck-card" />
-          <i className="dl__deck-card" />
+          {[1, 2, 3].map(k => (
+            <div key={k} className="dl__deck-card">
+              {SLIDES.map((s, i) => (
+                <img
+                  key={s.name}
+                  className={i === k ? 'on' : undefined}
+                  src={`${HERO}/${s.name}-768.webp`}
+                  alt=""
+                  width={768}
+                  height={Math.round((768 * s.h) / s.w)}
+                  loading="lazy"
+                  decoding="async"
+                  fetchPriority="low"
+                />
+              ))}
+            </div>
+          ))}
         </div>
         <div className="dl__stick">
           <div className="dl__bg" id="dlBg" aria-hidden="true">

@@ -2478,31 +2478,36 @@ html main #closing .cl__faces { flex: none; }
    it only crops sideways, so the shadows fall onto Faculty's (transparent) top. Older browsers keep overflow: hidden. */
 @supports (overflow: clip) { .ground-merge > #stories.sheet { overflow: visible; overflow-x: clip; } }
 
-/* Hero carousel, stacked cards (user 2026-11-16, after the Essential Addons "Stacked Cards" reference): the active slide is the full
-   card, centred, and three cards are stacked behind it, each one --stk-y higher and --stk-x narrower on both sides, so only their top
-   edges show above the card, in the brand's tones from the front back (brand, sun, amber). The deck (.dl__deck, Hero.jsx) has the
-   card's own box, so it scales with the card as Programmes covers it (same origin). The frame gives the stack its room above the
-   card (--stk = 3 steps), and --hero-fit / --hero-min count it, so the card itself keeps its height wherever those set it.
-   On every slide change the cards tuck down behind the card and rise again, front to back (page-motion.js); on hover a card lifts
-   and brightens, and a click on one moves on that many slides. The active card's design, copy and controls are unchanged; it gains
-   a soft shadow so it reads as the top card. Reduced motion: no deck and the old frame (the slides stack there). */
-.dl { --stk-y: clamp(7px, .85vw, 12px); --stk-x: clamp(10px, 2.2vw, 32px); --stk: calc(var(--stk-y) * 3); }
+/* Hero carousel, stacked cards at the sides (user 2026-11-16, after the Essential Addons "Stacked Cards" reference, turned on its
+   side): the active slide is the full card, centred, and the next three slides are stacked behind it, each one --stk-x wider on
+   both sides and --stk-y shorter at the top and bottom, so their edges show at the left and right of the card. Each shows the
+   slide that comes k after the active one (crossfading as the slides change), under a veil that deepens towards the back.
+   The frame gives the stack its room at the sides (--stk-out, the gutter outside it, + 3 steps); on phones the two together keep
+   the old 20px, so the active card is no narrower there. The deck (.dl__deck, Hero.jsx) has the card's own box, so it scales with
+   the card as Programmes covers it (same origin). On every slide change the stack tucks in behind the card and comes back out,
+   front to back (page-motion.js); on hover a card's veil lifts, and a click on one moves on that many slides. The active card's
+   design, copy and controls are unchanged; it gains a soft shadow so it reads as the top card. Its bottom shadow ends ~8px under
+   it, inside the frame's 20px gutter: Programmes starts at the gutter's edge and sits above the hero, cutting anything longer.
+   Reduced motion: no deck and the old frame (the slides stack there). */
+.dl { --stk-x: clamp(5px, 1vw, 14px); --stk-y: clamp(14px, 2.2vw, 30px); --stk-out: clamp(5px, 1.4vw, 20px); --stk: calc(var(--stk-out) + var(--stk-x) * 3); }
 .dl__deck { display: none; }
 @media (prefers-reduced-motion: no-preference) {
-  .dl { --hero-fit: calc(var(--txt-h) + 290px + 20px + var(--stk)); --hero-min: calc(var(--txt-h) + 230px + 20px + var(--stk)); }
-  .dl__frame { position: relative; padding-top: var(--stk); }
-  .dl--pin .dl__frame > .dl__stick { z-index: 1; box-shadow: 0 -10px 24px -14px rgba(30, 12, 2, .45), 0 10px 20px -12px rgba(30, 12, 2, .32); }
-  /* the bottom shadow ends ~8px under the card, well inside the frame's 20px gutter: the section after the hero (Programmes) starts
-     right at the gutter's edge and sits above the hero, so a longer shadow was cut there in a hard line (user 2026-11-16) */
-  .dl__deck { display: block; position: absolute; z-index: 0; top: var(--stk); bottom: 20px; left: calc(var(--cap) + 20px); right: calc(var(--cap) + 20px);
+  .dl__frame { position: relative; padding-left: calc(var(--cap) + var(--stk)); padding-right: calc(var(--cap) + var(--stk)); }
+  .dl--pin .dl__frame > .dl__stick { z-index: 1;
+    box-shadow: -10px 0 24px -14px rgba(30, 12, 2, .5), 10px 0 24px -14px rgba(30, 12, 2, .5), 0 10px 20px -12px rgba(30, 12, 2, .32); }
+  .dl__deck { display: block; position: absolute; z-index: 0; top: 0; bottom: 20px; left: calc(var(--cap) + var(--stk)); right: calc(var(--cap) + var(--stk));
     transform: scale(calc(1 - var(--cover, 0) * .2)); transform-origin: 50% 35%; pointer-events: none; }
-  .dl__deck-card { position: absolute; bottom: 0; top: calc(var(--k) * var(--stk-y) * -1); left: calc(var(--k) * var(--stk-x)); right: calc(var(--k) * var(--stk-x));
-    z-index: calc(4 - var(--k)); border-radius: var(--r-box); background: var(--c); pointer-events: auto; cursor: pointer;
-    box-shadow: 0 -4px 12px -6px rgba(30, 12, 2, .3); transition: translate .45s var(--ease), filter .35s var(--ease); }
-  .dl__deck-card:nth-child(1) { --k: 1; --c: var(--brand); }
-  .dl__deck-card:nth-child(2) { --k: 2; --c: var(--sun); }
-  .dl__deck-card:nth-child(3) { --k: 3; --c: var(--amber); }
+  .dl__deck-card { position: absolute; top: calc(var(--k) * var(--stk-y)); bottom: calc(var(--k) * var(--stk-y));
+    left: calc(var(--k) * var(--stk-x) * -1); right: calc(var(--k) * var(--stk-x) * -1); z-index: calc(4 - var(--k));
+    overflow: hidden; border-radius: var(--r-box); background: #2a1408; pointer-events: auto; cursor: pointer;
+    box-shadow: -4px 0 12px -6px rgba(30, 12, 2, .35), 4px 0 12px -6px rgba(30, 12, 2, .35); }
+  .dl__deck-card:nth-child(1) { --k: 1; --veil: .15; }
+  .dl__deck-card:nth-child(2) { --k: 2; --veil: .32; }
+  .dl__deck-card:nth-child(3) { --k: 3; --veil: .48; }
+  .dl__deck-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .9s ease; }
+  .dl__deck-card img.on { opacity: 1; }
+  .dl__deck-card::after { content: ""; position: absolute; inset: 0; background: rgba(30, 12, 2, var(--veil)); transition: background-color .35s var(--ease); }
 }
 @media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
-  .dl__deck-card:hover { translate: 0 -4px; filter: brightness(1.08); }
+  .dl__deck-card:hover::after { background: rgba(30, 12, 2, 0); }
 }
