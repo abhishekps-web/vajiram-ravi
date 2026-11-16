@@ -171,11 +171,12 @@ html[lang="hi"] .more__a { font-family: "Mukta", var(--btn-font); }
    links group (.nav__pill) no longer brings back its own white pill inside it once the page scrolls */
 .nav .nav__pill, .nav.scrolled .nav__pill { background-color: transparent; }
 
-/* the logo at Kevin's build's size (user 2026-11-16): 38px tall (162px wide), the same at the top of the page (white logo) and once
-   scrolled (colour logo); the bar's padding gives a pixel each side so it still fits the 46px pill */
-.nav .nav__pill { padding-top: 4px; padding-bottom: 4px; }
-.nav__logo { height: 38px; }
-.nav__logo .lg, .nav:not(.scrolled) .nav__logo .lg, .nav.scrolled .nav__logo .lg { height: 38px; width: auto; }
+/* the logo (user 2026-11-16, "make the logo a little bigger"; was Kevin's 38px): 44px tall (187px wide), the same at the top of the
+   page (white logo) and once scrolled (colour logo); the pill's padding gives a pixel each side so the bar stays 46px */
+.nav .nav__pill { padding-top: 1px; padding-bottom: 1px; }
+.nav__logo { height: 44px; }
+.nav__logo .lg, .nav:not(.scrolled) .nav__logo .lg, .nav.scrolled .nav__logo .lg { height: 44px; width: auto; transition: opacity .2s ease, transform .3s cubic-bezier(.22, 1, .36, 1); }
+.nav__logo:hover .lg, .nav__logo:focus-visible .lg { transform: scale(1.03); }
 
 /* The language switch, its own kind of control (user 2026-11-16: it read as a second "Let's talk" button): not a white pill but a
    track. On the orange header at rest, a translucent dark-brown track with a fine white edge; the chosen language on a white thumb in
@@ -195,3 +196,5 @@ html[lang="hi"] .more__a { font-family: "Mukta", var(--btn-font); }
   .nav:not(.scrolled) .lang__b[aria-pressed="false"]:hover { color: #FFD48A; }
 }
 @media (max-width: 480px) { .nav .lang__b { font-size: 13.5px; } .nav .lang__b[lang="hi"] { font-size: 17px; } }
+/* narrow phones: a size down, so the logo clears the language switch at 360px */
+@media (max-width: 400px) { .nav__logo, .nav__logo .lg, .nav:not(.scrolled) .nav__logo .lg, .nav.scrolled .nav__logo .lg { height: 38px; } }
