@@ -3,6 +3,7 @@ import Footer from '@/components/layout/Footer/Footer';
 import WhatsAppButton from '@/components/layout/WhatsAppButton/WhatsAppButton';
 import Hero from '@/components/sections/Hero/Hero';
 import Programmes from '@/components/sections/Programmes/Programmes';
+import BatchStrips from '@/components/sections/BatchStrips/BatchStrips';
 import Toppers from '@/components/sections/Toppers/Toppers';
 import WhyChoose from '@/components/sections/WhyChoose/WhyChoose';
 import Batches from '@/components/sections/Batches/Batches';
@@ -25,6 +26,8 @@ export default function Home() {
       <main id="top">
         {/* Order from the 11 Nov 2026 direction session (WEBSITE-DIRECTION-2026-11-11.md): 1 banners (hero),
             2 courses, 3 toppers, 4 topper testimonials, 5 faculty, 6 why choose us, then the rest */}
+        {/* the batch ribbon runs along the very top of the page, above the header (it scrolls away with the page; the header follows it) */}
+        <BatchStrips />
         <div className="cover" id="cover">
           <Hero />
           <Programmes />

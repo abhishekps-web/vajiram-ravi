@@ -79,6 +79,8 @@ export function initNavScrolled() {
   const nav = $('#nav'); if (!nav) return;
   const TRAVEL = 6, TOP = 1;   // user 2026-11-16: it starts leaving on the first few px of the first scroll down, long before the hero reaches it, and never turns white on the way; it is held only at the very top
   let navTick = false, lastY = scrollY, run = 0;
+  let strip = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--strip-h')) || 0;   // the ribbon above the header: the header follows it off screen
+  addEventListener('resize', () => { strip = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--strip-h')) || 0; });
   // The reveal clips the bar to its own rounded box (so its corners keep their radius while it opens and closes). Once it is open
   // the clip is dropped (.nav--open: nothing cuts the shadow or the menus); before it closes the clip is put back first.
   const away = () => {
@@ -91,6 +93,7 @@ export function initNavScrolled() {
   const update = () => {
     navTick = false;
     const y = Math.max(0, scrollY), dy = y - lastY; lastY = y;
+    document.documentElement.style.setProperty('--strip-off', Math.max(0, strip - y) + 'px');
     const hold = y < TOP || $('#nav [aria-expanded="true"]') || (drawer && !drawer.hidden) || nav.contains(document.activeElement);
     // white from 20px down; a bar that closes while white stays white until it is gone (it must not turn transparent mid-close), and one
     // that closes from the transparent top never turns white on the way out

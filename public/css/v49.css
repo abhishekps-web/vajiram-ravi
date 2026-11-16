@@ -587,10 +587,10 @@ footer.foot .foot__bot { font-size: 15.5px; }
 
 /* the section right after the hero slides up over it (user 2026-11-10: Programmes moved under the hero; this used to be #toppers only).
    js/page-motion.js sets --cover on the hero and --f on this section as it rises. */
-.cover > #dlPin + section { position: relative; z-index: 2; margin-top: 0; border-radius: 28px 28px 0 0; box-shadow: 0 -30px 60px -24px rgba(20, 8, 2, .55); }
-.cover > #dlPin + section > * { opacity: var(--cov, 1); transform: translate3d(0, calc((1 - var(--cov, 1)) * 44px), 0); will-change: opacity, transform; }
-.fx-on .cover > #dlPin + section > .fx { opacity: calc(var(--cov, 1) * var(--fx, .16)); }   /* keep the scroll-focus fade too */
-@media (prefers-reduced-motion: reduce) { .cover > #dlPin + section > * { opacity: 1; transform: none; } }
+.cover > #dlPin ~ section:where(#courses) { position: relative; z-index: 2; margin-top: 0; border-radius: 28px 28px 0 0; box-shadow: 0 -30px 60px -24px rgba(20, 8, 2, .55); }
+.cover > #dlPin ~ section:where(#courses) > * { opacity: var(--cov, 1); transform: translate3d(0, calc((1 - var(--cov, 1)) * 44px), 0); will-change: opacity, transform; }
+.fx-on .cover > #dlPin ~ section:where(#courses) > .fx { opacity: calc(var(--cov, 1) * var(--fx, .16)); }   /* keep the scroll-focus fade too */
+@media (prefers-reduced-motion: reduce) { .cover > #dlPin ~ section:where(#courses) > * { opacity: 1; transform: none; } }
 
 /* hero image carousel (replaces the video) */
 .dl__slides { position: absolute; inset: 0; }
@@ -1693,7 +1693,7 @@ html.foot-curtain main { background: linear-gradient(90deg, rgba(255, 250, 243, 
 main :is(#courses, #batches, #faculty, #stories.sheet, #resources, #visit, #faq.sheet, #closing, section#why.wc, .sm) { background: transparent; border-radius: 0; }
 /* ...except the sheet that slides up over the hero (Programmes): it covers the pinned hero, so it keeps its own solid ground (the same
    cream + jaali). Toppers follows it, so there is no light-to-light seam to hide. */
-main .cover > #dlPin + section { background: linear-gradient(90deg, rgba(255, 250, 243, 0) 0%, rgba(255, 250, 243, .94) 30%, rgba(255, 250, 243, .94) 70%, rgba(255, 250, 243, 0) 100%), url(/assets/img/patterns/bg-jaali.svg) 0 0 / 36px 36px repeat, #fffaf3;
+main .cover > #dlPin ~ section:where(#courses) { background: linear-gradient(90deg, rgba(255, 250, 243, 0) 0%, rgba(255, 250, 243, .94) 30%, rgba(255, 250, 243, .94) 70%, rgba(255, 250, 243, 0) 100%), url(/assets/img/patterns/bg-jaali.svg) 0 0 / 36px 36px repeat, #fffaf3;
   background-size: 100% 100%, 36px 36px, auto; border-radius: 28px 28px 0 0; }
 
 /* ---- General Studies: a set-height band instead of a full-screen section (it was min-height: max(600px, 100svh)). Height comes from
@@ -2218,7 +2218,7 @@ footer.foot .foot__logo--mark:focus-visible { outline: 2px solid #fff; outline-o
    NavigationBar component (components/layout/NavigationBar/). */
 
 /* Hero frame: a wrapper inside the hero section (.dl__frame, components/sections/Hero/Hero.jsx) insets the hero 20px on every
-   side (user 2026-11-13). It sits inside #dlPin so the "#dlPin + section" cover selectors and the sticky pin keep working;
+   side (user 2026-11-13). It sits inside #dlPin so the "#dlPin ~ section:where(#courses)" cover selectors and the sticky pin keep working;
    the slides (.dl__stick) fill the frame, and the 20px gutter is white like the header band above it. */
 .dl--pin { background: #fff; }
 .dl__frame { height: 100%; padding: 0 20px 20px; box-sizing: border-box; }   /* no top padding: the header's --hdr-gap is the space above */
@@ -2248,15 +2248,15 @@ footer.foot { padding-left: calc(var(--cap) + 76px); padding-right: calc(var(--c
 
 /* Programmes (the section that slides up over the hero): no top shadow (user 2026-11-13). Its rounded top, background and the
    slide-over motion are unchanged. */
-.cover > #dlPin + section { box-shadow: none; }
+.cover > #dlPin ~ section:where(#courses) { box-shadow: none; }
 
 /* Hero ground = the Programmes ground, exactly (user 2026-11-13): the jaali pattern (36px tiles) under a horizontal cream veil on
-   #fffaf3, the same declaration as "main .cover > #dlPin + section" above, held once in --ground-jaali so the two cannot drift.
+   #fffaf3, the same declaration as "main .cover > #dlPin ~ section:where(#courses)" above, held once in --ground-jaali so the two cannot drift.
    It fills the hero section around the photo card (its 20px frame) and the 20px gap above it, which belongs to the hero's frame;
    the header's white band covers the header only (public/css/navigation-bar.css). The pattern is offset by the header's height so
    it continues the page's own tiling (main has the same ground) with no seam. The hero card, copy and layout are unchanged. */
 :root { --ground-jaali: linear-gradient(90deg, rgba(255, 250, 243, 0) 0%, rgba(255, 250, 243, .94) 30%, rgba(255, 250, 243, .94) 70%, rgba(255, 250, 243, 0) 100%), url(/assets/img/patterns/bg-jaali.svg) 0 0 / 36px 36px repeat, #fffaf3; }
-main .cover > #dlPin + section { background: var(--ground-jaali); background-size: 100% 100%, 36px 36px, auto; }
+main .cover > #dlPin ~ section:where(#courses) { background: var(--ground-jaali); background-size: 100% 100%, 36px 36px, auto; }
 .dl--pin { background: var(--ground-jaali); background-size: 100% 100%, 36px 36px, auto;
   background-position: 0 0, 0 calc(-1 * (var(--hdr-h, 74px) + var(--hdr-gap, 20px))), 0 0; }
 
@@ -2268,7 +2268,7 @@ main .cover > #dlPin + section { background: var(--ground-jaali); background-siz
    folders, the book shelf, GS books, progress bars) are part of the drawings and stay as they are. ===== */
 :root { --r-box: 16px; }
 html .nav::after, html .dl__stick, html .mega, html .mega--sm, html .mega a.mega__a, html .mega__col--feat { border-radius: var(--r-box); }
-html main .cover > #dlPin + section, html #toppers, html #toppers.gz { border-radius: var(--r-box) var(--r-box) 0 0; }
+html main .cover > #dlPin ~ section:where(#courses), html #toppers, html #toppers.gz { border-radius: var(--r-box) var(--r-box) 0 0; }
 html .gz__sheet { border-radius: var(--r-box); }
 /* cards: 8px (user 2026-11-13). The containers above (header, hero frame, sheets, mega menus) keep --r-box. */
 :root { --r-card: 8px; }
@@ -2624,3 +2624,9 @@ footer.foot .foot__bot span:last-child { gap: 8px 20px; }
 /* Batch tickets: the description sits right under its title as one block (user 2026-11-16): the title no longer reserves two lines */
 .inv--ticket h3 { min-height: 0; }
 .inv--ticket .inv__w { margin-top: 4px; }
+
+/* Hero indicators (user 2026-11-16): bottom left, in line with the copy, and white (the bars' fill was orange); the arrows stay bottom right */
+#dlProg.dl__prog { left: 80px; right: auto; bottom: 29px; }
+#dlProg.dl__prog button i::after { background: #fff; }
+@media (max-width: 1440px) { #dlProg.dl__prog { left: clamp(20px, 5.5vw, 80px); } }
+@media (max-width: 900px) { #dlProg.dl__prog { left: 20px; bottom: 27px; } }
