@@ -109,6 +109,12 @@ The client wants **every section and every element animated**. For any change to
   numbers sits under the hero card, inside the hero section (`.dl__stats`, figures in `Hero/data.js`, count-up `hero-stats.js`,
   styles at the end of `v49.css`); the card gives up the row's height (`--stats-h`) so the first screen still ends with the
   Programmes peek, except on phones, where the card keeps its height and the row pushes the peek down.
+  Brand header and hero ground (user 2026-11-16, after eclectic-alfajores-975fab.netlify.app): from the top of the page through
+  the hero, one ground: a brand gradient with two glows, the jaali tile masked to the edges and a soft-light grain. The header
+  band (`.nav-band`) and the hero (`.dl__ground`) each paint it over their combined height (`--hx-h`, `Hero/hero-ground.js`), so
+  they meet with no seam (end of `v49.css`). At rest the nav items are light on it (white logo, links, "Let's talk" as the white
+  pill; end of `navigation-bar.css`); scrolled, the bar is white with the usual colours. The batch ribbon above the header was
+  removed (user 2026-11-16; `--strip-h` is 0, `components/sections/BatchStrips/` is unused).
 
 - The Toppers section (`#toppers`) is "Toppers from Vajiram & Ravi" (heading only, no subcopy): a static banner in `Toppers.jsx` plus `<ToppersSpread />` (`Toppers/ToppersSpread/`: ToppersSpread.jsx, RankMedal.jsx, `data.js` with the CSE 2025 rank holders; styles `public/css/toppers-spread.css`, banner styles `public/css/toppers.css`). Add or edit a rank holder in `data.js` only. The old gazette behaviour (`toppers.js`) was removed; `Toppers/data/` is unused leftovers. Newsreader italic 400/500 is loaded in `app/layout.jsx` for the spread.
 - Success stories (`#stories`, user 2026-11-13) is also styled with Tailwind v4: `Stories/stories.css` is its entry, with utilities

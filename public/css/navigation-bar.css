@@ -138,9 +138,25 @@ html[lang="hi"] .more__a { font-family: "Mukta", var(--btn-font); }
 /* The batch ribbon above the header (user 2026-11-16): --strip-h of page top. The header (fixed) starts below it and follows it
    off the screen as the page scrolls (--strip-off is set by initNavScrolled: strip height minus the scroll, never below 0); the band,
    the hero's top spacing and the hero's height all include it through --hdr-h. */
-:root { --strip-h: 44px; --hdr-h: calc(var(--hdr-pt) + 46px + var(--strip-h)); }
-@media (max-width: 900px) { :root { --strip-h: 38px; } }
+:root { --strip-h: 0px; --hdr-h: calc(var(--hdr-pt) + 46px + var(--strip-h)); }   /* ribbon removed (user 2026-11-16): 0, was 44px (38px on phones) */
 .nav, .nav.scrolled { top: calc(var(--hdr-pt) + var(--strip-off, var(--strip-h))); }
 
 /* the band is only a backdrop: it must not catch clicks meant for the batch ribbon beneath it */
 .nav-band { pointer-events: none; }
+
+/* Brand header (user 2026-11-16): at the top of the page the band behind the header is the brand colour, continuing the hero's
+   brand ground (v49.css, end), so the items at rest turn light: the white logo (logo-white.png), white links and burger with a
+   white tint on hover / open, and "Let's talk" as the white on-dark pill. Once the page scrolls (.scrolled) the bar is white
+   again and everything returns to its usual colours. The language switch keeps its white pill. */
+/* it starts under the batch ribbon (which it would otherwise cover) and reaches down to the hero, covering the 20px gap above the card */
+.nav-band { top: var(--strip-h); height: calc(var(--hdr-h) - var(--strip-h) + var(--hdr-gap)); }
+.nav:not(.scrolled) .nav__logo .lg--d { display: none; }
+.nav:not(.scrolled) .nav__logo .lg--l { display: block; }
+.nav:not(.scrolled) .nav__a, .nav:not(.scrolled) .nav__a.is-current { color: #fff; background: none; text-shadow: none; }
+.nav:not(.scrolled) .nav__a:hover, .nav:not(.scrolled) .explore.open .nav__a, .nav:not(.scrolled) .nav__a.is-current:hover,
+.nav:not(.scrolled) .nav__more.is-open .nav__more-b { background: rgba(255, 255, 255, .16); color: #fff; }
+.nav:not(.scrolled) .nav__a:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.nav:not(.scrolled) .nav__burger span { background: #fff; }
+.nav:not(.scrolled) .talk { --btn-bg: #fff; --btn-bg-hover: var(--sand); --btn-fg: var(--ink); --btn-fg-hover: var(--ink); --btn-text-shadow: none;
+  --btn-disc-bg: #C2410C; --btn-disc-fg: #fff; --btn-disc-shadow: none; }
+.nav .nav__a, .nav__burger span { transition: color .35s var(--ease, ease), background-color .2s; }

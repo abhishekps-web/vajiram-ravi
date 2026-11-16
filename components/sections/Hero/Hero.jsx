@@ -14,6 +14,8 @@ const SLIDES = [
 export default function Hero() {
   return (
     <section className="dl dl--pin" id="dlPin" aria-labelledby="dlH">
+      {/* the hero's ground (v49.css, end), continued above it by the header band */}
+      <span className="dl__ground" aria-hidden="true" />
       <div className="dl__frame">
         <div className="dl__stick">
           <div className="dl__bg" id="dlBg" aria-hidden="true">

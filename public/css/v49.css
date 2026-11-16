@@ -2635,3 +2635,29 @@ footer.foot .foot__bot span:last-child { gap: 8px 20px; }
    there (.ground-merge::before above) is off. */
 .ground-merge { background: var(--ground-jaali); background-size: 100% 100%, 36px 36px, auto; }
 .ground-merge::before { display: none; }
+
+/* Hero ground (user 2026-11-16, as on eclectic-alfajores-975fab.netlify.app): a brand gradient (135deg, #E85020 -> #C2410C ->
+   #A8380A) lit by a warm glow at the top right and deepened by a dark one at the bottom left; over it the jaali tile (44px, 14%),
+   masked so it shows only towards the edges; over that a soft-light grain (200px, 28%). It runs from the top of the page through
+   the hero: the header band (.nav-band, navigation-bar.css) and the hero (.dl__ground, Hero.jsx) each paint it, laid out over
+   the two together (--hx-h, their combined height, set by hero-ground.js) and the hero's copy shifted up by the band's height
+   (--hx-band), so they meet with no seam. The stats row on it is light: white numbers, cream labels, white dividers, the hover
+   rule in the on-dark accent (#FFD48A). Programmes still slides up over it on its own jaali ground. */
+:root { --hx-band: calc(var(--hdr-h) - var(--strip-h) + var(--hdr-gap));
+  --hx-grad: radial-gradient(48% 60% at 85% 20%, rgba(255, 170, 90, .45), rgba(0, 0, 0, 0) 70%), radial-gradient(45% 55% at 8% 100%, rgba(150, 40, 8, .5), rgba(0, 0, 0, 0) 70%), linear-gradient(135deg, #E85020 0%, #C2410C 55%, #A8380A 100%); }
+.dl--pin { background: var(--brand); }
+.dl__ground { position: absolute; inset: 0; z-index: 0; pointer-events: none; --hx-y: calc(-1 * var(--hx-band)); }
+.dl--pin .dl__frame { position: relative; z-index: 1; }
+html .nav-band, .dl__ground { overflow: hidden; isolation: isolate;
+  background: var(--hx-grad); background-size: 100% var(--hx-h, 100vh); background-position: 0 var(--hx-y, 0px); background-repeat: no-repeat; }
+.nav-band::before, .dl__ground::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .14;
+  background: url(/assets/img/patterns/jaali.svg) 0 var(--hx-y, 0px) / 44px 44px repeat;
+  -webkit-mask: radial-gradient(78% 70% at 50% 55%, rgba(0, 0, 0, 0) 40%, #000 100%) 0 var(--hx-y, 0px) / 100% var(--hx-h, 100vh) no-repeat;
+  mask: radial-gradient(78% 70% at 50% 55%, rgba(0, 0, 0, 0) 40%, #000 100%) 0 var(--hx-y, 0px) / 100% var(--hx-h, 100vh) no-repeat; }
+.nav-band::after, .dl__ground::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .28; mix-blend-mode: soft-light;
+  background: url(/assets/img/patterns/grain.png) 0 var(--hx-y, 0px) / 200px auto repeat; }
+.dl__num { color: #fff; }
+.dl__num::after { background: #FFD48A; }
+.dl__stat-l { color: rgba(255, 246, 236, .86); }
+.dl__stats li + li { border-left-color: rgba(255, 255, 255, .28); }
+@media (max-width: 760px) { .dl__stats li:nth-child(3) { border-left: 0; } }
