@@ -40,3 +40,12 @@ export const HERO_TOPPERS = [2, 1, 3].map(r => {
   const t = TOPPERS_2025.find(x => x.rank === r);
   return { rank: r, name: t.name, first: first(t.name), photo: t.photo };
 });
+
+// The toppers' slides (user 2026-11-16: "for seeing the toppers use Kevin's banner"; branch kevin, index.html .hx__slide): the CSE 2025
+// top three, each a full photo with the AIR card (Hero.jsx .hx__mark), after the institute photos. page-motion.js fills the card and
+// the results ticker's line from the slide on show. Photos public/assets/img/hero-v6/.
+export const HERO_TOPPER_SLIDES = [
+  { rank: 1, name: 'Anuj Agnihotri', src: '/assets/img/hero-v6/slide-anuj-agnihotri.webp' },
+  { rank: 2, name: 'Rajeshwari Suve M', src: '/assets/img/hero-v6/slide-rajeshwari-suve-m.webp' },
+  { rank: 3, name: 'Akansh Dhull', src: '/assets/img/hero-v6/slide-akansh-dhull.webp' },
+];

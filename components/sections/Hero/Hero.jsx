@@ -1,5 +1,5 @@
 import Button from '@/components/ui/Button/Button';
-import { HERO_STATS, HERO_TOPPERS } from './data';
+import { HERO_STATS, HERO_TOPPER_SLIDES } from './data';
 import Trending from './Trending';
 
 // the results pill's line (Kevin's hero: the topper on show; here the CSE 2025 AIR 1)
@@ -39,20 +39,24 @@ export default function Hero() {
                   {...(i === 0 ? { fetchPriority: 'high' } : { loading: 'lazy' })}
                 />
               ))}
-              {/* the toppers slide (user 2026-11-16): the CSE 2025 top five, AIR 1 in the middle; styles at the end of v49.css */}
-              <div className="dl__tops">
-                <ul className="dl__tops-row">
-                  {HERO_TOPPERS.map((t, i) => (
-                    <li key={t.rank} className={t.rank === 1 ? 'is-first' : undefined} style={{ '--i': i }}>
-                      <img src={t.photo} alt="" width="768" height="768" loading="lazy" decoding="async" />
-                      <span className="dl__tops-tag"><b>AIR {t.rank}</b> {t.first}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              {/* the toppers (user 2026-11-16, Kevin's banner): one full photo each, AIR 1 to 3, after the institute photos; the AIR card
+                  (.hx__mark below) and the results ticker follow the topper on show (page-motion.js) */}
+              {HERO_TOPPER_SLIDES.map(t => (
+                <div key={t.rank} className="dl__topper" data-rank={t.rank} data-name={t.name}>
+                  <img src={t.src} alt="" width="1920" height="822" loading="lazy" decoding="async" />
+                </div>
+              ))}
             </div>
           </div>
           <div id="heroNames" hidden aria-hidden="true" />
+          {/* the AIR card (Kevin's .hx__mark): shown on a topper's slide, with that topper's rank and name */}
+          <div className="hx__mark" aria-hidden="true">
+            <div className="hx__mark-card">
+              <p className="hx__mark-air"><span>AIR</span><b>01</b></p>
+              <p className="hx__mark-name">{HERO_TOPPER_SLIDES[0].name}</p>
+              <p className="hx__mark-exam">UPSC CSE 2025</p>
+            </div>
+          </div>
           {/* the hero's copy, Kevin's hero IA (user 2026-11-16; branch kevin, index.html .hx__copy): the CSE 2025 results pill with its
               gliding line, the headline, the lead and two buttons. One copy for every slide (the slides change only the photo).
               Styles at the end of v49.css ("Hero copy, Kevin's IA"). */}
@@ -61,7 +65,7 @@ export default function Hero() {
               <a className="hx__ticker" href="https://vajiramandravi.com/ias-selections-from-vajiram/" target="_blank" rel="noopener">
                 <span className="hx__tag">CSE 2025 results</span>
                 <span className="hx__win">
-                  <span className="hx__glide">
+                  <span className="hx__glide" id="hxGlide">
                     <span>{RESULT_LINE}</span>
                     <span aria-hidden="true">{RESULT_LINE}</span>
                   </span>
@@ -88,8 +92,8 @@ export default function Hero() {
             <Button variant="outline" onDark iconOnly size="sm" iconStart="arrow" label="Next slide" className="dl__arrow dl__arrow--next" />
           </div>
           <p className="dl__prog cdots" id="dlProg" role="group" aria-label="Hero slides">
-            {Array.from({ length: SLIDES.length + 1 }, (_, i) => (
-              <button key={i} type="button" aria-label={i === SLIDES.length ? `Slide ${i + 1}: CSE 2025 toppers` : `Slide ${i + 1}`}>
+            {[...SLIDES.map((_, i) => `Slide ${i + 1}`), ...HERO_TOPPER_SLIDES.map(t => `AIR ${t.rank}: ${t.name}`)].map(label => (
+              <button key={label} type="button" aria-label={label}>
                 <i />
               </button>
             ))}
