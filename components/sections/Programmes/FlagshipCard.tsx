@@ -130,7 +130,7 @@ export default function FlagshipCard() {
     <section
       aria-labelledby="flagship-programme-h"
       data-zoom
-      className="prog__flag relative grid w-full grid-cols-[520px_1fr] overflow-clip rounded-[28px] text-white shadow-[0_24px_48px_-20px_rgb(77_31_8/0.45)]"
+      className="prog__flag relative grid w-full grid-cols-[520px_1fr] overflow-clip rounded-[8px] text-white shadow-[0_24px_48px_-20px_rgb(77_31_8/0.45)]"
       style={{ backgroundImage: GROUND, backgroundColor: "#c9561a" }}
     >
       <img

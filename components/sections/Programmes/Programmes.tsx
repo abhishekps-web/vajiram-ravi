@@ -48,7 +48,7 @@ export default function Programmes() {
           <aside
             data-fade
             aria-labelledby="programmes-help-h"
-            className="prog__help relative mx-auto flex w-[1040px] items-center gap-7 rounded-[16px] border border-[#eadbc4] bg-white/85 py-7 pr-8 pl-7 shadow-rest backdrop-blur-sm"
+            className="prog__help relative mx-auto flex w-[1040px] items-center gap-7 rounded-[8px] border border-[#eadbc4] bg-white/85 py-7 pr-8 pl-7 shadow-rest backdrop-blur-sm"
           >
             <span aria-hidden="true" className="flex size-16 shrink-0 items-center justify-center rounded-full bg-burnt text-white">
               <svg viewBox="0 0 24 24" width={30} height={30} fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round">

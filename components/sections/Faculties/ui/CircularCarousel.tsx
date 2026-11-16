@@ -598,7 +598,7 @@ export default function CircularCarousel<T>({
   }, [pitch]);
 
   const name = itemName.charAt(0).toUpperCase() + itemName.slice(1);
-  const radiusPx = 18;
+  const radiusPx = 8;
 
   if (!count) return null;
 
@@ -622,7 +622,7 @@ export default function CircularCarousel<T>({
         lean.aimX = lean.aimY = 0;
         kick();
       }}
-      className={cx("relative flex w-full flex-col items-center rounded-[16px] outline-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-burnt", className)}
+      className={cx("relative flex w-full flex-col items-center rounded-[8px] outline-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-burnt", className)}
     >
       {/* The stage: the ring is centred in it and drawn by transforms alone. */}
       <div

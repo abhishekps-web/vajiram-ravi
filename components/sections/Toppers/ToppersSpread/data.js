@@ -9,7 +9,7 @@ const A = "/assets/img/toppers/";
 
 export const TOPPERS_2025 = [
   { rank: 1, name: "Anuj Agnihotri", programmes: ["Interview Guidance Programme"], photo: P + "01-anuj-agnihotri.webp" },
-  { rank: 2, name: "Rajeshwari Suve M", programmes: ["PowerUp Prelims Test Series", "Interview Guidance Programme", "Mains 2020 Test Series"], photo: P + "02-rajeshwari-suve-m.webp" },
+  { rank: 2, name: "Rajeshwari Suve", programmes: ["PowerUp Prelims Test Series", "Interview Guidance Programme", "Mains 2020 Test Series"], photo: P + "02-rajeshwari-suve-m.webp" },
   { rank: 3, name: "Akansh Dhull", programmes: ["General Studies Prelims-cum-Mains Classroom Programme"], photo: P + "03-akansh-dhull.webp" },
   { rank: 4, name: "Raghav Jhunjhunwala", programmes: ["Interview Guidance Programme"], photo: P + "04-raghav-jhunjhunwala.webp" },
   { rank: 5, name: "Ishan Bhatnagar", programmes: ["Sociology Optional Crash Course", "Sociology Enrichment Course", "Prelims CAMP (Online and Offline)", "Interview Guidance Programme"], photo: P + "05-ishan-bhatnagar.webp" },
