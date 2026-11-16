@@ -19,7 +19,8 @@ components/
   layout/                 site chrome
     NavigationBar/        the site header: NavigationBar.jsx, data.js (Study materials menu), nav-menus.js (drawer, mega menus,
                           .scrolled), lang-switch.js; styles public/css/navigation-bar.css (declared by the component)
-    Footer/               Footer.jsx, data.js (link columns, socials), footer-menu.js, footer-curtain.js, footer-word.js
+    Footer/               Footer.jsx (Kevin's footer, user 2026-11-16; styles public/css/footer-v6.css), data.js (link columns, socials,
+                          news, legal), footer-curtain.js
     Intro/                Intro.jsx (server-rendered overlay), intro.js (plays and lifts it)
     WhatsAppButton/       WhatsAppButton.jsx
     SiteBehaviour.jsx     client component: after hydration, imports lib/behaviour.js and starts it
@@ -115,6 +116,12 @@ The client wants **every section and every element animated**. For any change to
   they meet with no seam (end of `v49.css`). At rest the nav items are light on it (white logo, links, "Let's talk" as the white
   pill; end of `navigation-bar.css`); scrolled, the bar is white with the usual colours. The batch ribbon above the header was
   removed (user 2026-11-16; `--strip-h` is 0, `components/sections/BatchStrips/` is unused).
+  What's trending (user 2026-11-16, from Kevin's branch `kevin` of github.com/solomonmathai-coder/Vajiram-ravi, deployed at
+  eclectic-alfajores-975fab.netlify.app): a banner carousel under the stats inside the hero (`Hero/Trending.jsx`, `trending.js`, data
+  `TRENDING` in `Hero/data.js`, `public/css/trending.css`). The hero is then taller than the screen: it scrolls until its foot reaches the
+  bottom of the screen and is pinned there (`--hx-stick`, `hero-ground.js`); its shade starts only once Programmes comes on screen.
+- Contact us (`#visit`) and the footer are Kevin's too (user 2026-11-16): `Visit.jsx` + `public/css/contact-compact.css` (card, map,
+  photo gallery, `visit-gallery.js`); the cream footer `Footer.jsx` + `public/css/footer-v6.css` (IBM Plex Sans on the footer only).
 
 - The Toppers section (`#toppers`) is "Toppers from Vajiram & Ravi" (heading only, no subcopy): a static banner in `Toppers.jsx` plus `<ToppersSpread />` (`Toppers/ToppersSpread/`: ToppersSpread.jsx, RankMedal.jsx, `data.js` with the CSE 2025 rank holders; styles `public/css/toppers-spread.css`, banner styles `public/css/toppers.css`). Add or edit a rank holder in `data.js` only. The old gazette behaviour (`toppers.js`) was removed; `Toppers/data/` is unused leftovers. Newsreader italic 400/500 is loaded in `app/layout.jsx` for the spread.
 - Success stories (`#stories`, user 2026-11-13) is also styled with Tailwind v4: `Stories/stories.css` is its entry, with utilities

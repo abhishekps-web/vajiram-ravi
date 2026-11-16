@@ -1,46 +1,84 @@
-// ============ FOOTER ============
-// footer: v21's layout with a saree border and a Hindi line
+import Stylesheet from '@/components/ui/Stylesheet';
+import { FOOTER, SOCIAL, NEWS, LEGAL, SITE_HOME } from './data';
+
+// ============ FOOTER (user 2026-11-16: the footer from Kevin's build, eclectic-alfajores-975fab.netlify.app; version 6's "Footer –
+// v5 (minimal)"): the cream paper in the site's gold frame; the logo and, opposite it, the six social icons over a hairline; four link
+// columns and the latest current affairs beside them; the giant name pressed into the paper (an SVG deboss filter); the legal bar.
+// It stays parked under the page, which slides up off it (footer-curtain.js). Content in data.js, styles public/css/footer-v6.css. ============
+const ext = href => (href.startsWith('#') ? {} : { target: '_blank', rel: 'noopener' });
+const ARROW = ['M2.5 8h11', 'M8.6 3.6C9.4 5.9 11.2 7.4 13.5 8 11.2 8.6 9.4 10.1 8.6 12.4'];
+
 export default function Footer() {
   return (
-    <footer className="foot">
-      <img className="foot__scene" src="/assets/img/photos/footer-classroom.webp" alt="" aria-hidden="true" decoding="async" loading="lazy" />
+    <footer className="vf">
+      <Stylesheet href="/css/footer-v6.css" />
       <span className="foot__frame" aria-hidden="true" />
-      {/* gold double rule + corner diamonds (Figma 2164:5557 "ornament border"); styles/v49.css */}
-      <div className="foot__top">
-        <div className="foot__brand">
-          <a className="foot__logo foot__logo--mark" href="#top" aria-label="Vajiram & Ravi, back to top">
-            <img src="/assets/img/brand/logo-white.png" alt="Vajiram & Ravi, Institute for IAS Examination" width="966" height="227" loading="lazy" decoding="async" />
+      <div className="vf__in">
+        <div className="vf__bar">
+          <a className="vf__logo" href="#top" aria-label="Vajiram & Ravi, back to top">
+            <img src="/assets/img/brand/logo-v6.webp" alt="" width="617" height="206" loading="lazy" decoding="async" />
           </a>
-          <p>Best IAS coaching in Delhi, India. Preparing UPSC aspirants in Old Rajinder Nagar since 1976.</p>
-          <ul className="socials" id="socials" />
+          <ul className="vf__socials" aria-label="Vajiram & Ravi on social media">
+            {SOCIAL.map(([label, key]) => (
+              <li key={key}>
+                <a href={SITE_HOME} target="_blank" rel="noopener" aria-label={label}>
+                  <span className="vf__soc" style={{ '--m': `url(/assets/img/footer/social-${key}.svg)` }} aria-hidden="true" />
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
-        <div className="foot__cols" id="footCols" />
-      </div>
-      <div className="foot__news" aria-labelledby="footNewsH">
-        <h3 className="foot__news-k" id="footNewsH">{"Latest current affairs "}<span className="foot__news-live"><i aria-hidden="true" />Updated daily</span></h3>
-        <ul className="foot__news-list">
-          <li>
-            <span>Mains</span>
-            <a href="https://vajiramandravi.com/" target="_blank" rel="noopener">Supreme Court redefines the meaning of ‘industry’</a>
-          </li>
-          <li>
-            <span>Mains</span>
-            <a href="https://vajiramandravi.com/" target="_blank" rel="noopener">NITI Aayog flags gap between education and employment</a>
-          </li>
-          <li>
-            <span>Prelims</span>
-            <a href="https://vajiramandravi.com/" target="_blank" rel="noopener">Thiksey Monastery</a>
-          </li>
-        </ul>
-      </div>
-      <p className="foot__word" aria-hidden="true">Vajiram<span>&</span>Ravi</p>
-      <div className="foot__bot">
-        <span>© 2026 Vajiram & Ravi. All rights reserved.</span>
-        <span>
-          <a href="#">Terms and Conditions</a>
-          <a href="#">Privacy Policy</a>
-          <a href="#">Grievance Redressal</a>
-        </span>
+        <div className="vf__top">
+          <nav className="vf__cols" aria-label="Footer">
+            {FOOTER.map(([h, links]) => (
+              <div key={h} className="vf__col">
+                <h2 className="vf__h">{h}</h2>
+                <ul>{links.map(([label, href]) => <li key={label}><a href={href} {...ext(href)}>{label}</a></li>)}</ul>
+              </div>
+            ))}
+          </nav>
+          <section className="vf__news" aria-labelledby="vfNewsH">
+            <h2 className="vf__h vf__news-h" id="vfNewsH">Latest current affairs <span className="vf__live"><i aria-hidden="true" />Updated daily</span></h2>
+            <ul className="vf__news-list">
+              {NEWS.map(([tag, title, href]) => (
+                <li key={title}>
+                  <a href={href} target="_blank" rel="noopener">
+                    <span className="vf__tag">{tag}</span>
+                    <span className="vf__nt">{title}</span>
+                    <svg className="vf__arw" viewBox="0 0 16 16" aria-hidden="true">{ARROW.map(d => <path key={d} d={d} />)}</svg>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        </div>
+        <div className="vf__word">
+          <span className="vh">Vajiram &amp; Ravi</span>
+          <svg aria-hidden="true" viewBox="0 0 1280 210" fill="none">
+            <defs>
+              {/* the deboss: a soft inner shade along the top, a light edge along the bottom and a white lip under it */}
+              <filter id="vf-deboss" x="-2%" y="-10%" width="104%" height="125%" colorInterpolationFilters="sRGB">
+                <feOffset in="SourceAlpha" dy="4" result="down" /><feGaussianBlur in="down" stdDeviation="2.6" result="downSoft" />
+                <feComposite in="SourceAlpha" in2="downSoft" operator="out" result="topBand" />
+                <feFlood floodColor="#5a2a10" floodOpacity=".2" result="shadeInk" /><feComposite in="shadeInk" in2="topBand" operator="in" result="innerShade" />
+                <feOffset in="SourceAlpha" dy="-2.2" result="up" /><feGaussianBlur in="up" stdDeviation="1.1" result="upSoft" />
+                <feComposite in="SourceAlpha" in2="upSoft" operator="out" result="bottomBand" />
+                <feFlood floodColor="#ffffff" floodOpacity=".55" result="lightInk" /><feComposite in="lightInk" in2="bottomBand" operator="in" result="innerLight" />
+                <feOffset in="SourceAlpha" dy="2" result="lipDown" /><feComposite in="lipDown" in2="SourceAlpha" operator="out" result="lipBand" />
+                <feFlood floodColor="#ffffff" floodOpacity=".55" result="lipInk" /><feComposite in="lipInk" in2="lipBand" operator="in" result="lip" />
+                <feMerge><feMergeNode in="lip" /><feMergeNode in="SourceGraphic" /><feMergeNode in="innerShade" /><feMergeNode in="innerLight" /></feMerge>
+              </filter>
+            </defs>
+            <text x="640" y="172" textAnchor="middle" textLength="1272" lengthAdjust="spacingAndGlyphs" filter="url(#vf-deboss)">Vajiram &amp; Ravi</text>
+          </svg>
+        </div>
+        <div className="vf__legal">
+          <p>© 2026 Vajiram &amp; Ravi. All rights reserved</p>
+          <nav aria-label="Legal">
+            {LEGAL.map(([label, href]) => <a key={label} href={href} target="_blank" rel="noopener">{label}</a>)}
+            <span>Grievance redressal</span>
+          </nav>
+        </div>
       </div>
     </footer>
   );
