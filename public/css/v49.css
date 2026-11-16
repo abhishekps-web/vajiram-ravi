@@ -2989,3 +2989,7 @@ html .dl .tr { margin-top: max(72px, calc(100svh - var(--hdr-h) - var(--hdr-gap)
   .dl { --stats-h: 212px; }
   .dl__stats { padding: 28px 0 0; row-gap: 18px; }
 }
+
+/* Offscreen pause (performance audit 2026-11-16): lib/motion/offscreen-pause.js sets .anim-off on a section (or the footer) while it
+   is more than a screen away; its CSS animations hold where they are and carry on when it comes back. */
+.anim-off, .anim-off *, .anim-off *::before, .anim-off *::after { animation-play-state: paused !important; }
