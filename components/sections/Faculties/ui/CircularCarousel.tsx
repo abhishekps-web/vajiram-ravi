@@ -173,7 +173,8 @@ export default function CircularCarousel<T>({
 
   const sim = useRef<Sim>({ pos: 0, vel: 0, target: 0, stiffness: SNAP_HAND, held: false, lean: { x: 0, y: 0, aimX: 0, aimY: 0 }, clock: 0 });
   /** What the loop needs from React's state, kept current. */
-  const flags = useRef({ playing: interval > 0, onScreen: false, still: false, entered: true, hover: false, focus: false });
+  // `edge`: the ring is shifted sideways to bring a hovered card fully on screen (see "edge fit" below); it holds the autoplay too
+  const flags = useRef({ playing: interval > 0, onScreen: false, still: false, entered: true, hover: false, focus: false, edge: false });
   const frontRef = useRef(0);
   const depths = useRef<string[]>([]);
   const frame = useRef(0);
@@ -262,7 +263,7 @@ export default function CircularCarousel<T>({
       const counting = interval > 0 && f.playing && !f.still && f.entered && f.onScreen && slots > 1;
       if (counting) {
         busy = true;
-        if (!f.hover && !f.focus && !s.held && !document.hidden) s.clock += dt * 1000;
+        if (!f.hover && !f.edge && !f.focus && !s.held && !document.hidden) s.clock += dt * 1000;
         if (s.clock >= interval) {
           s.clock = 0;
           s.target = Math.round(s.target) + 1;
@@ -351,9 +352,129 @@ export default function CircularCarousel<T>({
     liveRef.current.textContent = `${index + 1} of ${count}: ${slideTitle(items[index])}`;
   };
 
+  /*
+   * Edge fit (user 2026-11-16): a card hovered with a mouse that is cut off by the viewport's left or right edge brings the ring
+   * across just far enough to show the whole card (16px clear of the edge). The whole projected ring moves rigidly: the shift is a
+   * `translate` on the layer holding the perspective and the floor shadow, so nothing is distorted, nothing reflows, and the arrows
+   * stay put. A card already in full view moves nothing; a hover onto a neighbour adjusts from where it is.
+   * The hover zone is the card's footprint before and after the shift together, so a pointer the shift slid off the card (one
+   * resting in the edge band) still counts as on it: no back-and-forth. The shift eases back once the pointer leaves that zone.
+   * While shifted the autoplay holds, so the card stays under the pointer; any turn of the ring, a drag or a resize lets it go.
+   */
+  const shiftRef = useRef<HTMLDivElement>(null);
+  const edge = useRef({ target: 0, leave: 0 as ReturnType<typeof setTimeout> | 0, x: -1, y: -1, card: null as HTMLElement | null, zone: null as null | { l: number; r: number; t: number; b: number } });
+  const EDGE_MARGIN = 16;
+  const EDGE_MS = 520;
+  const EDGE_GRACE = 140;
+  const setShift = (px: number) => {
+    const e = edge.current;
+    if (e.leave) clearTimeout(e.leave);
+    e.leave = 0;
+    if (!px) {
+      e.zone = null;
+      e.card = null;
+    }
+    const el = shiftRef.current;
+    if (!el || Math.abs(px - e.target) < 0.5) return;
+    e.target = px;
+    if (prefersReducedMotion()) el.style.transition = "none";   // reduced motion: the card comes into view at once
+    el.style.translate = px ? `${px.toFixed(1)}px 0` : "";
+    flags.current.edge = px !== 0;
+    if (!px) kick();
+  };
+  const fitCard = (card: HTMLElement) => {
+    const el = shiftRef.current;
+    if (!el) return;
+    let left = Infinity;
+    let right = -Infinity;
+    let top = Infinity;
+    let bottom = -Infinity;
+    card.querySelectorAll<HTMLElement>("span[aria-hidden]").forEach((part) => {
+      const r = part.getBoundingClientRect();
+      if (r.width > 0 && r.height > 0) {
+        left = Math.min(left, r.left);
+        right = Math.max(right, r.right);
+        top = Math.min(top, r.top);
+        bottom = Math.max(bottom, r.bottom);
+      }
+    });
+    if (!Number.isFinite(left)) return;
+    const zoom = getCanvasZoom();
+    // where the card would be with no shift: take off the shift as drawn this moment (mid-transition included)
+    const drawn = (parseFloat(getComputedStyle(el).translate) || 0) * zoom;
+    const l0 = left - drawn;
+    const r0 = right - drawn;
+    const vw = document.documentElement.clientWidth;
+    const now = edge.current.target * zoom;
+    let next = now;
+    if (r0 - l0 > vw - 2 * EDGE_MARGIN) next = EDGE_MARGIN - l0;
+    else if (l0 + now < EDGE_MARGIN) next = EDGE_MARGIN - l0;
+    else if (r0 + now > vw - EDGE_MARGIN) next = vw - EDGE_MARGIN - r0;
+    else if (l0 >= EDGE_MARGIN && r0 <= vw - EDGE_MARGIN) next = 0;   // fully visible unshifted: no need to stay moved
+    setShift(next / zoom);
+    // the hover zone: the card's footprint unshifted and shifted (the 10px hover lift included in its height)
+    edge.current.card = next ? card : null;
+    edge.current.zone = next ? { l: Math.min(l0, l0 + next), r: Math.max(r0, r0 + next), t: top - 12, b: bottom + 12 } : null;
+  };
+  const inZone = (x: number, y: number) => {
+    const z = edge.current.zone;
+    return !!z && x >= z.l && x <= z.r && y >= z.t && y <= z.b;
+  };
+  /** Ease the shift back a moment after the pointer is out of the zone (a hover onto a neighbour cancels it). */
+  const leaveSoon = () => {
+    const e = edge.current;
+    if (e.leave || !e.target) return;
+    e.leave = setTimeout(() => {
+      e.leave = 0;
+      if (!inZone(e.x, e.y)) setShift(0);
+    }, EDGE_GRACE);
+  };
+  const onCardEnter = (event: PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType !== "mouse" || drag.current?.moved) return;
+    const e = edge.current;
+    e.x = event.clientX;
+    e.y = event.clientY;
+    // A neighbour the ring carried under a pointer still inside the current zone is not a new hover (fitting it would chain shifts).
+    if (e.target && e.card && e.card !== event.currentTarget && inZone(e.x, e.y)) return;
+    if (e.leave) clearTimeout(e.leave);
+    e.leave = 0;
+    fitCard(event.currentTarget);
+  };
+  const onCardLeave = (event: PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType !== "mouse") return;
+    const e = edge.current;
+    e.x = event.clientX;
+    e.y = event.clientY;
+    if (!inZone(e.x, e.y)) leaveSoon();
+  };
+  useEffect(() => {
+    const e = edge.current;
+    const off = () => setShift(0);
+    // while shifted, follow the pointer anywhere: inside the zone keeps the shift, outside lets it go
+    const track = (event: globalThis.PointerEvent) => {
+      if (event.pointerType !== "mouse" || !e.target) return;
+      e.x = event.clientX;
+      e.y = event.clientY;
+      if (inZone(e.x, e.y)) {
+        if (e.leave) clearTimeout(e.leave);
+        e.leave = 0;
+      } else leaveSoon();
+    };
+    addEventListener("resize", off);
+    addEventListener("pointermove", track, { passive: true });
+    document.addEventListener("pointerleave", off);
+    return () => {
+      removeEventListener("resize", off);
+      removeEventListener("pointermove", track);
+      document.removeEventListener("pointerleave", off);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   /** Turns the ring `by` cards from where it is heading. */
   const move = (by: number, byHand: boolean) => {
     if (!slots || by === 0) return;
+    setShift(0);
     const s = sim.current;
     s.clock = 0;
     s.held = false;
@@ -411,6 +532,8 @@ export default function CircularCarousel<T>({
   const onPointerMove = (event: PointerEvent<HTMLDivElement>) => {
     const stage = stageRef.current;
     const d = drag.current;
+    edge.current.x = event.clientX;   // for the edge fit's check after its own shift
+    edge.current.y = event.clientY;
     // The ring does not follow the pointer (the client asked for no pointer tracking); only a drag moves it.
     if (!d || d.id !== event.pointerId) return;
     const zoom = getCanvasZoom();
@@ -421,6 +544,7 @@ export default function CircularCarousel<T>({
       if (Math.abs(dx) > 6 && Math.abs(dx) > Math.abs(dy)) {
         // It takes hold from where the drag began, so the threshold's few px are not lost.
         d.moved = true;
+        setShift(0);
         d.pos = s.pos;
         s.held = true;
         s.vel = 0;
@@ -525,6 +649,12 @@ export default function CircularCarousel<T>({
         className={cx("relative w-full touch-pan-y select-none", grabbing ? "cursor-grabbing" : "cursor-grab")}
         style={{ height: stageHeight }}
       >
+        {/* The edge-fit layer: the floor shadow and the ring move across together (a translate only; the arrows stay outside it). */}
+        <div
+          ref={shiftRef}
+          className="pointer-events-none absolute inset-0 motion-reduce:transition-none"
+          style={{ transition: `translate ${EDGE_MS}ms ${EASE}` }}
+        >
         {/* A soft shadow on the floor under the front of the ring. */}
         <span
           aria-hidden="true"
@@ -532,7 +662,7 @@ export default function CircularCarousel<T>({
           style={{ top: stageHeight / 2 + height / 2 - 18 }}
         />
         <div
-          className="absolute inset-0 flex items-center justify-center"
+          className="pointer-events-auto absolute inset-0 flex items-center justify-center"
           style={{
             perspective: PERSPECTIVE,
             opacity: shown ? 1 : 0,
@@ -622,8 +752,15 @@ export default function CircularCarousel<T>({
                       if (by !== 0) move(by, true);
                     }}
                     // Only the pointer on the front card holds the autoplay, not the pointer anywhere on the ring.
-                    onPointerEnter={isFront ? (event) => event.pointerType === "mouse" && (flags.current.hover = true) : undefined}
-                    onPointerLeave={isFront ? () => (flags.current.hover = false) : undefined}
+                    // Every card: the edge fit (bring a cut-off card fully on screen), see above.
+                    onPointerEnter={(event) => {
+                      if (isFront && event.pointerType === "mouse") flags.current.hover = true;
+                      onCardEnter(event);
+                    }}
+                    onPointerLeave={(event) => {
+                      if (isFront) flags.current.hover = false;
+                      onCardLeave(event);
+                    }}
                     className={cardClass}
                     style={cardStyle}
                   >
@@ -645,6 +782,7 @@ export default function CircularCarousel<T>({
               })}
             </div>
           </div>
+        </div>
         </div>
 
         {/* The arrows level with the front card: just beside the ring's ends, or at the stage's edges. */}
