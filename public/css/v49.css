@@ -2405,3 +2405,6 @@ html main #visit .cm__list--chan { grid-area: chan; }
 .dl__prog button:focus-visible i { background: rgba(255, 255, 255, .7); }
 @media (hover: hover) and (pointer: fine) { .dl__prog button:hover i { background: rgba(255, 255, 255, .7); } }
 @media (prefers-reduced-motion: reduce) { .dl__prog button i { transition: none; } }
+/* the controls are placed inside the hero card (.dl__stick), so their inset is the card's own 80px side padding (the copy's left
+   inset, mirrored), not --px: --px also holds the centring margin of wide screens, which pushed them toward the middle (1920px: 320px in) */
+@media (min-width: 901px) { .dl__arrows { right: 80px; } .dl__prog { --dl-ar: 80px; } }
