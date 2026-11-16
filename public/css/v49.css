@@ -1136,7 +1136,7 @@ section#why.wc, #stories.sheet, #faq.sheet { background: var(--ground); }   /* o
 /* FAQ cards: one outer edge whether open or closed. The marigold marker was a 3px left border, transparent when closed, so the closed card's
    outline (an inset shadow, drawn inside the border) sat 3px in from the open one. The marker is now an inset shadow too. */
 #faq .qa { border-left: 0; }
-#faq .qa[open] { box-shadow: inset 3px 0 0 var(--marigold), inset 0 0 0 1px var(--line-2), 0 14px 30px -22px rgba(120, 50, 10, .35); }
+#faq .qa[open] { box-shadow: inset 0 0 0 1px var(--line-2), 0 14px 30px -22px rgba(120, 50, 10, .35); }
 
 /* ---- One content container for every section (user 2026-11-10, screenshot: FAQ wider than the closing card on large screens). The global
    container is the section padding --px (content stops at 1800px and centres). Blocks that still carried their own cap now follow it:
@@ -1846,7 +1846,7 @@ main .cover > #dlPin + section { background: linear-gradient(90deg, rgba(255, 25
    a peach ground, a 4px brand bar on the left, a brand-tinted outline and lift, the question in brand orange, a dashed rule between
    question and answer, and the button flips to ink with the "x". */
 #faq .qa { transition: background-color .3s, box-shadow .3s; }
-#faq .qa[open] { background: #FFF4E8; box-shadow: inset 4px 0 0 var(--brand), inset 0 0 0 1px rgba(194, 65, 12, .32), 0 18px 34px -22px rgba(120, 50, 10, .45); }
+#faq .qa[open] { background: #FFF4E8; box-shadow: inset 0 0 0 1px rgba(194, 65, 12, .32), 0 18px 34px -22px rgba(120, 50, 10, .45); }
 #faq .qa[open] summary { color: var(--brand); }
 #faq .qa[open] summary img { background: var(--ink); }
 #faq .qa[open] p { margin-top: 2px; padding-top: 14px; border-top: 1px dashed rgba(194, 65, 12, .3); color: var(--ink); }
