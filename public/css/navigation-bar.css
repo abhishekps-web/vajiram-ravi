@@ -170,3 +170,9 @@ html[lang="hi"] .more__a { font-family: "Mukta", var(--btn-font); }
 /* one fill for the header (user 2026-11-16, "nested bg fill for the container"): the bar (.nav::after) is the only white; the logo +
    links group (.nav__pill) no longer brings back its own white pill inside it once the page scrolls */
 .nav .nav__pill, .nav.scrolled .nav__pill { background-color: transparent; }
+
+/* the logo at Kevin's build's size (user 2026-11-16): 38px tall (162px wide), the same at the top of the page (white logo) and once
+   scrolled (colour logo); the bar's padding gives a pixel each side so it still fits the 46px pill */
+.nav .nav__pill { padding-top: 4px; padding-bottom: 4px; }
+.nav__logo { height: 38px; }
+.nav__logo .lg, .nav:not(.scrolled) .nav__logo .lg, .nav.scrolled .nav__logo .lg { height: 38px; width: auto; }
