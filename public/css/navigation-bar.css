@@ -166,3 +166,7 @@ html[lang="hi"] .more__a { font-family: "Mukta", var(--btn-font); }
 .nav .talk { --btn-h: 44px; }
 /* on phones "Let's talk" is its arrow disc only (v49.css): at 44px tall it stays a circle, 44px wide (its side padding 8px, was 3px) */
 @media (max-width: 480px) { .nav .talk { padding: 0 8px; } }
+
+/* one fill for the header (user 2026-11-16, "nested bg fill for the container"): the bar (.nav::after) is the only white; the logo +
+   links group (.nav__pill) no longer brings back its own white pill inside it once the page scrolls */
+.nav .nav__pill, .nav.scrolled .nav__pill { background-color: transparent; }
