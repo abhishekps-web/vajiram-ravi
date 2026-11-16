@@ -14,12 +14,13 @@ export default function Hero() {
   return (
     <section className="dl dl--pin" id="dlPin" aria-labelledby="dlH">
       <div className="dl__frame">
-        {/* stacked cards (user 2026-11-16): the next three slides as cards behind the active one, their edges showing at its left and right
+        {/* stacked cards (user 2026-11-16, the Dribbble "Card stack UI interaction" shot): the next two slides as cards fanned out
+            behind the active one to its right
             (v49.css, end); page-motion.js moves the pictures along with the slides. Each looks exactly as that slide does at the
             front (user 2026-11-16): the same image files and crop, and the same scrim. Decorative (the arrows and indicators are the
             controls); a click on one still moves on that many slides. */}
         <div className="dl__deck" aria-hidden="true">
-          {[1, 2, 3].map(k => (
+          {[1, 2].map(k => (
             <div key={k} className="dl__deck-card" data-s={k}>
               {SLIDES.map((s, i) => (
                 <img
