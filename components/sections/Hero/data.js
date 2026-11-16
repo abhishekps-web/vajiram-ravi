@@ -30,3 +30,13 @@ export const TRENDING = [
     d: 'PowerUp Prelims Test Series 2027.', cta: 'Enroll now', href: '#contact', prog: 'PowerUp Prelims Test Series 2027',
     img: { src: `${CUT}/previous-year-papers.png`, alt: 'An examination question booklet', w: 640, h: 595 } },
 ];
+
+// The toppers slide (user 2026-11-16, "a banner type for the hero that showcase the toppers"): the fifth hero slide, a lineup of the
+// CSE 2025 top three (transparent cut-outs) on the right of the card, AIR 1 in the middle and tallest. Taken from the Toppers section's
+// own list (Toppers/ToppersSpread/data.js), so a rank holder is edited in one place; `order` is the lineup left to right.
+import { TOPPERS_2025 } from '../Toppers/ToppersSpread/data';
+const first = n => n.split(' ')[0];
+export const HERO_TOPPERS = [2, 1, 3].map(r => {
+  const t = TOPPERS_2025.find(x => x.rank === r);
+  return { rank: r, name: t.name, first: first(t.name), photo: t.photo };
+});

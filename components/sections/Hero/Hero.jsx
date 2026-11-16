@@ -1,5 +1,5 @@
 import Button from '@/components/ui/Button/Button';
-import { HERO_STATS } from './data';
+import { HERO_STATS, HERO_TOPPERS } from './data';
 import Trending from './Trending';
 
 // the results pill's line (Kevin's hero: the topper on show; here the CSE 2025 AIR 1)
@@ -39,6 +39,17 @@ export default function Hero() {
                   {...(i === 0 ? { fetchPriority: 'high' } : { loading: 'lazy' })}
                 />
               ))}
+              {/* the toppers slide (user 2026-11-16): the CSE 2025 top five, AIR 1 in the middle; styles at the end of v49.css */}
+              <div className="dl__tops">
+                <ul className="dl__tops-row">
+                  {HERO_TOPPERS.map((t, i) => (
+                    <li key={t.rank} className={t.rank === 1 ? 'is-first' : undefined} style={{ '--i': i }}>
+                      <img src={t.photo} alt="" width="768" height="768" loading="lazy" decoding="async" />
+                      <span className="dl__tops-tag"><b>AIR {t.rank}</b> {t.first}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
           <div id="heroNames" hidden aria-hidden="true" />
@@ -77,18 +88,11 @@ export default function Hero() {
             <Button variant="outline" onDark iconOnly size="sm" iconStart="arrow" label="Next slide" className="dl__arrow dl__arrow--next" />
           </div>
           <p className="dl__prog cdots" id="dlProg" role="group" aria-label="Hero slides">
-            <button type="button" aria-label="Slide 1">
-              <i />
-            </button>
-            <button type="button" aria-label="Slide 2">
-              <i />
-            </button>
-            <button type="button" aria-label="Slide 3">
-              <i />
-            </button>
-            <button type="button" aria-label="Slide 4">
-              <i />
-            </button>
+            {Array.from({ length: SLIDES.length + 1 }, (_, i) => (
+              <button key={i} type="button" aria-label={i === SLIDES.length ? `Slide ${i + 1}: CSE 2025 toppers` : `Slide ${i + 1}`}>
+                <i />
+              </button>
+            ))}
           </p>
         </div>
         {/* key numbers under the hero card (user 2026-11-16): data.js; hero-stats.js counts them up, the CSS is at the end of v49.css */}
