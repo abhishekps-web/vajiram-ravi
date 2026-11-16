@@ -2,9 +2,8 @@
 // Ported from the Soloman build (Downloads/solo/Vajiram-ravi, src/components/ui/CarouselControls.tsx), user 2026-11-13.
 
 import type { RefObject } from "react";
-import Icon from "@/components/sections/Faculties/ui/Icon";
+import Button from "@/components/ui/Button/Button";
 import { cx } from "@/components/sections/Faculties/lib/cx";
-import { pressRipple } from "@/components/sections/Faculties/lib/pressRipple";
 
 /*
  * Carousel arrows and dots (motion spec, "Carousel arrows + dots"), the same on every carousel of the page.
@@ -39,31 +38,22 @@ type CarouselArrowProps = {
   className?: string;
 };
 
-export function CarouselArrow({ direction, onClick, label, hidden = false, disabled = false, tone = "light", shape = "circle", size = 44, className }: CarouselArrowProps) {
+export function CarouselArrow({ direction, onClick, label, hidden = false, disabled = false, tone = "light", className }: CarouselArrowProps) {
+  // The site's own icon-only outline button (components/ui/Button), the same as the Batches arrows (user 2026-11-16: the
+  // arrows had their own style, unlike every other CTA). `shape` and `size` are no longer used: the button system sets them.
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      onPointerDown={disabled || hidden ? undefined : pressRipple}
+    <Button
+      variant="outline"
+      iconOnly
+      iconStart={direction === "prev" ? "arrow-left" : "arrow"}
+      label={label}
+      onDark={tone === "dark"}
       disabled={disabled}
-      aria-label={label}
+      onClick={onClick}
       aria-hidden={hidden || undefined}
       tabIndex={hidden ? -1 : undefined}
-      style={{ width: size, height: size }}
-      className={cx(
-        "relative isolate flex shrink-0 cursor-pointer items-center justify-center overflow-visible border [transition:background-color_var(--dur-fast)_var(--ease-out),color_var(--dur-fast)_var(--ease-out),border-color_var(--dur-fast)_var(--ease-out),opacity_var(--dur-fast)_var(--ease-out),scale_80ms_var(--ease-out)] active:scale-[.96]",
-        shape === "circle" ? "rounded-full" : "rounded-lg",
-        tone !== "dark" ? "border-ink/25 bg-cream/70 text-ink backdrop-blur-sm hover:border-ink hover:bg-ink hover:text-cream" : "border-cream/55 bg-[rgb(62_22_8/0.4)] text-cream backdrop-blur-sm hover:border-cream hover:bg-cream hover:text-ink",
-        hidden && "pointer-events-none opacity-0",
-        disabled && "cursor-default opacity-35",
-        disabled && (tone !== "dark" ? "hover:border-ink/25 hover:bg-cream/70 hover:text-ink" : "hover:border-cream/55 hover:bg-[rgb(62_22_8/0.4)] hover:text-cream"),
-        className,
-      )}
-    >
-      {/* The ripple is clipped to the button; the pulse ring sits outside it. */}
-      <span data-ripple aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden rounded-[inherit]" />
-      <Icon name={direction === "prev" ? "arrow-l" : "arrow-r"} className="relative" />
-    </button>
+      className={cx("carousel-arrow", hidden && "pointer-events-none opacity-0", className)}
+    />
   );
 }
 
