@@ -5,7 +5,7 @@
 //   <Button href="#contact" iconEnd="arrow">Talk to a counsellor</Button>
 //   <Button variant="secondary" onDark size="xl" href="#courses" iconEnd="arrow">Explore our courses</Button>
 //   <Button type="submit" fullWidth iconEnd="arrow" loading={busy} loadingLabel="Sending…">Book a free session</Button>
-//   <Button variant="secondary" iconOnly iconStart="close" label="Close" />
+//   <Button variant="outline" size="sm" iconOnly iconStart="close" label="Close" />   (every icon-only button: outline, sm)
 //
 // Renders <a> when `href` is set, otherwise <button type="button">. Static server component: behaviours change its state
 // in the browser with setButtonLoading / setButtonDisabled (./button-core.js).

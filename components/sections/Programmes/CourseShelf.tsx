@@ -5,7 +5,6 @@ import Button from "@/components/ui/Button/Button";
 import IndianLink from "@/components/sections/Programmes/ui/IndianLink";
 import { coursePageHref, programmeCategories, type Programme, type ProgrammeCategory } from "@/components/sections/Programmes/data/programmes";
 import { cx } from "@/components/sections/Programmes/lib/cx";
-import { pressRipple } from "@/components/sections/Programmes/lib/pressRipple";
 import { prefersReducedMotion } from "@/components/sections/Programmes/lib/motion";
 import CoverArt from "./CoverArt";
 import GeoArt from "./GeoArt";
@@ -727,23 +726,26 @@ function Book({ index, programme, hidden, out, open, away, style, onPick, onClos
 
         {/* A round close button at the open book's top right corner, for those who do not think to click away. */}
         {out && (
-          <button
-            type="button"
-            onClick={onClose}
-            onPointerDown={pressRipple}
-            aria-label={`Close ${programme.name}`}
-            tabIndex={open ? 0 : -1}
-            aria-hidden={!open || undefined}
+          // the site's icon-only Button (outline, sm; user 2026-11-16: every icon-only button looks the same), on a cream backing
+          // so it reads where it overhangs the book's corner
+          <span
             className={cx(
-              "absolute -top-5 -right-5 z-[130] flex size-10 cursor-pointer items-center justify-center rounded-full border border-ink/20 bg-cream/95 text-ink shadow-[0_6px_16px_-6px_rgb(43_18_6/0.45)] [transition:opacity_400ms_var(--ease-out),scale_400ms_var(--ease-out),background-color_var(--dur-fast)_var(--ease-out),color_var(--dur-fast)_var(--ease-out),border-color_var(--dur-fast)_var(--ease-out)] hover:border-ink hover:bg-ink hover:text-cream active:scale-[.94] [--press-ring:#2a1a12]",
+              "absolute -top-5 -right-5 z-[130] flex [transition:opacity_400ms_var(--ease-out),scale_400ms_var(--ease-out)]",
               open ? "scale-100 opacity-100 delay-300" : "pointer-events-none scale-75 opacity-0",
             )}
           >
-            <span data-ripple aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden rounded-full" />
-            <svg aria-hidden="true" viewBox="0 0 16 16" width={14} height={14} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" className="relative">
-              <path d="M4 4l8 8M12 4l-8 8" />
-            </svg>
-          </button>
+            <Button
+              variant="outline"
+              size="sm"
+              iconOnly
+              iconStart="close"
+              label={`Close ${programme.name}`}
+              onClick={onClose}
+              tabIndex={open ? 0 : -1}
+              aria-hidden={!open || undefined}
+              style={{ "--btn-bg": "rgb(255 250 243 / .95)" } as CSSProperties}
+            />
+          </span>
         )}
 
         {/* The inside of the back cover, under every page. */}

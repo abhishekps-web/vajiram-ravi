@@ -25,7 +25,7 @@ import Button from '@/components/ui/Button/Button';
 <Button variant="outline" size="sm" iconEnd="chevron" aria-expanded="false">Show all</Button>  // a <button>
 <Button variant="link" href="tel:+918062206330" iconEnd="arrow">Call us</Button>              // serif text link
 <Button type="submit" fullWidth iconEnd="arrow">Book a free session</Button>                  // form submit
-<Button variant="secondary" size="sm" iconOnly iconStart="close" label="Close" />             // icon button
+<Button variant="outline" size="sm" iconOnly iconStart="close" label="Close" />               // icon button
 <Button variant="fab" href="https://wa.me/…" iconStart={<svg …/>}>Chat on WhatsApp</Button>   // floating action
 ```
 
@@ -78,7 +78,7 @@ Values come from the existing buttons (audit, 2026-11-13); the only new colour i
 | **link** | Newsreader 600, brand text, arrow; hover: underline draws in, arrow slides 5px, text `--brand-d` | `#FFD48A` | View all batches, Free resources actions, Call us / Email us |
 | **destructive** | danger red `#B42318` pill; hover `#8F1D13` | white pill, red text | (available: delete / cancel) |
 | **fab** | raised 56px circle (52px on phones), one icon; the label slides out on hover / keyboard focus | | WhatsApp (green through tokens) |
-| **icon button** (`iconOnly`) | a circle the size of the button's height, any variant | | Faculty carousel arrows, dialog close |
+| **icon button** (`iconOnly`) | one look everywhere (user 2026-11-16): `variant="outline" size="sm"`, a 44px circle with a 16px icon; `onDark` on photos and dark grounds | | hero arrows, Batches arrows, Faculty carousel arrows, dialog close, the Programmes book's close |
 
 ## Sizes
 

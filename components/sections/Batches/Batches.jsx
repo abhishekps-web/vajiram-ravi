@@ -16,8 +16,8 @@ export default function Batches() {
         <div className="rail rail--batch">
           <div className="cards rail__track" id="price" tabIndex={0} role="region" aria-roledescription="carousel" aria-label="Upcoming batches" />
           <div className="rail__nav rv" style={{ "--d": ".24s" }}>
-            <Button variant="outline" iconOnly iconStart="arrow-left" label="Previous batches" className="cbtn cbtn--prev" />
-            <Button variant="outline" iconOnly iconStart="arrow" label="Next batches" className="cbtn cbtn--next" />
+            <Button variant="outline" size="sm" iconOnly iconStart="arrow-left" label="Previous batches" className="cbtn cbtn--prev" />
+            <Button variant="outline" size="sm" iconOnly iconStart="arrow" label="Next batches" className="cbtn cbtn--next" />
           </div>
         </div>
       </section>
