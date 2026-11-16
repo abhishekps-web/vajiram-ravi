@@ -6,8 +6,9 @@ export default function GeneralStudies() {
   return (
     <section className="gs" id="gs" aria-labelledby="gsH">
       <div className="prog__cuts" aria-hidden="true">
-        <img className="cut cut--l" src="/assets/img/photos/collage.png" alt="" decoding="async" />
-        <img className="cut cut--r" src="/assets/img/photos/collage.png" alt="" decoding="async" />
+        {/* one WebP (124 KB) drawn twice; below the fold, so lazy */}
+        <img className="cut cut--l" src="/assets/img/photos/collage.webp" alt="" width="1536" height="864" loading="lazy" decoding="async" />
+        <img className="cut cut--r" src="/assets/img/photos/collage.webp" alt="" width="1536" height="864" loading="lazy" decoding="async" />
       </div>
       <span className="kinari kinari--gs" aria-hidden="true" />
       <span className="pat pat--buta" aria-hidden="true" />

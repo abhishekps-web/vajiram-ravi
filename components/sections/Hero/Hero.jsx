@@ -1,4 +1,15 @@
 import Button from '@/components/ui/Button/Button';
+
+// Hero slides: WebP at three widths each (public/assets/img/hero/<name>-<width>.webp). The slides cover the hero
+// (object-fit: cover), so on a portrait phone the image is scaled to the hero's height and drawn about 2.5x the screen width.
+const HERO = '/assets/img/hero';
+const SIZES = '(max-width: 767px) 250vw, 100vw';
+const SLIDES = [
+  { name: 'hero-1', w: 1672, h: 941, widths: [768, 1200, 1672] },
+  { name: 'hero-prelims', w: 1672, h: 941, widths: [768, 1200, 1672] },
+  { name: 'hero-interview', w: 1536, h: 1024, widths: [768, 1200, 1536] },
+  { name: 'hero-result', w: 1672, h: 941, widths: [768, 1200, 1672] },
+];
 export default function Hero() {
   return (
     <section className="dl dl--pin" id="dlPin" aria-labelledby="dlH">
@@ -6,10 +17,21 @@ export default function Hero() {
         <div className="dl__stick">
           <div className="dl__bg" id="dlBg" aria-hidden="true">
             <div className="dl__slides" id="dlSlides">
-              <img className="on" src="/assets/img/hero/hero-1.png" alt="" width="1672" height="941" decoding="async" />
-              <img src="/assets/img/hero/hero-prelims.png" alt="" width="1672" height="941" decoding="async" loading="lazy" />
-              <img src="/assets/img/hero/hero-interview.png" alt="" width="1672" height="941" decoding="async" loading="lazy" />
-              <img src="/assets/img/hero/hero-result.png" alt="" width="1672" height="941" decoding="async" loading="lazy" />
+              {/* the first slide is the LCP image: loaded eagerly at high priority; the rest load lazily */}
+              {SLIDES.map((s, i) => (
+                <img
+                  key={s.name}
+                  className={i === 0 ? 'on' : undefined}
+                  src={`${HERO}/${s.name}-1200.webp`}
+                  srcSet={s.widths.map(w => `${HERO}/${s.name}-${w}.webp ${w}w`).join(', ')}
+                  sizes={SIZES}
+                  alt=""
+                  width={s.w}
+                  height={s.h}
+                  decoding="async"
+                  {...(i === 0 ? { fetchPriority: 'high' } : { loading: 'lazy' })}
+                />
+              ))}
             </div>
           </div>
           <div id="heroNames" hidden aria-hidden="true" />
