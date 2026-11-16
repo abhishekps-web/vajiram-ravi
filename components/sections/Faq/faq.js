@@ -3,5 +3,5 @@ import { $, esc, ico } from '@/lib/site';
 import { FAQS } from './data';
 
 export function renderFaq() {
-  $('#faqList').innerHTML = FAQS.map(([q, a], i) => `<details class="qa"${i ? '' : ' open'}><summary>${esc(q)}${ico('faq-plus.svg', 20)}</summary><p>${esc(a)}</p></details>`).join('');
+  $('#faqList').innerHTML = FAQS.map(([q, a], i) => `<details class="qa"${i ? '' : ' open'}><summary>${esc(q)}${ico('chev-white.svg', 20)}</summary><p>${esc(a)}</p></details>`).join('');
 }

@@ -2517,3 +2517,8 @@ html main #closing .cl__faces { flex: none; }
 @media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
   .dl__deck-card:hover { filter: brightness(1.25); }
 }
+
+/* FAQ toggle (user 2026-11-16): a chevron, down when closed and up when open, instead of plus / minus */
+#faq .qa[open] summary img { transform: rotate(180deg); }
+#faq .qa.is-closing summary img { transform: none; }
+#faq .qa:not([open]) summary:hover img { transform: translateY(2px); }
