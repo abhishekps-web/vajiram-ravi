@@ -2572,3 +2572,13 @@ footer.foot .foot__bot span:last-child { gap: 8px 20px; }
 #visit .cm__list .cm__item { padding-top: 12px; padding-bottom: 12px; }
 @media (max-width: 1000px) { #visit .cm__list { padding: 10px 20px; } }
 @media (max-width: 480px) { #visit .cm__list { padding: 6px 14px; } }
+
+/* Upcoming batches: the previous / next arrows placed as Faculty's (user 2026-11-16): either side of the row, level with the middle of
+   the tickets (the overlay spans the track's 18px / 34px padding, so its centre is the cards' centre), each centred in the side margin (the row is inset by --px; the overlay reaches out over it).
+   Phones keep them in a row under the tickets (Faculty's sit off-screen there and the row is swiped). */
+@media (min-width: 641px) {
+  #batches .rail--batch { position: relative; }
+  #batches .rail--batch > .rail__nav { position: absolute; inset: 18px calc(var(--px) * -1) 34px; z-index: 2; margin: 0; justify-content: space-between; align-items: center;
+    padding-inline: max(4px, calc((var(--px) - 48px) / 2)); pointer-events: none; }
+  #batches .rail--batch > .rail__nav .cbtn { pointer-events: auto; }
+}
