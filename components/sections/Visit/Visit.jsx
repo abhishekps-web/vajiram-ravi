@@ -37,7 +37,9 @@ export default function Visit() {
             </div>
           </div>
         </div>
-        <ul className="cm__list">
+        {/* three tiles (user 2026-11-13, after the wireframe): the photos as the large square on the left; on the right the campus
+            (address and map) over the call and email channels. v49.css, end */}
+        <ul className="cm__list cm__list--place">
           <li className="cm__item cm__item--chan" data-city="delhi">
             <div>
               <h3>Old Rajinder Nagar</h3>
@@ -48,6 +50,8 @@ export default function Visit() {
               <iframe src="https://www.google.com/maps?q=Vajiram+%26+Ravi,+1-B%2F7+Pusa+Road,+Old+Rajinder+Nagar,+New+Delhi+110060&z=16&output=embed" title="Map: Vajiram & Ravi, 1-B/7 Pusa Road, Old Rajinder Nagar, New Delhi" loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen />
             </div>
           </li>
+        </ul>
+        <ul className="cm__list cm__list--chan">
           <li className="cm__item cm__item--chan">
             <div>
               <h3 className="cm__tel">080-6220-6330</h3>

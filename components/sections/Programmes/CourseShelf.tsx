@@ -1,13 +1,12 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from "react";
 import Button from "@/components/ui/Button/Button";
 import IndianLink from "@/components/sections/Programmes/ui/IndianLink";
-import { programmeCategories, type Programme, type ProgrammeCategory } from "@/components/sections/Programmes/data/programmes";
+import { coursePageHref, programmeCategories, type Programme, type ProgrammeCategory } from "@/components/sections/Programmes/data/programmes";
 import { cx } from "@/components/sections/Programmes/lib/cx";
 import { pressRipple } from "@/components/sections/Programmes/lib/pressRipple";
 import { prefersReducedMotion } from "@/components/sections/Programmes/lib/motion";
-import { whenVisible } from "@/components/sections/Programmes/lib/reveal";
 import CoverArt from "./CoverArt";
 import GeoArt from "./GeoArt";
 import "./shelf.css";
@@ -18,12 +17,17 @@ import "./shelf.css";
  * little in from its front edge); and the open book, its pages PAGE in size with the spine at SPINE, which
  * needs OPEN_H of stage.
  */
-const BOOK = { w: 196, h: 260 };
+const BOOK = { w: 195, h: 260 };   // 3:4 (user 2026-11-13; was 196 x 260)
+/** Where "View course" rests on a closed book: its bottom edge, px above the book's foot (above the category). */
+const FOLLOW_BOTTOM = 45;
+/** The hovered book's pose and shadow: the Batches tickets' 3D hover (public/css/v49.css, .inv--ticket:hover), the same angles. */
+const HOVER_TILT = "perspective(1000px) translateY(-8px) rotateX(calc(var(--ty, 0) * -7deg)) rotateY(calc(var(--tx, 0) * 9deg))";
+const HOVER_SHADOW = "drop-shadow(calc(var(--tx, 0) * -14px) calc(24px - var(--ty, 0) * 10px) 18px rgb(60 25 5 / 0.32))";
 const GAP = 60;
 const ROW_H = 352;
 const BOOK_TOP = 30;
 const PLANK_TOP = BOOK_TOP + BOOK.h - 8;
-const PAGE = { w: 380, h: 504 };
+const PAGE = { w: 378, h: 504 };   // the open book's cover and pages, 3:4 too (was 380 x 504)
 const OPEN_H = 2 * ROW_H;
 
 /**
@@ -385,28 +389,43 @@ export default function CourseShelf({ programmes }: { programmes: Programme[] })
     return () => window.removeEventListener("keydown", onKey);
   });
 
-  // The entrance: the books arrive as a stack lying on the middle of the lowest plank, then are dealt off
-  // it, the top one first, into their places, the upper plank first. Held until the shelf is in view.
+  // The entrance (user 2026-11-13): the testimonials' scroll reveal, exactly (Stories: stories.css @keyframes st-deal and the
+  // postcards' animation): each book is dealt onto the shelf, rising 110px from 90% with a tilt of +-9deg (alternating, as the
+  // postcards'), its opacity full by 40%, and settles with the same spring, cubic-bezier(.34, 1.56, .64, 1), in 0.9s; the first
+  // at 0.26s, then one every 0.13s. As in the testimonials it starts once a quarter of the shelf is in view (theirs: threshold
+  // .25 on the section). Played on each book's [data-cover] (Web Animations, the per-keyframe easing as CSS applies it), so the
+  // hover tilt on the book and the open / close motions are untouched. Nothing plays with reduced motion.
   useEffect(() => {
     const root = rootRef.current;
     if (!root || prefersReducedMotion() || typeof root.animate !== "function") return;
-    const box = root.getBoundingClientRect();
-    if (box.top < window.innerHeight * 0.85 && box.bottom > 0) return;
-
-    const books = [...root.querySelectorAll<HTMLElement>("[data-book]")];
-    const n = books.length;
-    const foot = stackFoot(n, g);
-    const animations = books.flatMap((book, k) => {
-      const level = n - 1 - k;
-      const wait = (n - 1) * PILE_DROP_MS + PILE_IN_MS + k * DEAL_GAP_MS;
-      return moveBook(book, dealSteps(spot(k, n, g), foot, level, 0.92, level * PILE_DROP_MS, wait, { x: 0, y: -40 }), { z: 1 + level });
-    });
+    const covers = [...root.querySelectorAll<HTMLElement>("[data-book]")]
+      .filter((book) => book.getAttribute("aria-hidden") !== "true")
+      .map((book) => book.querySelector<HTMLElement>("[data-cover]"))
+      .filter((cover): cover is HTMLElement => !!cover);
+    const DEAL_EASE = "cubic-bezier(.34, 1.56, .64, 1)";
+    const animations = covers.map((cover, n) =>
+      cover.animate(
+        [
+          { offset: 0, opacity: 0, transform: `translateY(110px) rotate(${n % 2 ? -9 : 9}deg) scale(.9)`, easing: DEAL_EASE },
+          { offset: 0.4, opacity: 1, easing: DEAL_EASE },
+          { offset: 1, opacity: 1, transform: "none" },
+        ],
+        { duration: 900, delay: 260 + n * 130, fill: "both" },
+      ),
+    );
     animations.forEach((animation) => animation.pause());
     stacking.current = animations;
-    // Well in view first (over half the shelf, or most of the screen), so the stacking plays where the visitor is looking.
-    const cancel = whenVisible(root, 0.55, () => animations.forEach((animation) => animation.play()));
+    let seen: IntersectionObserver | null = null;
+    if ("IntersectionObserver" in window) {
+      seen = new IntersectionObserver((entries) => {
+        if (!entries[0].isIntersecting) return;
+        animations.forEach((animation) => animation.play());
+        seen?.disconnect();
+      }, { threshold: 0.25 });
+      seen.observe(root);
+    } else animations.forEach((animation) => animation.play());
     return () => {
-      cancel();
+      seen?.disconnect();
       animations.forEach((animation) => animation.cancel());
     };
   }, [cols]);   // re-armed when the screen's books-per-plank is known (it starts at four, then follows the screen)
@@ -449,15 +468,20 @@ export default function CourseShelf({ programmes }: { programmes: Programme[] })
       ...size,
       left: x,
       top: y,
-      transform: hovered === i && !away ? "translateY(-14px) rotate(-1deg)" : "none",
-      filter: away ? "blur(14px)" : "none",
+      // hover (user 2026-11-13): the Batches tickets' 3D tilt (v49.css .inv--ticket:hover): the book tips toward the pointer
+      // (--tx / --ty, set by Book), lifts 8px, and its shadow swings opposite the tilt
+      transform: hovered === i && !away ? HOVER_TILT : "none",
+      filter: away ? "blur(14px)" : hovered === i ? HOVER_SHADOW : "none",
       opacity: away ? 0.25 : 1,
       transition: shuffle?.arriving.includes(i)
         ? // Arriving: straight to its place; its motion stands it up.
           "none"
         : shuffle
             ? `left ${SLIDE_MS}ms ${EASE}, top ${SLIDE_MS}ms ${EASE}, width ${MOVE_MS}ms ${EASE}, height ${MOVE_MS}ms ${EASE}, transform 320ms ${EASE}, filter 700ms ${EASE}, opacity 700ms ${EASE}`
-            : `left ${MOVE_MS}ms ${EASE}, top ${MOVE_MS}ms ${EASE}, width ${MOVE_MS}ms ${EASE}, height ${MOVE_MS}ms ${EASE}, transform 320ms ${EASE}, filter 700ms ${EASE}, opacity 700ms ${EASE}`,
+            : hovered === i && !away
+              ? // while hovered the tilt follows the pointer closely, as the tickets' does (.14s linear)
+                `left ${MOVE_MS}ms ${EASE}, top ${MOVE_MS}ms ${EASE}, width ${MOVE_MS}ms ${EASE}, height ${MOVE_MS}ms ${EASE}, transform 140ms linear, filter 200ms linear, opacity 700ms ${EASE}`
+              : `left ${MOVE_MS}ms ${EASE}, top ${MOVE_MS}ms ${EASE}, width ${MOVE_MS}ms ${EASE}, height ${MOVE_MS}ms ${EASE}, transform 500ms ${EASE}, filter 400ms ${EASE}, opacity 700ms ${EASE}`,
     };
   };
 
@@ -617,6 +641,34 @@ function Book({ index, programme, hidden, out, open, away, style, onPick, onClos
   const turn = (by: number) => setTurned((t) => Math.min(last, Math.max(0, t + by)));
   const { deep } = programme.cover;
 
+  // "View course" shows only while a closed book is hovered, under the cursor, and follows it (user 2026-11-13); keyboard focus
+  // shows it at its place above the category. Fine pointers with motion only; the stage may be zoomed, so the offset is in its own px.
+  const followRef = useRef<HTMLSpanElement>(null);
+  const entered = useRef(false);
+  const follow = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const el = followRef.current;
+    if (!el || out || event.pointerType !== "mouse" || prefersReducedMotion()) return;
+    const box = event.currentTarget.getBoundingClientRect();
+    const k = box.width / BOOK.w || 1;
+    const rest = { x: BOOK.w / 2, y: BOOK.h - FOLLOW_BOTTOM - 18 };
+    const x = (event.clientX - box.left) / k - rest.x, y = (event.clientY - box.top) / k - rest.y;
+    // on entering, it appears under the pointer (no slide in from its resting place); after that it eases after it
+    if (!entered.current) { el.style.transition = "none"; el.style.translate = `${x.toFixed(1)}px ${y.toFixed(1)}px`; void el.offsetWidth; el.style.transition = ""; entered.current = true; return; }
+    el.style.translate = `${x.toFixed(1)}px ${y.toFixed(1)}px`;
+  };
+  // the 3D hover's inputs, as the tickets' (Batches/batches.js): where the pointer is over the book, -0.5..0.5, and the glare's spot
+  const tilt = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (out || event.pointerType !== "mouse" || prefersReducedMotion()) return;
+    const el = event.currentTarget, r = el.getBoundingClientRect();
+    const px = (event.clientX - r.left) / r.width, py = (event.clientY - r.top) / r.height;
+    el.style.setProperty("--tx", (px - 0.5).toFixed(3));
+    el.style.setProperty("--ty", (py - 0.5).toFixed(3));
+    el.style.setProperty("--gx", `${(px * 100).toFixed(0)}%`);
+    el.style.setProperty("--gy", `${(py * 100).toFixed(0)}%`);
+  };
+  const untilt = (el: HTMLElement) => { el.style.setProperty("--tx", "0"); el.style.setProperty("--ty", "0"); };
+  const unfollow = () => { entered.current = false; if (followRef.current) followRef.current.style.translate = ""; };
+
   useEffect(() => {
     if (!open) {
       setTurned(0);
@@ -638,7 +690,8 @@ function Book({ index, programme, hidden, out, open, away, style, onPick, onClos
       className="group/book absolute"
       style={style}
       onMouseEnter={() => onHover(true)}
-      onMouseLeave={() => onHover(false)}
+      onMouseLeave={(event) => { onHover(false); unfollow(); untilt(event.currentTarget); }}
+      onPointerMove={(event) => { tilt(event); follow(event); }}
     >
       <div data-cover className="absolute inset-0 origin-bottom [perspective:2200px]">
         {/* The shadow it casts on the wall while lifted off a plank or a stack (only in the entrance). */}
@@ -769,6 +822,21 @@ function Book({ index, programme, hidden, out, open, away, style, onPick, onClos
           </span>
         </button>
 
+        {/* "View course" on the closed book (the cover's IA, user 2026-11-13): the site's design-system button, shown only while
+            the book is hovered (or the button has keyboard focus), following the cursor (Book: follow). It links to the programme's
+            course detail page (coursePageHref, a placeholder for now; user 2026-11-13); a click on the cover still opens the book. */}
+        {!out && (
+          <span
+            ref={followRef}
+            className="pointer-events-none absolute inset-x-0 z-[101] flex justify-center scale-75 opacity-0 [transition:translate_450ms_cubic-bezier(.22,1,.36,1),opacity_250ms_var(--ease-out),scale_350ms_cubic-bezier(.22,1,.36,1)] group-hover/book:scale-100 group-hover/book:opacity-100 group-hover/book:[&>*]:pointer-events-auto has-[:focus-visible]:scale-100 has-[:focus-visible]:opacity-100 has-[:focus-visible]:[&>*]:pointer-events-auto motion-reduce:transition-none"
+            style={{ bottom: FOLLOW_BOTTOM }}
+          >
+            <Button size="xs" iconEnd="arrow" href={coursePageHref(programme)} ariaLabel={`View course: ${programme.name}`}>
+              View course
+            </Button>
+          </span>
+        )}
+
         {/* Under the open spread: previous and next, and where you are. */}
         {out && (
           <div
@@ -854,15 +922,10 @@ function CoverFront({ programme, large }: { programme: Programme; large: boolean
       </span>
 
       <span className={cx("absolute flex flex-col items-center", large ? "px-6 pt-7 pb-6" : "px-2.5 pt-3.5 pb-3")} style={frame}>
+        {/* The cover's IA (user 2026-11-13): name, foil rule, emblem, "View course", category. The "Vajiram & Ravi" line that
+            repeated on every cover was removed (user 2026-11-13); the name now opens the cover. */}
         <span
-          aria-hidden="true"
-          className={cx("tracking-[0.04em]", large ? "text-[13px]/[16px]" : "text-[12px]/[15px]")}
-          style={{ color: FOIL, opacity: 0.88 }}
-        >
-          Vajiram &amp; Ravi
-        </span>
-        <span
-          className={cx("block font-heading font-medium text-balance text-[#ffe3b0]", large ? "mt-5 text-[34px]/[1.1]" : "mt-2.5 text-[17px]/[1.12]")}
+          className={cx("block font-medium text-balance text-[#ffe3b0] [font-family:Newsreader,Georgia,serif]", large ? "mt-2 text-[36px]/[1.08]" : "mt-1 text-[20px]/[1.1]")}
         >
           {programme.name}
         </span>
@@ -872,17 +935,15 @@ function CoverFront({ programme, large }: { programme: Programme; large: boolean
           <span className={cx("rotate-45 bg-current", large ? "size-1.5" : "size-1")} />
           <span className={cx("h-px bg-current opacity-70", large ? "w-10" : "w-5")} />
         </span>
-        <span aria-hidden="true" className="flex flex-1 items-center justify-center">
+        <span aria-hidden="true" className="flex min-h-0 flex-1 items-center justify-center">
           <CoverArt emblem={emblem} size={large ? 128 : 66} />
         </span>
-        {/* The foot: the category and the course count; on hover, "Open the book". */}
-        <span className={cx("relative grid tracking-[0.02em] whitespace-nowrap", large ? "text-[12px]/[16px]" : "text-[12px]/[15px]")} style={{ color: FOIL }}>
-          <span className="col-start-1 row-start-1 [transition:opacity_300ms_var(--ease-out)] group-hover/book:opacity-0">
-            {programme.category} · {programme.count} courses
-          </span>
-          <span aria-hidden="true" className="col-start-1 row-start-1 text-[#ffe3b0] opacity-0 [transition:opacity_300ms_var(--ease-out)] group-hover/book:opacity-100">
-            Open the book
-          </span>
+        {/* The foot: the category. */}
+        <span
+          className={cx("block font-semibold tracking-[0.18em] whitespace-nowrap uppercase", large ? "text-[12px]/[16px]" : "mt-2.5 text-[10px]/[13px]")}
+          style={{ color: FOIL }}
+        >
+          {programme.category}
         </span>
       </span>
 
@@ -894,6 +955,12 @@ function CoverFront({ programme, large }: { programme: Programme; large: boolean
         aria-hidden="true"
         className="lp-glint pointer-events-none absolute inset-y-0 -left-[60%] z-10 w-[45%] bg-[linear-gradient(90deg,transparent,rgb(255_226_160/0.3)_50%,transparent)] mix-blend-screen"
         style={{ animationDelay: `${-glintOffset(programme.name)}s` }}
+      />
+      {/* The glare of the 3D hover (as the Batches tickets'): a soft light at the pointer (--gx / --gy, set by Book). */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-10 opacity-0 mix-blend-soft-light [transition:opacity_300ms] group-hover/book:opacity-100 motion-reduce:hidden"
+        style={{ background: "radial-gradient(circle at var(--gx, 50%) var(--gy, 30%), rgb(255 255 255 / 0.6), rgb(255 255 255 / 0.14) 34%, transparent 62%)" }}
       />
       {/* The shine: a band of light that sweeps across the cover on hover. */}
       <span

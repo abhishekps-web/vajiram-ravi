@@ -22,7 +22,9 @@ export default function Programmes() {
     <section id="courses" aria-labelledby="programmes-h" className="prog relative overflow-clip bg-cream">
       {/* soloboy's text and scroll motion (data-zoom, data-split, data-fade, data-drift …), held to this section */}
       <TextMotion rootId="courses" />
-      <div className="prog__canvas relative mx-auto flex w-canvas flex-col items-start px-20 pt-[90px]">
+      {/* top padding: --sec-y less the hero frame's 20px bottom gutter, so the hero card's edge -> this eyebrow is --sec-y, the
+          site's section spacing (user 2026-11-13) */}
+      <div className="prog__canvas relative mx-auto flex w-canvas flex-col items-start px-20 pt-[calc(var(--sec-y)-20px)]">
         {/* The course shelf: its heading, then the filter and the books on their planks (CourseShelf). */}
         <div className="relative w-full">
           {/* the section's heading (the flagship card and the "Find the right UPSC programme" heading above it were removed, user 2026-11-13) */}
@@ -31,16 +33,13 @@ export default function Programmes() {
             {/* the previous website's heading (user 2026-11-13) */}
             Programmes for every stage of UPSC.
           </h2>
-          {/* the previous website's body text (user 2026-11-13) */}
-          <p className="prog__intro intro rv" style={{ "--d": ".16s" } as CSSProperties}>
-            Choose the stage you&apos;re preparing for, then the programme. Every programme runs in the classroom and LIVE-Online.
-          </p>
-          <div className="mt-[40px]">
+          {/* no intro line under the heading (user 2026-11-13: removed) */}
+          <div className="mt-[var(--hd-gap)]">
             <CourseShelf programmes={programmes} />
           </div>
         </div>
 
-        <div className="relative w-full pt-14 pb-24">
+        <div className="relative w-full pt-14 pb-[var(--sec-y)]">
           {/*
             The client's closing line, as a card under the shelf: a counsellor's headset in
             a burnt disc, the question and the line, then the phone number and the button to the counselling form.

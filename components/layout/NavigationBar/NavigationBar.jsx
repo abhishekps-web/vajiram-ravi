@@ -22,14 +22,28 @@ export default function NavigationBar() {
               <button className="nav__a" id="exploreBtn" type="button" aria-expanded="false" aria-controls="mega">All courses</button>
               <div className="mega" id="mega" />
             </div>
-            <a className="nav__a" href="#toppers">Toppers</a>
+            <a className="nav__a" href="#toppers" data-more="toppers">Toppers</a>
             <div className="explore explore--sm" id="studyNav">
               <button className="nav__a" id="studyBtn" type="button" aria-expanded="false" aria-controls="megaSm">Study materials</button>
               <div className="mega mega--sm" id="megaSm" />
             </div>
-            <a className="nav__a" href="#gs">UPSC exam</a>
-            <a className="nav__a" href="#batches">Upcoming batches</a>
-            <a className="nav__a" href="#faq">FAQs</a>
+            <a className="nav__a" href="#gs" data-more="gs">UPSC exam</a>
+            <a className="nav__a" href="#batches" data-more="batches">Upcoming batches</a>
+            <a className="nav__a" href="#faq" data-more="faq">FAQs</a>
+            {/* "More" (user 2026-11-13): where the links do not all fit beside the language switch and "Let's talk", the last ones
+                move in here, FAQs first (initNavMore, nav-menus.js); each has its twin below, shown only while its bar link is out */}
+            <div className="nav__more" id="navMore" hidden>
+              <button className="nav__a nav__more-b" id="moreBtn" type="button" aria-expanded="false" aria-controls="moreMenu" aria-haspopup="true">
+                <span className="nav__more-t">More</span>
+                <svg className="nav__more-ic" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M4 6l4 4 4-4" /></svg>
+              </button>
+              <ul className="more" id="moreMenu">
+                <li data-more="toppers" hidden><a className="more__a" href="#toppers">Toppers</a></li>
+                <li data-more="gs" hidden><a className="more__a" href="#gs">UPSC exam</a></li>
+                <li data-more="batches" hidden><a className="more__a" href="#batches">Upcoming batches</a></li>
+                <li data-more="faq" hidden><a className="more__a" href="#faq">FAQs</a></li>
+              </ul>
+            </div>
           </nav>
           <button className="nav__burger" id="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="drawer">
             <span />

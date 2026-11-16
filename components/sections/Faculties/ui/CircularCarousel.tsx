@@ -44,11 +44,14 @@ import { whenVisible } from "@/components/sections/Faculties/lib/reveal";
 const STRIPS = 8;
 /** The ring holds at least this many cards; fewer items are repeated round it. */
 const MIN_CARDS = 10;
-/** Camera tilt, degrees: negative looks down onto the ring. */
-const TILT = -6;
+/**
+ * Camera tilt, degrees: negative looks down onto the ring. 0 (user 2026-11-13: a straight, front-facing view): the ring is seen
+ * level, at eye height, so it shows its arc as before but with no tilt; it was -6.
+ */
+const TILT = 0;
 const PERSPECTIVE = 2400;
-/** How far the camera leans toward the pointer, degrees. */
-const LEAN = 3.5;
+/** How far the camera leans toward the pointer, degrees: none (user 2026-11-13, no tilt); it was 3.5. */
+const LEAN = 0;
 /** Spring stiffness (rad/s) of a move made by hand, of the autoplay and of the entrance. */
 const SNAP_HAND = 9;
 const SNAP_AUTO = 6.5;
@@ -81,6 +84,8 @@ type CircularCarouselProps<T> = {
   href?: (item: T) => string | null;
   /** The slide's content for assistive technology (visually hidden): the card itself is only a picture. */
   renderSlide: (item: T) => ReactNode;
+  /** A name plate on the card itself (user 2026-11-13): the title and a line under it, at the card's foot. Visual only. */
+  cardLabel?: (item: T) => { title: string; sub?: string };
   /** Shown under the ring for the item at the front, cross-fading as it changes. Visual only. */
   renderCaption?: (item: T, index: number) => ReactNode;
   /** A card, canvas px. */
@@ -128,6 +133,7 @@ export default function CircularCarousel<T>({
   href,
   renderSlide,
   renderCaption,
+  cardLabel,
   width,
   height,
   gap = 32,
@@ -559,11 +565,21 @@ export default function CircularCarousel<T>({
                           style={{
                             borderRadius: round(edge),
                             backgroundImage: `url("${src}")`,
-                            backgroundSize: `${width}px ${height}px`,
-                            backgroundPosition: `${-strip.offset}px 0`,
+                            // the picture at the card's width and its own height (never stretched to the card's ratio), cropped
+                            // top and bottom around a point 30% down so the face stays in frame
+                            backgroundSize: `${width}px auto`,
+                            backgroundPosition: `${-strip.offset}px 30%`,
                             backgroundColor: backColor,
                           }}
                         >
+                          {/* the name plate's shade, on every strip so it follows the bend; only on the active card (user 2026-11-13),
+                              fading in as a card comes to the front, a little deeper on hover / focus */}
+                          {cardLabel && (
+                            <span
+                              className={cx("absolute inset-0 [transition:opacity_400ms_var(--ease-out)]", isFront ? "opacity-80 group-hover/cc:opacity-100 group-focus-within/cc:opacity-100" : "opacity-0")}
+                              style={{ backgroundImage: "linear-gradient(180deg, transparent 52%, rgb(30 14 6 / 0.55) 76%, rgb(30 14 6 / 0.88) 100%)", backgroundSize: `${width}px ${height}px`, backgroundPosition: `${-strip.offset}px 0` }}
+                            />
+                          )}
                           <span className="absolute inset-0" style={{ background: fadeColor, opacity: "calc(var(--cc-depth, 0) * 0.9)" }} />
                         </span>
                       </span>
@@ -571,7 +587,27 @@ export default function CircularCarousel<T>({
                   );
                 });
                 const cardStyle: CSSProperties = { transform: `rotateY(${(slot * step).toFixed(3)}deg) translateZ(${radius.toFixed(2)}px)` };
-                const cardClass = "group/cc absolute top-0 left-0 size-0 [transform-style:preserve-3d]";
+                // hover / keyboard focus (user 2026-11-13): the card lifts 10px (the `translate` property, so the ring's transform is untouched)
+                const cardClass = "group/cc absolute top-0 left-0 size-0 [transform-style:preserve-3d] [translate:0_0] [transition:translate_450ms_var(--ease-out)] hover:[translate:0_-10px] focus-within:[translate:0_-10px] motion-reduce:transition-none";
+                const label = cardLabel?.(item);
+                // the name plate: name and position at the card's foot, on the card's face (a hair in front of the strips), never
+                // seen from behind. Only the active card shows it (user 2026-11-13: "only the active person needed the details"):
+                // it fades and rises in as a card comes to the front and out as it leaves
+                const plate = label ? (
+                  <span
+                    aria-hidden="true"
+                    className={cx(
+                      "pointer-events-none absolute [backface-visibility:hidden] [transition:opacity_350ms_var(--ease-out),translate_450ms_var(--ease-out)] motion-reduce:transition-none",
+                      isFront ? "[translate:0_0] opacity-100" : "[translate:0_8px] opacity-0",
+                    )}
+                    style={{ left: -width / 2, top: -height / 2, width, height, transform: "translateZ(2px)" }}
+                  >
+                    <span className="absolute inset-x-0 bottom-0 flex flex-col gap-0.5 px-4 pb-4 text-left">
+                      <span className="cc-plate__name">{label.title}</span>
+                      {label.sub && <span className="cc-plate__sub">{label.sub}</span>}
+                    </span>
+                  </span>
+                ) : null;
                 return (
                   <div
                     key={slot}
@@ -594,11 +630,13 @@ export default function CircularCarousel<T>({
                     {link !== null ? (
                       <a href={link} draggable={false} tabIndex={copy ? -1 : undefined} className="absolute top-0 left-0 size-0 [transform-style:preserve-3d]">
                         {faces}
+                        {plate}
                         <div className="sr-only">{renderSlide(item)}</div>
                       </a>
                     ) : (
                       <>
                         {faces}
+                        {plate}
                         {!copy && <div className="sr-only">{renderSlide(item)}</div>}
                       </>
                     )}

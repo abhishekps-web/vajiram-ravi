@@ -71,6 +71,11 @@ export default function Hero() {
             </div>
           </div>
           <Button onDark size="xl" className="dl__cta" id="dlCta" href="#courses" iconEnd="arrow">Explore our courses</Button>
+          {/* previous / next (user 2026-11-13): the site's icon buttons, at the card's bottom right; page-motion.js moves the slides */}
+          <div className="dl__arrows" role="group" aria-label="Change slide">
+            <Button onDark iconOnly size="sm" iconStart="arrow-left" label="Previous slide" className="dl__arrow dl__arrow--prev" />
+            <Button onDark iconOnly size="sm" iconStart="arrow" label="Next slide" className="dl__arrow dl__arrow--next" />
+          </div>
           <p className="dl__prog" id="dlProg" role="group" aria-label="Hero slides">
             <button type="button" aria-label="Slide 1">
               <i />
@@ -85,10 +90,6 @@ export default function Hero() {
               <i />
             </button>
           </p>
-          <a className="dl__scroll" href="#toppers" aria-label="Scroll down">
-            <span>Scroll</span>
-            <i aria-hidden="true" />
-          </a>
         </div>
       </div>
     </section>

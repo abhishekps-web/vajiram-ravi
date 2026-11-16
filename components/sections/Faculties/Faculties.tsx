@@ -28,7 +28,7 @@ export default function Faculties() {
         </h2>
         <p className="intro rv" style={{ "--d": ".2s" } as CSSProperties}>{lead}</p>
       </div>
-      <div className="mt-14">
+      <div className="mt-[var(--hd-gap)]">
         <div data-rise>
           <EducatorFlow educators={educators} />
         </div>

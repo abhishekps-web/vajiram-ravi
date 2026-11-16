@@ -4,10 +4,10 @@ export default function init() {
   const sw = document.getElementById('langSw'); if (!sw) return;
   const HI = {
     'All courses': 'सभी कोर्स', 'Toppers': 'टॉपर्स', 'Study materials': 'अध्ययन सामग्री', 'Current affairs': 'करंट अफेयर्स',
-    'UPSC exam': 'UPSC परीक्षा', 'Upcoming batches': 'आगामी बैच', 'FAQs': 'सामान्य प्रश्न', 'Contact us': 'संपर्क करें', "Let's talk": 'बात करें'
+    'UPSC exam': 'UPSC परीक्षा', 'Upcoming batches': 'आगामी बैच', 'FAQs': 'सामान्य प्रश्न', 'Contact us': 'संपर्क करें', "Let's talk": 'बात करें', 'More': 'और'
   };
   const KEY = 'vr-lang';
-  const targets = () => [...document.querySelectorAll('.nav__links .nav__a, #drawer a, .nav .talk .btn__t')];
+  const targets = () => [...document.querySelectorAll('.nav__links .nav__a:not(.nav__more-b), .nav__more-t, .more__a, #drawer a, .nav .talk .btn__t')];
   targets().forEach(el => { if (!el.dataset.en) el.dataset.en = el.textContent.trim(); });
   const btns = [...sw.querySelectorAll('.lang__b')];
   const apply = (lang, animate) => {

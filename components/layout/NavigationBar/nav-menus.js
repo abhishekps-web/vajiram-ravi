@@ -31,6 +31,7 @@ const navMega = (wrap, btn) => {
 
 export function initNavMenus() {
   drawer = $('#drawer'); burger = $('#burger');
+  if (!drawer || !burger) return;   // a page without the header (the 404)
   burger.addEventListener('click', () => setDrawer(drawer.hidden));
   $$('a', drawer).forEach(a => a.addEventListener('click', () => setDrawer(false)));
   document.body.insertAdjacentHTML('beforeend', '<div class="mega-scrim" aria-hidden="true"></div>');
@@ -70,11 +71,71 @@ export function initNavMenus() {
   addEventListener('keydown', e => { if (e.key === 'Escape') { setMega(false); setDrawer(false); } });   // setMega(false) closes every menu
 }
 
-// the bar takes its solid "scrolled" style once the page leaves the top
+// the bar takes its solid "scrolled" style once the page leaves the top, and (user 2026-11-13) hides while the page scrolls down and
+// comes back as soon as it scrolls up (.nav--away, public/css/navigation-bar.css). It slides out of view on its own layer (a
+// transform on the fixed bar), so nothing on the page moves. It always shows near the top of the page, while a menu or the drawer
+// is open, and while focus is inside it; a few px of travel in one direction (TRAVEL) are needed first, so jitter does not flicker it.
 export function initNavScrolled() {
-  let navTick = false;
-  addEventListener('scroll', () => {
-    if (!navTick) { navTick = true; requestAnimationFrame(() => { navTick = false; $('#nav').classList.toggle('scrolled', scrollY > 20); }); }
-  }, { passive: true });
-  $('#nav').classList.toggle('scrolled', scrollY > 20);
+  const nav = $('#nav'); if (!nav) return;
+  const TRAVEL = 10, TOP = 120;
+  let navTick = false, lastY = scrollY, run = 0;
+  const update = () => {
+    navTick = false;
+    const y = Math.max(0, scrollY), dy = y - lastY; lastY = y;
+    nav.classList.toggle('scrolled', y > 20);
+    const hold = y < TOP || $('#nav [aria-expanded="true"]') || (drawer && !drawer.hidden) || nav.contains(document.activeElement);
+    if (hold) { run = 0; nav.classList.remove('nav--away'); return; }
+    if (!dy) return;
+    run = Math.sign(dy) === Math.sign(run) ? run + dy : dy;   // travel in the current direction
+    if (run > TRAVEL) nav.classList.add('nav--away');
+    else if (run < -TRAVEL) nav.classList.remove('nav--away');
+  };
+  addEventListener('scroll', () => { if (!navTick) { navTick = true; requestAnimationFrame(update); } }, { passive: true });
+  nav.addEventListener('focusin', () => nav.classList.remove('nav--away'));   // tabbing into the bar brings it back
+  update();
+}
+
+// "More" (user 2026-11-13): a priority+ bar. Wherever the links show (1024px and up), the bar keeps at least MIN px between its last
+// link and the language switch / "Let's talk"; when they would come closer, the links move into the More menu one by one from the
+// right (ORDER). Each has a twin in the menu (NavigationBar.jsx) that shows only while it is out, so nothing in the DOM moves; the
+// two mega-menu buttons always stay. Re-measured on resize, when the fonts load and when the language changes (Hindi labels are
+// longer). The menu opens on click, closes on a click outside, Escape, a choice, or when a mega menu opens.
+export function initNavMore() {
+  const wrap = $('#navMore'), btn = $('#moreBtn'), menu = $('#moreMenu'), links = $('.nav__links'), end = $('#nav .nav__end');
+  if (!wrap || !btn || !menu || !links || !end) return;
+  const ORDER = ['faq', 'batches', 'gs', 'toppers'], MIN = 40;
+  const barLink = k => links.querySelector(`.nav__a[data-more="${k}"]`), twin = k => menu.querySelector(`[data-more="${k}"]`);
+  const isOpen = () => wrap.classList.contains('is-open');
+  const setOpen = open => {
+    wrap.classList.toggle('is-open', open); btn.setAttribute('aria-expanded', open);
+    if (open) setMega(false);
+  };
+  const free = () => {
+    const kids = [...links.children].filter(e => !e.hidden && e.getClientRects().length && getComputedStyle(e).display !== 'none');
+    const right = Math.max(...kids.map(e => e.getBoundingClientRect().right));
+    return end.getBoundingClientRect().left - right;
+  };
+  const fit = () => {
+    ORDER.forEach(k => { barLink(k)?.classList.remove('is-over'); const t = twin(k); if (t) t.hidden = true; });
+    wrap.hidden = true;
+    if (getComputedStyle(links).display !== 'none') {
+      for (const k of ORDER) {
+        if (free() >= MIN) break;
+        barLink(k)?.classList.add('is-over'); const t = twin(k); if (t) t.hidden = false; wrap.hidden = false;
+      }
+    }
+    if (wrap.hidden && isOpen()) setOpen(false);
+  };
+  let tick = 0;
+  const refit = () => { cancelAnimationFrame(tick); tick = requestAnimationFrame(fit); };
+  btn.addEventListener('click', e => { e.stopPropagation(); setOpen(!isOpen()); });
+  menu.addEventListener('click', e => { if (e.target.closest('a')) setOpen(false); });
+  document.addEventListener('click', e => { if (isOpen() && !wrap.contains(e.target)) setOpen(false); });
+  addEventListener('keydown', e => { if (e.key === 'Escape' && isOpen()) { setOpen(false); btn.focus(); } });
+  wrap.addEventListener('focusout', e => { if (isOpen() && !wrap.contains(e.relatedTarget)) setOpen(false); });
+  ['#exploreBtn', '#studyBtn'].forEach(s => $(s)?.addEventListener('click', () => setOpen(false)));
+  addEventListener('resize', refit);
+  document.addEventListener('langchange', refit);
+  document.fonts?.ready.then(refit);
+  fit();
 }

@@ -28,14 +28,17 @@ export default function EducatorFlow({ educators }: { educators: Educator[] }) {
       href={(educator) => educator.profile}
       renderSlide={(educator) => <SlideText educator={educator} />}
       renderCaption={(educator) => <Caption educator={educator} />}
+      // the name and position on each card (user 2026-11-13)
+      cardLabel={(educator) => ({ title: educator.name, sub: educator.focus })}
       width={264}
-      height={372}
+      // compact cards (user 2026-11-13): 340 tall (was 372); the 2:3 portraits are cropped, not squeezed, to fit
+      height={340}
       gap={30}
       interval={AUTOPLAY_MS}
       fadeColor="#fff8ec"
       backColor="#ead9c2"
       tone="light"
-      spacing={28}
+      spacing={20}
       // The ring's visible ends are about 467px either side of the centre; the arrows sit 32px clear of them.
       arrowReach={523}
     />
@@ -55,22 +58,19 @@ function SlideText({ educator }: { educator: Educator }) {
 }
 
 /**
- * Under the ring, in a clear order: the name large in Mukta semibold; the subject as a small orange tag;
+ * Under the ring, in a clear order (the name and position are on the active card itself, not repeated here):
  * the introduction as the reading text (18px, ink, at a measure of about 60 characters); then the
  * qualifications and the experience as two quiet facts, each after its own line icon (a mortarboard, a
  * clock), set apart by a hairline.
  */
 function Caption({ educator }: { educator: Educator }) {
-  const { name, focus, introduction, qualifications, experience } = educator;
+  // the name and position are shown once, on the active card's portrait (cardLabel, user 2026-11-13); the caption keeps the rest
+  const { introduction, qualifications, experience } = educator;
   return (
     <div className="mx-auto flex w-[620px] flex-col items-center text-center">
-      <p className="edu__name">{name}</p>
-      {focus && (
-        <p className="mt-3 rounded-full bg-[#f6dfc6] px-3.5 py-1 text-[14px]/[20px] font-semibold text-burnt">{focus}</p>
-      )}
-      {introduction && <p className="edu__intro mt-4">{introduction}</p>}
+      {introduction && <p className="edu__intro">{introduction}</p>}
       {(qualifications || experience) && (
-        <div className="edu__facts mt-5 flex items-center gap-4 border-t border-[#eadbc4] pt-4">
+        <div className="edu__facts mt-3.5 flex items-center gap-4 border-t border-[#eadbc4] pt-3">
           {qualifications && (
             <span className="flex items-center gap-2">
               <svg aria-hidden="true" viewBox="0 0 20 20" width={18} height={18} fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="text-burnt">

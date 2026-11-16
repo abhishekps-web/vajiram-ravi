@@ -179,3 +179,12 @@ export const programmesClosing = {
 
 /** The choices of "Programme of Interest" in the counselling form: the flagship programme and the groups. */
 export const programmeChoices: string[] = [featuredProgramme.name, ...programmes.map((programme) => programme.name)];
+
+/**
+ * A programme's course detail page (user 2026-11-13: "View course" goes there; a placeholder for now): /courses/<slug>, the slug
+ * made from its name ("UPSC GS foundation course – PCM" -> "upsc-gs-foundation-course-pcm"). app/courses/[slug]/page.tsx
+ * builds one page per programme at build time.
+ */
+export const programmeSlug = (name: string) =>
+  name.toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+export const coursePageHref = (programme: Pick<Programme, "name">) => `/courses/${programmeSlug(programme.name)}`;

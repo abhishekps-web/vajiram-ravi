@@ -612,14 +612,7 @@ footer.foot .foot__bot { font-size: 15.5px; }
 /* slide 1 eyebrow matches the eyebrow on slides 2-4 */
 .dl__k { display: block; margin: 0 0 24px; font: 600 16px/1 var(--f-hi); letter-spacing: 0; text-transform: none; color: #FFD48A; }
 
-/* hero: subtle scroll-down cue, bottom centre */
-.dl__scroll { position: absolute; z-index: 4; left: 50%; bottom: 22px; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; color: rgba(255, 246, 232, .7); text-decoration: none; font: 500 11px/1 ui-monospace, Menlo, Consolas, monospace; letter-spacing: .18em; text-transform: uppercase; transition: color .3s; }
-.dl__scroll:hover, .dl__scroll:focus-visible { color: #fff; }
-.dl__scroll i { position: relative; width: 1px; height: 34px; background: rgba(255, 246, 232, .25); overflow: hidden; }
-.dl__scroll i::after { content: ""; position: absolute; left: 0; top: 0; width: 100%; height: 50%; background: #FFD48A; animation: dlScroll 2s cubic-bezier(.6, 0, .3, 1) infinite; }
-@keyframes dlScroll { 0% { transform: translateY(-100%); } 70%, 100% { transform: translateY(200%); } }
-@media (max-width: 900px) { .dl__scroll { display: none; } }
-@media (prefers-reduced-motion: reduce) { .dl__scroll { display: none; } }
+/* hero: the scroll-down cue ("Scroll" + the running line) was removed (user 2026-11-13) */
 
 /* footer wordmark reveal (js/footer-word.js): hidden until it scrolls into view, then each letter rises in, staggered */
 .foot__word.fw-ready .fw-c { display: inline-block; font-style: normal; opacity: 0; transform: translate3d(0, 55%, 0) rotate(6deg); transform-origin: 0 100%;
@@ -2288,3 +2281,119 @@ html #stories [class*="postcard-paper"] { border-radius: var(--r-card); }
 /* the contact form: 4px (user 2026-11-13) */
 :root { --r-form: 4px; }
 html .form--note { border-radius: var(--r-form); }
+
+/* Hero height from 1280px wide: fits its content instead of filling the screen (user 2026-11-13). The copy block is centred
+   (48px above the middle) with the CTA under it and the slide dots near the bottom of the card, so the card is
+   the copy (--txt-h, which reads ~17px under the rendered block) + an 88px gap above it + the CTA and a matching gap below it
+   (clearing the slide dots at the bottom):
+   about 510px at 1280, 525px at 1440, 546px from 1700. The section adds the frame's 20px bottom gutter. Reduced motion keeps its
+   flowing layout (above). */
+@media (min-width: 1280px) and (prefers-reduced-motion: no-preference) {
+  .dl--pin { height: calc(var(--txt-h) + 290px + 20px); }
+}
+
+/* Hero height with a peek of Programmes (user 2026-11-13): every first screen ends with a preview of the Programmes sheet under the
+   hero: its rounded top, its ground and its eyebrow label (which sits 90px into the sheet). So the hero takes the screen minus the
+   header and --hero-peek (the 20px frame gutter + the sheet's 90px top + the 30px label + ~36px of air: 176px), but never less than
+   --hero-min, the least that keeps the hero's own layout: the copy block and CTA centred as before, with at least ~40px above the
+   copy and room under the CTA for the slide indicators (26px off the card's bottom). On a short screen the content wins.
+   From 1280px wide it is never taller than the content-fit height above (--hero-fit), so wide screens that already show the
+   label are unchanged. Reduced motion keeps its flowing layout (above). */
+:root { --hero-peek: 176px; }
+.dl { --hero-fit: calc(var(--txt-h) + 290px + 20px); --hero-min: calc(var(--txt-h) + 230px + 20px); }
+@media (prefers-reduced-motion: no-preference) {
+  .dl--pin { height: max(var(--hero-min), calc(100vh - var(--hdr-h) - var(--hdr-gap) - var(--hero-peek)));
+             height: max(var(--hero-min), calc(100svh - var(--hdr-h) - var(--hdr-gap) - var(--hero-peek))); }
+}
+@media (min-width: 1280px) and (prefers-reduced-motion: no-preference) {
+  .dl--pin { height: min(var(--hero-fit), max(var(--hero-min), calc(100svh - var(--hdr-h) - var(--hdr-gap) - var(--hero-peek)))); }
+}
+
+/* ===== Vertical rhythm, standardised (user 2026-11-13 audit). One set of tokens for every section, a little tighter than before:
+   --sec-y   section padding, top and bottom: 64px on phones to 90px from 1440px (was 72-104px)
+   --hd-lbl  eyebrow -> heading: 24px (was 30px in most sections, 16-28px in others)
+   --hd-in   heading -> intro: 16px (was 16-28px)
+   --hd-gap  heading block -> its content: 36-48px (was 27-119px, set per section)
+   Every section pads --sec-y above and below. A light section that directly follows another light one takes half on top
+   (Faculty after Success stories, FAQ after Visit, the closing card after FAQ), so two cream sections never stack a double gap:
+   content to content is then 1.5 x --sec-y there and 2 x --sec-y across a coloured band (Toppers, Why, General Studies, Contact).
+   The Why scene (pinned), the Toppers banner, the Contact split card and the closing card keep their own inner layouts. Raised
+   with `html` so the section sheets loaded after this one (toppers.css, story.css, Tailwind sections) follow it too. ===== */
+:root { --sec-y: clamp(64px, 6.25vw, 90px); --py: var(--sec-y); --pb: var(--sec-y); --hd-lbl: 24px; --hd-in: 16px; --hd-gap: clamp(36px, 3.4vw, 48px); }
+/* section padding */
+html main :is(#stories.sheet, #batches, #resources.sm, #visit, #faq.faq, #gs.gs, section#toppers) { padding-top: var(--sec-y); padding-bottom: var(--sec-y); }
+html main :is(#educators, #faq.faq, #closing.cl) { padding-top: calc(var(--sec-y) * .5); }
+html main :is(#educators, #closing.cl) { padding-bottom: var(--sec-y); }
+/* header: eyebrow -> heading -> intro */
+html main section .lbl + .h2, html main section .lbl + .wc__h, html main section .h2.h2--sec,
+html main #courses .prog__shelf-h, html main #educators .edu__head .h2 { margin-top: var(--hd-lbl); }
+html main section .h2 + .intro, html main section .h2--sec + .intro, html main #courses .prog__intro,
+html main #educators .edu__head .intro, html main #faq .h2 + p, html main #gs .h2 + p { margin-top: var(--hd-in); }
+html main #closing .cl__p { margin-top: calc(var(--hd-in) - 20px); }   /* the closing card's column already has a 20px flex gap */
+html main #closing .cl__h { margin-bottom: 0; }
+html main #gs .lbl + .gs__h { margin-top: var(--hd-lbl); }
+/* heading block -> content */
+html main #batches .bhead { margin-bottom: var(--hd-gap); }
+html main .sm__grid, html main #faq .qas { margin-top: var(--hd-gap); }
+html main #visit .cm { margin-top: var(--hd-gap); }
+/* Contact on the same rhythm (user 2026-11-13): --sec-y above and below the split card (it had 90px above and the bottom space
+   as each column's own margin), the copy column aligned to the top instead of centred against the taller form, so the eyebrow
+   sits --sec-y from the top as in every other section, and the form's top lines up with the eyebrow. */
+html main #contact .contact__in { padding-top: var(--sec-y); padding-bottom: var(--sec-y); }
+html main #contact .contact__in > * { margin-bottom: 0; }
+@media (min-width: 901px) {
+  html main #contact .contact__in { align-items: start; }
+  html main #contact .contact__l { justify-content: flex-start; }
+  html main #contact .contact__in > .form { margin-top: 0; }
+}
+@media (max-width: 900px) { html main #contact .contact__in { row-gap: var(--hd-gap); } }   /* stacked: heading block -> form = --hd-gap */
+
+/* Hero arrows (user 2026-11-13): previous / next as the site's white icon buttons (onDark), at the card's bottom right, level with
+   the slide indicators on the left (the indicators sit 26px off the bottom; the 40px buttons are centred on them). They stay on
+   phones, where the indicators are hidden. Hover/focus: the button system's own states. */
+.dl__arrows { position: absolute; z-index: 6; right: var(--px); bottom: 18px; display: flex; gap: 10px; }
+.dl__arrows .btn { margin: 0; }
+@media (max-width: 1440px) { .dl__arrows { right: clamp(20px, 5.5vw, 100px); } }
+@media (max-width: 900px) { .dl__arrows { right: 20px; bottom: 16px; } }
+@media (prefers-reduced-motion: reduce) { .dl__arrows { display: none; } }
+
+/* Course detail page, placeholder (app/courses/[slug]/page.tsx, user 2026-11-13): the site's ground, header offset, rhythm and type */
+.course-page { background: var(--ground-jaali); background-size: 100% 100%, 36px 36px, auto; }
+.course-ph { display: flex; flex-direction: column; align-items: center; text-align: center; padding: var(--sec-y) var(--px); }
+.course-ph .h2 { margin: var(--hd-lbl, 24px) auto 0; max-width: 18ch; text-wrap: balance; }
+.course-ph .intro { margin: var(--hd-in, 16px) auto 0; text-wrap: balance; }
+.course-ph__card { width: min(100%, 720px); margin-top: var(--hd-gap, 48px); padding: clamp(24px, 4vw, 44px); border-radius: var(--r-box, 16px);
+  background: #fff; box-shadow: 0 0 0 1px rgba(122, 42, 10, .06), 0 24px 48px -28px rgba(122, 42, 10, .2); text-align: left; }
+.course-ph__k { margin: 0; font: 700 13px/1.3 var(--f); letter-spacing: .14em; text-transform: uppercase; color: var(--brand); }
+.course-ph__p { margin: 12px 0 0; font: 400 var(--body-fs, 16.5px)/var(--body-lh, 1.55) var(--f); color: var(--body); }
+.course-ph__list { margin: 18px 0 0; padding-left: 20px; color: var(--ink); font: 500 16px/1.6 var(--f); }
+.course-ph__btns { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+
+/* ---- Batches: one horizontal carousel (user 2026-11-13). The .rail primitive (v25.css) makes #price a single scroll-snapping
+   row; its width per ticket keeps the old grid's 4 / 2 / 1 across, the next ticket peeking in on phones. The row keeps the
+   page margin as scroll padding, and room above and below for the tickets' lift, tilt and shadow. Arrows: components/ui/rail.js
+   (one ticket per press, disabled at either end); centred under the row at every width (user 2026-11-13), 12px apart. ---- */
+#batches .rail--batch { --bgap: clamp(14px, 2vw, 28px); --cw: calc((100% - 3 * var(--bgap)) / 4); margin-top: 0; }
+#batches .rail--batch > .rail__track { gap: var(--bgap); row-gap: 0; padding: 18px var(--px) 34px; scroll-padding-inline: var(--px); }
+#batches .rail--batch > .rail__track:focus-visible { outline: 2px solid var(--brand); outline-offset: -2px; border-radius: 12px; }
+#batches .rail__nav { display: flex; justify-content: center; gap: 12px; margin-top: 4px; }
+/* the left and right "smoke" of Success stories (#tcar, Stories.jsx): the full-bleed row fades out over its outer 7% each side,
+   the same gradient at every width; off with reduced motion, as there */
+#batches .rail--batch > .rail__track { -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%); }
+@media (max-width: 1180px) { #batches .rail--batch { --cw: calc((100% - var(--bgap)) / 2); } }
+@media (max-width: 640px) { #batches .rail--batch { --cw: 86%; } }
+@media (prefers-reduced-motion: reduce) { #batches .rail--batch > .rail__track { scroll-behavior: auto; -webkit-mask-image: none; mask-image: none; } }
+
+/* ---- Contact us: three tiles (user 2026-11-13, after the wireframe). The campus photos are the large square on the left; on the right
+   the campus tile (address and map) over the channels tile (call, email); one 20px gutter between all three. Each right-hand tile is
+   the white contact card it was; the photo fills the full height. 1000px and under: photos, campus, channels, one under the other. ---- */
+html main #visit .cm { --tile-gap: clamp(14px, 1.4vw, 20px); grid-template-areas: "gal place" "gal chan"; grid-template-rows: auto auto;
+  column-gap: var(--tile-gap); row-gap: var(--tile-gap); align-items: stretch; }
+html main #visit .cm__gal { grid-area: gal; }
+html main #visit .cm__list--place { grid-area: place; }
+html main #visit .cm__list--chan { grid-area: chan; }
+/* the rows still arrive top to bottom across the two tiles */
+.cm.rv .cm__list--chan .cm__item:nth-child(1) { transition-delay: .5s, .5s, 0s, 0s; }
+.cm.rv .cm__list--chan .cm__item:nth-child(2) { transition-delay: .6s, .6s, 0s, 0s; }
+@media (max-width: 1000px) { html main #visit .cm { grid-template-columns: minmax(0, 1fr); grid-template-areas: "gal" "place" "chan"; } }

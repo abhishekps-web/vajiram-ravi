@@ -1,6 +1,9 @@
 # Vajiram & Ravi site
 
-Next.js (App Router) site, deployed to Vercel from `main`. One page at `/`, statically prerendered. Every section is its own
+Next.js (App Router) site, deployed to Vercel from `main`. The page at `/`, statically prerendered, plus one course detail page
+per programme at `/courses/<slug>` (`app/courses/[slug]/page.tsx`, built from `Programmes/data/programmes.ts`; a placeholder
+until the course content is ready, user 2026-11-13). "View course" on a Programmes book links there. Off the homepage only the
+site-wide behaviours run (`SITE_WIDE` in `lib/behaviour.js`) and in-page links are rewritten to `/#…`. Every section is its own
 component folder holding its markup, data and behaviour; `app/page.jsx` only composes them.
 
 Run: `npm install`, then `npm run dev` (http://localhost:3000). `npm run build` must pass before pushing.
@@ -78,7 +81,10 @@ The client wants **every section and every element animated**. For any change to
 ## Design tokens that must stay consistent
 
 - Section titles: `--h2` (64px on desktop, 40px on phones) for every section heading.
-- Section rhythm: `--sec-y` vertical padding and `--sec-gap` between sheets (end of `public/css/v49.css`). Do not give a section its own padding.
+- Section rhythm (audited 2026-11-13, "Vertical rhythm, standardised" at the end of `public/css/v49.css`): `--sec-y` (64-90px)
+  above and below every section, half on top for a light section that follows another light one (Faculty, FAQ, closing);
+  eyebrow -> heading `--hd-lbl` (24px), heading -> intro `--hd-in` (16px), heading block -> content `--hd-gap` (36-48px). The
+  Tailwind sections use the same variables (`pt-[var(--sec-y)]`, `mt-[var(--hd-gap)]`). Do not give a section its own padding.
 - Eyebrows: the `SectionLabel` component (`.lbl`: 14px semibold brand label). Dark grounds use `<SectionLabel light>`.
 - `--f` is the font-family variable. Never reuse that name for a scroll progress value (an earlier `--f` clash broke every font in Programmes).
 
@@ -91,9 +97,11 @@ The client wants **every section and every element animated**. For any change to
   instructions differ (e.g. a section order dated after 11 Nov), the user's instruction wins.
 - Global config: `lib/config.js` (`ENABLE_PRELOADER`: the logo intro on or off).
 - Content column: 1440px, centred on wider screens (`--cap` / `--px`, end of `public/css/v49.css`); section backgrounds stay full-bleed.
-  Up to 1440px wide the header + hero fill the first screen exactly (100svh); wider, the hero is a fixed 680px.
+  Hero height (user 2026-11-13): every first screen ends with a preview of Programmes (its sheet top and eyebrow label): the hero
+  is the screen minus the header and `--hero-peek` (176px), never less than `--hero-min` (its copy, CTA and slide indicators) and,
+  from 1280px wide, never more than `--hero-fit` (the content-fit height). End of `public/css/v49.css`. No scroll-down cue in the hero.
 - One ground for the header, the hero frame and Programmes: `--ground-jaali` (v49.css).
-- Header and hero (user 2026-11-13): the header is the NavigationBar component (`components/layout/NavigationBar/`, styles `public/css/navigation-bar.css`). At the top it sits in its own white band (`.nav-band`), then one 20px gap (`--hdr-gap`, the hero frame's gutter) to the hero, which is a fixed 680px (`public/css/v49.css`). The nav stays fixed in one place and always sits on a white bar with 16px corners (no move, shrink, hide or change on scroll). It never turns transparent over the hero (`.nav--hero` is unused). The hero carousel's autoplay holds while the pointer is over the hero or focus is inside it (`lib/motion/page-motion.js`).
+- Header and hero (user 2026-11-13): the header is the NavigationBar component (`components/layout/NavigationBar/`, styles `public/css/navigation-bar.css`). At the top it sits in its own white band (`.nav-band`), then one 20px gap (`--hdr-gap`, the hero frame's gutter) to the hero, whose height fits its content from 1280px wide (`public/css/v49.css`). The nav stays fixed in one place and never shrinks; smart header (user 2026-11-13): it slides out of view while the page scrolls down and back as soon as it scrolls up (`.nav--away`, `initNavScrolled` in `nav-menus.js`; a transform only, so nothing moves), always showing near the top, with a menu or the drawer open, or with focus inside it. Its bar is transparent at the top of the page and fades to white (16px corners, a soft shadow) once the page scrolls (`.scrolled`, `nav-menus.js`; end of `navigation-bar.css`, user 2026-11-13). `.nav--hero` is unused. Links show from 1024px (burger below); any that would come within 40px of the language switch move into a "More" menu, FAQs first (`initNavMore`, `nav-menus.js`; at 1280px all fit). The hero carousel's autoplay holds while the pointer is over the hero or keyboard focus is inside it, and resumes after; slides change by the previous/next arrows (`.dl__arrows`, bottom right), the indicators, arrow keys or a swipe (`lib/motion/page-motion.js`).
 
 - The Toppers section (`#toppers`) is "Behind every rank is a different journey": a static banner in `Toppers.jsx` plus `<ToppersSpread />` (`Toppers/ToppersSpread/`: ToppersSpread.jsx, RankMedal.jsx, `data.js` with the CSE 2025 rank holders; styles `public/css/toppers-spread.css`, banner styles `public/css/toppers.css`). Add or edit a rank holder in `data.js` only. The old gazette behaviour (`toppers.js`) was removed; `Toppers/data/` is unused leftovers. Newsreader italic 400/500 is loaded in `app/layout.jsx` for the spread.
 - Success stories (`#stories`, user 2026-11-13) is also styled with Tailwind v4: `Stories/stories.css` is its entry, with utilities
@@ -104,5 +112,7 @@ The client wants **every section and every element animated**. For any change to
 - Why choose us (`#story`) has no entrance (user 2026-11-13): the pinned scene (`WhyChoose/story.js`) is entered at its settled
   point (`OFF` = `S0`), so the heading, first photo and first chapter are in place when it pins (no zoom, word split, fade or
   reveal). Only the chapter swing plays on the scroll, plus the hover effects. Do not add an entrance back.
+  One step per gesture (user 2026-11-13): while it is pinned, one wheel flick, swipe or key press moves exactly one chapter, and
+  past the last one it carries on to the next section (`story.js`, "one step per gesture").
 - The "How it works" and results sections are in `sections/Parked/Parked.jsx`, inside `<div id="parked" hidden>`; they are not shown.
 - `public/css/why-choose.css` and `public/js/why-choose.js` are leftovers the page does not load (they were not loaded before the Next.js conversion either).
