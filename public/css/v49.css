@@ -2779,3 +2779,38 @@ html .dl { --card-min: calc(var(--txt-h) + 110px);
   .cl__tp { display: none; }
   html main #closing .cl__card { padding-bottom: 48px; }
 }
+
+/* ===== Hero refinement (user 2026-11-16, "refine in IA and design level with the same structure; work on the spacing"): one inset,
+   one rhythm. --hx-in is the copy's side inset (80px from 901px, the page margin below); the copy, the slide indicators, the arrows
+   and the stats row all keep to it, left and right. The card's foot is one zone (--hx-foot: the arrows' 44px on a 24px margin) with
+   the indicators and the arrows on one centre line, and the copy centres in the space above it, so the space over the pill equals the
+   space under the buttons. The lead keeps to a readable measure (~62 characters). Stats: the first figure starts on the copy's line,
+   the last ends on the arrows' line. ===== */
+.dl { --hx-in: var(--px); --hx-foot: 68px; }
+@media (min-width: 901px) { .dl { --hx-in: 80px; } }
+@media (max-width: 900px) { .dl { --hx-foot: 84px; } }
+html body .dl--pin .dl__in { padding: 0 var(--hx-in) var(--hx-foot); justify-content: center; }
+.hx__tick { margin-bottom: 24px; }
+.hx__lead { max-width: 36em; margin-top: 20px; }
+.hx__btns { margin-top: 32px; }
+/* the foot: indicators at the copy's inset, arrows at the same inset on the right, centred on one line 46px above the card's edge */
+html body #dlProg.dl__prog { left: var(--hx-in); right: auto; bottom: calc(24px + 22px - 4.5px); }
+html body .dl__arrows { right: var(--hx-in); bottom: 24px; }
+/* the stats keep to the copy's inset */
+html body .dl__stats { padding-left: var(--hx-in); padding-right: var(--hx-in); }
+html body .dl__stats li:first-child { padding-left: 0; }
+html body .dl__stats li:last-child { padding-right: 0; }
+.dl__stat-l { font-size: 14px; line-height: 1.4; }
+@media (max-width: 760px) {
+  html body .dl__stats li:nth-child(3) { padding-left: 0; }
+  html body .dl__stats li:nth-child(2n) { padding-right: 0; }
+}
+/* stats labels one measure (two lines at most, the same on each) */
+html body .dl__stat-l { max-width: 15em; }
+/* phones: the same structure, a tighter rhythm, so the copy clears the card's top with room to spare */
+@media (max-width: 640px) {
+  .dl { --hx-foot: 76px; }
+  .hx__tick { margin-bottom: 14px; }
+  .hx__lead { font-size: 15px; line-height: 1.55; margin-top: 12px; }
+  .hx__btns { margin-top: 20px; gap: 10px; }
+}
