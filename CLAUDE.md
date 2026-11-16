@@ -112,7 +112,8 @@ The client wants **every section and every element animated**. For any change to
 - Why choose us (`#story`) has no entrance (user 2026-11-13): the pinned scene (`WhyChoose/story.js`) is entered at its settled
   point (`OFF` = `S0`), so the heading, first photo and first chapter are in place when it pins (no zoom, word split, fade or
   reveal). Only the chapter swing plays on the scroll, plus the hover effects. Do not add an entrance back.
-  One step per gesture (user 2026-11-13): while it is pinned, one wheel flick, swipe or key press moves exactly one chapter, and
-  past the last one it carries on to the next section (`story.js`, "one step per gesture").
+  Natural scroll (user 2026-11-16, replacing "one step per gesture"): the page scrolls through the pinned scene like anywhere else,
+  with no gesture capture, snapping or settling; the six chapters play over about two screens of scroll (two gestures at most)
+  and the page carries on into Batches (`story.js`, "natural scroll").
 - The "How it works" and results sections are in `sections/Parked/Parked.jsx`, inside `<div id="parked" hidden>`; they are not shown.
 - `public/css/why-choose.css` and `public/js/why-choose.js` are leftovers the page does not load (they were not loaded before the Next.js conversion either).
