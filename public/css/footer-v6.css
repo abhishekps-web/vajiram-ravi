@@ -20,6 +20,9 @@
    js/page-motion.js), here on the cream; the content keeps clear of the inner rule (30px in) */
 .vf { isolation: isolate; }
 .vf .foot__frame { z-index: 0; }
+/* smaller corner diamonds, as on the "Book your free session" form (user 2026-11-16; patterns/frame.svg: 8px, on the outer rule's
+   corner): 8px instead of 18px, still centred where the outer rule's corners meet (9px into the frame's box) */
+.vf .foot__frame { background-size: 8px; background-position: 5px 5px, calc(100% - 5px) 5px, 5px calc(100% - 5px), calc(100% - 5px) calc(100% - 5px); }
 html.foot-curtain footer.vf { position: sticky; bottom: var(--foot-off, 0px); z-index: 0; margin-top: 0; }
 .vf__in { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 48px; max-width: 1280px; margin: 0 auto;
   padding: 72px max(var(--px, 24px), 48px) 56px; box-sizing: content-box; }   /* clear of the gold frame's inner rule (30px in) */
