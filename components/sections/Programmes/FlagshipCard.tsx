@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Cta from "@/components/sections/Programmes/ui/Cta";
+import Button from "@/components/ui/Button/Button";
 import { requestEnquiry } from "@/components/sections/Programmes/lib/enquiry";
 import { batches, featuredBatch, todayIso, upcomingBatches, type Batch } from "@/components/sections/Programmes/data/admissions";
 import { featuredProgramme } from "@/components/sections/Programmes/data/programmes";
@@ -212,12 +212,13 @@ export default function FlagshipCard() {
           programme's page.
         */}
         <div className="prog__flag-btns mt-auto flex items-center gap-3 pt-9">
-          <Cta variant="secondary" size="lg" onClick={() => requestEnquiry(programme.name)}>
+          {/* the site's Button (user 2026-11-16: one button component; Programmes' own Cta was a duplicate) */}
+          <Button onDark size="lg" iconEnd="arrow" onClick={() => requestEnquiry(programme.name)}>
             {programme.primary.label}
-          </Cta>
-          <Cta variant="secondary-dark" size="lg" href={programme.secondary.href}>
+          </Button>
+          <Button variant="outline" onDark size="lg" iconEnd="arrow" href={programme.secondary.href ?? undefined}>
             {programme.secondary.label}
-          </Cta>
+          </Button>
         </div>
       </div>
     </section>

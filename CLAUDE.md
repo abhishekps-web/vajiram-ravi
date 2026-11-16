@@ -57,7 +57,7 @@ public/
 
 Ported from the soloboy branch of C:UsersVonnueDownloadssoloVajiram-ravi (user 2026-11-13). It is the one section written in
 TypeScript and styled with Tailwind v4 utilities, kept close to soloboy's code; everything it needs lives in its folder
-(`components/sections/Programmes/`: `ui/` its Cta, Medallion, IndianLink and a section-scoped TextMotion; `lib/`; `data/`), images
+(`components/sections/Programmes/`: `ui/` its Medallion, IndianLink and a section-scoped TextMotion (its own Cta button was removed for the site Button, user 2026-11-16); `lib/`; `data/`), images
 in `public/assets/img/programmes/`.
 - `programmes.css` is its Tailwind entry: utilities generated from that folder only and unlayered, soloboy's theme, and Tailwind's
   preflight plus soloboy's global rules scoped to `#courses`. Nothing in it reaches other sections; keep it that way (this site's
