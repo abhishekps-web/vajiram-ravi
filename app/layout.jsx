@@ -1,5 +1,6 @@
 import Intro from '@/components/layout/Intro/Intro';
 import SiteBehaviour from '@/components/layout/SiteBehaviour';
+import DevCssReload from '@/components/layout/DevCssReload';
 import introBoot from '@/components/layout/Intro/boot';
 import { ENABLE_PRELOADER, INTRO_ONCE_PER_SESSION } from '@/lib/config';
 
@@ -48,6 +49,7 @@ export default function RootLayout({ children }) {
         {ENABLE_PRELOADER && <Intro />}
         {children}
         <SiteBehaviour />
+        {process.env.NODE_ENV === 'development' && <DevCssReload />}   {/* live-reloads public/css edits (dev only) */}
       </body>
     </html>
   );
