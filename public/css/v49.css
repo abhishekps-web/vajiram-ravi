@@ -2741,3 +2741,24 @@ html body .dl--pin.dl .dl__in { opacity: 1; transform: none; filter: none; point
 /* the hero's row sits where its bars did, centred on the arrows' line */
 #dlProg.dl__prog.cdots { gap: 10px; }
 #dlProg.dl__prog.cdots > button { padding: 0; }
+
+/* the "CSE 2025 results" tag in the eyebrow's shape (user 2026-11-16): the brand cartouche with pointed ends (cartouche-brand.svg as a
+   border image) and the eyebrow's type, 12px spaced capitals, exactly as .dl__k / .lbl__t above; the dark ticker pill around it stays */
+.hx__ticker .hx__tag { height: 30px; padding: 0 11px; border: solid transparent; border-width: 0 13px; border-radius: 0; box-shadow: none; background: none;
+  border-image: url(/assets/img/brand/cartouche-brand.svg) 0 13 fill / 0 13px / 0 stretch;
+  font: 500 12px/16px "Geist", var(--f), sans-serif; letter-spacing: .96px; text-transform: uppercase; white-space: nowrap; color: #fff; }
+.hx__ticker { padding-left: 4px; }
+@media (max-width: 640px) { .hx__ticker .hx__tag { height: 28px; padding: 0 9px; font-size: 11px; } }
+
+/* First screen = header + hero card + stats (user 2026-11-16, "we need to show the hero banner and the stats in the 1st viewport"): the
+   card takes the screen less the header, its gap, the stats row and the frame's gutters (20px above, 20px below the row), no more than
+   600px, and never less than its copy block plus room for the slide indicators and arrows (--txt-h + 110px). Replaces the earlier
+   Programmes-peek sizing of --card-h (the trending banners follow the stats now). */
+html .dl { --card-min: calc(var(--txt-h) + 110px);
+  --card-h: clamp(var(--card-min), calc(100svh - var(--hdr-h) - var(--hdr-gap) - var(--stats-h) - 40px), 600px); }
+/* ...and the ticker itself in the eyebrow's shape (user 2026-11-16): the dark cartouche (cartouche.svg, #2B1206) with the same pointed
+   ends, stretched to the ticker's size, instead of the rounded pill; the tag sits inside it. Hover brightens it a little. */
+.hx__ticker { height: 42px; padding: 0 14px 0 2px; border: solid transparent; border-width: 0 18px; border-radius: 0; box-shadow: none; background: none;
+  border-image: url(/assets/img/brand/cartouche.svg) 0 13 fill / 0 18px / 0 stretch; transition: filter .2s ease; }
+.hx__ticker:hover { background: none; filter: brightness(1.35); }
+@media (max-width: 640px) { .hx__ticker { height: 40px; padding: 0 10px 0 0; border-width: 0 16px; border-image-width: 0 16px; } }
