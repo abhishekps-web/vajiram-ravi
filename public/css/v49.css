@@ -2562,3 +2562,13 @@ footer.foot .foot__bot span:last-child { gap: 8px 20px; }
   footer.foot .foot__bot span:last-child { gap: 4px 16px; }
   footer.foot .foot__bot a { font-size: 13px; }
 }
+
+/* General Studies (user 2026-11-16): the heading a step smaller, the book on the right scaled down a little */
+@media (min-width: 1001px) { #gs .gs__h { font-size: min(56px, 4.1vw); } #gs .gsbook { --w: 292px; --h: 390px; --t: 41px; } }
+@media (max-width: 1000px) { #gs .gs__h { font-size: calc(var(--h2) * .9); } }
+
+/* Contact us: the three white tiles take less padding (user 2026-11-16) */
+#visit .cm__list { padding: 16px 28px; }
+#visit .cm__list .cm__item { padding-top: 12px; padding-bottom: 12px; }
+@media (max-width: 1000px) { #visit .cm__list { padding: 10px 20px; } }
+@media (max-width: 480px) { #visit .cm__list { padding: 6px 14px; } }

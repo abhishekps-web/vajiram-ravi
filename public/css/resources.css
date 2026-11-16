@@ -239,3 +239,27 @@
 @media (hover: hover) and (pointer: fine) {
   #resources .rf:hover .rmk__obj { transform: translateY(-18px) rotate(-2deg); transition-delay: 0s; }
 }
+
+/* the lift and float of the resource are driven by resource-float.js (one eased value per card), so CSS no longer transitions or
+   sets its transform; the folder's tilt, shadow, tab and stamp keep their soft CSS eases */
+#resources .rmk__obj { transition: opacity .6s var(--ease), translate .8s var(--ease); }
+@media (hover: hover) and (pointer: fine) { #resources .rf:hover .rmk__obj { transform: none; } }
+
+/* user 2026-11-16: no resting tilt on the folders (the Infographics card looked crooked), and the resources sit left, in line with the card's text */
+#resources .rf, #resources .rf:nth-child(n) { --tilt: 0deg; }
+#resources .rmk { justify-content: flex-start; padding-left: 26px; }
+#resources .rmk__poster, #resources .rmk__cal, #resources .rmk__news .rmk__sheet, #resources .rmk__nb { rotate: 0deg; }
+
+/* The Daily Brief keeps its slight left tilt and the sheet behind it (user 2026-11-16) */
+#resources .rmk__news .rmk__sheet { rotate: -3deg; }
+#resources .rmk__news .rmk__sheet--back { rotate: 5deg; }
+
+/* card titles semibold (user 2026-11-16) */
+#resources .rf .sm__t { font-weight: 600; }
+
+/* link buttons sit a little lower on every card, all on the same line (the card's last row, pushed down by margin-top: auto) */
+#resources .rf__front { padding-bottom: 26px; }
+#resources .rf .sm__act { margin-top: auto; padding-top: 6px; }
+
+/* the whole folder is clickable (resource-links.js) */
+#resources .rf { cursor: pointer; }
