@@ -256,10 +256,11 @@
   html:has(#nav.nav--away) #story:not(.cmp--run, .story-run *) .cmp__hd { top: 14px; }
   #story:not(.cmp--run, .story-run *) .cmp__p { top: calc(var(--hdr-h, 74px) + 14px + var(--hd-h, 180px) + (5 - var(--k)) * 10px); }
   html:has(#nav.nav--away) #story:not(.cmp--run, .story-run *) .cmp__p { top: calc(14px + var(--hd-h, 180px) + (5 - var(--k)) * 10px); }
-  /* the heading leaves with the stack, not a card's height after it: the cards are let go when the list's end reaches the foot of the
+  /* the heading leaves as the last card comes in (user 2026-11-17: not after the pile has closed up): it starts going about 150px of
+     scroll before the sixth card settles (the +200px: the 50px of stacked edges and 150px), and is gone as the pile closes up. The cards are let go when the list's end reaches the foot of the
      front card, so the heading's room (.cmp__ov's content) ends a card's height (--card-h, story.js) before the list does */
-  #story:not(.cmp--run, .story-run *) .cmp__ov { padding-bottom: calc(var(--card-h, calc(100svh - 284px)) + 50px); }
-  #story:not(.cmp--run, .story-run *) .cmp__track { margin-bottom: calc(-1 * var(--card-h, calc(100svh - 284px)) - 50px); }
+  #story:not(.cmp--run, .story-run *) .cmp__ov { padding-bottom: calc(var(--card-h, calc(100svh - 284px)) + 200px); }
+  #story:not(.cmp--run, .story-run *) .cmp__track { margin-bottom: calc(-1 * var(--card-h, calc(100svh - 284px)) - 200px); }
 }
 /* phones only (one column, the photo above the text): the photo gives up height so a whole card fits under the heading; tablets lay the
    card out in two columns, short enough already */
