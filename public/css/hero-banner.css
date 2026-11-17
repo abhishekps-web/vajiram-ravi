@@ -175,3 +175,15 @@ html body .dl .hx__tag { margin-left: -10px; }
     background: linear-gradient(0deg, rgba(46, 17, 6, .88) 0%, rgba(46, 17, 6, .8) 50%, rgba(46, 17, 6, .7) 74%, rgba(46, 17, 6, .25) 88%, transparent 100%); }
   html body .dl .hx__h { text-shadow: 0 2px 18px rgba(30, 10, 2, .55); }
 }
+
+/* Hero chevrons on larger screens (user 2026-11-17, "keep the chevron positions like on vajiram-ravi-kevin.netlify.app"): as on Kevin's,
+   previous / next are each centred on one side edge of the card, halfway up, half outside it, shown while the pointer is over the hero
+   (the dots stay centred at the foot). Phones keep the arrows beside the dots, as on his. */
+@media (min-width: 761px) {
+  .dl .hx__navs { display: block; padding: 0; }
+  .dl .hx__navs > .hx__nav { position: absolute; top: 50%; bottom: auto; translate: -50% -50%; }
+  .dl .hx__navs > .hx__nav--prev { left: 0; right: auto; }
+  .dl .hx__navs > .hx__nav--next { left: 100%; right: auto; }
+  .dl .hx__navs > .hx__dots { position: absolute; left: 50%; bottom: 28px; translate: -50% 0; }
+}
+@media (min-width: 761px) and (max-width: 900px) { .dl .hx__navs > .hx__dots { bottom: 22px; } }
