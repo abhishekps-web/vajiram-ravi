@@ -227,3 +227,11 @@
   #story:not(.cmp--run, .story-run *) .cmp__ph { filter: none; }
   #story:not(.cmp--run, .story-run *) .cmp__ph::after, #story:not(.cmp--run, .story-run *) .cmp__card::after { box-shadow: none; }
 }
+/* the last card settles too (user 2026-11-17, "an issue on the last card stacking"): the list ended 8px after the sixth card, so that card
+   was pushed on the moment it reached its place and the cards under it were squeezed up together as it went. The list now runs on 40% of
+   a screen past the last card, so the sixth settles, holds with the others showing under it, and the stack then leaves as one.
+   (An empty spacer after the cards, not padding: a sticky card is held within its container's content, which padding is not part of.) */
+@media (max-width: 899px) {
+  #story:not(.cmp--run, .story-run *) .cmp__track::after { content: ""; display: block; height: 40svh; }
+}
+@media (max-width: 899px) and (prefers-reduced-motion: reduce) { #story:not(.cmp--run, .story-run *) .cmp__track::after { display: none; } }
