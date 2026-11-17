@@ -28,8 +28,8 @@ main#top { padding-top: calc(var(--hdr-h) + var(--hdr-gap)); }
 /* Typography = the Button component's (user 2026-11-13): font, weight, line height and letter spacing are the button system's own
    tokens (public/css/buttons.css :root), and the size is the default (md) button's, 16px (.btn--md --btn-fs). Spacing, colours and
    hover/focus states are unchanged. Covers the bar's links and menu buttons (.nav__a) and the phone drawer's links. */
-.nav .nav__a, .drawer a { font-family: var(--btn-font); font-weight: var(--btn-weight); font-size: 18px; line-height: var(--btn-lh); letter-spacing: var(--btn-ls); }
-html[lang="hi"] .nav .nav__a, html[lang="hi"] .drawer a { font-family: "Mukta", var(--btn-font); }
+.nav .nav__a, .drawer a:not(.btn) { font-family: var(--btn-font); font-weight: var(--btn-weight); font-size: 18px; line-height: var(--btn-lh); letter-spacing: var(--btn-ls); }
+html[lang="hi"] .nav .nav__a, html[lang="hi"] .drawer a:not(.btn) { font-family: "Mukta", var(--btn-font); }
 
 /* Horizontal alignment (user 2026-11-13): the bar's left and right edges line up with the hero's content container, the photo card
    (20px in from the centred 1440px column, .dl__frame in v49.css). The bar reaches 10px past the nav's items (::after above), so the
@@ -103,7 +103,7 @@ html[lang="hi"] .more__a { font-family: "Mukta", var(--btn-font); }
 .nav .nav__links .more li + li { margin-top: 2px; }
 
 /* nav items in medium weight (user 2026-11-16): the bar links, the "More" menu and the drawer, 500 instead of the buttons' 700 */
-.nav .nav__a, .drawer a, .more__a { font-weight: 500; }
+.nav .nav__a, .drawer a:not(.btn), .more__a { font-weight: 500; }
 
 /* Sleeker bar (user 2026-11-16): a slimmer pill (46px, was 52), links at 16px (was 18) and 34px tall, a smaller logo and the
    smaller "Let's talk" button. --hdr-h follows the pill, so the band and the hero's top spacing shrink with it. */
@@ -225,4 +225,20 @@ html[lang="hi"] .more__a { font-family: "Mukta", var(--btn-font); }
   .nav .lang { padding: 0; }
   .nav .lang__thumb, .nav .lang__b[aria-pressed="true"] { display: none; }
   .nav .lang__b { min-width: 44px; height: 44px; padding: 0 6px; border-radius: 999px; }
+}
+
+/* Phones (user 2026-11-17: "keep the logo and push everything else into a hamburger on the right"): up to 760px the header is
+   the logo and the burger only. The language switch and "Let's talk" move into the drawer (Header markup: .drawer__end), so
+   nothing in the bar can overlap at any phone width. Above 760px (tablets, burger from 1023px down) the bar keeps them. */
+.drawer__end { display: none; }
+@media (max-width: 760px) {
+  .nav .nav__end { display: none; }
+  .nav .nav__pill { flex: 1; max-width: none; padding-right: 2px; }
+  .nav .nav__burger { flex: none; width: 44px; height: 44px; margin-left: auto; }
+  .nav .nav__burger span { left: 11px; right: 11px; }
+  .nav .nav__burger span:first-child { top: 18px; }
+  .nav .nav__burger span:last-child { top: 25px; }
+  .drawer__end { display: flex; align-items: center; gap: 12px; margin-top: 8px; padding: 12px 4px 4px; border-top: 1px solid var(--sand); }
+  .drawer__end .btn { flex: 1 1 auto; min-width: 0; }
+  .drawer .lang { flex: none; height: 44px; background: #F9F0E4; box-shadow: none; }
 }

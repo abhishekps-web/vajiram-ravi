@@ -4,8 +4,8 @@
    - The card (.dl__stick, Kevin's .hx__panel): on the 1280px column (80px in at 1440, the page margin on phones), 24px corners (20px
      from 900px down) and his deep shadow; the screen less the header and the stats row tall, 520 to 820px. Tablets and phones: no
      taller than 760px and 24px short of the screen, growing if the copy needs more.
-   - The copy (.dl__in, Kevin's .hx__copy): clamp(24px, 4vw, 64px) in, centred in the card; pill -> headline 22px, headline -> lead
-     24px (lead up to 760px), lead -> buttons 28px. Tablets and phones: at the card's foot under the portrait; phones centre it.
+   - The copy (.dl__in, Kevin's .hx__copy): clamp(24px, 4vw, 64px) in, left aligned in the card; pill -> headline 22px, headline -> lead
+     24px (lead up to 760px), lead -> buttons 28px. Tablets and phones: at the card's foot under the portrait; phones keep it left aligned too.
    - The slides: the top three of UPSC CSE 2025 in turn, 6.5 s each with a 1 s crossfade, each portrait pushing in slowly.
    - The AIR card: top right (7% / 3%); tablets and phones small in the top left corner.
    - The dots centred at the card's foot in a dark pill; previous / next centred on the card's two side edges, half outside it.
@@ -38,12 +38,12 @@ html body .dl .hx__btns { margin: 28px 0 0; gap: 12px; }
 }
 @media (max-width: 640px) { html body .dl .hx__tick { margin-bottom: 16px; } }
 @media (max-width: 560px) { html body .dl .hx__h { font-size: 32px; } }
-/* phones: centred (Kevin's mobile.css) */
+/* phones: left aligned like the larger screens (user 2026-11-17; Kevin's mobile.css centred it) */
 @media (max-width: 760px) {
-  html body .dl--pin .dl__in { align-items: center; text-align: center; }
-  html body .dl .hx__tick { display: flex; justify-content: center; }
-  html body .dl .hx__lead { margin-left: auto; margin-right: auto; }
-  html body .dl .hx__btns { justify-content: center; }
+  html body .dl--pin .dl__in { align-items: flex-start; text-align: left; }
+  html body .dl .hx__tick { display: flex; justify-content: flex-start; }
+  html body .dl .hx__lead { margin-left: 0; margin-right: 0; }
+  html body .dl .hx__btns { justify-content: flex-start; }
 }
 
 /* ---------- the slides: crossfade and a slow push-in ---------- */
@@ -92,15 +92,15 @@ html body .dl .hx__mark { top: 7%; right: 3%; }
 
 /* ---------- the controls' layer (Hero.jsx .hx__navs): the card clips its contents, so the layer is outside it (a sibling in
    .dl__frame) and page-motion.js lays it exactly over the card; it shrinks with the card as Programmes slides over the hero (the
-   card's scale, v49.css). Previous / next centred on the card's two side edges, half outside it; the dots centred at its foot ---------- */
+   card's scale, v49.css). Previous / next inside the card, at its two bottom corners level with the dots (user 2026-11-17: the side edges would cover the headline); the dots centred at its foot ---------- */
 .dl .hx__navs { position: absolute; top: 0; left: 0; z-index: 7; pointer-events: none;
   transform: scale(calc(1 - var(--cover, 0) * .2)); transform-origin: 50% 35%; }
 .dl .hx__dots { position: absolute; left: 50%; bottom: 28px; display: flex; align-items: center; gap: 8px; margin: 0; padding: 10px 12px;
   border-radius: 999px; translate: -50% 0; background: rgba(0, 0, 0, .25); pointer-events: auto; }
 @media (max-width: 900px) { .dl .hx__dots { bottom: 22px; } }
 .dl .hx__nav { position: absolute; top: 50%; display: flex; translate: -50% -50%; pointer-events: auto; transition: opacity .3s ease; }
-.dl .hx__nav--prev { left: 0; }
-.dl .hx__nav--next { left: 100%; }
+.dl .hx__nav--prev { left: var(--hx-in); top: auto; bottom: 20px; translate: none; }
+.dl .hx__nav--next { left: auto; right: var(--hx-in); top: auto; bottom: 20px; translate: none; }
 .dl .hx__nav .btn { --btn-bg: rgba(255, 249, 241, .92); --btn-fg: #C2410C; --btn-edge: inset 0 0 0 1px rgba(255, 255, 255, .8);
   --btn-shadow: 0 12px 24px -12px rgba(58, 20, 6, .6); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
 @media (hover: hover) and (pointer: fine) {
@@ -114,14 +114,15 @@ html body .dl .hx__mark { top: 7%; right: 3%; }
    edge to edge with square corners, the screen less the header and the controls' row tall (taller only if its copy needs it); the
    controls one row under it on the hero's ground: previous, the dots, next (64px: the 44px arrows on 10px) ---------- */
 @media (max-width: 760px) {
-  html .dl { --hx-ctrl: 64px; --hx-foot: 40px; }
+  html .dl { --hx-ctrl: 0px; --hx-foot: 84px; }
   html .dl { --card-h: calc(100svh - var(--hdr-h) - var(--hdr-gap) - var(--hx-ctrl)); }
   html body .dl--pin .dl__frame > .dl__stick { margin-left: calc(-1 * var(--hx-side)); margin-right: calc(-1 * var(--hx-side));
     border-radius: 0; box-shadow: none; }
-  .dl .hx__navs { position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; gap: 20px;
-    height: var(--hx-ctrl); transform: none; pointer-events: auto; }
-  .dl .hx__nav { position: static; display: flex; translate: none; opacity: 1; pointer-events: auto; }
-  .dl .hx__dots { position: static; translate: none; }
+  /* the controls stay inside the card (user 2026-11-17): the layer lies over it as on larger screens, the arrows at its bottom
+     corners and the dots between them; arrows always shown (no hover on a phone) */
+  .dl .hx__navs { transform: none; }
+  .dl .hx__nav { display: flex; opacity: 1; pointer-events: auto; }
+  .dl .hx__nav--prev, .dl .hx__nav--next { bottom: 18px; }
 }
 
 /* reduced motion: the slides do not run (page-motion.js), so neither do their controls */
