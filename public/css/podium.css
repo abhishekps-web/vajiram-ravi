@@ -35,10 +35,10 @@
    reduced motion. */
 @supports ((-webkit-background-clip: text) or (background-clip: text)) {
   #toppers .pd__h, #toppers .pd__h em { -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
-    background-size: 250% 100%; background-repeat: no-repeat; background-position: 100% 0; animation: pdTextShine 4.5s linear infinite; }
+    background-size: 250% 100%; background-repeat: no-repeat; background-position: 100% 0; animation: none; }
   #toppers .pd__h { background-image: linear-gradient(105deg, #fff 0%, #fff 38%, #FFD79A 45%, #FFF6E2 50%, #FFD79A 55%, #fff 62%, #fff 100%); }   /* on white, the glint shows as a gold edge round a warm light */
   #toppers .pd__h em { background-image: linear-gradient(105deg, #FFD48A 0%, #FFD48A 40%, #FFE9BE 46%, #FFFBEA 50%, #FFE9BE 54%, #FFD48A 60%, #FFD48A 100%);
-    animation-delay: .25s; }
+    animation: none; }
 }
 @keyframes pdTextShine { 0% { background-position: 100% 0; animation-timing-function: cubic-bezier(.45, 0, .55, 1); } 40%, 100% { background-position: 0% 0; } }   /* the gradient always covers the whole line; the band starts just off the left and ends just off the right */
 @media (prefers-reduced-motion: reduce) { #toppers .pd__h, #toppers .pd__h em { animation: none; } }
@@ -65,7 +65,7 @@
 /* it reaches 300px below the row, so the light runs on under all three names (and their lines of programme) */
 .pd__fx { --pd-slow: 2.2; position: absolute; z-index: 0; top: -60px; left: calc(var(--px) * -1); width: calc(100% + var(--px) * 2); height: calc(100% + 300px); pointer-events: none;
   mix-blend-mode: screen; -webkit-mask: linear-gradient(180deg, transparent 0, #000 22%); mask: linear-gradient(180deg, transparent 0, #000 22%); }
-.pd__beam { transform-box: view-box; transform-origin: 720px 0; animation: pdSway 16s ease-in-out infinite, pdBreathe 8s ease-in-out infinite; }
+.pd__beam { transform-box: view-box; transform-origin: 720px 0; animation: none; opacity: .85; }
 @keyframes pdSway { 0%, 100% { rotate: -1.2deg; } 50% { rotate: 1.2deg; } }
 @keyframes pdBreathe { 0%, 100% { opacity: .72; } 50% { opacity: 1; } }
 .pd__sparks circle { fill: #FFF0C8; transform-box: fill-box; transform-origin: center;
@@ -114,7 +114,7 @@
 .pd__col--1 .pd__laurel {
   background: linear-gradient(105deg, transparent 40%, rgba(255, 252, 235, .0) 43%, rgba(255, 252, 235, .7) 50%, rgba(255, 252, 235, 0) 57%, transparent 60%) 100% 0 / 250% 100% no-repeat,
               var(--pd-laurel) 0 0 / 100% 100% no-repeat; }
-.pd__row.in .pd__col--1 .pd__laurel { animation: pdShine 4.5s cubic-bezier(.45, .05, .3, 1) 2.6s infinite; }
+
 @keyframes pdShine { 0% { background-position: 100% 0, 0 0; } 36%, 100% { background-position: 0% 0, 0 0; } }
 
 /* ---------- the type ---------- */
@@ -208,7 +208,7 @@
   pointer-events: none; border-radius: 50%; mix-blend-mode: screen;
   background: repeating-conic-gradient(from 0deg, rgba(255, 226, 150, .55) 0deg 4deg, transparent 4deg 15deg);
   -webkit-mask: radial-gradient(closest-side, #000 18%, rgba(0, 0, 0, .5) 45%, transparent 100%); mask: radial-gradient(closest-side, #000 18%, rgba(0, 0, 0, .5) 45%, transparent 100%); }
-.js .pd__row.rv.in .pd__col--1 .pd__fig::before { animation: pdRays 1.6s cubic-bezier(.2, .8, .25, 1) calc(var(--pd-t) + 1s) both, pdTurn 90s linear calc(var(--pd-t) + 1s) infinite; }
+.js .pd__row.rv.in .pd__col--1 .pd__fig::before { animation: pdRays 1.6s cubic-bezier(.2, .8, .25, 1) calc(var(--pd-t) + 1s) both ; }
 @keyframes pdRays { 0% { opacity: 0; scale: .3; } 40% { opacity: 1; } 100% { opacity: .32; scale: 1; } }
 @keyframes pdTurn { to { rotate: 1turn; } }
 .pd__col--1 .pd__fig::after { content: ""; position: absolute; z-index: 3; left: 50%; top: 42%; width: 6px; height: 6px; margin: -3px; border-radius: 50%; pointer-events: none;
@@ -262,7 +262,7 @@
 .dr__track { display: flex; width: max-content; margin: 0; padding: 0; list-style: none; }
 .dr__item { flex: none; box-sizing: content-box; width: var(--dw); padding: 0 calc(var(--dw) * .18);   /* more room between them (user 2026-11-13); content-box, so the padding adds to the width */
    display: flex; flex-direction: column; align-items: center; text-align: center; }
-.js .dr__track.is-loop { animation: drMove var(--dr-dur, 160s) linear infinite; }
+
 .dr__view:hover .dr__track, .dr.is-off .dr__track { animation-play-state: paused; }
 @keyframes drMove { to { transform: translate3d(-50%, 0, 0); } }
 
@@ -416,3 +416,24 @@
    height), which showed as a smeared band in the shield's point. The photo now fades out just before that row, onto the shield's own
    orange photo area. */
 .pd__img { -webkit-mask: linear-gradient(180deg, #000 60%, transparent 70%); mask: linear-gradient(180deg, #000 60%, transparent 70%); }
+
+/* Toppers: static except the top three's glide-in on first load (user 2026-11-17). No sparkles, bokeh, sway, shine or turning rays; the
+   rank holders' row drifts again (auto scroll) and nothing else reveals. */
+.pd__bokeh, .pd__sparks { display: none; }
+#toppers .stars { opacity: .5; }   /* the glitter, softer */
+.dr__track.is-still { margin-inline: auto; }
+
+/* Top three (user 2026-11-17, "no swirl or glitter, keep only the glide up on first load"): each column simply glides up into place
+   once, 3 then 2 then 1. The crest turn, shield sweep, laurel growth, portrait blur-rise, rank stamp, rays and spark burst are gone. */
+.js .pd__row.rv:not(.in) .pd__gem, .js .pd__row.rv:not(.in) .pd__img, .js .pd__row.rv:not(.in) .pd__lbl > * { opacity: 1; }
+.js .pd__row.rv:not(.in) .pd__laurel { clip-path: none; }
+.js .pd__row.rv .pd__gem, .js .pd__row.rv .pd__img, .js .pd__row.rv .pd__laurel, .js .pd__row.rv .pd__n, .js .pd__row.rv .pd__name,
+.js .pd__row.rv .pd__gem::after { animation: none !important; }
+.pd__col--1 .pd__fig::before, .pd__col--1 .pd__fig::after, .pd__gem::after { display: none; }
+.js .pd__row.rv:not(.in) .pd__col { opacity: 0; transform: translateY(48px); }
+.js .pd__row.rv.in .pd__col { animation: pdGlide .9s cubic-bezier(.2, .8, .25, 1) both; }
+.js .pd__row.rv.in .pd__col--3 { animation-delay: 0s; }
+.js .pd__row.rv.in .pd__col--2 { animation-delay: .18s; }
+.js .pd__row.rv.in .pd__col--1 { animation-delay: .36s; }
+@keyframes pdGlide { from { opacity: 0; transform: translateY(48px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .js .pd__row.rv .pd__col { animation: none !important; opacity: 1; transform: none; } }

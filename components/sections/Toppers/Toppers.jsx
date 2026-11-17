@@ -9,8 +9,8 @@ export default function Toppers() {
     <>
       <Stylesheet href="/css/podium.css" />
       <section className="pd" id="toppers" aria-labelledby="pdH">
-  
   <div className="stars" data-stars="#FFF3D6" aria-hidden="true"></div>
+  
   
   <svg className="pd__defs" width="0" height="0" aria-hidden="true" focusable="false">
     <clipPath id="pdPhoto" clipPathUnits="objectBoundingBox">
@@ -24,7 +24,7 @@ export default function Toppers() {
   </svg>
   <div className="pd__hd">
     <SectionLabel light>UPSC CSE 2025 results</SectionLabel>
-    <h2 id="pdH" className="h2 h2--sec pd__h rv" style={{"--d":".12s"}}>Ranks they earned, <em>with the guidance we&nbsp;gave.</em></h2>
+    <h2 id="pdH" className="h2 h2--sec pd__h">Ranks they earned, <em>with the guidance we&nbsp;gave.</em></h2>
   </div>
 
   
@@ -97,10 +97,10 @@ export default function Toppers() {
 
   
   <div className="dr" role="region" aria-label="More UPSC CSE 2025 rank holders">
-    <p className="dr__h rv" style={{"--d":".05s"}}><span id="drHead">Ranks 4 to 18, CSE 2025</span></p>
+    <p className="dr__h"><span id="drHead">Ranks 4 to 18, CSE 2025</span></p>
     
     
-    <div className="dr__bar rv" style={{"--d":".1s"}} hidden>
+    <div className="dr__bar" hidden>
     <div className="dr__tabs" id="drTabs" role="tablist" aria-label="Year of the examination">
       <button type="button" className="dr__tab" role="tab" id="drTab2025" aria-controls="drList" aria-selected="true">2025</button>
       <button type="button" className="dr__tab" role="tab" id="drTab2024" aria-controls="drList" aria-selected="false" tabIndex="-1">2024</button>
@@ -115,7 +115,7 @@ export default function Toppers() {
     </div>
     <button type="button" className="dr__all" aria-controls="drTabs" aria-expanded="false"><span className="dr__all-t">View all</span></button>
     </div>
-    <div className="dr__view rv" style={{"--d":".12s"}} id="drList" aria-labelledby="drHead">
+    <div className="dr__view" id="drList" aria-labelledby="drHead">
       <ul className="dr__track">
         <li className="dr__item">
           <div className="dr__fig"><span className="dr__gem" aria-hidden="true"><i></i></span><span className="dr__pic"><img src="/assets/img/toppers/portrait/2025/04-raghav-jhunjhunwala-460.webp" srcSet="/assets/img/toppers/portrait/2025/04-raghav-jhunjhunwala-460.webp 460w, /assets/img/toppers/portrait/2025/04-raghav-jhunjhunwala.webp 768w" sizes="(max-width: 640px) 156px, 228px" alt="Raghav Jhunjhunwala" width="360" height="360" loading="lazy" decoding="async"/></span></div>
@@ -204,7 +204,7 @@ export default function Toppers() {
       </ul>
     </div>
     
-    <p className="dr__cta rv" style={{"--d":".16s"}}><Button variant="secondary" onDark href="https://vajiramandravi.com/ias-selections-from-vajiram/" target="_blank" rel="noopener" iconEnd="arrow">View all toppers</Button></p>
+    <p className="dr__cta"><Button variant="secondary" onDark href="https://vajiramandravi.com/ias-selections-from-vajiram/" target="_blank" rel="noopener" iconEnd="arrow">View all toppers</Button></p>
   </div>
 
 </section>
