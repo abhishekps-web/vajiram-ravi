@@ -2,9 +2,16 @@
 // six social links, the latest current affairs and the legal links. Rendered by Footer.jsx; styles public/css/footer-v6.css.
 const V = 'https://vajiramandravi.com/';
 
+// The columns in order (user 2026-11-17): Vajiram & Ravi, then UPSC Exam, Courses & Test Series, Free Resources.
 // [heading, [label, href]...]; a "#…" href stays on the page, every other link opens the institute's site in a new tab
 export const FOOTER = [
   ['Vajiram & Ravi', [['About Us', `${V}about-us/`], ['Careers', `${V}careers/`], ['Contact Us', '#contact'], ['FAQs', '#faq']]],
+  ['UPSC Exam', [
+    ['Syllabus & Exam Pattern', `${V}upsc-syllabus/`], ['Optional Subjects List', `${V}upsc-exam/optional-subjects-for-upsc/`],
+    ['Eligibility & Age Limit', `${V}upsc-exam/upsc-age-limit/`], ['Exam Calendar 2027', `${V}upsc-exam/upsc-calendar/`],
+    ['Admit Card & Answer Key', `${V}upsc-exam/upsc-admit-card/`], ['Cut Off & Results', `${V}upsc-exam/upsc-cut-off/`],
+    ['IAS Salary', `${V}upsc-exam/ias-salary/`],
+  ]],
   ['Courses & Test Series', [
     ['GS Course 2027', `${V}courses/upsc-gs-course/`], ['2 Year Course', `${V}courses/2-year-upsc-course/`],
     ['Online Coaching', `${V}upsc-online-coaching/`], ['CSAT Course', `${V}courses/upsc-csat-course/`],
@@ -12,12 +19,6 @@ export const FOOTER = [
     ['Prelims Test Series 2027', `${V}courses/prelims-test-series/`], ['Mains Test Series 2027', `${V}courses/upsc-mains-test-series/`],
     ['Optional Test Series', `${V}courses/upsc-mains-optional-subject-test-series/`],
     ['Mentorship Program 2027', `${V}courses/upsc-mentorship-program/`], ['Interview Guidance Program', `${V}courses/interview-guidance-program/`],
-  ]],
-  ['UPSC Exam', [
-    ['Syllabus & Exam Pattern', `${V}upsc-syllabus/`], ['Optional Subjects List', `${V}upsc-exam/optional-subjects-for-upsc/`],
-    ['Eligibility & Age Limit', `${V}upsc-exam/upsc-age-limit/`], ['Exam Calendar 2027', `${V}upsc-exam/upsc-calendar/`],
-    ['Admit Card & Answer Key', `${V}upsc-exam/upsc-admit-card/`], ['Cut Off & Results', `${V}upsc-exam/upsc-cut-off/`],
-    ['IAS Salary', `${V}upsc-exam/ias-salary/`],
   ]],
   ['Free Resources', [
     ['Current Affairs', `${V}current-affairs/`], ['Previous Year Papers', `${V}upsc-previous-year-papers/`],
