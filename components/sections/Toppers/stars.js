@@ -16,7 +16,7 @@ export default function initStars() {
   var host = box.parentElement;
   var hex = (box.getAttribute('data-stars') || '#ffffff').replace('#', '');
   var rgb = [0, 2, 4].map(function (i) { return parseInt(hex.substr(i, 2), 16); }).join(',');
-  var still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var still = true;   // static glitter (user 2026-11-17): one frame drawn once, like an image; nothing moves or twinkles
 
   var cv = document.createElement('canvas');
   box.innerHTML = '';
