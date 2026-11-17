@@ -231,7 +231,6 @@
    was pushed on the moment it reached its place and the cards under it were squeezed up together as it went. The list now runs on 40% of
    a screen past the last card, so the sixth settles, holds with the others showing under it, and the stack then leaves as one.
    (An empty spacer after the cards, not padding: a sticky card is held within its container's content, which padding is not part of.) */
-@media (max-width: 899px) {
-  #story:not(.cmp--run, .story-run *) .cmp__track::after { content: ""; display: block; height: 40svh; }
-}
-@media (max-width: 899px) and (prefers-reduced-motion: reduce) { #story:not(.cmp--run, .story-run *) .cmp__track::after { display: none; } }
+/* The spacer was taken out again (user 2026-11-17, "in this state there is space under that card"): on a taller screen it showed as an
+   empty band of the ground under the settled stack. With every card the same height (story.js) the stack leaves cleanly without it,
+   the earlier cards only closing up their 12px edges, and the next section follows straight after the last card. */
