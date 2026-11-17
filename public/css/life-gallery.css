@@ -163,3 +163,7 @@
 .lg__smoke { -webkit-mask: linear-gradient(180deg, transparent 0%, #000 22%, #000 78%, transparent 100%); mask: linear-gradient(180deg, transparent 0%, #000 22%, #000 78%, transparent 100%); }
 .lg__smoke--l { background: linear-gradient(90deg, rgba(214, 74, 22, .82) 0%, rgba(210, 72, 20, .55) 38%, rgba(205, 70, 18, .18) 72%, rgba(205, 70, 18, 0) 100%); }
 .lg__smoke--r { background: linear-gradient(270deg, rgba(186, 60, 12, .82) 0%, rgba(186, 60, 12, .55) 38%, rgba(186, 60, 12, .18) 72%, rgba(186, 60, 12, 0) 100%); }
+
+/* phones (760px and narrower, user 2026-11-17): no smoke at the row's sides ("remove the left and right smoke effect only on mobile"), so
+   its two blurred, endlessly drifting clouds no longer run there either; the row is flat on phones (life-gallery.js) */
+@media (max-width: 760px) { .lg__smoke { display: none; } }

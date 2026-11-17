@@ -46,12 +46,20 @@ export default function initLifeGallery() {
   // middle, 1 at the right edge), so the middle card is the smallest and flat-on, and the ones at the edges are larger and angled in,
   // their outer sides tallest. The cards stay where the row lays them out; only how they are drawn changes, as the row scrolls. ----
   const ANG = 30, NEAR = 150, PERSP = 1300;   // degrees of turn, px brought closer, and the viewing distance, at the row's edges
+  // phones (760px and narrower, user 2026-11-17, "simplify it on mobile, for performance and accessibility"): one card is on screen at a
+  // time, so the row is flat there: no turn, depth or re-spacing worked out on every scroll frame, only which card is in the middle
+  const flat = matchMedia('(max-width: 760px)');
   let cf = 0;
   function curve() {
     cf = 0;
     const all = [...track.children].filter(s => !s.hidden); if (!all.length) return;
     const half = track.clientWidth / 2, x0 = all[0].offsetLeft, pad = parseFloat(getComputedStyle(track).paddingLeft) || 0, sl = track.scrollLeft;
     const pos = all.map(s => s.offsetLeft - x0 + pad + s.offsetWidth / 2 - sl);   // read every position first, then draw
+    if (flat.matches) {
+      let mid = 0; pos.forEach((p, k) => { if (Math.abs(p - half) < Math.abs(pos[mid] - half)) mid = k; });
+      all.forEach((s, k) => { if (s.style.transform) s.style.transform = ''; if ((k === mid) !== s.classList.contains('is-mid')) s.classList.toggle('is-mid', k === mid); });
+      return;
+    }
     const wid = all.map(s => s.offsetWidth), G = parseFloat(getComputedStyle(track).columnGap) || 0;
     // Even gaps (user 2026-11-16, "make the gap consistent"): a turned card's near edge grows and its far edge shrinks, and a wide video
     // card swings out further than a photo, so with the cards' centres evenly laid out the gaps between what is seen came out uneven.
@@ -82,6 +90,7 @@ export default function initLifeGallery() {
     });
   }
   track.addEventListener('scroll', () => { if (!cf) cf = requestAnimationFrame(curve); }, { passive: true });
+  flat.addEventListener('change', () => curve());
 
   // back among the originals, to the same picture (one set over looks exactly the same)
   const normalise = () => {
