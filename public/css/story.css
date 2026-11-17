@@ -254,12 +254,16 @@
   #story:not(.cmp--run, .story-run *) .cmp__hd { position: sticky; z-index: 3; top: calc(var(--hdr-h, 74px) + 14px); margin-bottom: 0; padding-bottom: 12px;
     transition: top .35s cubic-bezier(.22, 1, .36, 1); }
   html:has(#nav.nav--away) #story:not(.cmp--run, .story-run *) .cmp__hd { top: 14px; }
-  #story:not(.cmp--run, .story-run *) .cmp__p { top: calc(var(--hdr-h, 74px) + 14px + var(--hd-h, 0px) + (5 - var(--k)) * 10px); }
-  html:has(#nav.nav--away) #story:not(.cmp--run, .story-run *) .cmp__p { top: calc(14px + var(--hd-h, 0px) + (5 - var(--k)) * 10px); }
-  #story:not(.cmp--run, .story-run *) .cmp__ph { aspect-ratio: auto; height: clamp(120px, 100svh - var(--hd-h, 0px) - 500px, 75vw); }
+  #story:not(.cmp--run, .story-run *) .cmp__p { top: calc(var(--hdr-h, 74px) + 14px + var(--hd-h, 180px) + (5 - var(--k)) * 10px); }
+  html:has(#nav.nav--away) #story:not(.cmp--run, .story-run *) .cmp__p { top: calc(14px + var(--hd-h, 180px) + (5 - var(--k)) * 10px); }
   /* the heading leaves with the stack, not a card's height after it: the cards are let go when the list's end reaches the foot of the
      front card, so the heading's room (.cmp__ov's content) ends a card's height (--card-h, story.js) before the list does */
   #story:not(.cmp--run, .story-run *) .cmp__ov { padding-bottom: var(--card-h, 0px); }
   #story:not(.cmp--run, .story-run *) .cmp__track { margin-bottom: calc(-1 * var(--card-h, 0px)); }
+}
+/* phones only (one column, the photo above the text): the photo gives up height so a whole card fits under the heading; tablets lay the
+   card out in two columns, short enough already */
+@media (max-width: 760px) {
+  #story:not(.cmp--run, .story-run *) .cmp__ph { aspect-ratio: auto; height: clamp(120px, 100svh - var(--hd-h, 180px) - 500px, 75vw); }
 }
 @media (max-width: 899px) and (prefers-reduced-motion: reduce) { #story:not(.cmp--run, .story-run *) .cmp__hd { transition: none; } }
