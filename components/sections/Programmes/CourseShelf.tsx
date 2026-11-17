@@ -801,7 +801,12 @@ function Book({ index, programme, hidden, out, open, away, style, onPick, onClos
           type="button"
           aria-label={out ? `Close ${programme.name}` : `Open ${programme.name}`}
           aria-expanded={open}
-          onClick={() => (out ? onClose() : onPick())}
+          onClick={() => {
+            if (out) return onClose();
+            // phones (760px and narrower, user 2026-11-17): a tap on a book goes straight to its course page, no opening book
+            if (window.matchMedia("(max-width: 760px)").matches) { window.location.assign(coursePageHref(programme)); return; }
+            onPick();
+          }}
           className="absolute inset-0 origin-left cursor-pointer rounded-[3px_7px_7px_3px] [transform-style:preserve-3d] focus-visible:outline-offset-4"
           style={{ transform: open ? "rotateY(-180deg)" : "none", zIndex: open ? 55 : 100, transition: flip(OPEN_MS) }}
         >
