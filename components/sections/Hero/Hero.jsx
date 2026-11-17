@@ -95,7 +95,7 @@ export default function Hero() {
                 <b className="hx__fig" data-fig={s.fig}>{s.fig}</b>
                 <span className="hx__fig hx__fig--room" aria-hidden="true">{s.fig}</span>
               </span>
-              <span className="hx__stat-t">{s.label}</span>
+              <span className="hx__stat-t">{s.lines.map((l, k) => <span key={l} className="hx__stat-l">{k ? " " : ""}{l}</span>)}</span>
             </li>
           ))}
         </ul>

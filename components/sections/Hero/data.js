@@ -1,11 +1,12 @@
 // Hero stats (user 2026-11-16: "copy the same code from kevins"): Kevin's four points (branch `kevin`, index.html .hx__stats), each a
 // large figure beside its line. `fig` is the final value; its first number rolls up from 0 (hero-stats.js), so "36/50" rolls its 36.
 // `at` is when the point rises in, in ms after the hero starts (Kevin's --at).
+// each label is set on two lines (user 2026-11-17: "stats label should always be 2 line"): `lines` holds the break
 export const HERO_STATS = [
-  { fig: '50+', label: 'Years of experience since 1976', at: 780 },
-  { fig: '59', label: 'Questions reflected in Prelims', at: 860 },
-  { fig: '10/10', label: 'Top rankers from V&R courses', at: 940 },
-  { fig: '36/50', label: 'CSE 2025 rankers from V&R', at: 1100 },
+  { fig: '50+', label: 'Years of experience', lines: ['Years of', 'experience'], at: 780 },
+  { fig: '59', label: 'Prelims questions reflected', lines: ['Prelims questions', 'reflected'], at: 860 },
+  { fig: '10/10', label: 'Top rankers trained', lines: ['Top rankers', 'trained'], at: 940 },
+  { fig: '36/50', label: 'CSE 2025 rankers', lines: ['CSE 2025', 'rankers'], at: 1100 },
 ];
 
 // What's trending (user 2026-11-16, from Kevin's build, eclectic-alfajores-975fab.netlify.app): the banners of the carousel under

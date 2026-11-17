@@ -182,10 +182,30 @@
   #courses .prog__help { flex-direction: column; align-items: flex-start; }
   #courses .prog__help > :last-child { width: 100%; justify-content: center; }
 }
+/* Phones (user 2026-11-17, "instead of the shelf idea, a horizontal scroll for the programmes on mobile"): the shelf is hidden and the
+   programmes are a row of cards (CourseShelf, ProgrammeRail) that scrolls sideways and runs on to the screen's right edge, the
+   next card cut off there to show there is more. Wider screens keep the shelf and never show the row. */
+#courses .prog__rail { display: none; }
+@media (max-width: 640px) {
+  #courses .prog__stage { display: none; }
+  #courses .prog__rail { display: flex; align-self: flex-start; width: calc(100% + 2 * var(--px)); min-width: 0; gap: 16px; margin: 12px 0 0 calc(var(--px) * -1); padding: 18px var(--px) 34px; scroll-padding-inline: var(--px); overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory; scrollbar-width: none; outline: none; }
+  #courses .prog__rail::-webkit-scrollbar { display: none; }
+  #courses .prog__rail::after { content: ""; flex: none; width: 1px; }
+  #courses .prog__rail:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 12px; }
+  #courses .prog__card { flex: none; width: min(72vw, 270px); scroll-snap-align: start; display: flex; flex-direction: column; gap: 16px; }
+  #courses .prog__card-cover { display: block; position: relative; aspect-ratio: 195 / 230; width: 100%; filter: drop-shadow(0 8px 10px rgb(43 18 6 / .28)); transition: transform .35s var(--ease-out, ease); }
+  #courses .prog__card-cover:active { transform: scale(.98); }
+  #courses .prog__card-cover:focus-visible { outline: 2px solid var(--brand); outline-offset: 4px; border-radius: 8px; }
+  #courses .prog__more { margin-top: 0; }   /* the row's own bottom padding is the gap above "See all programmes" */
+}
 /* the shelf's filter on phones: the bar keeps its chips on one line and scrolls sideways within the screen (its sliding indicator
    scrolls with them) */
 @media (max-width: 640px) {
-  #courses .prog__filter { max-width: 100%; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; }
+  #courses .prog__filter { max-width: none; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; }
+  /* the bar runs on to the screen's right edge (user 2026-11-17), so the chip cut off there shows there is more to scroll to; it still
+     starts at the page margin on the left */
+  #courses .prog__filter { align-self: flex-start; width: calc(100% + var(--px)); margin-right: calc(var(--px) * -1); border-radius: 14px 0 0 14px; padding-right: 20px; }
   #courses .prog__filter::-webkit-scrollbar { display: none; }
   #courses .prog__filter > button { flex: none; }
 }

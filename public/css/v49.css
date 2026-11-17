@@ -3029,3 +3029,17 @@ html main #gs.gs { margin-bottom: var(--sec-y); }
 @media (min-width: 1101px) and (max-width: 1279px) {
   html main #contact .contact__in { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 48px; }
 }
+
+/* Talk to us form on phones (user 2026-11-17, "keep the label on top and the input field below", then "keep the same input field style as
+   on desktop"): the fill-in-the-sentence layout becomes one field per line. Each field has its label above it (the form__lab labels,
+   hidden on larger screens) and its input below, full width, in the same handwritten, dashed-underline style as on desktop; the sentence's
+   lead-in words (form__say) are hidden. */
+.form__lab { display: none; }
+@media (max-width: 600px) {
+  .form--note .form__say { display: none; }
+  .form--note .form__sent { line-height: 1.5; margin: 18px 0 6px; }
+  .form--note .form__sent .line, .form--note .form__sent .keep { display: flex; flex-direction: column; align-items: stretch; gap: 6px; margin: 0 0 20px; white-space: normal; }
+  .form--note .form__lab { display: block; font: 600 14px/1.2 var(--f); letter-spacing: .01em; color: var(--ink); }
+  .form--note .form__sent .blank { flex: none; width: 100%; }
+  .form--note .form__sent .blank--tel { align-items: baseline; }
+}
