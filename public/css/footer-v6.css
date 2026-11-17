@@ -214,3 +214,25 @@ html.foot-curtain .vf::after { content: ""; position: absolute; inset: 0; z-inde
   .vf__logo img.vf__mark { height: 112px; }
   .vf__logo img.vf__wordmark { width: 100%; max-width: 320px; }
 }
+
+/* the legal bar on phones, tidied (user 2026-11-17, "optimise this section too"): centred, the copyright on its own line and the three
+   items centred under it, wrapping evenly; each link at least 24px tall to tap */
+@media (max-width: 760px) {
+  .vf__legal { flex-direction: column; align-items: center; gap: 8px; text-align: center; }
+  .vf__legal p { font-size: 13px; line-height: 20px; opacity: .85; }
+  .vf__legal nav { justify-content: center; gap: 4px 20px; }
+  .vf__legal nav > * { padding-block: 2px; }
+  /* no separator dots: the three items cannot share one line on a phone, and a dot left at the start of the wrapped line read as a stray */
+}
+
+/* social icons sized for Fitts's law (user 2026-11-17, "check Fitts's law for the social icons"): the targets were 32px round, 6px apart on
+   phones, small and close for a thumb. Now 44px targets (the touch guideline) 8px apart on phones, the six still in one row (304px), and
+   40px with a mouse; the glyphs a touch larger. The hover/focus disc is the whole target, so the larger area shows. */
+.vf__socials { gap: 8px; }
+.vf__socials a { width: 40px; height: 40px; }
+.vf__socials a .vf__soc { width: 20px; height: 20px; }
+@media (max-width: 760px) {
+  .vf__socials { gap: 8px; }
+  .vf__socials a { width: 44px; height: 44px; }
+  .vf__socials a .vf__soc { width: 22px; height: 22px; }
+}

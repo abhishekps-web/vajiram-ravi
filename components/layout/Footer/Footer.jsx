@@ -79,7 +79,7 @@ export default function Footer() {
           </svg>
         </div>
         <div className="vf__legal">
-          <p>© 2026 Vajiram &amp; Ravi. All rights reserved</p>
+          <p>© 2026 Vajiram &amp; Ravi. All rights reserved.</p>
           <nav aria-label="Legal">
             {LEGAL.map(([label, href]) => <a key={label} href={href} target="_blank" rel="noopener">{label}</a>)}
             <span>Grievance redressal</span>
