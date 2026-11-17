@@ -1,0 +1,14 @@
+/* Tailwind v4 entry for the carousel indicator only (CarouselDots.jsx, user 2026-11-17, "convert that component to a single file using
+   Tailwind"). Every style is a utility in CarouselDots.jsx; this file only sets Tailwind up for it:
+   - utilities generated from this folder only (source(none) + @source), prefixed `cd:` so they never collide with the Programmes,
+     Success stories, Faculty or promo banner sheets; unlayered, so they hold against the site's plain stylesheets; no preflight;
+   - no theme values (every size and colour is written out in the component), only the prefix;
+   - the timed fill's keyframes. */
+
+@import "tailwindcss/theme.css" layer(theme) prefix(cd);
+@import "tailwindcss/utilities.css" source(none);
+@source "./CarouselDots.jsx";
+
+@theme { --*: initial; }
+
+@keyframes cd-fill { to { transform: scaleX(1); } }

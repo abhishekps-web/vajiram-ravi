@@ -8,15 +8,15 @@
  * shortest way round), so after the last the first comes in from the right like any other; a banner that changes sides out of sight
  * jumps there without sliding. Each banner is a light tint with a faint mandala behind its picture: a label, a headline, one line and
  * the site's primary button; the picture on the right rising a little out of the banner's top (on phones above the type, right
- * aligned). The dots are the site's carousel indicator (.cdots--timed, v49.css): the current one fills over 6 s and its end moves on.
+ * aligned). The dots are the site's carousel indicator (CarouselDots, timed): the current one fills over 6 s and its end moves on.
  * It pauses while the pointer is over the banners or the keyboard is in them, while off screen and while the tab is hidden; with
  * reduced motion it does not advance on its own. Previous / next (on the banner's edges, on hover with a mouse; none on phones), the
  * dots, the arrow keys and a sideways swipe change the banner. Only the banner on show can be reached (the others are inert).
- * Kept for code outside this file: the root's `tr` class (the hero's spacing above it, end of v49.css) and `.cdots` (the indicator).
+ * Kept for code outside this file: the root's `tr` class (the hero's spacing above it, end of v49.css).
  */
 import { useEffect, useRef, useState } from 'react';
 import Button from '@/components/ui/Button/Button';
-import CarouselDots from '@/components/ui/CarouselDots';
+import CarouselDots from '@/components/ui/CarouselDots/CarouselDots';
 import { PROMO_BANNERS } from '../data';
 import './promo-banner.css';
 

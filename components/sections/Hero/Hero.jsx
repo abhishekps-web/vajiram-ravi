@@ -1,5 +1,5 @@
 import Button from '@/components/ui/Button/Button';
-import CarouselDots from '@/components/ui/CarouselDots';
+import CarouselDots from '@/components/ui/CarouselDots/CarouselDots';
 import { HERO_STATS, HERO_TOPPER_SLIDES } from './data';
 import PromoBanner from './PromoBanner/PromoBanner';
 import Stylesheet from '@/components/ui/Stylesheet';
@@ -73,7 +73,7 @@ export default function Hero() {
             over the card, previous / next centred on its two side edges, half outside it (shown while the pointer is over the card;
             hidden on touch screens, where a swipe changes the slide), the dots centred at its foot in a dark pill. Phones (user
             2026-11-16, "the controls move under the hero banner"): one row under the full-bleed card, previous, the dots, next.
-            The dots are the site's .cdots, the current one filling with the slide's time (page-motion.js, through --p). */}
+            The dots are the site's CarouselDots, the current one filling with the slide's time (page-motion.js, through --p). */}
         <div className="hx__navs" role="group" aria-label="Change topper">
           <span className="hx__nav hx__nav--prev"><Button variant="outline" iconOnly size="sm" iconStart="arrow-left" label="Previous topper" className="dl__arrow dl__arrow--prev" /></span>
           <CarouselDots as="p" id="dlProg" className="hx__dots" label="Choose a topper" labels={HERO_TOPPER_SLIDES.map(t => `AIR ${t.rank}: ${t.name}`)} />

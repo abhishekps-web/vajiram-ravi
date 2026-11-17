@@ -29,7 +29,8 @@ components/
                           Faculties (the faculty section, id "educators"; TS + Tailwind, ported from Soloman), Stories, Contact, Resources (data.jsx: the cards), Visit, Faq, Closing, Parked (hidden)
   dialogs/                RanksDialog, CourseCatalogDialog (+ their behaviours; course-catalog.js also opens the catalogue for any [data-cat] link)
   ui/                     shared pieces: Button/ (the button system: Button.jsx, button-core.js, README.md), SectionLabel (.lbl eyebrow),
-                          ArrowIcon/StraightArrow, Dialog, Stylesheet,
+                          ArrowIcon/StraightArrow, Dialog, Stylesheet, CarouselDots/ (every carousel's dot indicator; Tailwind,
+                          `cd:` utilities, entry carousel-dots.css),
                           custom-select.js (accessible dropdown), accordion.js, rail.js
 lib/
   behaviour.js            THE ORDER every behaviour runs in (the order matters; see the comment at its top)

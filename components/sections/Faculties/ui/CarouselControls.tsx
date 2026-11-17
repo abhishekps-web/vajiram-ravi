@@ -4,7 +4,7 @@
 import type { RefObject } from "react";
 import Button from "@/components/ui/Button/Button";
 import { cx } from "@/components/sections/Faculties/lib/cx";
-import SiteDots from "@/components/ui/CarouselDots";
+import SiteDots from "@/components/ui/CarouselDots/CarouselDots";
 
 /*
  * Carousel arrows and dots (motion spec, "Carousel arrows + dots"), the same on every carousel of the page.

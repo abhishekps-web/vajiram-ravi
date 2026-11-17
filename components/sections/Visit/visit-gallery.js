@@ -1,6 +1,6 @@
 /* Contact us: the campus photos (#cmGal, Visit.jsx; public/css/contact-compact.css), as in Kevin's build (js/visit-gallery.js). The
    photos cross-fade on their own, one every 5 s, while the gallery is on screen; the pointer over it holds the current one. The time is
-   the current dot's fill (the site's carousel indicator, .cdots--timed, --cd-t 5s): its animationend moves to the next photo, and
+   the current dot's fill (the site's carousel indicator, CarouselDots timed, 5s): its animationend moves to the next photo, and
    .is-paused holds it. The caption and the dots follow; a dot or the arrows at the sides (shown on hover) go to a photo and start its
    5 s again. With prefers-reduced-motion the photos do not change on their own; the dots and arrows still work. */
 export default function init() {

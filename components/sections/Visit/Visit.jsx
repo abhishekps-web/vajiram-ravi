@@ -1,5 +1,5 @@
 import { photoSrcSet } from '@/lib/photo';
-import CarouselDots from '@/components/ui/CarouselDots';
+import CarouselDots from '@/components/ui/CarouselDots/CarouselDots';
 import Button from '@/components/ui/Button/Button';
 import Stylesheet from '@/components/ui/Stylesheet';
 

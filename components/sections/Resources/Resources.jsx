@@ -1,5 +1,5 @@
 import Button from '@/components/ui/Button/Button';
-import CarouselDots from '@/components/ui/CarouselDots';
+import CarouselDots from '@/components/ui/CarouselDots/CarouselDots';
 import SectionLabel from '@/components/ui/SectionLabel';
 import Stylesheet from '@/components/ui/Stylesheet';
 import ResourceMock from './ResourceMock';
