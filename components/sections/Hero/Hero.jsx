@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import Button from '@/components/ui/Button/Button';
 import CarouselDots from '@/components/ui/CarouselDots/CarouselDots';
 import { HERO_STATS, HERO_TOPPER_SLIDES } from './data';
@@ -24,7 +25,8 @@ export default function Hero() {
               {/* the toppers, AIR 1 to 3, one full photo each; the AIR card (.hx__mark below) and the results ticker follow the topper on
                   show (page-motion.js). The first is the LCP image: loaded eagerly at high priority; the rest load lazily */}
               {HERO_TOPPER_SLIDES.map((t, i) => (
-                <div key={t.rank} className={i === 0 ? 'dl__topper on' : 'dl__topper'} data-rank={t.rank} data-name={t.name}>
+                <div key={t.rank} className={i === 0 ? 'dl__topper on' : 'dl__topper'} data-rank={t.rank} data-name={t.name}
+                  data-h={JSON.stringify(t.h)} data-lead={t.lead}>
                   <img src={t.src} alt="" width="1920" height="822" decoding="async" {...(i === 0 ? { fetchPriority: 'high' } : { loading: 'lazy' })} />
                 </div>
               ))}
@@ -40,7 +42,8 @@ export default function Hero() {
             </div>
           </div>
           {/* the hero's copy, Kevin's hero IA (user 2026-11-16; branch kevin, index.html .hx__copy): the CSE 2025 results pill with its
-              gliding line, the headline, the lead and two buttons. One copy for every slide (the slides change only the photo).
+              gliding line, the headline, the lead and two buttons. The headline and lead are the first slide's here; page-motion.js
+              swaps in each slide's own (data-h, data-lead on its .dl__topper) as the photo changes (user 2026-11-17).
               Styles at the end of v49.css ("Hero copy, Kevin's IA"). */}
           <div className="dl__in">
             <p className="hx__tick rv">
@@ -56,13 +59,11 @@ export default function Hero() {
               </a>
             </p>
             <h1 className="hx__h" id="dlH">
-              <span className="hx__line rv" style={{ "--d": ".05s" }}>Prepare for the UPSC with</span>
-              {" "}
-              <span className="hx__line rv" style={{ "--d": ".12s" }}>the institute behind</span>
-              {" "}
-              <span className="hx__line rv" style={{ "--d": ".19s" }}>India’s top rank-holders.</span>
+              {HERO_TOPPER_SLIDES[0].h.map((line, i) => (
+                <Fragment key={i}>{i ? " " : null}<span className="hx__line rv" style={{ "--d": `${.05 + i * .07}s` }}>{line}</span></Fragment>
+              ))}
             </h1>
-            <p className="hx__lead rv" style={{ "--d": ".27s" }}>Since 1976, Vajiram & Ravi has brought 50 years of Civil Services teaching experience to your preparation, with expert faculty, structured programmes, comprehensive study resources and flexible learning options.</p>
+            <p className="hx__lead rv" style={{ "--d": ".27s" }}>{HERO_TOPPER_SLIDES[0].lead}</p>
             <p className="hx__btns rv" style={{ "--d": ".34s" }}>
               <Button size="md" href="#courses" iconEnd="arrow">Explore programmes</Button>
               <Button onDark size="md" href="#contact">Get expert guidance</Button>

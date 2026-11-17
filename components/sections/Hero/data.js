@@ -46,8 +46,16 @@ export const HERO_TOPPERS = [2, 1, 3].map(r => {
 // The hero's slides, Kevin's banner (user 2026-11-16, "banner same as kevin's version"; branch kevin, index.html .hx__slide): the top
 // three of UPSC CSE 2025, each a full photo with the AIR card (Hero.jsx .hx__mark). page-motion.js fills the card and the results
 // ticker's line from the slide on show. Photos public/assets/img/hero-v6/ (the first is the LCP image).
+// Each slide has its own headline (`h`, its three lines) and lead, which change with the photo (user 2026-11-17, "the text needs to
+// change while changing the image"; page-motion.js). The first slide's copy is the hero's original; 2 and 3 are drafts to confirm.
 export const HERO_TOPPER_SLIDES = [
-  { rank: 1, name: 'Anuj Agnihotri', src: '/assets/img/hero-v6/slide-anuj-agnihotri.webp' },
-  { rank: 2, name: 'Rajeshwari Suve M', src: '/assets/img/hero-v6/slide-rajeshwari-suve-m.webp' },
-  { rank: 3, name: 'Akansh Dhull', src: '/assets/img/hero-v6/slide-akansh-dhull.webp' },
+  { rank: 1, name: 'Anuj Agnihotri', src: '/assets/img/hero-v6/slide-anuj-agnihotri.webp',
+    h: ['Prepare for the UPSC with', 'the institute behind', 'India’s top rank-holders.'],
+    lead: 'Since 1976, Vajiram & Ravi has brought 50 years of Civil Services teaching experience to your preparation, with expert faculty, structured programmes, comprehensive study resources and flexible learning options.' },
+  { rank: 2, name: 'Rajeshwari Suve M', src: '/assets/img/hero-v6/slide-rajeshwari-suve-m.webp',
+    h: ['Learn from the faculty', 'behind 36 of the top 50', 'in UPSC CSE 2025.'],
+    lead: 'Expert faculty and structured General Studies programmes take you through every stage of the exam, from Prelims and Mains to the interview.' },
+  { rank: 3, name: 'Akansh Dhull', src: '/assets/img/hero-v6/slide-akansh-dhull.webp',
+    h: ['Prepare the way', 'this year’s top', 'rank-holders did.'],
+    lead: 'Test series, daily current affairs and mentorship, in the classroom or online, so your preparation fits the way you study.' },
 ];
