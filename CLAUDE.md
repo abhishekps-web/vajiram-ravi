@@ -19,8 +19,8 @@ components/
   layout/                 site chrome
     NavigationBar/        the site header: NavigationBar.jsx, data.js (Study materials menu), nav-menus.js (drawer, mega menus,
                           .scrolled), lang-switch.js; styles public/css/navigation-bar.css (declared by the component)
-    Footer/               Footer.jsx (Kevin's footer, user 2026-11-16; styles public/css/footer-v6.css), data.js (link columns, socials,
-                          news, legal), footer-curtain.js
+    Footer/               Footer.jsx (Kevin's footer, user 2026-11-16; styles public/css/footer-v6.css): one file, user 2026-11-17: the link columns, socials,
+                          news and legal, the markup and initFooterCurtain (the curtain behaviour)
     Intro/                Intro.jsx (server-rendered overlay), intro.js (plays and lifts it)
     WhatsAppButton/       WhatsAppButton.jsx
     SiteBehaviour.jsx     client component: after hydration, imports lib/behaviour.js and starts it

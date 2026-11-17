@@ -237,3 +237,15 @@ html.foot-curtain .vf::after { content: ""; position: absolute; inset: 0; z-inde
 /* while the footer zooms in (footer-curtain.js .vf--zooming, 0 < --foot-p < 1) its content is one composited layer, scaled whole: drawn
    again at every step, the social icons (20px masks) snapped to the pixel grid differently each frame and jumped (user 2026-11-17) */
 html.foot-curtain .vf.vf--zooming > .vf__in, html.foot-curtain .vf.vf--zooming > .foot__frame { will-change: transform; }
+
+/* desktop and tablet (wider than 760px): the legal bar 28px clear of the frame's inner gold rule, which is drawn 24px in from the
+   footer's edge (it sat 8px above it; user 2026-11-17, "fix the spacing here"); and no line under the logo ("not needed in desktop") */
+@media (min-width: 761px) {
+  .vf .vf__in { padding-bottom: 52px; }
+  .vf .vf__tagline { display: none; }
+}
+
+/* the legal line at the link columns' size (user 2026-11-17, "this text size looks different from the footer links"): 15px on every
+   screen (it was 14px, the copyright 13px on phones); the links and "Grievance redressal" medium like the column links */
+.vf .vf__legal p, .vf .vf__legal a, .vf .vf__legal nav > span { font-size: 15px; line-height: 20px; }
+.vf .vf__legal nav > span { font-weight: 500; }
