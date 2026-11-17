@@ -18,12 +18,17 @@ export default function init() {
   // The stacked chapters (under 900px, story.css): every card as tall as the tallest (user 2026-11-17, "fix this": with cards of different
   // heights, the parts of the earlier cards showing under the front one included their buttons). Equal, only a clean edge of each shows.
   // Measured again on resize and once the fonts are in; cleared on wider screens (the pinned scene) and with reduced motion (no stacking).
-  const narrow = matchMedia('(max-width: 899px)');
+  const narrow = matchMedia('(max-width: 899px)'), hd = sec.querySelector('.cmp__hd');
   const even = () => {
     panels.forEach(p => { p.style.minHeight = ''; });
+    // the heading sticks above the stack (user 2026-11-17): its height places the cards under it and sizes their photos (story.css,
+    // --hd-h), so it is set before the cards are measured
+    if (hd && narrow.matches) sec.style.setProperty('--hd-h', hd.offsetHeight + 'px'); else sec.style.removeProperty('--hd-h');
+    sec.style.removeProperty('--card-h');
     if (!narrow.matches || reduce.matches) return;
     const h = Math.max(...panels.map(p => p.offsetHeight));
     panels.forEach(p => { p.style.minHeight = h + 'px'; });
+    sec.style.setProperty('--card-h', h + 'px');   // the heading leaves with the stack (story.css)
   };
   let evenT = 0;
   even();
