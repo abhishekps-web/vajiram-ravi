@@ -2381,7 +2381,7 @@ html main #contact .contact__in > * { margin-bottom: 0; }
    row; its width per ticket keeps the old grid's 4 / 2 / 1 across, the next ticket peeking in on phones. The row keeps the
    page margin as scroll padding, and room above and below for the tickets' lift, tilt and shadow. Arrows: components/ui/rail.js
    (one ticket per press, disabled at either end); centred under the row at every width (user 2026-11-13), 12px apart. ---- */
-#batches .rail--batch { --bgap: clamp(14px, 2vw, 28px); --cw: calc((100% - 3 * var(--bgap)) / 4); margin-top: 0; }
+#batches .rail--batch { --bgap: var(--card-gap, clamp(14px, 2vw, 28px)); --cw: calc((100% - 3 * var(--bgap)) / 4); margin-top: 0; }
 #batches .rail--batch > .rail__track { gap: var(--bgap); row-gap: 0; padding: 18px var(--px) 34px; scroll-padding-inline: var(--px); }
 #batches .rail--batch > .rail__track:focus-visible { outline: 2px solid var(--brand); outline-offset: -2px; border-radius: 12px; }
 #batches .rail__nav { display: flex; justify-content: center; gap: 12px; margin-top: 4px; }
@@ -3045,3 +3045,7 @@ html main #gs.gs { margin-bottom: var(--sec-y); }
 @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
   html main .cover > #dlPin ~ section#courses { margin-top: calc(var(--hx-tall, 0) * 30svh); }
 }
+
+/* The gap between cards in a row, one value for the Batches tickets and the Free Resources folders (user 2026-11-17, "the space between
+   the Free Resources cards should be the same as the batches cards"): 14px on phones, growing with the screen to 28px. */
+:root { --card-gap: clamp(14px, 2vw, 28px); }
