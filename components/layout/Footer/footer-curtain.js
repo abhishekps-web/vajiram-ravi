@@ -11,4 +11,24 @@ export default function init() {
   };
   check(); addEventListener('resize', check); addEventListener('load', check);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(check);
+
+  // The reveal zooms in (user 2026-11-17, "a zoom-in like the hero's zoom-out"): as the page slides up off the footer, its content grows
+  // from 92% to full size and a shade over it lifts, the mirror of the hero shrinking and darkening as Programmes covers it. --foot-p
+  // (0 as the footer starts to show, 1 once it is all uncovered) is set on the footer only, and only while it is being uncovered; the
+  // rule is at the end of public/css/footer-v6.css. Not with reduced motion.
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const page = foot.previousElementSibling && foot.previousElementSibling.tagName === 'MAIN' ? foot.previousElementSibling : document.querySelector('main');
+  if (!page) return;
+  let tick = 0, last = -1;
+  const step = () => {
+    tick = 0;
+    const shown = innerHeight - page.getBoundingClientRect().bottom;          // how much of the screen the footer fills
+    const p = Math.max(0, Math.min(1, shown / Math.min(innerHeight, foot.offsetHeight)));
+    const r = Math.round(p * 1000) / 1000;
+    if (r === last) return;
+    last = r; foot.style.setProperty('--foot-p', r);
+  };
+  addEventListener('scroll', () => { if (!tick) tick = requestAnimationFrame(step); }, { passive: true });
+  addEventListener('resize', step);
+  step();
 }

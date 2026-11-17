@@ -139,3 +139,16 @@ html.foot-curtain footer.vf { position: sticky; bottom: var(--foot-off, 0px); z-
   .vf__in { gap: 22px; padding: 34px 26px 28px; }
   .vf__col ul { gap: 6px; }
 }
+
+/* the reveal zooms in (user 2026-11-17, the mirror of the hero's zoom-out as Programmes covers it): while the page slides up off the
+   footer, the frame and everything in it grow from 92% to full size about the footer's middle, and a shade over the cream lifts from 35%
+   to nothing (--foot-p, 0..1, footer-curtain.js). Only the transform and the shade's opacity change, so the browser composites it. */
+html.foot-curtain .vf > .foot__frame, html.foot-curtain .vf > .vf__in { transform: scale(calc(.92 + var(--foot-p, 1) * .08)); transform-origin: 50% 50%; }
+/* the frame keeps its fade-in (v49.css .fb-anim) but its transform now follows the scroll, so it does not ease after it */
+html.foot-curtain .vf > .foot__frame { transition: opacity .9s var(--ease); }
+html.foot-curtain .vf::after { content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none; background: #1a0a02;
+  opacity: calc((1 - var(--foot-p, 1)) * .35); }
+@media (prefers-reduced-motion: reduce) {
+  html.foot-curtain .vf > .foot__frame, html.foot-curtain .vf > .vf__in { transform: none; }
+  html.foot-curtain .vf::after { display: none; }
+}
