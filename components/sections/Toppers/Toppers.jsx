@@ -97,7 +97,7 @@ export default function Toppers() {
 
   
   <div className="dr" role="region" aria-label="More UPSC CSE 2025 rank holders">
-    <p className="dr__h rv" style={{"--d":".05s"}}><span id="drHead">Ranks 4 to 18, CSE 2025</span></p>
+    <p className="dr__h rv" style={{"--d":".05s"}}><span id="drHead"> 36/50 Ranks, UPSC CSE 2025</span></p>
     
     
     <div className="dr__bar rv" style={{"--d":".1s"}} hidden>
