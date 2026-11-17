@@ -179,3 +179,38 @@ html.foot-curtain .vf::after { content: ""; position: absolute; inset: 0; z-inde
 @media (max-width: 760px) { .vf__brand { width: 100%; } .vf__tagline { font-size: 19px; } }
 /* phones (user 2026-11-17, "under that add the socials in the centre"): the social icons under the logo and its line, centred */
 @media (max-width: 760px) { .vf__bar > .vf__socials { align-self: center; justify-content: center; margin-left: 0; } }
+
+/* the line under the logo, set as on the Bragg footer (user 2026-11-17, footer.design/sites/bragg): upright (not italic), and on phones
+   the brand block centred: the logo, then with clear space under it the line, larger, centred, as a two-line statement (one sentence
+   to a line), then the social icons centred */
+.vf__tagline { font-style: normal; }
+@media (max-width: 760px) {
+  .vf__brand { align-items: center; gap: 22px; text-align: center; }
+  .vf__tagline { font-size: 24px; line-height: 1.25; letter-spacing: -.01em; }
+  .vf__tagline > span { display: block; }
+  .vf__bar { align-items: center; gap: 24px; }
+}
+
+/* the logo as the emblem and the wordmark (two pictures, Footer.jsx; user 2026-11-17, "arrange the logo mark and the wordmark
+   vertically"). Wider screens: side by side, the size the one picture had (220px across). Phones: stacked and centred, the emblem over
+   the wordmark, the wordmark the column's width (at most 320px), as the Bragg footer sets its mark over its line. */
+.vf__logo { display: flex; align-items: center; gap: 11px; }
+.vf__logo img.vf__mark { width: auto; height: 72px; }
+.vf__logo img.vf__wordmark { width: 138px; height: auto; }
+@media (max-width: 760px) {
+  .vf__logo { flex-direction: column; gap: 14px; width: 100%; }
+  .vf__logo img.vf__mark { height: 112px; }
+  .vf__logo img.vf__wordmark { width: 100%; max-width: 320px; }
+}
+
+/* the logo as the emblem and the wordmark (two pictures, Footer.jsx; user 2026-11-17, "arrange the logo mark and the wordmark
+   vertically"). Wider screens: side by side, the size the one picture had (220px across). Phones: stacked and centred, the emblem over
+   the wordmark, the wordmark the column's width (at most 320px), as the Bragg footer sets its mark over its line. */
+.vf__logo { display: flex; align-items: center; gap: 11px; }
+.vf__logo img.vf__mark { width: auto; height: 72px; }
+.vf__logo img.vf__wordmark { width: 138px; height: auto; }
+@media (max-width: 760px) {
+  .vf__logo { flex-direction: column; gap: 14px; width: 100%; }
+  .vf__logo img.vf__mark { height: 112px; }
+  .vf__logo img.vf__wordmark { width: 100%; max-width: 320px; }
+}
