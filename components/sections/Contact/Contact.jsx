@@ -14,20 +14,20 @@ export default function Contact() {
         <form className="form form--note rv" style={{ "--d": ".28s" }} id="form" noValidate data-endpoint="">
           <h3>Book your free session today!</h3>
           <p className="form__sent">
-            <span className="line line--name">{"Hi, I'm "}<span className="blank blank--name">
+            <span className="line line--name"><span className="form__say">{"Hi, I'm "}</span><label className="form__lab" htmlFor="fName">Full name</label><span className="blank blank--name">
               <input id="fName" name="name" autoComplete="name" required placeholder="your full name" aria-label="Your full name" />
             </span></span>
-            <span className="keep">{"and I'm preparing for "}<span className="blank blank--prog">
+            <span className="keep"><span className="form__say">{"and I'm preparing for "}</span><label className="form__lab" htmlFor="fProg">Programme</label><span className="blank blank--prog">
               <select id="fProg" name="programme" required aria-label="Programme you want to join">
                 <option value="">pick a programme</option>
                 <option>Not sure yet</option>
               </select>
             </span></span>
-            <span className="line line--tel">{"Please call me on "}<span className="blank blank--tel">
+            <span className="line line--tel"><span className="form__say">{"Please call me on "}</span><label className="form__lab" htmlFor="fPhone">Mobile number</label><span className="blank blank--tel">
               <span className="blank__cc" aria-hidden="true">+91</span>
               <input id="fPhone" name="phone" type="tel" inputMode="numeric" pattern={"[6-9][0-9]{9}"} maxLength="10" autoComplete="tel-national" required placeholder="10-digit mobile" aria-label="Your 10-digit mobile number" />
             </span></span>
-            <span className="keep">{"in the "}<span className="blank blank--time">
+            <span className="keep"><span className="form__say">{"in the "}</span><label className="form__lab" htmlFor="fTime">Preferred time for the call</label><span className="blank blank--time">
               <select id="fTime" name="time" required aria-label="Preferred time for the call">
                 <option value="">preferred time</option>
                 <option>Morning, 9 am to 12 pm</option>
@@ -35,7 +35,7 @@ export default function Contact() {
                 <option>Evening, 4 pm to 7 pm</option>
               </select>
             </span></span>
-            <span className="line line--mail">{"or email me on "}<span className="blank blank--mail">
+            <span className="line line--mail"><span className="form__say">{"or email me on "}</span><label className="form__lab" htmlFor="fEmail">Email (optional)</label><span className="blank blank--mail">
               <input id="fEmail" name="email" type="email" autoComplete="email" placeholder="you@email.com" aria-label="Your email, optional" />
             </span></span>
           </p>

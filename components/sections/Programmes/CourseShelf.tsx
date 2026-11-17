@@ -31,17 +31,19 @@ const OPEN_H = 2 * ROW_H;
 
 /**
  * Responsive (this site, 2026-11-13; soloboy is a fixed 1440px canvas): up to four books to a plank on wide screens, three on
- * tablets and phones (shelfCols; phones had two until 2026-11-16). The stage is as wide as soloboy's for four (1180, planks 1080, spine in the middle) and
+ * tablets and two on phones (shelfCols; phones had three from 2026-11-16 to 2026-11-17). The stage is as wide as soloboy's for four (1180, planks 1080, spine in the middle) and
  * narrower for fewer, but never narrower than the open book (two pages and a margin); it is then scaled to fit its column
  * (CSS zoom, CourseShelf), so on a 1440px screen nothing differs from soloboy.
  */
 type Geom = { cols: number; stageW: number; plankW: number; spine: Pt };
-function geomFor(cols: number): Geom {
+// `tight` (phones, two to a plank, nothing open): the stage hugs the two books instead of being as wide as the open book, so they are
+// scaled up to fill the column (user 2026-11-17). With a book open the stage widens to the open book again (the zoom eases between).
+function geomFor(cols: number, tight = false): Geom {
   const books = cols * BOOK.w + (cols - 1) * GAP;
-  const stageW = Math.max(books + 216, 2 * PAGE.w);
-  return { cols, stageW, plankW: books + 116, spine: { x: stageW / 2, y: OPEN_H / 2 } };
+  const stageW = tight ? books + 84 : Math.max(books + 216, 2 * PAGE.w);
+  return { cols, stageW, plankW: tight ? books + 60 : books + 116, spine: { x: stageW / 2, y: OPEN_H / 2 } };
 }
-const shelfCols = (width: number) => (width >= 1024 ? 4 : 3);   // phones too: three books to a plank (user 2026-11-16, was two)
+const shelfCols = (width: number) => (width >= 1024 ? 4 : width > 640 ? 3 : 2);   // four to a plank on wide screens, three on tablets, two on phones: the eight programmes are four planks of two (user 2026-11-17; phones had three from 2026-11-16)
 
 /** A book coming forward (and going back), and its cover swinging open (and shut). */
 const MOVE_MS = 650;
@@ -276,15 +278,16 @@ export default function CourseShelf({ programmes }: { programmes: Programme[] })
   // Books per plank for this screen, and the scale that fits the stage in its column (1 on wide screens).
   const frameRef = useRef<HTMLDivElement>(null);
   const [cols, setCols] = useState(4);
-  const [fit, setFit] = useState(1);
-  const g = geomFor(cols);
+  const [frameW, setFrameW] = useState(0);
+  const g = geomFor(cols, cols === 2 && picked === null);
+  const fit = frameW ? Math.min(1, frameW / g.stageW) : 1;
   useLayoutEffect(() => {
     const frame = frameRef.current;
     if (!frame) return;
     const measure = () => {
       const c = shelfCols(window.innerWidth);
       setCols(c);
-      setFit(Math.min(1, frame.clientWidth / geomFor(c).stageW));
+      setFrameW(frame.clientWidth);
     };
     measure();
     const ro = new ResizeObserver(measure);
@@ -499,7 +502,7 @@ export default function CourseShelf({ programmes }: { programmes: Programme[] })
       <div
         ref={rootRef}
         id="programme-shelf"
-        className="relative mt-10 [transition:height_600ms_var(--ease-out)]"
+        className="prog__stage relative mt-10 [transition:height_600ms_var(--ease-out),zoom_650ms_var(--ease-out)]"
         style={{ width: g.stageW, height: away ? Math.max(rows * ROW_H, OPEN_H) : rows * ROW_H, zoom: fit }}
         onClick={(event) => event.target === event.currentTarget && close()}
       >
@@ -539,6 +542,31 @@ export default function CourseShelf({ programmes }: { programmes: Programme[] })
           />
         ))}
       </div>
+      {/* Phones (640px and narrower; user 2026-11-17, instead of the shelf): the programmes as a row of cards to swipe sideways, the
+          next card showing at the screen's edge. The shelf above is hidden there (programmes.css); the filter drives both. */}
+      <ProgrammeRail programmes={shown.map((i) => programmes[i])} filter={filter} />
+    </div>
+  );
+}
+
+/**
+ * The programmes on phones: a row of cards that scrolls sideways (snapping card by card, the next one peeking in from the right
+ * edge so it reads as a row to swipe). Each card is just the book's cloth cover, a link to the programme's course page. The shelf (the stage above) is hidden at this width, so the books' open-book motion is not used here.
+ */
+function ProgrammeRail({ programmes, filter }: { programmes: Programme[]; filter: Filter }) {
+  const railRef = useRef<HTMLDivElement>(null);
+  // A different category starts the row from its first card again.
+  useEffect(() => { railRef.current?.scrollTo({ left: 0 }); }, [filter]);
+  return (
+    <div ref={railRef} className="prog__rail" role="region" aria-roledescription="carousel" aria-label="Programmes" tabIndex={0}>
+      {programmes.map((programme) => (
+        <article key={programme.name} className="prog__card">
+          {/* the book alone (user 2026-11-17): the whole cover is the link to the programme's course page */}
+          <a className="prog__card-cover" href={coursePageHref(programme)} aria-label={`View course: ${programme.name}`}>
+            <CoverFront programme={programme} large={false} />
+          </a>
+        </article>
+      ))}
     </div>
   );
 }
