@@ -650,12 +650,12 @@ html.foot-curtain footer.foot { position: sticky; bottom: var(--foot-off, 0px); 
 .js .lang { animation: langIn .7s var(--ease) .15s both; }
 @keyframes langIn { from { opacity: 0; transform: translateY(-10px); } }
 /* label swap when the language changes */
-.nav__a.is-sw, .drawer a.is-sw, .talk .btn__label.is-sw { animation: langSw .45s var(--ease); }
+.nav__a.is-sw, .drawer a:not(.btn).is-sw, .talk .btn__label.is-sw { animation: langSw .45s var(--ease); }
 @keyframes langSw { from { opacity: 0; transform: translateY(6px); } }
-html[lang="hi"] .nav__a, html[lang="hi"] .drawer a, html[lang="hi"] .talk .btn__t { font-family: "Mukta", var(--f); }
+html[lang="hi"] .nav__a, html[lang="hi"] .drawer a:not(.btn), html[lang="hi"] .talk .btn__t { font-family: "Mukta", var(--f); }
 @media (max-width: 1100px) { .nav__end { margin-left: 10px; } .nav__end .talk { margin-left: 0; } }
 @media (max-width: 480px) { .nav__end { gap: 6px; margin-left: 6px; } .lang__b { min-width: 32px; padding: 0 6px; font-size: 12.5px; } .lang__b[lang="hi"] { font-size: 14.5px; } .nav .nav__logo, .nav--hero .nav__logo { margin-right: 8px; } .nav--hero .nav__logo .lg, .nav__logo .lg { height: 34px; } }
-@media (prefers-reduced-motion: reduce) { .lang, .lang__thumb, .lang__b { transition: none; animation: none; } .nav__a.is-sw, .drawer a.is-sw, .talk .btn__label.is-sw { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .lang, .lang__thumb, .lang__b { transition: none; animation: none; } .nav__a.is-sw, .drawer a:not(.btn).is-sw, .talk .btn__label.is-sw { animation: none; } }
 
 /* ---- section titles: one size everywhere (64px on desktop, 40px on phones). The hero, the Toppers masthead and card headings are not section titles. ---- */
 :root { --h2: clamp(40px, 6vw, 64px); }
@@ -1127,6 +1127,7 @@ section#why.wc, #stories.sheet, #faq.sheet { background: var(--ground); }   /* o
    tilt, a transform, is untouched); js/page-motion.js adds .sg and then .in, items carry --i. ---- */
 .rv-btn { margin: 0; }
 #faq .faq__l .rv-btn { display: flex; justify-content: center; }
+@media (max-width: 640px) { #faq .faq__l .rv-btn { align-self: stretch; } }   /* the phone CTA is full width (buttons.css): the wrapper must span the column, or the button squeezes to its label */
 .sg > * { opacity: 0; translate: 0 28px; transition: opacity .7s var(--ease), translate .85s var(--ease); transition-delay: calc(var(--i, 0) * 80ms); }
 .sg.in > * { opacity: 1; translate: 0 0; }
 @media (prefers-reduced-motion: reduce) { .sg > * { opacity: 1; translate: none; transition: none; } }
@@ -1475,6 +1476,13 @@ footer.foot { padding-left: 76px; padding-right: 76px; }
 .mega__aside p.mega__k { margin: 0; letter-spacing: .1em; }
 .mega p.mega__p { margin: 0; font: 400 14px/1.5 var(--f); text-transform: none; color: #4A4038; }
 .mega .mega__cta { align-self: stretch; margin: 4px 0 0; }
+/* the menu's own button (user 2026-11-17: its label showed grey on the orange): `.mega a span` (v25) styles the small meta spans, and the
+   button's label spans are spans too, so they take the button's own colour and type back */
+.mega a.btn .btn__label, .mega a.btn .btn__t { font: inherit; color: inherit; letter-spacing: inherit; line-height: inherit; }
+/* the menu's side panel is narrow: the full-width button's empty left column (for the phone layout) goes, so the label has the room */
+.mega .mega__cta.btn--full.btn--disc { grid-template-columns: minmax(0, 1fr) var(--btn-disc); }
+.mega .mega__cta.btn--full.btn--disc > .btn__label { grid-column: 1; }
+.mega .mega__cta.btn--full.btn--disc > .btn__disc { grid-column: 2; }
 .mega a.mega__all { display: inline-flex; align-items: center; gap: 8px; margin: auto 0 0; padding: 0; font: 700 14px/1.2 var(--f); color: var(--brand); text-decoration: none; }
 .mega__all svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform .25s var(--ease); }
 .mega a.mega__all:focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; border-radius: 3px; }

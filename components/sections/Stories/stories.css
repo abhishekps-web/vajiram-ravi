@@ -51,3 +51,90 @@ html.js #stories:not([data-in]) > .lbl { opacity: 0; }
 @supports (overflow: clip) {
   #tcar { overflow: visible; overflow-x: clip; }
 }
+
+/* =====================================================================================================================
+   PHONES (760px and narrower, user 2026-11-17): the loop becomes a stack of cards instead of an auto-scrolling track.
+   One card in front, the next two peeking out behind it, tilted alternately; swipe the front card away or use the arrows.
+   stories.js sets --p (0 = front) on every card and --sg (+1 / -1) for the tilt side. Unlayered, so these win over the
+   `st:` utilities on the cards (hover scale, tilt, the deal animation) without touching them on larger screens.
+   ===================================================================================================================== */
+.tstack-nav { display: none; }
+@media (max-width: 760px) {
+  #stories { overflow-x: clip; }
+  #tcar {
+    overflow: visible; -webkit-mask-image: none; mask-image: none;
+    margin-inline: 0; padding: 28px 0 8px; margin-bottom: 0;
+    touch-action: pan-y;
+  }
+  #tcar > :first-child {            /* the track: every card on the same grid cell, no slide */
+    display: grid; width: 100%; animation: none; transform: none; will-change: auto;
+    padding-bottom: 36px;           /* room for the cards peeking out below the front one */
+  }
+  #tcar .pst {
+    --q: min(var(--p, 0), 2);
+    grid-area: 1 / 1; justify-self: center; align-self: start;
+    width: min(360px, 88vw); margin: 0;
+    z-index: calc(10 - var(--q)); transform-origin: 50% 100%;
+    rotate: calc(var(--sg, 1) * var(--q) * 2.5deg + var(--srd, 0deg));
+    translate: var(--sdx, 0px) calc(var(--q) * 16px);
+    scale: calc(1 - var(--q) * .05);
+    opacity: 1; filter: brightness(calc(1 - var(--q) * .03)); animation: none;
+    transition: rotate .9s cubic-bezier(.22,1,.36,1), translate .9s cubic-bezier(.22,1,.36,1), scale .9s cubic-bezier(.22,1,.36,1);
+    pointer-events: none; cursor: grab;
+  }
+  /* the Tailwind sheet is unlayered and its dealt-in animation is more specific than these rules: switch it off for good here
+     (it restarted whenever a card left .is-in / .is-out, which made the card flash and fade back in) */
+  #tcar .pst:not(.is-out):not(.is-in) { animation: none !important; }
+  /* phones: the card grows with its quote instead of cropping it at a fixed ratio; every card takes the height of the tallest,
+     so the stack stays one shape (the label, quote and name flow in a column instead of being placed absolutely) */
+  #tcar .pst { align-self: stretch; }
+  #tcar .pst > div { height: 100%; aspect-ratio: auto; display: flex; flex-direction: column; padding: 18px 24px 20px; box-sizing: border-box; }
+  #tcar .pst > div > p { position: static; margin: 0 0 12px; }
+  #tcar .pst blockquote { position: static; inset: auto; flex: 1 1 auto; overflow: visible; }
+  #tcar .pst footer { position: static; inset: auto; margin-top: 14px; }
+  #tcar .pst.is-front { pointer-events: auto; }
+  #tcar .pst.is-gone { visibility: hidden; }
+  #tcar .pst.is-drag { transition: none; cursor: grabbing; }
+  /* the front card slips out to the side, drops behind the stack and settles at the back; the card behind it rises meanwhile
+     (its --p changes at once and transitions). Previous does the reverse with the card from the back. */
+  #tcar .pst.is-out { animation: st-behind 1s linear both; }
+  #tcar .pst.is-in { animation: st-ahead 1s .3s linear both; }
+  #tcar .pst:hover, #tcar .pst:focus-within { z-index: calc(10 - var(--q)); }
+  #tcar .pst.is-front:hover { scale: 1; }
+  /* the entrance moves to the stack itself (the cards' own deal animation would pin their opacity) */
+  html.js #stories:not([data-in]) #tcar { opacity: 0; }
+  @media (prefers-reduced-motion: no-preference) { #stories[data-in] #tcar { animation: st-fade .8s .2s ease both; } }
+
+  .tstack-nav { display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: 18px; }
+  .tstack-btn {
+    display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; padding: 0;
+    border: 1px solid rgba(27, 42, 82, .18); background: rgba(255, 255, 255, .7); color: #1B2A52; cursor: pointer;
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    box-shadow: 0 6px 16px -8px rgba(27, 42, 82, .45);
+    transition: transform .25s var(--ease), background-color .25s var(--ease);
+  }
+  .tstack-btn:active { transform: scale(.92); }
+  .tstack-btn:focus-visible { outline: 2px solid #1B2A52; outline-offset: 3px; }
+  .tstack-count { font: 600 14px/1 var(--f); letter-spacing: .06em; color: rgba(27, 42, 82, .7); min-width: 4.5em; text-align: center; }
+  .tstack-count b { color: #1B2A52; }
+}
+@media (max-width: 760px) and (prefers-reduced-motion: reduce) {
+  #tcar .pst { transition-duration: 0s; }
+  #tcar .pst.is-out, #tcar .pst.is-in { animation: none; }
+}
+/* the card leaves the stack completely (sideways, past the other cards), changes layer while it is clear of them, then
+   slides back in behind: it never passes through a card. The section clips the sideways overshoot (#stories, below). */
+@keyframes st-behind {
+  0%   { z-index: 10; visibility: visible; opacity: 1; scale: 1; translate: var(--sdx, 0px) 0; rotate: var(--srd, 0deg); animation-timing-function: cubic-bezier(.3, 0, .2, 1); }
+  45%  { z-index: 10; visibility: visible; opacity: 1; scale: .97; translate: calc(var(--dir, 1) * 108%) -8px; rotate: calc(var(--dir, 1) * 9deg); }
+  46%  { z-index: 0; animation-timing-function: cubic-bezier(.4, 0, .2, 1); }
+  70%  { z-index: 0; visibility: visible; opacity: 1; }
+  100% { z-index: 0; visibility: visible; opacity: 1; scale: .9; translate: 0 32px; rotate: calc(var(--sg, 1) * 5deg); }
+}
+@keyframes st-ahead {
+  0%   { z-index: 0; visibility: visible; opacity: 1; scale: .9; translate: 0 32px; rotate: calc(var(--sg, 1) * 5deg); animation-timing-function: cubic-bezier(.3, 0, .2, 1); }
+  30%  { z-index: 0; visibility: visible; opacity: 1; }
+  54%  { z-index: 0; visibility: visible; opacity: 1; scale: .97; translate: calc(var(--dir, -1) * 108%) -8px; rotate: calc(var(--dir, -1) * 9deg); }
+  55%  { z-index: 10; animation-timing-function: cubic-bezier(.4, 0, .2, 1); }
+  100% { z-index: 10; visibility: visible; opacity: 1; scale: 1; translate: 0 0; rotate: 0deg; }
+}

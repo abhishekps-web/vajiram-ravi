@@ -5,6 +5,7 @@
 //   - a card with three quarters or more of it outside the viewport takes no hover at all
 //   - a card hovered or focused near the left or right edge slides inward just enough that its enlarged face is fully readable
 import { $, reduce } from '@/lib/site';
+import initCardStack from '@/components/ui/card-stack';
 
 export function initStories() {
   const st = $('#stories'), tc = $('#tcar');
@@ -16,6 +17,8 @@ export function initStories() {
     const seen = new IntersectionObserver(es => { if (es[0].isIntersecting) { st.setAttribute('data-in', ''); seen.disconnect(); } }, { threshold: .25 });
     seen.observe(st);
   } else st.setAttribute('data-in', '');
+
+  if (track) initCardStack(tc, track);
 
   if (io && track) {
     new IntersectionObserver(es => { track.style.animationPlayState = es[0].isIntersecting ? '' : 'paused'; }).observe(tc);

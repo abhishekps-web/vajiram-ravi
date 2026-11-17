@@ -21,7 +21,7 @@ function Postcard({ card, i, copy }) {
         'st:dimmed:[filter:blur(3.5px)] st:dimmed:opacity-55',
         'st:waiting:opacity-0 st:motion-safe:dealt:animate-[st-deal_.9s_cubic-bezier(.34,1.56,.64,1)_calc(.26s+var(--n,0)*.13s)_both]',
         'st:max-[900px]:w-[min(380px,86vw)] st:motion-reduce:transition-none',
-        copy && 'st:motion-reduce:hidden',
+        copy && 'st:motion-reduce:hidden st:max-[760px]:hidden',
       ].filter(Boolean).join(' ')}
       aria-hidden={copy || undefined}
       inert={copy || undefined}
@@ -91,6 +91,16 @@ export default function Stories() {
         >
           {POSTCARDS.map((card, i) => <Postcard key={card.rank} card={card} i={i} />)}
           {POSTCARDS.map((card, i) => <Postcard key={`copy-${card.rank}`} card={card} i={i} copy />)}
+        </div>
+        {/* phones (760px and narrower): the loop becomes a stack of cards, one in front; swipe it, or use these (stories.js, stories.css) */}
+        <div className="tstack-nav" role="group" aria-label="Testimonials">
+          <button type="button" className="tstack-btn" data-tstack="prev" aria-label="Previous testimonial">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
+          </button>
+          <span className="tstack-count" aria-live="polite"><b data-tstack="cur">1</b> / {POSTCARDS.length}</span>
+          <button type="button" className="tstack-btn" data-tstack="next" aria-label="Next testimonial">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg>
+          </button>
         </div>
       </div>
     </section>

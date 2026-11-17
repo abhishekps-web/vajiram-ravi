@@ -67,6 +67,15 @@ export default function NavigationBar() {
         <a href="#batches">Upcoming batches</a>
         <a href="#faq">FAQs</a>
         <a href="#contact">Contact us</a>
+        {/* phones (760px and narrower): the bar holds only the logo and the burger, so the language switch and the CTA live here */}
+        <div className="drawer__end">
+          <div className="lang" role="group" aria-label="Language / भाषा">
+            <span className="lang__thumb" aria-hidden="true" />
+            <button className="lang__b" type="button" data-lang="en" lang="en" aria-pressed="true" title="English">EN</button>
+            <button className="lang__b" type="button" data-lang="hi" lang="hi" aria-pressed="false" title="हिन्दी">हिं</button>
+          </div>
+          <Button className="drawer__talk" size="sm" href="#contact" iconEnd="arrow">Let's talk</Button>
+        </div>
       </div>
     </>
   );
