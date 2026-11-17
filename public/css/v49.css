@@ -3071,7 +3071,7 @@ html main #gs.gs { margin-bottom: var(--sec-y); }
 .dl--pin.has-shade::after { display: none; }
 .dl__shade { position: absolute; inset: 0; z-index: 6; background: #1a0a02; opacity: 0; pointer-events: none; will-change: opacity; }
 
-/* Carousel dots: the non-current dots are hollow rings (user 2026-11-17, "for non-active dots, do not just reduce their size"): an empty
+/* Carousel dots: the non-current dots were first hollow rings (user 2026-11-17, "for non-active dots, do not just reduce their size"): an empty
    centre inside a solid 1.5px edge, so a dot that is not current differs from the current one by fill and shape, not only by size, and
    its edge holds 3:1 or better against its ground (white on photos and dark grounds, brand orange on light ones). The current dot is the
    filled pill, as before; a hovered ring fills in. One component renders every row (components/ui/CarouselDots.jsx). */
@@ -3079,3 +3079,9 @@ html main #gs.gs { margin-bottom: var(--sec-y); }
 .cdots--light { --cd-edge: rgba(194, 65, 12, .8); }
 .cdots > button:not([aria-current="true"]) { background: transparent; background-clip: padding-box; box-shadow: inset 0 0 0 1.5px var(--cd-edge); }
 .cdots > button:not([aria-current="true"]):hover { background: var(--cd-edge); background-clip: padding-box; }
+/* …then, the same day (user 2026-11-17, "make the inactive dots filled and reduce their size"): filled, solid dots in that strong colour,
+   6px instead of 9px (the current dot stays the 9px tall pill), so they read clearly at the smaller size; a hovered one grows back to 9px.
+   The 8px tap border around each is unchanged, so the targets stay 22px and up. */
+.cdots > button:not([aria-current="true"]) { width: 6px; height: 6px; background: var(--cd-edge); background-clip: padding-box; box-shadow: none;
+  transition: width .35s cubic-bezier(.65, 0, .35, 1), height .25s ease, background-color .2s; }
+.cdots > button:not([aria-current="true"]):hover { width: 9px; height: 9px; background-clip: padding-box; }
