@@ -35,7 +35,9 @@ export default function init() {
   if (!spacer || !spacer.classList.contains('cmp__run')) {
     spacer = document.createElement('div'); spacer.className = 'cmp__run'; spacer.setAttribute('aria-hidden', 'true'); sec.after(spacer);
   }
-  const H = () => document.documentElement.clientHeight || innerHeight;
+  // the screen's height. Never more than innerHeight: in quirks mode (the workers.dev deployment served a <script> before the doctype,
+  // 2026-11-17) documentElement.clientHeight is the whole page's height, which made the spacer ~28,000px and opened the scene at chapter 4
+  const H = () => Math.min(document.documentElement.clientHeight || innerHeight, innerHeight);
   let on = false, raf = 0, last = 0, su = null, slotW = 0, slotL = 0;
 
   // scroll progress in vh since the section's top reached the top of the screen (the section is sticky, so read the spacer's position)
