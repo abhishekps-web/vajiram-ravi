@@ -3029,3 +3029,12 @@ html main #gs.gs { margin-bottom: var(--sec-y); }
 @media (min-width: 1101px) and (max-width: 1279px) {
   html main #contact .contact__in { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 48px; }
 }
+
+/* Batches: one height for every ticket (user 2026-11-17, "a height difference between the sealed and unsealed cards"). The "Limited seats"
+   stamp sat in the study-mode row's flow, so that row was 86px on a sealed ticket and 44px on the others, and a sealed ticket was taller
+   wherever the rail did not stretch them to match. The stamp is now laid over the row's bottom right corner (where it already sat), out of
+   the flow, and the row is the stamp's height on every ticket, so every ticket is the same height; the study-mode text keeps clear of it. */
+/* the row is as tall as the stamp on every ticket, sealed or not, so the stamp never reaches up into the copy above it */
+.ticket__meta { position: relative; min-height: 78px; box-sizing: border-box; }
+.ticket__meta .ticket__limited { position: absolute; right: 0; bottom: -4px; margin: 0; }
+.ticket__meta:has(.ticket__limited) dl { padding-right: 90px; }
