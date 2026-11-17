@@ -9,7 +9,7 @@ export const HERO_STATS = [
 ];
 
 // Promo banner (user 2026-11-16, from Kevin's build, eclectic-alfajores-975fab.netlify.app): the banners of the carousel under
-// the hero stats (PromoBanner.jsx). `tone` picks the banner's tint (public/css/promo-banner.css); `prog` pre-selects that programme in the
+// the hero stats (PromoBanner/PromoBanner.jsx). `tone` picks the banner's tint (TONES there); `prog` pre-selects that programme in the
 // contact form; pictures are the Free resources cut-outs (public/assets/img/resources/cutout/).
 const RES = 'https://vajiramandravi.com/';
 const CUT = '/assets/img/resources/cutout';

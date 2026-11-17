@@ -1,6 +1,6 @@
 import Button from '@/components/ui/Button/Button';
 import { HERO_STATS, HERO_TOPPER_SLIDES } from './data';
-import PromoBanner from './PromoBanner';
+import PromoBanner from './PromoBanner/PromoBanner';
 import Stylesheet from '@/components/ui/Stylesheet';
 
 // the results pill's line (Kevin's hero: the topper on show; here the CSE 2025 AIR 1)
