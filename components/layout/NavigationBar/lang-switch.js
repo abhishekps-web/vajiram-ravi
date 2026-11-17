@@ -30,5 +30,7 @@ export default function init() {
     const lang = b.dataset.lang; if (sw.dataset.cur === lang) return;
     try { localStorage.setItem(KEY, lang); } catch (e) {}
     apply(lang, true);
+    // on phones the chosen language's button is hidden (navigation-bar.css): keep focus on the switch
+    if (document.activeElement === b && !b.offsetParent) [...b.parentElement.querySelectorAll('.lang__b')].find(x => x !== b)?.focus();
   }));
 }

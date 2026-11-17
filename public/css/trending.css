@@ -83,6 +83,12 @@
 @media (max-width: 480px) {
   .tr__cta.btn { width: 100%; justify-content: space-between; }
 }
+/* phones (user 2026-11-17): the picture moves above the type, centred, with the mandala behind it */
+@media (max-width: 760px) {
+  .tr__pic { order: -1; margin: 22px 22px 0; justify-content: center; }
+  .tr__copy { padding: 18px 22px 26px; }
+  .tr__orn::before { right: 50%; top: -14%; bottom: auto; width: min(70%, 340px); translate: 50% 0; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .tr__slide, .tr__pic img { transition: none; }
