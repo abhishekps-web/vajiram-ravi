@@ -177,3 +177,22 @@
 .lg__vctl .lg__vi-pause, .lg__vctl.is-playing .lg__vi-play { display: none; }
 .lg__vctl.is-playing .lg__vi-pause { display: inline; }
 .lg__slide.is-copy .lg__vctl { visibility: hidden; }   /* the loop's copies are inert: no control on them */
+
+/* One card at a time (user 2026-11-17, "set the scrolling to one at a time"): the row snaps again, each card to the middle, and a swipe
+   or flick stops at the very next card (scroll-snap-stop: always). The row no longer glides by itself (DRIFT = false), so the snap no
+   longer pulls against anything; life-gallery.js still moves it back among the originals, to the same picture, once it rests. */
+.lg__track { scroll-snap-type: x mandatory; }
+.lg__slide { scroll-snap-align: center; scroll-snap-stop: always; }
+
+/* The play button in the middle of the video, over a black veil (user 2026-11-17, "place the play button at the centre with a black
+   overlay so it is prominent"): a 56px round button centred on the card, the card darkened under it. Once the video plays, the veil
+   lifts and the button (now pause) quietens to 60% until the pointer or focus is on it, so the video shows; it stays reachable by touch. */
+.lg__slide--vid .lg__media::after { content: ""; position: absolute; inset: 0; z-index: 1; background: rgba(0, 0, 0, .45); pointer-events: none;
+  transition: opacity .35s ease; }
+.lg__slide--vid .lg__media:has(.lg__vctl.is-playing)::after { opacity: 0; }
+.lg__vctl.btn { inset: 0; margin: auto; --btn-h: 56px; width: 56px; height: 56px; z-index: 2;
+  transition: opacity .3s ease; }
+.lg__vctl.btn svg { width: 22px; height: 22px; }
+.lg__vctl.btn.is-playing { opacity: .6; }
+.lg__vctl.btn.is-playing:hover, .lg__vctl.btn.is-playing:focus-visible { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .lg__slide--vid .lg__media::after, .lg__vctl.btn { transition: none; } }
