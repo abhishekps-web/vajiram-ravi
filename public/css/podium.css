@@ -403,3 +403,16 @@
 
 /* performance (user 2026-11-16): the looping animations rest while the section is off screen (.pd--off, set by stars.js) */
 #toppers.pd--off, #toppers.pd--off *, #toppers.pd--off *::before, #toppers.pd--off *::after { animation-play-state: paused !important; }
+
+/* Portraits on iPhone (user 2026-11-17, screenshot from Safari): Safari draws a clip-path: url() only inside the clipped element's own
+   box, so the heads that rise over the shields were cut flat at the shield's top edge. The portrait's box now starts .4 of the
+   shield's height above the shield (#pdPhotoTall, the same outline in that taller box, Toppers.jsx) and the photo moves down by as
+   much, so nothing on screen moves in other browsers. */
+.pd__pic { top: calc(var(--h) * -.4); clip-path: url(#pdPhotoTall); }
+.pd__img { top: calc(var(--h) * .16); }
+.dr__pic { top: calc(var(--dh) * -.4); clip-path: url(#pdPhotoTall); }
+.dr__pic img { top: calc(var(--dh) * .33); }
+/* The crest portraits (2025-crest/*.webp) were made taller by stretching their last row of pixels down (from 70.5% of the picture's
+   height), which showed as a smeared band in the shield's point. The photo now fades out just before that row, onto the shield's own
+   orange photo area. */
+.pd__img { -webkit-mask: linear-gradient(180deg, #000 60%, transparent 70%); mask: linear-gradient(180deg, #000 60%, transparent 70%); }

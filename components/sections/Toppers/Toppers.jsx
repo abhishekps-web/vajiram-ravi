@@ -16,6 +16,11 @@ export default function Toppers() {
     <clipPath id="pdPhoto" clipPathUnits="objectBoundingBox">
       <path d="M-.4 -.4H1.4V.07054H.95555V.61698C.95555 .68779 .77906 .84233 .49904 .94408C.21903 .84233 .04445 .68779 .04445 .61698V.07054H-.4Z"/>
     </clipPath>
+    {/* #pdPhoto for a box that starts .4 of the shield's height above it (y' = (y + .4) / 1.4): Safari draws a clip-path only inside the
+        clipped element's own box, so the head that rises over the shield needs to be inside that box (podium.css, end) */}
+    <clipPath id="pdPhotoTall" clipPathUnits="objectBoundingBox">
+      <path d="M-.4 0H1.4V.33610H.95555V.72641C.95555 .77699 .77906 .88738 .49904 .96006C.21903 .88738 .04445 .77699 .04445 .72641V.33610H-.4Z"/>
+    </clipPath>
   </svg>
   <div className="pd__hd">
     <SectionLabel light>UPSC CSE 2025 results</SectionLabel>
