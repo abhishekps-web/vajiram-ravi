@@ -228,3 +228,7 @@
   #courses .prog__rail::after { display: none; }   /* the flex row's end spacer; the grid keeps the row's own right padding */
   #courses .prog__card { width: auto; }
 }
+
+/* "Not sure which programme is right for you?" (user 2026-11-17, from a reference): a double frame, the box's own soft outer border and,
+   6px inside it, a thin orange rule with tighter corners. Drawn as a layer over the box's padding, so its content does not move. */
+#courses .prog__help::before { content: ""; position: absolute; inset: 6px; border: 1px solid rgb(225 120 60 / .55); border-radius: 4px; pointer-events: none; }
