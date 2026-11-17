@@ -165,3 +165,13 @@ html body .dl .hx__tag { margin-left: -10px; }
 .dl .hx__dots > button { margin: -8px -3px; }   /* the 8px tap border kept on every side (an even border keeps the dots round), overlapped 3px each side */
 /* reduced motion: the slides do not run, so the controls stay hidden (restated after the group's display above) */
 @media (prefers-reduced-motion: reduce) { .dl .hx__navs { display: none; } }
+
+/* phones (user 2026-11-17, accessibility: "add a gradient to the top so the title reads properly"): the copy (results ticker, title,
+   lead, buttons) fills the card from its foot to about 80% of its height, over the photo, and the old wash had faded to nothing by the
+   title (55-70% up), leaving white type on light parts of the photos (a white shirt). The wash now holds strong from the foot up through
+   the ticker and only then fades, so the face at the top stays clear; a soft shadow under the title's letters as well. */
+@media (max-width: 760px) {
+  #dlPin.dl--pin .dl__bg::after, #dlPin.dl--pin[data-s] .dl__bg::after {
+    background: linear-gradient(0deg, rgba(46, 17, 6, .88) 0%, rgba(46, 17, 6, .8) 50%, rgba(46, 17, 6, .7) 74%, rgba(46, 17, 6, .25) 88%, transparent 100%); }
+  html body .dl .hx__h { text-shadow: 0 2px 18px rgba(30, 10, 2, .55); }
+}
