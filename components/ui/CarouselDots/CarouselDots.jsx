@@ -4,11 +4,11 @@
 //
 //   <CarouselDots label="Choose a banner" labels={['Show banner 1', …]} active={i} onSelect={go} timed />
 //
-// Look: 6px dots in a strong colour (white on photos and dark grounds, brand orange on light ones); the current one is a 32px pill of
-// the SAME 6px height (user 2026-11-17, "the height of the dot should be the same for active and default"), whose fill (<i>) shows
+// Look: 8px dots (user 2026-11-17, from 6px) in a strong colour (white on photos and dark grounds, brand orange on light ones); the current one is a 32px pill of
+// the SAME 8px height (user 2026-11-17, "the height of the dot should be the same for active and default"), whose fill (<i>) shows
 // how far that slide has run. Each dot sits in an 8px transparent border, so its
-// tap target is 22px across; the negative block margin keeps the row 6px tall.
-// States: default (a 6px dot), hover/focus (the dot grows to about 10px across and tall), current (the 32 x 6px progress pill: a pale
+// tap target is 24px across; the negative block margin keeps the row 8px tall.
+// States: default (an 8px dot), hover/focus (the dot grows to about 13px across and tall), current (the 32 x 8px progress pill: a pale
 // track, filled from the left in the full colour as the slide runs).
 // The fill is driven by each carousel: --p (0..1) on the dot (the hero, page-motion.js), a timed CSS fill (`timed`, `duration` long;
 // its animationend moves the carousel on; paused under an .is-paused ancestor), or an inline transform (the Faculty clock). Without a
@@ -34,7 +34,7 @@ const ROW = 'cd:flex cd:items-center cd:gap-[0] cd:m-[0]';
 const DARK = 'cd:[--dot-edge:rgba(255,255,255,.9)] cd:[--dot-track:rgba(255,255,255,.4)] cd:[--dot-fill:#fff] cd:[--dot-ring:#FFD48A]';
 const LIGHT = 'cd:[--dot-edge:rgba(194,65,12,.8)] cd:[--dot-track:rgba(194,65,12,.3)] cd:[--dot-fill:var(--brand)] cd:[--dot-ring:var(--brand)]';
 const DOT = [
-  'cd:relative cd:flex-none cd:box-content cd:w-[6px] cd:h-[6px] cd:my-[-8px] cd:mx-[0] cd:p-[0] cd:overflow-hidden cd:cursor-pointer',
+  'cd:relative cd:flex-none cd:box-content cd:w-[8px] cd:h-[8px] cd:my-[-8px] cd:mx-[0] cd:p-[0] cd:overflow-hidden cd:cursor-pointer',
   'cd:border-8 cd:border-solid cd:border-transparent cd:rounded-full cd:bg-clip-padding cd:bg-(--dot-edge)',
   'cd:[transition:width_.35s_cubic-bezier(.65,0,.35,1),scale_.2s_ease,background-color_.2s_ease] cd:motion-reduce:transition-none',
   // hover / keyboard focus on a dot that is not current: it grows in both width and height (scale, so its neighbours do not move)
