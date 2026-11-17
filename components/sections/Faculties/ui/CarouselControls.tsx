@@ -4,6 +4,7 @@
 import type { RefObject } from "react";
 import Button from "@/components/ui/Button/Button";
 import { cx } from "@/components/sections/Faculties/lib/cx";
+import SiteDots from "@/components/ui/CarouselDots";
 
 /*
  * Carousel arrows and dots (motion spec, "Carousel arrows + dots"), the same on every carousel of the page.
@@ -74,26 +75,18 @@ type CarouselDotsProps = {
 };
 
 export function CarouselDots({ count, active, onSelect, label, itemName, tone = "light", fillRef, className }: CarouselDotsProps) {
-  // The site's carousel indicator (user 2026-11-16: one look for every carousel; .cdots at the end of public/css/v49.css): 9px dots,
-  // the current one a 32px pill whose fill shows the autoplay's progress (the clock sets its transform through `fillRef`; without a
-  // clock it is full). Brand orange on light grounds, white on dark ones.
+  // The site's carousel indicator, the one shared component (components/ui/CarouselDots, user 2026-11-17); the current dot's fill
+  // starts empty under the ring's clock (it sets the fill through `fillRef`), full without one.
   return (
-    <div role="group" aria-label={label} className={cx("cdots", tone === "light" && "cdots--light", className)}>
-      {Array.from({ length: count }, (_, i) => {
-        const isActive = i === active;
-        return (
-          <button
-            key={i}
-            type="button"
-            aria-label={`${itemName} ${i + 1} of ${count}`}
-            aria-current={isActive ? "true" : undefined}
-            onClick={() => onSelect(i)}
-          >
-            {/* Starts empty under a clock (it sets the fill; not a scale class, which would multiply with it); full without one. */}
-            <i ref={isActive ? fillRef : undefined} aria-hidden="true" style={isActive && fillRef ? { transform: "scaleX(0)" } : undefined} />
-          </button>
-        );
-      })}
-    </div>
+    <SiteDots
+      label={label}
+      labels={Array.from({ length: count }, (_, i) => `${itemName} ${i + 1} of ${count}`)}
+      active={active}
+      onSelect={onSelect}
+      tone={tone}
+      fillRef={fillRef}
+      fillProps={(_: number, on: boolean) => (on && fillRef ? { style: { transform: "scaleX(0)" } } : {})}
+      className={className}
+    />
   );
 }

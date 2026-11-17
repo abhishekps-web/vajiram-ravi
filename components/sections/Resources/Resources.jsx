@@ -1,4 +1,5 @@
 import Button from '@/components/ui/Button/Button';
+import CarouselDots from '@/components/ui/CarouselDots';
 import SectionLabel from '@/components/ui/SectionLabel';
 import Stylesheet from '@/components/ui/Stylesheet';
 import ResourceMock from './ResourceMock';
@@ -53,11 +54,7 @@ export default function Resources() {
         </ul>
         {/* phones only (user 2026-11-17): the site's dot indicator under the swipeable row of folders, one dot a folder, the current
             one long (resource-dots.js keeps it in step and scrolls to a folder on a tap; resources.css shows it under 641px) */}
-        <p className="sm__dots cdots cdots--light" role="group" aria-label="Choose a resource">
-          {RESOURCES.map((r, i) => (
-            <button key={r.title} type="button" aria-label={`Show ${r.title}`} aria-controls="resGrid" aria-current={i === 0 ? 'true' : undefined}><i /></button>
-          ))}
-        </p>
+        <CarouselDots as="p" className="sm__dots" tone="light" label="Choose a resource" labels={RESOURCES.map(r => `Show ${r.title}`)} active={0} controls="resGrid" />
       </div>
     </section>
   );

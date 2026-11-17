@@ -16,6 +16,7 @@
  */
 import { useEffect, useRef, useState } from 'react';
 import Button from '@/components/ui/Button/Button';
+import CarouselDots from '@/components/ui/CarouselDots';
 import { PROMO_BANNERS } from '../data';
 import './promo-banner.css';
 
@@ -65,7 +66,7 @@ const C = {
     + ' pb:fine:group-focus-within/stage:opacity-100 pb:fine:group-focus-within/stage:translate-x-0 pb:phone:hidden',
   prev: 'pb:-left-[22px] pb:narrow:-left-[14px] pb:fine:translate-x-2',
   next: 'pb:-right-[22px] pb:narrow:-right-[14px] pb:fine:-translate-x-2',
-  dots: 'cdots cdots--timed pb:justify-center pb:mt-[22px] pb:mb-0 pb:mx-0',
+  dots: 'pb:justify-center pb:mt-[22px] pb:mb-0 pb:mx-0',
 };
 
 export default function PromoBanner() {
@@ -136,15 +137,11 @@ export default function PromoBanner() {
         <span className={`${C.nav} ${C.prev}`}><Button variant="outline" size="sm" iconOnly iconStart="arrow-left" label="Previous banner" onClick={() => go(i - 1)} /></span>
         <span className={`${C.nav} ${C.next}`}><Button variant="outline" size="sm" iconOnly iconStart="arrow" label="Next banner" onClick={() => go(i + 1)} /></span>
       </div>
-      <p className={C.dots} role="group" aria-label="Choose a banner">
-        {PROMO_BANNERS.map((s, k) => (
-          <button key={s.h} type="button" aria-label={`Show banner ${k + 1}`} aria-current={k === i ? 'true' : undefined} onClick={() => go(k)}>
-            {/* the fill: restarted on every change (key), held still without autoplay, and its end moves on */}
-            <i key={k === i ? `on-${run}` : 'off'} style={k === i && !auto ? { animation: 'none', transform: 'none' } : undefined}
-              onAnimationEnd={k === i && auto ? () => go(i + 1) : undefined} />
-          </button>
-        ))}
-      </p>
+      {/* the site's dots (components/ui/CarouselDots); the fill: restarted on every change (key), held still without autoplay, and
+          its end moves on */}
+      <CarouselDots as="p" className={C.dots} label="Choose a banner" labels={PROMO_BANNERS.map((_, k) => `Show banner ${k + 1}`)} active={i}
+        onSelect={go} timed fillProps={(k, on) => ({ key: on ? `on-${run}` : 'off', style: on && !auto ? { animation: 'none', transform: 'none' } : undefined,
+          onAnimationEnd: on && auto ? () => go(i + 1) : undefined })} />
     </div>
   );
 }

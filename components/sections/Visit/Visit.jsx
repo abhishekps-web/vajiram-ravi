@@ -1,4 +1,5 @@
 import { photoSrcSet } from '@/lib/photo';
+import CarouselDots from '@/components/ui/CarouselDots';
 import Button from '@/components/ui/Button/Button';
 import Stylesheet from '@/components/ui/Stylesheet';
 
@@ -55,11 +56,7 @@ export default function Visit() {
             </figure>
           ))}
           <p className="cx__cap" aria-live="polite">{PHOTOS[0].cap}</p>
-          <div className="cx__dots cdots cdots--timed" role="group" aria-label="Choose photo" style={{ "--cd-t": "5s" }}>
-            {PHOTOS.map((p, i) => (
-              <button key={p.src} type="button" aria-label={`Photo ${i + 1} of ${PHOTOS.length}`} aria-current={i === 0 ? 'true' : undefined} className={i === 0 ? 'is-on' : undefined}><i /></button>
-            ))}
-          </div>
+          <CarouselDots className="cx__dots" label="Choose photo" labels={PHOTOS.map((p, i) => `Photo ${i + 1} of ${PHOTOS.length}`)} active={0} activeClass="is-on" timed duration="5s" />
           {/* previous / next: the site's icon-only button, at the photo's sides on hover; the span places it and fades it in */}
           <span className="cx__nav cx__nav--prev"><Button variant="outline" size="sm" iconOnly iconStart="arrow-left" label="Previous photo" /></span>
           <span className="cx__nav cx__nav--next"><Button variant="outline" size="sm" iconOnly iconStart="arrow" label="Next photo" /></span>

@@ -1,4 +1,5 @@
 import Button from '@/components/ui/Button/Button';
+import CarouselDots from '@/components/ui/CarouselDots';
 import { HERO_STATS, HERO_TOPPER_SLIDES } from './data';
 import PromoBanner from './PromoBanner/PromoBanner';
 import Stylesheet from '@/components/ui/Stylesheet';
@@ -75,13 +76,7 @@ export default function Hero() {
             The dots are the site's .cdots, the current one filling with the slide's time (page-motion.js, through --p). */}
         <div className="hx__navs" role="group" aria-label="Change topper">
           <span className="hx__nav hx__nav--prev"><Button variant="outline" iconOnly size="sm" iconStart="arrow-left" label="Previous topper" className="dl__arrow dl__arrow--prev" /></span>
-          <p className="hx__dots cdots" id="dlProg" role="group" aria-label="Choose a topper">
-            {HERO_TOPPER_SLIDES.map(t => (
-              <button key={t.rank} type="button" aria-label={`AIR ${t.rank}: ${t.name}`}>
-                <i />
-              </button>
-            ))}
-          </p>
+          <CarouselDots as="p" id="dlProg" className="hx__dots" label="Choose a topper" labels={HERO_TOPPER_SLIDES.map(t => `AIR ${t.rank}: ${t.name}`)} />
           <span className="hx__nav hx__nav--next"><Button variant="outline" iconOnly size="sm" iconStart="arrow" label="Next topper" className="dl__arrow dl__arrow--next" /></span>
         </div>
         <Stylesheet href="/css/hero-banner.css" />
