@@ -248,23 +248,23 @@
 /* The heading sticks too (user 2026-11-17, "Your UPSC partner · Why Vajiram & Ravi? · Fifty years … this should also stick"): on phones
    and tablets the eyebrow, title and intro (.cmp__hd) stay at the top of the screen while the cards stack under them, and leave with
    the stack. It sits under the header when the header shows, 14px from the top while the header is away (as the cards do, above).
-   The cards stick under the heading (--hd-h, its height, measured by story.js) with their 10px stacked edges, and the photo gives up
+   The cards stick under the heading (--hd-h, its height, measured by story.js) all at the same place (user 2026-11-17: no stacked edges), and the photo gives up
    height so a whole card still fits under the heading on the screen (at least 120px tall, at most its 4:3 height). */
 @media (max-width: 899px) {
   #story:not(.cmp--run, .story-run *) .cmp__hd { position: sticky; z-index: 3; top: calc(var(--hdr-h, 74px) + 14px); margin-bottom: 0; padding-bottom: 12px;
     transition: top .35s cubic-bezier(.22, 1, .36, 1); }
   html:has(#nav.nav--away) #story:not(.cmp--run, .story-run *) .cmp__hd { top: 14px; }
-  #story:not(.cmp--run, .story-run *) .cmp__p { top: calc(var(--hdr-h, 74px) + 14px + var(--hd-h, 180px) + (5 - var(--k)) * 10px); }
-  html:has(#nav.nav--away) #story:not(.cmp--run, .story-run *) .cmp__p { top: calc(14px + var(--hd-h, 180px) + (5 - var(--k)) * 10px); }
+  #story:not(.cmp--run, .story-run *) .cmp__p { top: calc(var(--hdr-h, 74px) + 14px + var(--hd-h, 180px)); }
+  html:has(#nav.nav--away) #story:not(.cmp--run, .story-run *) .cmp__p { top: calc(14px + var(--hd-h, 180px)); }
   /* the heading leaves as the last card comes in (user 2026-11-17: not after the pile has closed up): it starts going about 150px of
-     scroll before the sixth card settles (the +200px: the 50px of stacked edges and 150px), and is gone as the pile closes up. The cards are let go when the list's end reaches the foot of the
+     scroll before the sixth card settles (the +150px), and is gone as the pile closes up. The cards are let go when the list's end reaches the foot of the
      front card, so the heading's room (.cmp__ov's content) ends a card's height (--card-h, story.js) before the list does */
-  #story:not(.cmp--run, .story-run *) .cmp__ov { padding-bottom: calc(var(--card-h, calc(100svh - 284px)) + 200px); }
-  #story:not(.cmp--run, .story-run *) .cmp__track { margin-bottom: calc(-1 * var(--card-h, calc(100svh - 284px)) - 200px); }
+  #story:not(.cmp--run, .story-run *) .cmp__ov { padding-bottom: calc(var(--card-h, calc(100svh - 284px)) + 150px); }
+  #story:not(.cmp--run, .story-run *) .cmp__track { margin-bottom: calc(-1 * var(--card-h, calc(100svh - 284px)) - 150px); }
 }
 /* phones only (one column, the photo above the text): the photo gives up height so a whole card fits under the heading; tablets lay the
    card out in two columns, short enough already */
 @media (max-width: 760px) {
-  #story:not(.cmp--run, .story-run *) .cmp__ph { aspect-ratio: auto; height: clamp(120px, 100svh - var(--hd-h, 180px) - 500px, 75vw); }
+  #story:not(.cmp--run, .story-run *) .cmp__ph { aspect-ratio: auto; height: clamp(120px, 100svh - var(--hd-h, 180px) - 450px, 75vw); }
 }
 @media (max-width: 899px) and (prefers-reduced-motion: reduce) { #story:not(.cmp--run, .story-run *) .cmp__hd { transition: none; } }
