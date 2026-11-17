@@ -245,7 +245,7 @@
   .pd__col:hover .pd__img { translate: -50% 0; }
 }
 
-/* =====================================================================================================================================
+/* ==============================================================================================================================
    More rank holders (user 2026-11-13): the rest of CSE 2025 (ranks 4 to 48) under the podium, each portrait in a silver hexagon (user
    2026-11-15; until then a diamond, as the podium
    was before the crests (taller than wide; the head rising over the top corner, the body cut along the two lower edges and fading into
@@ -437,3 +437,10 @@
 .js .pd__row.rv.in .pd__col--1 { animation-delay: .36s; }
 @keyframes pdGlide { from { opacity: 0; transform: translateY(48px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .js .pd__row.rv .pd__col { animation: none !important; opacity: 1; transform: none; } }
+=======
+/* Nothing outside the section (user 2026-11-17, "overflows that exceed the screen and affect the section below"): the light behind the
+   podium (.pd__fx, wider than the column and reaching 300px below the row), the turning rays behind AIR 1 (a square 2.6 shields wide,
+   its corners sweeping past the screen as it turns), the sparks and the reel's track all stay inside the section's box. `clip` does not
+   make the section a scroll box (no stray inner scrolling); older Safari, which lacks it, gets `hidden`. */
+#toppers { overflow: clip; }
+@supports not (overflow: clip) { #toppers { overflow: hidden; } }

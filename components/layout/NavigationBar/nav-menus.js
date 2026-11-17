@@ -90,14 +90,12 @@ export function initNavScrolled() {
   };
   nav.addEventListener('transitionend', e => { if (e.target === nav && e.propertyName === 'clip-path' && !nav.classList.contains('nav--away')) nav.classList.add('nav--open'); });
   if (!nav.classList.contains('nav--away')) nav.classList.add('nav--open');
-  // Mobile (the burger bar, below 1024px; user 2026-11-17): the header stays fixed on screen and never hides on scroll.
-  const mobile = matchMedia('(max-width: 1023.98px)');
-  mobile.addEventListener('change', () => update());
+  // phones hide and show it on scroll like desktop (user 2026-11-17; it was held on screen below 1024px for a while)
   const update = () => {
     navTick = false;
     const y = Math.max(0, scrollY), dy = y - lastY; lastY = y;
     document.documentElement.style.setProperty('--strip-off', Math.max(0, strip - y) + 'px');
-    const hold = mobile.matches || y < TOP || $('#nav [aria-expanded="true"]') || (drawer && !drawer.hidden) || nav.contains(document.activeElement);
+    const hold = y < TOP || $('#nav [aria-expanded="true"]') || (drawer && !drawer.hidden) || nav.contains(document.activeElement);
     // white from 20px down; a bar that closes while white stays white until it is gone (it must not turn transparent mid-close), and one
     // that closes from the transparent top never turns white on the way out
     const paint = () => { if (y <= 20) nav.classList.remove('scrolled'); else if (!nav.classList.contains('nav--away')) nav.classList.add('scrolled'); };

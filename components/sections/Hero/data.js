@@ -9,12 +9,12 @@ export const HERO_STATS = [
   { fig: '36/50', label: 'CSE 2025 rankers', lines: ['CSE 2025', 'rankers'], at: 1100 },
 ];
 
-// What's trending (user 2026-11-16, from Kevin's build, eclectic-alfajores-975fab.netlify.app): the banners of the carousel under
-// the hero stats (Trending.jsx). `tone` picks the banner's tint (public/css/trending.css); `prog` pre-selects that programme in the
+// Promo banner (user 2026-11-16, from Kevin's build, eclectic-alfajores-975fab.netlify.app): the banners of the carousel under
+// the hero stats (PromoBanner/PromoBanner.jsx). `tone` picks the banner's tint (TONES there); `prog` pre-selects that programme in the
 // contact form; pictures are the Free resources cut-outs (public/assets/img/resources/cutout/).
 const RES = 'https://vajiramandravi.com/';
 const CUT = '/assets/img/resources/cutout';
-export const TRENDING = [
+export const PROMO_BANNERS = [
   { tone: 'butter', k: 'New batch · Starts 29 Jan', h: 'The full GS syllabus, in 11 months.',
     d: '11-Month Prelims cum Mains General Studies Comprehensive Programme, for CSE 2027.', cta: 'Enroll now', href: '#contact',
     prog: '11-Month Prelims cum Mains General Studies Comprehensive Programme',

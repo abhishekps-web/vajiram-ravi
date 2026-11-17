@@ -1,4 +1,5 @@
 import Button from '@/components/ui/Button/Button';
+import CarouselDots from '@/components/ui/CarouselDots';
 import SectionLabel from '@/components/ui/SectionLabel';
 import Stylesheet from '@/components/ui/Stylesheet';
 import ResourceMock from './ResourceMock';
@@ -48,9 +49,12 @@ export default function Resources() {
             <p className="intro rv" style={{ "--d": ".2s" }}>Daily current affairs, a monthly magazine and the official papers, free, from the Vajiram & Ravi editorial desk.</p>
           </div>
         </div>
-        <ul className="sm__grid sm__grid--res">
+        <ul className="sm__grid sm__grid--res" id="resGrid">
           {RESOURCES.map(r => <ResourceCard key={r.title} {...r} />)}
         </ul>
+        {/* phones only (user 2026-11-17): the site's dot indicator under the swipeable row of folders, one dot a folder, the current
+            one long (resource-dots.js keeps it in step and scrolls to a folder on a tap; resources.css shows it under 641px) */}
+        <CarouselDots as="p" className="sm__dots" tone="light" label="Choose a resource" labels={RESOURCES.map(r => `Show ${r.title}`)} active={0} controls="resGrid" />
       </div>
     </section>
   );

@@ -43,6 +43,10 @@ function geomFor(cols: number, tight = false): Geom {
   const stageW = tight ? books + 84 : Math.max(books + 216, 2 * PAGE.w);
   return { cols, stageW, plankW: tight ? books + 60 : books + 116, spine: { x: stageW / 2, y: OPEN_H / 2 } };
 }
+/** While course links are "#" (data/programmes.ts coursePageHref), a click on one stays where it is instead of jumping to the page's top. */
+const stayPut = (event: { currentTarget: EventTarget; preventDefault: () => void }) => {
+  if ((event.currentTarget as HTMLAnchorElement).getAttribute("href") === "#") event.preventDefault();
+};
 const shelfCols = (width: number) => (width >= 1024 ? 4 : width > 640 ? 3 : 2);   // four to a plank on wide screens, three on tablets, two on phones: the eight programmes are four planks of two (user 2026-11-17; phones had three from 2026-11-16)
 
 /** A book coming forward (and going back), and its cover swinging open (and shut). */
@@ -562,7 +566,7 @@ function ProgrammeRail({ programmes, filter }: { programmes: Programme[]; filter
       {programmes.map((programme) => (
         <article key={programme.name} className="prog__card">
           {/* the book alone (user 2026-11-17): the whole cover is the link to the programme's course page */}
-          <a className="prog__card-cover" href={coursePageHref(programme)} aria-label={`View course: ${programme.name}`}>
+          <a className="prog__card-cover" href={coursePageHref(programme)} onClick={stayPut} aria-label={`View course: ${programme.name}`}>
             <CoverFront programme={programme} large={false} />
           </a>
         </article>
@@ -859,7 +863,7 @@ function Book({ index, programme, hidden, out, open, away, style, onPick, onClos
             className="pointer-events-none absolute inset-x-0 z-[101] flex justify-center scale-75 opacity-0 [transition:translate_450ms_cubic-bezier(.22,1,.36,1),opacity_250ms_var(--ease-out),scale_350ms_cubic-bezier(.22,1,.36,1)] group-hover/book:scale-100 group-hover/book:opacity-100 group-hover/book:[&>*]:pointer-events-auto has-[:focus-visible]:scale-100 has-[:focus-visible]:opacity-100 has-[:focus-visible]:[&>*]:pointer-events-auto motion-reduce:transition-none"
             style={{ bottom: FOLLOW_BOTTOM }}
           >
-            <Button size="xs" iconEnd="arrow" href={coursePageHref(programme)} ariaLabel={`View course: ${programme.name}`}>
+            <Button size="xs" iconEnd="arrow" href={coursePageHref(programme)} onClick={stayPut} ariaLabel={`View course: ${programme.name}`}>
               View course
             </Button>
           </span>

@@ -106,15 +106,7 @@ html.js #stories:not([data-in]) > .lbl { opacity: 0; }
   @media (prefers-reduced-motion: no-preference) { #stories[data-in] #tcar { animation: st-fade .8s .2s ease both; } }
 
   .tstack-nav { display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: 18px; }
-  .tstack-btn {
-    display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; padding: 0;
-    border: 1px solid rgba(27, 42, 82, .18); background: rgba(255, 255, 255, .7); color: #1B2A52; cursor: pointer;
-    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
-    box-shadow: 0 6px 16px -8px rgba(27, 42, 82, .45);
-    transition: transform .25s var(--ease), background-color .25s var(--ease);
-  }
-  .tstack-btn:active { transform: scale(.92); }
-  .tstack-btn:focus-visible { outline: 2px solid #1B2A52; outline-offset: 3px; }
+  /* the arrows are the site's Button (outline, sm, icon-only; Stories.jsx), styled by public/css/buttons.css only */
   .tstack-count { font: 600 14px/1 var(--f); letter-spacing: .06em; color: rgba(27, 42, 82, .7); min-width: 4.5em; text-align: center; }
   .tstack-count b { color: #1B2A52; }
 }

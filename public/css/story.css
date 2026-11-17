@@ -191,3 +191,46 @@
 .story-run #story:not(.cmp--run) .cmp__card { visibility: hidden; }
 .story-run #story:not(.cmp--run) .cmp__p:first-child .cmp__ph { visibility: visible; }
 .story-run #story:not(.cmp--run) .cmp__p + .cmp__p { transform: rotate(30deg); }
+
+/* ---------- a still ground on phones and tablets (user 2026-11-17: "when I scroll on mobile the background scrolls") ----------
+   In the stacked layout (under 900px) the chapter cards stick near the top while the page scrolls, but the section's ground (the orange
+   gradient, the jaali lattice and the grain) scrolled with it, so the cards seemed to slide over a moving wall. The ground is now its own
+   layer (.cmp__ground, the section's first child): a screen tall, sticky at the top for the whole section, taking no room in the flow
+   (negative margins: it starts at the section's top edge and the content after it keeps its place). The section's own scrolling lattice
+   and grain are hidden there. The pinned scene (900px and wider) is unchanged and does not show this layer. */
+.cmp__ground { display: none; }
+@media (max-width: 899px) {
+  #story.cmp:not(.cmp--run, .story-run *) .cmp__ground { display: block; position: sticky; top: 0; z-index: -1; height: 100svh; pointer-events: none;
+    margin: calc(-1 * var(--sec-y, 96px)) 0 calc(var(--sec-y, 96px) - 100svh); overflow: hidden;
+    background:
+      radial-gradient(48% 60% at 85% 20%, rgba(255, 170, 90, .45), transparent 70%),
+      radial-gradient(45% 55% at 8% 100%, rgba(150, 40, 8, .5), transparent 70%),
+      linear-gradient(135deg, #E85020 0%, #C2410C 55%, #A8380A 100%); }
+  #story.cmp:not(.cmp--run, .story-run *) .cmp__ground::before { content: ""; position: absolute; inset: 0; opacity: .14;
+    background: url(/assets/img/patterns/jaali.svg) 0 0 / 44px 44px repeat;
+    -webkit-mask: linear-gradient(90deg, #000 0%, transparent 38%, transparent 62%, #000 100%); mask: linear-gradient(90deg, #000 0%, transparent 38%, transparent 62%, #000 100%); }
+  #story.cmp:not(.cmp--run, .story-run *) .cmp__ground::after { content: ""; position: absolute; inset: 0;
+    background: url(/assets/img/patterns/grain.png) repeat; background-size: 200px; mix-blend-mode: soft-light; opacity: .28; }
+  #story.cmp:not(.cmp--run, .story-run *)::before, #story.cmp:not(.cmp--run, .story-run *)::after { display: none; }
+}
+@media (max-width: 640px) { #story.cmp:not(.cmp--run, .story-run *) .cmp__ground::before { background-size: 32px 32px; } }
+
+/* ---------- the stacked chapters on phones and tablets, refined (user 2026-11-17) ----------
+   - Stacked upwards, not downwards: each card used to stick 12px lower than the one before, so the pile grew down the screen with the
+     earlier cards' tops showing above it. Now each card sticks 12px higher than the one before (the first lowest, the sixth at the top),
+     so a new card rises over the last and the earlier cards show as a sliver below it.
+   - No shadow under the photos inside the cards.
+   - A softer card shadow where the cards pile up. */
+@media (max-width: 899px) {
+  #story:not(.cmp--run, .story-run *) .cmp__p { top: calc(var(--hdr-h, 74px) + 14px + (5 - var(--k)) * 12px);
+    box-shadow: 0 -4px 14px -8px rgba(40, 12, 2, .22), 0 10px 22px -16px rgba(40, 12, 2, .3); }
+  #story:not(.cmp--run, .story-run *) .cmp__ph { filter: none; }
+  #story:not(.cmp--run, .story-run *) .cmp__ph::after, #story:not(.cmp--run, .story-run *) .cmp__card::after { box-shadow: none; }
+}
+/* the last card settles too (user 2026-11-17, "an issue on the last card stacking"): the list ended 8px after the sixth card, so that card
+   was pushed on the moment it reached its place and the cards under it were squeezed up together as it went. The list now runs on 40% of
+   a screen past the last card, so the sixth settles, holds with the others showing under it, and the stack then leaves as one.
+   (An empty spacer after the cards, not padding: a sticky card is held within its container's content, which padding is not part of.) */
+/* The spacer was taken out again (user 2026-11-17, "in this state there is space under that card"): on a taller screen it showed as an
+   empty band of the ground under the settled stack. With every card the same height (story.js) the stack leaves cleanly without it,
+   the earlier cards only closing up their 12px edges, and the next section follows straight after the last card. */

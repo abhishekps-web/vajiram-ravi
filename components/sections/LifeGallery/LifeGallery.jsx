@@ -8,6 +8,13 @@ import { LIFE } from './data';
 // cards that glides on slowly and loops (life-gallery.js), the centre card's caption under it, All / Images / Videos tabs under the row; arrows at the sides on hover (the site's icon-only
 // button in a placing span). Content in data.js, styles public/css/life-gallery.css. ============
 const PLAY = 'M8 5.5v13l11-6.5z';
+// the video cards' play / pause control (user 2026-11-17, "video controls are missing"): both glyphs, the one shown follows the video
+const VIDEO_ICON = (
+  <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
+    <path className="lg__vi-play" d="M8 5.5v13l11-6.5z" fill="currentColor" />
+    <g className="lg__vi-pause" fill="currentColor"><rect x="6.5" y="5.5" width="4" height="13" rx="1" /><rect x="13.5" y="5.5" width="4" height="13" rx="1" /></g>
+  </svg>
+);
 
 export default function LifeGallery() {
   return (
@@ -30,6 +37,9 @@ export default function LifeGallery() {
                   <>
                     <video poster={c.poster} data-src={c.src} muted loop playsInline preload="none" aria-label={c.label} />
                     <span className="lg__badge" aria-hidden="true"><svg viewBox="0 0 24 24" width="12" height="12"><path d={PLAY} /></svg>Video</span>
+                    {/* play / pause (life-gallery.js); shown on every video card (user 2026-11-17, "just show the controls"), and it plays
+                        once the card has a clip (data.js `src`; until then the poster stands in and the button does nothing) */}
+                    <Button variant="outline" size="sm" iconOnly iconStart={VIDEO_ICON} label={`Play video: ${c.name}`} className="lg__vctl" data-vctl="" />
                   </>
                 ) : (
                   <img src={c.img} srcSet={photoSrcSet(c.img, c.w)} sizes="(max-width: 760px) 80vw, 260px" alt={c.alt} width={c.w} height={c.h} loading="lazy" decoding="async" style={c.pos ? { objectPosition: c.pos } : undefined} />

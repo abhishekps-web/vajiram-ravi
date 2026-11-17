@@ -123,6 +123,7 @@ html body .dl .hx__mark { top: 7%; right: 3%; }
   .dl .hx__navs { transform: none; }
   .dl .hx__nav { display: flex; opacity: 1; pointer-events: auto; }
   .dl .hx__nav--prev, .dl .hx__nav--next { bottom: 18px; }
+  .dl .hx__navs { padding-bottom: 18px; }
 }
 
 /* reduced motion: the slides do not run (page-motion.js), so neither do their controls */
@@ -147,4 +148,30 @@ html body .dl .hx__tag { margin-left: -10px; }
    brown under the photo's faded foot fills the gap left below. */
 @media (max-width: 900px) {
   #dlSlides > .dl__topper[data-rank="1"] img { translate: 0 -22%; }
+}
+
+/* ---------- the controls as one group (user 2026-11-17, desktop and phones) ----------
+   previous / next close beside the dots, not at the card's corners: one centred group at the card's foot, 10px apart (the layer is a
+   flex box laid over the card; one wrapping line so it can sit at the foot, centred). On desktop the arrows still show on hover. */
+.dl .hx__navs { display: flex; flex-wrap: wrap; align-content: flex-end; align-items: center; justify-content: center; gap: 10px;
+  padding-bottom: 24px; box-sizing: border-box; }
+.dl .hx__navs > .hx__nav, .dl .hx__navs > .hx__dots { position: static; left: auto; right: auto; bottom: auto; translate: none; }
+@media (max-width: 900px) { .dl .hx__navs { padding-bottom: 20px; } }
+@media (max-width: 760px) { .dl .hx__navs { padding-bottom: 18px; } }
+/* the dots' spacing (user 2026-11-17, "the space between the indicators looks off"): each dot's invisible 8px tap border plus the
+   pill's 8px gap left the marks 24px apart, loose beside 9px dots. Now 10px between the marks (their 8px tap borders overlapped 3px each side, no gap) and
+   12px from the marks to the pill's ends, the same as above and below them. */
+.dl .hx__dots { gap: 0; padding: 10px 7px; }
+.dl .hx__dots > button { margin: -8px -3px; }   /* the 8px tap border kept on every side (an even border keeps the dots round), overlapped 3px each side */
+/* reduced motion: the slides do not run, so the controls stay hidden (restated after the group's display above) */
+@media (prefers-reduced-motion: reduce) { .dl .hx__navs { display: none; } }
+
+/* phones (user 2026-11-17, accessibility: "add a gradient to the top so the title reads properly"): the copy (results ticker, title,
+   lead, buttons) fills the card from its foot to about 80% of its height, over the photo, and the old wash had faded to nothing by the
+   title (55-70% up), leaving white type on light parts of the photos (a white shirt). The wash now holds strong from the foot up through
+   the ticker and only then fades, so the face at the top stays clear; a soft shadow under the title's letters as well. */
+@media (max-width: 760px) {
+  #dlPin.dl--pin .dl__bg::after, #dlPin.dl--pin[data-s] .dl__bg::after {
+    background: linear-gradient(0deg, rgba(46, 17, 6, .88) 0%, rgba(46, 17, 6, .8) 50%, rgba(46, 17, 6, .7) 74%, rgba(46, 17, 6, .25) 88%, transparent 100%); }
+  html body .dl .hx__h { text-shadow: 0 2px 18px rgba(30, 10, 2, .55); }
 }

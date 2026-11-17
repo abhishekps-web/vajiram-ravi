@@ -242,3 +242,13 @@ html[lang="hi"] .more__a { font-family: "Mukta", var(--btn-font); }
   .drawer__end .btn { flex: 1 1 auto; min-width: 0; }
   .drawer .lang { flex: none; height: 44px; background: #F9F0E4; box-shadow: none; }
 }
+
+/* Phones and tablets (below 1024px, user 2026-11-17, "the navigation bar has performance glitches at Toppers and Programmes"): the
+   bar hides and comes back by sliding (translate), which the compositor moves on its own, instead of the clip-path reveal, which is
+   repainted on the main thread every frame and stuttered while those sections kept it busy. Desktop keeps the reveal. */
+@media (max-width: 1023.98px) {
+  .nav, .nav.nav--open, .nav.nav--away { clip-path: none; }
+  .nav { transition: translate .38s cubic-bezier(.22, 1, .36, 1); will-change: translate; }
+  .nav.nav--away { opacity: 1; translate: 0 calc(-100% - var(--hdr-pt, 12px) - 24px); transition: translate .32s cubic-bezier(.4, 0, 1, 1); }
+}
+@media (max-width: 1023.98px) and (prefers-reduced-motion: reduce) { .nav, .nav.nav--away { transition: none; } }

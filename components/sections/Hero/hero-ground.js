@@ -7,7 +7,7 @@ export function initHeroGround() {
   if (!band || !hero) return;
   const set = () => {
     document.documentElement.style.setProperty('--hx-h', band.offsetHeight + hero.offsetHeight + 'px');
-    // the hero is taller than the screen (the trending banners under the stats): it scrolls until its foot reaches the bottom of the
+    // the hero is taller than the screen (the promo banners under the stats): it scrolls until its foot reaches the bottom of the
     // screen and is pinned from there while Programmes slides over it (as in Kevin's build: top = min(0, screen - hero))
     hero.style.setProperty('--hx-stick', Math.min(0, innerHeight - hero.offsetHeight) + 'px');
   };

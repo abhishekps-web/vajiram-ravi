@@ -2663,8 +2663,8 @@ html .nav-band, .dl__ground { overflow: hidden; isolation: isolate;
 .dl__stats li + li { border-left-color: rgba(255, 255, 255, .28); }
 @media (max-width: 760px) { .dl__stats li:nth-child(3) { border-left: 0; } }
 
-/* Hero with the trending banners (user 2026-11-16, as in Kevin's build): the section now holds the card, the stats and the banner
-   carousel (Trending.jsx), so it grows to fit them (height auto) and the card keeps the height it had (--card-h: what the section's
+/* Hero with the promo banners (user 2026-11-16, as in Kevin's build): the section now holds the card, the stats and the banner
+   carousel (PromoBanner.jsx), so it grows to fit them (height auto) and the card keeps the height it had (--card-h: what the section's
    height rules above gave it, less the stats row and the frame's 20px gutter). It is taller than the screen, so it scrolls until its
    foot reaches the bottom of the screen and is pinned there while Programmes slides over it (--hx-stick, hero-ground.js). */
 .dl { --card-h: calc(max(var(--hero-min), calc(100svh - var(--hdr-h) - var(--hdr-gap) - var(--hero-peek) - var(--stats-h))) - 20px); }
@@ -2727,7 +2727,7 @@ html body .dl--pin.dl .dl__in { opacity: 1; transform: none; filter: none; point
 @media (prefers-reduced-motion: reduce) { .hx__glide { animation: none; } }
 
 /* ===== Carousel progress indicator: one look for every carousel (user 2026-11-16, "unify all the progress indicators"): the hero
-   (#dlProg), What's trending (.tr__dots), the Contact us photos (.cx__dots) and the Faculty ring (CarouselDots). Kevin's banner dots:
+   (#dlProg), the promo banner (.tr__dots), the Contact us photos (.cx__dots) and the Faculty ring (CarouselDots). Kevin's banner dots:
    a row of 9px dots; the current one stretches to a 32px pill whose fill (<i>) shows how far that slide has run. White on dark and
    photo grounds; on light grounds (.cdots--light) brand orange. How the fill is driven is each carousel's own: --p (0..1) set by its
    script (the hero), a timed CSS fill (.cdots--timed, --cd-t long; its animationend moves the carousel on; paused under .is-paused),
@@ -2778,7 +2778,7 @@ html body .dl--pin.dl .dl__in { opacity: 1; transform: none; filter: none; point
 /* First screen = header + hero card + stats (user 2026-11-16, "we need to show the hero banner and the stats in the 1st viewport"): the
    card takes the screen less the header, its gap, the stats row and the frame's gutters (20px above, 20px below the row), no more than
    600px, and never less than its copy block plus room for the slide indicators and arrows (--txt-h + 110px). Replaces the earlier
-   Programmes-peek sizing of --card-h (the trending banners follow the stats now). */
+   Programmes-peek sizing of --card-h (the promo banners follow the stats now). */
 html .dl { --card-min: calc(var(--txt-h) + 110px);
   --card-h: clamp(var(--card-min), calc(100svh - var(--hdr-h) - var(--hdr-gap) - var(--stats-h) - 40px), 600px); }
 /* ...and the ticker itself in the eyebrow's shape (user 2026-11-16): the dark cartouche (cartouche.svg, #2B1206) with the same pointed
@@ -2976,7 +2976,7 @@ html main #closing .cl__card { background:
   linear-gradient(135deg, #E85020 0%, #C2410C 55%, #A8380A 100%); }
 html main #closing .cl__glow { display: none; }
 
-/* The first screen ends with the stats (user 2026-11-16, "still I can see some carousel elements under the stats"): the trending
+/* The first screen ends with the stats (user 2026-11-16, "still I can see some carousel elements under the stats"): the promo banner
    banners start below the bottom of the first screen on every screen size. Their gap under the stats is at least what is left of the
    screen after the header, the card and the stats, plus the 40px their pictures rise above them and 16px of air; never less than the
    72px it was (40px on phones). Same structure; only the gap grows on tall screens. */
@@ -3030,6 +3030,15 @@ html main #gs.gs { margin-bottom: var(--sec-y); }
   html main #contact .contact__in { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 48px; }
 }
 
+/* Batches: one height for every ticket (user 2026-11-17, "a height difference between the sealed and unsealed cards"). The "Limited seats"
+   stamp sat in the study-mode row's flow, so that row was 86px on a sealed ticket and 44px on the others, and a sealed ticket was taller
+   wherever the rail did not stretch them to match. The stamp is now laid over the row's bottom right corner (where it already sat), out of
+   the flow, and the row is the stamp's height on every ticket, so every ticket is the same height; the study-mode text keeps clear of it. */
+/* the row is as tall as the stamp on every ticket, sealed or not, so the stamp never reaches up into the copy above it */
+.ticket__meta { position: relative; min-height: 78px; box-sizing: border-box; }
+.ticket__meta .ticket__limited { position: absolute; right: 0; bottom: -4px; margin: 0; }
+.ticket__meta:has(.ticket__limited) dl { padding-right: 90px; }
+
 /* Talk to us form on phones (user 2026-11-17, "keep the label on top and the input field below", then "keep the same input field style as
    on desktop"): the fill-in-the-sentence layout becomes one field per line. Each field has its label above it (the form__lab labels,
    hidden on larger screens) and its input below, full width, in the same handwritten, dashed-underline style as on desktop; the sentence's
@@ -3043,3 +3052,41 @@ html main #gs.gs { margin-bottom: var(--sec-y); }
   .form--note .form__sent .blank { flex: none; width: 100%; }
   .form--note .form__sent .blank--tel { align-items: baseline; }
 }
+
+/* Talk to us form on phones (user 2026-11-17, "the labels should be the same as the desktop version", "check the font too"): each field's
+   label is the desktop sentence's own words (Hi, I'm / and I'm preparing for / Please call me on / in the / or email me on), in the
+   desktop's face (the form's serif, Newsreader 500, at the phone's size), above its field; the separate short labels (Full name …) are
+   no longer shown. Each input keeps its own accessible name (aria-label). */
+@media (max-width: 600px) {
+  .form--note .form__say { display: block; font: inherit; line-height: 1.25; color: inherit; white-space: normal; }
+  .form--note .form__lab { display: none; }
+}
+
+/* Scroll-driven values that no longer cascade (user 2026-11-17, performance on phones): the hero's dim and zoom (--cover) and the
+   Programmes sheet's fade-in (--cov) are set by page-motion.js on the elements that read them only. Registered as non-inheriting, a
+   change restyles just those elements instead of everything inside the hero and the sheet on every scroll frame. */
+@property --cover { syntax: '<number>'; inherits: false; initial-value: 0; }
+@property --cov { syntax: '<number>'; inherits: false; initial-value: 1; }
+/* the hero's shade: its own layer (page-motion.js adds it and sets its opacity), in place of the hero's ::after */
+.dl--pin.has-shade::after { display: none; }
+.dl__shade { position: absolute; inset: 0; z-index: 6; background: #1a0a02; opacity: 0; pointer-events: none; will-change: opacity; }
+
+/* Carousel dots: the non-current dots were first hollow rings (user 2026-11-17, "for non-active dots, do not just reduce their size"): an empty
+   centre inside a solid 1.5px edge, so a dot that is not current differs from the current one by fill and shape, not only by size, and
+   its edge holds 3:1 or better against its ground (white on photos and dark grounds, brand orange on light ones). The current dot is the
+   filled pill, as before; a hovered ring fills in. One component renders every row (components/ui/CarouselDots.jsx). */
+.cdots { --cd-edge: rgba(255, 255, 255, .9); }
+.cdots--light { --cd-edge: rgba(194, 65, 12, .8); }
+.cdots > button:not([aria-current="true"]) { background: transparent; background-clip: padding-box; box-shadow: inset 0 0 0 1.5px var(--cd-edge); }
+.cdots > button:not([aria-current="true"]):hover { background: var(--cd-edge); background-clip: padding-box; }
+/* …then, the same day (user 2026-11-17, "make the inactive dots filled and reduce their size"): filled, solid dots in that strong colour,
+   6px instead of 9px (the current dot stays the 9px tall pill), so they read clearly at the smaller size; a hovered one grows back to 9px.
+   The 8px tap border around each is unchanged, so the targets stay 22px and up. */
+.cdots > button:not([aria-current="true"]) { width: 6px; height: 6px; background: var(--cd-edge); background-clip: padding-box; box-shadow: none;
+  transition: width .35s cubic-bezier(.65, 0, .35, 1), height .25s ease, background-color .2s; }
+.cdots > button:not([aria-current="true"]):hover { width: 9px; height: 9px; background-clip: padding-box; }
+
+/* General Studies on phones (user 2026-11-17, "add a space between the book and the Our flagship programme eyebrow"): the book's bookmark
+   ribbon and shadow hang below it and nearly touched the eyebrow; more room under the book (56px in the book's zoomed units, about 35px
+   on screen). */
+@media (max-width: 760px) { #gs .gsbook { margin-bottom: 56px; } }

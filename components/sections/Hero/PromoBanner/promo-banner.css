@@ -1,0 +1,18 @@
+/* =====================================================================================================================
+   PROMO BANNER (#promo-banner, the carousel under the hero stats): Tailwind v4 entry for this component only (user 2026-11-17,
+   "write it in Tailwind, one file for the JS and the CSS"). Everything else (markup, styling as utilities, behaviour) is
+   PromoBanner.jsx; this file only sets Tailwind up for it:
+   - utilities generated from this folder's files only (source(none) + @source), prefixed `pb:` so they never collide with the
+     Programmes / Success stories sheets or this site's plain stylesheets in public/css; no preflight;
+   - named breakpoints for the banner's own steps (the site's are max-width ones).
+   ===================================================================================================================== */
+
+@import "tailwindcss/theme.css" layer(theme) prefix(pb);
+@import "tailwindcss/utilities.css" source(none);
+@source "./**/*.jsx";
+
+@custom-variant narrow (@media (max-width: 1100px));
+@custom-variant phone (@media (max-width: 760px));
+@custom-variant xs (@media (max-width: 480px));
+/* a real pointer: the previous / next buttons wait for hover there (touch screens wide enough to show them always see them) */
+@custom-variant fine (@media (hover: hover) and (pointer: fine));
