@@ -123,6 +123,11 @@ html body .dl .hx__mark { top: 7%; right: 3%; }
   .dl .hx__navs { transform: none; }
   .dl .hx__nav { display: flex; opacity: 1; pointer-events: auto; }
   .dl .hx__nav--prev, .dl .hx__nav--next { bottom: 18px; }
+  /* the arrows close beside the dots (user 2026-11-17), not at the card's corners: one centred group at the card's foot, previous,
+     the dots, next, 10px apart (the layer is a flex box laid over the card; one wrapping line so it can sit at the foot, centred) */
+  .dl .hx__navs { display: flex; flex-wrap: wrap; align-content: flex-end; align-items: center; justify-content: center; gap: 10px;
+    padding-bottom: 18px; box-sizing: border-box; }
+  .dl .hx__navs > .hx__nav, .dl .hx__navs > .hx__dots { position: static; left: auto; right: auto; bottom: auto; translate: none; }
 }
 
 /* reduced motion: the slides do not run (page-motion.js), so neither do their controls */
