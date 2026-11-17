@@ -234,3 +234,13 @@
 /* The spacer was taken out again (user 2026-11-17, "in this state there is space under that card"): on a taller screen it showed as an
    empty band of the ground under the settled stack. With every card the same height (story.js) the stack leaves cleanly without it,
    the earlier cards only closing up their 12px edges, and the next section follows straight after the last card. */
+
+/* No empty band over the stack while the header is away (user 2026-11-17, "see this space; this is because the title scrolled up"): the
+   cards stuck under where the header sits (--hdr-h + 14px), so once the header slid out of view on the way down the ground showed
+   above the pile. While the header is away (#nav.nav--away) the cards stick 14px from the top of the screen instead, and move back
+   down under the header when it returns on a scroll up (a short slide, so the pile does not jump). */
+@media (max-width: 899px) {
+  #story:not(.cmp--run, .story-run *) .cmp__p { transition: top .35s cubic-bezier(.22, 1, .36, 1); }
+  html:has(#nav.nav--away) #story:not(.cmp--run, .story-run *) .cmp__p { top: calc(14px + (5 - var(--k)) * 12px); }
+}
+@media (max-width: 899px) and (prefers-reduced-motion: reduce) { #story:not(.cmp--run, .story-run *) .cmp__p { transition: none; } }
