@@ -139,3 +139,11 @@ html body .dl .hx__mark { top: 7%; right: 3%; }
    left end, its tip 8px from the pill's (6px on phones), so the dark rim reads evenly round it, as it does above and below (6px) ---------- */
 html body .dl .hx__ticker { padding-left: 0; }
 html body .dl .hx__tag { margin-left: -10px; }
+
+/* AIR 1's photo on tablets and phones (user 2026-11-17: "the portrait looks off, make it the same as the other toppers"): Anuj sits at
+   a desk, so his face is 43% of the way down his photo where the others stand with theirs at about 21%; under 900px that put his face
+   behind the results ticker and the headline. His photo alone is raised by the difference, so his face sits where theirs do; the
+   brown under the photo's faded foot fills the gap left below. */
+@media (max-width: 900px) {
+  #dlSlides > .dl__topper[data-rank="1"] img { translate: 0 -22%; }
+}
