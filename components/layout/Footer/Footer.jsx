@@ -22,7 +22,8 @@ export default function Footer() {
               <img className="vf__mark" src="/assets/img/brand/logo-v6-mark.webp" alt="" width="198" height="203" loading="lazy" decoding="async" />
               <img className="vf__wordmark" src="/assets/img/brand/logo-v6-wordmark.webp" alt="" width="395" height="81" loading="lazy" decoding="async" />
             </a>
-            <p className="vf__tagline"><span>Understanding India.</span>{" "}<span>Shaping its Future.</span></p>
+            {/* set as in the preloader (Intro.jsx .vrv__tag): the two halves in two colours, rising in one after the other */}
+            <p className="vf__tagline"><span className="rv">Understanding India.</span>{" "}<span className="rv" style={{ "--d": ".15s" }}>Shaping its Future.</span></p>
           </div>
           <ul className="vf__socials" aria-label="Vajiram & Ravi on social media">
             {SOCIAL.map(([label, key]) => (

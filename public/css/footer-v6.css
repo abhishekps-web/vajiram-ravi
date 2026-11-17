@@ -224,3 +224,16 @@ html.foot-curtain .vf::after { content: ""; position: absolute; inset: 0; z-inde
   .vf__socials a { width: 44px; height: 44px; }
   .vf__socials a .vf__soc { width: 22px; height: 22px; }
 }
+
+/* the line under the logo set as in the preloader (user 2026-11-17, "same style as in the preloader"; intro.css .vrv__tag): Newsreader
+   400, clamp(22px, 2.2vw, 34px)/1.2, -.01em, upright, the second half in the accent. The preloader's white and pale gold sit on its
+   orange ground; on the footer's cream they would not read, so the halves take the footer's ink and its burnt orange. Each half rises
+   in (.rv, the second .15s later, as in the preloader) */
+.vf .vf__tagline { font: 400 clamp(22px, 2.2vw, 34px)/1.2 var(--f-title, "Newsreader"), Georgia, serif; letter-spacing: -.01em; color: var(--vf-ink); }
+.vf .vf__tagline > span { display: inline-block; }
+.vf .vf__tagline > span + span { color: var(--vf-burnt); }
+@media (max-width: 760px) { .vf .vf__tagline { font-size: 26px; } .vf .vf__tagline > span { display: block; } }
+
+/* while the footer zooms in (footer-curtain.js .vf--zooming, 0 < --foot-p < 1) its content is one composited layer, scaled whole: drawn
+   again at every step, the social icons (20px masks) snapped to the pixel grid differently each frame and jumped (user 2026-11-17) */
+html.foot-curtain .vf.vf--zooming > .vf__in, html.foot-curtain .vf.vf--zooming > .foot__frame { will-change: transform; }

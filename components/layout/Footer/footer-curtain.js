@@ -27,6 +27,9 @@ export default function init() {
     const r = Math.round(p * 1000) / 1000;
     if (r === last) return;
     last = r; foot.style.setProperty('--foot-p', r);
+    // while it zooms, the content is one layer the browser scales whole: drawn again at every step, the small social icons (masks)
+    // snapped to the pixel grid differently each frame and jumped (user 2026-11-17). Dropped at full size, so it redraws sharp.
+    foot.classList.toggle('vf--zooming', r > 0 && r < 1);
   };
   addEventListener('scroll', () => { if (!tick) tick = requestAnimationFrame(step); }, { passive: true });
   addEventListener('resize', step);
