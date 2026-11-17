@@ -2663,8 +2663,8 @@ html .nav-band, .dl__ground { overflow: hidden; isolation: isolate;
 .dl__stats li + li { border-left-color: rgba(255, 255, 255, .28); }
 @media (max-width: 760px) { .dl__stats li:nth-child(3) { border-left: 0; } }
 
-/* Hero with the trending banners (user 2026-11-16, as in Kevin's build): the section now holds the card, the stats and the banner
-   carousel (Trending.jsx), so it grows to fit them (height auto) and the card keeps the height it had (--card-h: what the section's
+/* Hero with the promo banners (user 2026-11-16, as in Kevin's build): the section now holds the card, the stats and the banner
+   carousel (PromoBanner.jsx), so it grows to fit them (height auto) and the card keeps the height it had (--card-h: what the section's
    height rules above gave it, less the stats row and the frame's 20px gutter). It is taller than the screen, so it scrolls until its
    foot reaches the bottom of the screen and is pinned there while Programmes slides over it (--hx-stick, hero-ground.js). */
 .dl { --card-h: calc(max(var(--hero-min), calc(100svh - var(--hdr-h) - var(--hdr-gap) - var(--hero-peek) - var(--stats-h))) - 20px); }
@@ -2727,7 +2727,7 @@ html body .dl--pin.dl .dl__in { opacity: 1; transform: none; filter: none; point
 @media (prefers-reduced-motion: reduce) { .hx__glide { animation: none; } }
 
 /* ===== Carousel progress indicator: one look for every carousel (user 2026-11-16, "unify all the progress indicators"): the hero
-   (#dlProg), What's trending (.tr__dots), the Contact us photos (.cx__dots) and the Faculty ring (CarouselDots). Kevin's banner dots:
+   (#dlProg), the promo banner (.tr__dots), the Contact us photos (.cx__dots) and the Faculty ring (CarouselDots). Kevin's banner dots:
    a row of 9px dots; the current one stretches to a 32px pill whose fill (<i>) shows how far that slide has run. White on dark and
    photo grounds; on light grounds (.cdots--light) brand orange. How the fill is driven is each carousel's own: --p (0..1) set by its
    script (the hero), a timed CSS fill (.cdots--timed, --cd-t long; its animationend moves the carousel on; paused under .is-paused),
@@ -2778,7 +2778,7 @@ html body .dl--pin.dl .dl__in { opacity: 1; transform: none; filter: none; point
 /* First screen = header + hero card + stats (user 2026-11-16, "we need to show the hero banner and the stats in the 1st viewport"): the
    card takes the screen less the header, its gap, the stats row and the frame's gutters (20px above, 20px below the row), no more than
    600px, and never less than its copy block plus room for the slide indicators and arrows (--txt-h + 110px). Replaces the earlier
-   Programmes-peek sizing of --card-h (the trending banners follow the stats now). */
+   Programmes-peek sizing of --card-h (the promo banners follow the stats now). */
 html .dl { --card-min: calc(var(--txt-h) + 110px);
   --card-h: clamp(var(--card-min), calc(100svh - var(--hdr-h) - var(--hdr-gap) - var(--stats-h) - 40px), 600px); }
 /* ...and the ticker itself in the eyebrow's shape (user 2026-11-16): the dark cartouche (cartouche.svg, #2B1206) with the same pointed
@@ -2976,7 +2976,7 @@ html main #closing .cl__card { background:
   linear-gradient(135deg, #E85020 0%, #C2410C 55%, #A8380A 100%); }
 html main #closing .cl__glow { display: none; }
 
-/* The first screen ends with the stats (user 2026-11-16, "still I can see some carousel elements under the stats"): the trending
+/* The first screen ends with the stats (user 2026-11-16, "still I can see some carousel elements under the stats"): the promo banner
    banners start below the bottom of the first screen on every screen size. Their gap under the stats is at least what is left of the
    screen after the header, the card and the stats, plus the 40px their pictures rise above them and 16px of air; never less than the
    72px it was (40px on phones). Same structure; only the gap grows on tall screens. */

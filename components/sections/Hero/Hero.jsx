@@ -1,6 +1,6 @@
 import Button from '@/components/ui/Button/Button';
 import { HERO_STATS, HERO_TOPPER_SLIDES } from './data';
-import Trending from './Trending';
+import PromoBanner from './PromoBanner';
 import Stylesheet from '@/components/ui/Stylesheet';
 
 // the results pill's line (Kevin's hero: the topper on show; here the CSE 2025 AIR 1)
@@ -99,8 +99,8 @@ export default function Hero() {
             </li>
           ))}
         </ul>
-        {/* What's trending (user 2026-11-16, from Kevin's build): the banner carousel under the stats (Trending.jsx) */}
-        <Trending />
+        {/* Promo banner (user 2026-11-16, from Kevin's build): the banner carousel under the stats (PromoBanner.jsx) */}
+        <PromoBanner />
       </div>
     </section>
   );

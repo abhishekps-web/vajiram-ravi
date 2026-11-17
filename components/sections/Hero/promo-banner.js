@@ -1,4 +1,4 @@
-// What's trending (Trending.jsx; styles public/css/trending.css), ported from Kevin's build (js/trending.js) as is. One banner at a
+// Promo banner (PromoBanner.jsx; styles public/css/promo-banner.css), ported from Kevin's build (js/trending.js) as is. One banner at a
 // time, sliding sideways in an endless loop: each banner sits at its place from the one on show, d (-2..2, the shortest way round),
 // so after the last banner the first comes in from the right like any other; a banner that changes sides out of sight jumps there
 // without sliding (--tr-o = d - its index, since the flex row already places it at its index). The current dot fills over 6 s (a CSS
@@ -7,8 +7,8 @@
 // keys and a sideways swipe change the banner. Only the banner on show can be reached (the others are inert).
 import { reduce } from '@/lib/site';
 
-export function initTrending() {
-  const tr = document.getElementById('trending'); if (!tr) return;
+export function initPromoBanner() {
+  const tr = document.getElementById('promo-banner'); if (!tr) return;
   const slides = [...tr.querySelectorAll('.tr__slide')], dots = [...tr.querySelectorAll('.tr__dots button')];
   const stage = tr.querySelector('.tr__stage'), track = tr.querySelector('.tr__track');
   if (slides.length < 2) return;

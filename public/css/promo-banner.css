@@ -1,9 +1,9 @@
-/* What's trending (user 2026-11-16): ported from Kevin's build (eclectic-alfajores-975fab.netlify.app, css/trending.css), in the
+/* Promo banner (user 2026-11-16): ported from Kevin's build (eclectic-alfajores-975fab.netlify.app, css/trending.css), in the
    hero under the stats, on its orange ground. One wide banner at a time, sliding sideways. Each banner is a light tint (light yellows
    and light browns in turn) with a faint mandala behind its picture: a small label, a headline in the title face in the tint's deep
    ink, one line under it and the site's primary button; the picture (a Free resources cut-out) on the right, rising a little out of
    the top of the banner. Under it, dots, the current one filling with the banner's time (6 s); previous and next on the banner's edges
-   while the pointer is over it (the site's icon-only buttons). Markup components/sections/Hero/Trending.jsx, behaviour trending.js. */
+   while the pointer is over it (the site's icon-only buttons). Markup components/sections/Hero/PromoBanner.jsx, behaviour promo-banner.js. */
 .tr { --tr-gap: 24px; --tr-h: 300px; position: relative; margin-top: 64px; padding: 0 0 64px; }
 
 .tr__stage { position: relative; display: flow-root; }   /* flow-root: the track's -40px top margin (room for the pictures) stays inside */
@@ -14,7 +14,7 @@
     radial-gradient(38% 80% at 80% 62%, rgba(255, 255, 255, .7), transparent 70%),
     linear-gradient(110deg, var(--bg-a) 0%, var(--bg-a) 34%, var(--bg-b) 100%);
   box-shadow: 0 26px 50px -30px rgba(60, 15, 0, .7), inset 0 0 0 1px rgba(255, 255, 255, .6);
-  translate: calc(var(--tr-o, 0) * (100% + var(--tr-gap))) 0; transition: translate .8s cubic-bezier(.65, 0, .35, 1); }   /* --tr-o: trending.js */
+  translate: calc(var(--tr-o, 0) * (100% + var(--tr-gap))) 0; transition: translate .8s cubic-bezier(.65, 0, .35, 1); }   /* --tr-o: promo-banner.js */
 .tr__slide--butter { --bg-a: #FFFAE8; --bg-b: #FCE7A6; --ink: #5A3A08; --acc: #A86A08; }
 .tr__slide--sand   { --bg-a: #FAF3EA; --bg-b: #E8D2B6; --ink: #4A2A12; --acc: #8B5A2B; }
 .tr__slide--cream  { --bg-a: #FFFBEF; --bg-b: #F8E2B0; --ink: #5A3A08; --acc: #A0670F; }

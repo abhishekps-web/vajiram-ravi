@@ -118,9 +118,9 @@ The client wants **every section and every element animated**. For any change to
   they meet with no seam (end of `v49.css`). At rest the nav items are light on it (white logo, links, "Let's talk" as the white
   pill; end of `navigation-bar.css`); scrolled, the bar is white with the usual colours. The batch ribbon above the header was
   removed (user 2026-11-16; `--strip-h` is 0, `components/sections/BatchStrips/` is unused).
-  What's trending (user 2026-11-16, from Kevin's branch `kevin` of github.com/solomonmathai-coder/Vajiram-ravi, deployed at
-  eclectic-alfajores-975fab.netlify.app): a banner carousel under the stats inside the hero (`Hero/Trending.jsx`, `trending.js`, data
-  `TRENDING` in `Hero/data.js`, `public/css/trending.css`). The hero is then taller than the screen: it scrolls until its foot reaches the
+  Promo banner (renamed from "What's trending", user 2026-11-17; user 2026-11-16, from Kevin's branch `kevin` of github.com/solomonmathai-coder/Vajiram-ravi, deployed at
+  eclectic-alfajores-975fab.netlify.app): a banner carousel under the stats inside the hero (`Hero/PromoBanner.jsx`, `promo-banner.js`, data
+  `PROMO_BANNERS` in `Hero/data.js`, `public/css/promo-banner.css`; classes `.tr__…`, id `#promo-banner`). The hero is then taller than the screen: it scrolls until its foot reaches the
   bottom of the screen and is pinned there (`--hx-stick`, `hero-ground.js`); its shade starts only once Programmes comes on screen.
 - Contact us (`#visit`) and the footer are Kevin's too (user 2026-11-16): `Visit.jsx` + `public/css/contact-compact.css` (card, map,
   photo gallery, `visit-gallery.js`); the cream footer `Footer.jsx` + `public/css/footer-v6.css` (IBM Plex Sans on the footer only).
