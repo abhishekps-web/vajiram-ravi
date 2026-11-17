@@ -171,3 +171,11 @@ html.foot-curtain .vf::after { content: ""; position: absolute; inset: 0; z-inde
 @media (max-width: 760px) { .vf__news { display: none; } }
 /* phones only (user 2026-11-17, "remove the large Vajiram & Ravi text in the footer, only on mobile"): the giant pressed-in name is not shown */
 @media (max-width: 760px) { .vf__word { display: none; } }
+
+/* the line under the logo (user 2026-11-17, "under that logo add 'Understanding India. Shaping its Future.'"): the site's serif, italic,
+   in the footer's ink; the logo and the line are one block (.vf__brand), opposite the social icons, above them on phones */
+.vf__brand { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; min-width: 0; }
+.vf__tagline { margin: 0; font: italic 400 18px/1.35 var(--f-title, Georgia), serif; letter-spacing: -.005em; color: var(--vf-ink); text-wrap: balance; }
+@media (max-width: 760px) { .vf__brand { width: 100%; } .vf__tagline { font-size: 19px; } }
+/* phones (user 2026-11-17, "under that add the socials in the centre"): the social icons under the logo and its line, centred */
+@media (max-width: 760px) { .vf__bar > .vf__socials { align-self: center; justify-content: center; margin-left: 0; } }

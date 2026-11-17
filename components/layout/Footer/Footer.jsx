@@ -15,9 +15,13 @@ export default function Footer() {
       <span className="foot__frame" aria-hidden="true" />
       <div className="vf__in">
         <div className="vf__bar">
-          <a className="vf__logo" href="#top" aria-label="Vajiram & Ravi, back to top">
-            <img src="/assets/img/brand/logo-v6-320.webp" srcSet="/assets/img/brand/logo-v6-320.webp 320w, /assets/img/brand/logo-v6.webp 617w" sizes="(max-width: 760px) 100vw, 220px" alt="" width="320" height="107" loading="lazy" decoding="async" />
-          </a>
+          {/* the logo and, under it, the institute's line (user 2026-11-17) */}
+          <div className="vf__brand">
+            <a className="vf__logo" href="#top" aria-label="Vajiram & Ravi, back to top">
+              <img src="/assets/img/brand/logo-v6-320.webp" srcSet="/assets/img/brand/logo-v6-320.webp 320w, /assets/img/brand/logo-v6.webp 617w" sizes="(max-width: 760px) 100vw, 220px" alt="" width="320" height="107" loading="lazy" decoding="async" />
+            </a>
+            <p className="vf__tagline">Understanding India. Shaping its Future.</p>
+          </div>
           <ul className="vf__socials" aria-label="Vajiram & Ravi on social media">
             {SOCIAL.map(([label, key]) => (
               <li key={key}>
