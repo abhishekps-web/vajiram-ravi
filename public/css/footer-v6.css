@@ -152,3 +152,12 @@ html.foot-curtain .vf::after { content: ""; position: absolute; inset: 0; z-inde
   html.foot-curtain .vf > .foot__frame, html.foot-curtain .vf > .vf__in { transform: none; }
   html.foot-curtain .vf::after { display: none; }
 }
+
+/* Phones (760px and narrower, user 2026-11-17, "remove the sticky behaviour for the footer on mobile only"): the footer is not parked
+   under the page there; it simply follows the last section and scrolls with the page. Its reveal zoom and shade (footer-curtain.js) go
+   with it. Wider screens keep the curtain. */
+@media (max-width: 760px) {
+  html.foot-curtain footer.vf { position: relative; bottom: auto; z-index: auto; }
+  html.foot-curtain .vf > .foot__frame, html.foot-curtain .vf > .vf__in { transform: none; }
+  html.foot-curtain .vf::after { display: none; }
+}
