@@ -165,7 +165,8 @@ html.foot-curtain .vf::after { content: ""; position: absolute; inset: 0; z-inde
 /* a larger logo (user 2026-11-17, "large the Vajiram logo in the footer"): 220px wide (was 136px), 180px on phones; the full-size file on
    high-density screens (srcSet, Footer.jsx) */
 .vf__logo img { width: 220px; }
-@media (max-width: 760px) { .vf__logo img { width: 180px; } }
+/* phones (user 2026-11-17, "make the logo fill 100% width"): the logo spans the footer's content column */
+@media (max-width: 760px) { .vf__logo { width: 100%; } .vf__logo img { width: 100%; } }
 /* phones only (user 2026-11-17, "remove latest current affairs from the mobile footer only"): the news card is not shown there */
 @media (max-width: 760px) { .vf__news { display: none; } }
 /* phones only (user 2026-11-17, "remove the large Vajiram & Ravi text in the footer, only on mobile"): the giant pressed-in name is not shown */
