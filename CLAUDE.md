@@ -26,7 +26,7 @@ components/
     SiteBehaviour.jsx     client component: after hydration, imports lib/behaviour.js and starts it
   sections/<Section>/     one folder per section: <Section>.jsx (markup), data.js (content), *.js (behaviour)
                           Hero, Programmes, Toppers (data/ holds the archive and rankers), WhyChoose, Batches, GeneralStudies,
-                          Faculties (the faculty section, id "educators"; TS + Tailwind, ported from Soloman), Stories, Contact, Resources (data.jsx: the cards), Visit, Faq, Closing, Parked (hidden)
+                          Faculties (the faculty section, id "educators"; TS + Tailwind, ported from Soloman), Stories, Contact, Resources (data.jsx: the cards), ContactUs (Tailwind), Faq, Closing, Parked (hidden)
   dialogs/                RanksDialog, CourseCatalogDialog (+ their behaviours; course-catalog.js also opens the catalogue for any [data-cat] link)
   ui/                     shared pieces: Button/ (the button system: Button.jsx, button-core.js, README.md), SectionLabel (.lbl eyebrow),
                           ArrowIcon/StraightArrow, Dialog, Stylesheet, CarouselDots/ (every carousel's dot indicator; Tailwind,
@@ -124,8 +124,9 @@ The client wants **every section and every element animated**. For any change to
   markup and behaviour in that one client component, `pb:` utilities from its folder only, entry `PromoBanner/promo-banner.css`; data
   `PROMO_BANNERS` in `Hero/data.js`; id `#promo-banner`). The hero is then taller than the screen: it scrolls until its foot reaches the
   bottom of the screen and is pinned there (`--hx-stick`, `hero-ground.js`); its shade starts only once Programmes comes on screen.
-- Contact us (`#visit`) and the footer are Kevin's too (user 2026-11-16): `Visit.jsx` + `public/css/contact-compact.css` (card, map,
-  photo gallery, `visit-gallery.js`); the cream footer `Footer.jsx` + `public/css/footer-v6.css` (IBM Plex Sans on the footer only).
+- Contact us (`#visit`) and the footer are Kevin's too (user 2026-11-16). Contact us (user 2026-11-17) is `ContactUs/ContactUs.jsx`,
+  Tailwind with `cu:` utilities (the shared entry `app/tailwind-sections.css`; the folder holds only the .jsx): one card holding the 2:1 map (no "View on maps"), the address (title font), phone,
+  email on the left and a static campus photo on the right, no shadow; its id stays `visit` for the shared shell rules; the cream footer `Footer.jsx` + `public/css/footer-v6.css` (IBM Plex Sans on the footer only).
 
 - The Toppers section (`#toppers`) is "Toppers from Vajiram & Ravi" (heading only, no subcopy): a static banner in `Toppers.jsx` plus `<ToppersSpread />` (`Toppers/ToppersSpread/`: ToppersSpread.jsx, RankMedal.jsx, `data.js` with the CSE 2025 rank holders; styles `public/css/toppers-spread.css`, banner styles `public/css/toppers.css`). Add or edit a rank holder in `data.js` only. The old gazette behaviour (`toppers.js`) was removed; `Toppers/data/` is unused leftovers. Newsreader italic 400/500 is loaded in `app/layout.jsx` for the spread.
 - Success stories on phones (user 2026-11-17, 760px and narrower): the postcards are a stack (one card in front, two peeking behind; swipe, arrows, or ← →) instead of the loop. Logic `components/ui/card-stack.js`; styles at the end of `Stories/stories.css`.

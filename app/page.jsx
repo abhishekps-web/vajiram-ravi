@@ -12,7 +12,7 @@ import Stories from '@/components/sections/Stories/Stories';
 import Contact from '@/components/sections/Contact/Contact';
 import Resources from '@/components/sections/Resources/Resources';
 import LifeGallery from '@/components/sections/LifeGallery/LifeGallery';
-import Visit from '@/components/sections/Visit/Visit';
+import ContactUs from '@/components/sections/ContactUs/ContactUs';
 import Faq from '@/components/sections/Faq/Faq';
 import Closing from '@/components/sections/Closing/Closing';
 import CourseCatalogDialog from '@/components/dialogs/CourseCatalogDialog';
@@ -43,7 +43,7 @@ export default function Home() {
         <Contact />
         <Resources />
         <LifeGallery />
-        <Visit />
+        <ContactUs />
         <Faq />
         <Closing />
         <CourseCatalogDialog />
