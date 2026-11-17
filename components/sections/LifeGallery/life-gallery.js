@@ -160,10 +160,30 @@ export default function initLifeGallery() {
 
   // videos (copies included): play while most of the card is on screen and the gallery is in view
   let vids = [];
+  // a video someone paused with its button (data-held) stays paused when it comes back on screen; one they played with it plays even
+  // with reduced motion, until it leaves the screen
   const syncVideos = () => vids.forEach(o => {
     if (!o.src) return;
-    if (auto && inView && o.seen && !document.hidden) { if (!o.v.src) o.v.src = o.src; o.v.play().catch(() => {}); }
+    const want = (auto || o.v.dataset.asked) && inView && o.seen && !document.hidden && !o.v.dataset.held;
+    if (want) { if (!o.v.src) o.v.src = o.src; o.v.play().catch(() => {}); }
     else o.v.pause();
+  });
+  // the play / pause button on each video card (user 2026-11-17, "video controls are missing"; LifeGallery.jsx .lg__vctl): it shows
+  // pause while the video plays and play while it does not, and says so (its label names the card)
+  const ctlState = v => {
+    const b = v.closest('.lg__media')?.querySelector('.lg__vctl'); if (!b) return;
+    const on = !v.paused, name = b.getAttribute('aria-label').replace(/^(Play|Pause) video/, '').trim();
+    b.classList.toggle('is-playing', on);
+    b.setAttribute('aria-label', `${on ? 'Pause' : 'Play'} video${name}`);
+  };
+  track.addEventListener('play', e => ctlState(e.target), true);
+  track.addEventListener('pause', e => ctlState(e.target), true);
+  track.addEventListener('click', e => {
+    const b = e.target.closest('.lg__vctl'); if (!b) return;
+    const v = b.closest('.lg__media')?.querySelector('video'); if (!v) return;
+    const src = (v.dataset.src || '').trim(); if (!src) return;
+    if (!v.paused) { v.dataset.held = '1'; delete v.dataset.asked; v.pause(); }
+    else { delete v.dataset.held; v.dataset.asked = '1'; if (!v.src) v.src = src; v.play().catch(() => {}); }
   });
   const vio = new IntersectionObserver(es => {
     es.forEach(e => { const o = vids.find(x => x.v === e.target); if (o) o.seen = e.isIntersecting; });

@@ -167,3 +167,13 @@
 /* phones (760px and narrower, user 2026-11-17): no smoke at the row's sides ("remove the left and right smoke effect only on mobile"), so
    its two blurred, endlessly drifting clouds no longer run there either; the row is flat on phones (life-gallery.js) */
 @media (max-width: 760px) { .lg__smoke { display: none; } }
+
+/* the video cards' play / pause button (user 2026-11-17, "video controls are missing"; LifeGallery.jsx, life-gallery.js): the site's
+   icon-only outline button in the card's bottom right corner, on a frosted light ground so it reads over any frame; the play glyph while
+   the video is stopped, pause while it plays. Shown on every video card, with or without a clip yet. */
+.lg__vctl.btn { position: absolute; right: 12px; bottom: 12px; z-index: 2; --btn-bg: rgba(255, 249, 241, .92); --btn-fg: #C2410C;
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.lg__vctl[hidden] { display: none; }
+.lg__vctl .lg__vi-pause, .lg__vctl.is-playing .lg__vi-play { display: none; }
+.lg__vctl.is-playing .lg__vi-pause { display: inline; }
+.lg__slide.is-copy .lg__vctl { visibility: hidden; }   /* the loop's copies are inert: no control on them */
