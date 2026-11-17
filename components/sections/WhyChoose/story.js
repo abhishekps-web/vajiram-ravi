@@ -15,6 +15,21 @@ export default function init() {
   const stage = sec.querySelector('.cmp__stage'), card = sec.querySelector('.cmp__card'), track = sec.querySelector('.cmp__track');
   const panels = [...track.children], N = panels.length;
   const wide = matchMedia('(min-width: 900px) and (min-height: 600px)'), reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  // The stacked chapters (under 900px, story.css): every card as tall as the tallest (user 2026-11-17, "fix this": with cards of different
+  // heights, the parts of the earlier cards showing under the front one included their buttons). Equal, only a clean edge of each shows.
+  // Measured again on resize and once the fonts are in; cleared on wider screens (the pinned scene) and with reduced motion (no stacking).
+  const narrow = matchMedia('(max-width: 899px)');
+  const even = () => {
+    panels.forEach(p => { p.style.minHeight = ''; });
+    if (!narrow.matches || reduce.matches) return;
+    const h = Math.max(...panels.map(p => p.offsetHeight));
+    panels.forEach(p => { p.style.minHeight = h + 'px'; });
+  };
+  let evenT = 0;
+  even();
+  addEventListener('resize', () => { clearTimeout(evenT); evenT = setTimeout(even, 150); });
+  addEventListener('load', even);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(even);
   const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
   const seg = (u, a, b) => clamp((u - a) / (b - a));
   const io = t => ((t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2) + (t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2)) / 2;
