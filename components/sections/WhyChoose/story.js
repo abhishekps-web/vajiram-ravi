@@ -21,14 +21,23 @@ export default function init() {
   const narrow = matchMedia('(max-width: 899px)'), hd = sec.querySelector('.cmp__hd');
   const even = () => {
     panels.forEach(p => { p.style.minHeight = ''; });
-    // the heading sticks above the stack (user 2026-11-17): its height places the cards under it and sizes their photos (story.css,
-    // --hd-h), so it is set before the cards are measured
-    if (hd && narrow.matches) sec.style.setProperty('--hd-h', hd.offsetHeight + 'px'); else sec.style.removeProperty('--hd-h');
+    // the heading sticks above the stack (user 2026-11-17): --hd-h places the cards under it and sizes their photos (story.css), so it
+    // is set before the cards are measured. It is the distance from the heading's top to the first card in the page's flow (the
+    // heading's height and the space under it), so a stuck card keeps the spacing it has before anything sticks (user 2026-11-17,
+    // "keep this spacing always"). Read from the list's place in .cmp__ov (neither is sticky), not from the sticky heading's position.
+    if (hd && narrow.matches) {
+      const ov = hd.parentElement, cs = getComputedStyle(ov);
+      const d = track.getBoundingClientRect().top - ov.getBoundingClientRect().top - parseFloat(cs.paddingTop) - parseFloat(cs.borderTopWidth) - parseFloat(getComputedStyle(hd).marginTop);
+      sec.style.setProperty('--hd-h', Math.round(d) + 'px');
+    } else sec.style.removeProperty('--hd-h');
     sec.style.removeProperty('--card-h');
     if (!narrow.matches || reduce.matches) return;
     const h = Math.max(...panels.map(p => p.offsetHeight));
     panels.forEach(p => { p.style.minHeight = h + 'px'; });
-    sec.style.setProperty('--card-h', h + 'px');   // the heading leaves with the stack (story.css)
+    // the heading leaves with the stack (story.css): its room ends a card's height, plus the space between it and the cards, before the
+    // list's end, so it starts moving the moment the cards do and that space holds while they go
+    const gap = hd ? (parseFloat(sec.style.getPropertyValue('--hd-h')) || 0) - hd.offsetHeight : 0;
+    sec.style.setProperty('--card-h', Math.round(h + Math.max(0, gap) + parseFloat(getComputedStyle(track).paddingBottom)) + 'px');   // + the list's own foot padding
   };
   let evenT = 0;
   even();

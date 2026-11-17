@@ -256,11 +256,11 @@
   html:has(#nav.nav--away) #story:not(.cmp--run, .story-run *) .cmp__hd { top: 14px; }
   #story:not(.cmp--run, .story-run *) .cmp__p { top: calc(var(--hdr-h, 74px) + 14px + var(--hd-h, 180px)); }
   html:has(#nav.nav--away) #story:not(.cmp--run, .story-run *) .cmp__p { top: calc(14px + var(--hd-h, 180px)); }
-  /* the heading leaves as the last card comes in (user 2026-11-17: not after the pile has closed up): it starts going about 150px of
-     scroll before the sixth card settles (the +150px), and is gone as the pile closes up. The cards are let go when the list's end reaches the foot of the
-     front card, so the heading's room (.cmp__ov's content) ends a card's height (--card-h, story.js) before the list does */
-  #story:not(.cmp--run, .story-run *) .cmp__ov { padding-bottom: calc(var(--card-h, calc(100svh - 284px)) + 150px); }
-  #story:not(.cmp--run, .story-run *) .cmp__track { margin-bottom: calc(-1 * var(--card-h, calc(100svh - 284px)) - 150px); }
+  /* the heading leaves with the stack, the moment the last card lands (user 2026-11-17: it neither waits after the pile nor goes ahead
+     of it, which left an empty band between the two): the cards are let go when the list's end reaches the foot of the front card, so
+     the heading's room (.cmp__ov's content) ends a card's height (--card-h, story.js) before the list does */
+  #story:not(.cmp--run, .story-run *) .cmp__ov { padding-bottom: calc(var(--card-h, calc(100svh - 284px))); }
+  #story:not(.cmp--run, .story-run *) .cmp__track { margin-bottom: calc(-1 * var(--card-h, calc(100svh - 284px))); }
 }
 /* phones only (one column, the photo above the text): the photo gives up height so a whole card fits under the heading; tablets lay the
    card out in two columns, short enough already */
@@ -268,3 +268,11 @@
   #story:not(.cmp--run, .story-run *) .cmp__ph { aspect-ratio: auto; height: clamp(120px, 100svh - var(--hd-h, 180px) - 450px, 75vw); }
 }
 @media (max-width: 899px) and (prefers-reduced-motion: reduce) { #story:not(.cmp--run, .story-run *) .cmp__hd { transition: none; } }
+
+/* The last card settles before the pile leaves (user 2026-11-17, "when it comes to the last card the UI breaks"): the list ended at the
+   sixth card's foot, so the pile and the heading were let go the moment it landed, and stopping just before that left the fifth card's
+   edge showing over it as it all began to move. An empty item after the cards (inside the list, so the cards' sticky room grows; padding
+   would not count) holds the settled pile and the heading for a quarter of a screen of scroll, then they leave together. */
+@media (max-width: 899px) and (prefers-reduced-motion: no-preference) {
+  #story:not(.cmp--run, .story-run *) .cmp__track::after { content: ""; display: block; height: 25svh; margin-top: -22px; pointer-events: none; }
+}
