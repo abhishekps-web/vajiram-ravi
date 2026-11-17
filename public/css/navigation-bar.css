@@ -159,6 +159,8 @@ html[lang="hi"] .more__a { font-family: "Mukta", var(--btn-font); }
 .nav:not(.scrolled) .nav__burger span { background: #fff; }
 .nav:not(.scrolled) .talk { --btn-bg: #fff; --btn-bg-hover: var(--sand); --btn-fg: var(--ink); --btn-fg-hover: var(--ink); --btn-text-shadow: none;
   --btn-disc-bg: #C2410C; --btn-disc-fg: #fff; --btn-disc-shadow: none; }
+/* the menu button keeps its 36px square on phones (user 2026-11-17: at 390px the row squeezed it to 1px wide, so the drawer could not be opened) */
+.nav__burger { flex: none; }
 .nav .nav__a, .nav__burger span { transition: color .35s var(--ease, ease), background-color .2s; }
 
 /* "Let's talk" the height of the language switch (user 2026-11-16: the English / Hindi controls side by side the same height): 44px,
@@ -198,3 +200,29 @@ html[lang="hi"] .more__a { font-family: "Mukta", var(--btn-font); }
 @media (max-width: 480px) { .nav .lang__b { font-size: 13.5px; } .nav .lang__b[lang="hi"] { font-size: 17px; } }
 /* narrow phones: a size down, so the logo clears the language switch at 360px */
 @media (max-width: 400px) { .nav__logo, .nav__logo .lg, .nav:not(.scrolled) .nav__logo .lg, .nav.scrolled .nav__logo .lg { height: 38px; } }
+
+/* Mobile header row (user 2026-11-17, "how can I access the nav items from mobile?"): below 1024px the logo + burger group and the
+   language / "Let's talk" group could not shrink, so on a phone the switch ran over the logo and the burger was squeezed to nothing.
+   Now one row on the bar: the logo (it gives up width first, keeping its proportions), the language switch, "Let's talk" and the menu
+   button last, at the right edge, a 44px tap target. .nav__pill is unwrapped (display: contents) so its logo and burger join that row. */
+@media (max-width: 1023.98px) {
+  .nav { justify-content: flex-start; align-items: center; gap: 8px; }
+  .nav .nav__pill { display: contents; }
+  .nav__logo, .nav .nav__logo, .nav--hero .nav__logo { flex: 0 1 auto; min-width: 0; margin-right: auto; padding: 0; }
+  .nav .nav__logo .lg, .nav:not(.scrolled) .nav__logo .lg, .nav.scrolled .nav__logo .lg { width: 187px; max-width: 100%; height: auto; }
+  .nav .nav__end { order: 1; margin-left: 0; }
+  .nav .nav__burger { order: 2; width: 44px; height: 44px; margin-left: 0; border-radius: 12px; transition: background-color .2s ease; }
+  .nav .nav__burger span { left: 13px; right: 13px; }
+  .nav .nav__burger span:first-child { top: 18px; }
+  .nav .nav__burger span:last-child { top: 25px; }
+  .nav .nav__burger:hover { background: rgba(38, 38, 38, .06); }
+  .nav:not(.scrolled) .nav__burger:hover { background: rgba(255, 255, 255, .16); }
+  .nav .nav__burger:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+}
+/* 600px and narrower: the language switch is one 44px button offering the other language (EN on a Hindi page, हिं on an English
+   one); the sliding thumb is dropped. lang-switch.js moves focus to it after a switch. */
+@media (max-width: 600px) {
+  .nav .lang { padding: 0; }
+  .nav .lang__thumb, .nav .lang__b[aria-pressed="true"] { display: none; }
+  .nav .lang__b { min-width: 44px; height: 44px; padding: 0 6px; border-radius: 999px; }
+}
