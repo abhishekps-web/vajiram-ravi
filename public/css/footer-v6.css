@@ -152,3 +152,87 @@ html.foot-curtain .vf::after { content: ""; position: absolute; inset: 0; z-inde
   html.foot-curtain .vf > .foot__frame, html.foot-curtain .vf > .vf__in { transform: none; }
   html.foot-curtain .vf::after { display: none; }
 }
+
+/* Phones (760px and narrower, user 2026-11-17, "remove the sticky behaviour for the footer on mobile only"): the footer is not parked
+   under the page there; it simply follows the last section and scrolls with the page. Its reveal zoom and shade (footer-curtain.js) go
+   with it. Wider screens keep the curtain. */
+@media (max-width: 760px) {
+  html.foot-curtain footer.vf { position: relative; bottom: auto; z-index: auto; }
+  html.foot-curtain .vf > .foot__frame, html.foot-curtain .vf > .vf__in { transform: none; }
+  html.foot-curtain .vf::after { display: none; }
+}
+
+/* a larger logo (user 2026-11-17, "large the Vajiram logo in the footer"): 220px wide (was 136px), 180px on phones; the full-size file on
+   high-density screens (srcSet, Footer.jsx) */
+.vf__logo img { width: 220px; }
+/* phones (user 2026-11-17, "make the logo fill 100% width"): the logo spans the footer's content column */
+@media (max-width: 760px) { .vf__logo { width: 100%; } .vf__logo img { width: 100%; } }
+/* phones only (user 2026-11-17, "remove latest current affairs from the mobile footer only"): the news card is not shown there */
+@media (max-width: 760px) { .vf__news { display: none; } }
+/* phones only (user 2026-11-17, "remove the large Vajiram & Ravi text in the footer, only on mobile"): the giant pressed-in name is not shown */
+@media (max-width: 760px) { .vf__word { display: none; } }
+
+/* the line under the logo (user 2026-11-17, "under that logo add 'Understanding India. Shaping its Future.'"): the site's serif, italic,
+   in the footer's ink; the logo and the line are one block (.vf__brand), opposite the social icons, above them on phones */
+.vf__brand { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; min-width: 0; }
+.vf__tagline { margin: 0; font: italic 400 18px/1.35 var(--f-title, Georgia), serif; letter-spacing: -.005em; color: var(--vf-ink); text-wrap: balance; }
+@media (max-width: 760px) { .vf__brand { width: 100%; } .vf__tagline { font-size: 19px; } }
+/* phones (user 2026-11-17, "under that add the socials in the centre"): the social icons under the logo and its line, centred */
+@media (max-width: 760px) { .vf__bar > .vf__socials { align-self: center; justify-content: center; margin-left: 0; } }
+
+/* the line under the logo, set as on the Bragg footer (user 2026-11-17, footer.design/sites/bragg): upright (not italic), and on phones
+   the brand block centred: the logo, then with clear space under it the line, larger, centred, as a two-line statement (one sentence
+   to a line), then the social icons centred */
+.vf__tagline { font-style: normal; }
+@media (max-width: 760px) {
+  .vf__brand { align-items: center; gap: 22px; text-align: center; }
+  .vf__tagline { font-size: 24px; line-height: 1.25; letter-spacing: -.01em; }
+  .vf__tagline > span { display: block; }
+  .vf__bar { align-items: center; gap: 24px; }
+}
+
+/* the logo as the emblem and the wordmark (two pictures, Footer.jsx; user 2026-11-17, "arrange the logo mark and the wordmark
+   vertically"). Wider screens: side by side, the size the one picture had (220px across). Phones: stacked and centred, the emblem over
+   the wordmark, the wordmark the column's width (at most 320px), as the Bragg footer sets its mark over its line. */
+.vf__logo { display: flex; align-items: center; gap: 11px; }
+.vf__logo img.vf__mark { width: auto; height: 72px; }
+.vf__logo img.vf__wordmark { width: 138px; height: auto; }
+@media (max-width: 760px) {
+  .vf__logo { flex-direction: column; gap: 14px; width: 100%; }
+  .vf__logo img.vf__mark { height: 112px; }
+  .vf__logo img.vf__wordmark { width: 100%; max-width: 320px; }
+}
+
+/* the logo as the emblem and the wordmark (two pictures, Footer.jsx; user 2026-11-17, "arrange the logo mark and the wordmark
+   vertically"). Wider screens: side by side, the size the one picture had (220px across). Phones: stacked and centred, the emblem over
+   the wordmark, the wordmark the column's width (at most 320px), as the Bragg footer sets its mark over its line. */
+.vf__logo { display: flex; align-items: center; gap: 11px; }
+.vf__logo img.vf__mark { width: auto; height: 72px; }
+.vf__logo img.vf__wordmark { width: 138px; height: auto; }
+@media (max-width: 760px) {
+  .vf__logo { flex-direction: column; gap: 14px; width: 100%; }
+  .vf__logo img.vf__mark { height: 112px; }
+  .vf__logo img.vf__wordmark { width: 100%; max-width: 320px; }
+}
+
+/* the legal bar on phones, tidied (user 2026-11-17, "optimise this section too"): centred, the copyright on its own line and the three
+   items centred under it, wrapping evenly; each link at least 24px tall to tap */
+@media (max-width: 760px) {
+  .vf__legal { flex-direction: column; align-items: center; gap: 8px; text-align: center; }
+  .vf__legal p { font-size: 13px; line-height: 20px; opacity: .85; }
+  .vf__legal nav { justify-content: center; gap: 4px 20px; }
+  .vf__legal nav > * { padding-block: 2px; }
+  /* no separator dots: the three items cannot share one line on a phone, and a dot left at the start of the wrapped line read as a stray */
+}
+
+/* social icons sized for Fitts's law (user 2026-11-17, "check Fitts's law for the social icons"): the targets were 32px round, 6px apart on
+   phones, small and close for a thumb. Now 44px targets (the touch guideline) 8px apart on phones, the six still in one row (304px), and
+   40px with a mouse; the glyphs a touch larger. The hover/focus disc is the whole target, so the larger area shows. */
+.vf__socials { gap: 8px; }
+.vf__socials a { width: 40px; height: 40px; }
+.vf__socials a .vf__soc { width: 20px; height: 20px; }
+@media (max-width: 760px) {
+  .vf__socials { gap: 8px; }
+  .vf__socials a { width: 44px; height: 44px; }
+  .vf__socials a .vf__soc { width: 22px; height: 22px; }
+}

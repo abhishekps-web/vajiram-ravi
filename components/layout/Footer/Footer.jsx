@@ -15,9 +15,15 @@ export default function Footer() {
       <span className="foot__frame" aria-hidden="true" />
       <div className="vf__in">
         <div className="vf__bar">
-          <a className="vf__logo" href="#top" aria-label="Vajiram & Ravi, back to top">
-            <img src="/assets/img/brand/logo-v6-320.webp" alt="" width="320" height="107" loading="lazy" decoding="async" />
-          </a>
+          {/* the logo and, under it, the institute's line (user 2026-11-17) */}
+          <div className="vf__brand">
+            <a className="vf__logo" href="#top" aria-label="Vajiram & Ravi, back to top">
+              {/* the emblem and the wordmark as two pictures (cut from logo-v6.webp), so phones can stack them (user 2026-11-17) */}
+              <img className="vf__mark" src="/assets/img/brand/logo-v6-mark.webp" alt="" width="198" height="203" loading="lazy" decoding="async" />
+              <img className="vf__wordmark" src="/assets/img/brand/logo-v6-wordmark.webp" alt="" width="395" height="81" loading="lazy" decoding="async" />
+            </a>
+            <p className="vf__tagline"><span>Understanding India.</span>{" "}<span>Shaping its Future.</span></p>
+          </div>
           <ul className="vf__socials" aria-label="Vajiram & Ravi on social media">
             {SOCIAL.map(([label, key]) => (
               <li key={key}>
@@ -73,7 +79,7 @@ export default function Footer() {
           </svg>
         </div>
         <div className="vf__legal">
-          <p>© 2026 Vajiram &amp; Ravi. All rights reserved</p>
+          <p>© 2026 Vajiram &amp; Ravi. All rights reserved.</p>
           <nav aria-label="Legal">
             {LEGAL.map(([label, href]) => <a key={label} href={href} target="_blank" rel="noopener">{label}</a>)}
             <span>Grievance redressal</span>
