@@ -187,4 +187,6 @@ export const programmeChoices: string[] = [featuredProgramme.name, ...programmes
  */
 export const programmeSlug = (name: string) =>
   name.toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
-export const coursePageHref = (programme: Pick<Programme, "name">) => `/courses/${programmeSlug(programme.name)}`;
+// For now (user 2026-11-17, "we don't want a new page for now, just # it") every course link is "#": the course pages are still built
+// (app/courses/[slug], from programmeSlug) but nothing links to them. Put back `/courses/${programmeSlug(programme.name)}` to link them.
+export const coursePageHref = (_programme: Pick<Programme, "name">) => "#";
