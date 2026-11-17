@@ -3090,3 +3090,11 @@ html main #gs.gs { margin-bottom: var(--sec-y); }
    ribbon and shadow hang below it and nearly touched the eyebrow; more room under the book (56px in the book's zoomed units, about 35px
    on screen). */
 @media (max-width: 760px) { #gs .gsbook { margin-bottom: 56px; } }
+
+/* Desktop hold before Programmes (user 2026-11-17, desktop only): once the hero's foot (the promo banner) is pinned at the bottom of
+   the screen, it stays put for a short stretch of scroll (30% of the screen) before Programmes starts sliding over it. The sheet's
+   margin is that stretch; the sticky hero covers it. --hx-tall (hero-ground.js) is 0 when the hero is shorter than the screen, so
+   no gap shows under a short hero. The shade and the sheet's fade (page-motion.js) follow the sheet, so they start after the hold. */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  html main .cover > #dlPin ~ section#courses { margin-top: calc(var(--hx-tall, 0) * 30svh); }
+}
