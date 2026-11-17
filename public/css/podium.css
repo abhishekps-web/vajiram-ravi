@@ -416,3 +416,10 @@
    height), which showed as a smeared band in the shield's point. The photo now fades out just before that row, onto the shield's own
    orange photo area. */
 .pd__img { -webkit-mask: linear-gradient(180deg, #000 60%, transparent 70%); mask: linear-gradient(180deg, #000 60%, transparent 70%); }
+
+/* Nothing outside the section (user 2026-11-17, "overflows that exceed the screen and affect the section below"): the light behind the
+   podium (.pd__fx, wider than the column and reaching 300px below the row), the turning rays behind AIR 1 (a square 2.6 shields wide,
+   its corners sweeping past the screen as it turns), the sparks and the reel's track all stay inside the section's box. `clip` does not
+   make the section a scroll box (no stray inner scrolling); older Safari, which lacks it, gets `hidden`. */
+#toppers { overflow: clip; }
+@supports not (overflow: clip) { #toppers { overflow: hidden; } }
