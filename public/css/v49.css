@@ -3052,3 +3052,12 @@ html main #gs.gs { margin-bottom: var(--sec-y); }
   .form--note .form__sent .blank { flex: none; width: 100%; }
   .form--note .form__sent .blank--tel { align-items: baseline; }
 }
+
+/* Talk to us form on phones (user 2026-11-17, "the labels should be the same as the desktop version", "check the font too"): each field's
+   label is the desktop sentence's own words (Hi, I'm / and I'm preparing for / Please call me on / in the / or email me on), in the
+   desktop's face (the form's serif, Newsreader 500, at the phone's size), above its field; the separate short labels (Full name …) are
+   no longer shown. Each input keeps its own accessible name (aria-label). */
+@media (max-width: 600px) {
+  .form--note .form__say { display: block; font: inherit; line-height: 1.25; color: inherit; white-space: normal; }
+  .form--note .form__lab { display: none; }
+}
