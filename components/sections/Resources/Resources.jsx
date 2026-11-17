@@ -48,9 +48,16 @@ export default function Resources() {
             <p className="intro rv" style={{ "--d": ".2s" }}>Daily current affairs, a monthly magazine and the official papers, free, from the Vajiram & Ravi editorial desk.</p>
           </div>
         </div>
-        <ul className="sm__grid sm__grid--res">
+        <ul className="sm__grid sm__grid--res" id="resGrid">
           {RESOURCES.map(r => <ResourceCard key={r.title} {...r} />)}
         </ul>
+        {/* phones only (user 2026-11-17): the site's dot indicator under the swipeable row of folders, one dot a folder, the current
+            one long (resource-dots.js keeps it in step and scrolls to a folder on a tap; resources.css shows it under 641px) */}
+        <p className="sm__dots cdots cdots--light" role="group" aria-label="Choose a resource">
+          {RESOURCES.map((r, i) => (
+            <button key={r.title} type="button" aria-label={`Show ${r.title}`} aria-controls="resGrid" aria-current={i === 0 ? 'true' : undefined}><i /></button>
+          ))}
+        </p>
       </div>
     </section>
   );
