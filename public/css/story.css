@@ -214,3 +214,16 @@
   #story.cmp:not(.cmp--run, .story-run *)::before, #story.cmp:not(.cmp--run, .story-run *)::after { display: none; }
 }
 @media (max-width: 640px) { #story.cmp:not(.cmp--run, .story-run *) .cmp__ground::before { background-size: 32px 32px; } }
+
+/* ---------- the stacked chapters on phones and tablets, refined (user 2026-11-17) ----------
+   - Stacked upwards, not downwards: each card used to stick 12px lower than the one before, so the pile grew down the screen with the
+     earlier cards' tops showing above it. Now each card sticks 12px higher than the one before (the first lowest, the sixth at the top),
+     so a new card rises over the last and the earlier cards show as a sliver below it.
+   - No shadow under the photos inside the cards.
+   - A softer card shadow where the cards pile up. */
+@media (max-width: 899px) {
+  #story:not(.cmp--run, .story-run *) .cmp__p { top: calc(var(--hdr-h, 74px) + 14px + (5 - var(--k)) * 12px);
+    box-shadow: 0 -4px 14px -8px rgba(40, 12, 2, .22), 0 10px 22px -16px rgba(40, 12, 2, .3); }
+  #story:not(.cmp--run, .story-run *) .cmp__ph { filter: none; }
+  #story:not(.cmp--run, .story-run *) .cmp__ph::after, #story:not(.cmp--run, .story-run *) .cmp__card::after { box-shadow: none; }
+}
