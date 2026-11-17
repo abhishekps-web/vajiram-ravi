@@ -123,11 +123,7 @@ html body .dl .hx__mark { top: 7%; right: 3%; }
   .dl .hx__navs { transform: none; }
   .dl .hx__nav { display: flex; opacity: 1; pointer-events: auto; }
   .dl .hx__nav--prev, .dl .hx__nav--next { bottom: 18px; }
-  /* the arrows close beside the dots (user 2026-11-17), not at the card's corners: one centred group at the card's foot, previous,
-     the dots, next, 10px apart (the layer is a flex box laid over the card; one wrapping line so it can sit at the foot, centred) */
-  .dl .hx__navs { display: flex; flex-wrap: wrap; align-content: flex-end; align-items: center; justify-content: center; gap: 10px;
-    padding-bottom: 18px; box-sizing: border-box; }
-  .dl .hx__navs > .hx__nav, .dl .hx__navs > .hx__dots { position: static; left: auto; right: auto; bottom: auto; translate: none; }
+  .dl .hx__navs { padding-bottom: 18px; }
 }
 
 /* reduced motion: the slides do not run (page-motion.js), so neither do their controls */
@@ -153,3 +149,19 @@ html body .dl .hx__tag { margin-left: -10px; }
 @media (max-width: 900px) {
   #dlSlides > .dl__topper[data-rank="1"] img { translate: 0 -22%; }
 }
+
+/* ---------- the controls as one group (user 2026-11-17, desktop and phones) ----------
+   previous / next close beside the dots, not at the card's corners: one centred group at the card's foot, 10px apart (the layer is a
+   flex box laid over the card; one wrapping line so it can sit at the foot, centred). On desktop the arrows still show on hover. */
+.dl .hx__navs { display: flex; flex-wrap: wrap; align-content: flex-end; align-items: center; justify-content: center; gap: 10px;
+  padding-bottom: 24px; box-sizing: border-box; }
+.dl .hx__navs > .hx__nav, .dl .hx__navs > .hx__dots { position: static; left: auto; right: auto; bottom: auto; translate: none; }
+@media (max-width: 900px) { .dl .hx__navs { padding-bottom: 20px; } }
+@media (max-width: 760px) { .dl .hx__navs { padding-bottom: 18px; } }
+/* the dots' spacing (user 2026-11-17, "the space between the indicators looks off"): each dot's invisible 8px tap border plus the
+   pill's 8px gap left the marks 24px apart, loose beside 9px dots. Now 10px between the marks (their 8px tap borders overlapped 3px each side, no gap) and
+   12px from the marks to the pill's ends, the same as above and below them. */
+.dl .hx__dots { gap: 0; padding: 10px 7px; }
+.dl .hx__dots > button { margin: -8px -3px; }   /* the 8px tap border kept on every side (an even border keeps the dots round), overlapped 3px each side */
+/* reduced motion: the slides do not run, so the controls stay hidden (restated after the group's display above) */
+@media (prefers-reduced-motion: reduce) { .dl .hx__navs { display: none; } }
