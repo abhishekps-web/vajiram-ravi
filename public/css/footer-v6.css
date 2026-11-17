@@ -193,26 +193,14 @@ html.foot-curtain .vf::after { content: ""; position: absolute; inset: 0; z-inde
 
 /* the logo as the emblem and the wordmark (two pictures, Footer.jsx; user 2026-11-17, "arrange the logo mark and the wordmark
    vertically"). Wider screens: side by side, the size the one picture had (220px across). Phones: stacked and centred, the emblem over
-   the wordmark, the wordmark the column's width (at most 320px), as the Bragg footer sets its mark over its line. */
+   the wordmark, the wordmark 60% of the screen's width (user 2026-11-17), as the Bragg footer sets its mark over its line. */
 .vf__logo { display: flex; align-items: center; gap: 11px; }
 .vf__logo img.vf__mark { width: auto; height: 72px; }
 .vf__logo img.vf__wordmark { width: 138px; height: auto; }
 @media (max-width: 760px) {
   .vf__logo { flex-direction: column; gap: 14px; width: 100%; }
   .vf__logo img.vf__mark { height: 112px; }
-  .vf__logo img.vf__wordmark { width: 100%; max-width: 320px; }
-}
-
-/* the logo as the emblem and the wordmark (two pictures, Footer.jsx; user 2026-11-17, "arrange the logo mark and the wordmark
-   vertically"). Wider screens: side by side, the size the one picture had (220px across). Phones: stacked and centred, the emblem over
-   the wordmark, the wordmark the column's width (at most 320px), as the Bragg footer sets its mark over its line. */
-.vf__logo { display: flex; align-items: center; gap: 11px; }
-.vf__logo img.vf__mark { width: auto; height: 72px; }
-.vf__logo img.vf__wordmark { width: 138px; height: auto; }
-@media (max-width: 760px) {
-  .vf__logo { flex-direction: column; gap: 14px; width: 100%; }
-  .vf__logo img.vf__mark { height: 112px; }
-  .vf__logo img.vf__wordmark { width: 100%; max-width: 320px; }
+  .vf__logo img.vf__wordmark { width: 60vw; max-width: none; }
 }
 
 /* the legal bar on phones, tidied (user 2026-11-17, "optimise this section too"): centred, the copyright on its own line and the three
