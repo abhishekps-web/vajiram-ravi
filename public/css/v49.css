@@ -3085,3 +3085,8 @@ html main #gs.gs { margin-bottom: var(--sec-y); }
 .cdots > button:not([aria-current="true"]) { width: 6px; height: 6px; background: var(--cd-edge); background-clip: padding-box; box-shadow: none;
   transition: width .35s cubic-bezier(.65, 0, .35, 1), height .25s ease, background-color .2s; }
 .cdots > button:not([aria-current="true"]):hover { width: 9px; height: 9px; background-clip: padding-box; }
+
+/* General Studies on phones (user 2026-11-17, "add a space between the book and the Our flagship programme eyebrow"): the book's bookmark
+   ribbon and shadow hang below it and nearly touched the eyebrow; more room under the book (56px in the book's zoomed units, about 35px
+   on screen). */
+@media (max-width: 760px) { #gs .gsbook { margin-bottom: 56px; } }
