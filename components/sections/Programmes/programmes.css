@@ -232,3 +232,11 @@
 /* "Not sure which programme is right for you?" (user 2026-11-17, from a reference): a double frame, the box's own soft outer border and,
    6px inside it, a thin orange rule with tighter corners. Drawn as a layer over the box's padding, so its content does not move. */
 #courses .prog__help::before { content: ""; position: absolute; inset: 6px; border: 1px solid rgb(225 120 60 / .55); border-radius: 4px; pointer-events: none; }
+
+/* Phones: the books' shadow without the filter (user 2026-11-17, "a glitch in the books while scrolling"). Each cover runs two endless
+   animations (the emblem ring turning, the glint passing), and a filter: drop-shadow on the cover recomputed its shadow from all of
+   that on every frame, for every book, while the page scrolled. The same shadow as a box-shadow on the book's own shape is drawn once
+   and does not depend on what moves inside it. */
+@media (max-width: 640px) {
+  #courses .prog__card-cover { filter: none; border-radius: 3px 7px 7px 3px; box-shadow: 0 8px 10px rgb(43 18 6 / .28); }
+}

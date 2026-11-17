@@ -3061,3 +3061,12 @@ html main #gs.gs { margin-bottom: var(--sec-y); }
   .form--note .form__say { display: block; font: inherit; line-height: 1.25; color: inherit; white-space: normal; }
   .form--note .form__lab { display: none; }
 }
+
+/* Scroll-driven values that no longer cascade (user 2026-11-17, performance on phones): the hero's dim and zoom (--cover) and the
+   Programmes sheet's fade-in (--cov) are set by page-motion.js on the elements that read them only. Registered as non-inheriting, a
+   change restyles just those elements instead of everything inside the hero and the sheet on every scroll frame. */
+@property --cover { syntax: '<number>'; inherits: false; initial-value: 0; }
+@property --cov { syntax: '<number>'; inherits: false; initial-value: 1; }
+/* the hero's shade: its own layer (page-motion.js adds it and sets its opacity), in place of the hero's ::after */
+.dl--pin.has-shade::after { display: none; }
+.dl__shade { position: absolute; inset: 0; z-index: 6; background: #1a0a02; opacity: 0; pointer-events: none; will-change: opacity; }
