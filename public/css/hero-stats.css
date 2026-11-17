@@ -81,3 +81,27 @@ html.js .hx__stats.is-pre .hx__in { opacity: 0; translate: 0 24px; }
 /* every label on exactly two lines (user 2026-11-17): the break is in the data (Hero/data.js), so no width makes it wrap again or run to one line */
 .hx__stats .hx__stat-t { width: auto; max-width: none; white-space: nowrap; }
 .hx__stat-l { display: block; }
+
+/* ---------- phones and tablets (900px and narrower): the desktop row's gold details, laid out for the two by two grid ----------
+   (user 2026-11-17, "many elements on desktop are missing on mobile"). Desktop has gold lines running in from the sides and a gold
+   diamond between the points; here the four sit in a grid, so the lines become a cross between them (fading at both ends, as the
+   desktop lines fade at their outer ends) and the diamond sits where the lines meet. The grid's padding is 32px on top and 40px below,
+   so its middle is 4px above the box's. */
+@media (max-width: 900px) {
+  .hx__stats { position: relative; justify-items: center; }   /* each point centred in its half, clear of the cross */
+  .hx__stats::before, .hx__stats::after { content: ""; position: absolute; pointer-events: none; }
+  .hx__stats::before { left: 50%; top: 32px; bottom: 40px; width: 1px; margin-left: -.5px;
+    background: linear-gradient(180deg, rgba(255, 212, 138, 0), rgba(255, 212, 138, .75) 50%, rgba(255, 212, 138, 0)); }
+  .hx__stats::after { top: calc(50% - 4px); left: 8%; right: 8%; height: 1px;
+    background: linear-gradient(90deg, rgba(255, 212, 138, 0), rgba(255, 212, 138, .75) 50%, rgba(255, 212, 138, 0)); }
+  /* the diamond: the first point's own mark, placed on the grid (the points are not positioned here, so it lands on the list) */
+  .hx__stats .hx__stat { position: static; }
+  .hx__stats .hx__stat:first-child::after { content: ""; position: absolute; left: 50%; top: calc(50% - 4px); z-index: 1; width: 8px; height: 8px;
+    margin: -4px 0 0 -4px; background: var(--hx-gold); rotate: 45deg; box-shadow: 0 0 0 3px rgba(255, 212, 138, .18); pointer-events: none; }
+  /* the entrance: the cross and the diamond fade in with the points */
+  html.js .hx__stats.is-pre::before, html.js .hx__stats.is-pre::after, html.js .hx__stats.is-pre .hx__stat:first-child::after { opacity: 0; }
+  .hx__stats.is-in::before, .hx__stats.is-in::after, .hx__stats.is-in .hx__stat:first-child::after { opacity: 1; transition: opacity .9s ease-out .7s; }
+}
+@media (max-width: 900px) and (prefers-reduced-motion: reduce) {
+  html.js .hx__stats.is-pre::before, html.js .hx__stats.is-pre::after, html.js .hx__stats.is-pre .hx__stat:first-child::after { opacity: 1; transition: none; }
+}
