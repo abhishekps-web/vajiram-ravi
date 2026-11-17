@@ -10,6 +10,9 @@ export default function WhyChoose() {
       <div className="cmp__pin">
         {/* holds the scene and the scroll spacer ./story.js adds after it, so the sticky section lets go when its run ends */}
         <section className="cmp" id="story" aria-labelledby="storyH">
+          {/* phones and tablets (the stacked layout): the section's ground, held still on the screen while the chapter cards scroll over it
+              (user 2026-11-17, "the background scrolls"); not shown with the pinned scene (story.css, end) */}
+          <div className="cmp__ground" aria-hidden="true" />
           <div className="cmp__stage">
             <div className="cmp__card" aria-hidden="true">
               <img src="/assets/img/photos/why-1-track-record.webp" srcSet="/assets/img/photos/why-1-track-record-800.webp 800w, /assets/img/photos/why-1-track-record.webp 1536w" sizes="(max-width: 900px) 92vw, 45vw" alt="" width="1536" height="1024" loading="lazy" decoding="async" style={{ objectPosition: "50% 55%" }} />

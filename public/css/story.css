@@ -191,3 +191,26 @@
 .story-run #story:not(.cmp--run) .cmp__card { visibility: hidden; }
 .story-run #story:not(.cmp--run) .cmp__p:first-child .cmp__ph { visibility: visible; }
 .story-run #story:not(.cmp--run) .cmp__p + .cmp__p { transform: rotate(30deg); }
+
+/* ---------- a still ground on phones and tablets (user 2026-11-17: "when I scroll on mobile the background scrolls") ----------
+   In the stacked layout (under 900px) the chapter cards stick near the top while the page scrolls, but the section's ground (the orange
+   gradient, the jaali lattice and the grain) scrolled with it, so the cards seemed to slide over a moving wall. The ground is now its own
+   layer (.cmp__ground, the section's first child): a screen tall, sticky at the top for the whole section, taking no room in the flow
+   (negative margins: it starts at the section's top edge and the content after it keeps its place). The section's own scrolling lattice
+   and grain are hidden there. The pinned scene (900px and wider) is unchanged and does not show this layer. */
+.cmp__ground { display: none; }
+@media (max-width: 899px) {
+  #story.cmp:not(.cmp--run, .story-run *) .cmp__ground { display: block; position: sticky; top: 0; z-index: -1; height: 100svh; pointer-events: none;
+    margin: calc(-1 * var(--sec-y, 96px)) 0 calc(var(--sec-y, 96px) - 100svh); overflow: hidden;
+    background:
+      radial-gradient(48% 60% at 85% 20%, rgba(255, 170, 90, .45), transparent 70%),
+      radial-gradient(45% 55% at 8% 100%, rgba(150, 40, 8, .5), transparent 70%),
+      linear-gradient(135deg, #E85020 0%, #C2410C 55%, #A8380A 100%); }
+  #story.cmp:not(.cmp--run, .story-run *) .cmp__ground::before { content: ""; position: absolute; inset: 0; opacity: .14;
+    background: url(/assets/img/patterns/jaali.svg) 0 0 / 44px 44px repeat;
+    -webkit-mask: linear-gradient(90deg, #000 0%, transparent 38%, transparent 62%, #000 100%); mask: linear-gradient(90deg, #000 0%, transparent 38%, transparent 62%, #000 100%); }
+  #story.cmp:not(.cmp--run, .story-run *) .cmp__ground::after { content: ""; position: absolute; inset: 0;
+    background: url(/assets/img/patterns/grain.png) repeat; background-size: 200px; mix-blend-mode: soft-light; opacity: .28; }
+  #story.cmp:not(.cmp--run, .story-run *)::before, #story.cmp:not(.cmp--run, .story-run *)::after { display: none; }
+}
+@media (max-width: 640px) { #story.cmp:not(.cmp--run, .story-run *) .cmp__ground::before { background-size: 32px 32px; } }
