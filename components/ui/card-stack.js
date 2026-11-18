@@ -11,6 +11,13 @@ export default function initCardStack(tc, track, cardSel = '.pst') {
   let at = 0, busy = false;
 
   const paint = () => {
+    if (!mq.matches) {   // larger screens keep the loop: no stack state, and every card (not just the first) must take hover
+      cards.forEach(c => {
+        ['--p', '--sg'].forEach(v => c.style.removeProperty(v));
+        c.classList.remove('is-front', 'is-gone'); c.removeAttribute('inert');
+      });
+      return;
+    }
     cards.forEach((c, i) => {
       const p = (i - at + n) % n;
       c.style.setProperty('--p', p);
@@ -74,5 +81,6 @@ export default function initCardStack(tc, track, cardSel = '.pst') {
   // a swipe must not end in a click
   tc.addEventListener('click', e => { if (locked && Math.abs(dx) > 6) { e.preventDefault(); e.stopPropagation(); } }, true);
 
+  mq.addEventListener?.('change', paint);
   paint();
 }
