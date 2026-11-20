@@ -1,10 +1,10 @@
 /* Shared Tailwind v4 entry for the sections whose folders hold only their .jsx (user 2026-11-17: "add that to the jsx file", no
    stylesheet in the section's folder). Every style is a utility in the component; this file only sets Tailwind up for them:
    - utilities generated from the listed components only (source(none) + @source), prefixed `cu:` so they never collide with the
-     other Tailwind sheets (Programmes, Success stories `st:`, promo banner `pb:`, carousel dots `cd:`); unlayered; no preflight;
+     other Tailwind sheets (Programmes, Success stories `st:`, carousel dots `cd:`); unlayered; no preflight;
    - the breakpoints those components use (the site's are max-width ones).
    Imported by each component that uses it. A new section that joins: add its @source line here and use the `cu:` prefix.
-   Now: Contact us (components/sections/ContactUs/ContactUs.jsx). */
+   Now: Contact us (components/sections/ContactUs/ContactUs.jsx) and the navigation bar (components/layout/NavigationBar/NavigationBar.jsx). */
 
 @import "tailwindcss/theme.css" layer(theme) prefix(cu);
 @import "tailwindcss/utilities.css" source(none);
@@ -13,3 +13,9 @@
 @custom-variant stacked (@media (max-width: 860px));
 @custom-variant xs (@media (max-width: 640px));   /* phones and small tablets: the map above the details (beside them only from 641px) */
 @custom-variant fine (@media (hover: hover) and (pointer: fine));
+@source "../components/layout/NavigationBar/NavigationBar.jsx";
+
+@custom-variant nav-top (&:where(#nav[data-top], #nav[data-top] *));
+
+:root { --f-hi: "Tiro Devanagari Hindi", "Mukta", var(--f); }
+@keyframes nav-lang-in { from { opacity: 0; transform: translateY(-10px); } }

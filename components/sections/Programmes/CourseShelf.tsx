@@ -672,21 +672,6 @@ function Book({ index, programme, hidden, out, open, away, style, onPick, onClos
   const turn = (by: number) => setTurned((t) => Math.min(last, Math.max(0, t + by)));
   const { deep } = programme.cover;
 
-  // "View course" shows only while a closed book is hovered, under the cursor, and follows it (user 2026-11-13); keyboard focus
-  // shows it at its place above the category. Fine pointers with motion only; the stage may be zoomed, so the offset is in its own px.
-  const followRef = useRef<HTMLSpanElement>(null);
-  const entered = useRef(false);
-  const follow = (event: ReactPointerEvent<HTMLDivElement>) => {
-    const el = followRef.current;
-    if (!el || out || event.pointerType !== "mouse" || prefersReducedMotion()) return;
-    const box = event.currentTarget.getBoundingClientRect();
-    const k = box.width / BOOK.w || 1;
-    const rest = { x: BOOK.w / 2, y: BOOK.h - FOLLOW_BOTTOM - 18 };
-    const x = (event.clientX - box.left) / k - rest.x, y = (event.clientY - box.top) / k - rest.y;
-    // on entering, it appears under the pointer (no slide in from its resting place); after that it eases after it
-    if (!entered.current) { el.style.transition = "none"; el.style.translate = `${x.toFixed(1)}px ${y.toFixed(1)}px`; void el.offsetWidth; el.style.transition = ""; entered.current = true; return; }
-    el.style.translate = `${x.toFixed(1)}px ${y.toFixed(1)}px`;
-  };
   // the 3D hover's inputs, as the tickets' (Batches/batches.js): where the pointer is over the book, -0.5..0.5, and the glare's spot
   const tilt = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (out || event.pointerType !== "mouse" || prefersReducedMotion()) return;
@@ -698,7 +683,6 @@ function Book({ index, programme, hidden, out, open, away, style, onPick, onClos
     el.style.setProperty("--gy", `${(py * 100).toFixed(0)}%`);
   };
   const untilt = (el: HTMLElement) => { el.style.setProperty("--tx", "0"); el.style.setProperty("--ty", "0"); };
-  const unfollow = () => { entered.current = false; if (followRef.current) followRef.current.style.translate = ""; };
 
   useEffect(() => {
     if (!open) {
@@ -721,8 +705,8 @@ function Book({ index, programme, hidden, out, open, away, style, onPick, onClos
       className="group/book absolute"
       style={style}
       onMouseEnter={() => onHover(true)}
-      onMouseLeave={(event) => { onHover(false); unfollow(); untilt(event.currentTarget); }}
-      onPointerMove={(event) => { tilt(event); follow(event); }}
+      onMouseLeave={(event) => { onHover(false); untilt(event.currentTarget); }}
+      onPointerMove={tilt}
     >
       <div data-cover className="absolute inset-0 origin-bottom [perspective:2200px]">
         {/* The shadow it casts on the wall while lifted off a plank or a stack (only in the entrance). */}
@@ -854,16 +838,15 @@ function Book({ index, programme, hidden, out, open, away, style, onPick, onClos
           </span>
         </button>
 
-        {/* "View course" on the closed book (the cover's IA, user 2026-11-13): the site's design-system button, shown only while
-            the book is hovered (or the button has keyboard focus), following the cursor (Book: follow). It links to the programme's
+        {/* "View course" on the closed book (the cover's IA, user 2026-11-13): the site's design-system button, shown at a fixed place
+            above the category while the book is hovered (or the button has keyboard focus; user 2026-11-20: it no longer follows the cursor). It links to the programme's
             course detail page (coursePageHref, a placeholder for now; user 2026-11-13); a click on the cover still opens the book. */}
         {!out && (
           <span
-            ref={followRef}
-            className="pointer-events-none absolute inset-x-0 z-[101] flex justify-center scale-75 opacity-0 [transition:translate_450ms_cubic-bezier(.22,1,.36,1),opacity_250ms_var(--ease-out),scale_350ms_cubic-bezier(.22,1,.36,1)] group-hover/book:scale-100 group-hover/book:opacity-100 group-hover/book:[&>*]:pointer-events-auto has-[:focus-visible]:scale-100 has-[:focus-visible]:opacity-100 has-[:focus-visible]:[&>*]:pointer-events-auto motion-reduce:transition-none"
+            className="pointer-events-none absolute inset-x-0 z-[101] flex justify-center scale-75 opacity-0 [transition:opacity_250ms_var(--ease-out),scale_350ms_cubic-bezier(.22,1,.36,1)] group-hover/book:scale-100 group-hover/book:opacity-100 group-hover/book:[&>*]:pointer-events-auto has-[:focus-visible]:scale-100 has-[:focus-visible]:opacity-100 has-[:focus-visible]:[&>*]:pointer-events-auto motion-reduce:transition-none"
             style={{ bottom: FOLLOW_BOTTOM }}
           >
-            <Button size="xs" iconEnd="arrow" href={coursePageHref(programme)} onClick={stayPut} ariaLabel={`View course: ${programme.name}`}>
+            <Button variant="white" size="xs" iconEnd="arrow" href={coursePageHref(programme)} onClick={stayPut} ariaLabel={`View course: ${programme.name}`}>
               View course
             </Button>
           </span>

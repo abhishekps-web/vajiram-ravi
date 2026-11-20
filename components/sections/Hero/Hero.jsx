@@ -4,7 +4,6 @@ import CarouselDots from '@/components/ui/CarouselDots/CarouselDots';
 import Stylesheet from '@/components/ui/Stylesheet';
 import { $, esc, reduce } from '@/lib/site';
 import { top10 } from '@/components/sections/Toppers/data/rankers';
-import PromoBanner from './PromoBanner/PromoBanner';
 
 const EXAM = 'UPSC CSE 2025';
 const RESULTS_URL = 'https://vajiramandravi.com/ias-selections-from-vajiram/';
@@ -149,7 +148,6 @@ export default function Hero() {
         <Stylesheet href="/css/hero-banner.css" />
         <Stylesheet href="/css/hero-stats.css" />
         <Stats />
-        <PromoBanner />
       </div>
     </section>
   );
@@ -198,8 +196,6 @@ export function initHeroGround() {
   if (!band || !hero) return;
   const measure = () => {
     document.documentElement.style.setProperty('--hx-h', band.offsetHeight + hero.offsetHeight + 'px');
-    hero.style.setProperty('--hx-stick', Math.min(0, innerHeight - hero.offsetHeight) + 'px');
-    hero.parentElement.style.setProperty('--hx-tall', hero.offsetHeight >= innerHeight ? '1' : '0');
   };
   measure();
   if ('ResizeObserver' in window) new ResizeObserver(measure).observe(hero);

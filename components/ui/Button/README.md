@@ -21,6 +21,7 @@ import Button from '@/components/ui/Button/Button';
 
 <Button href="#contact" iconEnd="arrow">Talk to a counsellor</Button>                          // primary CTA (link)
 <Button variant="secondary" href="#courses" iconEnd="arrow">Find your course</Button>          // ink pill
+<Button variant="white" href="#contact" iconEnd="arrow">Talk to a counsellor</Button>        // white primary
 <Button onDark size="xl" href="#courses" iconEnd="arrow">Explore our courses</Button>          // on a photo / orange ground
 <Button variant="outline" size="sm" iconEnd="chevron" aria-expanded="false">Show all</Button>  // a <button>
 <Button variant="link" href="tel:+918062206330" iconEnd="arrow">Call us</Button>              // serif text link
@@ -42,7 +43,7 @@ setButtonLoading(form.querySelector('#formBtn'), true, 'Sending…');   // … l
 
 | Prop | Type / values | Default | Notes |
 |---|---|---|---|
-| `variant` | `primary` `secondary` `outline` `ghost` `link` `destructive` `fab` | `primary` | see Variants |
+| `variant` | `primary` `white` `secondary` `outline` `ghost` `link` `destructive` `fab` | `primary` | see Variants |
 | `size` | `xs` `sm` `md` `lg` `xl` | `md` | see Sizes |
 | `children` / `label` | text | | the visible label. `label` doubles as the accessible name of an icon-only button |
 | `iconStart` | icon name or node | | leading icon |
@@ -72,6 +73,7 @@ Values come from the existing buttons (audit, 2026-11-13); the only new colour i
 | Variant | Look | `onDark` | Where it is used |
 |---|---|---|---|
 | **primary** | brand gradient pill (`#F06A2C → #E85020 → #C2410C`), white text, white disc with a brand arrow; hover deepens to `#D9480F → #A8380A` | white pill, ink text, brand disc; hover sand | Let's talk, FAQ, Toppers, Contact submit, programme books, batch tickets, menus · onDark: hero, GS, Closing's second button |
+| **white** | the primary CTA in white (user 2026-11-20): white pill, ink text, brand disc `#C2410C` with a white arrow, faint brand edge; hover sand | no edge, deeper shadow | Programmes: "View course" on a hovered book |
 | **secondary** | ink pill `#161412`, white text, flame disc `#E57512`; hover `#000` | (same) | Closing "Find your course", Why cards, dialog close |
 | **outline** | transparent, 1.5px brand edge at 45%, brand text; hover brand edge + 8% brand tint | translucent, white edge, white text | Toppers "Show all" · onDark: intro "Skip" |
 | **ghost** | no fill, ink text; hover 8% brand tint, brand text | white text, white tint | (available: quiet / toolbar actions) |

@@ -135,6 +135,19 @@
   --btn-disc-bg: #C2410C; --btn-disc-fg: #fff; --btn-disc-shadow: none;
 }
 
+/* WHITE: the primary CTA in white instead of the brand colour (user 2026-11-20): a white pill, ink text, the brand disc; hover sand.
+   On light grounds a faint brand edge keeps the pill's outline; on dark, photo or orange grounds (onDark) it needs none. */
+.btn--white {
+  --btn-bg: #fff; --btn-bg-hover: var(--sand); --btn-fg: var(--ink); --btn-fg-hover: var(--ink); --btn-text-shadow: none;
+  --btn-edge: inset 0 0 0 1px rgba(194, 65, 12, .18); --btn-edge-hover: inset 0 0 0 1px rgba(194, 65, 12, .3);
+  --btn-shadow: 0 12px 24px -14px rgba(60, 20, 0, .35); --btn-shadow-hover: 0 16px 30px -14px rgba(60, 20, 0, .45);
+  --btn-disc-bg: #C2410C; --btn-disc-fg: #fff; --btn-disc-shadow: none;
+}
+.btn--white.btn--on-dark {
+  --btn-edge: inset 0 0 0 0 transparent; --btn-edge-hover: inset 0 0 0 0 transparent;
+  --btn-shadow: 0 12px 24px -14px rgba(60, 20, 0, .5); --btn-shadow-hover: 0 16px 30px -14px rgba(60, 20, 0, .55);
+}
+
 /* SECONDARY: the ink pill with a flame disc (Closing, Why). Reads on light and on orange grounds alike. */
 .btn--secondary {
   --btn-bg: var(--btn-ink); --btn-bg-hover: #000; --btn-fg: #fff; --btn-text-shadow: none;

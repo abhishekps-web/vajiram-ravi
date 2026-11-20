@@ -16,7 +16,7 @@
 html body .dl--pin .dl__frame { padding-left: var(--hx-side); padding-right: var(--hx-side); }
 html body .dl--pin .dl__frame > .dl__stick { border-radius: 24px; box-shadow: 0 30px 60px -34px rgba(60, 15, 0, .7); }
 @media (min-width: 901px) {
-  html .dl { --card-h: clamp(max(520px, var(--card-min)), calc(100svh - var(--hdr-h) - var(--hdr-gap) - var(--stats-h)), 820px); }
+  html .dl { --card-h: clamp(max(520px, var(--card-min)), calc(100svh - var(--hdr-h) - var(--hdr-gap) - var(--stats-h)), 680px); }   /* 680px cap (user 2026-11-20: it grew to 820px and read too tall on large screens) */
 }
 @media (max-width: 900px) {
   html .dl { --card-h: min(760px, calc(100svh - var(--hdr-h) - var(--hdr-gap) - 24px)); --hx-in: 24px; --hx-foot: 84px; }
@@ -187,3 +187,9 @@ html body .dl .hx__tag { margin-left: -10px; }
   .dl .hx__navs > .hx__dots { position: absolute; left: 50%; bottom: 28px; translate: -50% 0; }
 }
 @media (min-width: 761px) and (max-width: 900px) { .dl .hx__navs > .hx__dots { bottom: 22px; } }
+
+/* the carousel's previous / next buttons in the brand colour (user 2026-11-20; they were the cream-white disc): a brand fill with a
+   white arrow and a soft white edge; hover deepens to --brand-d */
+.dl .hx__nav .btn.btn--icon { --btn-bg: var(--brand); --btn-fg: #fff; --btn-edge: inset 0 0 0 1px rgba(255, 255, 255, .35);
+  --btn-bg-hover: var(--brand-d, #A8380A); --btn-fg-hover: #fff; --btn-edge-hover: inset 0 0 0 1px rgba(255, 255, 255, .55);
+  --btn-shadow: 0 12px 24px -12px rgba(58, 20, 6, .55); }

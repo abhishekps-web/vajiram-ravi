@@ -241,7 +241,6 @@
    down under the header when it returns on a scroll up (a short slide, so the pile does not jump). */
 @media (max-width: 899px) {
   #story:not(.cmp--run, .story-run *) .cmp__p { transition: top .35s cubic-bezier(.22, 1, .36, 1); }
-  html:has(#nav.nav--away) #story:not(.cmp--run, .story-run *) .cmp__p { top: calc(14px + (5 - var(--k)) * 12px); }
 }
 @media (max-width: 899px) and (prefers-reduced-motion: reduce) { #story:not(.cmp--run, .story-run *) .cmp__p { transition: none; } }
 
@@ -253,9 +252,7 @@
 @media (max-width: 899px) {
   #story:not(.cmp--run, .story-run *) .cmp__hd { position: sticky; z-index: 3; top: calc(var(--hdr-h, 74px) + 14px); margin-bottom: 0; padding-bottom: 12px;
     transition: top .35s cubic-bezier(.22, 1, .36, 1); }
-  html:has(#nav.nav--away) #story:not(.cmp--run, .story-run *) .cmp__hd { top: 14px; }
   #story:not(.cmp--run, .story-run *) .cmp__p { top: calc(var(--hdr-h, 74px) + 14px + var(--hd-h, 180px)); }
-  html:has(#nav.nav--away) #story:not(.cmp--run, .story-run *) .cmp__p { top: calc(14px + var(--hd-h, 180px)); }
   /* the heading leaves with the stack, the moment the last card lands (user 2026-11-17: it neither waits after the pile nor goes ahead
      of it, which left an empty band between the two): the cards are let go when the list's end reaches the foot of the front card, so
      the heading's room (.cmp__ov's content) ends a card's height (--card-h, story.js) before the list does */

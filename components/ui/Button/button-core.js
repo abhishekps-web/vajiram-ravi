@@ -5,13 +5,13 @@
 // Styles: public/css/buttons.css. Documentation: components/ui/Button/README.md.
 // Plain JS with no browser globals at import time, so server components and behaviours can both import it.
 
-export const VARIANTS = ['primary', 'secondary', 'outline', 'ghost', 'link', 'destructive', 'fab'];
+export const VARIANTS = ['primary', 'white', 'secondary', 'outline', 'ghost', 'link', 'destructive', 'fab'];
 export const SIZES = ['xs', 'sm', 'md', 'lg', 'xl'];
 
 // Variants that roll their label up to a second copy on hover (the site's CTA motion). Link and FAB keep one copy.
-const ROLLS = new Set(['primary', 'secondary', 'outline', 'ghost', 'destructive']);
+const ROLLS = new Set(['primary', 'white', 'secondary', 'outline', 'ghost', 'destructive']);
 // Variants whose 'arrow' icon sits in the round disc (the brand CTA). Elsewhere 'arrow' is a bare glyph.
-const DISC = new Set(['primary', 'secondary', 'outline', 'destructive']);
+const DISC = new Set(['primary', 'white', 'secondary', 'outline', 'destructive']);
 
 // Built-in icons, by name. Each is drawn in currentColor, so it takes the variant's colours.
 // arrow: the brush-stroke arrow of every CTA; arrow-left: the same, mirrored; close: the dialog cross; chevron: the expand caret.

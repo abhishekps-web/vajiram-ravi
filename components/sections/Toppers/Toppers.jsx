@@ -1,6 +1,12 @@
 import Stylesheet from '@/components/ui/Stylesheet';
 import SectionLabel from '@/components/ui/SectionLabel';
 import Button from '@/components/ui/Button/Button';
+import { TOPPERS_2025 } from './ToppersSpread/data';
+
+const progLine = rank => {
+  const p = TOPPERS_2025.find(t => t.rank === rank)?.programmes || [];
+  return p.slice(0, 2).join(' · ') + (p.length > 2 ? ` +${p.length - 2} more` : '');
+};
 // ============ TOPPERS: the top three of UPSC CSE 2025 on a podium (gold, silver and bronze crests) over a drifting reel of the other
 // rank holders. Ported from the approved reference (eclectic-alfajores-975fab.netlify.app, 2026-11-16). Styles: public/css/podium.css.
 // Behaviour: ./stars.js (firefly sparkles), ./diamond-reel.js (the draggable endless loop). The reel's cards are written out here. ============
@@ -76,6 +82,7 @@ export default function Toppers() {
       <div className="pd__lbl">
         <b className="pd__n" aria-hidden="true"><small>AIR</small> 1</b>
         <h3 className="pd__name">Anuj Agnihotri<span className="pd__vh">, All India Rank 1</span></h3>
+        <p className="pd__prog">{progLine(1)}</p>
       </div>
     </li>
     <li className="pd__col pd__col--2">
@@ -83,6 +90,7 @@ export default function Toppers() {
       <div className="pd__lbl">
         <b className="pd__n" aria-hidden="true"><small>AIR</small> 2</b>
         <h3 className="pd__name">Rajeshwari Suve M<span className="pd__vh">, All India Rank 2</span></h3>
+        <p className="pd__prog">{progLine(2)}</p>
       </div>
     </li>
     <li className="pd__col pd__col--3">
@@ -90,6 +98,7 @@ export default function Toppers() {
       <div className="pd__lbl">
         <b className="pd__n" aria-hidden="true"><small>AIR</small> 3</b>
         <h3 className="pd__name">Akansh Dhull<span className="pd__vh">, All India Rank 3</span></h3>
+        <p className="pd__prog">{progLine(3)}</p>
       </div>
     </li>
   </ol>

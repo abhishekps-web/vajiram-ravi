@@ -437,10 +437,17 @@
 .js .pd__row.rv.in .pd__col--1 { animation-delay: .36s; }
 @keyframes pdGlide { from { opacity: 0; transform: translateY(48px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .js .pd__row.rv .pd__col { animation: none !important; opacity: 1; transform: none; } }
-=======
+
 /* Nothing outside the section (user 2026-11-17, "overflows that exceed the screen and affect the section below"): the light behind the
    podium (.pd__fx, wider than the column and reaching 300px below the row), the turning rays behind AIR 1 (a square 2.6 shields wide,
    its corners sweeping past the screen as it turns), the sparks and the reel's track all stay inside the section's box. `clip` does not
    make the section a scroll box (no stray inner scrolling); older Safari, which lacks it, gets `hidden`. */
 #toppers { overflow: clip; }
 @supports not (overflow: clip) { #toppers { overflow: hidden; } }
+
+/* the programme each of the top three took, under the name (user 2026-11-20; ranks 4 on show it in the reel, .dr__prog): the reel's
+   uppercase line, a size up, at most two lines */
+.pd__prog { margin: 8px 0 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  font: 600 clamp(11px, .85vw, 13px)/1.4 var(--f); letter-spacing: .07em; text-transform: uppercase; text-wrap: balance; color: #FFF6EA;
+  text-shadow: 0 1px 2px rgba(60, 14, 0, .55); }
+@media (max-width: 640px) { .pd__prog { margin-top: 5px; font-size: 10px; letter-spacing: .05em; } }

@@ -88,24 +88,6 @@
 .sc .vp__h { font-size: clamp(38px, 4.8vw, 84px); }
 @media (max-width: 900px) { .sc--r, .sc--l { grid-template-columns: 1fr; grid-template-rows: auto; } }
 
-/* ---- nav: logo-led; over the hero it is transparent and blends into the video ---- */
-.nav__logo { height: 44px; margin-right: 18px; padding: 0 8px 0 2px; border: 0; }
-.nav__logo .lg { height: 38px; width: auto; }
-.nav__logo .lg--l { display: none; }
-.nav::before { content: ""; position: fixed; inset: 0 0 auto 0; height: 150px; z-index: -1; background: linear-gradient(180deg, rgba(30, 12, 2, .62), transparent); opacity: 0; transition: opacity .3s; pointer-events: none; }
-.nav--hero { top: 28px; }
-.nav--hero::before { opacity: 1; }
-.nav--hero .nav__pill { background: transparent; box-shadow: none; padding-left: 0; }
-.nav--hero .nav__logo { margin-right: 28px; }
-.nav--hero .nav__logo .lg { height: 52px; }
-.nav--hero .nav__logo .lg--d { display: none; }
-.nav--hero .nav__logo .lg--l { display: block; }
-.nav--hero .nav__a { color: rgba(255, 255, 255, .86); }
-.nav--hero .nav__a:hover, .nav--hero .explore.open .nav__a { color: #FFD48A; }
-.nav--hero .nav__burger span { background: #fff; }
-.nav--hero .explore.open .nav__a { color: #FFD48A; }
-@media (max-width: 900px) { .nav--hero { top: 20px; } .nav--hero .nav__logo .lg { height: 42px; } .nav__logo .lg { height: 34px; } .nav--hero .nav__pill { max-width: none; } }
-
 /* ---- toppers: one newspaper page, equal columns ---- */
 #tgrid.tgrid { display: block; overflow: visible; margin: 0; padding: 0; }
 .tp { --ink: #1D1712; --rule: rgba(29, 23, 18, .3); background: radial-gradient(rgba(120, 90, 50, .06) 1px, transparent 1.4px) 0 0 / 4px 4px, #F8F3E8; border: 1px solid rgba(29, 23, 18, .16); box-shadow: 0 24px 40px -28px rgba(60, 30, 10, .45), 6px 6px 0 -1px #EFE8D8, 6px 6px 0 0 rgba(29, 23, 18, .12); padding: 20px clamp(14px, 2.4vw, 36px) 20px; color: var(--ink); text-align: left; font-family: Georgia, "Times New Roman", "Eczar", serif; }
@@ -162,8 +144,6 @@
 /* (the Why section now lives in css/why-choose.css) */
 
 /* ---- Buttons: the button system lives in public/css/buttons.css (components/ui/Button). Only placements remain here. ---- */
-/* header "Let's talk": on phones the label hides and the disc alone stays (a round arrow button) */
-@media (max-width: 480px) { .nav .talk { padding: 0 3px; gap: 0; } .nav .talk .btn__label { display: none; } }
 
 /* the pinned background must not spill past the section into the gap below it (that was the orange-to-cream strip) */
 
@@ -391,36 +371,9 @@
 .dl__p { margin: 22px 0 0; max-width: 34em; font: 400 clamp(16px, 1.3vw, 19px)/1.5 var(--f); color: rgba(255, 246, 232, .88); text-shadow: none; }
 @media (max-width: 900px) { .dl__p { margin-top: 14px; font-size: 15px; } .dl__cta { margin-top: 22px; } }
 
-/* nav "Let's talk": the orange pill by default, including over the hero */
-
-/* ---- nav menu: bigger, bolder links on a frosted bar, with a clear hover and a clear current section ---- */
-.nav__links { gap: 2px; }
-.nav__a { height: 40px; padding: 0 15px; border-radius: 999px; font: 600 15.5px/1 var(--f); letter-spacing: -.005em; color: var(--ink); transition: color .2s, background-color .2s; }
-.nav__a:hover, .explore.open .nav__a { background: rgba(194, 65, 12, .1); color: var(--brand); }
-.nav__pill { height: 52px; padding: 6px 12px 6px 14px; box-shadow: 0 0 0 1px rgba(38, 38, 38, .06), 0 10px 30px -10px rgba(38, 38, 38, .22); }
-/* over the hero: a frosted dark bar so the menu stands out from the video */
-.nav--hero .nav__pill { background: rgba(26, 10, 2, .42); -webkit-backdrop-filter: blur(14px) saturate(1.2); backdrop-filter: blur(14px) saturate(1.2); box-shadow: 0 0 0 1px rgba(255, 255, 255, .16), 0 12px 32px -12px rgba(0, 0, 0, .5); padding-left: 16px; }
-.nav--hero .nav__a { color: #fff; text-shadow: 0 1px 8px rgba(0, 0, 0, .35); }
-.nav--hero .nav__a:hover, .nav--hero .explore.open .nav__a { background: rgba(255, 255, 255, .16); color: #FFD48A; }
-.nav--hero .nav__logo { margin-right: 18px; }
-.nav__a.is-current { background: var(--brand); color: #fff; text-shadow: none; }
-.nav--hero .nav__a.is-current { background: rgba(255, 255, 255, .95); color: var(--brand-d, #A8380A); text-shadow: none; }
-@media (max-width: 1180px) { .nav__a { padding: 0 11px; font-size: 14.5px; } }
-
-/* over the hero the menu blends in: no bar, no blur, no outline. Bold white links read against the soft dark fade at the top. */
-.nav--hero .nav__pill { background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: none; padding-left: 0; }
-.nav--hero .nav__a { text-shadow: 0 1px 10px rgba(0, 0, 0, .45); }
-.nav--hero .nav__a:hover, .nav--hero .explore.open .nav__a { background: rgba(255, 255, 255, .14); }
-
 /* current section: a soft cue, not a solid fill */
-.nav__a.is-current { background: rgba(194, 65, 12, .1); color: var(--brand); text-shadow: none; }
-.nav--hero .nav__a.is-current { background: rgba(255, 255, 255, .14); color: #fff; text-shadow: 0 1px 10px rgba(0, 0, 0, .45); }
 
 /* no "current section" marking: a link only changes on hover */
-.nav__a.is-current { background: none; color: var(--ink); text-shadow: none; }
-.nav--hero .nav__a.is-current { background: none; color: #fff; text-shadow: 0 1px 10px rgba(0, 0, 0, .45); }
-.nav__a.is-current:hover { background: rgba(194, 65, 12, .1); color: var(--brand); }
-.nav--hero .nav__a.is-current:hover { background: rgba(255, 255, 255, .14); color: #FFD48A; }
 
 /* programme tabs: separate pills; the selected one is brand orange, the others are outlined */
 #courses .ptabs .seg { background: none; border: 0; padding: 0; gap: 10px; border-radius: 0; box-shadow: none; flex-wrap: wrap; justify-content: center; }
@@ -627,35 +580,9 @@ footer.foot { padding-top: 40px; }
 html.foot-curtain main { position: relative; z-index: 1; background: var(--ivory, #FFF9F1); }
 html.foot-curtain footer.foot { position: sticky; bottom: var(--foot-off, 0px); z-index: 0; margin-top: 0; }   /* --foot-off: 0, or negative when the footer is taller than the screen (js/footer-curtain.js) */
 
-/* ---- header language switcher: EN / हिं segmented pill, thumb slides under the active language ---- */
-.nav__end { display: flex; align-items: center; gap: 10px; }
-.lang { position: relative; display: flex; align-items: center; height: 44px; padding: 4px; border-radius: 999px; background: #fff; box-shadow: 0 0 0 1px rgba(38, 38, 38, .06), 0 10px 30px -10px rgba(38, 38, 38, .22); transition: background-color .3s var(--ease), box-shadow .3s var(--ease); }
-.lang__thumb { position: absolute; top: 4px; bottom: 4px; left: 4px; width: calc(50% - 4px); border-radius: 999px; background: var(--brand); transition: transform .45s cubic-bezier(.34, 1.4, .5, 1); }
-.lang[data-cur="hi"] .lang__thumb { transform: translateX(100%); }
-.lang__b { position: relative; z-index: 1; min-width: 44px; height: 100%; padding: 0 12px; border-radius: 999px; font: 700 14px/1 var(--f); letter-spacing: .04em; color: var(--ink); transition: color .25s var(--ease), transform .25s var(--ease); }
-.lang__b[lang="hi"] { font: 600 16px/1 "Mukta", var(--f); letter-spacing: 0; }
-.lang__b[aria-pressed="true"] { color: #fff; }
-.lang__b:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
-.nav--hero .lang { background: transparent; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .55); }
-.nav--hero .lang__thumb { background: rgba(255, 255, 255, .95); }
-.nav--hero .lang__b { color: #fff; }
-.nav--hero .lang__b[aria-pressed="true"] { color: var(--brand); }
-.nav--hero .lang__b:focus-visible { outline-color: #FFD48A; }
-@media (hover: hover) and (pointer: fine) {
-  .lang__b[aria-pressed="false"]:hover { color: var(--brand); transform: translateY(-1px); }
-  .nav--hero .lang__b[aria-pressed="false"]:hover { color: #FFD48A; }
-  .nav--hero .lang:hover { box-shadow: inset 0 0 0 1px #fff; }
-}
-/* entrance with the header */
-.js .lang { animation: langIn .7s var(--ease) .15s both; }
-@keyframes langIn { from { opacity: 0; transform: translateY(-10px); } }
 /* label swap when the language changes */
-.nav__a.is-sw, .drawer a:not(.btn).is-sw, .talk .btn__label.is-sw { animation: langSw .45s var(--ease); }
-@keyframes langSw { from { opacity: 0; transform: translateY(6px); } }
-html[lang="hi"] .nav__a, html[lang="hi"] .drawer a:not(.btn), html[lang="hi"] .talk .btn__t { font-family: "Mukta", var(--f); }
-@media (max-width: 1100px) { .nav__end { margin-left: 10px; } .nav__end .talk { margin-left: 0; } }
-@media (max-width: 480px) { .nav__end { gap: 6px; margin-left: 6px; } .lang__b { min-width: 32px; padding: 0 6px; font-size: 12.5px; } .lang__b[lang="hi"] { font-size: 14.5px; } .nav .nav__logo, .nav--hero .nav__logo { margin-right: 8px; } .nav--hero .nav__logo .lg, .nav__logo .lg { height: 34px; } }
-@media (prefers-reduced-motion: reduce) { .lang, .lang__thumb, .lang__b { transition: none; animation: none; } .nav__a.is-sw, .drawer a:not(.btn).is-sw, .talk .btn__label.is-sw { animation: none; } }
+
+html[lang="hi"] .talk .btn__t { font-family: "Mukta", var(--f); }
 
 /* ---- section titles: one size everywhere (64px on desktop, 40px on phones). The hero, the Toppers masthead and card headings are not section titles. ---- */
 :root { --h2: clamp(40px, 6vw, 64px); }
@@ -1191,7 +1118,7 @@ section#toppers.vrnp { padding-left: var(--px); padding-right: var(--px); }   /*
 .dl__in, .sc { padding-left: var(--px); padding-right: var(--px); }
 .dl__prog, .btn.dl__cta { left: var(--px); }
 .hw { padding-left: var(--px); padding-right: var(--px); }
-.nav { left: var(--px); right: var(--px); }
+
 #contact .contact__in { padding-left: var(--px); padding-right: var(--px); }
 @media (min-width: 901px) { #contact .contact__in { padding-left: var(--px); padding-right: var(--px); } }
 #stories.sheet, #faq.sheet { margin-left: 0; margin-right: 0; }   /* the 12px sheet margin pushed these two off the shared edge */
@@ -1413,8 +1340,6 @@ footer.foot { padding-left: 76px; padding-right: 76px; }
   .dl__in, .sc { padding-left: 80px; padding-right: 80px; }
   .dl__prog, .btn.dl__cta { left: 80px; }
 }
-/* navigation: the same 80px side padding as the hero, so the logo lines up with the hero copy */
-@media (min-width: 901px) { .nav { left: 80px; right: 80px; } }
 
 /* hero CTA: the whole button fades with the copy (out with the old copy, back in with the new one); it used to be pinned with opacity forced to 1 */
 @media (prefers-reduced-motion: no-preference) {
@@ -1422,20 +1347,6 @@ footer.foot { padding-left: 76px; padding-right: 76px; }
   .btn.dl__cta.is-swap { opacity: 0 !important; pointer-events: none; transition: opacity .35s ease, box-shadow .35s, scale .15s !important; }
   .dl__cta.is-swap .btn__label { opacity: 1; }
 }
-
-/* nav: link labels never wrap onto two lines */
-.nav__a { white-space: nowrap; }
-/* the logo keeps its size; below 1360px the seven links no longer fit beside it and the language / CTA group, so the nav switches to the
-   burger menu there (it used to switch at 1100px, which left 1100-1360 with links wrapping onto two lines and a squashed logo) */
-.nav__logo { flex: none; }
-@media (max-width: 1360px) {
-  .nav__links { display: none; }
-  .nav__burger { display: block; }
-  .nav__pill { flex: 1; max-width: 360px; padding-right: 4px; }
-  .nav__end { margin-left: 10px; } .nav__end .talk { margin-left: 0; }
-}
-/* nav between 1361 and 1600px: slightly tighter links and logo spacing so all seven fit beside the language / CTA group */
-@media (max-width: 1600px) { .nav__a { padding: 0 10px; font-size: 14.5px; } .nav--hero .nav__logo, .nav__logo { margin-right: 10px; } .nav__links { gap: 0; } }
 
 /* footer news in the brand column, under the social links (the column was empty below them); heading like the link columns, each
    headline under its Mains / Prelims tag */
@@ -1445,60 +1356,6 @@ footer.foot { padding-left: 76px; padding-right: 76px; }
 .foot__news--col .foot__news-list li { display: grid; justify-items: start; gap: 5px; }
 .foot__news--col .foot__news-list a { font-size: 15px; line-height: 1.4; }
 @media (max-width: 900px) { .foot__news--col { max-width: none; } }
-
-/* ---- All courses dropdown (refined): anchored to the nav pill and as wide as the content column. Five numbered stage columns sit on one
-   connecting rule; each programme is a full row (name, one-line description, course count) that warms on hover; a guidance column with the
-   counsellor CTA ends the panel. Opens with a short fade-and-drop and the columns follow, staggered. Desktop only (the nav uses the
-   burger menu from 1360px down). ---- */
-.explore { position: static; }
-.mega { left: 0; right: auto; top: calc(100% + 12px); width: min(1180px, calc(100vw - 2 * var(--px))); box-sizing: border-box;
-  display: grid; grid-template-columns: minmax(0, 1fr) 248px; gap: 0; padding: 0; border-radius: 22px; overflow: hidden;
-  background: #fff; box-shadow: 0 0 0 1px rgba(38, 20, 8, .06), 0 30px 60px -24px rgba(60, 24, 6, .45);
-  opacity: 0; visibility: hidden; transform: translateY(-8px); transition: opacity .2s var(--ease), transform .25s var(--ease), visibility 0s .25s; }
-.explore.open .mega { opacity: 1; visibility: visible; transform: none; transition: opacity .22s var(--ease), transform .3s var(--ease), visibility 0s; }
-.mega__stages { position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); padding: 26px 12px 22px 26px; }
-.mega__stages::before { content: ""; position: absolute; left: 40px; right: 40px; top: 40px; height: 1px; background: rgba(194, 65, 12, .22); }
-.mega__col { position: relative; padding-right: 14px; }
-.mega p.mega__k { position: relative; display: flex; align-items: center; gap: 8px; margin: 0 0 12px; font: 700 12px/1.3 var(--f); letter-spacing: .12em; text-transform: uppercase; color: var(--brand); }
-.mega__k b { flex: none; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: #fff; box-shadow: inset 0 0 0 1px rgba(194, 65, 12, .35); font-size: 11px; letter-spacing: 0; }
-.mega__col .mega__k { padding-right: 8px; background: none; }
-.mega__col .mega__k span, .mega__col .mega__k { width: fit-content; }
-.mega ul { display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; }
-.mega li + li { margin-top: 0; }
-.mega a.mega__a { display: grid; justify-content: stretch; gap: 3px; margin: 0 0 0 -10px; padding: 10px 10px 11px; border-radius: 12px; color: var(--ink); text-decoration: none;
-  font-size: inherit; transition: background-color .2s var(--ease); }
-.mega a.mega__a span { font: inherit; color: inherit; line-height: inherit; }
-.mega a.mega__a .mega__t { font: 500 16px/1.25 var(--f-d); letter-spacing: -.005em; color: var(--ink); transition: color .2s var(--ease); }
-.mega a.mega__a .mega__d { font: 400 13px/1.45 var(--f); color: #6B5D52; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-.mega a.mega__a .mega__n { justify-self: start; margin-top: 4px; padding: 2px 8px; border-radius: 999px; background: rgba(194, 65, 12, .08); font: 700 11px/1.5 var(--f); letter-spacing: .02em; color: var(--brand); transition: background-color .2s, color .2s; }
-.mega a.mega__a:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
-.mega__aside { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 26px 24px; background: var(--sand, #FFF2E6); border-left: 1px solid rgba(194, 65, 12, .12); }
-.mega__aside p.mega__k { margin: 0; letter-spacing: .1em; }
-.mega p.mega__p { margin: 0; font: 400 14px/1.5 var(--f); text-transform: none; color: #4A4038; }
-.mega .mega__cta { align-self: stretch; margin: 4px 0 0; }
-/* the menu's own button (user 2026-11-17: its label showed grey on the orange): `.mega a span` (v25) styles the small meta spans, and the
-   button's label spans are spans too, so they take the button's own colour and type back */
-.mega a.btn .btn__label, .mega a.btn .btn__t { font: inherit; color: inherit; letter-spacing: inherit; line-height: inherit; }
-/* the menu's side panel is narrow: the full-width button's empty left column (for the phone layout) goes, so the label has the room */
-.mega .mega__cta.btn--full.btn--disc { grid-template-columns: minmax(0, 1fr) var(--btn-disc); }
-.mega .mega__cta.btn--full.btn--disc > .btn__label { grid-column: 1; }
-.mega .mega__cta.btn--full.btn--disc > .btn__disc { grid-column: 2; }
-.mega a.mega__all { display: inline-flex; align-items: center; gap: 8px; margin: auto 0 0; padding: 0; font: 700 14px/1.2 var(--f); color: var(--brand); text-decoration: none; }
-.mega__all svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform .25s var(--ease); }
-.mega a.mega__all:focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; border-radius: 3px; }
-@keyframes megaIn { from { opacity: 0; transform: translateY(8px); } }
-.explore.open .mega__col, .explore.open .mega__aside { animation: megaIn .4s var(--ease) both; animation-delay: calc(var(--i, 5) * 35ms + 40ms); }
-@media (hover: hover) and (pointer: fine) {
-  .mega a.mega__a:hover { background: var(--sand, #FFF2E6); }
-  .mega a.mega__a:hover .mega__t { color: var(--brand); }
-  .mega a.mega__a:hover .mega__n { background: var(--brand); color: #fff; }
-  .mega a.mega__all:hover svg { transform: translateX(3px); }
-}
-@media (max-width: 1500px) { .mega { grid-template-columns: minmax(0, 1fr) 220px; } .mega__stages { padding-left: 22px; } .mega a.mega__a .mega__d { -webkit-line-clamp: 3; } }
-@media (prefers-reduced-motion: reduce) { .mega, .explore.open .mega { transition: none; transform: none; } .explore.open .mega__col, .explore.open .mega__aside { animation: none; } }
-.mega { width: min(1440px, calc(100vw - 2 * var(--px))); grid-template-columns: minmax(0, 1fr) 272px; }
-@media (max-width: 1500px) { .mega { grid-template-columns: minmax(0, 1fr) 248px; } }
-.mega a.mega__a .mega__d { -webkit-line-clamp: 3; }
 
 /* ---- free resources: "More free resources" pills under the six cards ---- */
 .sm__more { display: flex; align-items: center; flex-wrap: wrap; gap: 14px 24px; margin-top: 40px; padding-top: 28px; border-top: 1px solid rgba(194, 65, 12, .18); }
@@ -2071,21 +1928,6 @@ footer.foot .foot__cols > .foot__news--5th { grid-area: auto; grid-column: 1 / -
 #courses .ptabs .seg button small, #courses .ptabs .seg button:not([aria-selected="true"]) small { min-width: 24px; padding: 4px 7px; box-sizing: border-box; text-align: center; }
 #courses .ptabs .seg button:not([aria-selected="true"]) small { background: transparent; }
 
-/* ---- Study materials mega menu (js/content.js STUDY): the course menu's frame and rows, four groups (Current affairs, Exam essentials,
-   Practice, Books & notes) and the guidance aside. Current affairs is no longer its own nav link. Same open / stagger motion and row
-   hovers as All courses (.explore / .mega rules above). ---- */
-.mega--sm { width: min(1240px, calc(100vw - 2 * var(--px))); }
-.mega--sm .mega__stages { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-/* Mega menus (All courses, Study materials): no rule running through the numbered column headings */
-.mega__stages::before { content: none; }
-/* An open mega menu blurs and softly dims the page behind it (the hero when at the top): a fixed scrim just under the nav (z 50).
-   It fades in and out with the menu; it takes no pointer events, so moving off the menu still closes it. */
-.mega-scrim { position: fixed; inset: 0; z-index: 49; pointer-events: none; opacity: 0; visibility: hidden;
-  background: rgba(26, 10, 2, .16); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
-  transition: opacity .3s var(--ease), visibility 0s .3s; }
-.mega-open .mega-scrim { opacity: 1; visibility: visible; transition: opacity .3s var(--ease), visibility 0s; }
-@media (prefers-reduced-motion: reduce) { .mega-scrim { transition: none; } }
-
 /* ---- Footer, top-aligned (user 2026-11-11): no empty band beside the brand any more. Above 900px the brand and every column share one
    grid that starts at the top: the brand block heads the first column with the "Vajiram & Ravi" links under it; Courses, UPSC exam,
    Free resources and (1201px+) the "Latest current affairs" panel stand beside it from the top edge. .foot__cols dissolves into that
@@ -2121,53 +1963,7 @@ footer.foot .foot__logo--mark:focus-visible { outline: 2px solid #fff; outline-o
 @media (max-width: 640px) { footer.foot .foot__logo--mark img { height: 44px; } }
 @media (prefers-reduced-motion: reduce) { footer.foot .foot__logo--mark { transition: none; } }
 
-/* ---- Study materials dropdown: the All courses panel (same .explore / .mega design and motion), four groups instead of five stages,
-   so it is narrower; the CTA spans the guidance column like the courses one ---- */
-.mega--sm { width: min(1180px, calc(100vw - 2 * var(--px))); }
-.mega--sm .mega__stages { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-
-/* ---- Study materials dropdown, refined: compact one-line rows (title with its tag, a one-line description), Current affairs as a featured
-   column on a warm tint with a live dot, and the guidance column carrying today's three headlines above the CTA. All courses is untouched. ---- */
-.mega--sm { width: min(1240px, calc(100vw - 2 * var(--px))); grid-template-columns: minmax(0, 1fr) 300px; }
-.mega--sm .mega__stages { gap: 0 6px; padding: 22px 18px 20px 22px; align-items: start; }
-.mega--sm .mega__stages::before { left: 36px; right: 36px; top: 36px; }
-.mega--sm .mega__col { padding: 0 8px 0 0; }
-.mega--sm .mega__col--feat { margin: -8px 8px -8px -8px; padding: 8px 10px 10px 8px; border-radius: 16px; background: linear-gradient(180deg, #FFF3E6, #FFF8F1); box-shadow: inset 0 0 0 1px rgba(194, 65, 12, .14); }
-.mega--sm .mega__col--feat .mega__k b { background: var(--brand); color: #fff; box-shadow: none; }
-.mega--sm p.mega__k { margin-bottom: 8px; }
-.mega__live { display: inline-flex; align-items: center; gap: 5px; margin-left: 2px; padding: 2px 7px 2px 6px; border-radius: 999px; background: #FFD48A; color: #7A2A0A; font: 700 9.5px/1.4 var(--f); letter-spacing: .1em; }
-.mega__live i { position: relative; width: 6px; height: 6px; border-radius: 50%; background: #C2410C; }
-.mega__live i::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: #C2410C; animation: footLive 1.8s var(--ease) infinite; }
-.mega--sm ul { gap: 2px; }
-.mega--sm a.mega__a { gap: 2px; padding: 8px 10px 9px; }
-.mega--sm a.mega__a .mega__t { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 8px; font-size: 15.5px; }
-.mega--sm a.mega__a .mega__t .mega__n { margin: 0; padding: 1px 7px; font-size: 10.5px; }
-.mega--sm a.mega__a .mega__d { -webkit-line-clamp: 1; font-size: 12.5px; }
-.mega--sm .mega__aside { gap: 14px; padding: 24px 22px 22px; }
-.mega__heads { display: grid; gap: 0; width: 100%; margin: -2px 0 4px; padding: 0; list-style: none; }
-.mega__heads li + li { border-top: 1px solid rgba(194, 65, 12, .14); }
-.mega a.mega__h { display: grid; gap: 3px; margin: 0 -10px; padding: 10px; border-radius: var(--r-card); color: var(--ink); text-decoration: none; transition: background-color .2s var(--ease); }
-.mega__hk { justify-self: start; font: 700 10px/1.3 var(--f); letter-spacing: .12em; text-transform: uppercase; color: var(--brand); }
-.mega__ht { font: 500 14px/1.35 var(--f-d); color: var(--ink); transition: color .2s var(--ease); }
-.mega a.mega__h:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
-.mega--sm a.mega__all { margin: 0; }
-@media (hover: hover) and (pointer: fine) {
-  .mega a.mega__h:hover { background: #fff; }
-  .mega a.mega__h:hover .mega__ht { color: var(--brand); }
-}
-@media (max-width: 1500px) { .mega--sm { grid-template-columns: minmax(0, 1fr) 270px; } .mega--sm a.mega__a .mega__d { -webkit-line-clamp: 1; } }
-@media (prefers-reduced-motion: reduce) { .mega__live i::after { animation: none; opacity: 0; } .mega a.mega__h, .mega__ht { transition: none; } }
 /* Study materials rows: every row is title + one line; Current affairs prefixes its frequency in brand orange */
-.mega--sm .mega__f { margin-right: 6px; font: 700 10.5px/1 var(--f); letter-spacing: .08em; text-transform: uppercase; color: var(--brand); }
-.mega--sm a.mega__a .mega__d { font-size: 13px; }
-.mega--sm a.mega__a .mega__d, .mega--sm .mega__col a.mega__a .mega__d { -webkit-line-clamp: 2; }
-.mega--sm .mega__stages { grid-template-columns: minmax(0, 1.18fr) repeat(3, minmax(0, 1fr)); }
-.mega--sm .mega__col--feat p.mega__k { white-space: nowrap; }
-
-/* dropdown stage headings (All courses and Study materials): the connecting rule stops at each heading instead of running behind the
-   letters; the heading (number disc + label) gets the panel's white behind it, with a little air after the label */
-.mega .mega__col p.mega__k { position: relative; z-index: 1; padding-right: 12px; background: #fff; }
-.mega--sm .mega__col--feat p.mega__k { background: none; }   /* the featured column's tint already hides the rule */
 
 /* ---- custom select (js/custom-select.js; user 2026-11-11: the site's own dropdown for "pick a programme" instead of the browser's).
    The field looks exactly like the other blanks in the sentence form (handwriting on a dashed brand line, the chevron turns when open);
@@ -2222,9 +2018,6 @@ footer.foot .foot__logo--mark:focus-visible { outline: 2px solid #fff; outline-o
 .dl--pin, .dl--pin .dl__stick { height: calc(100vh - var(--hdr-h) - var(--hdr-gap)); height: calc(100svh - var(--hdr-h) - var(--hdr-gap)); min-height: 0; max-height: none; }
 @media (prefers-reduced-motion: reduce) { .dl--pin, .dl--pin .dl__stick { height: auto; min-height: calc(100svh - var(--hdr-h) - var(--hdr-gap)); } }
 
-/* Site header (band, spacing to the hero, scrolled bar, typography): public/css/navigation-bar.css, declared by the
-   NavigationBar component (components/layout/NavigationBar/). */
-
 /* Hero frame: a wrapper inside the hero section (.dl__frame, components/sections/Hero/Hero.jsx) insets the hero 20px on every
    side (user 2026-11-13). It sits inside #dlPin so the "#dlPin ~ section:where(#courses)" cover selectors and the sticky pin keep working;
    the slides (.dl__stick) fill the frame, and the 20px gutter is white like the header band above it. */
@@ -2275,7 +2068,7 @@ main .cover > #dlPin ~ section:where(#courses) { background: var(--ground-jaali)
    the form · 999px pills (--btn-radius; not 99px/9999px) · 50% circles. Small radii (1-7px) on the drawn illustrations (Resources
    folders, the book shelf, GS books, progress bars) are part of the drawings and stay as they are. ===== */
 :root { --r-box: 16px; }
-html .nav::after, html .dl__stick, html .mega, html .mega--sm, html .mega a.mega__a, html .mega__col--feat { border-radius: var(--r-box); }
+html .dl__stick { border-radius: var(--r-box); }
 html main .cover > #dlPin ~ section:where(#courses), html #toppers, html #toppers.gz { border-radius: var(--r-box) var(--r-box) 0 0; }
 html .gz__sheet { border-radius: var(--r-box); }
 /* cards: 8px (user 2026-11-13). The containers above (header, hero frame, sheets, mega menus) keep --r-box. */
@@ -3032,7 +2825,6 @@ html main #gs.gs { margin-bottom: var(--sec-y); }
 .dl--pin.has-shade::after { display: none; }
 .dl__shade { position: absolute; inset: 0; z-index: 6; background: #1a0a02; opacity: 0; pointer-events: none; will-change: opacity; }
 
-
 /* General Studies on phones (user 2026-11-17, "add a space between the book and the Our flagship programme eyebrow"): the book's bookmark
    ribbon and shadow hang below it and nearly touched the eyebrow; more room under the book (56px in the book's zoomed units, about 35px
    on screen). */
@@ -3049,3 +2841,23 @@ html main #gs.gs { margin-bottom: var(--sec-y); }
 /* The gap between cards in a row, one value for the Batches tickets and the Free Resources folders (user 2026-11-17, "the space between
    the Free Resources cards should be the same as the batches cards"): 14px on phones, growing with the screen to 28px. */
 :root { --card-gap: clamp(14px, 2vw, 28px); }
+
+/* Header sizes (user 2026-11-20: the header is the Tailwind NavigationBar component; these moved here from navigation-bar.css, which
+   is gone): the fixed bar sits --hdr-pt from the top, 46px tall; --hdr-h is the space it takes; --hdr-gap the 20px gutter under it. */
+:root { --hdr-pt: 22px; --hdr-gap: 20px; --strip-h: 0px; --hdr-h: calc(var(--hdr-pt) + 46px); }
+@media (max-width: 900px) { :root { --hdr-pt: 16px; } }
+main#top { padding-top: calc(var(--hdr-h) + var(--hdr-gap)); }
+
+/* Hero on the sections' ground (user 2026-11-20, "the same section colour used for other sections"): the header band and the hero
+   paint --ground-jaali (as Programmes) instead of the orange brand gradient; the hero's jaali continues the band's tiling. */
+/* beige (user 2026-11-20, "give beige color for the hero section"): the same jaali ground on a warm beige instead of the cream */
+:root { --hero-beige: #F3E8D6; --ground-beige: linear-gradient(90deg, rgba(243, 232, 214, 0) 0%, rgba(243, 232, 214, .94) 30%, rgba(243, 232, 214, .94) 70%, rgba(243, 232, 214, 0) 100%), url(/assets/img/patterns/bg-jaali.svg) 0 0 / 36px 36px repeat, var(--hero-beige); }
+.dl--pin { background: var(--hero-beige); }
+html .nav-band, html .dl__ground { background: var(--ground-beige); background-size: 100% 100%, 36px 36px, auto; background-position: 0 0, 0 var(--hx-y, 0px), 0 0; }
+.nav-band::before, .nav-band::after, .dl__ground::before, .dl__ground::after { content: none; }
+
+/* Simple scroll (user 2026-11-20): the hero no longer pins, dims or shrinks while Programmes slides over it; both scroll with the page. */
+html .dl--pin { position: relative; top: auto; }
+html .dl--pin .dl__stick { transform: none; }
+html main .cover > #dlPin ~ section#courses { margin-top: 0; border-radius: 0; box-shadow: none; }
+html main .cover > #dlPin ~ section#courses > * { opacity: 1; transform: none; }

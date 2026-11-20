@@ -33,11 +33,6 @@
 .np__item { border-left-color: rgba(35, 27, 20, .22); }
 .np__strap { border-bottom-color: rgba(35, 27, 20, .25); }
 
-/* Nav: hides while scrolling down, comes back as soon as you scroll up (js/v27.js) */
-.nav { transition: top .3s var(--ease), translate .35s var(--ease), opacity .25s ease; }
-.nav.is-hidden { translate: 0 calc(-100% - 70px); opacity: 0; pointer-events: none; }
-.nav.is-hidden > * { pointer-events: none; }
-
 /* ---- refinement: a proper broadsheet hierarchy ---- */
 .np { padding: 30px 48px 28px; }
 /* masthead: smaller nameplate, flanked by boxed "ears" */

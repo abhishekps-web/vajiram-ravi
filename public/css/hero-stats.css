@@ -105,3 +105,18 @@ html.js .hx__stats.is-pre .hx__in { opacity: 0; translate: 0 24px; }
 @media (max-width: 900px) and (prefers-reduced-motion: reduce) {
   html.js .hx__stats.is-pre::before, html.js .hx__stats.is-pre::after, html.js .hx__stats.is-pre .hx__stat:first-child::after { opacity: 1; transition: none; }
 }
+
+/* the stats on the light section ground (user 2026-11-20: the hero is no longer orange): ink figures and labels, brand lines and diamonds */
+.dl { --hx-gold: var(--brand); --hx-cream: var(--ink); }
+.hx__stats { color: var(--ink); }
+.hx__stat-t { color: #4A4038; }
+@media (min-width: 901px) {
+  .hx__stats::before { background: linear-gradient(90deg, rgba(194, 65, 12, 0), rgba(194, 65, 12, .45)); }
+  .hx__stats::after { background: linear-gradient(90deg, rgba(194, 65, 12, .45), rgba(194, 65, 12, 0)); }
+  .hx__stats .hx__stat + .hx__stat::before { background: var(--brand); box-shadow: 0 0 0 3px rgba(194, 65, 12, .14); }
+}
+@media (max-width: 900px) {
+  .hx__stats::before { background: linear-gradient(180deg, rgba(194, 65, 12, 0), rgba(194, 65, 12, .45) 50%, rgba(194, 65, 12, 0)); }
+  .hx__stats::after { background: linear-gradient(90deg, rgba(194, 65, 12, 0), rgba(194, 65, 12, .45) 50%, rgba(194, 65, 12, 0)); }
+  .hx__stats .hx__stat:first-child::after { box-shadow: 0 0 0 3px rgba(194, 65, 12, .14); }
+}

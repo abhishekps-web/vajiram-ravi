@@ -2,7 +2,7 @@
 
 Next.js (App Router) site, deployed to Vercel from `main`. The page at `/`, statically prerendered, plus one course detail page
 per programme at `/courses/<slug>` (`app/courses/[slug]/page.tsx`, built from `Programmes/data/programmes.ts`; a placeholder
-until the course content is ready, user 2026-11-13). "View course" on a Programmes book links there. Off the homepage only the
+until the course content is ready, user 2026-11-13). "View course" on a Programmes book links there (shown at a fixed place on a hovered book, no cursor follow, user 2026-11-20). Off the homepage only the
 site-wide behaviours run (`SITE_WIDE` in `lib/behaviour.js`) and in-page links are rewritten to `/#…`. Every section is its own
 component folder holding its markup, data and behaviour; `app/page.jsx` only composes them.
 
@@ -17,15 +17,15 @@ app/
   page.jsx                the page: the section components in order
 components/
   layout/                 site chrome
-    NavigationBar/        the site header: NavigationBar.jsx, data.js (Study materials menu), nav-menus.js (drawer, mega menus,
-                          .scrolled), lang-switch.js; styles public/css/navigation-bar.css (declared by the component)
-    Footer/               Footer.jsx (Kevin's footer, user 2026-11-16; styles public/css/footer-v6.css): one file, user 2026-11-17: the link columns, socials,
-                          news and legal, the markup and initFooterCurtain (the curtain behaviour)
+    NavigationBar/        the site header: NavigationBar.jsx only (user 2026-11-20: one file, Tailwind `cu:` utilities via
+                          app/tailwind-sections.css, no comments): markup, menu data, mega menus, drawer, More menu, language switch
+    Footer/               Footer.jsx (Kevin's footer, user 2026-11-16; styles public/css/footer-v6.css): one file, user 2026-11-17: the link columns, the legal bar
+                          with the socials (no logo or news, user 2026-11-20), the markup and initFooterCurtain (the curtain behaviour)
     Intro/                Intro.jsx (server-rendered overlay), intro.js (plays and lifts it)
     WhatsAppButton/       WhatsAppButton.jsx
     SiteBehaviour.jsx     client component: after hydration, imports lib/behaviour.js and starts it
   sections/<Section>/     one folder per section: <Section>.jsx (markup), data.js (content), *.js (behaviour)
-                          Hero (one file, user 2026-11-17: content, markup and its behaviours; PromoBanner/ beside it), Programmes, Toppers (data/ holds the archive and rankers), WhyChoose, Batches, GeneralStudies,
+                          Hero (one file, user 2026-11-17: content, markup and its behaviours), Programmes, Toppers (data/ holds the archive and rankers), WhyChoose, Batches (the GS section was removed from the homepage, user 2026-11-20),
                           Faculties (the faculty section, id "educators"; TS + Tailwind, ported from Soloman), Stories, Contact, Resources (data.jsx: the cards), ContactUs (Tailwind), Faq, Closing, Parked (hidden)
   dialogs/                RanksDialog, CourseCatalogDialog (+ their behaviours; course-catalog.js also opens the catalogue for any [data-cat] link)
   ui/                     shared pieces: Button/ (the button system: Button.jsx, button-core.js, README.md), SectionLabel (.lbl eyebrow),
@@ -107,23 +107,18 @@ The client wants **every section and every element animated**. For any change to
   is the screen minus the header and `--hero-peek` (176px), never less than `--hero-min` (its copy, CTA and slide indicators) and,
   from 1280px wide, never more than `--hero-fit` (the content-fit height). End of `public/css/v49.css`. No scroll-down cue in the hero.
 - One ground for the header, the hero frame and Programmes: `--ground-jaali` (v49.css).
-- Header and hero (user 2026-11-13): the header is the NavigationBar component (`components/layout/NavigationBar/`, styles `public/css/navigation-bar.css`). At the top it sits in its own white band (`.nav-band`), then one 20px gap (`--hdr-gap`, the hero frame's gutter) to the hero, whose height fits its content from 1280px wide (`public/css/v49.css`). The nav stays fixed in one place and never shrinks; smart header (user 2026-11-13): it slides out of view while the page scrolls down and back as soon as it scrolls up (`.nav--away`, `initNavScrolled` in `nav-menus.js`; a transform only, so nothing moves), always showing near the top, with a menu or the drawer open, or with focus inside it. Its bar is transparent at the top of the page and fades to white (16px corners, a soft shadow) once the page scrolls (`.scrolled`, `nav-menus.js`; end of `navigation-bar.css`, user 2026-11-13). `.nav--hero` is unused. Links show from 1024px (burger below; on phones, 760px and narrower, the bar is the logo and the burger only: the language switch and "Let's talk" sit at the foot of the drawer, `.drawer__end`, user 2026-11-17); any that would come within 40px of the language switch move into a "More" menu, FAQs first (`initNavMore`, `nav-menus.js`; at 1280px all fit). The hero carousel's autoplay holds while the pointer is over the hero's buttons (user 2026-11-16; not the whole banner) or keyboard focus is inside it, and resumes after; slides change by the previous/next arrows, the indicators, arrow keys or a swipe (`lib/motion/page-motion.js`). The banner is Kevin's in layout and spacing (user 2026-11-16, eclectic-alfajores-975fab.netlify.app, branch `kevin`; `public/css/hero-banner.css`): the card on the 1280px column, the copy left aligned in it (at its foot under the portrait below 900px; left aligned on phones too, user 2026-11-17), the AIR card top right (top left below 900px), the dots centred in a dark pill (`.hx__dots`) and the arrows inside the card, at its bottom corners level with the dots (both in `.hx__navs`, laid over the card by `page-motion.js`; arrows shown on hover). Phones (760px and narrower, user 2026-11-16): the card full width and the screen's height less the header; the previous/dots/next controls sit inside the card at its foot (user 2026-11-17). Logo 44px tall (38px at 400px and narrower).
+- Header and hero (user 2026-11-13): the header is the NavigationBar component (`components/layout/NavigationBar/NavigationBar.jsx`, Tailwind `cu:` utilities, user 2026-11-20; the header sizes `--hdr-pt`, `--hdr-h`, `--hdr-gap` are at the end of `v49.css`). At the top it sits in its own band (`.nav-band`), then one 20px gap (`--hdr-gap`, the hero frame's gutter) to the hero, whose height fits its content from 1280px wide (`public/css/v49.css`). The nav stays fixed in one place, never shrinks and is always visible (user 2026-11-20: no hiding on scroll). Its bar is transparent at the top of the page and fades to white (16px corners, a soft shadow) once the page scrolls (`data-top` on `#nav`, `initNavScrolled`; the `cu:nav-top:` variant). Links show from 1024px (burger below; on phones, 760px and narrower, the bar is the logo and the burger only: the language switch and "Let's talk" sit at the foot of the drawer, `.drawer__end`, user 2026-11-17); any that would come within 40px of the language switch move into a "More" menu, FAQs first (`initNavMore`; at 1280px all fit). The hero carousel's autoplay holds while the pointer is over the hero's buttons (user 2026-11-16; not the whole banner) or keyboard focus is inside it, and resumes after; slides change by the previous/next arrows, the indicators, arrow keys or a swipe (`lib/motion/page-motion.js`). The banner is Kevin's in layout and spacing (user 2026-11-16, eclectic-alfajores-975fab.netlify.app, branch `kevin`; `public/css/hero-banner.css`): the card on the 1280px column, the copy left aligned in it (at its foot under the portrait below 900px; left aligned on phones too, user 2026-11-17), the AIR card top right (top left below 900px), the dots centred in a dark pill (`.hx__dots`) and the arrows inside the card, at its bottom corners level with the dots (both in `.hx__navs`, laid over the card by `page-motion.js`; arrows shown on hover). Phones (760px and narrower, user 2026-11-16): the card full width and the screen's height less the header; the previous/dots/next controls sit inside the card at its foot (user 2026-11-17). Logo 44px tall (38px at 400px and narrower).
   No card stack (user 2026-11-16: removed): the slides crossfade with a slow zoom. Stats (user 2026-11-16): a row of four key
   numbers sits under the hero card, inside the hero section: Kevin's row (user 2026-11-16), `.hx__stats`, figures in `Hero.jsx` (STATS),
   roll-up and entrance `initHeroStats` in `Hero.jsx`, styles `public/css/hero-stats.css` (the old `.dl__stats` rules in `v49.css` are dead); the
   card gives up the row's height (`--stats-h`) so the first screen still ends with the
   Programmes peek, except on phones, where the card keeps its height and the row pushes the peek down.
-  Brand header and hero ground (user 2026-11-16, after eclectic-alfajores-975fab.netlify.app): from the top of the page through
-  the hero, one ground: a brand gradient with two glows, the jaali tile masked to the edges and a soft-light grain. The header
-  band (`.nav-band`) and the hero (`.dl__ground`) each paint it over their combined height (`--hx-h`, `initHeroGround` in `Hero.jsx`), so
-  they meet with no seam (end of `v49.css`). At rest the nav items are light on it (white logo, links, "Let's talk" as the white
-  pill; end of `navigation-bar.css`); scrolled, the bar is white with the usual colours. The batch ribbon above the header was
-  removed (user 2026-11-16; `--strip-h` is 0, `components/sections/BatchStrips/` is unused).
-  Promo banner (renamed from "What's trending", user 2026-11-17; user 2026-11-16, from Kevin's branch `kevin` of github.com/solomonmathai-coder/Vajiram-ravi, deployed at
-  eclectic-alfajores-975fab.netlify.app): a banner carousel under the stats inside the hero (`Hero/PromoBanner/PromoBanner.jsx`: Tailwind, user 2026-11-17,
-  markup and behaviour in that one client component, `pb:` utilities from its folder only, entry `PromoBanner/promo-banner.css`; data
-  `BANNERS` in `PromoBanner.jsx`; id `#promo-banner`). The hero is then taller than the screen: it scrolls until its foot reaches the
-  bottom of the screen and is pinned there (`--hx-stick`, `initHeroGround`); its shade starts only once Programmes comes on screen.
+  Hero ground (user 2026-11-20, replacing the orange brand ground of 2026-11-16): the header band (`.nav-band`) and the hero
+  (`.dl__ground`) paint the sections' `--ground-jaali`, the hero's tile continuing the band's (end of `v49.css`); the nav items are
+  their usual colours at rest, and the stats are ink on it (end of `hero-stats.css`). The batch ribbon above the header was removed
+  (user 2026-11-16; `--strip-h` is 0, `components/sections/BatchStrips/` is unused). The promo banner carousel under the stats was
+  removed (user 2026-11-20). Simple scroll (user 2026-11-20): the hero no longer pins, dims or shrinks while Programmes slides over
+  it; both scroll with the page (end of `v49.css`).
 - Contact us (`#visit`) and the footer are Kevin's too (user 2026-11-16). Contact us (user 2026-11-17) is `ContactUs/ContactUs.jsx`,
   Tailwind with `cu:` utilities (the shared entry `app/tailwind-sections.css`; the folder holds only the .jsx): one card holding the 2:1 map (no "View on maps"), the address (title font), phone,
   email on the left and a static campus photo on the right, no shadow; its id stays `visit` for the shared shell rules; the cream footer `Footer.jsx` + `public/css/footer-v6.css` (its text is in Mukta, the body font; its tagline in Newsreader as in the preloader; while it zooms in, `.vf--zooming` makes its content one layer so the social icons do not jump).

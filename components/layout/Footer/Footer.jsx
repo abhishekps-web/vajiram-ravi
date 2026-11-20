@@ -63,28 +63,14 @@ const SOCIALS = [
   { label: 'WhatsApp channel', icon: 'whatsapp' },
 ];
 
-const MAINS = site('current-affairs/upsc-mains-current-affairs/');
-const PRELIMS = site('current-affairs/upsc-prelims-current-affairs/');
-const NEWS = [
-  { tag: 'Mains', title: 'Supreme Court redefines the meaning of ‘industry’', href: MAINS },
-  { tag: 'Mains', title: 'NITI Aayog flags gap between education and employment', href: MAINS },
-  { tag: 'Prelims', title: 'Thiksey Monastery', href: PRELIMS },
-];
-
 const LEGAL = [
   { label: 'Terms and Conditions', href: site('terms-and-conditions/') },
   { label: 'Privacy Policy', href: site('privacy-policy/') },
 ];
 
-const ARROW = ['M2.5 8h11', 'M8.6 3.6C9.4 5.9 11.2 7.4 13.5 8 11.2 8.6 9.4 10.1 8.6 12.4'];
-
 function Brand() {
   return (
     <div className="vf__brand">
-      <a className="vf__logo" href="#top" aria-label="Vajiram & Ravi, back to top">
-        <img className="vf__mark" src="/assets/img/brand/logo-v6-mark.webp" alt="" width="198" height="203" loading="lazy" decoding="async" />
-        <img className="vf__wordmark" src="/assets/img/brand/logo-v6-wordmark.webp" alt="" width="395" height="81" loading="lazy" decoding="async" />
-      </a>
       <p className="vf__tagline">
         <span className="rv">Understanding India.</span>{" "}
         <span className="rv" style={{ "--d": ".15s" }}>Shaping its Future.</span>
@@ -121,27 +107,6 @@ function LinkColumns() {
         </div>
       ))}
     </nav>
-  );
-}
-
-function News() {
-  return (
-    <section className="vf__news" aria-labelledby="vfNewsH">
-      <h2 className="vf__h vf__news-h" id="vfNewsH">
-        Latest current affairs <span className="vf__live"><i aria-hidden="true" />Updated daily</span>
-      </h2>
-      <ul className="vf__news-list">
-        {NEWS.map(({ tag, title, href }) => (
-          <li key={title}>
-            <a href={href} {...NEW_TAB}>
-              <span className="vf__tag">{tag}</span>
-              <span className="vf__nt">{title}</span>
-              <svg className="vf__arw" viewBox="0 0 16 16" aria-hidden="true">{ARROW.map(d => <path key={d} d={d} />)}</svg>
-            </a>
-          </li>
-        ))}
-      </ul>
-    </section>
   );
 }
 
@@ -188,6 +153,7 @@ function Legal() {
         {LEGAL.map(({ label, href }) => <a key={label} href={href} {...NEW_TAB}>{label}</a>)}
         <span>Grievance Redressal</span>
       </nav>
+      <Socials />
     </div>
   );
 }
@@ -198,14 +164,8 @@ export default function Footer() {
       <Stylesheet href="/css/footer-v6.css" />
       <span className="foot__frame" aria-hidden="true" />
       <div className="vf__in">
-        <div className="vf__bar">
-          <Brand />
-          <Socials />
-        </div>
-        <div className="vf__top">
-          <LinkColumns />
-          <News />
-        </div>
+        <Brand />
+        <LinkColumns />
         <DebossedName />
         <Legal />
       </div>

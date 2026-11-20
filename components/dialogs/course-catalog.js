@@ -2,7 +2,7 @@
 // each course links to the counsellor form with that course pre-selected.
 import { $, esc, ico } from '@/lib/site';
 import { CATS, stageFor } from '@/lib/data/courses';
-import { setMega, setDrawer } from '@/components/layout/NavigationBar/nav-menus';
+import { setMega, setDrawer } from '@/components/layout/NavigationBar/NavigationBar';
 
 let courseDlg;
 const ALL = CATS.reduce((n, c) => n + c.courses.length, 0);

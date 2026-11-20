@@ -6,7 +6,6 @@ import Programmes from '@/components/sections/Programmes/Programmes';
 import Toppers from '@/components/sections/Toppers/Toppers';
 import WhyChoose from '@/components/sections/WhyChoose/WhyChoose';
 import Batches from '@/components/sections/Batches/Batches';
-import GeneralStudies from '@/components/sections/GeneralStudies/GeneralStudies';
 import Faculties from '@/components/sections/Faculties/Faculties';
 import Stories from '@/components/sections/Stories/Stories';
 import Contact from '@/components/sections/Contact/Contact';
@@ -37,12 +36,11 @@ export default function Home() {
           <Stories />
           <Faculties />
         </div>
-        <WhyChoose />
+        <LifeGallery />
         <Batches />
-        <GeneralStudies />
         <Contact />
         <Resources />
-        <LifeGallery />
+        <WhyChoose />
         <ContactUs />
         <Faq />
         <Closing />
