@@ -1,8 +1,8 @@
 import Stylesheet from '@/components/ui/Stylesheet';
-import { BATCHES, BYEAR } from '@/components/sections/Batches/data';
+import { BATCHES, BYEAR } from '@/components/sections/Batches/Batches';
 
 // ============ BATCH STRIPS: one straight orange ribbon that runs across the page, announcing the next batches (the idea of the
-// "Admissions open" strips on the reference homepage, kept to a single level ribbon). The items come from the batch tickets' data (Batches/data.js), so a new batch
+// "Admissions open" strips on the reference homepage, kept to a single level ribbon). The items come from the batch tickets' data (Batches/Batches.jsx), so a new batch
 // appears here as soon as it is added there. Pure CSS: the track is the list twice and slides by exactly one copy (no script).
 // Each batch is a link to the enquiry form with that programme chosen (the same [data-prog] link the Enroll buttons use).
 // Styles: public/css/batch-strips.css. ============

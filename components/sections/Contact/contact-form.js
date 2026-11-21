@@ -2,7 +2,7 @@
 // pre-selecting a programme from any [data-prog] link, validation, and sending to form[data-endpoint].
 import { $, $$, esc, PHONE } from '@/lib/site';
 import { CATS } from '@/lib/data/courses';
-import { BATCHES } from '@/components/sections/Batches/data';
+import { BATCHES } from '@/components/sections/Batches/Batches';
 import { setButtonLoading } from '@/components/ui/Button/button-core';
 
 export function initContactForm() {

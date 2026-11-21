@@ -14,6 +14,27 @@
 @custom-variant xs (@media (max-width: 640px));   /* phones and small tablets: the map above the details (beside them only from 641px) */
 @custom-variant fine (@media (hover: hover) and (pointer: fine));
 @source "../components/layout/NavigationBar/NavigationBar.jsx";
+@source "../components/sections/Batches/Batches.jsx";
+
+@property --fs { syntax: '<percentage>'; inherits: true; initial-value: 120%; }
+@property --fb { syntax: '<percentage>'; inherits: true; initial-value: 120%; }
+@property --fr { syntax: '<angle>'; inherits: true; initial-value: 0deg; }
+@property --fz { syntax: '<number>'; inherits: true; initial-value: 1; }
+:root {
+  --ticket-notch: radial-gradient(circle at 0 calc(100% - 66px), transparent 10px, #000 10.6px) left / 51% 100% no-repeat, radial-gradient(circle at 100% calc(100% - 66px), transparent 10px, #000 10.6px) right / 51% 100% no-repeat;
+  --flag-glint: linear-gradient(112deg, transparent 33%, rgba(255, 214, 170, .18) 39%, rgba(255, 232, 205, .55) 44%, rgba(255, 255, 255, .95) 47.6%, #fff 48.4%, rgba(214, 232, 255, .6) 50.5%, rgba(190, 215, 255, .14) 53%, transparent 55.5%, transparent 57.5%, rgba(255, 246, 232, .55) 59%, transparent 60.5%);
+}
+@keyframes flagClock {
+  0% { --fs: 120%; --fb: 120%; --fr: 0deg; --fz: 1; }
+  9% { --fr: 0deg; --fz: 1; }
+  13% { --fr: -2.5deg; }
+  19% { --fz: 1.04; }
+  25% { --fr: 2.5deg; }
+  31% { --fr: 0deg; --fz: 1; }
+  35% { --fs: -20%; }
+  36.6% { --fb: -20%; }
+  100% { --fs: -20%; --fb: -20%; --fr: 0deg; --fz: 1; }
+}
 
 @custom-variant nav-top (&:where(#nav[data-top], #nav[data-top] *));
 
