@@ -38,10 +38,10 @@ function Icon({ icon, slot }) {
 
 export default function Button({
   variant = 'primary', size = 'md', label, children, iconStart, iconEnd, iconOnly = false, onDark = false,
-  disabled = false, loading = false, loadingLabel, fullWidth = false, selected,
+  disabled = false, loading = false, loadingLabel, fullWidth = false, selected, shadow = true,
   type = 'button', href, target, rel, ariaLabel, className, labelId, ...rest
 }) {
-  const r = resolve({ variant, size, iconStart, iconEnd, iconOnly, onDark, fullWidth, loading, loadingLabel, disabled, selected, className });
+  const r = resolve({ variant, size, iconStart, iconEnd, iconOnly, onDark, fullWidth, loading, loadingLabel, disabled, selected, shadow, className });
   const text = r.busyLabel ?? children ?? label;
   const a11yLabel = ariaLabel ?? (iconOnly ? (label ?? (typeof children === 'string' ? children : undefined)) : undefined);
   const state = {

@@ -240,18 +240,6 @@
 #courses .ptabs { margin-top: 36px; }
 @media (prefers-reduced-motion: reduce) { .shelves.is-swap .shelf { animation: none; } }
 
-/* ---- counselling form: a brand-orange section (the form card itself stays white) ---- */
-#contact.contact { border: 0; color: #fff; background:
-  radial-gradient(48% 60% at 85% 20%, rgba(255, 170, 90, .45), transparent 70%),
-  radial-gradient(45% 55% at 8% 100%, rgba(150, 40, 8, .5), transparent 70%),
-  linear-gradient(135deg, #E85020 0%, #C2410C 55%, #A8380A 100%); }
-#contact .lbl .lbl__t, #contact .lbl .lbl__hi { color: #fff; }
-#contact .lbl .lbl__hi { border-color: rgba(255, 255, 255, .35); }
-#contact .h2, #contact .intro { color: #fff; }
-#contact .intro { color: rgba(255, 255, 255, .92); }
-#contact .contact__mandala { opacity: .16; filter: brightness(0) invert(1); }
-#contact .form { box-shadow: 0 30px 50px -28px rgba(60, 15, 0, .6); }
-
 /* testimonials: no section background of its own (it sits on the page ground like the sections around it) */
 #stories.sheet { background: none; border: 0; box-shadow: none; }
 #stories.sheet::before, #stories.sheet::after { display: none; }
@@ -291,36 +279,6 @@
 
 /* room before the footer (the FAQ now follows the counselling form) */
 #faq.faq { margin-bottom: 72px; }
-
-/* ---- counselling form as a sentence: the fields are blanks you fill in, written in handwriting on a dashed line ---- */
-.form--note h3 { margin: 0; font: 700 11.5px/1.2 var(--f); letter-spacing: .16em; text-transform: uppercase; color: var(--brand); }
-.form--note h3::after { content: none; }
-.form__sent { margin: 14px 0 8px; font: 500 clamp(19px, 1.6vw, 24px)/2.35 var(--f-d); color: var(--ink); letter-spacing: -.005em; }
-.blank { display: inline-flex; align-items: baseline; vertical-align: baseline; position: relative; min-width: 0; }
-.blank input, .blank select { height: 1.5em; padding: 0 6px; border: 0; border-bottom: 2px dashed rgba(194, 65, 12, .6); border-radius: 2px 2px 0 0; background: transparent; box-shadow: none;
-  font: 600 1.18em/1.5 "Caveat", "Segoe Script", cursive; letter-spacing: 0; color: #1B2A52; outline: none; transition: background-color .2s, border-color .2s; }
-.blank input::placeholder { color: rgba(27, 42, 82, .38); font-weight: 500; }
-.blank select { appearance: none; cursor: pointer; padding-right: 24px; background: transparent url(/assets/img/icons/chev-down.svg) right 4px center / 15px 15px no-repeat; }
-.blank select:invalid { color: rgba(27, 42, 82, .38); font-weight: 500; }
-.blank select option { font: 500 16px var(--f); color: var(--ink); }
-.blank input:focus, .blank select:focus { border-bottom: 2px solid var(--brand); background-color: rgba(254, 170, 28, .14); }
-.blank [aria-invalid="true"] { border-bottom: 2px solid #C0362C; background-color: rgba(192, 54, 44, .08); }
-.line--name { display: flex; align-items: baseline; gap: .35em; }
-.blank--name { flex: 1; min-width: 0; }
-.blank--name input { width: 100%; }
-.keep { white-space: nowrap; }
-.blank--prog select { width: 205px; max-width: 46vw; text-overflow: ellipsis; }
-.blank--tel { gap: 4px; }
-.blank--tel input { width: 150px; }
-.blank__cc { font: 600 1.05em "Caveat", cursive; color: rgba(27, 42, 82, .6); }
-.blank--time select { width: 215px; }
-.line--mail { display: flex; align-items: baseline; gap: .35em; }
-.blank--mail { flex: 1; min-width: 0; }
-.blank--mail input { width: 100%; }
-.form__opt { display: block; margin-top: 4px; font-size: .74em; color: var(--muted); }
-.form--note .form__err { margin-top: 10px; }
-.form--note .btn--full { margin-top: 4px; }
-@media (max-width: 600px) { .blank--name input, .blank--prog select, .blank--time select, .blank--mail input { width: min(100%, 250px); } .form--note { padding: 34px 26px 30px; } }
 
 /* FAQ: no section background of its own */
 #faq.sheet { background: none; border: 0; box-shadow: none; }
@@ -387,16 +345,8 @@
 /* programme tabs: selected pill is flat brand orange, no gradient and no shadow */
 #courses .ptabs .seg button[aria-selected="true"] { background: var(--brand); border-color: var(--brand); box-shadow: none; }
 
-  background: linear-gradient(135deg, #F06A2C 0%, #E85020 45%, #C2410C 100%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .25), 0 12px 24px -12px rgba(60, 20, 0, .7); font: 700 14.5px/1.25 var(--f); }
 
 /* Why: no icon; the number takes its place at the top left of each card */
-
-/* batch cards: no Hindi line; the tag (Limited seats / Flagship) sits top right, where it was */
-.inv .chip.inv__tag { position: absolute; z-index: 2; right: 26px; top: 28px; align-self: auto; margin: 0; }
-.inv--hi .chip.inv__tag { background: rgba(255, 255, 255, .16); border-color: rgba(255, 212, 138, .55); color: #FFD48A; }
-
-/* counselling form section: full width, edge to edge */
-#contact.contact { margin-left: 0; margin-right: 0; border-radius: 0; }
 
 /* room under the admissions banners */
 #bnr.bnr { padding-bottom: 72px; }
@@ -464,10 +414,6 @@
 @media (max-width: 600px) {
   .dl__h span, .sc .vp__h .ln i { white-space: normal; }
   .dl__h, .sc .vp__h { font-size: clamp(30px, 8.6vw, 38px); }
-  .blank--prog select { width: min(190px, 52vw); max-width: 100%; }
-  .blank--time select { width: min(210px, 60vw); max-width: 100%; }
-  .blank--tel input { width: min(150px, 44vw); }
-  .form__sent { font-size: 19px; }
 }
 
 /* ---- hero CTA: ONE fixed button, outside the slides. It never moves, fades or re-animates when the slides change.
@@ -516,15 +462,8 @@
 @media (prefers-reduced-motion: reduce) { .dl__stick { transform: none; border-radius: 0; } }
 
 /* eyebrow labels on light sections: English and Hindi both brand orange (labels on orange / dark sections stay white) */
-#courses .lbl__t, #batches .lbl__t, #faculty .lbl__t, #stories .lbl__t, #resources .lbl__t, #visit .lbl__t, #faq .lbl__t,
-#courses .lbl__hi, #batches .lbl__hi, #faculty .lbl__hi, #stories .lbl__hi, #resources .lbl__hi, #visit .lbl__hi, #faq .lbl__hi { color: var(--brand) !important; }
-#courses .lbl__hi, #batches .lbl__hi, #faculty .lbl__hi, #stories .lbl__hi, #resources .lbl__hi, #visit .lbl__hi, #faq .lbl__hi { border-color: rgba(194, 65, 12, .3) !important; }
-
-/* the mobile number blank spans the full width, like the name and email */
-.line--tel { display: flex; align-items: baseline; gap: .35em; }
-.blank--tel { flex: 1; min-width: 0; }
-.blank--tel input { flex: 1; width: 100%; min-width: 0; }
-@media (max-width: 600px) { .blank--tel input { width: 100%; } }
+#courses .lbl__t, #faculty .lbl__t, #stories .lbl__t, #resources .lbl__t, #visit .lbl__t, #faq .lbl__t, #courses .lbl__hi, #faculty .lbl__hi, #stories .lbl__hi, #resources .lbl__hi, #visit .lbl__hi, #faq .lbl__hi { color: var(--brand) !important; }
+#courses .lbl__hi, #faculty .lbl__hi, #stories .lbl__hi, #resources .lbl__hi, #visit .lbl__hi, #faq .lbl__hi { border-color: rgba(194, 65, 12, .3) !important; }
 
 /* footer text, larger (user 2026-11-10): logo 20 -> 24, intro 17 -> 19, column heads 17 -> 20, links 14.5 -> 16.5, bottom bar 14 -> 15.5 */
 footer.foot .foot__logo { font-size: 24px; }
@@ -605,21 +544,13 @@ html[lang="hi"] .talk .btn__t { font-family: "Mukta", var(--f); }
 .lbl { gap: 20px; }
 .lbl .lbl__t { font: 600 14px/1.2 var(--f); letter-spacing: 0; text-transform: none; color: var(--brand); }
 .lbl .lbl__hi { font: 400 17px/1 var(--f-hi); color: var(--brand); border-color: rgba(194, 65, 12, .3); }
-.lbl--w .lbl__t, .lbl--w .lbl__hi, #contact .lbl .lbl__t, #contact .lbl .lbl__hi { color: #fff; border-color: rgba(255, 255, 255, .32); }
+.lbl--w .lbl__t, .lbl--w .lbl__hi { color: #fff; border-color: rgba(255, 255, 255, .32); }
 .lbl + .h2, .lbl + .wc__h, .h2--sec { margin-top: 30px; }
 /* the same rhythm for the sections that set their own padding with a stronger selector */
 section#toppers.vrnp { padding-top: var(--sec-y); padding-bottom: var(--sec-y); }
 section#bnr.bnr { padding-top: 0; padding-bottom: 0; }
 .band--fac { padding-top: var(--sec-y); }
 .gs { padding-top: var(--sec-y); padding-bottom: var(--sec-y); }
-
-/* ---- Batches: the same centred header as Programmes and Faculty (eyebrow, title, intro, then the "view all" link) ---- */
-#batches > .lbl { justify-content: center; }
-#batches > .lbl > i, #batches > .lbl > .lbl__orn { display: none; }
-#batches > .h2 { margin-left: auto; margin-right: auto; text-align: center; text-wrap: balance; }
-#batches .bhead { flex-direction: column; align-items: center; gap: 18px; margin-bottom: 44px; text-align: center; }
-#batches .bhead .intro { margin-left: auto; margin-right: auto; text-wrap: balance; }
-#batches .cards { padding: 0 12px; }   /* the tilted invitation cards stay inside the page margin */
 
 /* ---- WhatsApp: a fixed contact button, bottom right, above everything; hidden while the intro plays ---- */
 .wa { position: fixed; right: max(20px, env(safe-area-inset-right)); bottom: max(20px, env(safe-area-inset-bottom)); z-index: 60; overflow: visible;
@@ -637,14 +568,10 @@ html.vrv-lock .wa { opacity: 0; pointer-events: none; }
 /* ---- body text: one size, one line height, one colour for running copy; one smaller size for card detail text.
    Dark grounds (hero, GS, Contact, flagship batch card) keep their own light colours. The Toppers newspaper is its own typographic piece. ---- */
 :root { --body-fs: 16.5px; --body-lh: 1.55; --small-fs: 14.5px; --small-lh: 1.5; }
-.intro, .wc__p, .gs__p, .qa p, .dl__p, .sc__p, #contact .intro, .contact__l .intro { font-size: var(--body-fs); line-height: var(--body-lh); letter-spacing: -.01em; }
+.intro, .wc__p, .gs__p, .qa p, .dl__p, .sc__p { font-size: var(--body-fs); line-height: var(--body-lh); letter-spacing: -.01em; }
 .intro, .wc__p, .qa p { color: var(--body); }
-.inv__w, .inv dl, .wc__l, .kc__d, .fc p, .hp__b { font-size: var(--small-fs); line-height: var(--small-lh); }
-.inv__w, .inv dl, .wc__l { color: var(--body); }
-.inv--hi .inv__w, .inv--hi dl { color: rgba(255, 255, 255, .88); }
-.inv dd, .inv dt { color: var(--body); }
-.inv--hi dd, .inv--hi dt { color: rgba(255, 255, 255, .88); }
-.inv dd { line-height: var(--small-lh); }
+.wc__l, .kc__d, .fc p, .hp__b { font-size: var(--small-fs); line-height: var(--small-lh); }
+.wc__l { color: var(--body); }
 
 /* ---- Visit: contact and campus as a dotted map of India on a white panel (ported from /v5 ContactMap.tsx + recipe-story.css .rs-cm).
    v5's rust and saffron are the site's brand and amber. Hovering or focusing a city's label or card lights its pin (js/visit-map.js). ---- */
@@ -897,7 +824,7 @@ html.vrv-lock .wa { opacity: 0; pointer-events: none; }
 
 /* ---- eyebrow badges (Figma "eyebrow pill"): a dark-brown cartouche with pointed ends, white 12px bold caps, 0.96px tracking.
    Replaces the plain eyebrow text and its rule/ornament. On dark backgrounds (hero, flagship, "why") the cartouche is brand orange so it still reads. ---- */
-:is(#courses, #batches, #why, #gs, #faculty, #stories, #contact, #resources, #visit, #faq) .lbl__t, .lbl .lbl__t, .dl__k, .sc .vp__k > .ln, .hw__k {
+:is(#courses, #batches, #why, #gs, #faculty, #stories, #resources, #visit, #faq) .lbl__t, .lbl .lbl__t, .dl__k, .sc .vp__k > .ln, .hw__k {
   display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; height: 30px; margin: 0; padding: 0 11px; overflow: visible;
   border: solid transparent; border-width: 0 13px; border-image: url(/assets/img/brand/cartouche.svg) 0 13 fill / 0 13px / 0 stretch;
   background: none; color: #fff !important; font: 500 12px/16px "Geist", var(--f), sans-serif; letter-spacing: .96px; text-transform: uppercase; white-space: nowrap; text-shadow: none;
@@ -912,13 +839,10 @@ html.vrv-lock .wa { opacity: 0; pointer-events: none; }
 .hw__k { margin-bottom: 14px; }
 
 /* form section: more breathing room at the sides (desktop) */
-@media (min-width: 901px) { #contact .contact__in { padding-left: clamp(40px, 8vw, 150px); padding-right: clamp(40px, 8vw, 150px); } }
-@media (max-width: 900px) { #contact .contact__in { padding-left: max(var(--px), 22px); padding-right: max(var(--px), 22px); } }
 
 /* one content width for every section: the content column stops at 1440px (what the Why section already used) and centres on wider
    screens, while section backgrounds stay full-bleed. The side padding grows to take up the slack, so everything that reads --px follows. */
 :root { --px: max(clamp(16px, 2.71vw, 52px), calc((100vw - 1440px) / 2)); }
-@media (min-width: 901px) { #contact .contact__in { padding-left: max(clamp(40px, 8vw, 150px), calc((100vw - 1440px) / 2 + 40px)); padding-right: max(clamp(40px, 8vw, 150px), calc((100vw - 1440px) / 2 + 40px)); } }
 
 /* programme books on small or touch screens: no button under the shelf; the whole book is the click target */
 @media (max-width: 900px), (hover: none), (pointer: coarse) {
@@ -945,12 +869,10 @@ html.vrv-lock .wa { opacity: 0; pointer-events: none; }
 
 /* tighter side padding on every section (was ~39px at 1440, now ~20px); the 1440px content cap is unchanged */
 :root { --px: max(clamp(14px, 1.4vw, 24px), calc((100vw - 1440px) / 2)); }
-@media (min-width: 901px) { #contact .contact__in { padding-left: max(clamp(20px, 3vw, 56px), calc((100vw - 1440px) / 2 + 20px)); padding-right: max(clamp(20px, 3vw, 56px), calc((100vw - 1440px) / 2 + 20px)); } }
 #faculty #team.rail__track { padding-left: calc(var(--px) + 16px); padding-right: calc(var(--px) + 16px); scroll-padding-inline: calc(var(--px) + 16px); }
 
 /* content cap raised from 1440px to 1680px, then 1800px so wide screens (1536, 1920 and up) no longer get a large empty margin each side; inner caps follow it */
 :root { --px: max(clamp(14px, 1.4vw, 24px), calc((100vw - 1800px) / 2)); }
-@media (min-width: 901px) { #contact .contact__in { padding-left: max(clamp(20px, 3vw, 56px), calc((100vw - 1800px) / 2 + 20px)); padding-right: max(clamp(20px, 3vw, 56px), calc((100vw - 1800px) / 2 + 20px)); } }
 .wc__in { max-width: none; }
 .vrnp .np-page { max-width: none; }
 .lv__in { max-width: none; }
@@ -998,9 +920,6 @@ footer.foot { padding-left: max(var(--px), 48px); padding-right: max(var(--px), 
 .foot .socials a:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) { .foot .socials a, .foot .socials a img { transition: none; } .foot .socials a:hover { transform: none; } }
 
-/* Talk to us: content capped at the site's 1280px content width, centred (the ground still runs full width) */
-#contact .contact__in { max-width: calc(1280px + 2 * var(--px)); margin-left: auto; margin-right: auto; box-sizing: border-box; }
-
 /* ---- Why cards in the brand colour (user 2026-11-10): the brand gradient used across the site (study-card hover, closing CTA), white type,
    number discs outlined in white; on hover the disc fills white with brand numerals. css/why-choose.css loads after this file, hence #why. ---- */
 #why .wc__card { background: linear-gradient(149deg, #e57512 14.3%, #ae3b0f 85.7%); color: #fff; }
@@ -1045,7 +964,7 @@ body { background-color: var(--ground-end); }
 section#why.wc, #stories.sheet, #faq.sheet { background: var(--ground); }   /* outranks css/why-choose.css (#why.wc, loads later) and an earlier #stories.sheet { background: none } */
 
 /* eyebrow badges: brand-orange fill everywhere (was dark brown #2B1206 on light grounds); shape, type and size unchanged */
-:is(#courses, #batches, #why, #gs, #faculty, #stories, #contact, #resources, #visit, #faq) .lbl__t, .lbl .lbl__t, .dl__k, .sc .vp__k > .ln, .hw__k {
+:is(#courses, #batches, #why, #gs, #faculty, #stories, #resources, #visit, #faq) .lbl__t, .lbl .lbl__t, .dl__k, .sc .vp__k > .ln, .hw__k {
   border-image-source: url(/assets/img/brand/cartouche-brand.svg); }
 
 /* ---- Consistent scroll reveal (user 2026-11-10). Every section header uses the same .rv stagger: eyebrow .05s, heading .12s, intro .2s,
@@ -1073,7 +992,6 @@ section#why.wc, #stories.sheet, #faq.sheet { background: var(--ground); }   /* o
 #resources .sm__in, #closing .cl__card, #visit .cm { max-width: none; }
 #toppers.vrnp .np-page { max-width: none; }
 #why.wc .wc__in { max-width: none; }
-#contact .contact__in { max-width: none; padding-left: var(--px); padding-right: var(--px); }
 #gs.gs { --gs-left: var(--px); }   /* text column starts on the container edge (was centred on an old 1240px container) */
 section#toppers.vrnp { padding-left: var(--px); padding-right: var(--px); }   /* the paper sits on the container (was 16 / 28px from the screen edge) */
 
@@ -1118,9 +1036,6 @@ section#toppers.vrnp { padding-left: var(--px); padding-right: var(--px); }   /*
 .dl__in, .sc { padding-left: var(--px); padding-right: var(--px); }
 .dl__prog, .btn.dl__cta { left: var(--px); }
 .hw { padding-left: var(--px); padding-right: var(--px); }
-
-#contact .contact__in { padding-left: var(--px); padding-right: var(--px); }
-@media (min-width: 901px) { #contact .contact__in { padding-left: var(--px); padding-right: var(--px); } }
 #stories.sheet, #faq.sheet { margin-left: 0; margin-right: 0; }   /* the 12px sheet margin pushed these two off the shared edge */
 
 /* ===== merged 2026-11-10: rules below came after the block above and win where they overlap (incl. --px: 1440px cap, wider small-screen margins) ===== */
@@ -1189,7 +1104,7 @@ footer.foot { padding-left: 76px; padding-right: 76px; }
 /* ---- tighter space between each section heading block and the content it introduces ---- */
 #courses .ptabs { margin-top: 20px; }
 .shelves { margin-top: clamp(28px, 3vw, 44px); }
-#batches .bhead { margin-bottom: 24px; }
+
 #faculty .rail { margin-top: 16px; }
 #faculty #team.rail__track { padding-top: 28px; }
 .sm__grid { margin-top: 24px; }
@@ -1220,85 +1135,9 @@ footer.foot { padding-left: 76px; padding-right: 76px; }
 /* segmented Programmes tabs: no dividers between the options */
 #courses .ptabs .seg button:not([aria-selected="true"]) + button:not([aria-selected="true"])::before { display: none; }
 
-/* Talk to us form: same sentence layout, but each field fills the rest of its line after the lead-in words (full width), and drops to its own full-width line
-   if the words leave too little room, so nothing is ever cut off */
-.form--note .form__sent { display: block; line-height: 2.35; margin-top: 14px; }
-.form--note .form__sent .line, .form--note .form__sent .keep { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 .35em; white-space: nowrap; }
-.form--note .form__sent .blank { display: flex; flex: 1 1 9em; width: auto; max-width: none; min-width: 0; margin-top: 0; }
-.form--note .form__sent .blank input, .form--note .form__sent .blank select { width: 100% !important; max-width: none !important; min-width: 0; height: 1.5em; text-overflow: ellipsis; }
-.form--note .form__sent .blank--tel { gap: 6px; }
-.form--note .form__sent .blank--tel input { width: auto !important; flex: 1; }
-#contact .contact__in > * { min-width: 0; }   /* the grid cells may shrink below their content on phones */
-
-/* ---- Upcoming batches as paper tickets (adapted from the reference site's "Next batches"): a dyed head with the start date and a lotus line mark, details on cream paper,
-   two half-circle notches and a dashed tear line above a stub that holds the Register button ---- */
-.inv--ticket { --r: 0deg; --ticket: #C64613; min-width: 0; transform: none; filter: drop-shadow(0 14px 15px rgba(102, 38, 13, .1)); transition: translate .35s var(--ease); }
-.inv--ticket:nth-child(2) { --ticket: #B47A20; }
-.inv--ticket:nth-child(3) { --ticket: #9D485B; }
-.inv--ticket:nth-child(4) { --ticket: #326F66; }
-.inv--ticket:hover, .inv--ticket:focus-within { transform: none; translate: 0 -5px; }
-.inv--ticket.inv--pre { opacity: 0; transform: translateY(40px); }
-.inv--ticket.inv--pre.in { opacity: 1; transform: none; transition: opacity .7s var(--ease), transform .9s var(--ease); transition-delay: calc(var(--i) * 110ms); }
-.inv--ticket.inv--pre.in:hover { transform: none; }
-.inv--ticket .inv__frame { display: flex; flex-direction: column; height: 100%; padding: 0; border-radius: 20px; background: #FFF8ED; color: var(--ink); box-shadow: none; overflow: hidden;
-  -webkit-mask: radial-gradient(circle at 0 calc(100% - 94px), transparent 11px, #000 11.6px) left, radial-gradient(circle at 100% calc(100% - 94px), transparent 11px, #000 11.6px) right; -webkit-mask-size: 51% 100%; -webkit-mask-repeat: no-repeat;
-  mask: radial-gradient(circle at 0 calc(100% - 94px), transparent 11px, #000 11.6px) left, radial-gradient(circle at 100% calc(100% - 94px), transparent 11px, #000 11.6px) right; mask-size: 51% 100%; mask-repeat: no-repeat; }
-.inv--ticket .inv__frame::before, .inv--ticket .inv__frame::after { content: none; }
-.ticket__head { position: relative; isolation: isolate; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; min-height: 132px; padding: 22px 24px; background: var(--ticket); color: #fff; overflow: hidden; }
-.ticket__head::after { content: ""; position: absolute; inset: 7px; border: 1px solid rgba(255, 255, 255, .19); border-radius: 14px 14px 0 0; pointer-events: none; }
-.ticket__lotus { position: absolute; right: 0; bottom: 0; width: 204px; height: 108px; opacity: .65; z-index: -1; }
-.ticket__date > span, .ticket__target { display: block; font-size: 12px; line-height: 1.35; font-weight: 600; }
-.ticket__date time { display: flex; align-items: flex-end; gap: 8px; margin-top: 6px; }
-.ticket__date time b { font: 700 54px/1 var(--f-d); letter-spacing: -.03em; }
-.ticket__date time > span { display: grid; padding-bottom: 6px; font: 600 15px/1.2 var(--f); }
-.ticket__date time small { font-size: 12px; font-weight: 600; opacity: .75; }
-.ticket__target { text-align: right; padding-top: 2px; color: rgba(255, 255, 255, .6); }
-.ticket__target strong { display: block; margin-top: 4px; font-size: 13px; color: #fff; font-weight: 600; }
-.ticket__body { display: flex; flex-direction: column; flex: 1; padding: 24px 24px 20px; }
-.inv--ticket .inv__tag { margin: 0; padding: 0; border: 0; background: none; color: var(--ticket); font: 700 12px/1.2 var(--f); text-transform: uppercase; letter-spacing: .06em; }
-.inv--ticket h3 { margin: 10px 0 0; min-height: 2.4em; color: var(--ink); font: 600 24px/1.2 var(--f-d); letter-spacing: -.015em; }
-.inv--ticket .inv__w { margin: 12px 0 0; color: var(--body); font-size: 15px; line-height: 1.5; }
-.ticket__meta { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; margin-top: auto; padding-top: 22px; }
-.ticket__meta dl { display: grid; gap: 0; margin: 0; padding: 0; border: 0; }
-.ticket__meta dt { color: #8D6E5E; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
-.ticket__meta dd { margin: 4px 0 0; color: var(--ink); font-size: 14px; line-height: 1.4; }
-.ticket__limited { flex: none; display: grid; place-items: center; width: 62px; height: 62px; border: 1.5px dashed var(--ticket); border-radius: 50%; rotate: -10deg; color: var(--ticket); font: 700 9.5px/1.2 var(--f); letter-spacing: .08em; text-transform: uppercase; text-align: center; }
-.ticket__stub { position: relative; flex: none; display: flex; align-items: center; height: 94px; padding: 0 24px; }
-.ticket__stub::before { content: ""; position: absolute; left: 18px; right: 18px; top: 0; border-top: 1.5px dashed #C9A98C; }
-@media (max-width: 700px) { .inv--ticket h3 { min-height: 0; } }
-@media (prefers-reduced-motion: reduce) { .inv--ticket, .inv--ticket.inv--pre, .inv--ticket.inv--pre.in { transform: none; opacity: 1; transition: none; } }
-.inv--ticket .inv__frame { background: #fff; }   /* white paper instead of cream */
-
-/* batch tickets: smooth hover (the entrance transition no longer replaces the hover's, and the delay only applies to the entrance) and the button label centred */
-.inv--ticket { will-change: translate; transition: translate .45s cubic-bezier(.22, 1, .36, 1); }
-.inv--ticket.inv--pre.in { transition: opacity .7s var(--ease) calc(var(--i) * 110ms), transform .9s var(--ease) calc(var(--i) * 110ms), translate .45s cubic-bezier(.22, 1, .36, 1) 0s; }
-
-/* batch tickets: "Limited seats" stamp as in the original design (solid rust double ring, tilted) */
-.ticket__meta { min-height: 98px; }
-.ticket__limited { position: relative; width: 82px; height: 82px; margin-bottom: -4px; border: 2px solid #C4482C; border-radius: 50%; color: #B13D24; rotate: -12deg; }
-.ticket__limited::before { content: ""; position: absolute; inset: 4px; border: 1px solid currentColor; border-radius: 50%; }
-.ticket__limited > span { text-align: center; text-transform: uppercase; font: 700 12px/1.4 var(--f); letter-spacing: .08em; }
-
-/* batch tickets, skeuomorphic hover: the paper tilts toward the pointer in 3D, a soft glare slides across it, the shadow swings opposite the tilt,
-   and the Register button reads as a raised key that presses down on click */
-.inv--ticket { transform-style: preserve-3d; transition: translate .45s cubic-bezier(.22, 1, .36, 1), transform .5s cubic-bezier(.22, 1, .36, 1), filter .4s; }
-.inv--ticket .inv__frame { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9), inset 0 -2px 0 rgba(120, 60, 20, .06); }
-.inv--ticket .inv__frame::after { content: ""; position: absolute; inset: 0; z-index: 4; pointer-events: none; opacity: 0; transition: opacity .3s;
-  background: radial-gradient(circle at var(--gx, 50%) var(--gy, 30%), rgba(255, 255, 255, .6), rgba(255, 255, 255, .14) 34%, transparent 62%); mix-blend-mode: soft-light; }
-.inv--ticket .ticket__head { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .28), inset 0 -10px 18px -12px rgba(0, 0, 0, .3); }
-.inv--ticket .inv__reg { --btn-shadow: inset 0 1px 0 rgba(255, 255, 255, .4), inset 0 -3px 0 rgba(120, 30, 0, .25), 0 6px 10px -6px rgba(198, 70, 19, .5); transition: box-shadow .25s, translate .15s, scale .15s; }
-@media (hover: hover) and (pointer: fine) {
-  .inv--ticket:hover { transform: perspective(1000px) rotateX(calc(var(--ty, 0) * -7deg)) rotateY(calc(var(--tx, 0) * 9deg)); translate: 0 -8px;
-    filter: drop-shadow(calc(var(--tx, 0) * -14px) calc(24px - var(--ty, 0) * 10px) 18px rgba(102, 38, 13, .3)); transition: translate .45s cubic-bezier(.22, 1, .36, 1), transform .14s linear, filter .2s; }
-  .inv--ticket:hover .inv__frame::after { opacity: 1; }
-  .inv--ticket:hover .inv__reg { --btn-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), inset 0 -3px 0 rgba(120, 30, 0, .3), 0 12px 16px -8px rgba(198, 70, 19, .7); }
-}
-.inv--ticket .inv__reg:active { translate: 0 2px; scale: 1; box-shadow: inset 0 2px 5px rgba(120, 30, 0, .45), 0 2px 4px -2px rgba(198, 70, 19, .5); }
-@media (prefers-reduced-motion: reduce) { .inv--ticket:hover { transform: none; } }
-
 /* ---- 64px between each section's heading block and the content it introduces ---- */
 #courses .ptabs { margin-top: 64px; }
-#batches .bhead { margin-bottom: 64px; }
+
 #faculty .rail { margin-top: 36px; }                 /* + 28px padding inside the carousel = 64px to the cards */
 #faculty #team.rail__track { padding-top: 28px; }
 .sm__grid { margin-top: 64px; }
@@ -1314,12 +1153,8 @@ footer.foot { padding-left: 76px; padding-right: 76px; }
 
 /* ---- no gaps between sections: the 24px strips (and the 72px under the FAQ) are gone, so each section meets the next directly ---- */
 :root { --sec-gap: 0px; }
-:is(#courses, #toppers, #why, #batches, #bnr, #gs, #faculty, #stories, #contact, #resources, #visit, #faq, #closing, footer.foot, .band, .sheet, .sm) { margin-top: 0; }
+:is(#courses, #toppers, #why, #batches, #bnr, #gs, #faculty, #stories, #resources, #visit, #faq, #closing, footer.foot, .band, .sheet, .sm) { margin-top: 0; }
 #faq.faq { margin-bottom: 0; }
-/* Talk to us: no circle (mandala / ring) pattern behind the copy */
-#contact .contact__mandala, #contact.contact::before, #contact.contact::after { display: none; }
-/* Talk to us: the dark-brown eyebrow badge (an orange one disappears on the orange ground) */
-#contact .lbl .lbl__t { border-image-source: url(/assets/img/brand/cartouche.svg); color: #fff !important; }
 
 /* Free resources: everything centred like the other sections (heading block, tabs and the foot row) */
 .sm__head { justify-content: center; text-align: center; }
@@ -1381,10 +1216,6 @@ footer.foot { padding-left: 76px; padding-right: 76px; }
 .sm__card, .sm__card::before { border-radius: 4px; }
 .sm__card > a:not(.btn), .sm__card > a:not(.btn):focus-visible { border-radius: 4px; }
 
-/* batch tickets: the same 4px corner radius as the form and resource cards */
-.inv--ticket .inv__frame { border-radius: 4px; }
-.ticket__head::after { border-radius: 2px 2px 0 0; }
-
 /* "More free resources": centred, the label above the pills on every width */
 .sm__more { flex-direction: column; align-items: center; gap: 18px; text-align: center; }
 .sm__more-k { line-height: 1.3; }
@@ -1433,21 +1264,17 @@ footer.foot { padding-left: 76px; padding-right: 76px; }
 /* ---- closing CTA: background pattern. The site's jaali lattice (the tile behind every light section) in white, large and faint, framing the
    card: it shows at the top corners and edges and fades out behind the copy, the lotus and the topper portraits. It settles in (fade + 18px rise)
    once the copy reveals, and on hover drifts half a tile, slowly, with the lotus. Inset by one tile so the drift never shows an edge. */
-.cl__card::before, #contact.contact::before { content: ""; display: block; position: absolute; inset: -44px; width: auto; height: auto; z-index: -1; pointer-events: none; opacity: .14;
+.cl__card::before { content: ""; display: block; position: absolute; inset: -44px; width: auto; height: auto; z-index: -1; pointer-events: none; opacity: .14;
   background: url(/assets/img/patterns/jaali.svg) 0 0 / 44px 44px repeat;
   -webkit-mask: radial-gradient(70% 62% at 50% 46%, transparent 38%, #000 100%), linear-gradient(180deg, #000 35%, transparent 88%); -webkit-mask-composite: source-in;
   mask: radial-gradient(70% 62% at 50% 46%, transparent 38%, #000 100%), linear-gradient(180deg, #000 35%, transparent 88%); mask-composite: intersect;
   transition: opacity .9s var(--ease), transform 1.2s var(--ease); }
-.fx-on .cl__card:not(:has(.cl__copy .rv.in))::before, .fx-on #contact.contact:not(:has(.contact__l .rv.in))::before { opacity: 0; transform: translateY(18px); }
+.fx-on .cl__card:not(:has(.cl__copy .rv.in))::before { opacity: 0; transform: translateY(18px); }
 @media (hover: hover) and (pointer: fine) {
-  .cl__card:hover::before, #contact.contact:hover::before { transform: translate(22px, -22px); }
+  .cl__card:hover::before { transform: translate(22px, -22px); }
 }
-@media (max-width: 640px) { .cl__card::before, #contact.contact::before { background-size: 32px 32px; } }
-@media (prefers-reduced-motion: reduce) { .cl__card::before, #contact.contact::before { transition: none; opacity: .14; transform: none; } }
-/* Talk to us (#contact) shares the lattice above: same tile, opacity and motion (it settles in with the eyebrow). The section is full-bleed with the
-   copy left and the form right, so the clear zone is a wide band through the middle and the lattice keeps to the outer edges and the top. */
-#contact.contact::before { -webkit-mask: radial-gradient(78% 70% at 50% 55%, transparent 40%, #000 100%); -webkit-mask-composite: source-over;
-  mask: radial-gradient(78% 70% at 50% 55%, transparent 40%, #000 100%); mask-composite: add; }
+@media (max-width: 640px) { .cl__card::before { background-size: 32px 32px; } }
+@media (prefers-reduced-motion: reduce) { .cl__card::before { transition: none; opacity: .14; transform: none; } }
 
 /* Free resources cards: the action is the link button (<Button variant="link">), at the card's foot */
 .sm__card--res .sm__act { margin-top: auto; align-self: flex-start; }
@@ -1703,10 +1530,6 @@ main .cover > #dlPin ~ section:where(#courses) { background: linear-gradient(90d
 }
 @media (prefers-reduced-motion: reduce) { #resources .sm__card--res .sm__rays { animation: none; } }
 
-/* Talk to us: the label / heading / intro block sits vertically centred against the form beside it (user 2026-11-11); stacked on phones as before.
-   The form carries the section's bottom padding as margin-bottom: var(--pb) (v25.css .form), so the text column takes the same margin and both cells end level. */
-@media (min-width: 901px) { #contact .contact__in { align-items: stretch; } #contact .contact__l { justify-content: center; margin-bottom: var(--pb); } }
-
 /* FAQ: open and closed read apart at a glance (user 2026-11-11). Closed stays a white card with the orange "+". Open turns warm:
    a peach ground, a 4px brand bar on the left, a brand-tinted outline and lift, the question in brand orange, a dashed rule between
    question and answer, and the button flips to ink with the "x". */
@@ -1714,9 +1537,6 @@ main .cover > #dlPin ~ section:where(#courses) { background: linear-gradient(90d
 #faq .qa[open] { background: #FFF4E8; box-shadow: inset 0 0 0 1px rgba(194, 65, 12, .32), 0 18px 34px -22px rgba(120, 50, 10, .45); }
 #faq .qa[open] summary { color: var(--brand); }
 #faq .qa[open] p { margin-top: 2px; padding-top: 14px; border-top: 1px dashed rgba(194, 65, 12, .3); color: var(--ink); }
-/* ---- Upcoming batches: one colour per programme family (set from BFAM in js/content.js as --ticket on each ticket: General Studies
-   orange, Prelims gold, Current affairs plum, Mains teal, Mentorship indigo). The ticket head and the tag (which names the family) take it. Eight tickets, four to a row. The nth-child colours from before are replaced by the inline --ticket. ---- */
-#batches .cards { row-gap: clamp(22px, 2.6vw, 36px); }
 
 /* Free resources, Contact us and FAQ read as one closing run: the padding where they meet is half the section rhythm
    (resources bottom, Contact top and bottom, FAQ top). Their outer edges keep the full --sec-y. */
@@ -1972,8 +1792,6 @@ footer.foot .foot__logo--mark:focus-visible { outline: 2px solid #fff; outline-o
    when there is no room below. The native <select> stays in the form, visually hidden. ---- */
 .cs__native { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); border: 0 !important; opacity: 0; pointer-events: none; }
 .cs { position: relative; display: inline-flex; flex: 1 1 auto; min-width: 0; max-width: 100%; }
-.blank--prog .cs { width: 205px; max-width: 46vw; } .blank--time .cs { width: 215px; max-width: 60vw; }
-.form--note .form__sent .blank .cs { width: 100%; max-width: none; }
 .cs__btn { display: flex; align-items: center; gap: 6px; width: 100%; min-width: 0; height: 1.5em; padding: 0 4px 0 6px; box-sizing: border-box; cursor: pointer;
   border-bottom: 2px dashed rgba(194, 65, 12, .6); border-radius: 2px 2px 0 0; background: transparent; outline: none;
   font: 600 1.18em/1.5 "Caveat", "Segoe Script", cursive; letter-spacing: 0; color: #1B2A52; user-select: none; -webkit-tap-highlight-color: transparent;
@@ -2035,9 +1853,9 @@ footer.foot .foot__logo--mark:focus-visible { outline: 2px solid #fff; outline-o
    navigation bar (public/css/navigation-bar.css). Up to 1440px wide nothing changes; wider, the whole 1440 layout centres, and
    section backgrounds still run edge to edge. (--px was max(inset, half the slack), which dropped the inset beyond ~1600px.) */
 /* the column is 1440px wide (user 2026-11-13: briefly 1920px, then back to 1440px): --cap is half of what the screen has beyond 1440px */
-:root { --cap: max(0px, calc((100vw - 1440px) / 2)); --px: calc(var(--cap) + clamp(16px, 5.5vw, 80px)); }
+:root { --cap: max(0px, calc((100vw - 1440px) / 2)); --px: calc(var(--cap) + clamp(16px, 5.5vw, 40px)); }
 .dl__frame { padding-left: calc(var(--cap) + 20px); padding-right: calc(var(--cap) + 20px); }
-footer.foot { padding-left: calc(var(--cap) + 76px); padding-right: calc(var(--cap) + 76px); }
+footer.foot { padding-left: calc(var(--cap) + 40px); padding-right: calc(var(--cap) + 40px); }
 @media (max-width: 640px) { footer.foot { padding-left: 40px; padding-right: 40px; } }
 
 /* Hero height above 1440px wide: a fixed 680px instead of filling the screen (user 2026-11-13); up to 1440px the header + hero
@@ -2073,15 +1891,10 @@ html main .cover > #dlPin ~ section:where(#courses), html #toppers, html #topper
 html .gz__sheet { border-radius: var(--r-box); }
 /* cards: 8px (user 2026-11-13). The containers above (header, hero frame, sheets, mega menus) keep --r-box. */
 :root { --r-card: 8px; }
-html .gz__frame, html .inv__frame, html .inv--ticket .inv__frame, html .sm__card, html #faqList .qa,
-html #story .cmp__ph, html #story .cmp__ph img, html #story .cmp__card, html #story .cmp__card img,
-html #visit .cm, html #visit .cm__track, html #visit .cm__list, html #visit .cm__map,
-html .cl__card, html footer.foot .foot__news, html #tcar > div, html #courses .prog__help, html #courses .prog__flag,
-html #stories [class*="postcard-paper"] { border-radius: var(--r-card); }
+html .gz__frame, html .sm__card, html #faqList .qa, html #visit .cm, html #visit .cm__track, html #visit .cm__list, html #visit .cm__map, html .cl__card, html footer.foot .foot__news, html #tcar > div, html #courses .prog__help, html #courses .prog__flag, html #stories [class*="postcard-paper"] { border-radius: var(--r-card); }
 @media (max-width: 900px) { html .cl__card, html #visit .cm { border-radius: var(--r-card); } }
-/* the contact form: 4px (user 2026-11-13) */
+/* the Talk to us form card: 4px (user 2026-11-13; TalkToUs.jsx) */
 :root { --r-form: 4px; }
-html .form--note { border-radius: var(--r-form); }
 
 /* Hero height from 1280px wide: fits its content instead of filling the screen (user 2026-11-13). The copy block is centred
    (48px above the middle) with the CTA under it and the slide dots near the bottom of the card, so the card is
@@ -2123,7 +1936,7 @@ html .form--note { border-radius: var(--r-form); }
 :root { --sec-y: clamp(64px, 6.25vw, 90px); --py: var(--sec-y); --pb: var(--sec-y); --hd-lbl: 24px; --hd-in: 16px; --hd-gap: clamp(36px, 3.4vw, 48px); }
 /* section padding */
 html main :is(#stories.sheet, #batches, #resources.sm, #visit, #faq.faq, #gs.gs, section#toppers) { padding-top: var(--sec-y); padding-bottom: var(--sec-y); }
-html main :is(#educators, #faq.faq, #closing.cl) { padding-top: calc(var(--sec-y) * .5); }
+html main :is(#educators, #story, #visit, #faq.faq, #closing.cl) { padding-top: calc(var(--sec-y) * .5); }
 html main :is(#educators, #closing.cl) { padding-bottom: var(--sec-y); }
 /* header: eyebrow -> heading -> intro */
 html main section .lbl + .h2, html main section .lbl + .wc__h, html main section .h2.h2--sec,
@@ -2134,20 +1947,9 @@ html main #closing .cl__p { margin-top: calc(var(--hd-in) - 20px); }   /* the cl
 html main #closing .cl__h { margin-bottom: 0; }
 html main #gs .lbl + .gs__h { margin-top: var(--hd-lbl); }
 /* heading block -> content */
-html main #batches .bhead { margin-bottom: var(--hd-gap); }
+
 html main .sm__grid, html main #faq .qas { margin-top: var(--hd-gap); }
 html main #visit .cm { margin-top: var(--hd-gap); }
-/* Contact on the same rhythm (user 2026-11-13): --sec-y above and below the split card (it had 90px above and the bottom space
-   as each column's own margin), the copy column aligned to the top instead of centred against the taller form, so the eyebrow
-   sits --sec-y from the top as in every other section, and the form's top lines up with the eyebrow. */
-html main #contact .contact__in { padding-top: var(--sec-y); padding-bottom: var(--sec-y); }
-html main #contact .contact__in > * { margin-bottom: 0; }
-@media (min-width: 901px) {
-  html main #contact .contact__in { align-items: start; }
-  html main #contact .contact__l { justify-content: flex-start; }
-  html main #contact .contact__in > .form { margin-top: 0; }
-}
-@media (max-width: 900px) { html main #contact .contact__in { row-gap: var(--hd-gap); } }   /* stacked: heading block -> form = --hd-gap */
 
 /* Hero arrows (user 2026-11-13): previous / next as the site's white icon buttons (onDark), at the card's bottom right, level with
    the slide indicators on the left (the indicators sit 26px off the bottom; the 40px buttons are centred on them). They stay on
@@ -2170,21 +1972,8 @@ html main #contact .contact__in > * { margin-bottom: 0; }
 .course-ph__list { margin: 18px 0 0; padding-left: 20px; color: var(--ink); font: 500 16px/1.6 var(--f); }
 .course-ph__btns { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
 
-/* ---- Batches: one horizontal carousel (user 2026-11-13). The .rail primitive (v25.css) makes #price a single scroll-snapping
-   row; its width per ticket keeps the old grid's 4 / 2 / 1 across, the next ticket peeking in on phones. The row keeps the
-   page margin as scroll padding, and room above and below for the tickets' lift, tilt and shadow. Arrows: components/ui/rail.js
-   (one ticket per press, disabled at either end); centred under the row at every width (user 2026-11-13), 12px apart. ---- */
-#batches .rail--batch { --bgap: var(--card-gap, clamp(14px, 2vw, 28px)); --cw: calc((100% - 3 * var(--bgap)) / 4); margin-top: 0; }
-#batches .rail--batch > .rail__track { gap: var(--bgap); row-gap: 0; padding: 18px var(--px) 34px; scroll-padding-inline: var(--px); }
-#batches .rail--batch > .rail__track:focus-visible { outline: 2px solid var(--brand); outline-offset: -2px; border-radius: 12px; }
-#batches .rail__nav { display: flex; justify-content: center; gap: 12px; margin-top: 4px; }
 /* the left and right "smoke" of Success stories (#tcar, Stories.jsx): the full-bleed row fades out over its outer 7% each side,
    the same gradient at every width; off with reduced motion, as there */
-#batches .rail--batch > .rail__track { -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
-  mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%); }
-@media (max-width: 1180px) { #batches .rail--batch { --cw: calc((100% - var(--bgap)) / 2); } }
-@media (max-width: 640px) { #batches .rail--batch { --cw: 86%; } }
-@media (prefers-reduced-motion: reduce) { #batches .rail--batch > .rail__track { scroll-behavior: auto; -webkit-mask-image: none; mask-image: none; } }
 
 /* ---- Contact us: three tiles (user 2026-11-13, after the wireframe). The campus photos are the large square on the left; on the right
    the campus tile (address and map) over the channels tile (call, email); one 20px gutter between all three. Each right-hand tile is
@@ -2220,20 +2009,6 @@ html main #visit .cm__list--chan { grid-area: chan; }
 /* Success stories -> Faculty (user 2026-11-16: a smaller gap): no bottom padding under the postcard row (its own 56px foot,
    Stories.jsx #tcar, already holds the cards' shadow and tilt), so the last postcard -> the Faculty eyebrow is about 60px */
 html main #stories.sheet { padding-bottom: 0; }
-
-/* VR-102 (user 2026-11-16): Contact, a shorter section. The note-style form set the height (477px of a 657px section): its padding,
-   a 2.35 line height across five sentence lines, and an empty error line that still took 42px. Now: the error line takes no
-   room until it has something to say, the sentence lines sit at 1.85 (2 on phones, where the fields need a comfortable tap
-   area), and the padding is 34 / 30px. Every field, the label, the heading and the intro stay; the rhythm around the card too. */
-html main #contact .form--note { padding: 34px 40px 30px; }
-html main #contact .form--note .form__sent { line-height: 1.85; margin-top: 10px; }
-html main #contact .form--note .form__err:empty { display: none; }
-html main #contact .form--note .form__err { margin: 10px 0 0; }
-html main #contact .form--note .btn--full { margin-top: 18px; }
-@media (max-width: 600px) {
-  html main #contact .form--note { padding: 30px 28px 26px; }   /* clear of the note's inner border */
-  html main #contact .form--note .form__sent { line-height: 2; }
-}
 
 /* Our flagship programme (#gs) as a contained card like the closing CTA (user 2026-11-16: "a container like the CTA section instead of a
    full-width section"): it sits on the content column (--px either side) with the shared --r-box corners; its gradient, collage cut-outs,
@@ -2336,48 +2111,6 @@ footer.foot .foot__bot span:last-child { gap: 8px 20px; }
 #visit .cm__list .cm__item { padding-top: 12px; padding-bottom: 12px; }
 @media (max-width: 1000px) { #visit .cm__list { padding: 10px 20px; } }
 @media (max-width: 480px) { #visit .cm__list { padding: 6px 14px; } }
-
-/* Upcoming batches: the previous / next arrows stay in a centred row under the tickets at every width (user 2026-11-16; they were
-   at the sides from 1024px, which is reverted). The row is `#batches .rail__nav` above. */
-
-/* Batch tickets, tighter (user 2026-11-16): less height and evenly spaced rows. Head 132 -> 106px, body padding and the gaps between
-   tag, title, text and the date/seat row trimmed, the "Limited seats" stamp and the stub smaller (the stub is 76px, so the
-   two notches of the tear line move up with it). */
-.ticket__head { min-height: 106px; padding: 16px 22px; }
-.ticket__date time { margin-top: 4px; }
-.ticket__date time b { font-size: 44px; }
-.ticket__lotus { width: 170px; height: 90px; }
-.ticket__body { padding: 16px 22px 12px; }
-.inv--ticket h3 { margin-top: 8px; font-size: 22px; }
-.inv--ticket .inv__w { margin-top: 8px; font-size: 14.5px; line-height: 1.45; }
-.ticket__meta { min-height: 0; padding-top: 12px; }
-.ticket__meta dd { margin-top: 2px; }
-.ticket__stub { height: 76px; padding: 0 22px; --stub-px: 22px; }
-.inv--ticket .inv__frame {
-  -webkit-mask: radial-gradient(circle at 0 calc(100% - 76px), transparent 11px, #000 11.6px) left, radial-gradient(circle at 100% calc(100% - 76px), transparent 11px, #000 11.6px) right; -webkit-mask-size: 51% 100%; -webkit-mask-repeat: no-repeat;
-  mask: radial-gradient(circle at 0 calc(100% - 76px), transparent 11px, #000 11.6px) left, radial-gradient(circle at 100% calc(100% - 76px), transparent 11px, #000 11.6px) right; mask-size: 51% 100%; mask-repeat: no-repeat; }
-
-/* Batch tickets, tighter still (user 2026-11-16): head 92px, stub 66px (notches at 66px), smaller type and gaps */
-.ticket__head { min-height: 92px; padding: 13px 20px; }
-.ticket__date > span, .ticket__target { font-size: 11.5px; }
-.ticket__date time { margin-top: 2px; }
-.ticket__date time b { font-size: 38px; }
-.ticket__date time > span { padding-bottom: 4px; font-size: 14px; }
-.ticket__lotus { width: 140px; height: 74px; }
-.ticket__body { padding: 12px 20px 8px; }
-.inv--ticket h3 { margin-top: 6px; min-height: 2.3em; font-size: 20px; }
-.inv--ticket .inv__w { margin-top: 6px; font-size: 14px; line-height: 1.4; }
-.ticket__meta { padding-top: 8px; }
-.ticket__meta dt { font-size: 10.5px; }
-.ticket__meta dd { font-size: 13.5px; line-height: 1.35; }
-.ticket__stub { height: 66px; padding: 0 20px; --stub-px: 20px; }
-.inv--ticket .inv__frame {
-  -webkit-mask: radial-gradient(circle at 0 calc(100% - 66px), transparent 10px, #000 10.6px) left, radial-gradient(circle at 100% calc(100% - 66px), transparent 10px, #000 10.6px) right; -webkit-mask-size: 51% 100%; -webkit-mask-repeat: no-repeat;
-  mask: radial-gradient(circle at 0 calc(100% - 66px), transparent 10px, #000 10.6px) left, radial-gradient(circle at 100% calc(100% - 66px), transparent 10px, #000 10.6px) right; mask-size: 51% 100%; mask-repeat: no-repeat; }
-
-/* Batch tickets: the description sits right under its title as one block (user 2026-11-16): the title no longer reserves two lines */
-.inv--ticket h3 { min-height: 0; }
-.inv--ticket .inv__w { margin-top: 4px; }
 
 /* Hero indicators (user 2026-11-16): bottom left, in line with the copy, and white (the bars' fill was orange); the arrows stay bottom right */
 #dlProg.dl__prog { left: 80px; right: auto; bottom: 29px; }
@@ -2547,17 +2280,6 @@ html .dl { --card-min: calc(var(--txt-h) + 110px);
 .hx__win { -webkit-mask: linear-gradient(90deg, transparent, #000 16px, #000 calc(100% - 24px), transparent); mask: linear-gradient(90deg, transparent, #000 16px, #000 calc(100% - 24px), transparent); }
 @media (max-width: 640px) { .hx__ticker { gap: 10px; padding: 0 14px 0 6px; } }
 
-/* Upcoming batches: the previous / next arrows placed as Faculty's again (user 2026-11-16, "in batch card the right and left arrow should
-   place like the faculty card"): either side of the row, level with the middle of the tickets (the overlay spans the track's 18px / 34px
-   padding, so its centre is the cards' centre), each centred in the side margin (the row is inset by --px; the overlay reaches out over
-   it). From 1024px, where the side margin (--px, 56px+) holds the 44px arrow; narrower screens keep them in the row under the tickets. */
-@media (min-width: 1024px) {
-  #batches .rail--batch { position: relative; }
-  #batches .rail--batch > .rail__nav { position: absolute; inset: 18px calc(var(--px) * -1) 34px; z-index: 2; margin: 0; justify-content: space-between; align-items: center;
-    padding-inline: max(4px, calc((var(--px) - 44px) / 2)); pointer-events: none; }
-  #batches .rail--batch > .rail__nav .cbtn { pointer-events: auto; }
-}
-
 /* closing CTA on phones (user 2026-11-16): no AIR 1 / AIR 2 portraits, and so no bottom band kept for them; the card ends under its copy */
 @media (max-width: 640px) {
   .cl__tp { display: none; }
@@ -2614,49 +2336,6 @@ html body .dl__stat-l { max-width: 15em; }
 @media (max-width: 1100px) { .dl__stat-l { font-size: 14.5px; } }
 /* a stat's second line (user 2026-11-16: "since 1976" under "Years experience"): its own line, a touch quieter than the label */
 .dl__stat-s { display: block; font-weight: 400; opacity: .82; }
-
-/* The flagship ticket's glint (user 2026-11-16, after vajiramadravi.vercel.app): a metallic glare sweeps across the flagship ticket every few
-   seconds, a hot narrow core, a soft warm falloff, a faint cool fringe and a thinner second streak; colour-dodge makes it flare the colour
-   beneath. Only the dyed head and the Enroll button catch it (a band laid exactly over the button, a beat later, so it reads as one
-   light travelling down the card); the cream paper and its type are left alone. About 2.6s of travel, then a rest. */
-.ticket__stub { --stub-px: 24px; }
-.inv--flagship .ticket__head::before, .inv--flagship .ticket__stub::after { content: ""; position: absolute; z-index: 3; pointer-events: none;
-  background: linear-gradient(112deg,
-      transparent 33%, rgba(255, 214, 170, .18) 39%, rgba(255, 232, 205, .55) 44%, rgba(255, 255, 255, .95) 47.6%, #fff 48.4%,
-      rgba(214, 232, 255, .6) 50.5%, rgba(190, 215, 255, .14) 53%, transparent 55.5%,
-      transparent 57.5%, rgba(255, 246, 232, .55) 59%, transparent 60.5%) var(--fs, 120%) 0 / 260% 100% no-repeat;
-  mix-blend-mode: color-dodge; }
-.inv--flagship .ticket__head::before { inset: 0; border-radius: inherit; }
-.inv--flagship .ticket__stub::after { background-position-x: var(--fb, 120%); top: 50%; left: var(--stub-px); right: var(--stub-px); height: var(--btn-h, 48px); translate: 0 -50%; border-radius: 999px; }
-@media (prefers-reduced-motion: reduce) {
-  .inv--flagship .ticket__head::before, .inv--flagship .ticket__stub::after { animation: none; background: none; }
-}
-
-/* One clock for the flagship ticket's shine and move (user 2026-11-16: shine first, then move). The glint's two bands (--fs on the head, --fb on the
-   button, a beat behind) and the card's lean (--fr) and swell (--fz) are all registered properties animated by the ONE animation below, so they can
-   never drift apart (separate animations can restart at different moments, e.g. on a live stylesheet reload). The timeline, as a share of the 7.5s cycle:
-   0-35%  the glint sweeps (the head's band; the button's runs 1.6% behind). Its first light reaches the card's top-left corner at about 9%,
-           and that is when the card starts to move, with the light: it leans in (13%), swells to 4% as the bright core crosses the middle (19%),
-           leans the other way (25%) and is flat again by 31%, as the light leaves;
-   35-100% rest.  The first 1.2s is the delay before the first cycle. On .inv__frame, so the hover tilt and lift on the ticket itself are untouched. */
-@property --fs { syntax: '<percentage>'; inherits: true; initial-value: 120%; }
-@property --fb { syntax: '<percentage>'; inherits: true; initial-value: 120%; }
-@property --fr { syntax: '<angle>'; inherits: true; initial-value: 0deg; }
-@property --fz { syntax: '<number>'; inherits: true; initial-value: 1; }
-.inv--flagship { animation: flagClock 7.5s cubic-bezier(.45, .05, .55, .95) 1.2s infinite; }
-.inv--flagship .inv__frame { transform: perspective(1000px) rotateY(var(--fr)) scale(var(--fz)); }
-@keyframes flagClock {
-  0%    { --fs: 120%; --fb: 120%; --fr: 0deg; --fz: 1; }
-  9%    { --fr: 0deg; --fz: 1; }
-  13%   { --fr: -2.5deg; }
-  19%   { --fz: 1.04; }
-  25%   { --fr: 2.5deg; }
-  31%   { --fr: 0deg; --fz: 1; }
-  35%   { --fs: -20%; }
-  36.6% { --fb: -20%; }
-  100%  { --fs: -20%; --fb: -20%; --fr: 0deg; --fz: 1; }
-}
-@media (prefers-reduced-motion: reduce) { .inv--flagship { animation: none; } .inv--flagship .inv__frame { transform: none; } }
 
 /* ===== Hero: the toppers slide (user 2026-11-16, "a banner type for the hero that showcase the toppers"). The fifth slide: no photo,
    the brand ground (a deep-to-brand gradient with a warm glow behind the lineup and the jaali tile, faint) and the CSE 2025 top three
@@ -2768,53 +2447,10 @@ html .dl .tr { margin-top: max(72px, calc(100svh - var(--hdr-h) - var(--hdr-gap)
    is more than a screen away; its CSS animations hold where they are and carry on when it comes back. */
 .anim-off, .anim-off *, .anim-off *::before, .anim-off *::after { animation-play-state: paused !important; }
 
-/* Spacing: Our flagship programme and Talk to us (user 2026-11-16, "fix the spacing").
+/* Spacing: Our flagship programme (user 2026-11-16, "fix the spacing").
    - #gs is a contained card on the content column (above), but it had no margin, so its foot sat right on the full-bleed Talk to us
-     section. It now has --sec-y of page ground under it, the same as the gap above it (Upcoming batches' own --sec-y padding).
-   - Talk to us between 901px and 1279px: the 600px form left the heading column about 240px wide at 1024px, so the heading ran
-     to six lines and the column hung far below the form. Up to 1100px the section stacks as it does on tablets (heading block,
-     then --hd-gap, then the form); from 1101px to 1279px the two columns share the width equally. 1280px and up is unchanged. */
+     section. It now has --sec-y of page ground under it, the same as the gap above it (Upcoming batches' own --sec-y padding). */
 html main #gs.gs { margin-bottom: var(--sec-y); }
-@media (min-width: 901px) and (max-width: 1100px) {
-  html main #contact .contact__in { grid-template-columns: minmax(0, 1fr); row-gap: var(--hd-gap); }
-  html main #contact .contact__l { margin-bottom: 0; }
-  html main #contact .contact__in > .form { width: 100%; max-width: 720px; }
-}
-@media (min-width: 1101px) and (max-width: 1279px) {
-  html main #contact .contact__in { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 48px; }
-}
-
-/* Batches: one height for every ticket (user 2026-11-17, "a height difference between the sealed and unsealed cards"). The "Limited seats"
-   stamp sat in the study-mode row's flow, so that row was 86px on a sealed ticket and 44px on the others, and a sealed ticket was taller
-   wherever the rail did not stretch them to match. The stamp is now laid over the row's bottom right corner (where it already sat), out of
-   the flow, and the row is the stamp's height on every ticket, so every ticket is the same height; the study-mode text keeps clear of it. */
-/* the row is as tall as the stamp on every ticket, sealed or not, so the stamp never reaches up into the copy above it */
-.ticket__meta { position: relative; min-height: 78px; box-sizing: border-box; }
-.ticket__meta .ticket__limited { position: absolute; right: 0; bottom: -4px; margin: 0; }
-.ticket__meta:has(.ticket__limited) dl { padding-right: 90px; }
-
-/* Talk to us form on phones (user 2026-11-17, "keep the label on top and the input field below", then "keep the same input field style as
-   on desktop"): the fill-in-the-sentence layout becomes one field per line. Each field has its label above it (the form__lab labels,
-   hidden on larger screens) and its input below, full width, in the same handwritten, dashed-underline style as on desktop; the sentence's
-   lead-in words (form__say) are hidden. */
-.form__lab { display: none; }
-@media (max-width: 600px) {
-  .form--note .form__say { display: none; }
-  .form--note .form__sent { line-height: 1.5; margin: 18px 0 6px; }
-  .form--note .form__sent .line, .form--note .form__sent .keep { display: flex; flex-direction: column; align-items: stretch; gap: 6px; margin: 0 0 20px; white-space: normal; }
-  .form--note .form__lab { display: block; font: 600 14px/1.2 var(--f); letter-spacing: .01em; color: var(--ink); }
-  .form--note .form__sent .blank { flex: none; width: 100%; }
-  .form--note .form__sent .blank--tel { align-items: baseline; }
-}
-
-/* Talk to us form on phones (user 2026-11-17, "the labels should be the same as the desktop version", "check the font too"): each field's
-   label is the desktop sentence's own words (Hi, I'm / and I'm preparing for / Please call me on / in the / or email me on), in the
-   desktop's face (the form's serif, Newsreader 500, at the phone's size), above its field; the separate short labels (Full name …) are
-   no longer shown. Each input keeps its own accessible name (aria-label). */
-@media (max-width: 600px) {
-  .form--note .form__say { display: block; font: inherit; line-height: 1.25; color: inherit; white-space: normal; }
-  .form--note .form__lab { display: none; }
-}
 
 /* Scroll-driven values that no longer cascade (user 2026-11-17, performance on phones): the hero's dim and zoom (--cover) and the
    Programmes sheet's fade-in (--cov) are set by page-motion.js on the elements that read them only. Registered as non-inheriting, a
@@ -2861,3 +2497,49 @@ html .dl--pin { position: relative; top: auto; }
 html .dl--pin .dl__stick { transform: none; }
 html main .cover > #dlPin ~ section#courses { margin-top: 0; border-radius: 0; box-shadow: none; }
 html main .cover > #dlPin ~ section#courses > * { opacity: 1; transform: none; }
+
+/* Success stories above the Faculty section that follows it (user 2026-11-21, "on hover the shadow gets clipped by the next section"):
+   #educators is positioned and isolated, so it painted over the hovered postcard's shadow where it falls past #stories' edge (the
+   section has no bottom padding). One layer up, the shadow falls over Faculty's top padding. */
+html main #stories { position: relative; z-index: 2; }
+
+/* The page's own scrollbar (user 2026-11-21, "the whole webpage scroll too"), matching the Toppers record list: a slim rounded brand
+   thumb on a warm cream track. Chrome, Edge and Safari via ::-webkit-scrollbar; Firefox the thin bar in the same colours. */
+html { scrollbar-width: thin; scrollbar-color: rgba(194, 65, 12, .6) #F6EEE3; }
+@supports selector(::-webkit-scrollbar) {
+  html { scrollbar-width: auto; scrollbar-color: auto; }
+  html::-webkit-scrollbar { width: 12px; height: 12px; }
+  html::-webkit-scrollbar-track { background: #F6EEE3; }
+  html::-webkit-scrollbar-thumb { min-height: 48px; border-radius: 999px; background: rgba(194, 65, 12, .6); border: 3px solid #F6EEE3; }
+  html::-webkit-scrollbar-thumb:hover { background-color: rgba(194, 65, 12, .85); }
+  html::-webkit-scrollbar-thumb:active { background-color: #C2410C; }
+}
+
+/* Scrollbars without a track, shown only while in use (user 2026-11-21, "remove the background, an auto effect is needed"): the thumb is
+   clear at rest and appears while the page (html.is-scrolling) or the record list (.is-scrolling) scrolls, or while the pointer is over
+   the list; page-motion.js sets the class and clears it 900ms after the last scroll. */
+html { scrollbar-color: transparent transparent; }
+html.is-scrolling { scrollbar-color: rgba(194, 65, 12, .6) transparent; }
+@supports selector(::-webkit-scrollbar) {
+  html, html.is-scrolling { scrollbar-color: auto; }
+  html::-webkit-scrollbar-track { background: transparent; }
+  html::-webkit-scrollbar-thumb { background-color: transparent; border-color: transparent; }
+  html.is-scrolling::-webkit-scrollbar-thumb { background-color: rgba(194, 65, 12, .6); }
+  html.is-scrolling::-webkit-scrollbar-thumb:hover { background-color: rgba(194, 65, 12, .85); }
+}
+
+/* The page scrollbar as an overlay (user 2026-11-21, "the scrollbar still has a white background"): a classic scrollbar always keeps its
+   own 12px gutter in the page's base colour, transparent track or not, so the native one is hidden and page-motion.js draws a slim thumb
+   (.vr-sb) that floats over the content at the right edge: shown while the page scrolls or the pointer is near the edge, draggable,
+   hidden at rest. Touch screens keep their own overlay bars. */
+@media (hover: hover) and (pointer: fine) {
+  html { scrollbar-width: none; }
+  html::-webkit-scrollbar { width: 0; height: 0; display: none; }
+}
+.vr-sb { position: fixed; top: 0; right: 3px; z-index: 9999; width: 6px; border-radius: 999px; background: rgba(194, 65, 12, .6);
+  opacity: 0; transition: opacity .35s ease, width .2s ease, background-color .2s ease; cursor: grab; touch-action: none; }
+.vr-sb.is-on { opacity: 1; }
+.vr-sb:hover, .vr-sb.is-drag { width: 9px; background: rgba(194, 65, 12, .85); }
+.vr-sb.is-drag { cursor: grabbing; }
+@media (hover: none), (pointer: coarse) { .vr-sb { display: none; } }
+@media (prefers-reduced-motion: reduce) { .vr-sb { transition: none; } }

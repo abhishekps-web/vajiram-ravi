@@ -122,7 +122,7 @@ export default function NavigationBar() {
   return (
     <>
       <div className="nav-band cu:absolute cu:top-0 cu:inset-x-0 cu:z-[2] cu:h-[calc(var(--hdr-h)+var(--hdr-gap))] cu:pointer-events-none" aria-hidden="true" />
-      <header className="cu:fixed cu:z-50 cu:top-[var(--hdr-pt)] cu:left-[calc(var(--px)+10px)] cu:right-[calc(var(--px)+10px)] cu:flex cu:items-center cu:justify-between cu:pointer-events-none cu:*:pointer-events-auto cu:after:absolute cu:after:-inset-y-2 cu:after:-inset-x-2.5 cu:after:-z-10 cu:after:rounded-[var(--r-box,16px)] cu:after:pointer-events-none cu:after:bg-white cu:after:shadow-[0_6px_24px_-14px_rgba(60,25,5,.28)] cu:after:transition-[background-color,box-shadow] cu:after:duration-[.35s] cu:nav-top:after:bg-transparent cu:nav-top:after:shadow-none cu:motion-reduce:after:transition-none cu:max-[1023.98px]:justify-start cu:max-[1023.98px]:gap-2" id="nav" data-top="">
+      <header className="cu:fixed cu:z-50 cu:top-[var(--hdr-pt)] cu:left-[calc(var(--px)+10px)] cu:right-[calc(var(--px)+10px)] cu:flex cu:items-center cu:justify-between cu:pointer-events-none cu:*:pointer-events-auto cu:after:absolute cu:after:-inset-y-2 cu:after:-inset-x-2.5 cu:after:-z-10 cu:after:rounded-[24px] cu:max-[900px]:after:rounded-[20px] cu:after:pointer-events-none cu:after:bg-white cu:after:shadow-[0_6px_24px_-14px_rgba(60,25,5,.28)] cu:after:transition-[background-color,box-shadow] cu:after:duration-[.35s] cu:nav-top:after:bg-transparent cu:nav-top:after:shadow-none cu:motion-reduce:after:transition-none cu:max-[1023.98px]:justify-start cu:max-[1023.98px]:gap-2" id="nav" data-top="">
         <div className="cu:relative cu:flex cu:items-center cu:gap-1.5 cu:h-[46px] cu:py-px cu:pl-3 cu:pr-2.5 cu:max-[1023.98px]:contents">
           <Logo />
           <nav className="cu:flex cu:items-center cu:gap-0.5 cu:max-[1600px]:gap-0 cu:max-[1023.98px]:hidden" id="navLinks" aria-label="Main">
@@ -134,13 +134,12 @@ export default function NavigationBar() {
             <MoreMenu />
           </nav>
           <button className="cu:group/burger cu:hidden cu:max-[1023.98px]:block cu:relative cu:flex-none cu:order-2 cu:size-11 cu:p-0 cu:rounded-xl cu:border-0 cu:bg-transparent cu:cursor-pointer cu:text-[var(--ink)] cu:transition-colors cu:duration-200 cu:hover:bg-[rgba(38,38,38,.06)] cu:focus-visible:outline-2 cu:focus-visible:outline-offset-2 cu:focus-visible:outline-current cu:max-[760px]:ml-auto" id="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="drawer">
-            <span className="cu:absolute cu:inset-x-[13px] cu:top-[18px] cu:h-[1.5px] cu:bg-current cu:transition-[translate,rotate] cu:duration-[.25s] cu:ease-[cubic-bezier(.2,.7,.2,1)] cu:group-aria-expanded/burger:translate-y-[3.5px] cu:group-aria-expanded/burger:rotate-45 cu:max-[760px]:inset-x-[11px] cu:motion-reduce:transition-none" />
-            <span className="cu:absolute cu:inset-x-[13px] cu:top-[25px] cu:h-[1.5px] cu:bg-current cu:transition-[translate,rotate] cu:duration-[.25s] cu:ease-[cubic-bezier(.2,.7,.2,1)] cu:group-aria-expanded/burger:-translate-y-[3.5px] cu:group-aria-expanded/burger:-rotate-45 cu:max-[760px]:inset-x-[11px] cu:motion-reduce:transition-none" />
+            <span className="cu:absolute cu:inset-x-[13px] cu:top-[17px] cu:h-[2px] cu:rounded-full cu:bg-current cu:transition-[translate,rotate] cu:duration-[.25s] cu:ease-[cubic-bezier(.2,.7,.2,1)] cu:group-aria-expanded/burger:translate-y-[4px] cu:group-aria-expanded/burger:rotate-45 cu:max-[760px]:inset-x-[11px] cu:motion-reduce:transition-none" />
+            <span className="cu:absolute cu:inset-x-[13px] cu:top-[25px] cu:h-[2px] cu:rounded-full cu:bg-current cu:transition-[translate,rotate] cu:duration-[.25s] cu:ease-[cubic-bezier(.2,.7,.2,1)] cu:group-aria-expanded/burger:-translate-y-[4px] cu:group-aria-expanded/burger:-rotate-45 cu:max-[760px]:inset-x-[11px] cu:motion-reduce:transition-none" />
           </button>
         </div>
         <div className="cu:flex cu:items-center cu:gap-2.5 cu:max-[1023.98px]:order-1 cu:max-[760px]:hidden" id="navEnd">
-          <LangSwitch bar />
-          <Button className="talk cu:[--btn-h:44px]!" size="xs" href="#contact" iconEnd="arrow" data-talk="">Let's talk</Button>
+          <Button className="talk" size="sm" shadow={false} href="#contact" iconEnd="arrow" data-talk="">Let's talk</Button>
         </div>
       </header>
       <div className="cu:fixed cu:z-[49] cu:top-[100px] cu:inset-x-[var(--px)] cu:grid cu:p-2.5 cu:rounded-[20px] cu:bg-white cu:shadow-[0_18px_48px_rgba(38,38,38,.16)] cu:max-[900px]:top-[92px] cu:[&[hidden]]:hidden" id="drawer" hidden>
@@ -149,7 +148,7 @@ export default function NavigationBar() {
         ))}
         <div className="cu:hidden cu:max-[760px]:flex cu:items-center cu:gap-3 cu:mt-2 cu:pt-3 cu:px-1 cu:pb-1 cu:border-t cu:border-[var(--sand)]">
           <LangSwitch />
-          <Button className="cu:flex-[1_1_auto] cu:min-w-0" size="sm" href="#contact" iconEnd="arrow" data-talk="">Let's talk</Button>
+          <Button className="cu:flex-[1_1_auto] cu:min-w-0" size="sm" shadow={false} href="#contact" iconEnd="arrow" data-talk="">Let's talk</Button>
         </div>
       </div>
       <div className="cu:fixed cu:inset-0 cu:z-[49] cu:pointer-events-none cu:invisible cu:opacity-0 cu:bg-[rgba(26,10,2,.16)] cu:backdrop-blur-[10px] cu:[transition:opacity_.3s_var(--ease),visibility_0s_.3s] cu:data-[open]:visible cu:data-[open]:opacity-100 cu:data-[open]:[transition:opacity_.3s_var(--ease),visibility_0s] cu:motion-reduce:transition-none" id="megaScrim" aria-hidden="true" />

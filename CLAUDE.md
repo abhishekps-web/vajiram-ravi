@@ -19,28 +19,30 @@ components/
   layout/                 site chrome
     NavigationBar/        the site header: NavigationBar.jsx only (user 2026-11-20: one file, Tailwind `cu:` utilities via
                           app/tailwind-sections.css, no comments): markup, menu data, mega menus, drawer, More menu, language switch
-    Footer/               Footer.jsx (Kevin's footer, user 2026-11-16; styles public/css/footer-v6.css): one file, user 2026-11-17: the link columns, the legal bar
-                          with the socials (no logo or news, user 2026-11-20), the markup and initFooterCurtain (the curtain behaviour)
+    Footer/               Footer.jsx (Kevin's footer, user 2026-11-16; styles public/css/footer-v6.css): one file, user 2026-11-17: the logo row (with the socials), the link
+                          columns and the legal bar (no giant debossed name, user 2026-11-21) (no news, user 2026-11-20; the logo, emblem + wordmark, back at the top since user 2026-11-21), the markup and initFooterCurtain (the curtain behaviour)
     Intro/                Intro.jsx (server-rendered overlay), intro.js (plays and lifts it)
     WhatsAppButton/       WhatsAppButton.jsx
     SiteBehaviour.jsx     client component: after hydration, imports lib/behaviour.js and starts it
   sections/<Section>/     one folder per section: <Section>.jsx (markup), data.js (content), *.js (behaviour)
-                          Hero (one file, user 2026-11-17: content, markup and its behaviours), Programmes, Toppers (data/ holds the archive and rankers), WhyChoose, Batches (the GS section was removed from the homepage, user 2026-11-20),
-                          Faculties (the faculty section, id "educators"; TS + Tailwind, ported from Soloman), Stories, Contact, Resources (data.jsx: the cards), ContactUs (Tailwind), Faq, Closing, Parked (hidden)
+                          Hero (user 2026-11-21: Hero.jsx composes HeroBanner.jsx (slides, copy, controls, `initHeroCarousel`) and HeroStats.jsx (the stats row, `initHeroStats`);
+                          styles in public/css/hero-banner.css and hero-stats.css), Programmes, Toppers (data/ holds the archive and rankers), WhyChoose, Batches (the GS section was removed from the homepage, user 2026-11-20),
+                          Faculties (the faculty section, id "educators"; TS + Tailwind, ported from Soloman; the off-front cards use `-bw` copies of the
+                          photos, not a CSS grayscale filter, for performance), Stories, TalkToUs ("Talk to us", the counsellor form, id `contact`: one file, Tailwind `cu:` utilities, no comments, user 2026-11-21), Resources (data.jsx: the cards), ContactUs (Tailwind), Faq, Closing, Parked (hidden)
   dialogs/                RanksDialog, CourseCatalogDialog (+ their behaviours; course-catalog.js also opens the catalogue for any [data-cat] link)
   ui/                     shared pieces: Button/ (the button system: Button.jsx, button-core.js, README.md), SectionLabel (.lbl eyebrow),
                           ArrowIcon/StraightArrow, Dialog, Stylesheet, CarouselDots/ (every carousel's dot indicator; Tailwind,
-                          `cd:` utilities, entry carousel-dots.css),
+                          `cd:` utilities, entry carousel-dots.css), Tabs/ (every tab bar: the sand bar and sliding brand pill; Tabs.jsx the markup, tabs-core.js `initTabs` the behaviour, ControlledTabs.jsx for React state; styles public/css/tabs.css, user 2026-11-21; sections only place the bar),
                           custom-select.js (accessible dropdown), accordion.js, rail.js
 lib/
   behaviour.js            THE ORDER every behaviour runs in (the order matters; see the comment at its top)
   site.js                 shared helpers ($, $$, esc, reduce, clamp, ico …) and site constants (PHONE, SITE)
   data/courses.js         the course catalogue (nav menu, catalogue dialog, contact form)
-  motion/                 site-wide motion: scroll.js (Lenis, .rv reveals), page-motion.js (hero slides, section MAP, CTA labels),
+  motion/                 site-wide motion: scroll.js (Lenis, .rv reveals), page-motion.js (section MAP, scrollbar, WhatsApp button; the hero slides are in Hero.jsx),
                           hero-kit.js (nav hide-on-scroll), rise.js (.rise card groups), word-fill.js (.reveal headings)
   vendor/lenis.min.js
 public/
-  css/                    the stylesheets, served as-is (see "Styles" below): buttons.css, v25.css … v49.css, intro.css, toppers.css, story.css
+  css/                    the stylesheets, served as-is (see "Styles" below): buttons.css, v25.css … v49.css, intro.css, toppers.css
   assets/img/             brand/, icons/, patterns/, hero/, photos/, banners/, toppers/ (by purpose)
 .claude/skills/site-motion/   the motion rules and the headless-Chrome check script
 ```
@@ -48,9 +50,9 @@ public/
 ## How a section is put together
 
 - **Markup**: `<Section>.jsx` is a static server component. Shared markup comes from `components/ui` (`SectionLabel`, `ArrowIcon`, `Dialog`) — reuse those rather than copying markup.
-- **Content**: lists and copy that a behaviour renders, or that repeats, live in the section's `data.js` (e.g. `Faq/data.js`, `Batches/data.js`, `Faculties/data/educators.ts`, `Resources/data.jsx`). Editing content means editing data only.
+- **Content**: lists and copy that a behaviour renders, or that repeats, live in the section's `data.js` (e.g. `Faq/data.js`, `Faculties/data/educators.ts`, `Resources/data.jsx`). Editing content means editing data only.
 - **Behaviour**: the section's `*.js` modules export `init…()` functions that work on the server-rendered DOM (they build lists, bind events, animate). Register a new one in `lib/behaviour.js` at the right point in the sequence. They run once, in the browser, after hydration; React never re-renders those nodes, so they may change them freely.
-- **Buttons**: every button and button-styled link is `<Button>` (`components/ui/Button/Button.jsx`) or, in a behaviour, `buttonHTML()` (`button-core.js`); its look lives only in `public/css/buttons.css`. Pick a variant/size, never restyle: section rules may only place a button (margin, position, display) or override its `--btn-*` tokens. Reference: `components/ui/Button/README.md`.
+- **Buttons**: every button and button-styled link is `<Button>` (`components/ui/Button/Button.jsx`) or, in a behaviour, `buttonHTML()` (`button-core.js`); its look lives only in `public/css/buttons.css`. `shadow={false}` (`buttonHTML({ shadow: false })`) turns the drop shadow off (`.btn--flat`; the header's "Let's talk" uses it). Pick a variant/size, never restyle: section rules may only place a button (margin, position, display) or override its `--btn-*` tokens. Reference: `components/ui/Button/README.md`.
 - **Never change the DOM before hydration** (a script that does breaks it: render that markup in a component instead and have the behaviour find it).
 - JSX from HTML: `className`, `style={{ "--d": ".1s" }}`, `htmlFor`, `tabIndex`; keep meaningful spaces between inline elements as `{" "}`.
 
@@ -99,18 +101,22 @@ The client wants **every section and every element animated**. For any change to
   Why choose us, a PageSpeed target of 90 to 95, mobile first, the review workflow), plus the full transcript; the original
   .docx is next to it. Read its "For the build" list before changing the page's structure. Where the user's later
   instructions differ (e.g. a section order dated after 11 Nov), the user's instruction wins.
+- Scrollbars (user 2026-11-21): on mouse screens the page's native bar is hidden and page-motion.js draws an overlay thumb (`.vr-sb`, no
+  gutter, draggable, auto-hiding); the page's webkit rules (end of `v49.css`) and the Toppers record list's (end of `podium.css`) are custom: a slim
+  rounded brand-orange thumb, no track, auto-hiding (shown while scrolling or over the list; `.is-scrolling` from page-motion.js, which
+  also forces Chrome to repaint the bar when it flips).
 - Global config: `lib/config.js` (`ENABLE_PRELOADER`: the logo intro on or off; `INTRO_ONCE_PER_SESSION`: every load, or only the
-  first page of a session). The intro runs from the inline boot script `components/layout/Intro/boot.js` from the first paint,
+  first page of a session). Its mandala ring is capped at 88% of the screen height (user 2026-11-21). The intro runs from the inline boot script `components/layout/Intro/boot.js` from the first paint,
   never waiting for hydration, and never under reduced motion.
 - Content column: 1440px, centred on wider screens (`--cap` / `--px`, end of `public/css/v49.css`); section backgrounds stay full-bleed.
   Hero height (user 2026-11-13): every first screen ends with a preview of Programmes (its sheet top and eyebrow label): the hero
   is the screen minus the header and `--hero-peek` (176px), never less than `--hero-min` (its copy, CTA and slide indicators) and,
   from 1280px wide, never more than `--hero-fit` (the content-fit height). End of `public/css/v49.css`. No scroll-down cue in the hero.
 - One ground for the header, the hero frame and Programmes: `--ground-jaali` (v49.css).
-- Header and hero (user 2026-11-13): the header is the NavigationBar component (`components/layout/NavigationBar/NavigationBar.jsx`, Tailwind `cu:` utilities, user 2026-11-20; the header sizes `--hdr-pt`, `--hdr-h`, `--hdr-gap` are at the end of `v49.css`). At the top it sits in its own band (`.nav-band`), then one 20px gap (`--hdr-gap`, the hero frame's gutter) to the hero, whose height fits its content from 1280px wide (`public/css/v49.css`). The nav stays fixed in one place, never shrinks and is always visible (user 2026-11-20: no hiding on scroll). Its bar is transparent at the top of the page and fades to white (16px corners, a soft shadow) once the page scrolls (`data-top` on `#nav`, `initNavScrolled`; the `cu:nav-top:` variant). Links show from 1024px (burger below; on phones, 760px and narrower, the bar is the logo and the burger only: the language switch and "Let's talk" sit at the foot of the drawer, `.drawer__end`, user 2026-11-17); any that would come within 40px of the language switch move into a "More" menu, FAQs first (`initNavMore`; at 1280px all fit). The hero carousel's autoplay holds while the pointer is over the hero's buttons (user 2026-11-16; not the whole banner) or keyboard focus is inside it, and resumes after; slides change by the previous/next arrows, the indicators, arrow keys or a swipe (`lib/motion/page-motion.js`). The banner is Kevin's in layout and spacing (user 2026-11-16, eclectic-alfajores-975fab.netlify.app, branch `kevin`; `public/css/hero-banner.css`): the card on the 1280px column, the copy left aligned in it (at its foot under the portrait below 900px; left aligned on phones too, user 2026-11-17), the AIR card top right (top left below 900px), the dots centred in a dark pill (`.hx__dots`) and the arrows inside the card, at its bottom corners level with the dots (both in `.hx__navs`, laid over the card by `page-motion.js`; arrows shown on hover). Phones (760px and narrower, user 2026-11-16): the card full width and the screen's height less the header; the previous/dots/next controls sit inside the card at its foot (user 2026-11-17). Logo 44px tall (38px at 400px and narrower).
+- Header and hero (user 2026-11-13): the header is the NavigationBar component (`components/layout/NavigationBar/NavigationBar.jsx`, Tailwind `cu:` utilities, user 2026-11-20; the header sizes `--hdr-pt`, `--hdr-h`, `--hdr-gap` are at the end of `v49.css`). At the top it sits in its own band (`.nav-band`), then one 20px gap (`--hdr-gap`, the hero frame's gutter) to the hero, whose height fits its content from 1280px wide (`public/css/v49.css`). The nav stays fixed in one place, never shrinks and is always visible (user 2026-11-20: no hiding on scroll). "Let's talk" is the `sm` button (44px, its own disc; it was `xs` forced to 44px). Its bar is transparent at the top of the page and fades to white (the hero card's corners: 24px, 20px at 900px and narrower, user 2026-11-21; a soft shadow) once the page scrolls (`data-top` on `#nav`, `initNavScrolled`; the `cu:nav-top:` variant). No language switch in the bar (user 2026-11-21; it stays at the foot of the phone drawer). Links show from 1024px (burger below; on phones, 760px and narrower, the bar is the logo and the burger only: the language switch and "Let's talk" sit at the foot of the drawer, `.drawer__end`, user 2026-11-17); any that would come within 40px of the language switch move into a "More" menu, FAQs first (`initNavMore`; at 1280px all fit). The hero carousel's autoplay holds while the pointer is over the hero's buttons (user 2026-11-16; not the whole banner) or keyboard focus is inside it, and resumes after; slides change by the previous/next arrows, the indicators, arrow keys or a swipe (`initHeroCarousel` in `HeroBanner.jsx`). The banner is Kevin's in layout and spacing (user 2026-11-16, eclectic-alfajores-975fab.netlify.app, branch `kevin`; `public/css/hero-banner.css`): the card on the 1280px column, the copy left aligned in it (at its foot under the portrait below 900px; left aligned on phones too, user 2026-11-17), the AIR card top right (top left below 900px), the dots centred in a dark pill (`.hx__dots`) and the arrows inside the card, at its bottom corners level with the dots (both in `.hx__navs`, laid over the card by `page-motion.js`; arrows shown on hover). Phones (760px and narrower, user 2026-11-16): the card full width and the screen's height less the header; the previous/dots/next controls sit inside the card at its foot (user 2026-11-17). Logo 44px tall (38px at 400px and narrower).
   No card stack (user 2026-11-16: removed): the slides crossfade with a slow zoom. Stats (user 2026-11-16): a row of four key
-  numbers sits under the hero card, inside the hero section: Kevin's row (user 2026-11-16), `.hx__stats`, figures in `Hero.jsx` (STATS),
-  roll-up and entrance `initHeroStats` in `Hero.jsx`, styles `public/css/hero-stats.css` (the old `.dl__stats` rules in `v49.css` are dead); the
+  numbers sits under the hero card, inside the hero section: Kevin's row (user 2026-11-16), `.hx__stats`, figures in `HeroStats.jsx` (STATS),
+  roll-up and entrance `initHeroStats`, both in `HeroStats.jsx`, styles `public/css/hero-stats.css` (the old `.dl__stats` rules in `v49.css` are dead); the
   card gives up the row's height (`--stats-h`) so the first screen still ends with the
   Programmes peek, except on phones, where the card keeps its height and the row pushes the peek down.
   Hero ground (user 2026-11-20, replacing the orange brand ground of 2026-11-16): the header band (`.nav-band`) and the hero
@@ -119,23 +125,49 @@ The client wants **every section and every element animated**. For any change to
   (user 2026-11-16; `--strip-h` is 0, `components/sections/BatchStrips/` is unused). The promo banner carousel under the stats was
   removed (user 2026-11-20). Simple scroll (user 2026-11-20): the hero no longer pins, dims or shrinks while Programmes slides over
   it; both scroll with the page (end of `v49.css`).
+- Life at Vajiram & Ravi (`#lifeGal`, `LifeGallery/`, styles `public/css/life-gallery.css`): on the hero's ground, `--ground-beige` (user 2026-11-21, replacing the orange ground and grain; the override block at the end of its sheet). The hero's results pill with the running topper names was removed (user 2026-11-21); in its place the hero copy opens with a
+  static `<SectionLabel light>` eyebrow ("CSE 2025 results"). Slides (user 2026-11-21): `HERO_ORDER` in `HeroBanner.jsx` picks and orders them from `ALL_SLIDES` (now results, AIR 1, GS foundation,
+  next batch, campus (`slide-campus.webp`, drawn at 125% width so the sign clears the copy; `data-kind` on `#dlPin` for per-slide rules, set by `initHeroCarousel`); photos `hero-v6/slide-results.webp`, `slide-gs-foundation.webp`, `slide-batch.webp`, each with a desktop `pos` and a phone
+  crop `mpos`; kept and ready: `air-2`, `air-3`, `prelims`, `mentor`). Each has its eyebrow, headline, lead and buttons; a topper or a slide
+  with an `image` shows that photo, the others draw their visual (programme book, `ResultsArt`: the CSE 2025 top 10 and "36 of the top
+  50"; `BatchArt`: a ticket for the flagship batch from `BATCHES` with the next two under it). Programme slides (`PROGRAMME_COPY`, from `Programmes/data/programmes.ts`): the programme's
+  book (its cloth colours, gold frame, `CoverArt` emblem) where the portrait stands, on a ground in its colour; each slide carries its
+  own eyebrow, headline, lead and buttons (`data-eyebrow`, `data-h`, `data-lead`, `data-btns`), swapped by `initHeroCarousel` (Enrol picks
+  the programme in the contact form via `data-prog`; View course opens its page). A programme can have its own photo instead of the drawn book (`image` in `PROGRAMME_COPY`; GS foundation: `hero-v6/slide-gs-foundation.webp`, the
+  study desk with the GS book, with its own left wash; on tablets and phones only the card's top 40%). Styles at the end of `hero-banner.css`. The AIR card is a slim caption pill (gold "AIR 1" badge, name, exam) at the card's bottom right, top left on phones. Hero height and stats (user 2026-11-21, end of `public/css/hero-stats.css`): the hero (header band + card + stats) fills the screen, at most 900px
+  tall, the stats band 184px on desktop (120px on screens 760px tall or less), the banner card at most 540px (the hero
+  shortens with it), never below its copy (`--card-min`); the stats sit centred with equal space above and below; the stats row is 120px on desktop and a two by two grid on phones (168px, user 2026-11-21; end of hero-stats.css), so card +
+  stats fit the first screen from 1024x650 and 390x844 up.
 - Contact us (`#visit`) and the footer are Kevin's too (user 2026-11-16). Contact us (user 2026-11-17) is `ContactUs/ContactUs.jsx`,
   Tailwind with `cu:` utilities (the shared entry `app/tailwind-sections.css`; the folder holds only the .jsx): one card holding the 2:1 map (no "View on maps"), the address (title font), phone,
-  email on the left and a static campus photo on the right, no shadow; its id stays `visit` for the shared shell rules; the cream footer `Footer.jsx` + `public/css/footer-v6.css` (its text is in Mukta, the body font; its tagline in Newsreader as in the preloader; while it zooms in, `.vf--zooming` makes its content one layer so the social icons do not jump).
+  email (Lucide `phone` / `mail` glyphs, inline SVG) on the left and a static campus photo on the right, no shadow; its id stays `visit` for the shared shell rules; the cream footer `Footer.jsx` + `public/css/footer-v6.css` (its text is in Mukta, the body font; its tagline in Newsreader as in the preloader; while it zooms in, `.vf--zooming` makes its content one layer so the social icons do not jump).
 
-- The Toppers section (`#toppers`) is "Toppers from Vajiram & Ravi" (heading only, no subcopy): a static banner in `Toppers.jsx` plus `<ToppersSpread />` (`Toppers/ToppersSpread/`: ToppersSpread.jsx, RankMedal.jsx, `data.js` with the CSE 2025 rank holders; styles `public/css/toppers-spread.css`, banner styles `public/css/toppers.css`). Add or edit a rank holder in `data.js` only. The old gazette behaviour (`toppers.js`) was removed; `Toppers/data/` is unused leftovers. Newsreader italic 400/500 is loaded in `app/layout.jsx` for the spread.
+- The Toppers section (`#toppers`, `Toppers/Toppers.jsx`, styles `public/css/podium.css`): heading, the drifting reel (`diamond-reel.js`; drag, swipe, or a
+  two-finger sideways trackpad swipe moves it) starting at AIR 1 (no podium for the top three, user 2026-11-21), then "The full record, year by year" (`ToppersRecord`, refined 2026-11-21: a frosted
+  panel on the main content column (the hero card's width), archive label + live count, gold year chips (one scrolling line on phones), rank badges (solid gold for the top 10), the portrait
+  pane with the rank in gold; phones show a photo in each row instead of the pane; the rows are hover-only, not clickable; the list scrolls on its own: `data-lenis-prevent`; photo pane on the left). Ground: the hero's `--ground-beige` (user 2026-11-21), its text in ink and brand orange and the record a white card;
+  a faint grain (200px, soft-light, 45%; end of `podium.css`).
+- Success stories sit one layer above Faculty (`#stories` z-index 2, end of `v49.css`) so a hovered postcard's shadow is not cut off.
 - Success stories on phones (user 2026-11-17, 760px and narrower): the postcards are a stack (one card in front, two peeking behind; swipe, arrows, or ← →) instead of the loop. Logic `components/ui/card-stack.js`; styles at the end of `Stories/stories.css`.
 - Success stories (`#stories`, user 2026-11-13) is also styled with Tailwind v4: `Stories/stories.css` is its entry, with utilities
   generated from that folder only and **prefixed `st:`** (so they never collide with Programmes' sheet), no preflight, plus its
   keyframes, the `postcard-paper` utility and the `waiting` / `dealt` / `dimmed` variants. The postcards are server-rendered
   from `Stories/data.js` (`POSTCARDS`), portraits through `next/image`; `stories.js` only adds the reveal, the tilt and the
   off-screen pause. Its section shell (padding, ground, eyebrow, `.h2`) stays in `public/css` like every other section's.
-- Why choose us (`#story`) has no entrance (user 2026-11-13): the pinned scene (`WhyChoose/story.js`) is entered at its settled
-  point (`OFF` = `S0`), so the heading, first photo and first chapter are in place when it pins (no zoom, word split, fade or
-  reveal). Only the chapter swing plays on the scroll, plus the hover effects. Do not add an entrance back.
-  Natural scroll (user 2026-11-16, replacing "one step per gesture"): the page scrolls through the pinned scene like anywhere else,
-  with no gesture capture, snapping or settling; the six chapters play over about two screens of scroll (two gestures at most)
-  and the page carries on into Batches (`story.js`, "natural scroll").
+- Why Vajiram & Ravi (`#story`, user 2026-11-20, replacing the pinned photographic scene and its story.js / story.css): one file,
+  `WhyChoose/WhyChoose.jsx`, Tailwind `cu:` utilities (`app/tailwind-sections.css`). A centred heading over six cards in a plain grid,
+  three to a row (no tilt or zig-zag, user 2026-11-21; two columns at 860px and narrower, phones included), each card static (no link or arrow, user 2026-11-21):
+  icon tile, title, copy and the key figure (no photos, user 2026-11-21). All six fit one screen from 360x740 up (spacing scales
+  with the screen height; on phones the copy and the figure's caption are hidden). Cards rise in (`.why__cards` in `lib/motion/rise.js`);
+  hover fills the icon tile brand and tilts it.
+  No sticking (user 2026-11-21): it and Contact us scroll with the page like any section.
+- Best IAS Coaching in Delhi (`#about`, `BestCoaching/`) was removed from the page (user 2026-11-21); the folder is unused.
+- Why Vajiram & Ravi with Legacy (`#story`, user 2026-11-21): one component, `WhyChoose/WhyChoose.jsx`, one section on `--ground-jaali` (half the section rhythm above it, `v49.css`). Top: the 3:4 photo (`campus-entrance-clean.webp`, the building cropped, levelled and colour-corrected from `campus-entrance.webp`) beside the eyebrow "Why Vajiram & Ravi?", the "50+ Years of Experience" heading and paragraph (`LEGACY`, `#legacy`). Below (`#reasons`): the six reasons, three to a row, each an Indian line icon (Ashoka Chakra, diya, lotus, book, India Gate, screen with a jharokha arch), title and text, no cards; the gap is the Batches tickets' `--card-gap`. `Legacy/` was removed.
+- Batches (`#batches`, user 2026-11-21): one file, `Batches/Batches.jsx`, Tailwind `cu:` utilities, no comments (user: no comments
+  in the code). It holds the batch data (`BATCHES`, `BFAM`, `BYEAR`, `BANNERS`, imported from here by the contact form, BatchStrips
+  and hero-banners), the tickets, the "all batches" dialog and the behaviours (`initBatchTickets`, `initBatchDialog`). The flagship
+  glint's `@property`s, `flagClock` keyframes, `--ticket-notch` and `--flag-glint` are in `app/tailwind-sections.css`. The shared
+  shells it keeps: `.band`, `.rail` / `.rail__track` / `.rail__nav` / `.cbtn` (rail.js), `.dlg`, `.rv`, and the `.sg` stagger on `#price`.
 - Hero banner types (user 2026-11-16): `/hero-banners` (`app/hero-banners/page.jsx`, not linked, noindex) shows ten hero carousel
   ideas side by side for the client to pick from: A toppers, B course highlights, C both. Components in `components/hero-banners/`
   (`HeroTypes.jsx`, the shared engine `carousel.jsx`: the timer bar's CSS animation drives the autoplay; `data.js` builds every

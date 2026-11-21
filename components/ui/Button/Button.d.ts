@@ -19,6 +19,8 @@ export interface ButtonProps extends Omit<AnchorHTMLAttributes<HTMLAnchorElement
   loadingLabel?: string;
   fullWidth?: boolean;
   selected?: boolean;
+  /** false: no drop shadow, at rest or on hover (adds .btn--flat). Default true. */
+  shadow?: boolean;
   type?: 'button' | 'submit' | 'reset';
   href?: string;
   ariaLabel?: string;

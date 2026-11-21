@@ -6,6 +6,7 @@
    to scroll; the page is the same width with the lock on and off */
 html.vrv-lock { overflow-y: scroll; }
 html.vrv-lock body { height: 100vh; overflow: hidden; }
+html.vrv-lock.vrv-restore body { height: auto; overflow: visible; }   /* a reload from mid-page: the page scrolls back to its place under the overlay (boot.js) */
 html:not(.vrv-lock) .vrv { display: none; }   /* the overlay is server-rendered; it shows only while the intro holds the lock (never without JS) */
 .vrv { --verm: #C2410C; --mari: #FEAA1C; --ink: #120D09; --e: cubic-bezier(.45, .05, .25, 1);
   position: fixed; inset: 0; z-index: 1000; overflow: visible; background: var(--ink); color: #fff;
@@ -51,3 +52,7 @@ html:not(.vrv-lock) .vrv { display: none; }   /* the overlay is server-rendered;
   .vrv__bar, .vrv__edge { display: none; }
   .vrv-out .vrv { transform: none; opacity: 0; transition: opacity .4s; }
 }
+
+/* the mandala ring inside the screen (user 2026-11-21, "the circle in the preloader is out of the screen at 1440"): 760px across ran past
+   the top and bottom of a laptop's viewport (about 700-800px tall at 1440 wide), so it is also capped at 88% of the screen's height */
+.vrv__ring { width: min(760px, 120vw, 88svh); }

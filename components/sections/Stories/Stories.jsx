@@ -15,7 +15,7 @@ function Postcard({ card, i, copy }) {
   return (
     <article
       className={[
-        'pst st:group/pst st:relative st:z-(--z) st:w-[418px] st:flex-none st:mx-[-24px] st:rotate-(--t) st:translate-y-(--y)',
+        'pst st:group/pst st:relative st:cursor-pointer st:z-(--z) st:w-[418px] st:flex-none st:mx-[-24px] st:rotate-(--t) st:translate-y-(--y)',
         'st:[transition:rotate_.55s_var(--ease),translate_.55s_var(--ease),scale_.55s_var(--ease),filter_.45s_var(--ease),opacity_.45s_var(--ease)]',
         'st:hover:z-30 st:hover:rotate-0 st:hover:scale-[1.16] st:hover:translate-y-[calc(var(--y)-18px)]',
         'st:focus-within:z-30 st:focus-within:rotate-0 st:focus-within:scale-[1.16] st:focus-within:translate-y-[calc(var(--y)-18px)]',

@@ -1,8 +1,8 @@
 // Content for the hero banner types page (/hero-banners): every slide is built from the site's own data, so nothing here is
-// new copy. Toppers: CSE 2025 rank holders (Toppers/ToppersSpread/data.js, with the programmes each one took). Courses: the
+// new copy. Toppers: CSE 2025 rank holders (TOPPERS_2025 in Toppers/Toppers.jsx, with the programmes each one took). Courses: the
 // flagship and the programme groups (Programmes/data/programmes.ts) and the batch tickets (Batches/Batches.jsx).
 // Batch dates are the Batches section's own and still to be confirmed there; the seat notes are its "Limited seats" chips.
-import { TOPPERS_2025 } from '@/components/sections/Toppers/ToppersSpread/data';
+import { TOPPERS_2025 } from '@/components/sections/Toppers/Toppers';
 import { featuredProgramme, programmes, programmeSlug } from '@/components/sections/Programmes/data/programmes';
 import { BATCHES, BFAM, BYEAR } from '@/components/sections/Batches/Batches';
 

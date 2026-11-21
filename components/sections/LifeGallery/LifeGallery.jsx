@@ -1,13 +1,13 @@
 import { photoSrcSet } from '@/lib/photo';
 import Button from '@/components/ui/Button/Button';
 import Stylesheet from '@/components/ui/Stylesheet';
+import Tabs from '@/components/ui/Tabs/Tabs';
 import { LIFE } from './data';
 
 // ============ LIFE AT VAJIRAM & RAVI (user 2026-11-16): ported from Kevin's branch (index.html #lifeGal, css/life-gallery.css,
 // js/life-gallery.js). On the brand ground with grain: the heading, a curved row of photo and video
 // cards that glides on slowly and loops (life-gallery.js), the centre card's caption under it, All / Images / Videos tabs under the row; arrows at the sides on hover (the site's icon-only
 // button in a placing span). Content in data.js, styles public/css/life-gallery.css. ============
-const PLAY = 'M8 5.5v13l11-6.5z';
 // the video cards' play / pause control (user 2026-11-17, "video controls are missing"): both glyphs, the one shown follows the video
 const VIDEO_ICON = (
   <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
@@ -36,7 +36,6 @@ export default function LifeGallery() {
                 {c.vid ? (
                   <>
                     <video poster={c.poster} data-src={c.src} muted loop playsInline preload="none" aria-label={c.label} />
-                    <span className="lg__badge" aria-hidden="true"><svg viewBox="0 0 24 24" width="12" height="12"><path d={PLAY} /></svg>Video</span>
                     {/* play / pause (life-gallery.js); shown on every video card (user 2026-11-17, "just show the controls"), and it plays
                         once the card has a clip (data.js `src`; until then the poster stands in and the button does nothing) */}
                     <Button variant="outline" size="sm" iconOnly iconStart={VIDEO_ICON} label={`Play video: ${c.name}`} className="lg__vctl" data-vctl="" />
@@ -51,12 +50,13 @@ export default function LifeGallery() {
         </ul>
       </div>
       {/* All / Images / Videos, under the row (user 2026-11-16) */}
-      <div className="lg__tabs rv" role="tablist" aria-label="Show" style={{ '--d': '.1s' }}>
-        <button type="button" className="lg__tab" role="tab" data-f="all" aria-selected="true" aria-controls="lifeTrack">All</button>
-        <button type="button" className="lg__tab" role="tab" data-f="img" aria-selected="false" aria-controls="lifeTrack" tabIndex={-1}>Images</button>
-        <button type="button" className="lg__tab" role="tab" data-f="vid" aria-selected="false" aria-controls="lifeTrack" tabIndex={-1}>Videos</button>
-        <span className="lg__ind" aria-hidden="true" />
-      </div>
+      <Tabs
+        className="lg__tabs rv"
+        style={{ '--d': '.1s' }}
+        label="Show"
+        controls="lifeTrack"
+        items={[{ id: 'all', label: 'All' }, { id: 'img', label: 'Images' }, { id: 'vid', label: 'Videos' }]}
+      />
     </section>
   );
 }

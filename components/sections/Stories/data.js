@@ -1,6 +1,6 @@
 // Success stories: a quote per rank holder (by AIR) of the latest result. The quotes come from the Figma and are attributed
 // to real rankers: confirm them with the rankers before launch.
-import { top10 } from '@/components/sections/Toppers/data/rankers';
+import { top10 } from '@/components/sections/Toppers/Toppers';
 
 export const TESTIMONIALS = {
   1: '“The GS classes gave me a clear rhythm for Prelims and Mains. The test feedback showed me exactly what to improve each week.”',

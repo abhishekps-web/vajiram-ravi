@@ -8,7 +8,7 @@ import WhyChoose from '@/components/sections/WhyChoose/WhyChoose';
 import Batches from '@/components/sections/Batches/Batches';
 import Faculties from '@/components/sections/Faculties/Faculties';
 import Stories from '@/components/sections/Stories/Stories';
-import Contact from '@/components/sections/Contact/Contact';
+import TalkToUs from '@/components/sections/TalkToUs/TalkToUs';
 import Resources from '@/components/sections/Resources/Resources';
 import LifeGallery from '@/components/sections/LifeGallery/LifeGallery';
 import ContactUs from '@/components/sections/ContactUs/ContactUs';
@@ -38,7 +38,7 @@ export default function Home() {
         </div>
         <LifeGallery />
         <Batches />
-        <Contact />
+        <TalkToUs />
         <Resources />
         <WhyChoose />
         <ContactUs />

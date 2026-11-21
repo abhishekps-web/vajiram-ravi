@@ -55,6 +55,7 @@ setButtonLoading(form.querySelector('#formBtn'), true, 'Sending…');   // … l
 | `loadingLabel` | text | | label shown while loading (otherwise the spinner alone) |
 | `fullWidth` | boolean | `false` | fills its container; with the disc, the label centres and a spacer column balances the disc |
 | `selected` | boolean | | toggle buttons: sets `aria-pressed` and the selected look |
+| `shadow` | boolean | `true` | `false` drops the drop shadow at rest and on hover (`.btn--flat`); the header's "Let's talk" uses it |
 | `type` | `button` `submit` `reset` | `button` | `<button>` only |
 | `href` | URL | | renders `<a>`; omit for `<button>` |
 | `target`, `rel` | | | `target="_blank"` gets `rel="noopener"` unless given |
@@ -80,7 +81,8 @@ Values come from the existing buttons (audit, 2026-11-13); the only new colour i
 | **link** | Newsreader 600, brand text, arrow; hover: underline draws in, arrow slides 5px, text `--brand-d` | `#FFD48A` | View all batches, Free resources actions, Call us / Email us |
 | **destructive** | danger red `#B42318` pill; hover `#8F1D13` | white pill, red text | (available: delete / cancel) |
 | **fab** | raised 56px circle (52px on phones), one icon; the label slides out on hover / keyboard focus | | WhatsApp (green through tokens) |
-| **icon button** (`iconOnly`) | one look everywhere (user 2026-11-16): `variant="outline" size="sm"`, a 44px circle with a 16px icon; `onDark` on photos and dark grounds; hover fills it with the brand colour, the icon white (buttons.css) | | hero arrows, Batches arrows, Faculty carousel arrows, dialog close, the Programmes book's close |
+| **icon button** (`iconOnly`) | one look everywhere (user 2026-11-16): `variant="outline" size="sm"`, a 44px circle with a 16px icon; `onDark` on photos and dark grounds; hover fills it with the brand colour, the icon white (buttons.css) | | Batches arrows, Faculty carousel arrows, dialog close, the Programmes book's close |
+| **primary icon button** (`iconOnly`, default variant) | user 2026-11-21: brand fill, white icon, no edge at rest; hover deepens to `--brand-d` with a soft white edge (buttons.css `.btn--primary.btn--icon`) | same | the hero's previous / next |
 
 ## Sizes
 

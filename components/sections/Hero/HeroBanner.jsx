@@ -178,11 +178,11 @@ function Controls() {
   return (
     <div className="hx__navs" role="group" aria-label="Change slide">
       <span className="hx__nav hx__nav--prev">
-        <Button variant="outline" iconOnly size="sm" iconStart="arrow-left" label="Previous slide" className="dl__arrow dl__arrow--prev" />
+        <Button iconOnly size="sm" iconStart="arrow-left" label="Previous slide" className="dl__arrow dl__arrow--prev" />
       </span>
       <CarouselDots as="p" id="dlProg" className="hx__dots" label="Choose a slide" labels={HERO.map(slideName)} />
       <span className="hx__nav hx__nav--next">
-        <Button variant="outline" iconOnly size="sm" iconStart="arrow" label="Next slide" className="dl__arrow dl__arrow--next" />
+        <Button iconOnly size="sm" iconStart="arrow" label="Next slide" className="dl__arrow dl__arrow--next" />
       </span>
     </div>
   );
@@ -302,6 +302,32 @@ export function initHeroCarousel() {
   const lay = () => Object.assign(navs.style, getComputedStyle(navs).position === 'absolute'
     ? { left: card.offsetLeft + 'px', top: card.offsetTop + 'px', width: card.offsetWidth + 'px', height: card.offsetHeight + 'px' }
     : { left: '', top: '', width: '', height: '' });
+  const copyIn = hero.querySelector('.dl__in'), stacked = matchMedia('(max-width: 900px)');
+  const fit = () => {
+    copyIn.style.minHeight = '';
+    if (!stacked.matches) return;
+    const ghost = copyIn.cloneNode(true);
+    ghost.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
+    Object.assign(ghost.style, { position: 'absolute', left: '0', top: '0', width: copyIn.offsetWidth + 'px', height: 'auto', minHeight: '0', visibility: 'hidden', pointerEvents: 'none' });
+    ghost.setAttribute('aria-hidden', 'true');
+    card.appendChild(ghost);
+    const lbl = ghost.querySelector('.lbl__t'), h = ghost.querySelector('.hx__h'), lead = ghost.querySelector('.hx__lead'), btns = [...ghost.querySelectorAll('.hx__btns .btn')];
+    let tallest = 0;
+    slides.forEach(sl => {
+      const d = sl.dataset, lines = JSON.parse(d.h);
+      lbl.textContent = d.eyebrow;
+      h.querySelectorAll('.hx__line').forEach((s, i) => { s.textContent = lines[i] || ''; });
+      lead.textContent = d.lead;
+      JSON.parse(d.btns).forEach((b, i) => btns[i]?.querySelectorAll('.btn__t').forEach(t => { t.textContent = b.t; }));
+      tallest = Math.max(tallest, ghost.offsetHeight);
+    });
+    ghost.remove();
+    copyIn.style.minHeight = `max(var(--card-h, 0px), ${tallest}px)`;
+  };
+  let fitT = 0;
+  const refit = () => { clearTimeout(fitT); fitT = setTimeout(fit, 120); };
+  fit(); addEventListener('resize', refit);
+  document.fonts?.ready.then(fit);
   lay(); addEventListener('resize', lay);
   if ('ResizeObserver' in window) new ResizeObserver(lay).observe(card);
   show(0); sync();

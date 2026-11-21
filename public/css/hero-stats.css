@@ -137,7 +137,7 @@ html body .dl { --stats-h: 120px; }
   html body .dl { --stats-h: 96px; --card-h: calc(100svh - var(--hdr-h) - var(--hdr-gap) - var(--stats-h) - 8px); }
   .hx__stats { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 6px; padding: 16px 0 12px; height: auto; align-items: start; }
   .hx__stats::before, .hx__stats::after, .hx__stats .hx__stat:first-child::after { display: none; }
-  .hx__stats .hx__stat { gap: 4px; }
+  .hx__stats .hx__stat { gap: 6px; }
   .hx__stats .hx__fig { font-size: 26px; }
   .hx__stats .hx__stat-t { font-size: 11px; line-height: 1.3; white-space: normal; }
 }
@@ -186,3 +186,18 @@ html body .dl { --card-h: max(var(--card-min), calc(min(100svh, 900px) - var(--h
   --hero-avail: calc(min(100svh, 900px) - var(--hdr-h) - var(--hdr-gap));
   --card-h: max(var(--card-min), min(480px, calc(var(--hero-avail) - var(--stats-min))));
   --stats-h: calc(var(--hero-avail) - var(--card-h)); } }
+
+/* phones: the four stats as a two by two grid (user 2026-11-21, replacing the single compact row), with the tablets' cross and diamond
+   between them; the card gives up the grid's height (--stats-h) so card + stats still fill the first screen */
+@media (max-width: 760px) {
+  html body .dl { --stats-h: 218px; }
+  .hx__stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 16px; padding: 24px 0; align-items: center; justify-items: center; }
+  .hx__stats::before, .hx__stats::after, .hx__stats .hx__stat:first-child::after { display: block; }
+  .hx__stats::before { top: 24px; bottom: 24px; }
+  .hx__stats::after, .hx__stats .hx__stat:first-child::after { top: 50%; }
+  .hx__stats .hx__stat { gap: 6px; }
+  .hx__stats .hx__fig { font-size: 30px; }
+  .hx__stats .hx__stat-t { font-size: 13px; line-height: 1.35; white-space: nowrap; }
+}
+/* phones: the banner card fills the screen below the header (user 2026-11-21); the stats follow below the fold */
+@media (max-width: 760px) { html body .dl { --card-h: calc(100svh - var(--hdr-h) - var(--hdr-gap)); } }

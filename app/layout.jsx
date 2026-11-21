@@ -27,13 +27,9 @@ const BASE_HREFS = process.env.NODE_ENV === 'development' ? BASE_CSS.map(n => `/
 // Runs before paint: html.js (the CSS's JS-on hooks) and, with the preloader on (ENABLE_PRELOADER, lib/config.js), the intro
 // itself (components/layout/Intro/boot.js: html.vrv-lock shows the overlay and holds scrolling until it lifts). With the
 // preloader off only html.js is set.
-// Also before paint: html.story-run when the Why scene will pin (900 x 600 and up, motion on; the same test as
-// components/sections/WhyChoose/story.js), so its pinned layout and scroll spacer are in place from the first frame and the page
-// height never changes when story.js starts (user 2026-11-16, "page jumps / pin late"; public/css/story.css, end).
-const STORY_RUN = "try{if(matchMedia('(min-width: 900px) and (min-height: 600px)').matches&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('story-run')}catch(e){}";
 const BOOT = (ENABLE_PRELOADER
   ? introBoot({ oncePerSession: INTRO_ONCE_PER_SESSION })
-  : "document.documentElement.classList.add('js')") + ';' + STORY_RUN;
+  : "document.documentElement.classList.add('js')");
 
 export default function RootLayout({ children }) {
   return (

@@ -223,6 +223,10 @@
 .btn.btn--icon, .btn.btn--icon.btn--on-dark { --btn-bg-hover: var(--brand); --btn-fg-hover: #fff; --btn-edge-hover: inset 0 0 0 1.5px var(--brand); }
 /* ...and rests on a white fill (user 2026-11-16), the icon in the brand colour, on light and dark grounds alike */
 .btn.btn--icon, .btn.btn--icon.btn--on-dark { --btn-bg: #fff; --btn-fg: var(--brand); --btn-edge: inset 0 0 0 1.5px rgba(194, 65, 12, .3); }
+/* PRIMARY icon-only (user 2026-11-21: the hero's previous / next): the brand fill and a white icon, no edge at rest; hover deepens to
+   --brand-d with a soft white edge */
+.btn.btn--primary.btn--icon, .btn.btn--primary.btn--icon.btn--on-dark { --btn-bg: var(--brand); --btn-fg: #fff; --btn-edge: inset 0 0 0 0 transparent;
+  --btn-bg-hover: var(--brand-d, #A8380A); --btn-fg-hover: #fff; --btn-edge-hover: inset 0 0 0 1px rgba(255, 255, 255, .55); }
 
 /* ---------------------------------------------------------------- states ---------------------------------------------------------------- */
 /* HOVER: real pointers only (touch gets the resting look, and the press). Fill deepens, shadow lifts, label rolls, arrow swaps. */
@@ -301,3 +305,7 @@
   .btn:focus-visible { outline: 2px solid Highlight; outline-offset: 2px; }
   .btn:disabled, .btn[aria-disabled="true"] { border-color: GrayText; color: GrayText; }
 }
+
+/* shadow off (user 2026-11-21): <Button shadow={false}> / buttonHTML({ shadow: false }) adds .btn--flat, which drops the drop shadow at rest,
+   on hover and when pressed; the button's edge, colours and motion are unchanged. Used by the header's "Let's talk". */
+.btn.btn--flat, .btn.btn--flat:hover, .btn.btn--flat:focus-visible, .btn.btn--flat:active { --btn-shadow: 0 0 0 0 transparent; --btn-shadow-hover: 0 0 0 0 transparent; }

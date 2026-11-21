@@ -41,9 +41,11 @@ import { whenVisible } from "@/components/sections/Faculties/lib/reveal";
  */
 
 /** Strips per card: enough that the bend reads as a curve. */
-const STRIPS = 8;
+const STRIPS = 6;
 /** The ring holds at least this many cards; fewer items are repeated round it. */
 const MIN_CARDS = 10;
+/** A photo's black-and-white copy, made next to it (`-bw` before the extension). */
+const bw = (src: string) => src.replace(/(\.\w+)$/, "-bw$1");
 /**
  * Camera tilt, degrees: negative looks down onto the ring. 0 (user 2026-11-13: a straight, front-facing view): the ring is seen
  * level, at eye height, so it shows its arc as before but with no tilt; it was -6.
@@ -160,7 +162,6 @@ export default function CircularCarousel<T>({
   const [still, setStill] = useState(false);
   const [shown, setShown] = useState(true);
   const [playing, setPlaying] = useState(interval > 0);
-  const [grabbing, setGrabbing] = useState(false);
   // The photos load only once the ring is within a screen and a half of the viewport (performance audit 2026-11-16: they are CSS
   // backgrounds, so loading="lazy" cannot defer them, and Lighthouse counted ~160 KB of offscreen images).
   const [near, setNear] = useState(false);
@@ -228,7 +229,7 @@ export default function CircularCarousel<T>({
         if (!el) continue;
         const turn = ((mod(i - s.pos + slots / 2, slots) - slots / 2) * step * Math.PI) / 180;
         // 0 at the front, 0.5 edge on, 1 at the back.
-        const depth = ((1 - Math.cos(turn)) / 2).toFixed(3);
+        const depth = ((1 - Math.cos(turn)) / 2).toFixed(2);   // two decimals (performance, 2026-11-21): far fewer restyles while turning
         if (depths.current[i] === depth) continue;
         depths.current[i] = depth;
         el.style.setProperty("--cc-depth", depth);
@@ -512,7 +513,6 @@ export default function CircularCarousel<T>({
   const release = () => {
     const d = drag.current;
     drag.current = null;
-    setGrabbing(false);
     if (!d?.moved) return;
     const s = sim.current;
     const trail = d.trail;
@@ -559,7 +559,6 @@ export default function CircularCarousel<T>({
         s.held = true;
         s.vel = 0;
         stage?.setPointerCapture(event.pointerId);
-        setGrabbing(true);
         kick();
       } else {
         if (Math.abs(dy) > 10) drag.current = null;
@@ -656,7 +655,7 @@ export default function CircularCarousel<T>({
           event.preventDefault();
           move(by, true);
         }}
-        className={cx("relative w-full touch-pan-y select-none", grabbing ? "cursor-grabbing" : "cursor-grab")}
+        className="relative w-full touch-pan-y select-none"
         style={{ height: stageHeight }}
       >
         {/* The edge-fit layer: the floor shadow and the ring move across together (a translate only; the arrows stay outside it). */}
@@ -698,13 +697,12 @@ export default function CircularCarousel<T>({
                       {/* The front of the strip: its slice of the picture, black and white off the front. */}
                       <span aria-hidden="true" className="absolute outline outline-1 outline-transparent [backface-visibility:hidden]" style={{ ...box, transform: strip.transform }}>
                         <span
-                          className={cx(
-                            "absolute inset-0 overflow-hidden bg-no-repeat [transition:filter_600ms_var(--ease-out)]",
-                            isFront ? "grayscale-0" : "grayscale group-hover/cc:grayscale-0",
-                          )}
+                          className="absolute inset-0 overflow-hidden bg-no-repeat"
                           style={{
                             borderRadius: round(edge),
-                            backgroundImage: near ? `url("${src}")` : undefined,
+                            // performance (user 2026-11-21): a black-and-white copy of the photo (-bw), not a CSS grayscale filter on
+                            // every strip; the colour photo lies over it and fades in by opacity on the front card and on hover
+                            backgroundImage: near ? `url("${bw(src)}")` : undefined,
                             // the picture at the card's width and its own height (never stretched to the card's ratio), cropped
                             // top and bottom around a point 30% down so the face stays in frame
                             backgroundSize: `${width}px auto`,
@@ -712,6 +710,17 @@ export default function CircularCarousel<T>({
                             backgroundColor: backColor,
                           }}
                         >
+                          <span
+                            className={cx(
+                              "absolute inset-0 bg-no-repeat [transition:opacity_600ms_var(--ease-out)] motion-reduce:transition-none",
+                              isFront ? "opacity-100" : "opacity-0 group-hover/cc:opacity-100",
+                            )}
+                            style={{
+                              backgroundImage: near ? `url("${src}")` : undefined,
+                              backgroundSize: `${width}px auto`,
+                              backgroundPosition: `${-strip.offset}px 30%`,
+                            }}
+                          />
                           {/* the name plate's shade, on every strip so it follows the bend; only on the active card (user 2026-11-13),
                               fading in as a card comes to the front, a little deeper on hover / focus */}
                           {cardLabel && (

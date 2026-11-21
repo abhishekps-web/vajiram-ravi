@@ -5,6 +5,8 @@
    only the videos (the copies are made again for each). The arrows move it a card at a time. It no longer glides on by itself (DRIFT = false, user
    2026-11-16); the drift code below stays, switched off. A video card plays muted and looping while most of it is on screen. With
    prefers-reduced-motion nothing moves or plays on its own. A video with an empty data-src is a placeholder: its poster stands in. */
+import { initTabs } from '@/components/ui/Tabs/tabs-core';
+
 export default function initLifeGallery() {
   const gal = document.getElementById('lifeGal'); if (!gal) return;
   const track = gal.querySelector('.lg__track'); if (!track) return;
@@ -200,14 +202,7 @@ export default function initLifeGallery() {
   // starts again from the first and fades back in
   const tabBar = gal.querySelector('.lg__tabs');
   if (tabBar) {
-    const tabs = [...tabBar.querySelectorAll('.lg__tab')], ind = tabBar.querySelector('.lg__ind');
     let cur = 'all', swapT = 0;
-    const placeInd = instant => {
-      const sel = tabs.find(b => b.getAttribute('aria-selected') === 'true'); if (!sel) return;
-      ind.classList.toggle('is-instant', !!instant);
-      ind.style.transform = `translateX(${sel.offsetLeft}px)`; ind.style.width = sel.offsetWidth + 'px';
-      if (instant) { void ind.offsetWidth; ind.classList.remove('is-instant'); }
-    };
     const apply = f => {
       slides.forEach(s => { const v = s.classList.contains('lg__slide--vid'); s.hidden = f === 'img' ? v : f === 'vid' ? !v : false; });
       build();
@@ -215,22 +210,13 @@ export default function initLifeGallery() {
     const pick = f => {
       if (f === cur) return;
       cur = f;
-      tabs.forEach(b => { const on = b.dataset.f === f; b.setAttribute('aria-selected', on); b.tabIndex = on ? 0 : -1; });
-      placeInd(!auto);
       clearTimeout(swapT);
       if (!auto) { apply(f); schedule(); return; }
       track.classList.add('is-sw');
       swapT = setTimeout(() => { apply(f); track.classList.remove('is-sw'); syncVideos(); schedule(); }, 200);
     };
-    tabBar.addEventListener('click', e => { const b = e.target.closest('.lg__tab'); if (b) pick(b.dataset.f); });
-    tabBar.addEventListener('keydown', e => {
-      const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0; if (!d) return;
-      const k = tabs.findIndex(b => b.dataset.f === cur), nx = tabs[(k + d + tabs.length) % tabs.length];
-      pick(nx.dataset.f); nx.focus(); e.preventDefault();
-    });
-    placeInd(true);
-    // web fonts and resizes change the label widths; the pill follows
-    if ('ResizeObserver' in window) new ResizeObserver(() => placeInd(false)).observe(tabBar);
+    // the shared tab bar (components/ui/Tabs) moves the pill, marks the tab and handles the keys
+    initTabs(tabBar, { onSelect: pick });
   }
 
   // the card widths follow the screen, so the copies are made again when it changes size

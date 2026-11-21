@@ -1,133 +1,108 @@
-import Button from '@/components/ui/Button/Button';
-import Stylesheet from '@/components/ui/Stylesheet';
 import SectionLabel from '@/components/ui/SectionLabel';
+import { photoSrcSet } from '@/lib/photo';
+import '@/app/tailwind-sections.css';
 
-// ============ WHY VAJIRAM & RAVI: a pinned photographic scene (after vajiram-ravi-homepage.vercel.app #campus) carrying the six reasons. No entrance (user 2026-11-13): it pins already settled (heading, first photo, first chapter in place) and each next chapter swings in on the scroll (./story.js). Without the pinned stage (narrow, short or reduced motion) it is a static stacked list. css/story.css (id stays "story": the older #why rules in v25/v49.css would restyle it). ============
+const LEGACY = {
+  label: 'Why Vajiram & Ravi?',
+  title: '50+ Years of Experience: The Best IAS Coaching in Delhi, India',
+  body: 'Vajiram & Ravi maintains its prominence in UPSC preparation through both offline and online formats. Established in 1976, the institute has built a five-decade legacy, adapting to every shift in the examination while staying focused on aspirant outcomes. The organization features seasoned educators delivering thorough training for the Prelims, Mains, and Interview stages, supported by a consistent track record of student success. Throughout its history, the institute has assisted thousands of candidates in entering the IAS, IPS, IFS, and related government positions through expert mentorship and structured curricula.',
+};
+
+const PHOTO = { src: '/assets/img/photos/institute-exterior.webp', alt: 'The Vajiram & Ravi institute building, its sign reading "Institute for IAS Exam"', w: 900, h: 1200 };
+
+const ICONS = {
+  medal: (
+    <>
+      <path d="M8 2.5l4 6.5 4-6.5" />
+      <circle cx="12" cy="15" r="6" />
+      <path d="M10.6 13l1.6-1.1v6.1" />
+    </>
+  ),
+  board: (
+    <>
+      <path d="M3 4h18v11H3Z" />
+      <path d="M6 8h6M6 11h4" />
+      <circle cx="17" cy="8" r="1.5" />
+      <path d="M14.5 13.5c.3-2 1.2-3 2.5-3s2.2 1 2.5 3" />
+      <path d="M8 20l2-5M16 20l-2-5" />
+    </>
+  ),
+  mentor: (
+    <>
+      <circle cx="8" cy="7.5" r="2.5" />
+      <path d="M3.5 20c0-4 2-6 4.5-6s4.5 2 4.5 6" />
+      <circle cx="17" cy="11" r="2" />
+      <path d="M14 20c0-3 1.4-4.5 3-4.5S20 17 20 20" />
+      <path d="M13.5 4.5h6M17.5 2.5l2 2-2 2" />
+    </>
+  ),
+  notes: (
+    <>
+      <path d="M6 3h9l4 4v14H6Z" />
+      <path d="M15 3v4h4" />
+      <path d="M9 12.5l1.5 1.5L13.5 11M9 17.5h7" />
+    </>
+  ),
+  place: (
+    <>
+      <path d="M12 22s7.5-6.4 7.5-12A7.5 7.5 0 0 0 4.5 10c0 5.6 7.5 12 7.5 12Z" />
+      <path d="M9 13V8.5l3-1.8 3 1.8V13Z" />
+      <path d="M11 13v-2.2h2V13M8 13h8" />
+    </>
+  ),
+  live: (
+    <>
+      <rect x="3" y="4" width="18" height="12" rx="1.5" />
+      <path d="M8 20h8M12 16v4" />
+      <path d="m10.5 8 4 2-4 2V8Z" />
+    </>
+  ),
+};
+
+const REASONS = [
+  { t: 'A proven track record', d: 'AIR 1 in every UPSC result since 2016, and all ten of the top ten ranks in CSE 2025 prepared with us. Founded in 1976 by Prof. P. Velayutham.', icon: 'medal' },
+  { t: 'Expert faculty', d: 'Expert faculty for every GS paper, the optionals and the essay: an academic tradition shaped by educators and subject specialists.', icon: 'board' },
+  { t: 'Personal guidance', d: 'A plan shaped around your strengths and gaps, with a mentor who keeps it on track from Foundation to Interview.', icon: 'mentor' },
+  { t: 'Complete study material', d: 'Notes, test series and interview preparation in one place. 59 questions in Prelims 2025 came from our test series.', icon: 'notes' },
+  { t: 'A prime location', d: 'Over 50 years in Old Rajinder Nagar, New Delhi, at Gate 5 of Karol Bagh Metro.', icon: 'place' },
+  { t: 'Learn the way that suits you', d: '12 UPSC CSE programmes in the classroom and LIVE-Online, with the same teachers and the same tests.', icon: 'live' },
+];
+
+const CARD = [
+  'cu:group cu:relative cu:flex cu:flex-col cu:h-full cu:p-[26px] cu:rounded-(--r-card) cu:text-[#5a4632]',
+  'cu:[background:linear-gradient(178deg,#F9EFDA,#F5E8CE_30%,#EFDFC0)]',
+].join(' ');
+
 export default function WhyChoose() {
   return (
-    <>
-      <Stylesheet href="/css/story.css" />
-      <div className="cmp__pin">
-        {/* holds the scene and the scroll spacer ./story.js adds after it, so the sticky section lets go when its run ends */}
-        <section className="cmp" id="story" aria-labelledby="storyH">
-          {/* phones and tablets (the stacked layout): the section's ground, held still on the screen while the chapter cards scroll over it
-              (user 2026-11-17, "the background scrolls"); not shown with the pinned scene (story.css, end) */}
-          <div className="cmp__ground" aria-hidden="true" />
-          <div className="cmp__stage">
-            <div className="cmp__card" aria-hidden="true">
-              <img src="/assets/img/photos/why-1-track-record.webp" srcSet="/assets/img/photos/why-1-track-record-800.webp 800w, /assets/img/photos/why-1-track-record.webp 1536w" sizes="(max-width: 900px) 92vw, 45vw" alt="" width="1536" height="1024" loading="lazy" decoding="async" style={{ objectPosition: "50% 55%" }} />
-            </div>
-            <p className="cmp__big" aria-hidden="true">
-              <span className="cmp__l">Why choose</span>
-              <span className="cmp__r">us?</span>
-            </p>
-            <div className="cmp__ov">
-              <header className="cmp__hd">
-                <SectionLabel reveal={false}>Your UPSC partner · Since 1976</SectionLabel>
-                <h2 id="storyH" className="cmp__h2">
-                  <span className="cmp__en">Why Vajiram & Ravi?</span>
-                  {" "}
-                  <span className="cmp__h">{"Fifty years of teaching "}<em>the civil services examination</em>, built around what the UPSC actually asks.</span>
-                </h2>
-              </header>
-              <div className="cmp__track">
-                <article className="cmp__p" aria-labelledby="storyT0">
-                  <figure className="cmp__ph">
-                    <img src="/assets/img/photos/why-1-track-record.webp" srcSet="/assets/img/photos/why-1-track-record-800.webp 800w, /assets/img/photos/why-1-track-record.webp 1536w" sizes="(max-width: 900px) 92vw, 45vw" alt="The Vajiram & Ravi building, seen from its front gate" width="1536" height="1024" loading="lazy" decoding="async" style={{ objectPosition: "50% 55%" }} />
-                  </figure>
-                  <div className="cmp__tx">
-                    <p className="cmp__no" aria-hidden="true">01<small>/06</small></p>
-                    <p className="cmp__lab">AIR 1 · every result since 2016</p>
-                    <h3 className="cmp__t" id="storyT0">
-                      <span>A proven track record</span>
-                      <i aria-hidden="true" />
-                    </h3>
-                    <p className="cmp__d">AIR 1 in every UPSC result since 2016, and all ten of the top ten ranks in CSE 2025 prepared with us. Founded in 1976 by Prof. P. Velayutham.</p>
-                    <Button variant="secondary" size="sm" className="cmp__cta" href="#toppers" iconEnd="arrow">Meet the toppers</Button>
-                  </div>
-                </article>
-                <article className="cmp__p" aria-labelledby="storyT1">
-                  <figure className="cmp__ph">
-                    <img src="/assets/img/photos/why-2-faculty.webp" srcSet="/assets/img/photos/why-2-faculty-800.webp 800w, /assets/img/photos/why-2-faculty.webp 1536w" sizes="(max-width: 900px) 92vw, 45vw" alt="A Vajiram & Ravi professor teaching a General Studies class" width="1536" height="1024" loading="lazy" decoding="async" style={{ objectPosition: "50% 30%" }} />
-                  </figure>
-                  <div className="cmp__tx">
-                    <p className="cmp__no" aria-hidden="true">02<small>/06</small></p>
-                    <p className="cmp__lab">The teaching</p>
-                    <h3 className="cmp__t" id="storyT1">
-                      <span>Expert faculty</span>
-                      <i aria-hidden="true" />
-                    </h3>
-                    <p className="cmp__d">Expert faculty for every GS paper, the optionals and the essay: an academic tradition shaped by educators and subject specialists.</p>
-                    <Button variant="secondary" size="sm" className="cmp__cta" href="#educators" iconEnd="arrow">Meet our educators</Button>
-                  </div>
-                </article>
-                <article className="cmp__p" aria-labelledby="storyT2">
-                  <figure className="cmp__ph">
-                    <img src="/assets/img/photos/why-3-guidance.webp" srcSet="/assets/img/photos/why-3-guidance-800.webp 800w, /assets/img/photos/why-3-guidance.webp 1536w" sizes="(max-width: 900px) 92vw, 45vw" alt="A mentor going through a study plan with an aspirant" width="1536" height="1024" loading="lazy" decoding="async" style={{ objectPosition: "45% 40%" }} />
-                  </figure>
-                  <div className="cmp__tx">
-                    <p className="cmp__no" aria-hidden="true">03<small>/06</small></p>
-                    <p className="cmp__lab">Your plan</p>
-                    <h3 className="cmp__t" id="storyT2">
-                      <span>Personal guidance</span>
-                      <i aria-hidden="true" />
-                    </h3>
-                    <p className="cmp__d">A plan shaped around your strengths and gaps, with a mentor who keeps it on track from Foundation to Interview.</p>
-                    <Button variant="secondary" size="sm" className="cmp__cta" href="#contact" iconEnd="arrow">Let’s talk</Button>
-                  </div>
-                </article>
-                <article className="cmp__p" aria-labelledby="storyT3">
-                  <figure className="cmp__ph">
-                    <img src="/assets/img/photos/why-4-study-material.webp" srcSet="/assets/img/photos/why-4-study-material-800.webp 800w, /assets/img/photos/why-4-study-material.webp 1536w" sizes="(max-width: 900px) 92vw, 45vw" alt="Vajiram & Ravi study material, test series sheets and notes on a desk" width="1536" height="1024" loading="lazy" decoding="async" style={{ objectPosition: "50% 50%" }} />
-                  </figure>
-                  <div className="cmp__tx">
-                    <p className="cmp__no" aria-hidden="true">04<small>/06</small></p>
-                    <p className="cmp__lab">Study material</p>
-                    <h3 className="cmp__t" id="storyT3">
-                      <span>Complete study material</span>
-                      <i aria-hidden="true" />
-                    </h3>
-                    <p className="cmp__d">Notes, test series and interview preparation in one place. 59 questions in Prelims 2025 came from our test series.</p>
-                    <Button variant="secondary" size="sm" className="cmp__cta" href="#resources" iconEnd="arrow">Explore study materials</Button>
-                  </div>
-                </article>
-                <article className="cmp__p" aria-labelledby="storyT4">
-                  <figure className="cmp__ph">
-                    <img src="/assets/img/photos/why-5-location.webp" srcSet="/assets/img/photos/why-5-location-800.webp 800w, /assets/img/photos/why-5-location.webp 1286w" sizes="(max-width: 900px) 92vw, 45vw" alt="Aspirants walking to the Vajiram & Ravi gate in Old Rajinder Nagar" width="1286" height="1024" loading="lazy" decoding="async" style={{ objectPosition: "55% 50%" }} />
-                  </figure>
-                  <div className="cmp__tx">
-                    <p className="cmp__no" aria-hidden="true">05<small>/06</small></p>
-                    <p className="cmp__lab">Old Rajinder Nagar</p>
-                    <h3 className="cmp__t" id="storyT4">
-                      <span>A prime location</span>
-                      <i aria-hidden="true" />
-                    </h3>
-                    <p className="cmp__d">Over 50 years in Old Rajinder Nagar, New Delhi, at Gate 5 of Karol Bagh Metro.</p>
-                    <Button variant="secondary" size="sm" className="cmp__cta" href="#visit" iconEnd="arrow">Visit the campus</Button>
-                  </div>
-                </article>
-                <article className="cmp__p" aria-labelledby="storyT5">
-                  <figure className="cmp__ph">
-                    <img src="/assets/img/photos/why-6-classroom-online.webp" srcSet="/assets/img/photos/why-6-classroom-online-800.webp 800w, /assets/img/photos/why-6-classroom-online.webp 1536w" sizes="(max-width: 900px) 92vw, 45vw" alt="A Vajiram & Ravi classroom with the lecture streaming live to online students" width="1536" height="1024" loading="lazy" decoding="async" style={{ objectPosition: "50% 40%" }} />
-                  </figure>
-                  <div className="cmp__tx">
-                    <p className="cmp__no" aria-hidden="true">06<small>/06</small></p>
-                    <p className="cmp__lab">Classroom + LIVE-Online</p>
-                    <h3 className="cmp__t" id="storyT5">
-                      <span>Learn the way that suits you</span>
-                      <i aria-hidden="true" />
-                    </h3>
-                    <p className="cmp__d">12 UPSC CSE programmes in the classroom and LIVE-Online, with the same teachers and the same tests.</p>
-                    <Button variant="secondary" size="sm" className="cmp__cta" href="#courses" iconEnd="arrow">Find your programme</Button>
-                  </div>
-                </article>
-              </div>
-            </div>
-          </div>
-        </section>
-        {/* the scroll the pinned scene plays over: sized by css/story.css from the first paint (html.story-run), so the page never jumps */}
-        <div className="cmp__run" aria-hidden="true" />
+    <section id="story" aria-labelledby="legacyH" className="cu:relative cu:py-(--sec-y) cu:px-(--px) cu:[background:var(--ground-jaali)] cu:overflow-clip">
+      <div className="cu:grid cu:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] cu:max-[900px]:grid-cols-1 cu:items-center cu:gap-x-[clamp(24px,5vw,72px)] cu:gap-y-[28px] cu:text-left">
+        <figure className="rv cu:m-0 cu:aspect-[3/4] cu:w-[min(100%,calc((100svh-var(--hdr-h)-64px)*.75))] cu:max-[900px]:w-[min(100%,360px)] cu:overflow-hidden cu:rounded-(--r-card) cu:bg-[#eadbc4] cu:[box-shadow:0_24px_48px_-32px_rgb(80_48_16/.35)]" style={{ '--d': '.05s' }}>
+          <img src={PHOTO.src} srcSet={photoSrcSet(PHOTO.src, PHOTO.w)} sizes="(max-width: 900px) 92vw, 30vw" alt={PHOTO.alt} width={PHOTO.w} height={PHOTO.h} loading="lazy" decoding="async" className="cu:block cu:size-full cu:object-cover cu:object-center cu:transition-transform cu:duration-700 cu:ease-(--ease) cu:fine:hover:scale-[1.03] cu:motion-reduce:transition-none" />
+        </figure>
+        <header id="legacy" className="cu:flex cu:flex-col cu:items-start">
+          <SectionLabel>{LEGACY.label}</SectionLabel>
+          <h2 id="legacyH" className="h2 h2--sec rv cu:mt-(--hd-lbl) cu:mb-0 cu:max-w-[22ch] cu:text-balance cu:text-[clamp(34px,3.7vw,52px)]! cu:leading-[1.08]!" style={{ '--d': '.12s' }}>{LEGACY.title}</h2>
+          <p className="rv cu:mt-(--hd-lbl) cu:mb-0 cu:max-w-[62ch] cu:text-[clamp(16px,1.25vw,18px)] cu:leading-[1.75] cu:text-[#4a3f35]" style={{ '--d': '.2s' }}>{LEGACY.body}</p>
+        </header>
       </div>
-    </>
+      <div id="reasons" className="cu:mt-[clamp(48px,5vw,72px)]">
+        <ul className="why__cards cu:grid cu:grid-cols-3 cu:max-[1000px]:grid-cols-2 cu:max-[640px]:grid-cols-1 cu:gap-(--card-gap) cu:w-full cu:list-none cu:p-0 cu:text-left">
+          {REASONS.map((r) => (
+            <li key={r.t} className="cu:min-w-0">
+              <article className={CARD}>
+                <span aria-hidden="true" className="cu:grid cu:place-items-center cu:flex-none cu:size-[60px] cu:rounded-full cu:bg-[#FFF8EA] cu:text-(--brand)">
+                  <svg aria-hidden="true" viewBox="0 0 24 24" className="cu:size-[30px] cu:fill-none cu:stroke-current cu:[stroke-width:1.5] cu:[stroke-linecap:round] cu:[stroke-linejoin:round]">{ICONS[r.icon]}</svg>
+                </span>
+                <div className="cu:pt-[18px]">
+                  <h3 className="cu:m-0 cu:[font:400_clamp(24px,2vw,30px)/1.15_var(--f-title)] cu:tracking-[-.01em] cu:text-[#2A2016]">{r.t}</h3>
+                  <p className="cu:mt-[8px] cu:mb-0 cu:text-[clamp(15px,1.15vw,17px)] cu:leading-[1.65] cu:text-[#5a4632]">{r.d}</p>
+                </div>
+              </article>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
   );
 }

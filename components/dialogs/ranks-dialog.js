@@ -1,6 +1,6 @@
 // Ranks dialog (#yd): every rank holder of a year. Opened by any [data-allranks] link.
 import { $, esc } from '@/lib/site';
-import { YEARS, byYear, progOf } from '@/components/sections/Toppers/data/rankers';
+import { YEARS, byYear, progOf } from '@/components/sections/Toppers/Toppers';
 
 export function initRanksDialog() {
   const yd = $('#yd');

@@ -31,7 +31,7 @@ export const isSwapIcon = name => name === 'arrow' || name === 'arrow-left';
  * The resolved shape of a button: which parts it renders. Both renderers use this, so they cannot drift apart.
  */
 export function resolve({ variant = 'primary', size = 'md', iconStart, iconEnd, iconOnly = false, onDark = false, fullWidth = false,
-  loading = false, loadingLabel, disabled = false, selected, className = '' } = {}) {
+  loading = false, loadingLabel, disabled = false, selected, shadow = true, className = '' } = {}) {
   if (!VARIANTS.includes(variant)) variant = 'primary';
   if (!SIZES.includes(size)) size = 'md';
   const fab = variant === 'fab';
@@ -42,6 +42,7 @@ export function resolve({ variant = 'primary', size = 'md', iconStart, iconEnd, 
   if (disc) cls.push('btn--disc');
   if (onDark) cls.push('btn--on-dark');
   if (fullWidth) cls.push('btn--full');
+  if (shadow === false) cls.push('btn--flat');   // no drop shadow, at rest or on hover (the edge stays)
   if (selected) cls.push('is-selected');
   if (className) cls.push(className);
   return {
