@@ -75,14 +75,7 @@
   background-image: repeating-linear-gradient(90deg, #e6d4b6 0 1px, #fbf3e4 1px 3px);
 }
 
-/* The filter's indicator slides between the chips. Reduced motion: it jumps. */
-.shelf-filter__ind {
-  transition:
-    translate 0.57s var(--spring-pill, cubic-bezier(0.7, 0, 0.2, 1)),
-    width 0.57s var(--spring-pill, cubic-bezier(0.7, 0, 0.2, 1));
-}
 @media (prefers-reduced-motion: reduce) {
-  .shelf-filter__ind,
   .shelf-plank {
     transition: none;
   }

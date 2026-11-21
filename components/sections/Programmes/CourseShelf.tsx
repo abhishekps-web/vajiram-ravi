@@ -2,6 +2,7 @@
 
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from "react";
 import Button from "@/components/ui/Button/Button";
+import ControlledTabs from "@/components/ui/Tabs/ControlledTabs";
 import IndianLink from "@/components/sections/Programmes/ui/IndianLink";
 import { coursePageHref, programmeCategories, type Programme, type ProgrammeCategory } from "@/components/sections/Programmes/data/programmes";
 import { cx } from "@/components/sections/Programmes/lib/cx";
@@ -19,7 +20,7 @@ import "./shelf.css";
 const BOOK = { w: 195, h: 230 };   // shorter (user 2026-11-16; was 195 x 260, 3:4)
 /** Where "View course" rests on a closed book: its bottom edge, px above the book's foot (above the category). */
 const FOLLOW_BOTTOM = 45;
-/** The hovered book's pose and shadow: the Batches tickets' 3D hover (public/css/v49.css, .inv--ticket:hover), the same angles. */
+/** The hovered book's pose and shadow: the Batches tickets' 3D hover (Batches/Batches.jsx), the same angles. */
 const HOVER_TILT = "perspective(1000px) translateY(-8px) rotateX(calc(var(--ty, 0) * -7deg)) rotateY(calc(var(--tx, 0) * 9deg))";
 const HOVER_SHADOW = "drop-shadow(calc(var(--tx, 0) * -14px) calc(24px - var(--ty, 0) * 10px) 18px rgb(60 25 5 / 0.32))";
 const GAP = 32;   // compact (user 2026-11-16; was 60)
@@ -474,7 +475,7 @@ export default function CourseShelf({ programmes }: { programmes: Programme[] })
       ...size,
       left: x,
       top: y,
-      // hover (user 2026-11-13): the Batches tickets' 3D tilt (v49.css .inv--ticket:hover): the book tips toward the pointer
+      // hover (user 2026-11-13): the Batches tickets' 3D tilt (Batches/Batches.jsx): the book tips toward the pointer
       // (--tx / --ty, set by Book), lifts 8px, and its shadow swings opposite the tilt
       transform: hovered === i && !away ? HOVER_TILT : "none",
       filter: away ? "blur(14px)" : hovered === i ? HOVER_SHADOW : "none",
@@ -506,7 +507,7 @@ export default function CourseShelf({ programmes }: { programmes: Programme[] })
       <div
         ref={rootRef}
         id="programme-shelf"
-        className="prog__stage relative mt-10 [transition:height_600ms_var(--ease-out),zoom_650ms_var(--ease-out)]"
+        className="prog__stage relative mt-6 [transition:height_600ms_var(--ease-out),zoom_650ms_var(--ease-out)]"
         style={{ width: g.stageW, height: away ? Math.max(rows * ROW_H, OPEN_H) : rows * ROW_H, zoom: fit }}
         onClick={(event) => event.target === event.currentTarget && close()}
       >
@@ -576,62 +577,19 @@ function ProgrammeRail({ programmes, filter }: { programmes: Programme[]; filter
 }
 
 /**
- * The category filter, after the reference shelf's: a white bar of chips, each with how many programme
- * groups it holds, and a burnt indicator that slides under the chosen one (shelf.css). Each chip is a
- * toggle button (aria-pressed) controlling the shelf.
+ * The category filter: the site's shared tab bar (components/ui/Tabs), each tab with how many programme groups it holds, and the
+ * brand pill that slides under the chosen one. The tabs control the shelf.
  */
 function ShelfFilter({ filter, counts, onChoose }: { filter: Filter; counts: number[]; onChoose: (f: Filter) => void }) {
-  const barRef = useRef<HTMLDivElement>(null);
-  const [ind, setInd] = useState<{ x: number; w: number } | null>(null);
-
-  useLayoutEffect(() => {
-    const measure = () => {
-      const chip = barRef.current?.querySelector<HTMLElement>('[aria-pressed="true"]');
-      if (chip) setInd({ x: chip.offsetLeft, w: chip.offsetWidth });
-    };
-    measure();
-    // The chips' widths settle once the web fonts are in.
-    document.fonts?.ready.then(measure);
-  }, [filter]);
-
   return (
-    <div
-      ref={barRef}
-      role="group"
-      aria-label="Filter the programmes by category"
-      // the previous Programmes tab bar's look (user 2026-11-13): a sand bar, brand pill indicator, brand counts
-      className="prog__filter relative isolate inline-flex items-center rounded-[14px] bg-[#F9F0E4] p-1"
-    >
-      {ind && <span aria-hidden="true" className="shelf-filter__ind absolute top-1 bottom-1 left-0 -z-10 rounded-[10px] bg-[var(--brand)]" style={{ translate: `${ind.x}px 0`, width: ind.w }} />}
-      {FILTERS.map((f, n) => {
-        const active = f === filter;
-        return (
-          <button
-            key={f}
-            type="button"
-            aria-pressed={active}
-            aria-controls="programme-shelf"
-            onClick={() => onChoose(f)}
-            className={cx(
-              "relative flex h-10 flex-none cursor-pointer items-center gap-2 rounded-[10px] px-[14px] font-[family-name:var(--f)] text-[15px]/none font-semibold whitespace-nowrap [transition:background-color_.3s_var(--ease),color_.3s_var(--ease)_.05s] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand)] active:scale-[.97]",
-              active ? "text-white" : "text-[var(--ink)] hover:bg-[rgb(194_65_12/0.08)] hover:text-[var(--brand)]",
-              // Before the indicator is measured, the chosen chip carries the fill itself.
-              active && !ind && "bg-[var(--brand)]",
-            )}
-          >
-            {f}
-            <span
-              className={cx(
-                "box-border min-w-6 rounded-full px-[7px] py-1 text-center text-[12px]/[16px] font-bold [transition:background-color_.3s_var(--ease)_.05s,color_.3s_var(--ease)_.05s]",
-                active ? "bg-white/24 text-white" : "bg-transparent text-[var(--brand)]",
-              )}
-            >
-              {counts[n]}
-            </span>
-          </button>
-        );
-      })}
-    </div>
+    <ControlledTabs
+      className="prog__filter"
+      label="Filter the programmes by category"
+      controls="programme-shelf"
+      value={filter}
+      onChange={(id: string) => onChoose(id as Filter)}
+      items={FILTERS.map((f, n) => ({ id: f, label: f, count: counts[n] }))}
+    />
   );
 }
 
@@ -672,7 +630,7 @@ function Book({ index, programme, hidden, out, open, away, style, onPick, onClos
   const turn = (by: number) => setTurned((t) => Math.min(last, Math.max(0, t + by)));
   const { deep } = programme.cover;
 
-  // the 3D hover's inputs, as the tickets' (Batches/batches.js): where the pointer is over the book, -0.5..0.5, and the glare's spot
+  // the 3D hover's inputs, as the tickets' (Batches/Batches.jsx): where the pointer is over the book, -0.5..0.5, and the glare's spot
   const tilt = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (out || event.pointerType !== "mouse" || prefersReducedMotion()) return;
     const el = event.currentTarget, r = el.getBoundingClientRect();
@@ -940,7 +898,10 @@ function CoverFront({ programme, large }: { programme: Programme; large: boolean
         {/* The cover's IA (user 2026-11-13): name, foil rule, emblem, "View course", category. The "Vajiram & Ravi" line that
             repeated on every cover was removed (user 2026-11-13); the name now opens the cover. */}
         <span
-          className={cx("block font-medium text-balance text-[#ffe3b0] [font-family:Newsreader,Georgia,serif]", large ? "mt-2 text-[36px]/[1.08]" : "mt-1 text-[20px]/[1.1]")}
+          className={cx(
+            "flex shrink-0 items-center justify-center font-medium text-balance text-[#ffe3b0] [font-family:Newsreader,Georgia,serif]",
+            large ? "mt-2 h-[3.24em] text-[36px]/[1.08]" : "mt-1 h-[3.3em] text-[20px]/[1.1]",
+          )}
         >
           {programme.name}
         </span>

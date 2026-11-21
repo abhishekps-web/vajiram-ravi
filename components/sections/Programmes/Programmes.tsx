@@ -24,7 +24,7 @@ export default function Programmes() {
       <TextMotion rootId="courses" />
       {/* top padding: three quarters of --sec-y (user 2026-11-16: more room above, then trimmed; it was half of it less 20px, about
           a 50px gap under the hero). Phones and tablets: programmes.css */}
-      <div className="prog__canvas relative mx-auto flex w-canvas flex-col items-start px-20 pt-[calc(var(--sec-y)*.75)]">
+      <div className="prog__canvas relative mx-auto flex w-canvas flex-col items-start px-20 pt-[calc(var(--sec-y)*.5)]">
         {/* The course shelf: its heading, then the filter and the books on their planks (CourseShelf). */}
         <div className="relative w-full">
           {/* the section's heading (the flagship card and the "Find the right UPSC programme" heading above it were removed, user 2026-11-13) */}
@@ -38,12 +38,12 @@ export default function Programmes() {
             <CourseShelf programmes={programmes} />
           </div>
           {/* "See all": opens the course catalogue (any [data-cat] link does, components/dialogs/course-catalog.js), user 2026-11-16 */}
-          <div data-fade className="prog__more mt-10 flex justify-center">
+          <div data-fade className="prog__more mt-6 flex justify-center">
             <Button variant="outline" href="#courses" data-cat="0" iconEnd="arrow">See all programmes</Button>
           </div>
         </div>
 
-        <div className="relative w-full pt-14 pb-[var(--sec-y)]">
+        <div className="relative w-full pt-8 pb-[calc(var(--sec-y)*.6)]">
           {/*
             The client's closing line, as a card under the shelf: a counsellor's headset in
             a burnt disc, the question and the line, then the phone number and the button to the counselling form.

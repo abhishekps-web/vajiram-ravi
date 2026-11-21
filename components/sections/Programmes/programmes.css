@@ -164,7 +164,7 @@
   #courses .prog__flag-btns { flex-wrap: wrap; }
 }
 @media (max-width: 900px) {
-  #courses .prog__canvas { padding-top: calc(var(--sec-y) * .75); }   /* three quarters of the section rhythm (user 2026-11-16: more room above, then trimmed a little) */
+  #courses .prog__canvas { padding-top: calc(var(--sec-y) * .5); }
   #courses .prog__flag { grid-template-columns: minmax(0, 1fr); }
   #courses .prog__flag-photo { min-height: 340px; }
   #courses .prog__flag-body { padding: 32px 28px; }
@@ -172,7 +172,7 @@
   #courses .prog__help { flex-wrap: wrap; gap: 18px 20px; padding: 24px; }
 }
 @media (max-width: 640px) {
-  #courses .prog__canvas { padding-top: calc(var(--sec-y) * .75); }   /* three quarters of the section rhythm (user 2026-11-16: more room above, then trimmed a little) */
+  #courses .prog__canvas { padding-top: calc(var(--sec-y) * .5); }
   #courses .prog__flag { border-radius: 8px; }
   #courses .prog__flag-photo { min-height: 260px; }
   #courses .prog__flag-body { padding: 28px 20px 24px; }
@@ -202,12 +202,10 @@
 /* the shelf's filter on phones: the bar keeps its chips on one line and scrolls sideways within the screen (its sliding indicator
    scrolls with them) */
 @media (max-width: 640px) {
-  #courses .prog__filter { max-width: none; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; }
+  #courses .prog__filter { max-width: none; }
   /* the bar runs on to the screen's right edge (user 2026-11-17), so the chip cut off there shows there is more to scroll to; it still
      starts at the page margin on the left */
   #courses .prog__filter { align-self: flex-start; width: calc(100% + var(--px)); margin-right: calc(var(--px) * -1); border-radius: 14px 0 0 14px; padding-right: 20px; }
-  #courses .prog__filter::-webkit-scrollbar { display: none; }
-  #courses .prog__filter > button { flex: none; }
 }
 
 /* Typography = the site's global system (user 2026-11-13): the heading is the plain .h2 (no italic run; no other section
@@ -240,3 +238,6 @@
 @media (max-width: 640px) {
   #courses .prog__card-cover { filter: none; border-radius: 3px 7px 7px 3px; box-shadow: 0 8px 10px rgb(43 18 6 / .28); }
 }
+
+/* "Not sure which programme is right for you?" with a subtler shadow (user 2026-11-21): a short, soft lift instead of shadow-rest */
+#courses .prog__help { box-shadow: 0 8px 20px -14px rgba(77, 31, 8, .18); }
