@@ -71,10 +71,15 @@ const LEGAL = [
 function Brand() {
   return (
     <div className="vf__brand">
+      <a className="vf__logo rv" href="#top" aria-label="Vajiram & Ravi, back to top">
+        <img className="vf__mark" src="/assets/img/brand/logo-v6-mark.webp" alt="" width="198" height="203" loading="lazy" decoding="async" />
+        <img className="vf__wordmark" src="/assets/img/brand/logo-v6-wordmark.webp" alt="" width="395" height="81" loading="lazy" decoding="async" />
+      </a>
       <p className="vf__tagline">
         <span className="rv">Understanding India.</span>{" "}
         <span className="rv" style={{ "--d": ".15s" }}>Shaping its Future.</span>
       </p>
+      <Socials />
     </div>
   );
 }
@@ -110,50 +115,14 @@ function LinkColumns() {
   );
 }
 
-function DebossedName() {
-  return (
-    <div className="vf__word">
-      <span className="vh">Vajiram &amp; Ravi</span>
-      <svg aria-hidden="true" viewBox="0 0 1280 210" fill="none">
-        <defs>
-          <filter id="vf-deboss" x="-2%" y="-10%" width="104%" height="125%" colorInterpolationFilters="sRGB">
-            <feOffset in="SourceAlpha" dy="4" result="down" />
-            <feGaussianBlur in="down" stdDeviation="2.6" result="downSoft" />
-            <feComposite in="SourceAlpha" in2="downSoft" operator="out" result="topBand" />
-            <feFlood floodColor="#5a2a10" floodOpacity=".2" result="shadeInk" />
-            <feComposite in="shadeInk" in2="topBand" operator="in" result="innerShade" />
-            <feOffset in="SourceAlpha" dy="-2.2" result="up" />
-            <feGaussianBlur in="up" stdDeviation="1.1" result="upSoft" />
-            <feComposite in="SourceAlpha" in2="upSoft" operator="out" result="bottomBand" />
-            <feFlood floodColor="#ffffff" floodOpacity=".55" result="lightInk" />
-            <feComposite in="lightInk" in2="bottomBand" operator="in" result="innerLight" />
-            <feOffset in="SourceAlpha" dy="2" result="lipDown" />
-            <feComposite in="lipDown" in2="SourceAlpha" operator="out" result="lipBand" />
-            <feFlood floodColor="#ffffff" floodOpacity=".55" result="lipInk" />
-            <feComposite in="lipInk" in2="lipBand" operator="in" result="lip" />
-            <feMerge>
-              <feMergeNode in="lip" />
-              <feMergeNode in="SourceGraphic" />
-              <feMergeNode in="innerShade" />
-              <feMergeNode in="innerLight" />
-            </feMerge>
-          </filter>
-        </defs>
-        <text x="640" y="172" textAnchor="middle" textLength="1272" lengthAdjust="spacingAndGlyphs" filter="url(#vf-deboss)">Vajiram &amp; Ravi</text>
-      </svg>
-    </div>
-  );
-}
-
 function Legal() {
   return (
     <div className="vf__legal">
-      <p>© 2026 Vajiram &amp; Ravi. All rights reserved.</p>
+      <p>© 2026 Vajiram &amp; Ravi. All Rights Reserved.</p>
       <nav aria-label="Legal">
         {LEGAL.map(({ label, href }) => <a key={label} href={href} {...NEW_TAB}>{label}</a>)}
         <span>Grievance Redressal</span>
       </nav>
-      <Socials />
     </div>
   );
 }
@@ -166,7 +135,6 @@ export default function Footer() {
       <div className="vf__in">
         <Brand />
         <LinkColumns />
-        <DebossedName />
         <Legal />
       </div>
     </footer>

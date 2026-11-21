@@ -201,3 +201,32 @@ html.foot-curtain .vf.vf--zooming > .vf__in, html.foot-curtain .vf.vf--zooming >
 .vf__legal .vf__socials { margin: -8px -8px -8px 0; }
 @media (min-width: 761px) { .vf .vf__brand { display: none; } }
 @media (max-width: 760px) { .vf__legal .vf__socials { margin: 6px 0 0; justify-content: center; } }
+
+/* The logo back (user 2026-11-21, "same as we used earlier"): the emblem and the wordmark as before 2026-11-20. Desktop and tablet: side
+   by side, 72px tall, at the top of the footer with the rule under it (the tagline stays hidden there); phones: stacked and centred, the
+   emblem over the wordmark (40% of the screen), the tagline under them. Hover: the emblem turns a little. */
+.vf__logo { display: flex; align-items: center; gap: 11px; width: max-content; }
+.vf__logo img { display: block; }
+.vf__logo img.vf__mark { width: auto; height: 72px; transition: rotate .5s var(--ease, ease); }
+.vf__logo img.vf__wordmark { width: 138px; height: auto; }
+.vf__logo:focus-visible { outline: 2px solid var(--vf-burnt); outline-offset: 6px; border-radius: 8px; }
+@media (hover: hover) and (pointer: fine) { .vf__logo:hover img.vf__mark { rotate: -8deg; } }
+@media (prefers-reduced-motion: reduce) { .vf__logo img.vf__mark { transition: none; } }
+@media (min-width: 761px) {
+  .vf .vf__brand { display: flex; width: 100%; padding-bottom: 24px; border-bottom: 1px solid var(--vf-rule); }
+}
+@media (max-width: 760px) {
+  .vf__logo { flex-direction: column; gap: 14px; width: 100%; }
+  .vf__logo img.vf__mark { height: 112px; }
+  .vf__logo img.vf__wordmark { width: 40vw; max-width: none; }
+}
+
+/* The social icons beside the logo (user 2026-11-21, "show the social links along with the logo"): out of the legal bar and into the
+   brand row. Desktop and tablet: the logo left, the icons right, on one line above the rule. Phones: centred under the logo and the
+   tagline. */
+.vf .vf__brand > .vf__socials { margin: 0; }
+@media (min-width: 761px) {
+  .vf .vf__brand { flex-direction: row; align-items: center; justify-content: space-between; gap: 24px; }
+  .vf .vf__brand > .vf__socials { margin-right: -8px; }
+}
+@media (max-width: 760px) { .vf .vf__brand > .vf__socials { justify-content: center; } }
