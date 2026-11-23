@@ -2,7 +2,6 @@ import '@/app/tailwind-sections.css';
 import Button from '@/components/ui/Button/Button';
 import { buttonHTML } from '@/components/ui/Button/button-core';
 import { $, $$, esc, reduce, SITE } from '@/lib/site';
-import { CATS, CAT_D, STAGES } from '@/lib/data/courses';
 
 const BAR_LINKS = [
   { k: 'toppers', href: '#toppers', t: 'Toppers' },
@@ -126,7 +125,7 @@ export default function NavigationBar() {
         <div className="cu:relative cu:flex cu:items-center cu:gap-1.5 cu:h-[46px] cu:py-px cu:pl-3 cu:pr-2.5 cu:max-[1023.98px]:contents">
           <Logo />
           <nav className="cu:flex cu:items-center cu:gap-0.5 cu:max-[1600px]:gap-0 cu:max-[1023.98px]:hidden" id="navLinks" aria-label="Main">
-            <MegaMenu id="mega" wrapId="explore" btnId="exploreBtn" label="All courses" wide />
+            <a className={LINK} href="/coursefinder/" data-i18n="">All courses</a>
             <a className={LINK} href="#toppers" data-more="toppers" data-i18n="">Toppers</a>
             <MegaMenu id="megaSm" wrapId="studyNav" btnId="studyBtn" label="Study materials" />
             <a className={LINK} href="#batches" data-more="batches" data-i18n="">Upcoming batches</a>
@@ -163,32 +162,13 @@ const ALL_LINK = 'cu:group/all cu:inline-flex cu:items-center cu:gap-2 cu:p-0 cu
 const KICKER = 'cu:relative cu:z-[1] cu:flex cu:items-center cu:gap-2 cu:w-fit cu:m-0 cu:pr-3 cu:[font:700_12px/1.3_var(--f)] cu:tracking-[.12em] cu:uppercase cu:text-[var(--brand)]';
 const DISC = 'cu:flex-none cu:grid cu:place-items-center cu:size-7 cu:rounded-full cu:text-[11px] cu:tracking-normal';
 const DISC_PLAIN = 'cu:bg-white cu:shadow-[inset_0_0_0_1px_rgba(194,65,12,.35)]';
+const num = i => String(i + 1).padStart(2, '0');
 const DISC_FEAT = 'cu:bg-[var(--brand)] cu:text-white';
 const ROW = 'cu:group/row cu:grid cu:-ml-2.5 cu:px-2.5 cu:rounded-[var(--r-box,16px)] cu:text-[var(--ink)] cu:no-underline cu:transition-colors cu:duration-200 cu:fine:hover:bg-[var(--sand)] cu:focus-visible:outline-2 cu:focus-visible:outline-offset-2 cu:focus-visible:outline-[var(--brand)]';
 const ROW_T = 'cu:[font:500_16px/1.25_var(--f-d)] cu:tracking-[-.005em] cu:text-[var(--ink)] cu:transition-colors cu:duration-200 cu:fine:group-hover/row:text-[var(--brand)]';
 const ROW_D = 'cu:[font:400_13px/1.45_var(--f)] cu:text-[#6B5D52]';
 const ASIDE = 'cu:flex cu:flex-col cu:items-start cu:bg-[var(--sand,#FFF2E6)] cu:border-l cu:border-[rgba(194,65,12,.12)]';
 
-const plural = n => n + (n === 1 ? ' course' : ' courses');
-// the All courses menu opens the course finder (public/coursefinder/) at that category's section (user 2026-11-23); CATS order -> its section keys
-const CF_KEY = ['gs', 'optional', 'csat', 'interview', 'mentorship', 'mains-ts', 'prelims-ts', 'optional-ts'];
-const cfHref = c => `/coursefinder/#cat=${CF_KEY[c] || 'all'}`;
-const num = i => String(i + 1).padStart(2, '0');
-
-function coursesMenu() {
-  const total = CATS.reduce((n, c) => n + c.courses.length, 0);
-  const cols = STAGES.map((s, i) => `<section class="cu:relative cu:pr-3.5" data-mega-col>
-      <p class="${KICKER} cu:mb-3"><b class="${DISC} ${DISC_PLAIN}">${num(i)}</b>${s.k}</p>
-      <ul class="cu:grid cu:gap-1 cu:m-0 cu:p-0 cu:list-none">${s.cats.map(c => `<li><a class="${ROW} cu:gap-[3px] cu:pt-2.5 cu:pb-[11px]" href="${cfHref(c)}" data-mega-close><span class="${ROW_T}">${esc(CATS[c].t)}</span><span class="${ROW_D} cu:line-clamp-3">${esc(CAT_D[c])}</span><span class="cu:justify-self-start cu:mt-1 cu:py-0.5 cu:px-2 cu:rounded-full cu:bg-[rgba(194,65,12,.08)] cu:[font:700_11px/1.5_var(--f)] cu:tracking-[.02em] cu:text-[var(--brand)] cu:transition-colors cu:duration-200 cu:fine:group-hover/row:bg-[var(--brand)] cu:fine:group-hover/row:text-white">${plural(CATS[c].courses.length)}</span></a></li>`).join('')}</ul>
-    </section>`).join('');
-  return `<div class="cu:grid cu:grid-cols-5 cu:pt-[26px] cu:pr-3 cu:pb-[22px] cu:pl-[26px] cu:max-[1500px]:pl-[22px]">${cols}</div>
-    <aside class="${ASIDE} cu:gap-3 cu:py-[26px] cu:px-6" data-mega-col>
-      <p class="${KICKER} cu:tracking-[.1em]">Not sure where to start?</p>
-      <p class="cu:m-0 cu:[font:400_14px/1.5_var(--f)] cu:text-[#4A4038]">A counsellor will match you to a programme for your stage, with no pressure to enrol.</p>
-      ${buttonHTML({ href: '#contact', label: 'Talk to a counsellor', size: 'sm', iconEnd: 'arrow', fullWidth: true, className: 'cu:self-stretch cu:mt-1 cu:grid-cols-[minmax(0,1fr)_var(--btn-disc)]! cu:[&>:first-child]:col-start-1! cu:[&>:nth-child(2)]:col-start-2!', attrs: { 'data-mega-close': '' } })}
-      <a class="${ALL_LINK} cu:mt-auto" href="/coursefinder/" data-mega-close>View all ${total} courses${ARROW_SVG}</a>
-    </aside>`;
-}
 
 function studyMenu() {
   const cols = STUDY_MENU.map(([k, items], i) => {
@@ -266,9 +246,7 @@ export function initNavMenus() {
   if (!drawer || !burger) return;
   burger.addEventListener('click', () => setDrawer(drawer.hidden));
   $$('a', drawer).forEach(a => a.addEventListener('click', () => setDrawer(false)));
-  $('#mega').innerHTML = coursesMenu();
   $('#megaSm').innerHTML = studyMenu();
-  navMega($('#explore'), $('#exploreBtn'));
   navMega($('#studyNav'), $('#studyBtn'));
   addEventListener('keydown', e => { if (e.key === 'Escape') { setMega(false); setDrawer(false); } });
 }
@@ -318,7 +296,7 @@ export function initNavMore() {
   document.addEventListener('click', e => { if (isOpen() && !wrap.contains(e.target)) setOpen(false); });
   addEventListener('keydown', e => { if (e.key === 'Escape' && isOpen()) { setOpen(false); btn.focus(); } });
   wrap.addEventListener('focusout', e => { if (isOpen() && !wrap.contains(e.relatedTarget)) setOpen(false); });
-  ['#exploreBtn', '#studyBtn'].forEach(s => $(s)?.addEventListener('click', () => setOpen(false)));
+  $('#studyBtn')?.addEventListener('click', () => setOpen(false));
   addEventListener('resize', refit);
   document.addEventListener('langchange', refit);
   document.fonts?.ready.then(refit);

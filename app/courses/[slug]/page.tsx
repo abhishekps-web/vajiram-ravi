@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { notFound } from "next/navigation";
-import NavigationBar from "@/components/layout/NavigationBar/NavigationBar";
+import NavigationBar from "@/components/layout/NavigationBar";
 import Footer from "@/components/layout/Footer/Footer";
 import SectionLabel from "@/components/ui/SectionLabel";
 import Button from "@/components/ui/Button/Button";

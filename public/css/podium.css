@@ -499,7 +499,7 @@ html #toppers.pd, html main #toppers.pd { box-shadow: none; border-radius: 0; }
    reel under the heading and a closer "View all toppers" */
 html main #toppers.pd { padding-top: calc(var(--sec-y) * .7); padding-bottom: calc(var(--sec-y) * .7); }
 html #toppers .dr { margin-top: clamp(52px, 5vw, 72px); }
-html #toppers .dr__cta { margin-top: clamp(20px, 2vw, 28px); }
+html #toppers .dr__cta { margin-top: var(--hd-gap); }
 
 /* Toppers record, changing the person (user 2026-11-21, "more seamless"): the new portrait crossfades in over the old one (two stacked
    images, no blank gap), rising a little as it arrives while the old one sinks away, and the caption fades out and back in with it */
@@ -552,9 +552,9 @@ html #toppers .tp-row b { transition: color .4s var(--ease, ease); }
 html #toppers .tp-row .tp-badge { transition: background-color .4s var(--ease, ease), color .4s var(--ease, ease); }
 @media (prefers-reduced-motion: reduce) { html #toppers .tp-row, html #toppers .tp-row b, html #toppers .tp-row .tp-badge { transition: none; } }
 @media (max-width: 600px) {
-  html #toppers .tp-record { padding-inline: 0; margin-top: 4px; }
+  html #toppers .tp-record { padding-inline: 0; margin-top: var(--hd-gap); }
   html #toppers .tp-record > div { padding-inline: 8px; }
-  html #toppers .tp-frame { padding-inline: 12px; padding-top: 12px; margin-top: 4px; }
+  html #toppers .tp-frame { padding-inline: 12px; padding-top: 12px; }
   html #toppers .tp-frame::before { left: 4px; right: 4px; top: 54px; }
   html #toppers .tp-frame::after { left: 0; right: 0; }
 }
@@ -565,7 +565,7 @@ html #toppers .tp-row .tp-badge { transition: background-color .4s var(--ease, e
 @media (max-width: 900px) {
   html #toppers .tp-more-wrap { display: flex; justify-content: center; margin-top: 16px; }
   html #toppers .tp-more-wrap [hidden] { display: none; }
-  html #toppers .tp-list.is-clamped ul > li:nth-child(n+11) { display: none; }
+  html #toppers .tp-list.is-clamped ul > li:nth-child(n+6) { display: none; }
   html #toppers .tp-record .dr__h { scroll-margin-top: 96px; }
 }
 .dr__view.is-scroll { overflow-x: auto; overflow-y: hidden; scrollbar-width: none; overscroll-behavior-x: contain; touch-action: pan-x pan-y; -webkit-overflow-scrolling: touch; }

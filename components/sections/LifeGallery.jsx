@@ -1,8 +1,7 @@
 import { photoSrcSet } from '@/lib/photo';
 import Button from '@/components/ui/Button/Button';
 import Stylesheet from '@/components/ui/Stylesheet';
-import Tabs from '@/components/ui/Tabs/Tabs';
-import { initTabs } from '@/components/ui/Tabs/tabs-core';
+import Tabs, { initTabs } from '@/components/ui/Tabs';
 
 const P = '/assets/img/photos';
 export const LIFE = [

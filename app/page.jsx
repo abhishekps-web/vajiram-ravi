@@ -1,4 +1,4 @@
-import NavigationBar from '@/components/layout/NavigationBar/NavigationBar';
+import NavigationBar from '@/components/layout/NavigationBar';
 import Footer from '@/components/layout/Footer/Footer';
 import WhatsAppButton from '@/components/layout/WhatsAppButton/WhatsAppButton';
 import Hero from '@/components/sections/Hero/Hero';

@@ -2,7 +2,7 @@
 
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from "react";
 import Button from "@/components/ui/Button/Button";
-import ControlledTabs from "@/components/ui/Tabs/ControlledTabs";
+import { ControlledTabs } from "@/components/ui/Tabs";
 import IndianLink from "@/components/sections/Programmes/ui/IndianLink";
 import { coursePageHref, programmeCategories, type Programme, type ProgrammeCategory } from "@/components/sections/Programmes/data/programmes";
 import { cx } from "@/components/sections/Programmes/lib/cx";

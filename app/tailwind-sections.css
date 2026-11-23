@@ -4,7 +4,7 @@
      other Tailwind sheets (Programmes, Success stories `st:`, carousel dots `cd:`); unlayered; no preflight;
    - the breakpoints those components use (the site's are max-width ones).
    Imported by each component that uses it. A new section that joins: add its @source line here and use the `cu:` prefix.
-   Now: Contact us (components/sections/ContactUs.jsx), the navigation bar (components/layout/NavigationBar/NavigationBar.jsx) Why Vajiram & Ravi (components/sections/WhyChoose.jsx) Best IAS coaching (components/sections/BestCoaching.jsx) 50+ years (components/sections/Legacy/Legacy.jsx) Batches (components/sections/Batches.jsx) the Toppers year-by-year record (components/sections/Toppers.jsx) and Talk to us (components/sections/TalkToUs.jsx). */
+   Now: Contact us (components/sections/ContactUs.jsx), the navigation bar (components/layout/NavigationBar.jsx) Why Vajiram & Ravi (components/sections/WhyChoose.jsx) Best IAS coaching (components/sections/BestCoaching.jsx) 50+ years (components/sections/Legacy/Legacy.jsx) Batches (components/sections/Batches.jsx) the Toppers year-by-year record (components/sections/Toppers.jsx) and Talk to us (components/sections/TalkToUs.jsx). */
 
 @import "tailwindcss/theme.css" layer(theme) prefix(cu);
 @import "tailwindcss/utilities.css" source(none);
@@ -13,12 +13,13 @@
 @custom-variant stacked (@media (max-width: 860px));
 @custom-variant xs (@media (max-width: 640px));   /* phones and small tablets: the map above the details (beside them only from 641px) */
 @custom-variant fine (@media (hover: hover) and (pointer: fine));
-@source "../components/layout/NavigationBar/NavigationBar.jsx";
+@source "../components/layout/NavigationBar.jsx";
 @source "../components/sections/WhyChoose.jsx";
 @source "../components/sections/BestCoaching.jsx";
 @source "../components/sections/Legacy/Legacy.jsx";
 @source "../components/sections/Batches.jsx";
 @source "../components/sections/Toppers.jsx";
+@source "../components/sections/ToppersRecord.jsx";
 @source "../components/sections/TalkToUs.jsx";
 @source "../components/sections/Stories.jsx";
 
