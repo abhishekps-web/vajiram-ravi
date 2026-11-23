@@ -11,7 +11,7 @@ const Ico = ({ d }) => (
 
 const CENTRE = {
   address: '1-B/7, Pusa Road, Old Rajinder Nagar, New Delhi 110060',
-  near: 'Next to Gate 5 of Karol Bagh Metro Station, near pillar 103',
+  near: ['Next to Gate 5 of Karol Bagh Metro Station,', 'near pillar 103'],
   hours: 'Mon – Sat, 9 am – 7 pm',
   phone: { label: '080-6220-6330', href: 'tel:+918062206330' },
   email: 'admissions@vajiramandravi.com',
@@ -29,13 +29,13 @@ const DETAILS = [
   'cu:flex cu:flex-col cu:min-w-0',
   'cu:stacked:grid cu:stacked:grid-cols-[minmax(0,240px)_minmax(0,1fr)] cu:stacked:gap-x-[28px] cu:stacked:content-start cu:xs:flex',
 ].join(' ');
-const BADGE = 'cu:self-start cu:justify-self-start cu:m-0 cu:px-[9px] cu:py-[2px] cu:border cu:border-solid cu:border-[rgba(204,85,0,.45)] cu:rounded-full cu:text-[#9A3412] cu:[font:700_10.5px/1.4_var(--f)] cu:tracking-[.1em] cu:uppercase';
-const ADDRESS = 'cu:mt-[12px] cu:mb-0 cu:font-(family-name:--f-title) cu:font-normal cu:text-[clamp(23px,1.9vw,27px)] cu:leading-[1.22] cu:tracking-[-.01em] cu:text-(--ink) cu:[text-wrap:balance]';
-const NEAR = 'cu:mt-[10px] cu:mb-0 cu:[font:400_14.5px/1.5_var(--f)] cu:text-(--body)';
-const HOURS = 'cu:mt-[6px] cu:mb-0 cu:[font:500_14.5px/1.5_var(--f)] cu:text-(--ink)';
-const META = 'cu:flex cu:flex-col cu:gap-[10px] cu:mt-[18px] cu:mb-0 cu:pt-[18px] cu:px-0 cu:pb-0 cu:border-0 cu:[border-top:1px_solid_#eadbc4] cu:list-none cu:xs:gap-0 cu:xs:mt-[16px] cu:xs:pt-[6px]';
+const BADGE = 'cu:self-start cu:justify-self-start cu:m-0 cu:text-[#E57512] cu:[font:700_13px/1.2_var(--f)] cu:tracking-[.08em] cu:uppercase';
+const ADDRESS = 'cu:mt-[10px] cu:mb-0 cu:font-(family-name:--f-title) cu:font-normal cu:text-[clamp(24px,2vw,28px)] cu:leading-[1.2] cu:tracking-[-.01em] cu:text-(--ink) cu:[text-wrap:balance]';
+const NEAR = 'cu:mt-[8px] cu:mb-0 cu:[font:400_15px/1.5_var(--f)] cu:text-(--body)';
+const HOURS = 'cu:mt-[14px] cu:mb-0 cu:[font:600_15px/1.5_var(--f)] cu:text-(--ink)';
+const META = 'cu:flex cu:flex-col cu:gap-[12px] cu:mt-[20px] cu:mb-0 cu:pt-[20px] cu:px-0 cu:pb-0 cu:border-0 cu:[border-top:1px_solid_#eadbc4] cu:list-none cu:xs:gap-0 cu:xs:mt-[16px] cu:xs:pt-[6px]';
 const LINK = [
-  'cu:inline-flex cu:items-center cu:gap-[8px] cu:pb-px cu:xs:min-h-[40px] cu:xs:gap-[10px] cu:[font:500_14.5px/1.3_var(--f)] cu:text-(--ink) cu:no-underline',
+  'cu:inline-flex cu:items-center cu:gap-[8px] cu:pb-px cu:xs:min-h-[40px] cu:xs:gap-[10px] cu:[font:600_16.5px/1.3_var(--f)] cu:text-(--ink) cu:no-underline',
   'cu:bg-[linear-gradient(currentColor,currentColor)] cu:bg-no-repeat cu:bg-[position:0_100%] cu:bg-[length:0_1px]',
   'cu:[transition:color_.2s_ease,background-size_.3s_cubic-bezier(.22,1,.36,1)] cu:motion-reduce:transition-none',
   'cu:hover:text-(--brand) cu:hover:bg-[length:100%_1px] cu:focus-visible:text-(--brand) cu:focus-visible:bg-[length:100%_1px]',
@@ -61,7 +61,7 @@ export default function ContactUs() {
           </div>
           <p className={BADGE}>New Delhi centre</p>
           <h3 className={ADDRESS}>{CENTRE.address}</h3>
-          <p className={NEAR}>{CENTRE.near}</p>
+          <p className={NEAR}>{CENTRE.near.map(line => <span key={line} className="cu:block">{line}</span>)}</p>
           <p className={HOURS}>{CENTRE.hours}</p>
           <ul className={META}>
             <li><a className={LINK} href={CENTRE.phone.href} aria-label={`Call us on ${CENTRE.phone.label}`}><Ico d={PHONE} /><span>{CENTRE.phone.label}</span></a></li>

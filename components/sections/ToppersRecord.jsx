@@ -55,7 +55,7 @@ export default function ToppersRecord() {
         </div>
         <div className="tp-frame cu:relative cu:mt-(--hd-in) cu:p-[clamp(32px,3.2vw,46px)] cu:pt-[clamp(14px,1.6vw,22px)] cu:rounded-(--r-form) cu:before:absolute cu:before:inset-[12px] cu:before:top-[calc(clamp(14px,1.6vw,22px)+46px)] cu:before:pointer-events-none cu:before:border-2 cu:before:border-t-0 cu:before:border-solid cu:before:border-[rgba(194,65,12,.55)] cu:before:[mask-image:linear-gradient(180deg,transparent,#000_45%)]">
           <p className="dr__h"><span data-year-head>{`${RECORD[0].people.length} Ranks, UPSC CSE ${RECORD[0].y}`}</span></p>
-          <div className="cu:grid cu:grid-cols-[minmax(0,300px)_minmax(0,1fr)] cu:max-[1100px]:grid-cols-[minmax(0,270px)_minmax(0,1fr)] cu:max-[900px]:grid-cols-1 cu:gap-[clamp(20px,3vw,40px)] cu:items-start cu:mt-(--hd-lbl) cu:[--col:406px]">
+          <div className="cu:grid cu:grid-cols-[minmax(0,1fr)_minmax(0,300px)] cu:max-[1100px]:grid-cols-[minmax(0,1fr)_minmax(0,270px)] cu:max-[900px]:grid-cols-1 cu:gap-[clamp(20px,3vw,40px)] cu:items-start cu:mt-(--hd-lbl) cu:[--col:406px]">
             <div id="tpList" data-lenis-prevent className="tp-list cu:max-h-(--col) cu:overflow-y-auto cu:-ml-[6px] cu:pl-[6px] cu:pr-[10px] cu:[mask-image:linear-gradient(180deg,#000_90%,transparent)]">
               {RECORD.map((g, gi) => (
                 <ul key={g.y} data-y={g.y} hidden={gi !== 0} className="cu:m-0 cu:p-0 cu:list-none cu:grid cu:gap-0">
@@ -63,8 +63,8 @@ export default function ToppersRecord() {
                     <li key={p.r + p.n} className="cu:[border-bottom:1px_solid_rgba(120,80,40,.16)] cu:last:[border-bottom:0]">
                       <div className={ROW} role="button" tabIndex={0} data-src={p.src} data-n={p.n} data-r={p.r} data-c={p.c || `UPSC CSE ${g.y}`}>
                         <img src={p.src} alt="" width="40" height="40" loading="lazy" decoding="async" className="cu:hidden cu:max-[900px]:block cu:shrink-0 cu:size-[40px] cu:rounded-full cu:object-cover cu:object-top cu:bg-[#F4EDE3] cu:[box-shadow:0_0_0_2px_rgba(194,65,12,.35)]" />
+                        <span className="tab__n tp-badge cu:shrink-0 cu:whitespace-nowrap cu:min-w-[68px] cu:text-center" aria-label={`All India Rank ${p.r}`}>AIR {p.r}</span>
                         <b className="cu:block cu:min-w-0 cu:[font:600_clamp(16px,1.3vw,18px)/1.3_var(--f)] cu:text-(--ink)">{p.n}</b>
-                        <span className="tab__n tp-badge cu:shrink-0 cu:whitespace-nowrap" aria-label={`All India Rank ${p.r}`}>AIR {p.r}</span>
                       </div>
                     </li>
                   ))}
@@ -72,7 +72,7 @@ export default function ToppersRecord() {
               ))}
             </div>
             <div className="tp-more-wrap"><Button variant="link" iconEnd="chevron" data-more aria-expanded="false" hidden>Show all names</Button></div>
-            <div className="tp-pane cu:[--shield:min(350px,calc((var(--col)-150px)*.88))] cu:max-[1100px]:[--shield:min(290px,calc((var(--col)-150px)*.88))] cu:sticky cu:top-[calc(var(--hdr-h)+16px)] cu:h-(--col) cu:flex cu:items-center cu:justify-center cu:gap-[clamp(20px,2.4vw,36px)] cu:text-left cu:text-(--ink) cu:max-[900px]:hidden" aria-live="polite">
+            <div className="tp-pane cu:order-first cu:[--shield:min(350px,calc((var(--col)-150px)*.88))] cu:max-[1100px]:[--shield:min(290px,calc((var(--col)-150px)*.88))] cu:sticky cu:top-[calc(var(--hdr-h)+16px)] cu:h-(--col) cu:flex cu:items-center cu:justify-center cu:gap-[clamp(20px,2.4vw,36px)] cu:text-left cu:text-(--ink) cu:max-[900px]:hidden" aria-live="polite">
               <div className="dr__fig cu:mt-[28px]" style={{ '--dw': 'var(--shield)', '--dh': 'calc(var(--shield) * 1.24089)' }}>
                 <span className="tp-laurel" aria-hidden="true" />
                 <span className="dr__gem" aria-hidden="true" />
@@ -220,12 +220,10 @@ export function initToppersRecord() {
     startedAt = performance.now();
     autoT = setTimeout(step, left);
   };
-  const hold = () => { held = true; pauseView(); };
-  const release = () => { held = false; resumeView(); };
-  rec.addEventListener('pointerenter', hold);
-  rec.addEventListener('pointerleave', release);
-  rec.addEventListener('focusin', hold);
-  rec.addEventListener('focusout', release);
+  let focused = false;
+  const sync = () => { if (focused === held) return; held = focused; if (held) pauseView(); else resumeView(); };
+  rec.addEventListener('focusin', e => { focused = e.target.matches(':focus-visible'); sync(); });
+  rec.addEventListener('focusout', e => { if (!rec.contains(e.relatedTarget)) { focused = false; sync(); } });
   list.addEventListener('click', arm);
   list.addEventListener('keydown', arm);
   if ('IntersectionObserver' in window) new IntersectionObserver(es => { const was = visible; visible = es[0].isIntersecting; if (visible && !was) resumeView(); else if (!visible) pauseView(); }, { threshold: .35 }).observe(rec); else { visible = true; arm(); }

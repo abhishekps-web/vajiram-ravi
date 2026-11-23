@@ -76,7 +76,7 @@ const REASONS = [
 
 const CARD = [
   'cu:group cu:relative cu:flex cu:flex-col cu:h-full cu:p-[26px] cu:rounded-(--r-card) cu:text-[#5a4632]',
-  'cu:bg-[#FBF7EC] cu:[box-shadow:0_1px_2px_rgba(40,25,10,.08),0_10px_24px_-14px_rgba(40,25,10,.28)]',
+  'cu:paper-card',
 ].join(' ');
 
 export default function WhyChoose() {
@@ -97,12 +97,12 @@ export default function WhyChoose() {
           {REASONS.map((r) => (
             <li key={r.t} className="cu:min-w-0 cu:max-[640px]:flex-[0_0_82%] cu:max-[640px]:snap-start">
               <article className={CARD}>
-                <span aria-hidden="true" className="cu:grid cu:place-items-center cu:flex-none cu:size-[56px] cu:rounded-full cu:bg-white cu:[box-shadow:inset_0_0_0_1.5px_rgba(194,65,12,.18)] cu:text-(--brand)">
+                <span aria-hidden="true" className="cu:grid cu:place-items-center cu:flex-none cu:size-[56px] cu:rounded-full cu:bg-white cu:text-(--brand)">
                   <svg aria-hidden="true" viewBox="0 0 48 48" className="cu:size-[30px] cu:fill-none cu:stroke-(--brand) cu:[stroke-width:3] cu:[stroke-linecap:round] cu:[stroke-linejoin:round]">{ICONS[r.icon]}</svg>
                 </span>
                 <div className="cu:pt-[18px]">
-                  <h3 className="cu:m-0 cu:[font:400_clamp(24px,2vw,30px)/1.15_var(--f-title)] cu:tracking-[-.01em] cu:text-[#2A2016]">{r.t}</h3>
-                  <p className="cu:mt-[8px] cu:mb-0 cu:text-[clamp(15px,1.15vw,17px)] cu:leading-[1.65] cu:text-[#5a4632]">{r.d}</p>
+                  <h3 className="cu:m-0 cu:[font:600_22px/1.2_var(--f-title)] cu:tracking-[-.015em] cu:text-[#2A2016]">{r.t}</h3>
+                  <p className="cu:mt-[8px] cu:mb-0 cu:text-[14.5px] cu:leading-[1.5] cu:text-[#5a4632]">{r.d}</p>
                 </div>
               </article>
             </li>

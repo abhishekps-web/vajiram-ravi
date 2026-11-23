@@ -63,13 +63,17 @@
 }
 
 /* the postcard: cream card stock with a faint fibre grain and a printed edge */
+:root { --paper: linear-gradient(135deg, rgba(255, 255, 255, .55), rgba(255, 255, 255, 0) 45%), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .36 0 0 0 0 .2 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E"), #FBF7EC; }
+
 @utility postcard-paper {
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, .55), rgba(255, 255, 255, 0) 45%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .36 0 0 0 0 .2 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E"),
-    #FBF7EC;
+  background: var(--paper);
   box-shadow: 0 0 0 1px rgba(120, 95, 55, .16), inset 0 0 0 1px rgba(255, 255, 255, .7), 0 1px 1px rgba(40, 25, 10, .18),
     0 6px 10px -4px rgba(40, 25, 10, .3), 0 26px 30px -18px rgba(40, 25, 10, .5);
+}
+
+@utility paper-card {
+  background: var(--paper);
+  box-shadow: 0 0 0 1px rgba(120, 95, 55, .16), inset 0 0 0 1px rgba(255, 255, 255, .7), 0 1px 2px rgba(40, 25, 10, .04), 0 6px 16px -12px rgba(40, 25, 10, .14);
 }
 
 /* the eyebrow is the shared SectionLabel, so its reveal is stated here rather than on its markup */
