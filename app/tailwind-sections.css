@@ -4,22 +4,23 @@
      other Tailwind sheets (Programmes, Success stories `st:`, carousel dots `cd:`); unlayered; no preflight;
    - the breakpoints those components use (the site's are max-width ones).
    Imported by each component that uses it. A new section that joins: add its @source line here and use the `cu:` prefix.
-   Now: Contact us (components/sections/ContactUs/ContactUs.jsx), the navigation bar (components/layout/NavigationBar/NavigationBar.jsx) Why Vajiram & Ravi (components/sections/WhyChoose/WhyChoose.jsx) Best IAS coaching (components/sections/BestCoaching/BestCoaching.jsx) 50+ years (components/sections/Legacy/Legacy.jsx) Batches (components/sections/Batches/Batches.jsx) the Toppers year-by-year record (components/sections/Toppers/Toppers.jsx) and Talk to us (components/sections/TalkToUs/TalkToUs.jsx). */
+   Now: Contact us (components/sections/ContactUs.jsx), the navigation bar (components/layout/NavigationBar/NavigationBar.jsx) Why Vajiram & Ravi (components/sections/WhyChoose.jsx) Best IAS coaching (components/sections/BestCoaching.jsx) 50+ years (components/sections/Legacy/Legacy.jsx) Batches (components/sections/Batches.jsx) the Toppers year-by-year record (components/sections/Toppers.jsx) and Talk to us (components/sections/TalkToUs.jsx). */
 
 @import "tailwindcss/theme.css" layer(theme) prefix(cu);
 @import "tailwindcss/utilities.css" source(none);
-@source "../components/sections/ContactUs/ContactUs.jsx";
+@source "../components/sections/ContactUs.jsx";
 
 @custom-variant stacked (@media (max-width: 860px));
 @custom-variant xs (@media (max-width: 640px));   /* phones and small tablets: the map above the details (beside them only from 641px) */
 @custom-variant fine (@media (hover: hover) and (pointer: fine));
 @source "../components/layout/NavigationBar/NavigationBar.jsx";
-@source "../components/sections/WhyChoose/WhyChoose.jsx";
-@source "../components/sections/BestCoaching/BestCoaching.jsx";
+@source "../components/sections/WhyChoose.jsx";
+@source "../components/sections/BestCoaching.jsx";
 @source "../components/sections/Legacy/Legacy.jsx";
-@source "../components/sections/Batches/Batches.jsx";
-@source "../components/sections/Toppers/Toppers.jsx";
-@source "../components/sections/TalkToUs/TalkToUs.jsx";
+@source "../components/sections/Batches.jsx";
+@source "../components/sections/Toppers.jsx";
+@source "../components/sections/TalkToUs.jsx";
+@source "../components/sections/Stories.jsx";
 
 @property --fs { syntax: '<percentage>'; inherits: true; initial-value: 120%; }
 @property --fb { syntax: '<percentage>'; inherits: true; initial-value: 120%; }
@@ -45,3 +46,124 @@
 
 :root { --f-hi: "Tiro Devanagari Hindi", "Mukta", var(--f); }
 @keyframes nav-lang-in { from { opacity: 0; transform: translateY(-10px); } }
+
+/* ===== Success stories (#stories, components/sections/Stories.jsx): its utilities are `cu:` like every section here; below, what a utility cannot say cleanly: the section states, the postcard paper, the keyframes and the phone stack ===== */
+/* section states, set by stories.js: `waiting` until the section scrolls in (only when JS runs, so the page reads without it),
+   `dealt` once it has; `dimmed` is every other postcard while one is hovered or focused (real pointers only) */
+/* hover as the section always had it: a plain :hover (the default also requires @media (hover: hover)) */
+@custom-variant sthover (&:hover);
+@custom-variant waiting (html.js #stories:not([data-in]) &);
+@custom-variant dealt (#stories[data-in] &);
+@custom-variant dimmed {
+  @media (hover: hover) and (pointer: fine) {
+    #tcar:has(.pst:hover) &:not(:hover), #tcar:has(.pst:focus-within) &:not(:focus-within) { @slot; }
+  }
+}
+
+/* the postcard: cream card stock with a faint fibre grain and a printed edge */
+@utility postcard-paper {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, .55), rgba(255, 255, 255, 0) 45%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .36 0 0 0 0 .2 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E"),
+    #FBF7EC;
+  box-shadow: 0 0 0 1px rgba(120, 95, 55, .16), inset 0 0 0 1px rgba(255, 255, 255, .7), 0 1px 1px rgba(40, 25, 10, .18),
+    0 6px 10px -4px rgba(40, 25, 10, .3), 0 26px 30px -18px rgba(40, 25, 10, .5);
+}
+
+/* the eyebrow is the shared SectionLabel, so its reveal is stated here rather than on its markup */
+html.js #stories:not([data-in]) > .lbl { opacity: 0; }
+@media (prefers-reduced-motion: no-preference) { #stories[data-in] > .lbl { animation: st-fade .7s ease both; } }
+
+/* the track slides left by exactly one of its two identical sets, so the loop has no seam */
+@keyframes st-slide { to { transform: translate3d(-50%, 0, 0); } }
+/* the heading rises out of its masked line */
+@keyframes st-line { 0% { transform: translateY(105%); } }
+@keyframes st-fade { 0% { opacity: 0; transform: translateY(8px); } }
+/* each postcard is dealt onto the table: rises, tilts and settles with a spring */
+@keyframes st-deal { 0% { opacity: 0; transform: translateY(110px) rotate(var(--from-r, 8deg)) scale(.9); } 40% { opacity: 1; } 100% { transform: none; } }
+
+/* the postcards' shadows (and their tilt / hover lift) reach below the track; the track only needs to crop sideways, where the
+   loop slides past (user 2026-11-16: "the shadow gets clipped"). Where overflow: clip is supported the track crops the x axis
+   alone and lets the shadows fall below it, so the tighter gap to Faculty stays. Older browsers keep overflow: hidden. */
+@supports (overflow: clip) {
+  #tcar { overflow: visible; overflow-x: clip; }
+}
+
+/* =====================================================================================================================
+   PHONES (760px and narrower, user 2026-11-17): the loop becomes a stack of cards instead of an auto-scrolling track.
+   One card in front, the next two peeking out behind it, tilted alternately; swipe the front card away or use the arrows.
+   stories.js sets --p (0 = front) on every card and --sg (+1 / -1) for the tilt side. Unlayered, so these win over the
+   `st:` utilities on the cards (hover scale, tilt, the deal animation) without touching them on larger screens.
+   ===================================================================================================================== */
+.tstack-nav { display: none; }
+@media (max-width: 760px) {
+  #stories { overflow-x: clip; }
+  #tcar {
+    overflow: visible; -webkit-mask-image: none; mask-image: none;
+    margin-inline: 0; padding: 28px 0 8px; margin-bottom: 0;
+    touch-action: pan-y;
+  }
+  #tcar > :first-child {            /* the track: every card on the same grid cell, no slide */
+    display: grid; width: 100%; animation: none; transform: none; will-change: auto;
+    padding-bottom: 36px;           /* room for the cards peeking out below the front one */
+  }
+  #tcar .pst {
+    --q: min(var(--p, 0), 2);
+    grid-area: 1 / 1; justify-self: center; align-self: start;
+    width: min(360px, 88vw); margin: 0;
+    z-index: calc(10 - var(--q)); transform-origin: 50% 100%;
+    rotate: calc(var(--sg, 1) * var(--q) * 2.5deg + var(--srd, 0deg));
+    translate: var(--sdx, 0px) calc(var(--q) * 16px);
+    scale: calc(1 - var(--q) * .05);
+    opacity: 1; filter: brightness(calc(1 - var(--q) * .03)); animation: none;
+    transition: rotate .9s cubic-bezier(.22,1,.36,1), translate .9s cubic-bezier(.22,1,.36,1), scale .9s cubic-bezier(.22,1,.36,1);
+    pointer-events: none; cursor: grab;
+  }
+  /* the Tailwind sheet is unlayered and its dealt-in animation is more specific than these rules: switch it off for good here
+     (it restarted whenever a card left .is-in / .is-out, which made the card flash and fade back in) */
+  #tcar .pst:not(.is-out):not(.is-in) { animation: none !important; }
+  /* phones: the card grows with its quote instead of cropping it at a fixed ratio; every card takes the height of the tallest,
+     so the stack stays one shape (the label, quote and name flow in a column instead of being placed absolutely) */
+  #tcar .pst { align-self: stretch; }
+  #tcar .pst > div { height: 100%; aspect-ratio: auto; display: flex; flex-direction: column; padding: 18px 24px 20px; box-sizing: border-box; }
+  #tcar .pst > div > p { position: static; margin: 0 0 12px; }
+  #tcar .pst blockquote { position: static; inset: auto; flex: 1 1 auto; overflow: visible; }
+  #tcar .pst footer { position: static; inset: auto; margin-top: 14px; }
+  #tcar .pst.is-front { pointer-events: auto; }
+  #tcar .pst.is-gone { visibility: hidden; }
+  #tcar .pst.is-drag { transition: none; cursor: grabbing; }
+  /* the front card slips out to the side, drops behind the stack and settles at the back; the card behind it rises meanwhile
+     (its --p changes at once and transitions). Previous does the reverse with the card from the back. */
+  #tcar .pst.is-out { animation: st-behind 1s linear both; }
+  #tcar .pst.is-in { animation: st-ahead 1s .3s linear both; }
+  #tcar .pst:hover, #tcar .pst:focus-within { z-index: calc(10 - var(--q)); }
+  #tcar .pst.is-front:hover { scale: 1; }
+  /* the entrance moves to the stack itself (the cards' own deal animation would pin their opacity) */
+  html.js #stories:not([data-in]) #tcar { opacity: 0; }
+  @media (prefers-reduced-motion: no-preference) { #stories[data-in] #tcar { animation: st-fade .8s .2s ease both; } }
+
+  .tstack-nav { display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: 18px; }
+  /* the arrows are the site's Button (outline, sm, icon-only; Stories.jsx), styled by public/css/buttons.css only */
+  .tstack-count { font: 600 14px/1 var(--f); letter-spacing: .06em; color: rgba(27, 42, 82, .7); min-width: 4.5em; text-align: center; }
+  .tstack-count b { color: #1B2A52; }
+}
+@media (max-width: 760px) and (prefers-reduced-motion: reduce) {
+  #tcar .pst { transition-duration: 0s; }
+  #tcar .pst.is-out, #tcar .pst.is-in { animation: none; }
+}
+/* the card leaves the stack completely (sideways, past the other cards), changes layer while it is clear of them, then
+   slides back in behind: it never passes through a card. The section clips the sideways overshoot (#stories, below). */
+@keyframes st-behind {
+  0%   { z-index: 10; visibility: visible; opacity: 1; scale: 1; translate: var(--sdx, 0px) 0; rotate: var(--srd, 0deg); animation-timing-function: cubic-bezier(.3, 0, .2, 1); }
+  45%  { z-index: 10; visibility: visible; opacity: 1; scale: .97; translate: calc(var(--dir, 1) * 108%) -8px; rotate: calc(var(--dir, 1) * 9deg); }
+  46%  { z-index: 0; animation-timing-function: cubic-bezier(.4, 0, .2, 1); }
+  70%  { z-index: 0; visibility: visible; opacity: 1; }
+  100% { z-index: 0; visibility: visible; opacity: 1; scale: .9; translate: 0 32px; rotate: calc(var(--sg, 1) * 5deg); }
+}
+@keyframes st-ahead {
+  0%   { z-index: 0; visibility: visible; opacity: 1; scale: .9; translate: 0 32px; rotate: calc(var(--sg, 1) * 5deg); animation-timing-function: cubic-bezier(.3, 0, .2, 1); }
+  30%  { z-index: 0; visibility: visible; opacity: 1; }
+  54%  { z-index: 0; visibility: visible; opacity: 1; scale: .97; translate: calc(var(--dir, -1) * 108%) -8px; rotate: calc(var(--dir, -1) * 9deg); }
+  55%  { z-index: 10; animation-timing-function: cubic-bezier(.4, 0, .2, 1); }
+  100% { z-index: 10; visibility: visible; opacity: 1; scale: 1; translate: 0 0; rotate: 0deg; }
+}

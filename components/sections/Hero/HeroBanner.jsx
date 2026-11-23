@@ -6,7 +6,7 @@ import SectionLabel from '@/components/ui/SectionLabel';
 import { $, reduce } from '@/lib/site';
 import CoverArt from '@/components/sections/Programmes/CoverArt';
 import { programmes } from '@/components/sections/Programmes/data/programmes';
-import { BATCHES } from '@/components/sections/Batches/Batches';
+import { BATCHES } from '@/components/sections/Batches';
 
 const EXAM = 'UPSC CSE 2025';
 

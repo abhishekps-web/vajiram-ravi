@@ -1,6 +1,6 @@
 // Results (parked section, hidden): four key-number cards in #kcards.
 import { $, esc, ico } from '@/lib/site';
-import { YEARS, top10 } from '@/components/sections/Toppers/Toppers';
+import { YEARS, top10 } from '@/components/sections/Toppers';
 
 export function initResultCards() {
   const faces = l => `<span class="kc__faces">${l.map(p => `<img src="${esc(p.src)}" alt="" loading="lazy">`).join('')}</span>`;

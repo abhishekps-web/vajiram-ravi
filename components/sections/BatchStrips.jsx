@@ -1,5 +1,5 @@
 import Stylesheet from '@/components/ui/Stylesheet';
-import { BATCHES, BYEAR } from '@/components/sections/Batches/Batches';
+import { BATCHES, BYEAR } from '@/components/sections/Batches';
 
 // ============ BATCH STRIPS: one straight orange ribbon that runs across the page, announcing the next batches (the idea of the
 // "Admissions open" strips on the reference homepage, kept to a single level ribbon). The items come from the batch tickets' data (Batches/Batches.jsx), so a new batch

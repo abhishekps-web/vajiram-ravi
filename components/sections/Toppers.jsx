@@ -290,8 +290,7 @@ function ToppersRecord() {
       <div className="tp-sheet" data-sheet hidden>
         <div className="tp-sheet__scrim" data-sheet-close />
         <div className="tp-sheet__panel" role="dialog" aria-modal="true" aria-label="Topper details" data-lenis-prevent>
-          <span className="tp-sheet__grab" data-sheet-grab aria-hidden="true" />
-          <Button variant="outline" size="sm" iconOnly iconStart="close" label="Close" className="tp-sheet__x" data-sheet-close />
+          <Button variant="ghost" size="sm" iconOnly iconStart="close" label="Close" className="tp-sheet__x" data-sheet-close />
           <div className="tp-pane tp-sheet__body">
             <div className="dr__fig" style={{ '--dw': 'min(210px, 54vw)', '--dh': 'calc(min(210px, 54vw) * 1.24089)' }}>
               <span className="tp-laurel" aria-hidden="true" />

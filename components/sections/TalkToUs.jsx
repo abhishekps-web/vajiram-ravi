@@ -2,7 +2,7 @@ import Button from '@/components/ui/Button/Button';
 import SectionLabel from '@/components/ui/SectionLabel';
 import { $, $$, esc, PHONE, SITE } from '@/lib/site';
 import { CATS } from '@/lib/data/courses';
-import { BATCHES } from '@/components/sections/Batches/Batches';
+import { BATCHES } from '@/components/sections/Batches';
 import { setButtonLoading } from '@/components/ui/Button/button-core';
 import '@/app/tailwind-sections.css';
 

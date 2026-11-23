@@ -3,7 +3,7 @@ import { prefersReducedMotion } from "@/components/sections/Programmes/lib/motio
 /**
  * Brings this site's counsellor form (#contact, components/sections/Contact) into view and puts the focus in its name field.
  * With a `programme` (e.g. the flagship card's "Enquire") it also chooses that programme in the form's programme list, the
- * same way every [data-prog] link on this site does (components/sections/TalkToUs/TalkToUs.jsx, initTalkToUs): the option is added if the
+ * same way every [data-prog] link on this site does (components/sections/TalkToUs.jsx, initTalkToUs): the option is added if the
  * list does not have it, and a change event lets the form's own dropdown (components/ui/custom-select.js) follow.
  *
  * (soloboy dispatched a "vr:enquire" event to its own counselling postcard; this site's form is the Contact section.)

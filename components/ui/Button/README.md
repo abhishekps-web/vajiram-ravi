@@ -77,7 +77,7 @@ Values come from the existing buttons (audit, 2026-11-13); the only new colour i
 | **white** | the primary CTA in white (user 2026-11-20): white pill, ink text, brand disc `#C2410C` with a white arrow, faint brand edge; hover sand | no edge, deeper shadow | Programmes: "View course" on a hovered book |
 | **secondary** | ink pill `#161412`, white text, flame disc `#E57512`; hover `#000` | (same) | Closing "Find your course", Why cards, dialog close |
 | **outline** | transparent, 1.5px brand edge at 45%, brand text; hover brand edge + 8% brand tint | translucent, white edge, white text | Toppers "Show all" · onDark: intro "Skip" |
-| **ghost** | no fill, ink text; hover 8% brand tint, brand text | white text, white tint | (available: quiet / toolbar actions) |
+| **ghost** | no fill, ink text; hover 8% brand tint, brand text; icon-only: the bare icon, muted ink, soft ink tint on hover | white text, white tint | (available: quiet / toolbar actions) |
 | **link** | Newsreader 600, brand text, arrow; hover: underline draws in, arrow slides 5px, text `--brand-d` | `#FFD48A` | View all batches, Free resources actions, Call us / Email us |
 | **destructive** | danger red `#B42318` pill; hover `#8F1D13` | white pill, red text | (available: delete / cancel) |
 | **fab** | raised 56px circle (52px on phones), one icon; the label slides out on hover / keyboard focus | | WhatsApp (green through tokens) |

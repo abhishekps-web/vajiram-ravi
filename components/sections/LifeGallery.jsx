@@ -1,13 +1,71 @@
-/* Life at Vajiram & Ravi (#lifeGal, LifeGallery.jsx; styles public/css/life-gallery.css), ported from Kevin's branch
-   (js/life-gallery.js) as is: a row of photo and video cards that scrolls sideways, snaps to
-   a card and loops: copies of the shown cards sit before and after them, and whenever the row comes to rest among the copies it is
-   moved, unseen, by exactly one set to the same picture among the originals. Tabs above it show all the cards, only the images or
-   only the videos (the copies are made again for each). The arrows move it a card at a time. It no longer glides on by itself (DRIFT = false, user
-   2026-11-16); the drift code below stays, switched off. A video card plays muted and looping while most of it is on screen. With
-   prefers-reduced-motion nothing moves or plays on its own. A video with an empty data-src is a placeholder: its poster stands in. */
+import { photoSrcSet } from '@/lib/photo';
+import Button from '@/components/ui/Button/Button';
+import Stylesheet from '@/components/ui/Stylesheet';
+import Tabs from '@/components/ui/Tabs/Tabs';
 import { initTabs } from '@/components/ui/Tabs/tabs-core';
 
-export default function initLifeGallery() {
+const P = '/assets/img/photos';
+export const LIFE = [
+  { vid: true, poster: `${P}/footer-classroom.webp`, src: '', label: 'Video: a full classroom for an Indian Polity lecture', name: 'In the classroom', detail: 'Indian Polity lecture, Old Rajinder Nagar' },
+  { img: `${P}/why-2-faculty.webp`, alt: 'A Vajiram & Ravi professor teaching a General Studies class', w: 1536, h: 1024, pos: '62% 30%', name: 'Our faculty', detail: 'Specialists for every General Studies paper' },
+  { img: `${P}/campus-entrance.webp`, alt: 'The institute entrance with the Vajiram & Ravi sign', w: 900, h: 1600, pos: '50% 32%', name: 'The entrance', detail: 'Next to Gate 5, Karol Bagh Metro' },
+  { img: `${P}/why-3-guidance.webp`, alt: 'A mentor going through a study plan with an aspirant', w: 1536, h: 1024, pos: '45% 40%', name: 'Mentoring', detail: 'A study plan, kept on track' },
+  { img: `${P}/why-4-study-material.webp`, alt: 'Vajiram & Ravi study material, test series sheets and notes on a desk', w: 1536, h: 1024, name: 'Study material', detail: 'Notes and test series for every stage' },
+  { vid: true, poster: `${P}/why-5-location-800.webp`, src: '', label: 'Video: aspirants walking in to the campus in Old Rajinder Nagar', name: 'Arriving for class', detail: 'Old Rajinder Nagar, New Delhi' },
+  { img: `${P}/building-hd.webp`, alt: 'The Vajiram & Ravi building seen from the street', w: 2240, h: 1685, pos: '40% 50%', name: 'The building', detail: '1-B/7, Pusa Road' },
+  { img: `${P}/why-6-classroom-online.webp`, alt: 'A Vajiram & Ravi classroom with the lecture streaming live to online students', w: 1536, h: 1024, pos: '50% 40%', name: 'Classroom + LIVE-Online', detail: 'The same teachers and the same tests' },
+  { img: `${P}/campus-hd.webp`, alt: 'The Vajiram & Ravi campus gate and building at Old Rajinder Nagar', w: 2000, h: 1334, pos: '62% 50%', name: 'The campus', detail: 'Old Rajinder Nagar since 1976' },
+];
+
+const VIDEO_ICON = (
+  <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
+    <path className="lg__vi-play" d="M8 5.5v13l11-6.5z" fill="currentColor" />
+    <g className="lg__vi-pause" fill="currentColor"><rect x="6.5" y="5.5" width="4" height="13" rx="1" /><rect x="13.5" y="5.5" width="4" height="13" rx="1" /></g>
+  </svg>
+);
+
+export default function LifeGallery() {
+  return (
+    <section className="lgal" id="lifeGal" aria-labelledby="lifeH">
+      <Stylesheet href="/css/life-gallery.css" />
+      <div className="lg__hd">
+        <h2 className="lg__h rv" id="lifeH" style={{ '--d': '.05s' }}>Life at Vajiram &amp; Ravi</h2>
+      </div>
+      <div className="lg__rail">
+        <span className="lg__smoke lg__smoke--l" aria-hidden="true" />
+        <span className="lg__smoke lg__smoke--r" aria-hidden="true" />
+        <span className="lg__arw lg__prev"><Button variant="outline" size="sm" iconOnly iconStart="arrow-left" label="Previous photo" /></span>
+        <span className="lg__arw lg__next"><Button variant="outline" size="sm" iconOnly iconStart="arrow" label="Next photo" /></span>
+        <ul className="lg__track" id="lifeTrack" aria-labelledby="lifeH">
+          {LIFE.map(c => (
+            <li key={c.name} className={`lg__slide${c.vid ? ' lg__slide--vid' : ''}`}>
+              <figure className="lg__media">
+                {c.vid ? (
+                  <>
+                    <video poster={c.poster} data-src={c.src} muted loop playsInline preload="none" aria-label={c.label} />
+                    <Button variant="outline" size="sm" iconOnly iconStart={VIDEO_ICON} label={`Play video: ${c.name}`} className="lg__vctl" data-vctl="" />
+                  </>
+                ) : (
+                  <img src={c.img} srcSet={photoSrcSet(c.img, c.w)} sizes="(max-width: 760px) 80vw, 260px" alt={c.alt} width={c.w} height={c.h} loading="lazy" decoding="async" style={c.pos ? { objectPosition: c.pos } : undefined} />
+                )}
+              </figure>
+              <p className="lg__cap"><b>{c.name}</b><span>{c.detail}</span></p>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <Tabs
+        className="lg__tabs rv"
+        style={{ '--d': '.1s' }}
+        label="Show"
+        controls="lifeTrack"
+        items={[{ id: 'all', label: 'All' }, { id: 'img', label: 'Images' }, { id: 'vid', label: 'Videos' }]}
+      />
+    </section>
+  );
+}
+
+export function initLifeGallery() {
   const gal = document.getElementById('lifeGal'); if (!gal) return;
   const track = gal.querySelector('.lg__track'); if (!track) return;
   const slides = [...track.querySelectorAll('.lg__slide')]; if (slides.length < 2) return;
@@ -17,22 +75,17 @@ export default function initLifeGallery() {
 
   slides.forEach((s, k) => s.style.setProperty('--td', Math.min(k, 4) * 0.08 + 's'));
 
-  // where the row must scroll to for a card to sit at its start (the track's padding lines the first child up with the heading)
   const cards = () => [...track.children].filter(s => !s.hidden);
-  // the curved row (user 2026-11-16) centres a card, so this is the scroll that brings a card's middle to the middle of the row
   const rel = s => s.offsetLeft - cards()[0].offsetLeft + (parseFloat(getComputedStyle(track).paddingLeft) || 0) + s.offsetWidth / 2 - track.clientWidth / 2;
   const firstOriginal = () => slides.find(s => !s.hidden);
 
-  // ---- the loop: copies of the shown cards either side ----
   const build = () => {
     track.querySelectorAll('.is-copy').forEach(c => c.remove());
     const shown = slides.filter(s => !s.hidden); if (!shown.length) { setW = 0; return; }
     const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
     const last = shown[shown.length - 1];
     setW = last.offsetLeft + last.offsetWidth + gap - shown[0].offsetLeft;
-    // enough copies each side that a screen's width of cards is always there to scroll into
     const n = Math.max(1, Math.ceil(track.clientWidth / setW));
-    // the copies show the same files as the originals (already fetched), so they need not wait to come near the screen
     const copy = s => { const c = s.cloneNode(true); c.classList.add('is-copy'); c.setAttribute('aria-hidden', 'true'); c.inert = true; c.querySelectorAll('img').forEach(i => { i.loading = 'eager'; }); return c; };
     for (let k = 0; k < n; k++) {
       track.prepend(...shown.map(copy));
@@ -43,13 +96,7 @@ export default function initLifeGallery() {
     watchVideos();
     curve();
   };
-  // ---- the curve (user 2026-11-16, after a curved image gallery): the row is seen as the inside of a cylinder. Each card is turned
-  // towards the middle and brought closer the further its centre is from the middle of the row (t: -1 at the left edge, 0 in the
-  // middle, 1 at the right edge), so the middle card is the smallest and flat-on, and the ones at the edges are larger and angled in,
-  // their outer sides tallest. The cards stay where the row lays them out; only how they are drawn changes, as the row scrolls. ----
   const ANG = 30, NEAR = 150, PERSP = 1300;   // degrees of turn, px brought closer, and the viewing distance, at the row's edges
-  // phones (760px and narrower, user 2026-11-17, "simplify it on mobile, for performance and accessibility"): one card is on screen at a
-  // time, so the row is flat there: no turn, depth or re-spacing worked out on every scroll frame, only which card is in the middle
   const flat = matchMedia('(max-width: 760px)');
   let cf = 0;
   function curve() {
@@ -63,12 +110,6 @@ export default function initLifeGallery() {
       return;
     }
     const wid = all.map(s => s.offsetWidth), G = parseFloat(getComputedStyle(track).columnGap) || 0;
-    // Even gaps (user 2026-11-16, "make the gap consistent"): a turned card's near edge grows and its far edge shrinks, and a wide video
-    // card swings out further than a photo, so with the cards' centres evenly laid out the gaps between what is seen came out uneven.
-    // So each card's drawn left and right edges are worked out (the same turn, depth and viewing distance as drawn), the cards are laid
-    // edge to edge with the row's gap G between them, and the whole run is slid so the point at the middle of the row stays where it was
-    // (this follows the scroll smoothly). Each card is then moved sideways by the difference. Done twice, as the turn depends on where
-    // a card ends up.
     const T = x => Math.max(-1.6, Math.min(1.6, (x - half) / half));
     const edges = (w, t) => { const a = -t * ANG * Math.PI / 180, z = t * t * NEAR, e = x => x * Math.cos(a) * PERSP / (PERSP - (z - x * Math.sin(a)));
       return [e(-w / 2), e(w / 2)]; };
@@ -83,7 +124,6 @@ export default function initLifeGallery() {
       const off = half - (u[k] + f * ((u[k + 1] ?? u[k]) - u[k]));
       at = u.map(v => v + off);
     }
-    // only the card nearest the middle of the row shows its caption (user 2026-11-16, "just need the text label for the centre items")
     let mid = 0; ts.forEach((t, k) => { if (Math.abs(t) < Math.abs(ts[mid])) mid = k; });
     all.forEach((s, k) => {
       const t = ts[k];
@@ -94,7 +134,6 @@ export default function initLifeGallery() {
   track.addEventListener('scroll', () => { if (!cf) cf = requestAnimationFrame(curve); }, { passive: true });
   flat.addEventListener('change', () => curve());
 
-  // back among the originals, to the same picture (one set over looks exactly the same)
   const normalise = () => {
     if (!setW) return;
     const base = rel(firstOriginal()), x = track.scrollLeft;
@@ -105,18 +144,9 @@ export default function initLifeGallery() {
 
   const to = left => { moving = true; clearTimeout(moveT); moveT = setTimeout(() => { moving = false; }, 1200);   // the drift waits for the glide (at most 1.2 s)
     track.scrollTo({ left, behavior: auto ? 'smooth' : 'auto' }); };
-  // cards differ in width (videos are wider), so step by each card's own position; each step starts from among the originals, so
-  // there is always a card to go to either side
-  // the row drifts, so it is usually between two cards: an arrow goes to the next card more than half a card away, never a nudge
   const next = () => { normalise(); const x = track.scrollLeft, h = cards()[0].offsetWidth / 2, p = cards().map(rel).find(v => v > x + h); if (p !== undefined) to(p); };
   const prev = () => { normalise(); const x = track.scrollLeft, h = cards()[0].offsetWidth / 2, b = cards().map(rel).filter(v => v < x - h); if (b.length) to(b[b.length - 1]); };
 
-  // ---- the drift (user 2026-11-16, "keep the carousel running at a slow speed without stopping"): instead of a step every few
-  // seconds, the row glides left without a pause, SPEED px a second, round and round (one set on, it is moved back by one set, which
-  // looks the same). It stops while the mouse is over the row (user 2026-11-16, "should stop moving when hovered"), so a picture can
-  // be looked at, and glides on from there when the mouse leaves. It gives way only while something else moves the row: an arrow's
-  // glide to a card, or a hand on it (a drag, a swipe, a trackpad), and carries on from wherever that leaves it. It rests while the
-  // gallery is off screen or the tab is hidden (nobody sees it), and never runs with prefers-reduced-motion. ----
   const SPEED = 26;
   let px = 0, lastSet = -1, held = false, hovered = false, raf = 0, prevT = 0;
   const drift = now => {
@@ -153,25 +183,19 @@ export default function initLifeGallery() {
       if (e.key === 'ArrowLeft') { prev(); schedule(); e.preventDefault(); }
     }
   });
-  // once the row comes to rest it is put back among the originals; a scroll by hand (swipe, trackpad) also restarts the count
   track.addEventListener('scroll', () => {
     if (jumping) { jumping = false; return; }
     clearTimeout(settle);
     settle = setTimeout(() => { normalise(); if (!moving) schedule(); moving = false; }, 140);
   }, { passive: true });
 
-  // videos (copies included): play while most of the card is on screen and the gallery is in view
   let vids = [];
-  // a video someone paused with its button (data-held) stays paused when it comes back on screen; one they played with it plays even
-  // with reduced motion, until it leaves the screen
   const syncVideos = () => vids.forEach(o => {
     if (!o.src) return;
     const want = (auto || o.v.dataset.asked) && inView && o.seen && !document.hidden && !o.v.dataset.held;
     if (want) { if (!o.v.src) o.v.src = o.src; o.v.play().catch(() => {}); }
     else o.v.pause();
   });
-  // the play / pause button on each video card (user 2026-11-17, "video controls are missing"; LifeGallery.jsx .lg__vctl): it shows
-  // pause while the video plays and play while it does not, and says so (its label names the card)
   const ctlState = v => {
     const b = v.closest('.lg__media')?.querySelector('.lg__vctl'); if (!b) return;
     const on = !v.paused, name = b.getAttribute('aria-label').replace(/^(Play|Pause) video/, '').trim();
@@ -198,8 +222,6 @@ export default function initLifeGallery() {
     vids.forEach(o => vio.observe(o.v));
   }
 
-  // All / Images / Videos: the brand pill slides to the chosen tab; the row fades out, keeps only those cards (with their copies),
-  // starts again from the first and fades back in
   const tabBar = gal.querySelector('.lg__tabs');
   if (tabBar) {
     let cur = 'all', swapT = 0;
@@ -215,11 +237,9 @@ export default function initLifeGallery() {
       track.classList.add('is-sw');
       swapT = setTimeout(() => { apply(f); track.classList.remove('is-sw'); syncVideos(); schedule(); }, 200);
     };
-    // the shared tab bar (components/ui/Tabs) moves the pill, marks the tab and handles the keys
     initTabs(tabBar, { onSelect: pick });
   }
 
-  // the card widths follow the screen, so the copies are made again when it changes size
   let rw = track.clientWidth, rT = 0;
   addEventListener('resize', () => { clearTimeout(rT); rT = setTimeout(() => { if (track.clientWidth !== rw) { rw = track.clientWidth; build(); } else curve(); }, 150); });
 
@@ -230,7 +250,6 @@ export default function initLifeGallery() {
     syncVideos(); schedule();
   }, { threshold: .3 }).observe(track);
   document.addEventListener('visibilitychange', () => { syncVideos(); schedule(); });
-  // only someone reading with the keyboard holds it; a mouse click keeps it going
 
   if (!auto) gal.classList.add('is-in');
 }

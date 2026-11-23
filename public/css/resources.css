@@ -1,5 +1,5 @@
 /* ============ Free resources (#resources): each card is a manila file folder from the editorial desk
-   (components/sections/Resources/Resources.jsx .rf, the resources themselves ResourceMock.jsx .rmk).
+   (components/sections/Resources.jsx .rf, .rmk).
    Back to front: the folder's back with a coloured index tab (.rf__back, .rf__tab), the resource sticking out of it (.rmk), and the
    front flap with the copy and a rubber "Free" stamp (.rf__front, .rf__stamp). The kin of the toppers' magazine, the batches' tickets
    and the students' postcards. Motion: as the cards rise in, each resource slides up out of its folder (.rise, staggered by --i); on
@@ -247,7 +247,7 @@
   #resources .rf:hover .rmk__obj { transform: translateY(-18px) rotate(-2deg); transition-delay: 0s; }
 }
 
-/* the lift and float of the resource are driven by resource-float.js (one eased value per card), so CSS no longer transitions or
+/* the lift and float of the resource are driven by Resources.jsx (one eased value per card), so CSS no longer transitions or
    sets its transform; the folder's tilt, shadow, tab and stamp keep their soft CSS eases */
 #resources .rmk__obj { transition: opacity .6s var(--ease), translate .8s var(--ease); }
 @media (hover: hover) and (pointer: fine) { #resources .rf:hover .rmk__obj { transform: none; } }
@@ -268,7 +268,7 @@
 #resources .rf__front { padding-bottom: 26px; }
 #resources .rf .sm__act { margin-top: auto; align-self: flex-start; --btn-shadow: 0 0 0 0 transparent; --btn-shadow-hover: 0 0 0 0 transparent; }   /* no shadow on the CTA (user 2026-11-16) */
 
-/* the whole folder is clickable (resource-links.js) */
+/* the whole folder is clickable (Resources.jsx) */
 #resources .rf { cursor: pointer; }
 
 /* Same content hierarchy as the batch tickets (user 2026-11-16): a small uppercase tag in the folder's colour, the serif title
@@ -293,7 +293,7 @@
 #resources .rf__back::after { top: 106px; height: 46px; }   /* foot at the front flap (back top 30px + 106 + 46 = the flap at 182px) */
 
 /* Hovering anywhere on the folder plays the CTA's own hover (user 2026-11-16): the same states as `.btn:hover` (buttons.css): the
-   fill, the label roll, the arrow swap and the disc. The whole card is the link (resource-links.js), so the button answers it. */
+   fill, the label roll, the arrow swap and the disc. The whole card is the link (Resources.jsx), so the button answers it. */
 @media (hover: hover) and (pointer: fine) {
   #resources .rf:hover .sm__act { color: var(--btn-fg-hover); box-shadow: var(--btn-edge-hover), var(--btn-shadow-hover); }
   #resources .rf:hover .sm__act::before { opacity: 1; }
@@ -327,7 +327,8 @@
 #resources .rf .sm__act { --btn-bg: rgba(255, 252, 244, .76); --btn-bg-hover: rgba(255, 252, 244, .76);
   --btn-edge: inset 0 0 0 1px rgba(120, 70, 20, .16); --btn-edge-hover: inset 0 0 0 1px rgba(120, 70, 20, .16); }   /* no colour change on hover (user 2026-11-16): the label roll and the disc still play */
 
-/* the dot indicator under the row of folders, on phones only (user 2026-11-17; Resources.jsx .sm__dots, resource-dots.js): the site's
-   carousel dots on a light ground (CarouselDots tone light), centred under the row in the room its bottom padding leaves */
-#resources .sm__dots { display: none; }
-@media (max-width: 640px) { #resources .sm__dots { display: flex; justify-content: center; margin: -14px 0 0; } }
+/* the previous / next arrows under the row of folders, on phones only: the Batches rail's arrows (.cbtn), centred under the row in the room its bottom padding leaves */
+#resources .sm__nav { display: none; }
+@media (max-width: 640px) { #resources .sm__nav { display: flex; justify-content: center; gap: 12px; margin: -14px 0 0; } }
+
+html main #resources { position: relative; z-index: 2; }

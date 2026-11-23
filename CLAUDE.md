@@ -50,7 +50,7 @@ public/
 ## How a section is put together
 
 - **Markup**: `<Section>.jsx` is a static server component. Shared markup comes from `components/ui` (`SectionLabel`, `ArrowIcon`, `Dialog`) — reuse those rather than copying markup.
-- **Content**: lists and copy that a behaviour renders, or that repeats, live in the section's `data.js` (e.g. `Faq/data.js`, `Faculties/data/educators.ts`, `Resources/data.jsx`). Editing content means editing data only.
+- **Content**: lists and copy that a behaviour renders, or that repeats, live in the section's `data.js` (e.g. `Faq/data.js`, `Faculties.tsx` (its data)). Editing content means editing data only.
 - **Behaviour**: the section's `*.js` modules export `init…()` functions that work on the server-rendered DOM (they build lists, bind events, animate). Register a new one in `lib/behaviour.js` at the right point in the sequence. They run once, in the browser, after hydration; React never re-renders those nodes, so they may change them freely.
 - **Buttons**: every button and button-styled link is `<Button>` (`components/ui/Button/Button.jsx`) or, in a behaviour, `buttonHTML()` (`button-core.js`); its look lives only in `public/css/buttons.css`. `shadow={false}` (`buttonHTML({ shadow: false })`) turns the drop shadow off (`.btn--flat`; the header's "Let's talk" uses it). Pick a variant/size, never restyle: section rules may only place a button (margin, position, display) or override its `--btn-*` tokens. Reference: `components/ui/Button/README.md`.
 - **Never change the DOM before hydration** (a script that does breaks it: render that markup in a component instead and have the behaviour find it).
@@ -122,7 +122,7 @@ The client wants **every section and every element animated**. For any change to
   Hero ground (user 2026-11-20, replacing the orange brand ground of 2026-11-16): the header band (`.nav-band`) and the hero
   (`.dl__ground`) paint the sections' `--ground-jaali`, the hero's tile continuing the band's (end of `v49.css`); the nav items are
   their usual colours at rest, and the stats are ink on it (end of `hero-stats.css`). The batch ribbon above the header was removed
-  (user 2026-11-16; `--strip-h` is 0, `components/sections/BatchStrips/` is unused). The promo banner carousel under the stats was
+  (user 2026-11-16; `--strip-h` is 0, `components/sections/BatchStrips.jsx` is unused). The promo banner carousel under the stats was
   removed (user 2026-11-20). Simple scroll (user 2026-11-20): the hero no longer pins, dims or shrinks while Programmes slides over
   it; both scroll with the page (end of `v49.css`).
 - Life at Vajiram & Ravi (`#lifeGal`, `LifeGallery/`, styles `public/css/life-gallery.css`): on the hero's ground, `--ground-beige` (user 2026-11-21, replacing the orange ground and grain; the override block at the end of its sheet). The hero's results pill with the running topper names was removed (user 2026-11-21); in its place the hero copy opens with a
@@ -148,11 +148,11 @@ The client wants **every section and every element animated**. For any change to
   pane with the rank in gold; phones show a photo in each row instead of the pane; the rows are hover-only, not clickable; the list scrolls on its own: `data-lenis-prevent`; photo pane on the left). Ground: the hero's `--ground-beige` (user 2026-11-21), its text in ink and brand orange and the record a white card;
   a faint grain (200px, soft-light, 45%; end of `podium.css`).
 - Success stories sit one layer above Faculty (`#stories` z-index 2, end of `v49.css`) so a hovered postcard's shadow is not cut off.
-- Success stories on phones (user 2026-11-17, 760px and narrower): the postcards are a stack (one card in front, two peeking behind; swipe, arrows, or ← →) instead of the loop. Logic `components/ui/card-stack.js`; styles at the end of `Stories/stories.css`.
-- Success stories (`#stories`, user 2026-11-13) is also styled with Tailwind v4: `Stories/stories.css` is its entry, with utilities
-  generated from that folder only and **prefixed `st:`** (so they never collide with Programmes' sheet), no preflight, plus its
+- Success stories on phones (user 2026-11-17, 760px and narrower): the postcards are a stack (one card in front, two peeking behind; swipe, arrows, or ← →) instead of the loop. Logic `components/ui/card-stack.js`; styles at the end of `sections/stories.css`.
+- Success stories (`#stories`, user 2026-11-13) is also styled with Tailwind v4: `Stories.jsx` takes the shared `cu:` entry (`app/tailwind-sections.css`, which also holds its states, keyframes and phone stack), with utilities
+  generated from that folder only and prefixed `cu:`, no preflight, plus its
   keyframes, the `postcard-paper` utility and the `waiting` / `dealt` / `dimmed` variants. The postcards are server-rendered
-  from `Stories/data.js` (`POSTCARDS`), portraits through `next/image`; `stories.js` only adds the reveal, the tilt and the
+  from `Stories.jsx` (`POSTCARDS`), portraits through `next/image`; `initStories` (same file) only adds the reveal, the tilt and the
   off-screen pause. Its section shell (padding, ground, eyebrow, `.h2`) stays in `public/css` like every other section's.
 - Why Vajiram & Ravi (`#story`, user 2026-11-20, replacing the pinned photographic scene and its story.js / story.css): one file,
   `WhyChoose/WhyChoose.jsx`, Tailwind `cu:` utilities (`app/tailwind-sections.css`). A centred heading over six cards in a plain grid,

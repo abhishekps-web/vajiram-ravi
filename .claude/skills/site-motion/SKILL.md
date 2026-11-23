@@ -7,7 +7,7 @@ description: Animation rules for the Vajiram & Ravi site. The client wants every
 
 The client requirement: **nothing on this site appears or responds without motion.** Every section has an entrance, every element inside it is revealed, and everything a person can point at answers the pointer. Apply this to whatever the current task touches, then run the audit below.
 
-> The site is a Next.js app: each section is a folder in `components/sections/<Section>/` (markup, `data.js`, behaviour modules), composed in `app/page.jsx`; site-wide motion is in `lib/motion/` and runs in the order set by `lib/behaviour.js`. Paths below: `css/…` is `public/css/…`; `js/content.js` is now split into the section behaviour modules, `js/page-motion.js` and `js/scroll.js` are `lib/motion/`, and `js/toppers.js` is `components/sections/Toppers/toppers.js`.
+> The site is a Next.js app: each section is a file (or, for the multi-file ones, a folder) in `components/sections/` (markup, `data.js`, behaviour modules), composed in `app/page.jsx`; site-wide motion is in `lib/motion/` and runs in the order set by `lib/behaviour.js`. Paths below: `css/…` is `public/css/…`; `js/content.js` is now split into the section behaviour modules, `js/page-motion.js` and `js/scroll.js` are `lib/motion/`, and `js/toppers.js` is `components/sections/Toppers/toppers.js`.
 
 ## 1. The checklist (apply to everything you add or change)
 

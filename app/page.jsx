@@ -3,17 +3,17 @@ import Footer from '@/components/layout/Footer/Footer';
 import WhatsAppButton from '@/components/layout/WhatsAppButton/WhatsAppButton';
 import Hero from '@/components/sections/Hero/Hero';
 import Programmes from '@/components/sections/Programmes/Programmes';
-import Toppers from '@/components/sections/Toppers/Toppers';
-import WhyChoose from '@/components/sections/WhyChoose/WhyChoose';
-import Batches from '@/components/sections/Batches/Batches';
-import Faculties from '@/components/sections/Faculties/Faculties';
-import Stories from '@/components/sections/Stories/Stories';
-import TalkToUs from '@/components/sections/TalkToUs/TalkToUs';
-import Resources from '@/components/sections/Resources/Resources';
-import LifeGallery from '@/components/sections/LifeGallery/LifeGallery';
-import ContactUs from '@/components/sections/ContactUs/ContactUs';
+import Toppers from '@/components/sections/Toppers';
+import WhyChoose from '@/components/sections/WhyChoose';
+import Batches from '@/components/sections/Batches';
+import Faculties from '@/components/sections/Faculties';
+import Stories from '@/components/sections/Stories';
+import TalkToUs from '@/components/sections/TalkToUs';
+import Resources from '@/components/sections/Resources';
+import LifeGallery from '@/components/sections/LifeGallery';
+import ContactUs from '@/components/sections/ContactUs';
 import Faq from '@/components/sections/Faq/Faq';
-import Closing from '@/components/sections/Closing/Closing';
+import Closing from '@/components/sections/Closing';
 import CourseCatalogDialog from '@/components/dialogs/CourseCatalogDialog';
 
 // The homepage: the sections in page order. Each section owns its markup, data, styles and behaviour in
