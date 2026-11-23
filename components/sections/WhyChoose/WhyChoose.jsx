@@ -13,48 +13,53 @@ const PHOTO = { src: '/assets/img/photos/institute-exterior.webp', alt: 'The Vaj
 const ICONS = {
   medal: (
     <>
-      <path d="M8 2.5l4 6.5 4-6.5" />
-      <circle cx="12" cy="15" r="6" />
-      <path d="M10.6 13l1.6-1.1v6.1" />
+      <path d="M27 3h10L27 20l-6-3Z" fill="#C23B30" />
+      <path d="M11 3h10l9 16-7 2Z" fill="#E2574C" />
+      <circle cx="24" cy="31" r="14" fill="#EEC45E" />
+      <circle cx="24" cy="31" r="9.5" fill="#D9AE4F" />
+      <circle cx="24" cy="31" r="6.5" fill="#EEC45E" />
     </>
   ),
   board: (
     <>
-      <path d="M3 4h18v11H3Z" />
-      <path d="M6 8h6M6 11h4" />
-      <circle cx="17" cy="8" r="1.5" />
-      <path d="M14.5 13.5c.3-2 1.2-3 2.5-3s2.2 1 2.5 3" />
-      <path d="M8 20l2-5M16 20l-2-5" />
+      <path d="M12 23v9c0 3.5 5.4 7 12 7s12-3.5 12-7v-9l-12 6Z" fill="#4A6FA5" />
+      <path d="M24 7 46 18 24 29 2 18Z" fill="#2F4B7C" />
+      <path d="M41 20v12" stroke="#EEC45E" strokeWidth="2.4" strokeLinecap="round" />
+      <circle cx="41" cy="35" r="3" fill="#EEC45E" />
     </>
   ),
   mentor: (
     <>
-      <circle cx="8" cy="7.5" r="2.5" />
-      <path d="M3.5 20c0-4 2-6 4.5-6s4.5 2 4.5 6" />
-      <circle cx="17" cy="11" r="2" />
-      <path d="M14 20c0-3 1.4-4.5 3-4.5S20 17 20 20" />
-      <path d="M13.5 4.5h6M17.5 2.5l2 2-2 2" />
+      <circle cx="31" cy="17" r="5.5" fill="#F2C6A0" />
+      <path d="M21 41c0-8 4.5-12 10-12s10 4 10 12Z" fill="#2F4B7C" />
+      <circle cx="16" cy="13" r="7" fill="#F2C6A0" />
+      <path d="M3 42c0-10 5.5-16 13-16s13 6 13 16Z" fill="#E8730C" />
+      <path d="M38 4l1.4 2.8 3.1.5-2.2 2.2.5 3.1L38 11l-2.8 1.6.5-3.1-2.2-2.2 3.1-.5Z" fill="#EEC45E" />
     </>
   ),
   notes: (
     <>
-      <path d="M6 3h9l4 4v14H6Z" />
-      <path d="M15 3v4h4" />
-      <path d="M9 12.5l1.5 1.5L13.5 11M9 17.5h7" />
+      <rect x="5" y="31" width="38" height="10" rx="2.5" fill="#E2574C" />
+      <rect x="8" y="20" width="32" height="10" rx="2.5" fill="#EEC45E" />
+      <rect x="6" y="9" width="34" height="10" rx="2.5" fill="#4A6FA5" />
+      <path d="M11 36h12M14 25h12M12 14h12" stroke="#FFF1D6" strokeWidth="2" strokeLinecap="round" />
     </>
   ),
   place: (
     <>
-      <path d="M12 22s7.5-6.4 7.5-12A7.5 7.5 0 0 0 4.5 10c0 5.6 7.5 12 7.5 12Z" />
-      <path d="M9 13V8.5l3-1.8 3 1.8V13Z" />
-      <path d="M11 13v-2.2h2V13M8 13h8" />
+      <ellipse cx="24" cy="43.5" rx="10" ry="2.5" fill="#E6D3AE" />
+      <path d="M24 3C16 3 10 9 10 17c0 10 14 26 14 26s14-16 14-26C38 9 32 3 24 3Z" fill="#E2574C" />
+      <circle cx="24" cy="17" r="6.5" fill="#FFF1D6" />
     </>
   ),
   live: (
     <>
-      <rect x="3" y="4" width="18" height="12" rx="1.5" />
-      <path d="M8 20h8M12 16v4" />
-      <path d="m10.5 8 4 2-4 2V8Z" />
+      <rect x="4" y="7" width="40" height="28" rx="3.5" fill="#3A4F7A" />
+      <rect x="7.5" y="10.5" width="33" height="21" rx="1.5" fill="#CFE3FF" />
+      <path d="M20 15.5 33 21l-13 5.5Z" fill="#E8730C" />
+      <circle cx="37" cy="14" r="2.2" fill="#E2574C" />
+      <rect x="21" y="35" width="6" height="5" fill="#8A97B0" />
+      <rect x="14" y="39" width="20" height="4" rx="2" fill="#3A4F7A" />
     </>
   ),
 };
@@ -92,7 +97,7 @@ export default function WhyChoose() {
             <li key={r.t} className="cu:min-w-0">
               <article className={CARD}>
                 <span aria-hidden="true" className="cu:grid cu:place-items-center cu:flex-none cu:size-[60px] cu:rounded-full cu:bg-[#FFF8EA] cu:text-(--brand)">
-                  <svg aria-hidden="true" viewBox="0 0 24 24" className="cu:size-[30px] cu:fill-none cu:stroke-current cu:[stroke-width:1.5] cu:[stroke-linecap:round] cu:[stroke-linejoin:round]">{ICONS[r.icon]}</svg>
+                  <svg aria-hidden="true" viewBox="0 0 48 48" className="cu:size-[38px]">{ICONS[r.icon]}</svg>
                 </span>
                 <div className="cu:pt-[18px]">
                   <h3 className="cu:m-0 cu:[font:400_clamp(24px,2vw,30px)/1.15_var(--f-title)] cu:tracking-[-.01em] cu:text-[#2A2016]">{r.t}</h3>

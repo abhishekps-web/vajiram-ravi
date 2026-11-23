@@ -248,7 +248,7 @@ function ToppersRecord() {
           </div>
           <Tabs className="tp-yrs cu:self-center" label="Year of the examination" controls="tpList" items={RECORD.map(g => ({ id: String(g.y), label: g.y }))} />
         </div>
-        <div className="cu:relative cu:mt-[clamp(10px,1.2vw,14px)] cu:p-[clamp(32px,3.2vw,46px)] cu:rounded-(--r-form) cu:before:absolute cu:before:inset-[12px] cu:before:top-[calc(clamp(32px,3.2vw,46px)+38px)] cu:before:pointer-events-none cu:before:border-[16px] cu:before:border-t-0 cu:before:border-solid cu:before:border-transparent cu:before:[border-image:url(/assets/img/patterns/frame.svg)_16_/_1_/_0_stretch]">
+        <div className="tp-frame cu:relative cu:mt-[clamp(10px,1.2vw,14px)] cu:p-[clamp(32px,3.2vw,46px)] cu:rounded-(--r-form) cu:before:absolute cu:before:inset-[12px] cu:before:top-[calc(clamp(32px,3.2vw,46px)+38px)] cu:before:pointer-events-none cu:before:border-2 cu:before:border-t-0 cu:before:border-solid cu:before:border-[rgba(194,65,12,.55)] cu:before:[mask-image:linear-gradient(180deg,transparent,#000_45%)]">
           <p className="dr__h"><span data-year-head>{`${RECORD[0].people.length} Ranks, UPSC CSE ${RECORD[0].y}`}</span></p>
           <div className="cu:grid cu:grid-cols-[minmax(0,300px)_minmax(0,1fr)] cu:max-[1100px]:grid-cols-[minmax(0,270px)_minmax(0,1fr)] cu:max-[900px]:grid-cols-1 cu:gap-[clamp(20px,3vw,40px)] cu:items-start cu:mt-[clamp(10px,1.2vw,14px)] cu:[--col:clamp(340px,calc(100svh_-_260px),700px)]">
             <div id="tpList" data-lenis-prevent className="tp-list cu:max-h-(--col) cu:overflow-y-auto cu:-ml-[6px] cu:pl-[6px] cu:pr-[10px] cu:[mask-image:linear-gradient(180deg,#000_90%,transparent)]">
@@ -295,18 +295,20 @@ export function initToppersRecord() {
   const name = $('[data-name]', pane), cap = $('[data-cap]', pane), rank = $('[data-rank]', pane), meta = $('[data-meta]', pane);
   let front = $('[data-shot]', pane), back = $('[data-shot-back]', pane);
   let cur = null, token = 0;
+  const bar = document.createElement('i');
+  bar.className = 'tp-prog'; bar.setAttribute('aria-hidden', 'true'); bar.innerHTML = '<b></b>';
   const wait = ms => new Promise(r => setTimeout(r, reduce ? 0 : ms));
   const preload = src => { const img = new Image(); img.src = src; return img.decode ? img.decode().catch(() => {}) : new Promise(r => { img.onload = img.onerror = r; }); };
   const show = (row, instant) => {
     if (!row || row === cur) return;
     if (cur) cur.removeAttribute('aria-current');
-    cur = row; row.setAttribute('aria-current', 'true');
+    cur = row; row.setAttribute('aria-current', 'true'); row.appendChild(bar);
     const mine = ++token, src = row.dataset.src;
     const text = () => { name.textContent = row.dataset.n; cap.textContent = row.dataset.c; rank.textContent = row.dataset.r; };
     if (instant) { text(); return; }
     meta.classList.add('is-swap');
     const photo = front.getAttribute('src') === src ? Promise.resolve() : preload(src);
-    Promise.all([photo, wait(150)]).then(() => {
+    Promise.all([photo, wait(220)]).then(() => {
       if (mine !== token) return;
       text();
       if (front.getAttribute('src') !== src) {
@@ -320,6 +322,53 @@ export function initToppersRecord() {
   list.addEventListener('click', e => show(e.target.closest('.tp-row')));
   list.addEventListener('keydown', e => { if (e.key !== 'Enter' && e.key !== ' ') return; const row = e.target.closest('.tp-row'); if (!row) return; e.preventDefault(); show(row); });
   show($('ul:not([hidden]) .tp-row', list), true);
+
+  let held = false, visible = false, autoT = 0, startedAt = 0, left = 6000;
+  const STEP = 6000;
+  const step = () => {
+    autoT = 0;
+    if (!held && visible && !document.hidden && pane.offsetParent) {
+      const rows = $$('ul:not([hidden]) .tp-row', list);
+      const next = rows[(rows.indexOf(cur) + 1) % rows.length];
+      if (next) {
+        show(next);
+        const lt = list.getBoundingClientRect(), rt = next.getBoundingClientRect();
+        if (rt.top < lt.top || rt.bottom > lt.bottom) list.scrollTo({ top: list.scrollTop + rt.top - lt.top - 8, behavior: reduce ? 'auto' : 'smooth' });
+      }
+    }
+    arm();
+  };
+  bar.style.setProperty('--step', STEP + 'ms');
+  const arm = () => {
+    clearTimeout(autoT); autoT = 0;
+    if (reduce) return;
+    bar.classList.remove('is-run', 'is-paused'); void bar.offsetWidth;
+    if (!visible) return;
+    if (!held) bar.classList.add('is-run');
+    left = STEP; startedAt = performance.now();
+    autoT = setTimeout(step, STEP);
+  };
+  const pauseView = () => {
+    if (!autoT) return;
+    left = Math.max(0, left - (performance.now() - startedAt));
+    clearTimeout(autoT); autoT = 0;
+    bar.classList.add('is-paused');
+  };
+  const resumeView = () => {
+    if (reduce || held || autoT) return;
+    if (!bar.classList.contains('is-run')) { arm(); return; }
+    bar.classList.remove('is-paused');
+    startedAt = performance.now();
+    autoT = setTimeout(step, left);
+  };
+  const hold = () => { held = true; clearTimeout(autoT); autoT = 0; bar.classList.remove('is-run', 'is-paused'); };
+  rec.addEventListener('pointerenter', hold);
+  rec.addEventListener('pointerleave', () => { held = false; arm(); });
+  rec.addEventListener('focusin', hold);
+  rec.addEventListener('focusout', () => { held = false; arm(); });
+  list.addEventListener('click', arm);
+  list.addEventListener('keydown', arm);
+  if ('IntersectionObserver' in window) new IntersectionObserver(es => { const was = visible; visible = es[0].isIntersecting; if (visible && !was) resumeView(); else if (!visible) pauseView(); }, { threshold: .35 }).observe(rec); else { visible = true; arm(); }
 
   const yearHead = $('[data-year-head]', rec);
   initTabs($('.tp-yrs', rec), { onSelect: id => {

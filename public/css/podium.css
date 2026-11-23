@@ -486,14 +486,12 @@ html #toppers.pd, html main #toppers.pd { box-shadow: none; border-radius: 0; }
   #toppers .tp-list::-webkit-scrollbar-thumb:active { background-color: #C2410C; }
 }
 
-/* the record list's scrollbar: no track, the thumb shown only while the list scrolls or the pointer is over it (user 2026-11-21) */
-#toppers .tp-list { scrollbar-color: transparent transparent; }
-#toppers .tp-list:hover, #toppers .tp-list.is-scrolling { scrollbar-color: rgba(194, 65, 12, .55) transparent; }
+/* the record list's scrollbar: always visible, no track (user 2026-11-23) */
+#toppers .tp-list { scrollbar-color: rgba(194, 65, 12, .55) transparent; }
 @supports selector(::-webkit-scrollbar) {
-  #toppers .tp-list, #toppers .tp-list:hover, #toppers .tp-list.is-scrolling { scrollbar-color: auto; }
+  #toppers .tp-list { scrollbar-color: auto; }
   #toppers .tp-list::-webkit-scrollbar-track { background: transparent; }
-  #toppers .tp-list::-webkit-scrollbar-thumb { background-color: transparent; }
-  #toppers .tp-list:hover::-webkit-scrollbar-thumb, #toppers .tp-list.is-scrolling::-webkit-scrollbar-thumb { background-color: rgba(194, 65, 12, .55); }
+  #toppers .tp-list::-webkit-scrollbar-thumb { background-color: rgba(194, 65, 12, .55); }
   #toppers .tp-list::-webkit-scrollbar-thumb:hover { background-color: rgba(194, 65, 12, .8); }
 }
 
@@ -505,10 +503,10 @@ html #toppers .dr__cta { margin-top: clamp(20px, 2vw, 28px); }
 
 /* Toppers record, changing the person (user 2026-11-21, "more seamless"): the new portrait crossfades in over the old one (two stacked
    images, no blank gap), rising a little as it arrives while the old one sinks away, and the caption fades out and back in with it */
-.tp-pane .dr__pic img.tp-shot { opacity: 1; transition: opacity .45s var(--ease, ease), translate .6s var(--ease, ease); }
+.tp-pane .dr__pic img.tp-shot { opacity: 1; transition: opacity .6s var(--ease, ease), translate .7s var(--ease, ease); }
 .tp-pane .dr__pic img.tp-shot.is-back { opacity: 0; translate: -50% 14px; }
-.tp-meta { transition: opacity .2s ease, translate .3s var(--ease, ease); }
-.tp-meta.is-swap { opacity: 0; translate: 0 6px; transition-duration: .15s; }
+.tp-meta { transition: opacity .45s ease, translate .6s var(--ease, ease); }
+.tp-meta.is-swap { opacity: 0; translate: 0 8px; transition-duration: .22s; }
 @media (prefers-reduced-motion: reduce) { .tp-pane .dr__pic img.tp-shot, .tp-meta { transition: none; } }
 
 /* a portrait that is not a cut-out (it has its own background) fills the shield's panel instead of rising over its top edge */
@@ -544,3 +542,17 @@ html #toppers .tp-row[aria-current]:focus-visible { outline-color: var(--ink, #1
 .tp-list ul[hidden] { display: none; }
 
 .tp-record .dr__h { margin-inline: 0; }
+.tp-frame::after { content: ""; position: absolute; left: 8px; right: 8px; bottom: 8px; height: 9px; pointer-events: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 9'%3E%3Cpath d='M4.5 0 9 4.5 4.5 9 0 4.5Z' fill='%23c2410c' fill-opacity='.7'/%3E%3C/svg%3E") left center / 9px 9px no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 9'%3E%3Cpath d='M4.5 0 9 4.5 4.5 9 0 4.5Z' fill='%23c2410c' fill-opacity='.7'/%3E%3C/svg%3E") right center / 9px 9px no-repeat; }
+.tp-row { overflow: hidden; }
+.tp-prog { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: rgba(255, 255, 255, .16); pointer-events: none; }
+.tp-prog b { display: block; height: 100%; background: #FDBA74; transform: scaleX(0); transform-origin: left center; }
+.tp-prog.is-run b { animation: tpProg var(--step, 3500ms) linear forwards; }
+@keyframes tpProg { to { transform: scaleX(1); } }
+@media (prefers-reduced-motion: reduce) { .tp-prog { display: none; } }
+html #toppers .tp-row { transition: background-color .4s var(--ease, ease); }
+html #toppers .tp-row b { transition: color .4s var(--ease, ease); }
+html #toppers .tp-row .tp-badge { transition: background-color .4s var(--ease, ease), color .4s var(--ease, ease); }
+@media (prefers-reduced-motion: reduce) { html #toppers .tp-row, html #toppers .tp-row b, html #toppers .tp-row .tp-badge { transition: none; } }
+.tp-prog.is-paused b { animation-play-state: paused; }
