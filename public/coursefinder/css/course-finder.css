@@ -1834,3 +1834,18 @@ body { font-family: var(--f); }
 .cf-feat__sub { color: #fff; text-shadow: 0 1px 1px rgb(120 40 8 / .35); }
 /* no shadow where the page's bottom edge meets the footer (user 2026-11-23); v49.css gives the curtain's page a drop shadow */
 html.foot-curtain main { box-shadow: none; }
+/* Our Popular Courses intro (logo, heading, text) centred top-to-bottom against the cards (user 2026-11-23); it was top-aligned.
+   Desktop only: on tablets and phones the intro sits above the cards */
+@media (min-width: 1101px) { .cf-sec.cf-feat > .cf-feat__intro { align-self: center; } }
+
+/* ---------- the page head without the breadcrumb and the figures, its title and line set to the left (user 2026-11-23) ---------- */
+.cf-hero__in { text-align: left; }
+.cf-h, .cf-lede { margin-inline: 0; }
+
+/* ---------- hero illustration on the right only (user 2026-11-23): Rashtrapati Bhavan on the left removed, the India Gate panel
+   made more prominent — wider (the text now sits on the left), from the hero's top, darker and less faded ---------- */
+.cf-hero__bg::before { content: none; }
+.cf-hero__bg { opacity: .42; }
+.cf-hero__bg::after { top: 0; width: 46%; background-size: 1040px auto; background-position: right 0 top -150px;
+  -webkit-mask: linear-gradient(270deg, #000 62%, transparent), linear-gradient(180deg, transparent, #000 40px); -webkit-mask-composite: source-in;
+  mask: linear-gradient(270deg, #000 62%, transparent), linear-gradient(180deg, transparent, #000 40px); mask-composite: intersect; }
