@@ -8,14 +8,11 @@ import { TOPPERS, NP_ARCHIVE } from './toppers-data';
 
 export { TOPPERS, NP_ARCHIVE };
 export { initToppersRecord } from './ToppersRecord';
-import Tabs, { initTabs } from '@/components/ui/Tabs';
-
-const DR_YEARS = [2025, 2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015];
 
 const PORTRAIT = "/assets/img/toppers/portrait/2025/";
 const PHOTO = "/assets/img/toppers/";
 
-export const TOPPERS_2025 = [
+const TOPPERS_2025 = [
   { rank: 1, name: "Anuj Agnihotri", programmes: ["Interview Guidance Programme"], photo: PORTRAIT + "01-anuj-agnihotri.webp" },
   { rank: 2, name: "Rajeshwari Suve", programmes: ["PowerUp Prelims Test Series", "Interview Guidance Programme", "Mains 2020 Test Series"], photo: PORTRAIT + "02-rajeshwari-suve-m.webp" },
   { rank: 3, name: "Akansh Dhull", programmes: ["General Studies Prelims-cum-Mains Classroom Programme"], photo: PORTRAIT + "03-akansh-dhull.webp" },
@@ -44,8 +41,6 @@ export const TOPPERS_2025 = [
   { rank: 34, name: "Nancy Singh", programmes: ["Interview Guidance Programme"], photo: PHOTO + "2025-34-nancy-singh.webp" },
 ];
 
-
-
 const RANKED = TOPPERS.filter(p => p.r).map(p => ({ ...p, n: p.n.replace(/\b[a-z]/g, c => c.toUpperCase()) }));
 export const YEARS = [...new Set(RANKED.map(p => p.y))].sort((a, b) => b - a);
 export const byYear = y => RANKED.filter(p => p.y === y).sort((a, b) => a.r - b.r);
@@ -57,6 +52,7 @@ const progLine = rank => {
   const p = TOPPERS_2025.find(t => t.rank === rank)?.programmes || [];
   return p.slice(0, 2).join(' · ') + (p.length > 2 ? ` +${p.length - 2} more` : '');
 };
+
 export default function Toppers() {
   return (
     <>
@@ -83,18 +79,6 @@ export default function Toppers() {
   
   <div className="dr" role="region" aria-label="More UPSC CSE 2025 rank holders">
     <p className="dr__h"><span id="drHead"> 36/50 Ranks, UPSC CSE 2025</span></p>
-    
-    
-    <Tabs
-      className="dr__bar"
-      hidden
-      id="drTabs"
-      label="Year of the examination"
-      controls="drList"
-      items={DR_YEARS.map((y, i) => ({ id: String(y), label: y, domId: `drTab${y}`, hidden: i > 4, className: i > 4 ? 'dr__tab--old' : undefined }))}
-    >
-      <button type="button" className="dr__all" aria-controls="drTabs" aria-expanded="false"><span className="dr__all-t">View all</span></button>
-    </Tabs>
     <div className="dr__view" id="drList" aria-labelledby="drHead">
       <ul className="dr__track">
         <li className="dr__item">
@@ -212,39 +196,8 @@ export default function Toppers() {
 
 export function initDiamondReel() {
   const dr = document.querySelector('#toppers .dr'); if (!dr) return;
-  const track = dr.querySelector('.dr__track'), view = dr.querySelector('.dr__view'), head = document.getElementById('drHead');
-  const tabs = [...dr.querySelectorAll('.dr__bar .tab')];
+  const track = dr.querySelector('.dr__track'), view = dr.querySelector('.dr__view');
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const PIC = 'assets/img/toppers/portrait/placeholder-man.webp';   // WebP (was a 143KB PNG; user 2026-11-16, performance)
-  const data = window.NP_ARCHIVE;
-
-  const esc = t => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-  const tidyProg = p => p.replace(/^&\s*/, '').trim()
-    .replace(/^IGP$/i, 'Interview Guidance Programme').replace(/\bIGP\b/g, 'Interview Guidance Programme')
-    .replace(/Interview Guidance Program\b/gi, 'Interview Guidance Programme').replace(/Prelims Cum Mains/g, 'Prelims-cum-Mains');
-  const progs = s => (s || '').split(/,(?![^(]*\))|\s&\s/).map(tidyProg).filter(Boolean);
-  const titleWord = w => /^[A-Z]{3,}$/.test(w) ? w[0] + w.slice(1).toLowerCase() : w;
-  const tidyName = n => n.replace(/\s*-\s*Rank\s*\d+$/i, '').replace(/^[^A-Za-z]+|[^A-Za-z.]+$/g, '').replace(/\.$/, '').split(' ').map(titleWord).join(' ');
-  const extra = {};
-  (window.TOPPERS || []).forEach(t => { if (t.c && t.r) extra[t.y + '-' + t.r] = t.c; });
-
-  const card = (y, t) => {
-    const P = progs(t.programmes || extra[y + '-' + t.rank]);
-    const lab = P.slice(0, 2).map(esc).join('&nbsp;&middot; ') + (P.length > 2 ? ` +${P.length - 2} more` : '');
-    return `<li class="dr__item">
-      <div class="dr__fig"><span class="dr__gem" aria-hidden="true"><i></i></span><span class="dr__pic"><img src="${PIC}" alt="" width="360" height="360" decoding="async"></span></div>
-      <p class="dr__n" aria-hidden="true"><small>AIR</small> ${t.rank}</p>
-      <h4 class="dr__name">${esc(tidyName(t.name))}<span class="pd__vh">, All India Rank ${t.rank}</span></h4>
-      ${lab ? `<p class="dr__prog">${lab}</p>` : ''}
-    </li>`;
-  };
-  const render = y => {
-    const list = ((data && data.ARCHIVE[y]) || []).slice().sort((a, b) => a.rank - b.rank);
-    track.innerHTML = list.map(t => card(y, t)).join('');
-    head.textContent = y === 2025 ? '36 rank holders, CSE 2025' : `Rank holders, CSE ${y}`;
-    dr.setAttribute('aria-label', y === 2025 ? 'More UPSC CSE 2025 rank holders' : `UPSC CSE ${y} rank holders`);
-  };
-
   const SPEED = 34;
   const coarse = matchMedia('(hover: none) and (pointer: coarse)').matches;
   let scrollRaf = 0, scrollPos = 0, scrollLast = 0, touching = false, userScroll = false, userT = 0;
@@ -372,30 +325,8 @@ export function initDiamondReel() {
   view.addEventListener('click', e => { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
   view.addEventListener('dragstart', e => e.preventDefault());
 
-  let year = 2025, swapT = 0;
-  const bar = dr.querySelector('.dr__bar');
-  const tabApi = initTabs(bar, { onSelect: (id, tab) => {
-    const y = +id; if (y === year) return;
-    year = y;
-    view.setAttribute('aria-labelledby', tab.id);
-    view.classList.add('is-sw'); clearTimeout(swapT);
-    swapT = setTimeout(() => { render(y); layout(); view.classList.remove('is-sw'); }, still ? 0 : 280);
-  } });
-  if (data) {
-    const all = dr.querySelector(".dr__all"), older = tabs.filter(t => t.classList.contains("dr__tab--old"));
-    if (all && older.length) all.addEventListener("click", () => {
-      const open = all.getAttribute("aria-expanded") !== "true";
-      older.forEach(t => { t.hidden = !open; });
-      all.setAttribute("aria-expanded", open);
-      all.querySelector(".dr__all-t").textContent = open ? "Show fewer" : "View all";
-      if (!open && older.some(t => t.getAttribute("aria-selected") === "true")) tabApi.select(tabs[0].dataset.tab);
-      requestAnimationFrame(() => { tabApi.place(true); tabApi.centre(true); });
-    });
-    else if (all) all.hidden = true;
-  } else bar.hidden = true;   // no data, no years to choose from
-
-  layout(); tabApi.centre(false);
-  let rt = 0; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { layout(); tabApi.centre(false); }, 150); });
+  layout();
+  let rt = 0; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(layout, 150); });
   const sync = () => { dr.classList.toggle('is-off', document.hidden); sync2(); };
   document.addEventListener('visibilitychange', sync);
   sync();

@@ -130,7 +130,7 @@ export default function Batches() {
         </div>
         <div className="rail cu:mt-0! cu:[--bgap:var(--card-gap)] cu:[--cw:calc((100%-3*var(--bgap))/4)] cu:max-[1180px]:[--cw:calc((100%-var(--bgap))/2)] cu:max-[640px]:[--cw:86%]">
           <div
-            className="rail__track cu:gap-(--bgap) cu:pt-[18px]! cu:pb-[80px]! cu:max-[760px]:pb-[24px]! cu:mb-[-46px] cu:[mask-image:linear-gradient(90deg,transparent_0,#000_7%,#000_93%,transparent_100%)] cu:motion-reduce:[mask-image:none] cu:focus-visible:[outline:2px_solid_var(--brand)]! cu:focus-visible:[outline-offset:-2px] cu:focus-visible:rounded-[12px]"
+            className="rail__track cu:gap-(--bgap) cu:pt-[18px]! cu:pb-[80px]! cu:max-[760px]:pb-[24px]! cu:mb-[-46px] cu:focus-visible:[outline:2px_solid_var(--brand)]! cu:focus-visible:[outline-offset:-2px] cu:focus-visible:rounded-[12px]"
             id="price" tabIndex={0} role="region" aria-roledescription="carousel" aria-label="Upcoming batches"
           >
             {BATCHES.map(b => <Ticket key={b.full} b={b} />)}

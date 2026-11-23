@@ -103,8 +103,8 @@ export function initResourceArrows() {
   const EDGE = 12;
   const step = () => { const [a, b] = grid.children; return b ? b.offsetLeft - a.offsetLeft : grid.clientWidth; };
   const sync = () => {
-    prev.disabled = grid.scrollLeft <= EDGE;
-    next.disabled = grid.scrollLeft >= grid.scrollWidth - grid.clientWidth - EDGE;
+    prev.style.visibility = grid.scrollLeft <= EDGE ? 'hidden' : '';
+    next.style.visibility = grid.scrollLeft >= grid.scrollWidth - grid.clientWidth - EDGE ? 'hidden' : '';
   };
   prev.addEventListener('click', () => grid.scrollBy({ left: -step() }));
   next.addEventListener('click', () => grid.scrollBy({ left: step() }));

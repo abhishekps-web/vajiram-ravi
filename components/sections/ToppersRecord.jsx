@@ -42,7 +42,7 @@ export default function ToppersRecord() {
       <div className={RECORD_BOX}>
         <div className="cu:flex cu:flex-col cu:items-center cu:text-center cu:gap-(--hd-in)">
           <div className="cu:min-w-0">
-            <h3 className="cu:m-0 cu:[font-family:var(--f-title)] cu:font-normal cu:text-[clamp(12px,3.3vw,44px)] cu:whitespace-nowrap cu:leading-[1.1] cu:tracking-[-.02em] cu:text-(--ink)">For a decade, we’ve been shaping India’s civil servants.</h3>
+            <h3 className="cu:m-0 cu:[font-family:var(--f-title)] cu:font-normal cu:text-[clamp(12px,3.3vw,44px)] cu:whitespace-nowrap cu:max-[640px]:whitespace-normal cu:max-[640px]:text-[clamp(26px,7.4vw,32px)] cu:max-[640px]:text-balance cu:leading-[1.1] cu:max-[640px]:leading-[1.15] cu:tracking-[-.02em] cu:text-(--ink)">For a decade, we’ve been shaping India’s civil servants.</h3>
           </div>
           <Tabs className="tp-yrs cu:self-center" label="Year of the examination" controls="tpList" items={RECORD.map(g => ({ id: String(g.y), label: g.y }))} />
         </div>
@@ -64,7 +64,7 @@ export default function ToppersRecord() {
                 </ul>
               ))}
             </div>
-            <div className="tp-more-wrap"><Button variant="outline" size="sm" iconEnd="chevron" data-more aria-expanded="false" hidden>Show all names</Button></div>
+            <div className="tp-more-wrap"><Button variant="link" iconEnd="chevron" data-more aria-expanded="false" hidden>Show all names</Button></div>
             <div className="tp-pane cu:[--shield:min(350px,calc((var(--col)-150px)*.88))] cu:max-[1100px]:[--shield:min(290px,calc((var(--col)-150px)*.88))] cu:sticky cu:top-[calc(var(--hdr-h)+16px)] cu:h-(--col) cu:flex cu:items-center cu:justify-center cu:gap-[clamp(20px,2.4vw,36px)] cu:text-left cu:text-(--ink) cu:max-[900px]:hidden" aria-live="polite">
               <div className="dr__fig cu:mt-[28px]" style={{ '--dw': 'var(--shield)', '--dh': 'calc(var(--shield) * 1.24089)' }}>
                 <span className="tp-laurel" aria-hidden="true" />
@@ -195,8 +195,8 @@ export function initToppersRecord() {
     clearTimeout(autoT); autoT = 0;
     if (reduce) return;
     resetProgressBar(bar); void bar.offsetWidth;
-    if (!visible) return;
-    if (!held) runProgressBar(bar);
+    if (!visible || held) return;
+    runProgressBar(bar);
     left = STEP; startedAt = performance.now();
     autoT = setTimeout(step, STEP);
   };
@@ -213,11 +213,12 @@ export function initToppersRecord() {
     startedAt = performance.now();
     autoT = setTimeout(step, left);
   };
-  const hold = () => { held = true; clearTimeout(autoT); autoT = 0; resetProgressBar(bar); };
+  const hold = () => { held = true; pauseView(); };
+  const release = () => { held = false; resumeView(); };
   rec.addEventListener('pointerenter', hold);
-  rec.addEventListener('pointerleave', () => { held = false; arm(); });
+  rec.addEventListener('pointerleave', release);
   rec.addEventListener('focusin', hold);
-  rec.addEventListener('focusout', () => { held = false; arm(); });
+  rec.addEventListener('focusout', release);
   list.addEventListener('click', arm);
   list.addEventListener('keydown', arm);
   if ('IntersectionObserver' in window) new IntersectionObserver(es => { const was = visible; visible = es[0].isIntersecting; if (visible && !was) resumeView(); else if (!visible) pauseView(); }, { threshold: .35 }).observe(rec); else { visible = true; arm(); }

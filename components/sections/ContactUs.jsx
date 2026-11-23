@@ -46,13 +46,13 @@ const MAP_BOX = [
   'cu:after:absolute cu:after:inset-0 cu:after:z-1 cu:after:rounded-[inherit] cu:after:pointer-events-none cu:after:shadow-[inset_0_0_0_1px_rgba(194,65,12,.16)]',
 ].join(' ');
 const MAP_FRAME = 'cu:absolute cu:inset-x-0 cu:top-[-64px] cu:w-full cu:h-[calc(100%+64px)] cu:border-0';
-const PHOTO_BOX = 'cu:group cu:relative cu:z-1 cu:m-0 cu:min-h-[360px] cu:overflow-hidden cu:rounded-[4px] cu:bg-[#6b2a0c] cu:stacked:min-h-0 cu:stacked:aspect-[16/9]';
+const PHOTO_BOX = 'cu:xs:hidden cu:group cu:relative cu:z-1 cu:m-0 cu:min-h-[360px] cu:overflow-hidden cu:rounded-[4px] cu:bg-[#6b2a0c] cu:stacked:min-h-0 cu:stacked:aspect-[16/9]';
 const PHOTO_IMG = 'cu:absolute cu:inset-0 cu:block cu:w-full cu:h-full cu:object-cover cu:object-[100%_45%] cu:[transition:transform_.9s_cubic-bezier(.22,1,.36,1)] cu:motion-reduce:transition-none cu:fine:group-hover:[transform:scale(1.04)]';
 
 export default function ContactUs() {
   return (
     <section className="band dots band--gap" id="visit" aria-labelledby="locH">
-      <h2 id="locH" className="h2 h2--sec rv" style={{ "--d": ".12s" }}>Contact us</h2>
+      <h2 id="locH" className="h2 h2--sec rv cu:mt-0!" style={{ "--d": ".12s" }}>Contact us</h2>
       <p className="intro rv" style={{ "--d": ".2s", textWrap: "balance" }}>Pick the channel that suits you, or visit us in New Delhi.</p>
       <div className={`${CARD} rv`} style={{ "--d": ".28s" }}>
         <div className={DETAILS}>

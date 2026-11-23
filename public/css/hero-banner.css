@@ -353,3 +353,8 @@ html body .dl .hx__mark-exam { grid-column: 2; margin: 0; font: 500 12px/16px va
 }
 /* the campus slide's lead on a narrower measure on wider screens, so its lines end before the light sign (#dlPin[data-kind], initHeroCarousel) */
 @media (min-width: 901px) { #dlPin[data-kind="campus"] .hx__lead { max-width: 400px; } }
+
+@media (min-width: 901px) {
+  html body .dl .dl__in > * { max-width: 50%; }
+  html body .dl .dl__in > .hx__lead { max-width: min(50%, 36em); }
+}

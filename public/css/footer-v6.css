@@ -187,7 +187,8 @@ html.foot-curtain .vf.vf--zooming > .vf__in, html.foot-curtain .vf.vf--zooming >
    footer's edge (it sat 8px above it; user 2026-11-17, "fix the spacing here"); and no line under the logo ("not needed in desktop") */
 @media (min-width: 761px) {
   .vf .vf__in { padding-bottom: 52px; }
-  .vf .vf__tagline { display: none; }
+  .vf .vf__brand .vf__tagline { font-size: clamp(20px, 1.9vw, 28px); text-align: left; }
+  .vf .vf__brand .vf__tagline > span { display: block; }
 }
 
 /* the legal line at the link columns' size (user 2026-11-17, "this text size looks different from the footer links"): 15px on every

@@ -93,12 +93,12 @@ export default function WhyChoose() {
         </header>
       </div>
       <div id="reasons" className="cu:mt-[clamp(48px,5vw,72px)]">
-        <ul className="why__cards cu:grid cu:grid-cols-3 cu:max-[1000px]:grid-cols-2 cu:max-[640px]:flex cu:max-[640px]:overflow-x-auto cu:max-[640px]:snap-x cu:max-[640px]:snap-mandatory cu:max-[640px]:overscroll-x-contain cu:max-[640px]:[scrollbar-width:none] cu:max-[640px]:[&::-webkit-scrollbar]:hidden cu:max-[640px]:-mx-(--px) cu:max-[640px]:px-(--px) cu:max-[640px]:scroll-px-(--px) cu:max-[640px]:pt-[14px] cu:max-[640px]:pb-[44px] cu:max-[640px]:-mt-[14px] cu:max-[640px]:-mb-[18px] cu:gap-(--card-gap) cu:w-full cu:list-none cu:p-0 cu:text-left">
+        <ul className="why__cards cu:grid cu:grid-cols-3 cu:max-[1000px]:grid-cols-2 cu:max-[640px]:flex cu:max-[640px]:overflow-x-auto cu:max-[640px]:snap-x cu:max-[640px]:snap-mandatory cu:max-[640px]:overscroll-x-contain cu:max-[640px]:[scrollbar-width:none] cu:max-[640px]:[&::-webkit-scrollbar]:hidden cu:max-[640px]:-mx-(--px) cu:max-[640px]:px-(--px) cu:max-[640px]:scroll-px-(--px) cu:max-[640px]:pt-[14px] cu:max-[640px]:pb-[44px] cu:max-[640px]:-mt-[14px] cu:max-[640px]:-mb-[44px] cu:gap-(--card-gap) cu:w-full cu:max-[640px]:w-[calc(100%+2*var(--px))] cu:list-none cu:p-0 cu:text-left">
           {REASONS.map((r) => (
             <li key={r.t} className="cu:min-w-0 cu:max-[640px]:flex-[0_0_82%] cu:max-[640px]:snap-start">
               <article className={CARD}>
-                <span aria-hidden="true" className="cu:grid cu:place-items-center cu:flex-none cu:size-[60px] cu:rounded-full cu:bg-[#FFF8EA] cu:text-(--brand)">
-                  <svg aria-hidden="true" viewBox="0 0 48 48" className="cu:size-[40px] cu:fill-none cu:stroke-(--brand) cu:[stroke-width:2.6] cu:[stroke-linecap:round] cu:[stroke-linejoin:round]">{ICONS[r.icon]}</svg>
+                <span aria-hidden="true" className="cu:grid cu:place-items-center cu:flex-none cu:size-[56px] cu:rounded-full cu:bg-[rgba(194,65,12,.1)] cu:[box-shadow:inset_0_0_0_1.5px_rgba(194,65,12,.22)] cu:text-(--brand)">
+                  <svg aria-hidden="true" viewBox="0 0 48 48" className="cu:size-[30px] cu:fill-none cu:stroke-(--brand) cu:[stroke-width:3] cu:[stroke-linecap:round] cu:[stroke-linejoin:round]">{ICONS[r.icon]}</svg>
                 </span>
                 <div className="cu:pt-[18px]">
                   <h3 className="cu:m-0 cu:[font:400_clamp(24px,2vw,30px)/1.15_var(--f-title)] cu:tracking-[-.01em] cu:text-[#2A2016]">{r.t}</h3>

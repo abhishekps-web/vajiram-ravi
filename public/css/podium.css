@@ -555,8 +555,7 @@ html #toppers .tp-row .tp-badge { transition: background-color .4s var(--ease, e
   html #toppers .tp-record { padding-inline: 0; margin-top: var(--hd-gap); }
   html #toppers .tp-record > div { padding-inline: 8px; }
   html #toppers .tp-frame { padding-inline: 12px; padding-top: 12px; }
-  html #toppers .tp-frame::before { left: 4px; right: 4px; top: 54px; }
-  html #toppers .tp-frame::after { left: 0; right: 0; }
+  html #toppers .tp-frame::before, html #toppers .tp-frame::after { display: none; }
 }
 @media (max-width: 900px) {
   html #toppers .tp-list { max-height: none; overflow: visible; -webkit-mask-image: none; mask-image: none; margin-left: 0; padding-inline: 0; }

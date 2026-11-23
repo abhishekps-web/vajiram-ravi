@@ -1,4 +1,4 @@
-// Scroll rails (stories, faculty): chevrons scroll one card; each hides at its end of the rail.
+// Scroll rails (stories, faculty): chevrons scroll one card; each is hidden (not disabled) at its end of the rail, the other stays where it is.
 import { $, $$ } from '@/lib/site';
 
 export default function initRails() {
@@ -7,8 +7,8 @@ export default function initRails() {
     const cardStep = () => { const c = track.children; return c.length > 1 ? c[1].offsetLeft - c[0].offsetLeft : track.clientWidth; };
     const sync = () => {
       const max = track.scrollWidth - track.clientWidth;
-      prev.disabled = track.scrollLeft <= 2;
-      next.disabled = track.scrollLeft >= max - 2;
+      prev.style.visibility = track.scrollLeft <= 2 ? 'hidden' : '';
+      next.style.visibility = track.scrollLeft >= max - 2 ? 'hidden' : '';
     };
     prev.addEventListener('click', () => track.scrollBy({ left: -cardStep() }));
     next.addEventListener('click', () => track.scrollBy({ left: cardStep() }));
