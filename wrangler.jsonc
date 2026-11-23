@@ -1,6 +1,9 @@
 {
   "name": "vajiram-ravi",
   "compatibility_date": "2026-11-01",
+  "build": {
+    "command": "npm run build"
+  },
   "assets": {
     "directory": "./out",
     "not_found_handling": "404-page"
