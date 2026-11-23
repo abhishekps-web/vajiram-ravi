@@ -629,13 +629,25 @@
       const id = k === 'all' ? null : (k === 'gs-11' || k === 'gs-2yr') ? 'gs' : k;   // GS Foundation is its own section again
       const el = id ? $(`#cat-${id}`) : list;
       if (!el || el.hidden) return;
-      const y = el.getBoundingClientRect().top + scrollY, down = y > scrollY;
-      const top = y - (bar ? bar.offsetHeight : 0) - (down ? 0 : 70) - 24;   // going up the nav comes back above the bar
-      scrollTo({ top, behavior: smooth && !reduce ? 'smooth' : 'auto' });
+      const y = el.getBoundingClientRect().top + scrollY;
+      // clear of the fixed nav AND the sticky search bar under it (the bar's sticky top is the nav's height)
+      const off = bar ? (parseFloat(getComputedStyle(bar).top) || 0) + bar.offsetHeight : 0;
+      const top = y - off - 24;
+      // 'instant', not 'auto': the page sets scroll-behavior: smooth, which made link jumps a slow glide that stopped short
+      scrollTo({ top, behavior: smooth && !reduce ? 'smooth' : 'instant' });
     };
     window.__cfSetCat = k => { history.replaceState(null, '', `#cat=${k}`); go(k); };
     const m = location.hash.match(/^#cat=([\w-]+)/);
-    if (m) setTimeout(() => go(m[1], false), 0);
+    // a #cat= link from another page: jump now, then again once images and fonts have settled the layout (they push sections down),
+    // unless the visitor has scrolled in between (user 2026-11-23: links from the homepage nav landed past their section)
+    if (m) {
+      let moved = false; const mark = () => { moved = true; };
+      setTimeout(() => { go(m[1], false); setTimeout(() => addEventListener('wheel', mark, { once: true, passive: true }), 50); }, 0);
+      const again = () => { if (!moved) go(m[1], false); };
+      addEventListener('load', again, { once: true });
+      if (document.fonts) document.fonts.ready.then(again);
+      setTimeout(again, 900); setTimeout(again, 1800);
+    }
 
     /* ---------- the category rail (user 2026-11-18, a wireframe: "an indicator for the user to find the categories ... when the user
        hovers over it they can see all the other categories, and by clicking on one they can go to it"): a slim column on the left of

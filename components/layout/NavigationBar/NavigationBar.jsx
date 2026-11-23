@@ -11,7 +11,7 @@ const BAR_LINKS = [
 ];
 
 const DRAWER_LINKS = [
-  ['#courses', 'All courses'],
+  ['/coursefinder/', 'All courses'],   // the course finder page (user 2026-11-23)
   ['#toppers', 'Toppers'],
   ['#resources', 'Study materials'],
   ['#batches', 'Upcoming batches'],
@@ -168,20 +168,23 @@ const ROW_D = 'cu:[font:400_13px/1.45_var(--f)] cu:text-[#6B5D52]';
 const ASIDE = 'cu:flex cu:flex-col cu:items-start cu:bg-[var(--sand,#FFF2E6)] cu:border-l cu:border-[rgba(194,65,12,.12)]';
 
 const plural = n => n + (n === 1 ? ' course' : ' courses');
+// the All courses menu opens the course finder (public/coursefinder/) at that category's section (user 2026-11-23); CATS order -> its section keys
+const CF_KEY = ['gs', 'optional', 'csat', 'interview', 'mentorship', 'mains-ts', 'prelims-ts', 'optional-ts'];
+const cfHref = c => `/coursefinder/#cat=${CF_KEY[c] || 'all'}`;
 const num = i => String(i + 1).padStart(2, '0');
 
 function coursesMenu() {
   const total = CATS.reduce((n, c) => n + c.courses.length, 0);
   const cols = STAGES.map((s, i) => `<section class="cu:relative cu:pr-3.5" data-mega-col>
       <p class="${KICKER} cu:mb-3"><b class="${DISC} ${DISC_PLAIN}">${num(i)}</b>${s.k}</p>
-      <ul class="cu:grid cu:gap-1 cu:m-0 cu:p-0 cu:list-none">${s.cats.map(c => `<li><a class="${ROW} cu:gap-[3px] cu:pt-2.5 cu:pb-[11px]" href="#courses" data-cat="${c}"><span class="${ROW_T}">${esc(CATS[c].t)}</span><span class="${ROW_D} cu:line-clamp-3">${esc(CAT_D[c])}</span><span class="cu:justify-self-start cu:mt-1 cu:py-0.5 cu:px-2 cu:rounded-full cu:bg-[rgba(194,65,12,.08)] cu:[font:700_11px/1.5_var(--f)] cu:tracking-[.02em] cu:text-[var(--brand)] cu:transition-colors cu:duration-200 cu:fine:group-hover/row:bg-[var(--brand)] cu:fine:group-hover/row:text-white">${plural(CATS[c].courses.length)}</span></a></li>`).join('')}</ul>
+      <ul class="cu:grid cu:gap-1 cu:m-0 cu:p-0 cu:list-none">${s.cats.map(c => `<li><a class="${ROW} cu:gap-[3px] cu:pt-2.5 cu:pb-[11px]" href="${cfHref(c)}" data-mega-close><span class="${ROW_T}">${esc(CATS[c].t)}</span><span class="${ROW_D} cu:line-clamp-3">${esc(CAT_D[c])}</span><span class="cu:justify-self-start cu:mt-1 cu:py-0.5 cu:px-2 cu:rounded-full cu:bg-[rgba(194,65,12,.08)] cu:[font:700_11px/1.5_var(--f)] cu:tracking-[.02em] cu:text-[var(--brand)] cu:transition-colors cu:duration-200 cu:fine:group-hover/row:bg-[var(--brand)] cu:fine:group-hover/row:text-white">${plural(CATS[c].courses.length)}</span></a></li>`).join('')}</ul>
     </section>`).join('');
   return `<div class="cu:grid cu:grid-cols-5 cu:pt-[26px] cu:pr-3 cu:pb-[22px] cu:pl-[26px] cu:max-[1500px]:pl-[22px]">${cols}</div>
     <aside class="${ASIDE} cu:gap-3 cu:py-[26px] cu:px-6" data-mega-col>
       <p class="${KICKER} cu:tracking-[.1em]">Not sure where to start?</p>
       <p class="cu:m-0 cu:[font:400_14px/1.5_var(--f)] cu:text-[#4A4038]">A counsellor will match you to a programme for your stage, with no pressure to enrol.</p>
       ${buttonHTML({ href: '#contact', label: 'Talk to a counsellor', size: 'sm', iconEnd: 'arrow', fullWidth: true, className: 'cu:self-stretch cu:mt-1 cu:grid-cols-[minmax(0,1fr)_var(--btn-disc)]! cu:[&>:first-child]:col-start-1! cu:[&>:nth-child(2)]:col-start-2!', attrs: { 'data-mega-close': '' } })}
-      <a class="${ALL_LINK} cu:mt-auto" href="#courses" data-mega-close>View all ${total} courses${ARROW_SVG}</a>
+      <a class="${ALL_LINK} cu:mt-auto" href="/coursefinder/" data-mega-close>View all ${total} courses${ARROW_SVG}</a>
     </aside>`;
 }
 
