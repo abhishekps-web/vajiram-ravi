@@ -139,6 +139,8 @@ export default function NavigationBar() {
           </button>
         </div>
         <div className="cu:flex cu:items-center cu:gap-2.5 cu:max-[1023.98px]:order-1 cu:max-[760px]:hidden" id="navEnd">
+          {/* EN / हिं in the bar beside "Let's talk", as in the course finder's nav (user 2026-11-23); phones keep it in the drawer */}
+          <LangSwitch bar />
           <Button className="talk" size="sm" shadow={false} href="#contact" iconEnd="arrow" data-talk="">Let's talk</Button>
         </div>
       </header>
