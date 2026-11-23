@@ -164,14 +164,8 @@ The client wants **every section and every element animated**. For any change to
 - Best IAS Coaching in Delhi (`#about`, `BestCoaching/`) was removed from the page (user 2026-11-21); the folder is unused.
 - Why Vajiram & Ravi with Legacy (`#story`, user 2026-11-21): one component, `WhyChoose/WhyChoose.jsx`, one section on `--ground-jaali` (half the section rhythm above it, `v49.css`). Top: the 3:4 photo (`campus-entrance-clean.webp`, the building cropped, levelled and colour-corrected from `campus-entrance.webp`) beside the eyebrow "Why Vajiram & Ravi?", the "50+ Years of Experience" heading and paragraph (`LEGACY`, `#legacy`). Below (`#reasons`): the six reasons, three to a row, each an Indian line icon (Ashoka Chakra, diya, lotus, book, India Gate, screen with a jharokha arch), title and text, no cards; the gap is the Batches tickets' `--card-gap`. `Legacy/` was removed.
 - Batches (`#batches`, user 2026-11-21): one file, `Batches/Batches.jsx`, Tailwind `cu:` utilities, no comments (user: no comments
-  in the code). It holds the batch data (`BATCHES`, `BFAM`, `BYEAR`, `BANNERS`, imported from here by the contact form, BatchStrips
-  and hero-banners), the tickets, the "all batches" dialog and the behaviours (`initBatchTickets`, `initBatchDialog`). The flagship
+  in the code). It holds the batch data (`BATCHES`, `BFAM`, `BYEAR`, `BANNERS`, imported from here by the contact form and BatchStrips), the tickets, the "all batches" dialog and the behaviours (`initBatchTickets`, `initBatchDialog`). The flagship
   glint's `@property`s, `flagClock` keyframes, `--ticket-notch` and `--flag-glint` are in `app/tailwind-sections.css`. The shared
   shells it keeps: `.band`, `.rail` / `.rail__track` / `.rail__nav` / `.cbtn` (rail.js), `.dlg`, `.rv`, and the `.sg` stagger on `#price`.
-- Hero banner types (user 2026-11-16): `/hero-banners` (`app/hero-banners/page.jsx`, not linked, noindex) shows ten hero carousel
-  ideas side by side for the client to pick from: A toppers, B course highlights, C both. Components in `components/hero-banners/`
-  (`HeroTypes.jsx`, the shared engine `carousel.jsx`: the timer bar's CSS animation drives the autoplay; `data.js` builds every
-  slide from the site's own toppers, programmes and batches), styles `public/css/hero-banners.css`. The chosen one moves into
-  `components/sections/Hero`; the page can then go.
 - The "How it works" and results sections are in `sections/Parked/Parked.jsx`, inside `<div id="parked" hidden>`; they are not shown.
 - `public/css/why-choose.css` and `public/js/why-choose.js` are leftovers the page does not load (they were not loaded before the Next.js conversion either).

@@ -30,11 +30,11 @@
 // A plain component (no hooks): it renders in server components and, with onSelect, inside client ones.
 import './carousel-dots.css';
 
-const ROW = 'cd:flex cd:items-center cd:gap-[0] cd:m-[0]';
-const DARK = 'cd:[--dot-edge:rgba(255,255,255,.9)] cd:[--dot-track:rgba(255,255,255,.4)] cd:[--dot-fill:#fff] cd:[--dot-ring:#FFD48A]';
-const LIGHT = 'cd:[--dot-edge:rgba(194,65,12,.8)] cd:[--dot-track:rgba(194,65,12,.3)] cd:[--dot-fill:var(--brand)] cd:[--dot-ring:var(--brand)]';
+const ROW = 'cd:flex cd:items-center cd:gap-[0] cd:m-[0] cd:py-[10px] cd:px-[7px] cd:rounded-full cd:bg-(--dot-pill)';
+const DARK = 'cd:[--dot-edge:rgba(255,255,255,.9)] cd:[--dot-track:rgba(255,255,255,.4)] cd:[--dot-fill:#fff] cd:[--dot-ring:#FFD48A] cd:[--dot-pill:rgba(0,0,0,.25)]';
+const LIGHT = 'cd:[--dot-edge:rgba(194,65,12,.8)] cd:[--dot-track:rgba(194,65,12,.3)] cd:[--dot-fill:var(--brand)] cd:[--dot-ring:var(--brand)] cd:[--dot-pill:rgba(194,65,12,.1)]';
 const DOT = [
-  'cd:relative cd:flex-none cd:box-content cd:w-[8px] cd:h-[8px] cd:my-[-8px] cd:mx-[0] cd:p-[0] cd:overflow-hidden cd:cursor-pointer',
+  'cd:relative cd:flex-none cd:box-content cd:w-[8px] cd:h-[8px] cd:my-[-8px] cd:mx-[-3px] cd:p-[0] cd:overflow-hidden cd:cursor-pointer',
   'cd:border-8 cd:border-solid cd:border-transparent cd:rounded-full cd:bg-clip-padding cd:bg-(--dot-edge)',
   'cd:[transition:width_.35s_cubic-bezier(.65,0,.35,1),scale_.2s_ease,background-color_.2s_ease] cd:motion-reduce:transition-none',
   // hover / keyboard focus on a dot that is not current: it grows in both width and height (scale, so its neighbours do not move)

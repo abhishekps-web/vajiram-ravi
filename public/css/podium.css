@@ -546,18 +546,13 @@ html #toppers .tp-row[aria-current]:focus-visible { outline-color: var(--ink, #1
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 9'%3E%3Cpath d='M4.5 0 9 4.5 4.5 9 0 4.5Z' fill='%23c2410c' fill-opacity='.7'/%3E%3C/svg%3E") left center / 9px 9px no-repeat,
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 9'%3E%3Cpath d='M4.5 0 9 4.5 4.5 9 0 4.5Z' fill='%23c2410c' fill-opacity='.7'/%3E%3C/svg%3E") right center / 9px 9px no-repeat; }
 .tp-row { overflow: hidden; }
-.tp-prog { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: rgba(255, 255, 255, .16); pointer-events: none; }
-.tp-prog b { display: block; height: 100%; background: #FDBA74; transform: scaleX(0); transform-origin: left center; }
-.tp-prog.is-run b { animation: tpProg var(--step, 3500ms) linear forwards; }
-@keyframes tpProg { to { transform: scaleX(1); } }
-@media (prefers-reduced-motion: reduce) { .tp-prog { display: none; } }
+.tp-prog { position: absolute; left: 0; right: 0; bottom: 0; }
 html #toppers .tp-row { transition: background-color .4s var(--ease, ease); }
 html #toppers .tp-row b { transition: color .4s var(--ease, ease); }
 html #toppers .tp-row .tp-badge { transition: background-color .4s var(--ease, ease), color .4s var(--ease, ease); }
 @media (prefers-reduced-motion: reduce) { html #toppers .tp-row, html #toppers .tp-row b, html #toppers .tp-row .tp-badge { transition: none; } }
-.tp-prog.is-paused b { animation-play-state: paused; }
 @media (max-width: 600px) {
-  html #toppers .tp-record { padding-inline: 0; }
+  html #toppers .tp-record { padding-inline: 0; margin-top: 4px; }
   html #toppers .tp-record > div { padding-inline: 8px; }
   html #toppers .tp-frame { padding-inline: 12px; padding-top: 12px; margin-top: 4px; }
   html #toppers .tp-frame::before { left: 4px; right: 4px; top: 54px; }
@@ -573,3 +568,25 @@ html #toppers .tp-row .tp-badge { transition: background-color .4s var(--ease, e
   html #toppers .tp-list.is-clamped ul > li:nth-child(n+11) { display: none; }
   html #toppers .tp-record .dr__h { scroll-margin-top: 96px; }
 }
+.dr__view.is-scroll { overflow-x: auto; overflow-y: hidden; scrollbar-width: none; overscroll-behavior-x: contain; touch-action: pan-x pan-y; -webkit-overflow-scrolling: touch; }
+.dr__view.is-scroll::-webkit-scrollbar { display: none; }
+.tp-sheet { display: none; }
+@media (max-width: 900px) {
+  .tp-sheet:not([hidden]) { display: block; position: fixed; inset: 0; z-index: 400; }
+  .tp-sheet__scrim { position: absolute; inset: 0; background: rgba(29, 23, 18, .5); opacity: 0; transition: opacity .35s ease; }
+  .tp-sheet.is-open .tp-sheet__scrim { opacity: 1; }
+  .tp-sheet__panel { position: absolute; left: 0; right: 0; bottom: 0; max-height: 88svh; overflow-y: auto; overscroll-behavior: contain; padding: 22px 20px calc(28px + env(safe-area-inset-bottom)); border-radius: 24px 24px 0 0; background: #FFF8EA; box-shadow: 0 -18px 48px -16px rgba(29, 23, 18, .4); transform: translateY(100%); transition: transform .4s var(--ease, cubic-bezier(.22, 1, .36, 1)); touch-action: pan-y; }
+  .tp-sheet.is-open .tp-sheet__panel { transform: translateY(0); }
+  .tp-sheet__grab { position: absolute; top: 8px; left: 50%; width: 44px; height: 5px; margin-left: -22px; border-radius: 999px; background: rgba(120, 80, 40, .3); }
+  .tp-sheet__x { position: absolute; top: 14px; right: 14px; }
+  .tp-sheet .tp-pane { display: flex; flex-direction: column; align-items: center; gap: 18px; padding-top: 20px; text-align: center; }
+  .tp-sheet .tp-pane .dr__fig { margin: 18px 0 0; }
+  .tp-sheet .tp-pane .tp-meta { display: flex; flex-direction: column; align-items: center; width: 100%; height: auto; }
+  .tp-sheet .tp-pane .tp-meta .dr__n, .tp-sheet .tp-pane .tp-meta .dr__name, .tp-sheet .tp-pane .tp-meta .dr__prog { text-align: center; }
+  .tp-sheet .tp-pane .tp-meta .dr__prog { display: block; -webkit-line-clamp: unset; overflow: visible; }
+  html.tp-sheet-open { overflow: hidden; }
+}
+@media (prefers-reduced-motion: reduce) { .tp-sheet__scrim, .tp-sheet__panel { transition: none; } }
+html .tp-sheet .dr__n { background-image: linear-gradient(180deg, #E0661F 0%, #C2410C 55%, #9A3412 100%); filter: none; }
+html .tp-sheet .dr__name { color: var(--ink, #1D1712); }
+html .tp-sheet .dr__prog { color: #6b5d50; text-shadow: none; }

@@ -2,6 +2,7 @@ import Stylesheet from '@/components/ui/Stylesheet';
 import SectionLabel from '@/components/ui/SectionLabel';
 import Button from '@/components/ui/Button/Button';
 import { setButtonLabel } from '@/components/ui/Button/button-core';
+import { createProgressBar, runProgressBar, pauseProgressBar, resumeProgressBar, resetProgressBar } from '@/components/ui/ProgressBar/progress-bar-core';
 import { $, $$, esc, reduce } from '@/lib/site';
 import '@/app/tailwind-sections.css';
 import Tabs from '@/components/ui/Tabs/Tabs';
@@ -286,6 +287,25 @@ function ToppersRecord() {
           </div>
         </div>
       </div>
+      <div className="tp-sheet" data-sheet hidden>
+        <div className="tp-sheet__scrim" data-sheet-close />
+        <div className="tp-sheet__panel" role="dialog" aria-modal="true" aria-label="Topper details" data-lenis-prevent>
+          <span className="tp-sheet__grab" data-sheet-grab aria-hidden="true" />
+          <Button variant="outline" size="sm" iconOnly iconStart="close" label="Close" className="tp-sheet__x" data-sheet-close />
+          <div className="tp-pane tp-sheet__body">
+            <div className="dr__fig" style={{ '--dw': 'min(210px, 54vw)', '--dh': 'calc(min(210px, 54vw) * 1.24089)' }}>
+              <span className="tp-laurel" aria-hidden="true" />
+              <span className="dr__gem" aria-hidden="true" />
+              <span className="dr__pic"><img data-s-shot src={FIRST.src} alt="" className="tp-shot" decoding="async" /></span>
+            </div>
+            <div className="tp-meta tp-sheet__meta">
+              <p className="dr__n" aria-hidden="true"><small>AIR</small> <span data-s-rank>{FIRST.r}</span></p>
+              <h4 data-s-name className="dr__name">{FIRST.n}</h4>
+              <p data-s-cap className="dr__prog">{FIRST.c || `UPSC CSE ${RECORD[0].y}`}</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -297,8 +317,7 @@ export function initToppersRecord() {
   const name = $('[data-name]', pane), cap = $('[data-cap]', pane), rank = $('[data-rank]', pane), meta = $('[data-meta]', pane);
   let front = $('[data-shot]', pane), back = $('[data-shot-back]', pane);
   let cur = null, token = 0;
-  const bar = document.createElement('i');
-  bar.className = 'tp-prog'; bar.setAttribute('aria-hidden', 'true'); bar.innerHTML = '<b></b>';
+  const bar = createProgressBar({ className: 'tp-prog', track: true });
   const wait = ms => new Promise(r => setTimeout(r, reduce ? 0 : ms));
   const preload = src => { const img = new Image(); img.src = src; return img.decode ? img.decode().catch(() => {}) : new Promise(r => { img.onload = img.onerror = r; }); };
   const show = (row, instant) => {
@@ -321,6 +340,42 @@ export function initToppersRecord() {
       meta.classList.remove('is-swap');
     });
   };
+  const sheet = $('[data-sheet]', rec), phone = matchMedia('(max-width: 900px)');
+  let sheetRow = null, sheetT = 0;
+  if (sheet) {
+    document.body.appendChild(sheet);
+    const panel = $('.tp-sheet__panel', sheet), sShot = $('[data-s-shot]', sheet), sRank = $('[data-s-rank]', sheet), sName = $('[data-s-name]', sheet), sCap = $('[data-s-cap]', sheet);
+    const closeSheet = () => {
+      if (sheet.hidden) return;
+      sheet.classList.remove('is-open'); document.documentElement.classList.remove('tp-sheet-open');
+      clearTimeout(sheetT); sheetT = setTimeout(() => { sheet.hidden = true; panel.style.transform = ''; }, reduce ? 0 : 380);
+      if (sheetRow) sheetRow.focus({ preventScroll: true });
+    };
+    const openSheet = row => {
+      sheetRow = row; clearTimeout(sheetT);
+      const src = row.dataset.src;
+      sShot.src = src; sShot.alt = row.dataset.n;
+      sShot.classList.toggle('is-boxed', !isCutout(src)); sShot.classList.toggle('is-pad', isPlaceholder(src));
+      sRank.textContent = row.dataset.r; sName.textContent = row.dataset.n; sCap.textContent = row.dataset.c;
+      sheet.hidden = false; void sheet.offsetWidth;
+      sheet.classList.add('is-open'); document.documentElement.classList.add('tp-sheet-open');
+      $('.tp-sheet__x', sheet).focus({ preventScroll: true });
+    };
+    sheet.addEventListener('click', e => { if (e.target.closest('[data-sheet-close]')) closeSheet(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && !sheet.hidden) closeSheet(); });
+    let drag = null;
+    panel.addEventListener('pointerdown', e => { if (!e.target.closest('[data-sheet-grab], .tp-sheet__body')) return; if (panel.scrollTop > 0) return; drag = { id: e.pointerId, y: e.clientY, dy: 0 }; });
+    panel.addEventListener('pointermove', e => {
+      if (!drag || e.pointerId !== drag.id) return;
+      drag.dy = Math.max(0, e.clientY - drag.y);
+      if (drag.dy > 6) { panel.style.transition = 'none'; panel.style.transform = `translateY(${drag.dy}px)`; }
+    });
+    const endDrag = () => { if (!drag) return; const far = drag.dy > 90; drag = null; panel.style.transition = ''; if (far) closeSheet(); else panel.style.transform = ''; };
+    panel.addEventListener('pointerup', endDrag); panel.addEventListener('pointercancel', endDrag);
+    list.addEventListener('click', e => { const row = e.target.closest('.tp-row'); if (row && phone.matches) openSheet(row); });
+    list.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && phone.matches) { const row = e.target.closest('.tp-row'); if (row) openSheet(row); } });
+    phone.addEventListener('change', () => { if (!phone.matches) closeSheet(); });
+  }
   list.addEventListener('click', e => show(e.target.closest('.tp-row')));
   list.addEventListener('keydown', e => { if (e.key !== 'Enter' && e.key !== ' ') return; const row = e.target.closest('.tp-row'); if (!row) return; e.preventDefault(); show(row); });
   show($('ul:not([hidden]) .tp-row', list), true);
@@ -340,13 +395,13 @@ export function initToppersRecord() {
     }
     arm();
   };
-  bar.style.setProperty('--step', STEP + 'ms');
+  bar.style.setProperty('--pb-t', STEP + 'ms');
   const arm = () => {
     clearTimeout(autoT); autoT = 0;
     if (reduce) return;
-    bar.classList.remove('is-run', 'is-paused'); void bar.offsetWidth;
+    resetProgressBar(bar); void bar.offsetWidth;
     if (!visible) return;
-    if (!held) bar.classList.add('is-run');
+    if (!held) runProgressBar(bar);
     left = STEP; startedAt = performance.now();
     autoT = setTimeout(step, STEP);
   };
@@ -354,16 +409,16 @@ export function initToppersRecord() {
     if (!autoT) return;
     left = Math.max(0, left - (performance.now() - startedAt));
     clearTimeout(autoT); autoT = 0;
-    bar.classList.add('is-paused');
+    pauseProgressBar(bar);
   };
   const resumeView = () => {
     if (reduce || held || autoT) return;
     if (!bar.classList.contains('is-run')) { arm(); return; }
-    bar.classList.remove('is-paused');
+    resumeProgressBar(bar);
     startedAt = performance.now();
     autoT = setTimeout(step, left);
   };
-  const hold = () => { held = true; clearTimeout(autoT); autoT = 0; bar.classList.remove('is-run', 'is-paused'); };
+  const hold = () => { held = true; clearTimeout(autoT); autoT = 0; resetProgressBar(bar); };
   rec.addEventListener('pointerenter', hold);
   rec.addEventListener('pointerleave', () => { held = false; arm(); });
   rec.addEventListener('focusin', hold);
@@ -398,7 +453,7 @@ export function initToppersRecord() {
       cur = null;
       show($('ul:not([hidden]) .tp-row', list));
     };
-    if (document.startViewTransition && !reduce) document.startViewTransition(swap); else swap();
+    if (document.startViewTransition && !reduce && !matchMedia('(hover: none) and (pointer: coarse)').matches) document.startViewTransition(swap); else swap();
   } });
 }
 
@@ -438,6 +493,31 @@ export function initDiamondReel() {
   };
 
   const SPEED = 34;
+  const coarse = matchMedia('(hover: none) and (pointer: coarse)').matches;
+  let scrollRaf = 0, scrollPos = 0, scrollLast = 0, touching = false, userScroll = false, userT = 0;
+  const stopScroll = () => { cancelAnimationFrame(scrollRaf); scrollRaf = 0; clearTimeout(userT); touching = false; userScroll = false; view.classList.remove('is-scroll'); view.scrollLeft = 0; };
+  const wrapScroll = () => {
+    const sl = view.scrollLeft;
+    if (sl >= loopW * 1.5) { scrollPos = sl - loopW; view.scrollLeft = scrollPos; }
+    else if (sl <= loopW * .5) { scrollPos = sl + loopW; view.scrollLeft = scrollPos; }
+    else scrollPos = sl;
+  };
+  const scrollTick = now => {
+    scrollRaf = 0;
+    const dt = Math.min(.05, (now - (scrollLast || now)) / 1000); scrollLast = now;
+    if (looping && !dr.classList.contains('is-off') && !touching && !userScroll) {
+      scrollPos += SPEED * dt; view.scrollLeft = scrollPos;
+      if (scrollPos >= loopW * 1.5) { scrollPos -= loopW; view.scrollLeft = scrollPos; }
+    }
+    scrollRaf = requestAnimationFrame(scrollTick);
+  };
+  const releaseUser = () => { clearTimeout(userT); userT = setTimeout(() => { if (!touching) { userScroll = false; scrollPos = view.scrollLeft; } }, 900); };
+  if (coarse) {
+    view.addEventListener('touchstart', () => { touching = true; userScroll = true; clearTimeout(userT); }, { passive: true });
+    view.addEventListener('touchend', () => { touching = false; releaseUser(); }, { passive: true });
+    view.addEventListener('touchcancel', () => { touching = false; releaseUser(); }, { passive: true });
+    view.addEventListener('scroll', () => { if (!userScroll || !looping) return; wrapScroll(); releaseUser(); }, { passive: true });
+  }
   let looping = false, loopW = 0, anim = null, vel = 0, hover = false, drag = null, fling = 0, moved = false, wheelT = 0;
   const dur = () => loopW / SPEED * 1000;
   const getOff = () => anim ? -((anim.currentTime || 0) % dur()) / dur() * loopW : 0;
@@ -457,11 +537,18 @@ export function initDiamondReel() {
     if (anim) { anim.cancel(); anim = null; }
     cancelAnimationFrame(fling); fling = 0;
     looping = false; vel = 0; track.style.transform = '';
+    stopScroll();
     if (still) return;
     const fits = track.scrollWidth <= view.clientWidth;
     if (fits) { track.classList.add('is-still'); return; }
     [...track.children].forEach(li => { const c = li.cloneNode(true); c.dataset.copy = ''; c.setAttribute('aria-hidden', 'true'); c.inert = true; track.appendChild(c); });
     loopW = track.scrollWidth / 2; looping = true;
+    if (coarse) {
+      view.classList.add('is-scroll');
+      scrollPos = loopW; view.scrollLeft = scrollPos; scrollLast = 0;
+      scrollRaf = requestAnimationFrame(scrollTick);
+      return;
+    }
     track.classList.add('is-drag');
     anim = track.animate([{ transform: 'translate3d(0, 0, 0)' }, { transform: `translate3d(${-loopW}px, 0, 0)` }], { duration: dur(), iterations: Infinity });
     applyRate();
@@ -496,7 +583,7 @@ export function initDiamondReel() {
   view.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') { clearTimeout(hoverT); hoverT = setTimeout(() => { hover = true; sync2(); }, 3000); } });
   view.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') { clearTimeout(hoverT); hover = false; sync2(); } });
   view.addEventListener('pointerdown', e => {
-    if (!looping || (e.pointerType === 'mouse' && e.button !== 0)) return;
+    if (coarse || !looping || (e.pointerType === 'mouse' && e.button !== 0)) return;
     cancelAnimationFrame(fling); fling = 0; vel = 0; moved = false;
     drag = { id: e.pointerId, x: e.clientX, off: getOff(), lx: e.clientX, lt: performance.now(), vx: 0 };
   });
@@ -519,7 +606,7 @@ export function initDiamondReel() {
   view.addEventListener('pointercancel', release);
   view.addEventListener('lostpointercapture', release);
   view.addEventListener('wheel', e => {
-    if (!looping) return;
+    if (coarse || !looping) return;
     const k = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? view.clientWidth : 1;
     const dx = e.deltaX * k, dy = e.deltaY * k;
     if (!dx || Math.abs(dx) <= Math.abs(dy)) return;

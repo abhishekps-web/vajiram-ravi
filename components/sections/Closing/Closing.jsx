@@ -36,7 +36,7 @@ export default function Closing() {
             <Button variant="secondary" href="#courses" iconEnd="arrow">Find your course</Button>
             <Button onDark href="#contact">Talk to a counsellor</Button>
           </p>
-          <p className="cl__call rv" style={{ "--d": ".36s" }}>{"Prefer to call? "}<a href="tel:+918062206330">080-6220-6330</a>{" · Mon – Sat, 9 AM – 7 PM"}</p>
+          <p className="cl__call rv" style={{ "--d": ".36s" }}><span className="cl__call-n">{"Prefer to call? "}<a href="tel:+918062206330">080-6220-6330</a></span><span className="cl__call-s" aria-hidden="true">{" · "}</span><span className="cl__call-h">Mon – Sat, 9 AM – 7 PM</span></p>
         </div>
       </div>
     </section>

@@ -39,9 +39,8 @@ html:not(.vrv-lock) .vrv { display: none; }   /* the overlay is server-rendered;
 .vrv-play .vrv__tag-hi { animation: tin .6s .9s var(--e) forwards; }
 @keyframes tin { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 
-.vrv__bar { position: absolute; z-index: 4; left: 0; top: 0; height: 3px; width: 100%; background: #FFD48A; transform: scaleX(0); transform-origin: 0 50%; }
-.vrv-play .vrv__bar { animation: bar 2.3s linear forwards; }
-@keyframes bar { to { transform: scaleX(1); } }
+.vrv__bar { position: absolute; z-index: 4; left: 0; top: 0; width: 100%; --pb-t: 2.3s; }
+.vrv-play .vrv__bar > b { animation: pbar-fill var(--pb-t) linear forwards; }
 .vrv__edge { position: absolute; left: 0; right: 0; bottom: -30px; height: 30px; background: url(/assets/img/patterns/kinari.svg) 0 0 / 40px 30px repeat-x; }
 .vrv-out .vrv { transform: translateY(calc(-100% - 30px)); }
 

@@ -1,4 +1,5 @@
 import Stylesheet from '@/components/ui/Stylesheet';
+import ProgressBar from '@/components/ui/ProgressBar/ProgressBar';
 // brand intro: Vajiram & Ravi reveal on orange (public/css/intro.css), run by the inline boot script ./boot.js from the first
 // paint; every load, or once per session (INTRO_ONCE_PER_SESSION, lib/config.js); never under reduced motion.
 // Rendered on the server so the overlay is in the first paint; intro.css shows it only while html.vrv-lock is set,
@@ -17,7 +18,7 @@ export default function Intro() {
           </div>
           <p className="vrv__tag"><span>Understanding India.</span>{' '}<span>Shaping its Future.</span></p>
         </div>
-        <span className="vrv__bar" aria-hidden="true" />
+        <ProgressBar className="vrv__bar" duration="2.3s" />
         <span className="vrv__edge" aria-hidden="true" />
       </div>
     </>

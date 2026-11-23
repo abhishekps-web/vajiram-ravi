@@ -2543,3 +2543,8 @@ html.is-scrolling { scrollbar-color: rgba(194, 65, 12, .6) transparent; }
 .vr-sb.is-drag { cursor: grabbing; }
 @media (hover: none), (pointer: coarse) { .vr-sb { display: none; } }
 @media (prefers-reduced-motion: reduce) { .vr-sb { transition: none; } }
+@media (max-width: 760px) {
+  .cl__call-n, .cl__call-h { display: block; }
+  .cl__call-s { display: none; }
+  .cl__call-h { margin-top: 4px; }
+}
