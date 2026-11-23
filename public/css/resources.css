@@ -327,8 +327,8 @@
 #resources .rf .sm__act { --btn-bg: rgba(255, 252, 244, .76); --btn-bg-hover: rgba(255, 252, 244, .76);
   --btn-edge: inset 0 0 0 1px rgba(120, 70, 20, .16); --btn-edge-hover: inset 0 0 0 1px rgba(120, 70, 20, .16); }   /* no colour change on hover (user 2026-11-16): the label roll and the disc still play */
 
-/* the previous / next arrows under the row of folders, on phones only: the Batches rail's arrows (.cbtn), centred under the row in the room its bottom padding leaves */
-#resources .sm__nav { display: none; }
-@media (max-width: 640px) { #resources .sm__nav { display: flex; justify-content: center; gap: 12px; margin: -14px 0 0; } }
+/* the dot indicator under the row of folders, on phones only (CarouselDots, bindDots in components/ui/rail.js): centred under the row in the room its bottom padding leaves */
+#resources .sm__dots { display: none; }
+@media (max-width: 640px) { #resources .sm__dots { display: flex; justify-content: center; width: fit-content; margin: -14px auto 0; } }
 
 html main #resources { position: relative; z-index: 2; }

@@ -25,7 +25,7 @@ const isCutout = src => src.includes('/portrait/2025/') || src.includes('/portra
 const isPlaceholder = src => src.includes('/portrait/placeholder');
 
 const RECORD_BOX = [
-  'cu:relative cu:max-w-[1240px] cu:mx-auto cu:px-[40px] cu:max-[600px]:px-[20px]',
+  'cu:relative cu:max-w-(--site-w) cu:mx-auto cu:px-[40px] cu:max-[600px]:px-[20px]',
   'cu:text-(--ink)',
 ].join(' ');
 
@@ -35,6 +35,13 @@ const ROW = [
   'cu:transition-[background-color] cu:duration-200 cu:fine:hover:bg-[#F7F0E6]',
   'cu:motion-reduce:transition-none',
 ].join(' ');
+
+const LUCIDE_X = (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
+    <path d="M18 6 6 18" />
+    <path d="m6 6 12 12" />
+  </svg>
+);
 
 export default function ToppersRecord() {
   return (
@@ -86,7 +93,7 @@ export default function ToppersRecord() {
       <div className="tp-sheet" data-sheet hidden>
         <div className="tp-sheet__scrim" data-sheet-close />
         <div className="tp-sheet__panel" role="dialog" aria-modal="true" aria-label="Topper details" data-lenis-prevent>
-          <Button variant="ghost" size="sm" iconOnly iconStart="close" label="Close" className="tp-sheet__x" data-sheet-close />
+          <Button variant="ghost" size="sm" iconOnly iconStart={LUCIDE_X} label="Close" className="tp-sheet__x" data-sheet-close />
           <div className="tp-pane tp-sheet__body">
             <div className="dr__fig" style={{ '--dw': 'min(210px, 54vw)', '--dh': 'calc(min(210px, 54vw) * 1.24089)' }}>
               <span className="tp-laurel" aria-hidden="true" />

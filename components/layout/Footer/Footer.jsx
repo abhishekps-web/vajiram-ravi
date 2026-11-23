@@ -79,7 +79,6 @@ function Brand() {
         <span className="rv">Understanding India.</span>{" "}
         <span className="rv" style={{ "--d": ".15s" }}>Shaping its Future.</span>
       </p>
-      <Socials />
     </div>
   );
 }
@@ -118,7 +117,10 @@ function LinkColumns() {
 function Legal() {
   return (
     <div className="vf__legal">
-      <p>© 2026 Vajiram &amp; Ravi. All Rights Reserved.</p>
+      <div className="vf__legal-start">
+        <p>© 2026 Vajiram &amp; Ravi. All Rights Reserved.</p>
+        <Socials />
+      </div>
       <nav aria-label="Legal">
         {LEGAL.map(({ label, href }) => <a key={label} href={href} {...NEW_TAB}>{label}</a>)}
         <span>Grievance Redressal</span>

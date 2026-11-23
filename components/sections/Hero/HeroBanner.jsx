@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import Button from '@/components/ui/Button/Button';
-import CarouselDots from '@/components/ui/CarouselDots/CarouselDots';
+import CarouselDots from '@/components/ui/CarouselDots';
 import Stylesheet from '@/components/ui/Stylesheet';
 import SectionLabel from '@/components/ui/SectionLabel';
 import { $, reduce } from '@/lib/site';

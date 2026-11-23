@@ -3,7 +3,7 @@
 import "./educators.css";
 import { Fragment, useEffect, useMemo, useRef, useState, type CSSProperties, type KeyboardEvent, type PointerEvent, type ReactNode, type RefObject } from "react";
 import Button from "@/components/ui/Button/Button";
-import SiteDots from "@/components/ui/CarouselDots/CarouselDots";
+import SiteDots from "@/components/ui/CarouselDots";
 import SectionLabel from "@/components/ui/SectionLabel";
 
 export type Href = string | null;

@@ -1,6 +1,8 @@
 import Button from '@/components/ui/Button/Button';
+import CarouselDots from '@/components/ui/CarouselDots';
 import SectionLabel from '@/components/ui/SectionLabel';
 import Stylesheet from '@/components/ui/Stylesheet';
+import { bindDots } from '@/components/ui/rail';
 import { $$, SITE, reduce } from '@/lib/site';
 
 export const RESOURCES = [
@@ -46,10 +48,7 @@ export default function Resources() {
         <ul className="sm__grid sm__grid--res" id="resGrid">
           {RESOURCES.map(r => <ResourceCard key={r.title} {...r} />)}
         </ul>
-        <div className="sm__nav rv" style={{ '--d': '.24s' }}>
-          <Button variant="outline" size="sm" iconOnly iconStart="arrow-left" label="Previous resources" className="cbtn cbtn--prev" />
-          <Button variant="outline" size="sm" iconOnly iconStart="arrow" label="Next resources" className="cbtn cbtn--next" />
-        </div>
+        <CarouselDots className="sm__dots" tone="light" label="Choose a resource" labels={RESOURCES.map(r => `Show ${r.title}`)} controls="resGrid" />
       </div>
     </section>
   );
@@ -97,18 +96,6 @@ export function initResourceFloat() {
   });
 }
 
-export function initResourceArrows() {
-  const grid = document.getElementById('resGrid'), prev = document.querySelector('#resources .cbtn--prev'), next = document.querySelector('#resources .cbtn--next');
-  if (!grid || !prev || !next) return;
-  const EDGE = 12;
-  const step = () => { const [a, b] = grid.children; return b ? b.offsetLeft - a.offsetLeft : grid.clientWidth; };
-  const sync = () => {
-    prev.style.visibility = grid.scrollLeft <= EDGE ? 'hidden' : '';
-    next.style.visibility = grid.scrollLeft >= grid.scrollWidth - grid.clientWidth - EDGE ? 'hidden' : '';
-  };
-  prev.addEventListener('click', () => grid.scrollBy({ left: -step() }));
-  next.addEventListener('click', () => grid.scrollBy({ left: step() }));
-  grid.addEventListener('scroll', () => requestAnimationFrame(sync), { passive: true });
-  addEventListener('resize', sync, { passive: true });
-  sync(); setTimeout(sync, 600);
+export function initResourceDots() {
+  bindDots(document.getElementById('resGrid'), $$('#resources .sm__dots > button'));
 }

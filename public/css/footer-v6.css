@@ -24,8 +24,8 @@
    corner): 8px instead of 18px, still centred where the outer rule's corners meet (9px into the frame's box) */
 .vf .foot__frame { background-size: 8px; background-position: 5px 5px, calc(100% - 5px) 5px, 5px calc(100% - 5px), calc(100% - 5px) calc(100% - 5px); }
 html.foot-curtain footer.vf { position: sticky; bottom: var(--foot-off, 0px); z-index: 0; margin-top: 0; }
-.vf__in { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 48px; max-width: 1280px; margin: 0 auto;
-  padding: 72px max(var(--px, 24px), 48px) 56px; box-sizing: content-box; }   /* clear of the gold frame's inner rule (30px in) */
+.vf__in { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 48px; max-width: var(--chrome-w); margin: 0 auto;
+  padding: 72px max(var(--chrome-px, 24px), 48px) 56px; box-sizing: content-box; }   /* clear of the gold frame's inner rule (30px in) */
 
 /* the logo row */
 .vf__socials { display: flex; align-items: center; gap: 12px; margin: 0; padding: 0; list-style: none; }
@@ -187,8 +187,14 @@ html.foot-curtain .vf.vf--zooming > .vf__in, html.foot-curtain .vf.vf--zooming >
    footer's edge (it sat 8px above it; user 2026-11-17, "fix the spacing here"); and no line under the logo ("not needed in desktop") */
 @media (min-width: 761px) {
   .vf .vf__in { padding-bottom: 52px; }
-  .vf .vf__brand .vf__tagline { font-size: clamp(20px, 1.9vw, 28px); text-align: left; }
+  html .vf .vf__brand { display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "logo tagline"; align-items: center; column-gap: 28px; }
+  html .vf .vf__brand > .vf__logo { grid-area: logo; }
+  html .vf .vf__brand > .vf__tagline { grid-area: tagline; justify-self: end; text-align: right; font-size: clamp(20px, 1.7vw, 26px); line-height: 1.25; }
   .vf .vf__brand .vf__tagline > span { display: block; }
+}
+@media (min-width: 1100px) {
+  html .vf .vf__brand > .vf__tagline { font-size: clamp(22px, 1.9vw, 28px); white-space: nowrap; }
+  .vf .vf__brand .vf__tagline > span { display: inline; }
 }
 
 /* the legal line at the link columns' size (user 2026-11-17, "this text size looks different from the footer links"): 15px on every
@@ -199,9 +205,16 @@ html.foot-curtain .vf.vf--zooming > .vf__in, html.foot-curtain .vf.vf--zooming >
 /* user 2026-11-20: no logo and no news; the social icons close the legal bar (right on desktop, centred under the links on phones);
    the brand block holds only the phone tagline, so it is hidden on wider screens */
 .vf .vf__legal { align-items: center; }
-.vf__legal .vf__socials { margin: -8px -8px -8px 0; }
 @media (min-width: 761px) { .vf .vf__brand { display: none; } }
-@media (max-width: 760px) { .vf__legal .vf__socials { margin: 6px 0 0; justify-content: center; } }
+/* The social icons sit in the legal bar with the copyright (user 2026-11-23): desktop and tablet, the copyright then the icons on the left and
+   the legal links on the right; phones, the links, the icons and the copyright stacked and centred. */
+.vf__legal-start { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 24px; }
+.vf__legal .vf__socials { margin: -8px 0 -8px -8px; }
+@media (max-width: 760px) {
+  .vf__legal-start { flex-direction: column-reverse; justify-content: center; gap: 8px; }
+  .vf__legal .vf__socials { margin: 0; justify-content: center; }
+  .vf__legal nav { order: -1; }
+}
 
 /* The logo back (user 2026-11-21, "same as we used earlier"): the emblem and the wordmark as before 2026-11-20. Desktop and tablet: side
    by side, 72px tall, at the top of the footer with the rule under it (the tagline stays hidden there); phones: stacked and centred, the
@@ -222,12 +235,3 @@ html.foot-curtain .vf.vf--zooming > .vf__in, html.foot-curtain .vf.vf--zooming >
   .vf__logo img.vf__wordmark { width: 40vw; max-width: none; }
 }
 
-/* The social icons beside the logo (user 2026-11-21, "show the social links along with the logo"): out of the legal bar and into the
-   brand row. Desktop and tablet: the logo left, the icons right, on one line above the rule. Phones: centred under the logo and the
-   tagline. */
-.vf .vf__brand > .vf__socials { margin: 0; }
-@media (min-width: 761px) {
-  .vf .vf__brand { flex-direction: row; align-items: center; justify-content: space-between; gap: 24px; }
-  .vf .vf__brand > .vf__socials { margin-right: -8px; }
-}
-@media (max-width: 760px) { .vf .vf__brand > .vf__socials { justify-content: center; } }

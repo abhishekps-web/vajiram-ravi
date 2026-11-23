@@ -97,7 +97,7 @@ export default function WhyChoose() {
           {REASONS.map((r) => (
             <li key={r.t} className="cu:min-w-0 cu:max-[640px]:flex-[0_0_82%] cu:max-[640px]:snap-start">
               <article className={CARD}>
-                <span aria-hidden="true" className="cu:grid cu:place-items-center cu:flex-none cu:size-[56px] cu:rounded-full cu:bg-[rgba(194,65,12,.1)] cu:[box-shadow:inset_0_0_0_1.5px_rgba(194,65,12,.22)] cu:text-(--brand)">
+                <span aria-hidden="true" className="cu:grid cu:place-items-center cu:flex-none cu:size-[56px] cu:rounded-full cu:bg-white cu:[box-shadow:inset_0_0_0_1.5px_rgba(194,65,12,.18)] cu:text-(--brand)">
                   <svg aria-hidden="true" viewBox="0 0 48 48" className="cu:size-[30px] cu:fill-none cu:stroke-(--brand) cu:[stroke-width:3] cu:[stroke-linecap:round] cu:[stroke-linejoin:round]">{ICONS[r.icon]}</svg>
                 </span>
                 <div className="cu:pt-[18px]">

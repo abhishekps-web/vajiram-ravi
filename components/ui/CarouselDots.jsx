@@ -1,6 +1,7 @@
 // The site's carousel indicator, one component for every carousel (user 2026-11-17, "unify all dots as components"): the hero, the
 // promo banner, the Faculty ring, Free resources and the Contact us photos. Tailwind (user 2026-11-17, "convert that component to a
-// single file using Tailwind"): every style is a `cd:` utility below; carousel-dots.css only sets Tailwind up for this folder.
+// single file using Tailwind"): every style is a `cu:` utility below (the shared entry app/tailwind-sections.css, which also holds the
+// timed fill's `cd-fill` keyframes).
 //
 //   <CarouselDots label="Choose a banner" labels={['Show banner 1', …]} active={i} onSelect={go} timed />
 //
@@ -28,26 +29,26 @@
 //   controls    the id of the element the dots change (aria-controls)
 //   as          the element of the row: 'div' (default) or 'p'
 // A plain component (no hooks): it renders in server components and, with onSelect, inside client ones.
-import './carousel-dots.css';
+import '@/app/tailwind-sections.css';
 
-const ROW = 'cd:flex cd:items-center cd:gap-[0] cd:m-[0] cd:py-[10px] cd:px-[7px] cd:rounded-full cd:bg-(--dot-pill)';
-const DARK = 'cd:[--dot-edge:rgba(255,255,255,.9)] cd:[--dot-track:rgba(255,255,255,.4)] cd:[--dot-fill:#fff] cd:[--dot-ring:#FFD48A] cd:[--dot-pill:rgba(0,0,0,.25)]';
-const LIGHT = 'cd:[--dot-edge:rgba(194,65,12,.8)] cd:[--dot-track:rgba(194,65,12,.3)] cd:[--dot-fill:var(--brand)] cd:[--dot-ring:var(--brand)] cd:[--dot-pill:rgba(194,65,12,.1)]';
+const ROW = 'cu:flex cu:items-center cu:gap-[0] cu:m-[0] cu:py-[10px] cu:px-[7px] cu:rounded-full cu:bg-(--dot-pill)';
+const DARK = 'cu:[--dot-edge:rgba(255,255,255,.9)] cu:[--dot-track:rgba(255,255,255,.4)] cu:[--dot-fill:#fff] cu:[--dot-ring:#FFD48A] cu:[--dot-pill:rgba(0,0,0,.25)]';
+const LIGHT = 'cu:[--dot-edge:rgba(194,65,12,.8)] cu:[--dot-track:rgba(194,65,12,.3)] cu:[--dot-fill:var(--brand)] cu:[--dot-ring:var(--brand)] cu:[--dot-pill:rgba(194,65,12,.1)]';
 const DOT = [
-  'cd:relative cd:flex-none cd:box-content cd:w-[8px] cd:h-[8px] cd:my-[-8px] cd:mx-[-3px] cd:p-[0] cd:overflow-hidden cd:cursor-pointer',
-  'cd:border-8 cd:border-solid cd:border-transparent cd:rounded-full cd:bg-clip-padding cd:bg-(--dot-edge)',
-  'cd:[transition:width_.35s_cubic-bezier(.65,0,.35,1),scale_.2s_ease,background-color_.2s_ease] cd:motion-reduce:transition-none',
+  'cu:relative cu:flex-none cu:box-content cu:w-[8px] cu:h-[8px] cu:my-[-8px] cu:mx-[-3px] cu:p-[0] cu:overflow-hidden cu:cursor-pointer',
+  'cu:border-8 cu:border-solid cu:border-transparent cu:rounded-full cu:bg-clip-padding cu:bg-(--dot-edge)',
+  'cu:[transition:width_.35s_cubic-bezier(.65,0,.35,1),scale_.2s_ease,background-color_.2s_ease] cu:motion-reduce:transition-none',
   // hover / keyboard focus on a dot that is not current: it grows in both width and height (scale, so its neighbours do not move)
-  'cd:[&:not([aria-current=true]):hover]:[scale:1.6] cd:[&:not([aria-current=true]):focus-visible]:[scale:1.6]',
-  'cd:aria-[current=true]:w-[32px] cd:aria-[current=true]:bg-(--dot-track)',
-  'cd:focus-visible:outline-2 cd:focus-visible:outline-(--dot-ring) cd:focus-visible:outline-offset-[-5px]',
+  'cu:[&:not([aria-current=true]):hover]:[scale:1.6] cu:[&:not([aria-current=true]):focus-visible]:[scale:1.6]',
+  'cu:aria-[current=true]:w-[32px] cu:aria-[current=true]:bg-(--dot-track)',
+  'cu:focus-visible:outline-2 cu:focus-visible:outline-(--dot-ring) cu:focus-visible:outline-offset-[-5px]',
 ].join(' ');
 // the fill: a square bar the pill clips, growing from its rounded left end; empty on the other dots
-const FILL = 'cd:absolute cd:inset-[0] cd:block cd:bg-(--dot-fill) cd:origin-left cd:[transform:scaleX(var(--p,1))] cd:[:not([aria-current=true])>&]:[transform:scaleX(0)]';
+const FILL = 'cu:absolute cu:inset-[0] cu:block cu:bg-(--dot-fill) cu:origin-left cu:[transform:scaleX(var(--p,1))] cu:[:not([aria-current=true])>&]:[transform:scaleX(0)]';
 const TIMED = [
-  'cd:[[aria-current=true]>&]:[transform:scaleX(0)] cd:[[aria-current=true]>&]:animate-[cd-fill_var(--dot-t,6s)_linear_forwards]',
-  'cd:[.is-paused_&]:[animation-play-state:paused]',
-  'cd:motion-reduce:[[aria-current=true]>&]:animate-none cd:motion-reduce:[[aria-current=true]>&]:[transform:none]',
+  'cu:[[aria-current=true]>&]:[transform:scaleX(0)] cu:[[aria-current=true]>&]:animate-[cd-fill_var(--dot-t,6s)_linear_forwards]',
+  'cu:[.is-paused_&]:[animation-play-state:paused]',
+  'cu:motion-reduce:[[aria-current=true]>&]:animate-none cu:motion-reduce:[[aria-current=true]>&]:[transform:none]',
 ].join(' ');
 
 /**

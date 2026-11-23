@@ -20,7 +20,7 @@ const CENTRE = {
 const PHOTO = { src: '/assets/img/photos/campus-sunlit.webp', alt: 'Students outside the Vajiram & Ravi institute entrance, its sign reading "Institute for IAS Examination, since 1976"', w: 1672, h: 941 };
 
 const CARD = [
-  'cu:relative cu:grid cu:grid-cols-[minmax(0,340px)_minmax(0,1fr)] cu:gap-[clamp(28px,3.4vw,48px)] cu:w-full cu:max-w-[1180px] cu:mx-auto cu:mt-(--hd-gap) cu:text-left',
+  'cu:relative cu:grid cu:grid-cols-[minmax(0,340px)_minmax(0,1fr)] cu:gap-[clamp(28px,3.4vw,48px)] cu:w-full cu:max-w-(--site-w) cu:mx-auto cu:mt-(--hd-gap) cu:text-left',
   'cu:p-[clamp(28px,2.6vw,36px)] cu:xs:p-[16px] cu:stacked:grid-cols-1 cu:stacked:gap-[28px] cu:xs:gap-[20px]',
   'cu:bg-[rgb(255_255_255/.85)] cu:backdrop-blur-[8px] cu:border cu:border-solid cu:border-[#eadbc4] cu:rounded-[8px]',
   'cu:before:absolute cu:before:inset-[6px] cu:before:border cu:before:border-solid cu:before:border-[rgb(225_120_60/.55)] cu:before:rounded-[4px] cu:before:pointer-events-none',

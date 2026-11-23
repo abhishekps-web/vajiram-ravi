@@ -1,7 +1,7 @@
 /* Shared Tailwind v4 entry for the sections whose folders hold only their .jsx (user 2026-11-17: "add that to the jsx file", no
    stylesheet in the section's folder). Every style is a utility in the component; this file only sets Tailwind up for them:
    - utilities generated from the listed components only (source(none) + @source), prefixed `cu:` so they never collide with the
-     other Tailwind sheets (Programmes, Success stories `st:`, carousel dots `cd:`); unlayered; no preflight;
+     other Tailwind sheets (Programmes); unlayered; no preflight;
    - the breakpoints those components use (the site's are max-width ones).
    Imported by each component that uses it. A new section that joins: add its @source line here and use the `cu:` prefix.
    Now: Contact us (components/sections/ContactUs.jsx), the navigation bar (components/layout/NavigationBar.jsx) Why Vajiram & Ravi (components/sections/WhyChoose.jsx) Best IAS coaching (components/sections/BestCoaching.jsx) 50+ years (components/sections/Legacy/Legacy.jsx) Batches (components/sections/Batches.jsx) the Toppers year-by-year record (components/sections/Toppers.jsx) and Talk to us (components/sections/TalkToUs.jsx). */
@@ -22,6 +22,7 @@
 @source "../components/sections/ToppersRecord.jsx";
 @source "../components/sections/TalkToUs.jsx";
 @source "../components/sections/Stories.jsx";
+@source "../components/ui/CarouselDots.jsx";
 
 @property --fs { syntax: '<percentage>'; inherits: true; initial-value: 120%; }
 @property --fb { syntax: '<percentage>'; inherits: true; initial-value: 120%; }
@@ -168,3 +169,6 @@ html.js #stories:not([data-in]) > .lbl { opacity: 0; }
   55%  { z-index: 10; animation-timing-function: cubic-bezier(.4, 0, .2, 1); }
   100% { z-index: 10; visibility: visible; opacity: 1; scale: 1; translate: 0 0; rotate: 0deg; }
 }
+
+/* the carousel indicator's timed fill (components/ui/CarouselDots.jsx) */
+@keyframes cd-fill { to { transform: scaleX(1); } }

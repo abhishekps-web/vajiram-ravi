@@ -2,6 +2,7 @@ import '@/app/tailwind-sections.css';
 import Button from '@/components/ui/Button/Button';
 import { buttonHTML } from '@/components/ui/Button/button-core';
 import { $, $$, esc, reduce, SITE } from '@/lib/site';
+import { CATS, CAT_D, STAGES } from '@/lib/data/courses';
 
 const BAR_LINKS = [
   { k: 'toppers', href: '#toppers', t: 'Toppers' },
@@ -89,8 +90,8 @@ function Logo() {
 
 function MegaMenu({ id, wrapId, btnId, label, wide }) {
   const size = wide
-    ? 'cu:w-[min(1440px,calc(100vw-2*var(--px)))] cu:grid-cols-[minmax(0,1fr)_272px] cu:max-[1500px]:grid-cols-[minmax(0,1fr)_248px]'
-    : 'cu:w-[min(1240px,calc(100vw-2*var(--px)))] cu:grid-cols-[minmax(0,1fr)_300px] cu:max-[1500px]:grid-cols-[minmax(0,1fr)_270px]';
+    ? 'cu:w-[min(var(--chrome-w),calc(100vw-2*var(--chrome-px)))] cu:grid-cols-[minmax(0,1fr)_272px] cu:max-[1500px]:grid-cols-[minmax(0,1fr)_248px]'
+    : 'cu:w-[min(1240px,calc(100vw-2*var(--chrome-px)))] cu:grid-cols-[minmax(0,1fr)_300px] cu:max-[1500px]:grid-cols-[minmax(0,1fr)_270px]';
   return (
     <div className="cu:group/mega cu:static" id={wrapId}>
       <button className={LINK} id={btnId} type="button" aria-expanded="false" aria-controls={id} data-i18n="">{label}</button>
@@ -121,11 +122,11 @@ export default function NavigationBar() {
   return (
     <>
       <div className="nav-band cu:absolute cu:top-0 cu:inset-x-0 cu:z-[2] cu:h-[calc(var(--hdr-h)+var(--hdr-gap))] cu:pointer-events-none" aria-hidden="true" />
-      <header className="cu:fixed cu:z-50 cu:top-[var(--hdr-pt)] cu:left-[calc(var(--px)+10px)] cu:right-[calc(var(--px)+10px)] cu:flex cu:items-center cu:justify-between cu:pointer-events-none cu:*:pointer-events-auto cu:after:absolute cu:after:-inset-y-2 cu:after:-inset-x-2.5 cu:after:-z-10 cu:after:rounded-[24px] cu:max-[900px]:after:rounded-[20px] cu:after:pointer-events-none cu:after:bg-white cu:after:shadow-[0_6px_24px_-14px_rgba(60,25,5,.28)] cu:after:transition-[background-color,box-shadow] cu:after:duration-[.35s] cu:nav-top:after:bg-transparent cu:nav-top:after:shadow-none cu:motion-reduce:after:transition-none cu:max-[1023.98px]:justify-start cu:max-[1023.98px]:gap-2" id="nav" data-top="">
+      <header className="cu:fixed cu:z-50 cu:top-[var(--hdr-pt)] cu:left-[calc(var(--chrome-px)+10px)] cu:min-[901px]:left-[calc(var(--chrome-cap)+34px)] cu:right-[calc(var(--chrome-px)+10px)] cu:min-[901px]:right-[calc(var(--chrome-cap)+34px)] cu:flex cu:items-center cu:justify-between cu:pointer-events-none cu:*:pointer-events-auto cu:after:absolute cu:after:-inset-y-2 cu:after:-inset-x-2.5 cu:after:-z-10 cu:after:rounded-[24px] cu:max-[900px]:after:rounded-[20px] cu:after:pointer-events-none cu:after:bg-white cu:after:shadow-[0_6px_24px_-14px_rgba(60,25,5,.28)] cu:after:transition-[background-color,box-shadow] cu:after:duration-[.35s] cu:nav-top:after:bg-transparent cu:nav-top:after:shadow-none cu:motion-reduce:after:transition-none cu:max-[1023.98px]:justify-start cu:max-[1023.98px]:gap-2" id="nav" data-top="">
         <div className="cu:relative cu:flex cu:items-center cu:gap-1.5 cu:h-[46px] cu:py-px cu:pl-3 cu:pr-2.5 cu:max-[1023.98px]:contents">
           <Logo />
           <nav className="cu:flex cu:items-center cu:gap-0.5 cu:max-[1600px]:gap-0 cu:max-[1023.98px]:hidden" id="navLinks" aria-label="Main">
-            <a className={LINK} href="/coursefinder/" data-i18n="">All courses</a>
+            <MegaMenu id="mega" wrapId="explore" btnId="exploreBtn" label="All courses" wide />
             <a className={LINK} href="#toppers" data-more="toppers" data-i18n="">Toppers</a>
             <MegaMenu id="megaSm" wrapId="studyNav" btnId="studyBtn" label="Study materials" />
             <a className={LINK} href="#batches" data-more="batches" data-i18n="">Upcoming batches</a>
@@ -137,13 +138,13 @@ export default function NavigationBar() {
             <span className="cu:absolute cu:inset-x-[13px] cu:top-[25px] cu:h-[2px] cu:rounded-full cu:bg-current cu:transition-[translate,rotate] cu:duration-[.25s] cu:ease-[cubic-bezier(.2,.7,.2,1)] cu:group-aria-expanded/burger:-translate-y-[4px] cu:group-aria-expanded/burger:-rotate-45 cu:max-[760px]:inset-x-[11px] cu:motion-reduce:transition-none" />
           </button>
         </div>
-        <div className="cu:flex cu:items-center cu:gap-2.5 cu:max-[1023.98px]:order-1 cu:max-[760px]:hidden" id="navEnd">
+        <div className="cu:flex cu:items-center cu:gap-2.5 cu:pr-3 cu:max-[1023.98px]:order-1 cu:max-[760px]:hidden" id="navEnd">
           {/* EN / हिं in the bar beside "Let's talk", as in the course finder's nav (user 2026-11-23); phones keep it in the drawer */}
           <LangSwitch bar />
           <Button className="talk" size="sm" shadow={false} href="#contact" iconEnd="arrow" data-talk="">Let's talk</Button>
         </div>
       </header>
-      <div className="cu:fixed cu:z-[49] cu:top-[100px] cu:inset-x-[var(--px)] cu:grid cu:p-2.5 cu:rounded-[20px] cu:bg-white cu:shadow-[0_18px_48px_rgba(38,38,38,.16)] cu:max-[900px]:top-[92px] cu:[&[hidden]]:hidden" id="drawer" hidden>
+      <div className="cu:fixed cu:z-[49] cu:top-[100px] cu:inset-x-[var(--chrome-px)] cu:grid cu:p-2.5 cu:rounded-[20px] cu:bg-white cu:shadow-[0_18px_48px_rgba(38,38,38,.16)] cu:max-[900px]:top-[92px] cu:[&[hidden]]:hidden" id="drawer" hidden>
         {DRAWER_LINKS.map(([href, t]) => (
           <a key={href} className="cu:py-3 cu:px-3.5 cu:rounded-xl cu:text-[var(--ink)] cu:no-underline cu:[font-family:var(--btn-font)] cu:font-medium cu:text-lg cu:leading-[var(--btn-lh)] cu:tracking-[var(--btn-ls)] cu:transition-colors cu:duration-200 cu:hover:bg-[var(--sand)] cu:focus-visible:bg-[var(--sand)] cu:focus-visible:outline-2 cu:focus-visible:-outline-offset-2 cu:focus-visible:outline-[var(--brand)] cu:[html[lang=hi]_&]:[font-family:Mukta,var(--btn-font)]" href={href} data-i18n="">{t}</a>
         ))}
@@ -162,13 +163,32 @@ const ALL_LINK = 'cu:group/all cu:inline-flex cu:items-center cu:gap-2 cu:p-0 cu
 const KICKER = 'cu:relative cu:z-[1] cu:flex cu:items-center cu:gap-2 cu:w-fit cu:m-0 cu:pr-3 cu:[font:700_12px/1.3_var(--f)] cu:tracking-[.12em] cu:uppercase cu:text-[var(--brand)]';
 const DISC = 'cu:flex-none cu:grid cu:place-items-center cu:size-7 cu:rounded-full cu:text-[11px] cu:tracking-normal';
 const DISC_PLAIN = 'cu:bg-white cu:shadow-[inset_0_0_0_1px_rgba(194,65,12,.35)]';
-const num = i => String(i + 1).padStart(2, '0');
 const DISC_FEAT = 'cu:bg-[var(--brand)] cu:text-white';
 const ROW = 'cu:group/row cu:grid cu:-ml-2.5 cu:px-2.5 cu:rounded-[var(--r-box,16px)] cu:text-[var(--ink)] cu:no-underline cu:transition-colors cu:duration-200 cu:fine:hover:bg-[var(--sand)] cu:focus-visible:outline-2 cu:focus-visible:outline-offset-2 cu:focus-visible:outline-[var(--brand)]';
 const ROW_T = 'cu:[font:500_16px/1.25_var(--f-d)] cu:tracking-[-.005em] cu:text-[var(--ink)] cu:transition-colors cu:duration-200 cu:fine:group-hover/row:text-[var(--brand)]';
 const ROW_D = 'cu:[font:400_13px/1.45_var(--f)] cu:text-[#6B5D52]';
 const ASIDE = 'cu:flex cu:flex-col cu:items-start cu:bg-[var(--sand,#FFF2E6)] cu:border-l cu:border-[rgba(194,65,12,.12)]';
 
+const plural = n => n + (n === 1 ? ' course' : ' courses');
+// the All courses menu opens the course finder (public/coursefinder/) at that category's section (user 2026-11-23); CATS order -> its section keys
+const CF_KEY = ['gs', 'optional', 'csat', 'interview', 'mentorship', 'mains-ts', 'prelims-ts', 'optional-ts'];
+const cfHref = c => `/coursefinder/#cat=${CF_KEY[c] || 'all'}`;
+const num = i => String(i + 1).padStart(2, '0');
+
+function coursesMenu() {
+  const total = CATS.reduce((n, c) => n + c.courses.length, 0);
+  const cols = STAGES.map((s, i) => `<section class="cu:relative cu:pr-3.5" data-mega-col>
+      <p class="${KICKER} cu:mb-3"><b class="${DISC} ${DISC_PLAIN}">${num(i)}</b>${s.k}</p>
+      <ul class="cu:grid cu:gap-1 cu:m-0 cu:p-0 cu:list-none">${s.cats.map(c => `<li><a class="${ROW} cu:gap-[3px] cu:pt-2.5 cu:pb-[11px]" href="${cfHref(c)}" data-mega-close><span class="${ROW_T}">${esc(CATS[c].t)}</span><span class="${ROW_D} cu:line-clamp-3">${esc(CAT_D[c])}</span><span class="cu:justify-self-start cu:mt-1 cu:py-0.5 cu:px-2 cu:rounded-full cu:bg-[rgba(194,65,12,.08)] cu:[font:700_11px/1.5_var(--f)] cu:tracking-[.02em] cu:text-[var(--brand)] cu:transition-colors cu:duration-200 cu:fine:group-hover/row:bg-[var(--brand)] cu:fine:group-hover/row:text-white">${plural(CATS[c].courses.length)}</span></a></li>`).join('')}</ul>
+    </section>`).join('');
+  return `<div class="cu:grid cu:grid-cols-5 cu:pt-[26px] cu:pr-3 cu:pb-[22px] cu:pl-[26px] cu:max-[1500px]:pl-[22px]">${cols}</div>
+    <aside class="${ASIDE} cu:gap-3 cu:py-[26px] cu:px-6" data-mega-col>
+      <p class="${KICKER} cu:tracking-[.1em]">Not sure where to start?</p>
+      <p class="cu:m-0 cu:[font:400_14px/1.5_var(--f)] cu:text-[#4A4038]">A counsellor will match you to a programme for your stage, with no pressure to enrol.</p>
+      ${buttonHTML({ href: '#contact', label: 'Talk to a counsellor', size: 'sm', iconEnd: 'arrow', fullWidth: true, className: 'cu:self-stretch cu:mt-1 cu:grid-cols-[minmax(0,1fr)_var(--btn-disc)]! cu:[&>:first-child]:col-start-1! cu:[&>:nth-child(2)]:col-start-2!', attrs: { 'data-mega-close': '' } })}
+      <a class="${ALL_LINK} cu:mt-auto" href="/coursefinder/" data-mega-close>View all ${total} courses${ARROW_SVG}</a>
+    </aside>`;
+}
 
 function studyMenu() {
   const cols = STUDY_MENU.map(([k, items], i) => {
@@ -246,7 +266,9 @@ export function initNavMenus() {
   if (!drawer || !burger) return;
   burger.addEventListener('click', () => setDrawer(drawer.hidden));
   $$('a', drawer).forEach(a => a.addEventListener('click', () => setDrawer(false)));
+  $('#mega').innerHTML = coursesMenu();
   $('#megaSm').innerHTML = studyMenu();
+  navMega($('#explore'), $('#exploreBtn'));
   navMega($('#studyNav'), $('#studyBtn'));
   addEventListener('keydown', e => { if (e.key === 'Escape') { setMega(false); setDrawer(false); } });
 }
@@ -296,7 +318,7 @@ export function initNavMore() {
   document.addEventListener('click', e => { if (isOpen() && !wrap.contains(e.target)) setOpen(false); });
   addEventListener('keydown', e => { if (e.key === 'Escape' && isOpen()) { setOpen(false); btn.focus(); } });
   wrap.addEventListener('focusout', e => { if (isOpen() && !wrap.contains(e.relatedTarget)) setOpen(false); });
-  $('#studyBtn')?.addEventListener('click', () => setOpen(false));
+  ['#exploreBtn', '#studyBtn'].forEach(s => $(s)?.addEventListener('click', () => setOpen(false)));
   addEventListener('resize', refit);
   document.addEventListener('langchange', refit);
   document.fonts?.ready.then(refit);

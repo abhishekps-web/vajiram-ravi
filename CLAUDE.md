@@ -31,8 +31,8 @@ components/
                           photos, not a CSS grayscale filter, for performance), Stories, TalkToUs ("Talk to us", the counsellor form, id `contact`: one file, Tailwind `cu:` utilities, no comments, user 2026-11-21), Resources (data.jsx: the cards), ContactUs (Tailwind), Faq, Closing
   dialogs/                RanksDialog, CourseCatalogDialog (+ their behaviours; course-catalog.js also opens the catalogue for any [data-cat] link)
   ui/                     shared pieces: Button/ (the button system: Button.jsx, button-core.js, README.md), SectionLabel (.lbl eyebrow),
-                          ArrowIcon/StraightArrow, Dialog, Stylesheet, CarouselDots/ (every carousel's dot indicator; Tailwind,
-                          `cd:` utilities, entry carousel-dots.css), Tabs.jsx (every tab bar, one file: the sand bar and sliding brand pill; `Tabs` the markup, `initTabs` the behaviour, `ControlledTabs` for React state; styles public/css/tabs.css, user 2026-11-21; sections only place the bar),
+                          ArrowIcon/StraightArrow, Dialog, Stylesheet, CarouselDots.jsx (every carousel's dot indicator; Tailwind,
+                          `cu:` utilities, the shared entry app/tailwind-sections.css), Tabs.jsx (every tab bar, one file: the sand bar and sliding brand pill; `Tabs` the markup, `initTabs` the behaviour, `ControlledTabs` for React state; styles public/css/tabs.css, user 2026-11-21; sections only place the bar),
                           custom-select.js (accessible dropdown), accordion.js, rail.js
 lib/
   behaviour.js            THE ORDER every behaviour runs in (the order matters; see the comment at its top)
