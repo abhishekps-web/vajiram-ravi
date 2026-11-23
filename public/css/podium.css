@@ -556,3 +556,20 @@ html #toppers .tp-row b { transition: color .4s var(--ease, ease); }
 html #toppers .tp-row .tp-badge { transition: background-color .4s var(--ease, ease), color .4s var(--ease, ease); }
 @media (prefers-reduced-motion: reduce) { html #toppers .tp-row, html #toppers .tp-row b, html #toppers .tp-row .tp-badge { transition: none; } }
 .tp-prog.is-paused b { animation-play-state: paused; }
+@media (max-width: 600px) {
+  html #toppers .tp-record { padding-inline: 0; }
+  html #toppers .tp-record > div { padding-inline: 8px; }
+  html #toppers .tp-frame { padding-inline: 12px; padding-top: 12px; margin-top: 4px; }
+  html #toppers .tp-frame::before { left: 4px; right: 4px; top: 54px; }
+  html #toppers .tp-frame::after { left: 0; right: 0; }
+}
+@media (max-width: 900px) {
+  html #toppers .tp-list { max-height: none; overflow: visible; -webkit-mask-image: none; mask-image: none; margin-left: 0; padding-inline: 0; }
+}
+.tp-more-wrap { display: none; }
+@media (max-width: 900px) {
+  html #toppers .tp-more-wrap { display: flex; justify-content: center; margin-top: 16px; }
+  html #toppers .tp-more-wrap [hidden] { display: none; }
+  html #toppers .tp-list.is-clamped ul > li:nth-child(n+11) { display: none; }
+  html #toppers .tp-record .dr__h { scroll-margin-top: 96px; }
+}

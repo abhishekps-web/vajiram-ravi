@@ -1,6 +1,7 @@
 import Stylesheet from '@/components/ui/Stylesheet';
 import SectionLabel from '@/components/ui/SectionLabel';
 import Button from '@/components/ui/Button/Button';
+import { setButtonLabel } from '@/components/ui/Button/button-core';
 import { $, $$, esc, reduce } from '@/lib/site';
 import '@/app/tailwind-sections.css';
 import Tabs from '@/components/ui/Tabs/Tabs';
@@ -248,9 +249,9 @@ function ToppersRecord() {
           </div>
           <Tabs className="tp-yrs cu:self-center" label="Year of the examination" controls="tpList" items={RECORD.map(g => ({ id: String(g.y), label: g.y }))} />
         </div>
-        <div className="tp-frame cu:relative cu:mt-[clamp(10px,1.2vw,14px)] cu:p-[clamp(32px,3.2vw,46px)] cu:rounded-(--r-form) cu:before:absolute cu:before:inset-[12px] cu:before:top-[calc(clamp(32px,3.2vw,46px)+38px)] cu:before:pointer-events-none cu:before:border-2 cu:before:border-t-0 cu:before:border-solid cu:before:border-[rgba(194,65,12,.55)] cu:before:[mask-image:linear-gradient(180deg,transparent,#000_45%)]">
+        <div className="tp-frame cu:relative cu:mt-[clamp(10px,1.2vw,14px)] cu:p-[clamp(32px,3.2vw,46px)] cu:rounded-(--r-form) cu:before:absolute cu:before:inset-[12px] cu:before:top-[calc(clamp(32px,3.2vw,46px)+46px)] cu:before:pointer-events-none cu:before:border-2 cu:before:border-t-0 cu:before:border-solid cu:before:border-[rgba(194,65,12,.55)] cu:before:[mask-image:linear-gradient(180deg,transparent,#000_45%)]">
           <p className="dr__h"><span data-year-head>{`${RECORD[0].people.length} Ranks, UPSC CSE ${RECORD[0].y}`}</span></p>
-          <div className="cu:grid cu:grid-cols-[minmax(0,300px)_minmax(0,1fr)] cu:max-[1100px]:grid-cols-[minmax(0,270px)_minmax(0,1fr)] cu:max-[900px]:grid-cols-1 cu:gap-[clamp(20px,3vw,40px)] cu:items-start cu:mt-[clamp(10px,1.2vw,14px)] cu:[--col:clamp(340px,calc(100svh_-_260px),700px)]">
+          <div className="cu:grid cu:grid-cols-[minmax(0,300px)_minmax(0,1fr)] cu:max-[1100px]:grid-cols-[minmax(0,270px)_minmax(0,1fr)] cu:max-[900px]:grid-cols-1 cu:gap-[clamp(20px,3vw,40px)] cu:items-start cu:mt-[clamp(22px,2.4vw,32px)] cu:[--col:clamp(340px,calc(100svh_-_260px),700px)]">
             <div id="tpList" data-lenis-prevent className="tp-list cu:max-h-(--col) cu:overflow-y-auto cu:-ml-[6px] cu:pl-[6px] cu:pr-[10px] cu:[mask-image:linear-gradient(180deg,#000_90%,transparent)]">
               {RECORD.map((g, gi) => (
                 <ul key={g.y} data-y={g.y} hidden={gi !== 0} className="cu:m-0 cu:p-0 cu:list-none cu:grid cu:gap-0">
@@ -266,6 +267,7 @@ function ToppersRecord() {
                 </ul>
               ))}
             </div>
+            <div className="tp-more-wrap"><Button variant="outline" size="sm" iconEnd="chevron" data-more aria-expanded="false" hidden>Show all names</Button></div>
             <div className="tp-pane cu:[--shield:min(350px,calc((var(--col)-150px)*.88))] cu:max-[1100px]:[--shield:min(290px,calc((var(--col)-150px)*.88))] cu:sticky cu:top-[calc(var(--hdr-h)+16px)] cu:h-(--col) cu:flex cu:items-center cu:justify-center cu:gap-[clamp(20px,2.4vw,36px)] cu:text-left cu:text-(--ink) cu:max-[900px]:hidden" aria-live="polite">
               <div className="dr__fig cu:mt-[28px]" style={{ '--dw': 'var(--shield)', '--dh': 'calc(var(--shield) * 1.24089)' }}>
                 <span className="tp-laurel" aria-hidden="true" />
@@ -371,12 +373,28 @@ export function initToppersRecord() {
   if ('IntersectionObserver' in window) new IntersectionObserver(es => { const was = visible; visible = es[0].isIntersecting; if (visible && !was) resumeView(); else if (!visible) pauseView(); }, { threshold: .35 }).observe(rec); else { visible = true; arm(); }
 
   const yearHead = $('[data-year-head]', rec);
+  const more = $('[data-more]', rec), LIMIT = 10;
+  const syncMore = () => {
+    const n = ($('ul:not([hidden])', list) || { children: [] }).children.length, clamped = list.classList.contains('is-clamped');
+    more.hidden = n <= LIMIT;
+    setButtonLabel(more, clamped ? `Show all ${n} names` : 'Show fewer');
+    more.setAttribute('aria-expanded', String(!clamped));
+  };
+  list.classList.add('is-clamped');
+  syncMore();
+  more.addEventListener('click', () => {
+    const open = list.classList.toggle('is-clamped') === false;
+    syncMore();
+    if (!open) $('.dr__h', rec).scrollIntoView({ block: 'start', behavior: reduce ? 'auto' : 'smooth' });
+  });
   initTabs($('.tp-yrs', rec), { onSelect: id => {
     const group = $(`ul[data-y="${id}"]`, list);
     if (group) yearHead.textContent = `${group.children.length} Ranks, UPSC CSE ${id}`;
     const swap = () => {
       $$('ul[data-y]', list).forEach(u => { u.hidden = u.dataset.y !== id; });
       list.scrollTop = 0;
+      list.classList.add('is-clamped');
+      syncMore();
       cur = null;
       show($('ul:not([hidden]) .tp-row', list));
     };

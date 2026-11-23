@@ -83,8 +83,8 @@ export default function WhyChoose() {
   return (
     <section id="story" aria-labelledby="legacyH" className="cu:relative cu:py-(--sec-y) cu:px-(--px) cu:[background:var(--ground-jaali)] cu:overflow-clip">
       <div className="cu:grid cu:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] cu:max-[900px]:grid-cols-1 cu:items-center cu:gap-x-[clamp(24px,5vw,72px)] cu:gap-y-[28px] cu:text-left">
-        <figure className="rv cu:m-0 cu:aspect-[3/4] cu:w-[min(100%,calc((100svh-var(--hdr-h)-64px)*.75))] cu:max-[900px]:w-[min(100%,360px)] cu:overflow-hidden cu:rounded-(--r-card) cu:bg-[#eadbc4] cu:[box-shadow:0_24px_48px_-32px_rgb(80_48_16/.35)]" style={{ '--d': '.05s' }}>
-          <img src={PHOTO.src} srcSet={photoSrcSet(PHOTO.src, PHOTO.w)} sizes="(max-width: 900px) 92vw, 30vw" alt={PHOTO.alt} width={PHOTO.w} height={PHOTO.h} loading="lazy" decoding="async" className="cu:block cu:size-full cu:object-cover cu:object-center cu:transition-transform cu:duration-700 cu:ease-(--ease) cu:fine:hover:scale-[1.03] cu:motion-reduce:transition-none" />
+        <figure className="rv cu:m-0 cu:aspect-[3/4] cu:w-[min(100%,calc((100svh-var(--hdr-h)-64px)*.75))] cu:max-[900px]:w-[min(100%,360px)] cu:max-[640px]:w-full cu:max-[640px]:aspect-video cu:overflow-hidden cu:rounded-(--r-card) cu:bg-[#eadbc4] cu:[box-shadow:0_24px_48px_-32px_rgb(80_48_16/.35)]" style={{ '--d': '.05s' }}>
+          <img src={PHOTO.src} srcSet={photoSrcSet(PHOTO.src, PHOTO.w)} sizes="(max-width: 900px) 92vw, 30vw" alt={PHOTO.alt} width={PHOTO.w} height={PHOTO.h} loading="lazy" decoding="async" className="cu:block cu:size-full cu:object-cover cu:object-center cu:max-[640px]:object-[50%_56%] cu:transition-transform cu:duration-700 cu:ease-(--ease) cu:fine:hover:scale-[1.03] cu:motion-reduce:transition-none" />
         </figure>
         <header id="legacy" className="cu:flex cu:flex-col cu:items-start">
           <SectionLabel>{LEGACY.label}</SectionLabel>
