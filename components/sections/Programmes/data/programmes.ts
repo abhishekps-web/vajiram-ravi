@@ -187,6 +187,20 @@ export const programmeChoices: string[] = [featuredProgramme.name, ...programmes
  */
 export const programmeSlug = (name: string) =>
   name.toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
-// For now (user 2026-11-17, "we don't want a new page for now, just # it") every course link is "#": the course pages are still built
-// (app/courses/[slug], from programmeSlug) but nothing links to them. Put back `/courses/${programmeSlug(programme.name)}` to link them.
-export const coursePageHref = (_programme: Pick<Programme, "name">) => "#";
+// The books' course links open the course finder (public/coursefinder/) at that programme's section (user 2026-11-23); they were "#"
+// (2026-11-17, "just # it"). The course pages are still built (app/courses/[slug], from programmeSlug) but nothing links to them.
+// Programme name -> the course finder's section key; an unknown name opens the course finder at the top.
+const FINDER_KEY: Record<string, string> = {
+  "UPSC GS foundation course – PCM": "gs",
+  "CSAT course": "csat",
+  "Optional subject programme": "optional",
+  "Optional test series": "optional-ts",
+  "Prelims test series": "prelims-ts",
+  "Mains test series": "mains-ts",
+  "Mentorship programme": "mentorship",
+  "Interview guidance programme": "interview",
+};
+export const coursePageHref = (programme: Pick<Programme, "name">) => {
+  const key = FINDER_KEY[programme.name];
+  return key ? `/coursefinder/#cat=${key}` : "/coursefinder/";
+};

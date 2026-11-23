@@ -1018,7 +1018,8 @@ function PeelCorner({ onTurn }: { onTurn: () => void }) {
 
 /** What is printed on a right-hand page: the programme, one of its courses, or the way to all of them (kevin's pages). */
 function Page({ leaf, programme, onRestart }: { leaf: Leaf; programme: Programme; onRestart: () => void }) {
-  const href = programme.href;
+  // "View this course" / "View all N courses" open the course finder at this programme's section (user 2026-11-23; was programme.href)
+  const href = coursePageHref(programme);
   if (leaf.kind === "overview") {
     return (
       <>
