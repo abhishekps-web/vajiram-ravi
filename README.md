@@ -37,8 +37,9 @@ node .claude/skills/site-motion/scripts/motion-check.js "#story" --hover ".sm__c
 
 Reports console errors, unanimated elements in the section and the hover transform, and writes screenshots.
 
-## Cloudflare Pages (staging)
+## Cloudflare (Workers Builds, staging)
 
-The site is a static export (`output: 'export'` in `next.config.mjs`, images unoptimised): `npm run build` writes the site to `out/`.
-Cloudflare Pages settings: production branch `main`, staging branch `staging`; framework preset none; build command `npm run build`;
-build output directory `out`; environment variable `NODE_VERSION=22`. `public/_headers` sets the cache headers.
+The site is a static export (`output: 'export'` in `next.config.mjs`, images unoptimised): `npm run build` writes it to `out/`, and
+`wrangler.jsonc` serves that folder as static assets (`previews: {}` is needed by `wrangler preview`). `public/_headers` sets the cache headers.
+Project settings (Workers & Pages, Settings, Build): build command `npm run build`; deploy command `npx wrangler deploy` for the production
+branch (`main`) and `npx wrangler preview` for the other branches (`staging`); build variable `NODE_VERSION=22`.
