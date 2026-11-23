@@ -988,7 +988,7 @@ html.cf-locked { overflow: hidden; }
 
 /* more room around the footer's legal line (user 2026-11-20, "add a bit more space"): a wider gap above its rule, more air between
    the rule and the line, and more below it before the footer's edge */
-.vf .vf__legal { margin-top: 18px; padding-top: 22px; margin-bottom: 16px; }
+/* (the legal row's extra spacing removed 2026-11-23: the footer is now the homepage's, spaced as there) */
 
 /* ---------- the hero in a golden gradient (user 2026-11-20, "lets use a gradient colour similar to the uploaded image ... for the hero
    section"): saffron at the top and bottom, a pale gold band through the middle, with a fine grain over it, as in the image. On the
@@ -1832,3 +1832,5 @@ body { font-family: var(--f); }
 /* Our Popular Courses heading and sub text in white (user 2026-11-23), a soft warm shadow to lift them off the orange */
 .cf-feat .cf-sec__h, .cf-feat .cf-feat__h { color: #fff; text-shadow: 0 1px 2px rgb(120 40 8 / .3); }
 .cf-feat__sub { color: #fff; text-shadow: 0 1px 1px rgb(120 40 8 / .35); }
+/* no shadow where the page's bottom edge meets the footer (user 2026-11-23); v49.css gives the curtain's page a drop shadow */
+html.foot-curtain main { box-shadow: none; }
