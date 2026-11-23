@@ -13,53 +13,54 @@ const PHOTO = { src: '/assets/img/photos/institute-exterior.webp', alt: 'The Vaj
 const ICONS = {
   medal: (
     <>
-      <path d="M27 3h10L27 20l-6-3Z" fill="#C23B30" />
-      <path d="M11 3h10l9 16-7 2Z" fill="#E2574C" />
-      <circle cx="24" cy="31" r="14" fill="#EEC45E" />
-      <circle cx="24" cy="31" r="9.5" fill="#D9AE4F" />
-      <circle cx="24" cy="31" r="6.5" fill="#EEC45E" />
+      <path d="M34.2 19.0 L35.0 19.9 L35.6 20.8 L35.6 21.7 L35.2 22.5 L34.4 23.2 L33.3 23.7 L32.2 24.0 L31.3 24.4 L30.7 24.8 L30.5 25.5 L30.5 26.5 L30.6 27.6 L30.6 28.8 L30.3 29.8 L29.7 30.6 L28.8 30.8 L27.8 30.7 L26.7 30.3 L25.6 29.7 L24.8 29.4 L24.0 29.3 L23.4 29.6 L22.7 30.3 L22.0 31.2 L21.1 32.0 L20.2 32.6 L19.3 32.6 L18.5 32.2 L17.8 31.4 L17.3 30.3 L17.0 29.2 L16.6 28.3 L16.2 27.7 L15.5 27.5 L14.5 27.5 L13.4 27.6 L12.2 27.6 L11.2 27.3 L10.4 26.7 L10.2 25.8 L10.3 24.8 L10.7 23.7 L11.3 22.6 L11.6 21.8 L11.7 21.0 L11.4 20.4 L10.7 19.7 L9.8 19.0 L9.0 18.1 L8.4 17.2 L8.4 16.3 L8.8 15.5 L9.6 14.8 L10.7 14.3 L11.8 14.0 L12.7 13.6 L13.3 13.2 L13.5 12.5 L13.5 11.5 L13.4 10.4 L13.4 9.2 L13.7 8.2 L14.3 7.4 L15.2 7.2 L16.2 7.3 L17.3 7.7 L18.4 8.3 L19.2 8.6 L20.0 8.7 L20.6 8.4 L21.3 7.7 L22.0 6.8 L22.9 6.0 L23.8 5.4 L24.7 5.4 L25.5 5.8 L26.2 6.6 L26.7 7.7 L27.0 8.8 L27.4 9.7 L27.8 10.3 L28.5 10.5 L29.5 10.5 L30.6 10.4 L31.8 10.4 L32.8 10.7 L33.6 11.3 L33.8 12.2 L33.7 13.2 L33.3 14.3 L32.7 15.4 L32.4 16.2 L32.3 17.0 L32.6 17.6 L33.3 18.3 L34.2 19.0Z" />
+      <circle cx="22" cy="19" r="8" />
+      <path d="M22.0 15.0 L23.3 18.2 L26.8 18.5 L24.1 20.7 L24.9 24.0 L22.0 22.2 L19.1 24.0 L19.9 20.7 L17.2 18.5 L20.7 18.2Z" />
+      <path d="M15 31 9.5 44l6.5-2.5 3 4.5 3.5-14M29 31l5 13-6-2.5-3.5 4.5-3-14" />
+      <path d="M37 7.5l3-2.5M40 12.5l4-.5" />
     </>
   ),
   board: (
     <>
-      <path d="M12 23v9c0 3.5 5.4 7 12 7s12-3.5 12-7v-9l-12 6Z" fill="#4A6FA5" />
-      <path d="M24 7 46 18 24 29 2 18Z" fill="#2F4B7C" />
-      <path d="M41 20v12" stroke="#EEC45E" strokeWidth="2.4" strokeLinecap="round" />
-      <circle cx="41" cy="35" r="3" fill="#EEC45E" />
+      <path d="M3 18 24 8l21 10-21 10Z" />
+      <path d="M12 23.5V32c0 3.2 5.4 6 12 6s12-2.8 12-6v-8.5" />
+      <path d="M41 21v12" />
+      <path d="M41 33l-1.8 5h3.6Z" />
+      <path d="M36 5l2.5-2.5M41 8l4-.5" />
     </>
   ),
   mentor: (
     <>
-      <circle cx="31" cy="17" r="5.5" fill="#F2C6A0" />
-      <path d="M21 41c0-8 4.5-12 10-12s10 4 10 12Z" fill="#2F4B7C" />
-      <circle cx="16" cy="13" r="7" fill="#F2C6A0" />
-      <path d="M3 42c0-10 5.5-16 13-16s13 6 13 16Z" fill="#E8730C" />
-      <path d="M38 4l1.4 2.8 3.1.5-2.2 2.2.5 3.1L38 11l-2.8 1.6.5-3.1-2.2-2.2 3.1-.5Z" fill="#EEC45E" />
+      <circle cx="15" cy="14" r="6.5" />
+      <path d="M3.5 41c0-9.5 5-15 11.5-15s11.5 5.5 11.5 15Z" />
+      <circle cx="34" cy="18" r="5" />
+      <path d="M28.5 29.5c1.5-.9 3.2-1.4 5.5-1.4 5 0 8.5 4 9 12.9" />
+      <path d="M36 5.5l2-3M41 9.5l4-1" />
     </>
   ),
   notes: (
     <>
-      <rect x="5" y="31" width="38" height="10" rx="2.5" fill="#E2574C" />
-      <rect x="8" y="20" width="32" height="10" rx="2.5" fill="#EEC45E" />
-      <rect x="6" y="9" width="34" height="10" rx="2.5" fill="#4A6FA5" />
-      <path d="M11 36h12M14 25h12M12 14h12" stroke="#FFF1D6" strokeWidth="2" strokeLinecap="round" />
+      <rect x="5" y="31" width="38" height="10" rx="2.5" />
+      <rect x="8" y="20.5" width="32" height="9.5" rx="2.5" />
+      <rect x="6" y="10" width="34" height="9.5" rx="2.5" />
+      <path d="M11 36h12M14 25.2h12M12 14.8h12" />
+      <path d="M38 4l2.5-2M43 7.5l3-.5" />
     </>
   ),
   place: (
     <>
-      <ellipse cx="24" cy="43.5" rx="10" ry="2.5" fill="#E6D3AE" />
-      <path d="M24 3C16 3 10 9 10 17c0 10 14 26 14 26s14-16 14-26C38 9 32 3 24 3Z" fill="#E2574C" />
-      <circle cx="24" cy="17" r="6.5" fill="#FFF1D6" />
+      <path d="M24 4c-7.5 0-13 5.5-13 13 0 9.5 13 26 13 26s13-16.5 13-26c0-7.5-5.5-13-13-13Z" />
+      <circle cx="24" cy="17" r="5.5" />
+      <path d="M12 44.5c7 2 17 2 24 0" />
+      <path d="M40 5l3-2.5M43 11l3.5-.5" />
     </>
   ),
   live: (
     <>
-      <rect x="4" y="7" width="40" height="28" rx="3.5" fill="#3A4F7A" />
-      <rect x="7.5" y="10.5" width="33" height="21" rx="1.5" fill="#CFE3FF" />
-      <path d="M20 15.5 33 21l-13 5.5Z" fill="#E8730C" />
-      <circle cx="37" cy="14" r="2.2" fill="#E2574C" />
-      <rect x="21" y="35" width="6" height="5" fill="#8A97B0" />
-      <rect x="14" y="39" width="20" height="4" rx="2" fill="#3A4F7A" />
+      <rect x="4" y="7" width="40" height="27" rx="3.5" />
+      <path d="M20 14.5 33 20.5l-13 6Z" />
+      <path d="M24 34v6.5M15 41.5h18" />
+      <path d="M38 3l2.5-2M43 6.5l3-.5" />
     </>
   ),
 };
@@ -97,7 +98,7 @@ export default function WhyChoose() {
             <li key={r.t} className="cu:min-w-0">
               <article className={CARD}>
                 <span aria-hidden="true" className="cu:grid cu:place-items-center cu:flex-none cu:size-[60px] cu:rounded-full cu:bg-[#FFF8EA] cu:text-(--brand)">
-                  <svg aria-hidden="true" viewBox="0 0 48 48" className="cu:size-[38px]">{ICONS[r.icon]}</svg>
+                  <svg aria-hidden="true" viewBox="0 0 48 48" className="cu:size-[40px] cu:fill-none cu:stroke-[#1D1712] cu:[stroke-width:2.6] cu:[stroke-linecap:round] cu:[stroke-linejoin:round]">{ICONS[r.icon]}</svg>
                 </span>
                 <div className="cu:pt-[18px]">
                   <h3 className="cu:m-0 cu:[font:400_clamp(24px,2vw,30px)/1.15_var(--f-title)] cu:tracking-[-.01em] cu:text-[#2A2016]">{r.t}</h3>
