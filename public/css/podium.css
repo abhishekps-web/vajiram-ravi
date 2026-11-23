@@ -543,9 +543,4 @@ html #toppers .tp-row[aria-current]:focus-visible { outline-color: var(--ink, #1
 /* the record list: only the chosen year's names show (a utility class's display would otherwise override [hidden]), and wheel scrolling passes on to the page at the list's ends */
 .tp-list ul[hidden] { display: none; }
 
-/* the record's "38 Ranks, UPSC CSE 2024" heading: its flourish lines run out to the frame's border at each end (the frame sits 28px in from the container's edge) */
-.tp-record .dr__h { margin-inline: calc(-1 * (clamp(32px, 3.2vw, 46px) - 28px)); }
-.tp-record .dr__h::before, .tp-record .dr__h::after { flex: 1; width: auto; min-width: 0; }
-.tp-record .dr__h { margin-block: 0; margin-inline: calc(-1 * (clamp(32px, 3.2vw, 46px) - 18px)); }
-.tp-record .dr__h::before, .tp-record .dr__h::after { height: 1px; background: rgba(194, 65, 12, .4); }
-html #toppers .tp-record .dr__h::before, html #toppers .tp-record .dr__h::after { background: rgba(194, 65, 12, .4); }
+.tp-record .dr__h { margin-inline: 0; }

@@ -220,7 +220,7 @@ const PROG = new Map(TOPPERS.filter(p => p.c).map(p => [`${p.y}-${p.r}`, p.c]));
 const PLACEHOLDER = '/assets/img/toppers/portrait/placeholder-man-pad.webp';
 const RECORD = NP_ARCHIVE.ARCHIVE_YEARS.filter(y => y < LATEST).map(y => ({
   y,
-  people: [...NP_ARCHIVE.ARCHIVE[y]].sort((a, b) => a.rank - b.rank).map(p => ({ r: p.rank, n: p.name, c: prog(p.programmes || PROG.get(`${y}-${p.rank}`)), src: y === 2024 ? PLACEHOLDER : '/' + p.photo })),
+  people: [...NP_ARCHIVE.ARCHIVE[y]].sort((a, b) => a.rank - b.rank).map(p => ({ r: p.rank, n: p.name, c: prog(p.programmes || PROG.get(`${y}-${p.rank}`)), src: PLACEHOLDER })),
 }));
 const FIRST = RECORD[0].people[0];
 const isCutout = src => src.includes('/portrait/2025/') || src.includes('/portrait/placeholder');
@@ -248,7 +248,7 @@ function ToppersRecord() {
           </div>
           <Tabs className="tp-yrs cu:self-center" label="Year of the examination" controls="tpList" items={RECORD.map(g => ({ id: String(g.y), label: g.y }))} />
         </div>
-        <div className="cu:relative cu:mt-[clamp(10px,1.2vw,14px)] cu:p-[clamp(32px,3.2vw,46px)] cu:rounded-(--r-form) cu:before:absolute cu:before:inset-[12px] cu:before:pointer-events-none cu:before:border-[16px] cu:before:border-t-0 cu:before:border-solid cu:before:border-transparent cu:before:[border-image:url(/assets/img/patterns/frame.svg)_16_/_1_/_0_stretch]">
+        <div className="cu:relative cu:mt-[clamp(10px,1.2vw,14px)] cu:p-[clamp(32px,3.2vw,46px)] cu:rounded-(--r-form) cu:before:absolute cu:before:inset-[12px] cu:before:top-[calc(clamp(32px,3.2vw,46px)+38px)] cu:before:pointer-events-none cu:before:border-[16px] cu:before:border-t-0 cu:before:border-solid cu:before:border-transparent cu:before:[border-image:url(/assets/img/patterns/frame.svg)_16_/_1_/_0_stretch]">
           <p className="dr__h"><span data-year-head>{`${RECORD[0].people.length} Ranks, UPSC CSE ${RECORD[0].y}`}</span></p>
           <div className="cu:grid cu:grid-cols-[minmax(0,300px)_minmax(0,1fr)] cu:max-[1100px]:grid-cols-[minmax(0,270px)_minmax(0,1fr)] cu:max-[900px]:grid-cols-1 cu:gap-[clamp(20px,3vw,40px)] cu:items-start cu:mt-[clamp(10px,1.2vw,14px)] cu:[--col:clamp(340px,calc(100svh_-_260px),700px)]">
             <div id="tpList" data-lenis-prevent className="tp-list cu:max-h-(--col) cu:overflow-y-auto cu:-ml-[6px] cu:pl-[6px] cu:pr-[10px] cu:[mask-image:linear-gradient(180deg,#000_90%,transparent)]">
@@ -489,9 +489,7 @@ export function initDiamondReel() {
 
   layout(); tabApi.centre(false);
   let rt = 0; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { layout(); tabApi.centre(false); }, 150); });
-  let seen = false;
-  const sync = () => { dr.classList.toggle('is-off', !seen || document.hidden); sync2(); };
-  new IntersectionObserver(es => { seen = es[0].isIntersecting; sync(); }, { rootMargin: '100px 0px' }).observe(dr);
+  const sync = () => { dr.classList.toggle('is-off', document.hidden); sync2(); };
   document.addEventListener('visibilitychange', sync);
   sync();
 }
