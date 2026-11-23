@@ -28,7 +28,7 @@ components/
                           Hero (user 2026-11-21: Hero.jsx composes HeroBanner.jsx (slides, copy, controls, `initHeroCarousel`) and HeroStats.jsx (the stats row, `initHeroStats`);
                           styles in public/css/hero-banner.css and hero-stats.css), Programmes, Toppers (data/ holds the archive and rankers), WhyChoose, Batches (the GS section was removed from the homepage, user 2026-11-20),
                           Faculties (the faculty section, id "educators"; TS + Tailwind, ported from Soloman; the off-front cards use `-bw` copies of the
-                          photos, not a CSS grayscale filter, for performance), Stories, TalkToUs ("Talk to us", the counsellor form, id `contact`: one file, Tailwind `cu:` utilities, no comments, user 2026-11-21), Resources (data.jsx: the cards), ContactUs (Tailwind), Faq, Closing, Parked (hidden)
+                          photos, not a CSS grayscale filter, for performance), Stories, TalkToUs ("Talk to us", the counsellor form, id `contact`: one file, Tailwind `cu:` utilities, no comments, user 2026-11-21), Resources (data.jsx: the cards), ContactUs (Tailwind), Faq, Closing
   dialogs/                RanksDialog, CourseCatalogDialog (+ their behaviours; course-catalog.js also opens the catalogue for any [data-cat] link)
   ui/                     shared pieces: Button/ (the button system: Button.jsx, button-core.js, README.md), SectionLabel (.lbl eyebrow),
                           ArrowIcon/StraightArrow, Dialog, Stylesheet, CarouselDots/ (every carousel's dot indicator; Tailwind,
@@ -167,5 +167,4 @@ The client wants **every section and every element animated**. For any change to
   in the code). It holds the batch data (`BATCHES`, `BFAM`, `BYEAR`, `BANNERS`, imported from here by the contact form and BatchStrips), the tickets, the "all batches" dialog and the behaviours (`initBatchTickets`, `initBatchDialog`). The flagship
   glint's `@property`s, `flagClock` keyframes, `--ticket-notch` and `--flag-glint` are in `app/tailwind-sections.css`. The shared
   shells it keeps: `.band`, `.rail` / `.rail__track` / `.rail__nav` / `.cbtn` (rail.js), `.dlg`, `.rv`, and the `.sg` stagger on `#price`.
-- The "How it works" and results sections are in `sections/Parked/Parked.jsx`, inside `<div id="parked" hidden>`; they are not shown.
 - `public/css/why-choose.css` and `public/js/why-choose.js` are leftovers the page does not load (they were not loaded before the Next.js conversion either).
