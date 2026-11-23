@@ -1855,7 +1855,7 @@ footer.foot .foot__logo--mark:focus-visible { outline: 2px solid #fff; outline-o
 /* the column is 1440px wide (user 2026-11-13: briefly 1920px, then back to 1440px): --cap is half of what the screen has beyond 1440px */
 :root {
   --site-w: 1440px;
-  --cap: max(0px, calc((100vw - var(--site-w) - 40px) / 2));
+  --cap: max(0px, calc((100vw - var(--site-w) - 80px) / 2));
   --px: max(clamp(16px, 5.5vw, 40px), calc((100vw - var(--site-w)) / 2));
   --chrome-w: 1500px;
   --chrome-cap: max(0px, calc((100vw - var(--chrome-w)) / 2));
