@@ -117,7 +117,7 @@ The client wants **every section and every element animated**. For any change to
   (user 2026-11-16; `--strip-h` is 0, `components/sections/BatchStrips.jsx` is unused). The promo banner carousel under the stats was
   removed (user 2026-11-20). Simple scroll (user 2026-11-20): the hero no longer pins, dims or shrinks while Programmes slides over
   it; both scroll with the page (end of `v49.css`).
-- Life at Vajiram & Ravi (`#lifeGal`, `LifeGallery/`, styles `public/css/life-gallery.css`): on the hero's ground, `--ground-beige` (user 2026-11-21, replacing the orange ground and grain; the override block at the end of its sheet). The hero's results pill with the running topper names was removed (user 2026-11-21); in its place the hero copy opens with a
+- Life at Vajiram & Ravi (`#lifeGal`, `LifeGallery.jsx`, Tailwind `cu:` utilities since 2026-11-24; the JS hooks are the `lg__*` class names): on the hero's ground, `--ground-beige` (user 2026-11-21; the `cu:ground-beige` utility in app/tailwind-sections.css). The hero's results pill with the running topper names was removed (user 2026-11-21); in its place the hero copy opens with a
   static `<SectionLabel light>` eyebrow ("CSE 2025 results"). Slides (user 2026-11-21): `HERO_ORDER` in `HeroBanner.jsx` picks and orders them from `ALL_SLIDES` (now results, AIR 1, GS foundation,
   next batch, campus (`slide-campus.webp`, drawn at 125% width so the sign clears the copy; `data-kind` on `#dlPin` for per-slide rules, set by `initHeroCarousel`); photos `hero-v6/slide-results.webp`, `slide-gs-foundation.webp`, `slide-batch.webp`, each with a desktop `pos` and a phone
   crop `mpos`; kept and ready: `air-2`, `air-3`, `prelims`, `mentor`). Each has its eyebrow, headline, lead and buttons; a topper or a slide

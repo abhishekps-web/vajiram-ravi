@@ -37,6 +37,10 @@
    page jump ~15px as the intro lifted) and holds the page to one screen under the overlay; vrv-restore lets a reload from mid-page
    scroll back to its place under it. boot.js listens for the `iris` animation, so that name stays. */
 @source "../components/layout/Intro/Intro.jsx";
+@source "../components/sections/LifeGallery.jsx";
+
+/* the hero's beige ground (--ground-beige, v49.css: a fade, the jaali tile, the beige), sized as on the hero (.dl__ground) */
+@utility ground-beige { background: var(--ground-beige); background-size: 100% 100%, 36px 36px, auto; }
 @custom-variant vrv-lock (html.vrv-lock &);
 @custom-variant vrv-play (html.vrv-play &);
 @custom-variant vrv-out (html.vrv-out &);

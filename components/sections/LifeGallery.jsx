@@ -1,7 +1,7 @@
 import { photoSrcSet } from '@/lib/photo';
 import SectionWrapper from '@/components/ui/section_wrapper';
 import Button from '@/components/ui/Button';
-import Stylesheet from '@/components/ui/Stylesheet';
+import '@/app/tailwind-sections.css';
 import Tabs, { initTabs } from '@/components/ui/Tabs';
 
 const P = '/assets/img/photos';
@@ -19,43 +19,48 @@ export const LIFE = [
 
 const VIDEO_ICON = (
   <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
-    <path className="lg__vi-play" d="M8 5.5v13l11-6.5z" fill="currentColor" />
-    <g className="lg__vi-pause" fill="currentColor"><rect x="6.5" y="5.5" width="4" height="13" rx="1" /><rect x="13.5" y="5.5" width="4" height="13" rx="1" /></g>
+    <path className="cu:[.is-playing_&]:hidden" d="M8 5.5v13l11-6.5z" fill="currentColor" />
+    <g className="cu:hidden cu:[.is-playing_&]:inline" fill="currentColor"><rect x="6.5" y="5.5" width="4" height="13" rx="1" /><rect x="13.5" y="5.5" width="4" height="13" rx="1" /></g>
   </svg>
 );
 
+const ARROW = 'cu:absolute cu:top-[calc(var(--cpad)+var(--ch)/2-22px)] cu:z-4 cu:flex cu:opacity-0 cu:pointer-events-none cu:[transition:opacity_.3s_ease,translate_.35s_cubic-bezier(.22,1,.36,1)] cu:focus-within:opacity-100 cu:focus-within:pointer-events-auto cu:focus-within:[translate:0_0] cu:fine:group-hover/rail:opacity-100 cu:fine:group-hover/rail:pointer-events-auto cu:fine:group-hover/rail:[translate:0_0]';
+const MEDIA = 'cu:block cu:size-full cu:object-cover cu:[filter:brightness(.92)] cu:[transition:transform_1.1s_cubic-bezier(.22,.8,.24,1),filter_.5s_ease] cu:motion-reduce:transition-none cu:fine:group-hover/slide:[transform:scale(1.03)] cu:fine:group-hover/slide:[filter:brightness(1)]';
+const PLAY = 'lg__vctl cu:[&.btn.btn]:absolute cu:[&.btn.btn]:inset-0 cu:[&.btn.btn]:z-2 cu:[&.btn.btn]:m-auto cu:[&.btn.btn]:size-14 cu:[&.btn.btn]:[--btn-h:56px] cu:[&.btn.btn]:[--btn-ic:38px] cu:[&.btn.btn]:[--btn-bg:rgba(255,249,241,.92)] cu:[&.btn.btn]:[--btn-fg:#C2410C] cu:[&.btn.btn]:[--btn-edge:inset_0_0_0_1px_rgba(255,255,255,.85)] cu:[&.btn.btn]:[--btn-edge-hover:inset_0_0_0_1px_var(--brand,#C2410C)] cu:[&.btn.btn]:[--btn-shadow:0_14px_30px_-10px_rgba(0,0,0,.55)] cu:[&.btn.btn]:backdrop-blur-[6px] cu:[&.btn.btn]:[transition:opacity_.3s_ease] cu:motion-reduce:[&.btn.btn]:transition-none cu:[&_svg]:size-full cu:[&.is-playing]:opacity-60 cu:[&.is-playing:hover]:opacity-100 cu:[&.is-playing:focus-visible]:opacity-100 cu:[.is-copy_&]:invisible cu:max-[760px]:[&.btn.btn]:size-13 cu:max-[760px]:[&.btn.btn]:[--btn-h:52px] cu:max-[760px]:[&.btn.btn]:[--btn-ic:34px]';
+
 export default function LifeGallery() {
   return (
-    <SectionWrapper id="lifeGal" labelledBy="lifeH" compact bleed className="lgal">
-      <Stylesheet href="/css/life-gallery.css" />
-      <div className="lg__hd">
-        <h2 className="lg__h rv" id="lifeH" style={{ '--d': '.05s' }}>Life at Vajiram &amp; Ravi</h2>
+    <SectionWrapper id="lifeGal" labelledBy="lifeH" compact bleed
+      className="cu:isolate cu:overflow-hidden cu:[color:var(--ink,#1D1712)] cu:ground-beige cu:[--cw:clamp(220px,21vw,380px)] cu:[--ch:calc(var(--cw)*1.18)] cu:[--gap:clamp(10px,1.1vw,18px)] cu:[--cpad:64px] cu:max-[760px]:[--cw:56vw] cu:max-[760px]:[--gap:10px] cu:max-[760px]:[--cpad:44px]">
+      <div className="cu:px-(--px) cu:text-center">
+        <h2 className="rv cu:m-0 cu:[font:400_var(--h2)/1.02_var(--f-title,Georgia),serif] cu:tracking-[-.02em] cu:text-center cu:[color:var(--ink,#1D1712)]" id="lifeH" style={{ '--d': '.05s' }}>Life at Vajiram &amp; Ravi</h2>
       </div>
-      <div className="lg__rail">
-        <span className="lg__smoke lg__smoke--l" aria-hidden="true" />
-        <span className="lg__smoke lg__smoke--r" aria-hidden="true" />
-        <span className="lg__arw lg__prev"><Button variant="outline" size="sm" iconOnly iconStart="arrow-left" label="Previous photo" /></span>
-        <span className="lg__arw lg__next"><Button variant="outline" size="sm" iconOnly iconStart="arrow" label="Next photo" /></span>
-        <ul className="lg__track" id="lifeTrack" aria-labelledby="lifeH">
+      <div className="lg__rail cu:group/rail cu:relative">
+        <span className={`lg__arw lg__prev cu:left-[max(12px,calc(var(--px)-22px))] cu:[translate:8px_0] ${ARROW}`}><Button variant="outline" size="sm" iconOnly iconStart="arrow-left" label="Previous photo" /></span>
+        <span className={`lg__arw lg__next cu:right-[max(12px,calc(var(--px)-22px))] cu:[translate:-8px_0] ${ARROW}`}><Button variant="outline" size="sm" iconOnly iconStart="arrow" label="Next photo" /></span>
+        <ul className="lg__track cu:mx-0 cu:mt-[calc(var(--hd-gap)-var(--cpad))] cu:mb-[calc(var(--cpad)*-1)] cu:flex cu:list-none cu:gap-(--gap) cu:overflow-x-auto cu:overscroll-x-contain cu:px-(--px) cu:py-(--cpad) cu:snap-x cu:snap-mandatory cu:scroll-px-(--px) cu:[scrollbar-width:none] cu:[&::-webkit-scrollbar]:hidden cu:[transition:opacity_.2s_ease] cu:[&.is-sw]:opacity-0 cu:motion-reduce:transition-none cu:motion-reduce:scroll-auto" id="lifeTrack" aria-labelledby="lifeH">
           {LIFE.map(c => (
-            <li key={c.name} className={`lg__slide${c.vid ? ' lg__slide--vid' : ''}`}>
-              <figure className="lg__media">
+            <li key={c.name} className={`lg__slide${c.vid ? ' lg__slide--vid cu:basis-[calc(var(--ch)*16/9)] cu:max-[760px]:basis-[min(calc(var(--ch)*16/9),calc(100vw-2*var(--px,20px)))]' : ' cu:basis-(--cw)'} cu:group/slide cu:min-w-0 cu:shrink-0 cu:grow-0 cu:snap-center cu:snap-always cu:opacity-0 cu:[translate:0_24px] cu:[transition:opacity_.7s_ease_var(--td,0s),translate_.9s_cubic-bezier(.22,.8,.24,1)_var(--td,0s)] cu:[#lifeGal.is-in_&]:opacity-100 cu:[#lifeGal.is-in_&]:[translate:0_0] cu:origin-[50%_calc(var(--ch)/2)] cu:will-change-transform cu:@container cu:motion-reduce:transition-none`}>
+              <figure className={`lg__media cu:relative cu:m-0 cu:h-(--ch) cu:overflow-hidden cu:rounded-[10px] cu:bg-[#F4EEE6] cu:shadow-[0_30px_50px_-30px_rgba(80,48,16,.45)] ${c.vid ? 'cu:after:pointer-events-none cu:after:absolute cu:after:inset-0 cu:after:z-1 cu:after:bg-[rgba(0,0,0,.45)] cu:after:[transition:opacity_.35s_ease] cu:has-[.is-playing]:after:opacity-0 cu:motion-reduce:after:transition-none' : ''}`}>
                 {c.vid ? (
                   <>
-                    <video poster={c.poster} data-src={c.src} muted loop playsInline preload="none" aria-label={c.label} />
-                    <Button variant="outline" size="sm" iconOnly iconStart={VIDEO_ICON} label={`Play video: ${c.name}`} className="lg__vctl" data-vctl="" />
+                    <video className={MEDIA} poster={c.poster} data-src={c.src} muted loop playsInline preload="none" aria-label={c.label} />
+                    <Button variant="outline" size="sm" iconOnly iconStart={VIDEO_ICON} label={`Play video: ${c.name}`} className={PLAY} data-vctl="" />
                   </>
                 ) : (
-                  <img src={c.img} srcSet={photoSrcSet(c.img, c.w)} sizes="(max-width: 760px) 80vw, 260px" alt={c.alt} width={c.w} height={c.h} loading="lazy" decoding="async" style={c.pos ? { objectPosition: c.pos } : undefined} />
+                  <img className={MEDIA} src={c.img} srcSet={photoSrcSet(c.img, c.w)} sizes="(max-width: 760px) 80vw, 260px" alt={c.alt} width={c.w} height={c.h} loading="lazy" decoding="async" style={c.pos ? { objectPosition: c.pos } : undefined} />
                 )}
               </figure>
-              <p className="lg__cap"><b>{c.name}</b><span>{c.detail}</span></p>
+              <p className="cu:mx-0 cu:mt-[14px] cu:mb-0 cu:flex cu:flex-col cu:items-baseline cu:justify-between cu:gap-1 cu:text-left cu:opacity-0 cu:[transition:opacity_.35s_ease] cu:[.is-mid_&]:opacity-100 cu:motion-reduce:opacity-100">
+                <b className="cu:flex-none cu:[font:600_16px/1.3_var(--f)] cu:[color:var(--ink,#1D1712)]">{c.name}</b>
+                <span className="cu:min-w-0 cu:[font:400_14px/1.35_var(--f)] cu:text-[#7a6a58] cu:text-left">{c.detail}</span>
+              </p>
             </li>
           ))}
         </ul>
       </div>
       <Tabs
-        className="lg__tabs rv"
+        className="lg__tabs rv cu:mx-auto cu:mt-[clamp(28px,3vw,40px)] cu:mb-0"
         style={{ '--d': '.1s' }}
         label="Show"
         controls="lifeTrack"
