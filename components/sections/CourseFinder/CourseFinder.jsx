@@ -5,8 +5,8 @@
    buttons). `#cat=<family or group>` opens a group. Data: courses.json (slimmed from the finder's CF_DATA); banners in
    public/assets/img/courses. Styles: public/css/course-finder.css. */
 import { useEffect, useMemo, useRef, useState } from 'react';
-import CarouselDots from '@/components/ui/CarouselDots/CarouselDots';
-import Button from '@/components/ui/Button/Button';
+import CarouselDots from '@/components/ui/CarouselDots';
+import Button from '@/components/ui/Button';
 import DATA from './courses.json';
 
 const GROUPS = [
