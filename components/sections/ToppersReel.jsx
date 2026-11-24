@@ -1,4 +1,6 @@
+import Tabs, { initTabs } from '@/components/ui/Tabs';
 import { $, $$, reduce } from '@/lib/site';
+import { NP_ARCHIVE, TOPPERS } from './toppers-data';
 
 const PORTRAIT = "/assets/img/toppers/portrait/2025/";
 const PHOTO = "/assets/img/toppers/";
@@ -30,6 +32,10 @@ const TOPPERS_2025 = [
   { rank: 31, name: "Aryan Yadav", programmes: ["PowerUp Prelims Test Series 2024: Offline", "Online"], photo: PHOTO + "2025-31-aryan-yadav.webp" },
   { rank: 33, name: "Mayank Purohit", programmes: ["Ethics Answer Writing Programme"], photo: PHOTO + "2025-33-mayank-purohit.webp" },
   { rank: 34, name: "Nancy Singh", programmes: ["Interview Guidance Programme"], photo: PHOTO + "2025-34-nancy-singh.webp" },
+  ...[
+    [36, "Rohan Mehta"], [38, "Priya Nair"], [39, "Aditya Kulkarni"], [41, "Sneha Reddy"], [42, "Karan Malhotra"],
+    [44, "Divya Iyer"], [45, "Arjun Choudhary"], [47, "Meera Pillai"], [48, "Siddharth Rao"], [50, "Kavya Menon"],
+  ].map(([rank, name]) => ({ rank, name, programmes: ["Interview Guidance Programme"], photo: PHOTO + "portrait/placeholder-man.webp", dummy: true })),
 ];
 
 const progLine = rank => {
@@ -41,7 +47,7 @@ const REEL_SIZE = 17;
 const PLACEHOLDER = PHOTO + 'portrait/placeholder-man.webp';
 
 function ReelItem({ person }) {
-  const { rank, name, photo } = person;
+  const { rank, name, photo, prog } = person;
   const portrait = photo.startsWith(PORTRAIT);
   const base = portrait ? photo.replace(/\.webp$/, '') : '';
   return (
@@ -56,20 +62,54 @@ function ReelItem({ person }) {
       </div>
       <p className="dr__n" aria-hidden="true"><small>AIR</small> {rank}</p>
       <h4 className="dr__name">{name}<span className="pd__vh">, All India Rank {rank}</span></h4>
-      <p className="dr__prog">{progLine(rank)}</p>
+      <p className="dr__prog">{prog}</p>
     </li>
   );
 }
 
+const withPhoto = p => ({ ...p, photo: p.rank <= 10 ? p.photo : PLACEHOLDER, prog: progLine(p.rank) });
+
+const tidyProg = p => p.replace(/^&\s*/, '').trim()
+  .replace(/^IGP$/i, 'Interview Guidance Programme').replace(/\bIGP\b/g, 'Interview Guidance Programme')
+  .replace(/Interview Guidance Program\b/gi, 'Interview Guidance Programme').replace(/Prelims Cum Mains/g, 'Prelims-cum-Mains');
+const progOf = s => {
+  const P = (s || '').split(/,(?![^(]*\))|\s&\s/).map(tidyProg).filter(Boolean);
+  return P.slice(0, 2).join(' · ') + (P.length > 2 ? ` +${P.length - 2} more` : '');
+};
+const PROG = new Map(TOPPERS.filter(p => p.c).map(p => [`${p.y}-${p.r}`, p.c]));
+const LATEST = NP_ARCHIVE.ARCHIVE_YEARS[0];
+
+const YEARS = [
+  { y: LATEST, head: `36/50 Ranks, UPSC CSE ${LATEST}`, rows: [TOPPERS_2025.slice(0, REEL_SIZE).map(withPhoto), TOPPERS_2025.slice(REEL_SIZE).map(withPhoto)] },
+  ...NP_ARCHIVE.ARCHIVE_YEARS.filter(y => y < LATEST && NP_ARCHIVE.ARCHIVE[y]).map(y => {
+    const people = [...NP_ARCHIVE.ARCHIVE[y]].sort((a, b) => a.rank - b.rank)
+      .map(p => ({ rank: p.rank, name: p.name, photo: PLACEHOLDER, prog: progOf(p.programmes || PROG.get(`${y}-${p.rank}`)) || `UPSC CSE ${y}` }));
+    const half = Math.ceil(people.length / 2);
+    return { y, head: `${people.length} Ranks, UPSC CSE ${y}`, rows: people.length > 12 ? [people.slice(0, half), people.slice(half)] : [people] };
+  }),
+];
+
+function Reel({ people, reverse, ...rest }) {
+  return (
+    <div className="dr__view" {...rest}>
+      <ul className="dr__track" data-dir={reverse ? '-1' : undefined}>
+        {people.map(p => <ReelItem key={p.rank + p.name} person={p} />)}
+      </ul>
+    </div>
+  );
+}
+
 export default function ToppersReel() {
-  const people = TOPPERS_2025.slice(0, REEL_SIZE).map(p => (p.rank <= 10 ? p : { ...p, photo: PLACEHOLDER }));
   return (
     <>
-      <p className="dr__h"><span id="drHead"> 36/50 Ranks, UPSC CSE 2025</span></p>
-      <div className="dr__view" id="drList" aria-labelledby="drHead">
-        <ul className="dr__track">
-          {people.map(p => <ReelItem key={p.rank} person={p} />)}
-        </ul>
+      <Tabs className="dr__yrs" label="Year of the examination" controls="drList" items={YEARS.map(g => ({ id: String(g.y), label: g.y }))} />
+      <p className="dr__h"><span id="drHead" data-year-head>{YEARS[0].head}</span></p>
+      <div id="drList" role="tabpanel" aria-labelledby="drHead">
+        {YEARS.map((g, gi) => (
+          <div key={g.y} data-y={g.y} data-head={g.head} hidden={gi !== 0}>
+            {g.rows.map((row, ri) => <Reel key={ri} people={row} reverse={ri === 1} aria-label={ri ? `More UPSC CSE ${g.y} rank holders` : `UPSC CSE ${g.y} rank holders`} />)}
+          </div>
+        ))}
       </div>
     </>
   );
@@ -77,7 +117,21 @@ export default function ToppersReel() {
 
 export function initDiamondReel() {
   const dr = document.querySelector('#toppers .dr'); if (!dr) return;
-  const track = dr.querySelector('.dr__track'), view = dr.querySelector('.dr__view');
+  const reels = new Map();
+  dr.querySelectorAll('.dr__view').forEach(view => reels.set(view, initReel(dr, view)));
+  const head = dr.querySelector('[data-year-head]'), list = dr.querySelector('#drList');
+  initTabs(dr.querySelector('.dr__yrs'), { onSelect: id => {
+    const swap = () => {
+      list.querySelectorAll('[data-y]').forEach(g => { g.hidden = g.dataset.y !== id; if (!g.hidden) head.textContent = g.dataset.head; });
+      list.querySelectorAll('[data-y]:not([hidden]) .dr__view').forEach(v => reels.get(v)());
+    };
+    if (document.startViewTransition && !reduce && !matchMedia('(hover: none) and (pointer: coarse)').matches) document.startViewTransition(swap); else swap();
+  } });
+}
+
+function initReel(dr, view) {
+  const track = view.querySelector('.dr__track');
+  const base = track.dataset.dir === '-1' ? -1 : 1;
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const SPEED = 34;
   const coarse = matchMedia('(hover: none) and (pointer: coarse)').matches;
@@ -93,8 +147,9 @@ export function initDiamondReel() {
     scrollRaf = 0;
     const dt = Math.min(.05, (now - (scrollLast || now)) / 1000); scrollLast = now;
     if (looping && !dr.classList.contains('is-off') && !touching && !userScroll) {
-      scrollPos += SPEED * dt; view.scrollLeft = scrollPos;
+      scrollPos += SPEED * dt * base; view.scrollLeft = scrollPos;
       if (scrollPos >= loopW * 1.5) { scrollPos -= loopW; view.scrollLeft = scrollPos; }
+      else if (scrollPos <= loopW * .5) { scrollPos += loopW; view.scrollLeft = scrollPos; }
     }
     scrollRaf = requestAnimationFrame(scrollTick);
   };
@@ -141,7 +196,7 @@ export function initDiamondReel() {
     applyRate();
     sync2();
   };
-  let boost = 0, dir = 1, rate = 1, boostRaf = 0, sy = scrollY, st = performance.now();
+  let boost = 0, dir = base, rate = base, boostRaf = 0, sy = scrollY, st = performance.now();
   const BOOST_MAX = 6, BOOST_PER_PX_S = 1 / 250;
   const applyRate = () => {
     if (!anim) return;
@@ -162,7 +217,7 @@ export function initDiamondReel() {
   if (!still) addEventListener('scroll', () => {
     const now = performance.now(), d = scrollY - sy, dt = Math.max(1, now - st); sy = scrollY; st = now;
     if (!d || !looping || dr.classList.contains('is-off')) return;
-    dir = d > 0 ? 1 : -1;
+    dir = (d > 0 ? 1 : -1) * base;
     boost = Math.max(boost, Math.min(BOOST_MAX, Math.abs(d) / dt * 1000 * BOOST_PER_PX_S));
     if (!boostRaf) boostRaf = requestAnimationFrame(boostStep);
   }, { passive: true });
@@ -211,4 +266,5 @@ export function initDiamondReel() {
   const sync = () => { dr.classList.toggle('is-off', document.hidden); sync2(); };
   document.addEventListener('visibilitychange', sync);
   sync();
+  return () => { layout(); sync(); };
 }

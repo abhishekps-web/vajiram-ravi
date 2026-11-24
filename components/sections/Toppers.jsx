@@ -4,7 +4,6 @@ import SectionLabel from '@/components/ui/SectionLabel';
 import Button from '@/components/ui/Button';
 import { $, $$, esc, reduce } from '@/lib/site';
 import '@/app/tailwind-sections.css';
-import ToppersRecord from './ToppersRecord';
 import ToppersReel from './ToppersReel';
 import { TOPPERS, NP_ARCHIVE } from './toppers-data';
 
@@ -45,7 +44,6 @@ export default function Toppers() {
   
   <div className="dr" role="region" aria-label="More UPSC CSE 2025 rank holders">
     <ToppersReel />
-    <ToppersRecord />
     <p className="dr__cta"><Button variant="secondary" onDark href="https://vajiramandravi.com/ias-selections-from-vajiram/" target="_blank" rel="noopener" iconEnd="arrow">View all toppers</Button></p>
   </div>
 
