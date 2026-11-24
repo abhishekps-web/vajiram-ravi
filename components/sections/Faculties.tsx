@@ -924,7 +924,8 @@ function CircularCarousel<T>({
     }
     let cancel = () => {};
     const alreadyThere = canvasTop(stage) < (window.innerHeight / getCanvasZoom()) * 0.85;
-    if (!reduced && !alreadyThere) {
+    const phone = window.matchMedia("(max-width: 760px)").matches;
+    if (!reduced && !alreadyThere && !phone) {
       f.entered = false;
       setShown(false);
       s.pos = s.target = -INTRO_TURN;
