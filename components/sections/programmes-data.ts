@@ -1,71 +1,123 @@
-import { links, type Href } from "@/components/sections/Programmes/data/links";
+const SITE = "https://vajiramandravi.com";
 
-/**
- * Explore UPSC Programmes (IA 4), in the `kevin` branch's copy (its `programmes` content, as the client asked
- * on 14 Nov 2026: "use this content only"): the heading, the flagship General Studies programme, and every
- * programme group on the course shelf. The client's round of feedback (items 21 to 27) slimmed the flagship
- * card's lines and put each group in a category for the shelf's filter; nothing else is added beyond that
- * copy. The links are the groups' pages on vajiramandravi.com, and what kevin marked as still to be
- * confirmed is marked so here too.
- */
+export type Href = string | null;
 
-/** A section heading: the words before the emphasis (shown in orange), the emphasis, and the words after it. */
+export const links = {
+
+  allCourses: `${SITE}/all-courses/`,
+  currentAffairs: `${SITE}/current-affairs/`,
+  upscExam: `${SITE}/upsc-exam/`,
+  upcomingBatches: `${SITE}/new-upcoming-batches/`,
+  toppers: `${SITE}/ias-selections-from-vajiram/`,
+  topperStory: null,
+
+  gsCourse: `${SITE}/courses/upsc-general-studies/`,
+  gsClassroom: `${SITE}/courses/upsc-gs-course/`,
+  gsOnline: `${SITE}/courses/upsc-gs-online-course/`,
+  twoYearCourse: `${SITE}/courses/2-year-upsc-course/`,
+  twoYearOnline: `${SITE}/courses/2-year-upsc-online-course/`,
+  onlineCoaching: `${SITE}/upsc-online-coaching/`,
+  optionalSubject: `${SITE}/courses/upsc-optional-subject-courses/`,
+  csat: `${SITE}/courses/upsc-csat-course/`,
+  currentAffairsCourse: `${SITE}/courses/upsc-module-courses/current-affairs-course/`,
+  prelimsTestSeries: `${SITE}/courses/prelims-test-series/`,
+  mainsTestSeries: `${SITE}/courses/upsc-mains-test-series/`,
+  mainsTestSeriesHindi: `${SITE}/courses/upsc-mains-test-series-hindi-medium/`,
+  optionalTestSeries: `${SITE}/courses/upsc-mains-optional-subject-test-series/`,
+  mentorship: `${SITE}/courses/upsc-mentorship-program/`,
+  mentorshipHindi: `${SITE}/courses/upsc-mentorship-program-hindi-medium/`,
+  interviewGuidance: `${SITE}/courses/interview-guidance-program/`,
+
+  mentorshipPrograms: `${SITE}/courses/mentorship-programs/`,
+  moduleCourses: `${SITE}/courses/upsc-module-courses/`,
+  csatCourses: `${SITE}/courses/upsc-csat/`,
+  mainsTestSeriesAll: `${SITE}/courses/mains-test-series/`,
+  crashCourses: `${SITE}/courses/upsc-crash-courses/`,
+  ifos: `${SITE}/courses/upsc-indian-forest-service-ifos-coaching/`,
+
+  currentAffairsPrelims: `${SITE}/current-affairs/upsc-prelims-current-affairs/`,
+  currentAffairsMains: `${SITE}/current-affairs/upsc-mains-current-affairs/`,
+  studyMaterial: `${SITE}/upsc-exam/free-upsc-study-material-notes/`,
+  questArticles: null,
+  article: null,
+  monthlyMagazine: `${SITE}/upsc-study-materials/monthly-current-affairs-magazine/`,
+
+  yojanaKurukshetra: `${SITE}/upsc-study-materials/yojana-magazine-pdf/`,
+  previousYearPapers: `${SITE}/upsc-previous-year-papers/`,
+  toppersAnswerSheets: `${SITE}/upsc-ias-toppers-copy-and-answer-sheets/`,
+  essayPractice: `${SITE}/upsc-study-materials/weekly-essay/`,
+  upscBooks: `${SITE}/upsc-exam/upsc-book-list/`,
+  modelAnswers: `${SITE}/upsc-exam/model-answers-for-upsc-mains/`,
+
+  theRecitals: `${SITE}/upsc-study-materials/monthly-current-affairs-magazine/`,
+  dailyCurrentAffairs: `${SITE}/current-affairs/`,
+
+  prelimsPointers: `${SITE}/current-affairs/upsc-prelims-current-affairs/`,
+  mainsArticles: `${SITE}/current-affairs/upsc-mains-current-affairs/`,
+
+  upsc2027: `${SITE}/upsc-exam/upsc-2027/`,
+  examPattern: `${SITE}/upsc-exam/upsc-exam-pattern/`,
+  syllabus: `${SITE}/upsc-syllabus/`,
+  csatSyllabus: `${SITE}/upsc-exam/csat-syllabus/`,
+  optionalSubjectsList: `${SITE}/upsc-exam/optional-subjects-for-upsc/`,
+  selectionProcess: `${SITE}/upsc-exam/upsc-selection-process/`,
+  interview: `${SITE}/upsc-exam/upsc-interview/`,
+  ageLimit: `${SITE}/upsc-exam/upsc-age-limit/`,
+  iasSalary: `${SITE}/upsc-exam/ias-salary/`,
+  calendar: `${SITE}/upsc-exam/upsc-calendar/`,
+  admitCard: `${SITE}/upsc-exam/upsc-admit-card/`,
+  prelimsAnswerKey: `${SITE}/upsc-exam/upsc-prelims-answer-key-2026/`,
+  cutOff: `${SITE}/upsc-exam/upsc-cut-off/`,
+  finalResult: `${SITE}/upsc-exam/upsc-result-2025/`,
+
+  aboutUs: `${SITE}/about-us/`,
+  faculty: null,
+  studentStories: null,
+
+  testSeries: `${SITE}/courses/prelims-test-series/`,
+  careers: `${SITE}/careers/`,
+  termsAndConditions: `${SITE}/terms-and-conditions/`,
+  privacyPolicy: `${SITE}/privacy-policy/`,
+  grievanceRedressal: null,
+  whatsapp: "https://wa.me/918062206330",
+} satisfies Record<string, Href>;
+
 export type HeadingParts = { before: string; em: string; after: string };
 
-/** The section's heading. Its lead line was removed at the client's request (feedback 24). */
 export const programmesIntro = {
   title: { before: "Find the right", em: "UPSC programme", after: "for your preparation." } satisfies HeadingParts,
 };
 
 export type ProgrammeLink = { label: string; href: Href };
 
-/**
- * The flagship programme. As in kevin's copy, its benefits describe what the programme covers and are to be
- * confirmed by the academic team. The three lines are the client's of 11 Nov 2026, and the learning modes
- * are a small note under them.
- */
 export const featuredProgramme = {
   tag: "Flagship programme",
   name: "General Studies Prelims & Mains programme",
-  /** The client's three lines (11 Nov 2026); the figures in them are set in bold. */
+
   benefits: [
     "300+ class lectures and 900+ teaching hours by experienced subject specialists.",
     "18 Yellow Books covering the General Studies syllabus, alongside The Recitals, the monthly current affairs magazine.",
     "30 Prelims tests and an additional six-month Mains support programme with evaluation and feedback.",
   ],
-  /** How it can be taken, as a small note under the lines rather than a block of its own. */
+
   modes: "Classroom and LIVE-Online",
-  /**
-   * "Enrol for the programme" opens the counselling postcard with this programme chosen (FlagshipCard).
-   * TODO: point it at the programme's enrolment page once the live site has one.
-   */
+
   primary: { label: "Enrol for the programme" },
   secondary: { label: "View programme details", href: links.gsCourse } satisfies ProgrammeLink,
-  /**
-   * Its photographs, fading from one to the next; `position` is the part of a photo the frame keeps. First
-   * the client's photograph of a lecture (a faculty member at the board with the map of India, a student's
-   * hand up; 11 Nov 2026), then the library study group.
-   */
+
   photos: [
     { src: "/assets/img/programmes/flagship-lecture.webp", width: 1000, height: 1506, position: "40% 30%" },
     { src: "/assets/img/programmes/featured-library.webp", width: 1264, height: 848, position: "45% 50%" },
   ],
 };
 
-/** The emblems stamped in gold foil on the books' covers (Programmes/CoverArt). */
 export type CoverEmblem = "books" | "abacus" | "quill" | "layers" | "target" | "pen" | "compass" | "mic";
 
-/** The geometric motifs pressed into the cloth under the foil, from the earlier course wall (Programmes/GeoArt). */
 export type CoverArtKind = "bars" | "circles" | "grid" | "arches" | "arcs" | "lines" | "target" | "quarters";
 
-/** The shelf's filter: each programme group belongs to one of these. */
 export const programmeCategories = ["Foundation", "Optional", "Tests", "Guidance"] as const;
 export type ProgrammeCategory = (typeof programmeCategories)[number];
 
-/**
- * A programme group on the course shelf: its name, its category on the shelf's filter, how many courses it
- * holds, the courses its line names (one page each in the open book), the line, its page, and its cover.
- */
 export type Programme = {
   name: string;
   category: ProgrammeCategory;
@@ -73,24 +125,14 @@ export type Programme = {
   courses: string[];
   line: string;
   href: Href;
-  /**
-   * Its cloth hardcover, in the deep bookbinding colours of the reference shelf (vajiram-ravi.vercel.app),
-   * warmed towards the brand's rust and orange: the cloth's light, base and deep tones (the board runs from
-   * light to deep, the spine is the deep tone), the gold emblem on it, and the geometric motif pressed into
-   * the cloth under the foil, which moves while the book is hovered.
-   */
+
   cover: { light: string; base: string; deep: string; emblem: CoverEmblem; art: CoverArtKind };
 };
 
-/** The shelf's heading, in two lines (the emphasis in orange). */
 export const shelfIntro = {
   title: { before: "All our ", em: "UPSC programmes", after: ", side by side.", line2: "Choose one to take a closer look." },
 };
 
-/**
- * Every programme group, as kevin's wall lists them, shelved by category. Counts and lines are from his
- * design and to be confirmed (TODO); the rest of each group's courses are reached through its "View all" page.
- */
 export const programmes: Programme[] = [
   {
     name: "UPSC GS foundation course – PCM",
@@ -166,30 +208,17 @@ export const programmes: Programme[] = [
   },
 ];
 
-/**
- * The client's closing line ("Not sure which programme is right for you? Speak with our academic
- * counsellors."), set as a card under the shelf: the question as its heading, the rest under it, and its
- * button to the counselling form.
- */
 export const programmesClosing = {
   question: "Not sure which programme is right for you?",
   text: "Speak with our academic counsellors.",
-  cta: { label: "Get expert guidance", href: "#contact" } satisfies ProgrammeLink,   // this site's counselling form (soloboy: #counselling)
+  cta: { label: "Get expert guidance", href: "#contact" } satisfies ProgrammeLink,
 };
 
-/** The choices of "Programme of Interest" in the counselling form: the flagship programme and the groups. */
 export const programmeChoices: string[] = [featuredProgramme.name, ...programmes.map((programme) => programme.name)];
 
-/**
- * A programme's course detail page (user 2026-11-13: "View course" goes there; a placeholder for now): /courses/<slug>, the slug
- * made from its name ("UPSC GS foundation course – PCM" -> "upsc-gs-foundation-course-pcm"). app/courses/[slug]/page.tsx
- * builds one page per programme at build time.
- */
 export const programmeSlug = (name: string) =>
   name.toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
-// The books' course links open the course finder (public/coursefinder/) at that programme's section (user 2026-11-23); they were "#"
-// (2026-11-17, "just # it"). The course pages are still built (app/courses/[slug], from programmeSlug) but nothing links to them.
-// Programme name -> the course finder's section key; an unknown name opens the course finder at the top.
+
 const FINDER_KEY: Record<string, string> = {
   "UPSC GS foundation course – PCM": "gs",
   "CSAT course": "csat",

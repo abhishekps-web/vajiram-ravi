@@ -1,7 +1,7 @@
 # Vajiram & Ravi site
 
 Next.js (App Router) site, deployed to Vercel from `main`. The page at `/`, statically prerendered, plus one course detail page
-per programme at `/courses/<slug>` (`app/courses/[slug]/page.tsx`, built from `Programmes/data/programmes.ts`; a placeholder
+per programme at `/courses/<slug>` (`app/courses/[slug]/page.tsx`, built from `programmes-data.ts`; a placeholder
 until the course content is ready, user 2026-11-13). "View course" on a Programmes book links there (shown at a fixed place on a hovered book, no cursor follow, user 2026-11-20). Off the homepage only the
 site-wide behaviours run (`SITE_WIDE` in `lib/behaviour.js`) and in-page links are rewritten to `/#…`. Every section is its own
 component folder holding its markup, data and behaviour; `app/page.jsx` only composes them.
@@ -30,7 +30,7 @@ components/
                           Faculties (the faculty section, id "educators"; TS + Tailwind, ported from Soloman; the off-front cards use `-bw` copies of the
                           photos, not a CSS grayscale filter, for performance), Stories, TalkToUs ("Talk to us", the counsellor form, id `contact`: one file, Tailwind `cu:` utilities, no comments, user 2026-11-21), Resources (data.jsx: the cards), ContactUs (Tailwind), Faq, Closing
   dialogs/                RanksDialog, CourseCatalogDialog (+ their behaviours; course-catalog.js also opens the catalogue for any [data-cat] link)
-  ui/                     shared pieces: Button/ (the button system: Button.jsx, button-core.js, README.md), SectionLabel (.lbl eyebrow),
+  ui/                     shared pieces: Button.jsx (the button system, one file: the `<Button>` component and `buttonHTML()` for behaviours; types in Button.d.ts, reference in Button.md), SectionLabel (.lbl eyebrow),
                           ArrowIcon/StraightArrow, Dialog, Stylesheet, CarouselDots.jsx (every carousel's dot indicator; Tailwind,
                           `cu:` utilities, the shared entry app/tailwind-sections.css), Tabs.jsx (every tab bar, one file: the sand bar and sliding brand pill; `Tabs` the markup, `initTabs` the behaviour, `ControlledTabs` for React state; styles public/css/tabs.css, user 2026-11-21; sections only place the bar),
                           custom-select.js (accessible dropdown), accordion.js, rail.js
@@ -52,25 +52,17 @@ public/
 - **Markup**: `<Section>.jsx` is a static server component. Shared markup comes from `components/ui` (`SectionLabel`, `ArrowIcon`, `Dialog`) — reuse those rather than copying markup.
 - **Content**: lists and copy that a behaviour renders, or that repeats, live in the section's `data.js` (e.g. `Faq/data.js`, `Faculties.tsx` (its data)). Editing content means editing data only.
 - **Behaviour**: the section's `*.js` modules export `init…()` functions that work on the server-rendered DOM (they build lists, bind events, animate). Register a new one in `lib/behaviour.js` at the right point in the sequence. They run once, in the browser, after hydration; React never re-renders those nodes, so they may change them freely.
-- **Buttons**: every button and button-styled link is `<Button>` (`components/ui/Button/Button.jsx`) or, in a behaviour, `buttonHTML()` (`button-core.js`); its look lives only in `public/css/buttons.css`. `shadow={false}` (`buttonHTML({ shadow: false })`) turns the drop shadow off (`.btn--flat`; the header's "Let's talk" uses it). Pick a variant/size, never restyle: section rules may only place a button (margin, position, display) or override its `--btn-*` tokens. Reference: `components/ui/Button/README.md`.
+- **Buttons**: every button and button-styled link is `<Button>` (`components/ui/Button.jsx`) or, in a behaviour, `buttonHTML()` (same file); its look lives only in `public/css/buttons.css`. `shadow={false}` (`buttonHTML({ shadow: false })`) turns the drop shadow off (`.btn--flat`; the header's "Let's talk" uses it). Pick a variant/size, never restyle: section rules may only place a button (margin, position, display) or override its `--btn-*` tokens. Reference: `components/ui/Button/README.md`.
 - **Never change the DOM before hydration** (a script that does breaks it: render that markup in a component instead and have the behaviour find it).
 - JSX from HTML: `className`, `style={{ "--d": ".1s" }}`, `htmlFor`, `tabIndex`; keep meaningful spaces between inline elements as `{" "}`.
 
 ## The Programmes section (#courses) is different: TypeScript + Tailwind
 
-Ported from the soloboy branch of C:UsersVonnueDownloadssoloVajiram-ravi (user 2026-11-13). It is the one section written in
-TypeScript and styled with Tailwind v4 utilities, kept close to soloboy's code; everything it needs lives in its folder
-(`components/sections/Programmes/`: `ui/` its Medallion, IndianLink and a section-scoped TextMotion (its own Cta button was removed for the site Button, user 2026-11-16); `lib/`; `data/`), images
-in `public/assets/img/programmes/`.
-- `programmes.css` is its Tailwind entry: utilities generated from that folder only and unlayered, soloboy's theme, and Tailwind's
-  preflight plus soloboy's global rules scoped to `#courses`. Nothing in it reaches other sections; keep it that way (this site's
-  buttons also use a `.cta` class).
-- Its section title, eyebrow and body copy use this site's styles (`SectionLabel`, `.h2.h2--sec`); its ground is this site's
-  (`--ground-jaali`, shared with the hero and the header).
-- Responsive (soloboy is a fixed, zoomed 1440 canvas): the rules at the end of `programmes.css` and the shelf's geometry in
-  `CourseShelf.tsx` (4 / 3 / 2 books to a plank, the stage scaled to fit). At 1440px and up it is soloboy's layout unchanged.
-- Its motion is soloboy's (`ui/TextMotion`, Web Animations: the site-motion check cannot see it and lists those elements as static).
-- "Enrol" opens this site's contact form with the programme chosen (`lib/enquiry.ts`).
+Ported from the soloboy branch (user 2026-11-13). One client component, `components/sections/Programmes.tsx` (user 2026-11-24: the section, shelf, cover art, TextMotion, IndianLink and Medallion in one file, `cu:` Tailwind utilities, no stylesheet of its own). Its programme data and links are `components/sections/programmes-data.ts` (server code, the course page and the hero, reads it, so it cannot live in the client file). Images in `public/assets/img/programmes/`.
+- Its Tailwind setup (soloboy's colours, shadows, the `#courses`-scoped reset, keyframes) is in the shared entry `app/tailwind-sections.css`; its plain-CSS hooks (`peel`, `is-peeling`, `prog__*`, `tm-mask`) are class names the code or other sheets look up, not styles.
+- Its section title, eyebrow and body copy use this site's styles (`SectionLabel`, `.h2.h2--sec`); its ground is this site's (`--ground-jaali`).
+- Responsive: `max-[640px]:` / `max-[900px]:` utilities in the component and the shelf's geometry in `CourseShelf` (4 / 3 / 2 books to a plank, the stage scaled to fit); phones get the book rail instead of the shelf.
+- Its motion is soloboy's (`TextMotion`, Web Animations: the site-motion check cannot see it and lists those elements as static).
 
 ## Styles
 
@@ -130,7 +122,7 @@ The client wants **every section and every element animated**. For any change to
   next batch, campus (`slide-campus.webp`, drawn at 125% width so the sign clears the copy; `data-kind` on `#dlPin` for per-slide rules, set by `initHeroCarousel`); photos `hero-v6/slide-results.webp`, `slide-gs-foundation.webp`, `slide-batch.webp`, each with a desktop `pos` and a phone
   crop `mpos`; kept and ready: `air-2`, `air-3`, `prelims`, `mentor`). Each has its eyebrow, headline, lead and buttons; a topper or a slide
   with an `image` shows that photo, the others draw their visual (programme book, `ResultsArt`: the CSE 2025 top 10 and "36 of the top
-  50"; `BatchArt`: a ticket for the flagship batch from `BATCHES` with the next two under it). Programme slides (`PROGRAMME_COPY`, from `Programmes/data/programmes.ts`): the programme's
+  50"; `BatchArt`: a ticket for the flagship batch from `BATCHES` with the next two under it). Programme slides (`PROGRAMME_COPY`, from `programmes-data.ts`): the programme's
   book (its cloth colours, gold frame, `CoverArt` emblem) where the portrait stands, on a ground in its colour; each slide carries its
   own eyebrow, headline, lead and buttons (`data-eyebrow`, `data-h`, `data-lead`, `data-btns`), swapped by `initHeroCarousel` (Enrol picks
   the programme in the contact form via `data-prog`; View course opens its page). A programme can have its own photo instead of the drawn book (`image` in `PROGRAMME_COPY`; GS foundation: `hero-v6/slide-gs-foundation.webp`, the

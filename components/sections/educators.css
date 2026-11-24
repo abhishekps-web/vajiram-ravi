@@ -1,7 +1,7 @@
 /* =====================================================================================================================
    EDUCATORS (#educators): the Faculty section ported from the Soloman build (Downloads/solo/Vajiram-ravi,
    src/components/sections/Faculty: "Meet our educators", the circular carousel), user 2026-11-13. Set up as the Programmes
-   port is (components/sections/Programmes/programmes.css): Tailwind v4 utilities generated from this folder only, soloboy's
+   port is (app/tailwind-sections.css): Tailwind v4 utilities generated from this folder only, soloboy's
    theme, and its base reset applied inside #educators only. The eyebrow, heading, intro and the caption's copy use this site's
    global type (SectionLabel, .h2, .intro, Newsreader card titles); see Faculties.tsx and EducatorFlow.tsx.
    ===================================================================================================================== */

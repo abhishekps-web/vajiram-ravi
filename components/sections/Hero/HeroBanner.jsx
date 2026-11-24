@@ -1,11 +1,11 @@
 import { Fragment } from 'react';
-import Button from '@/components/ui/Button/Button';
+import Button from '@/components/ui/Button';
 import CarouselDots from '@/components/ui/CarouselDots';
 import Stylesheet from '@/components/ui/Stylesheet';
 import SectionLabel from '@/components/ui/SectionLabel';
 import { $, reduce } from '@/lib/site';
-import CoverArt from '@/components/sections/Programmes/CoverArt';
-import { programmes } from '@/components/sections/Programmes/data/programmes';
+import { CoverArt } from '@/components/sections/Programmes';
+import { programmes } from '@/components/sections/programmes-data';
 import { BATCHES } from '@/components/sections/Batches';
 
 const EXAM = 'UPSC CSE 2025';
