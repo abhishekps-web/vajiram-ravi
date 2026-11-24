@@ -603,3 +603,6 @@ html .tp-sheet .dr__prog { color: #6b5d50; text-shadow: none; }
   html #toppers .tp-frame .dr__h { margin-inline: 0; gap: 10px; }
   html #toppers .tp-frame .dr__h::before, html #toppers .tp-frame .dr__h::after { width: auto; flex: 1 1 0; min-width: 16px; }
 }
+
+/* Toppers title line height 102% (user 2026-11-24; other section titles stay at 104%) */
+html #toppers .pd__h { line-height: 1.02; }
