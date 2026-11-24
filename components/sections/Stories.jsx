@@ -63,7 +63,6 @@ function Postcard({ card, i, copy }) {
         <blockquote
           className='cu:absolute cu:inset-x-[28px] cu:top-[40px] cu:bottom-[84px] cu:m-0 cu:overflow-hidden cu:[font:500_22px/28px_Caveat,"Segoe_Script",cursive] cu:text-[#1B2A52] cu:text-pretty cu:max-[460px]:text-[19px] cu:max-[460px]:leading-[24px]'
         >
-          {/* the sender's photo in the stamp's place: a passport print stuck on the card, the handwriting wraps around it */}
           <Image
             className={[
               'cu:float-right cu:w-[78px] cu:h-[96px] cu:mt-[-6px] cu:mr-[-2px] cu:mb-[8px] cu:ml-[16px] cu:object-cover cu:object-[50%_18%]',
@@ -78,7 +77,6 @@ function Postcard({ card, i, copy }) {
           />
           {card.quote}
         </blockquote>
-        {/* name and rank, written below the message */}
         <footer className="cu:absolute cu:inset-x-[28px] cu:bottom-[20px] cu:grid cu:pt-[8px] cu:[border-top:1px_solid_rgba(27,42,82,.25)]">
           <b className='cu:[font:600_25px/28px_Caveat,"Segoe_Script",cursive] cu:text-[#1B2A52]'>{card.name}</b>
           <em className='cu:[font:500_18px/22px_Caveat,"Segoe_Script",cursive] cu:text-[rgba(27,42,82,.75)]'>AIR {card.rank}, UPSC CSE {card.year}</em>
@@ -93,7 +91,6 @@ export default function Stories() {
     <SectionWrapper id="stories" labelledBy="stH" compact noBottom className="sheet sheet--pad">
       <SectionLabel reveal={false}>Success stories</SectionLabel>
       <h2 id="stH" className="h2 h2--sec">
-        {/* the heading rises out of its masked line */}
         <span className="cu:block cu:my-[-.1em] cu:py-[.1em] cu:overflow-hidden cu:waiting:opacity-0">
           <span className="cu:block cu:motion-safe:dealt:animate-[st-line_.8s_cubic-bezier(.22,1,.36,1)_90ms_both]">Hear it from our students</span>
         </span>
@@ -107,7 +104,6 @@ export default function Stories() {
           'cu:motion-reduce:overflow-x-auto cu:motion-reduce:[-webkit-mask-image:none] cu:motion-reduce:[mask-image:none]',
         ].join(' ')}
       >
-        {/* two identical sets in one track: it slides left by exactly one set; hovering pauses it */}
         <div
           className="cu:flex cu:w-max cu:items-start cu:will-change-transform cu:animate-[st-slide_var(--dur)_linear_infinite] cu:group-hover/tcar:[animation-play-state:paused] cu:motion-reduce:animate-none"
           style={{ '--dur': DURATION }}
@@ -115,9 +111,7 @@ export default function Stories() {
           {POSTCARDS.map((card, i) => <Postcard key={card.rank} card={card} i={i} />)}
           {POSTCARDS.map((card, i) => <Postcard key={`copy-${card.rank}`} card={card} i={i} copy />)}
         </div>
-        {/* phones (760px and narrower): the loop becomes a stack of cards, one in front; swipe it, or use these (stories.js, stories.css) */}
         <div className="tstack-nav" role="group" aria-label="Testimonials">
-          {/* the site's arrow buttons (icon-only, outline, sm), as on every other carousel (user 2026-11-17: arrows, not chevrons) */}
           <Button variant="outline" size="sm" iconOnly iconStart="arrow-left" label="Previous testimonial" data-tstack="prev" />
           <Button variant="outline" size="sm" iconOnly iconStart="arrow" label="Next testimonial" data-tstack="next" />
         </div>
@@ -133,7 +127,7 @@ export function initStories() {
   const io = 'IntersectionObserver' in window;
 
   if (io && !reduce) {
-    const seen = new IntersectionObserver(es => { if (es[0].isIntersecting) { st.setAttribute('data-in', ''); seen.disconnect(); } }, { threshold: .25 });
+    const seen = new IntersectionObserver(es => { if (es[0].isIntersecting) { st.setAttribute('data-in', ''); seen.disconnect(); } }, { rootMargin: '0px 0px -15% 0px' });
     seen.observe(st);
   } else st.setAttribute('data-in', '');
 
@@ -162,7 +156,7 @@ export function initStories() {
   const nudge = (c, px) => {
     const t = tc.getBoundingClientRect(), r = c.getBoundingClientRect();
     const cur = parseFloat(c.dataset.sx || 0);
-    const half = c.offsetWidth * SCALE / 2, cx = r.left + r.width / 2 - cur;   // centre without any earlier nudge
+    const half = c.offsetWidth * SCALE / 2, cx = r.left + r.width / 2 - cur;
     const pad = Math.max(16, t.width * .07 + 8);
     const lo = t.left + pad + half, hi = t.right - pad - half;
     let sx = hi < lo ? 0 : Math.round(Math.min(Math.max(cx, lo), hi) - cx);
@@ -171,7 +165,7 @@ export function initStories() {
   };
   const settle = c => { c.dataset.sx = 0; c.style.removeProperty('--tw-translate-x'); };
   if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    const dead = new Set();   // cards switched off for this hover: 3/4 or more of them is outside the viewport
+    const dead = new Set();
     const visible = c => { const r = c.getBoundingClientRect(); return Math.max(0, Math.min(r.right, innerWidth) - Math.max(r.left, 0)) / r.width; };
     tc.addEventListener('pointerover', e => {
       const c = e.target.closest('.pst');
@@ -183,7 +177,7 @@ export function initStories() {
     tc.addEventListener('pointerout', e => {
       const c = e.target.closest('.pst');
       if (!c || c.contains(e.relatedTarget)) return;
-      const r = c.getBoundingClientRect();   // still under the pointer (the card is moving or its corner is round): not a real exit
+      const r = c.getBoundingClientRect();
       if (e.clientX > r.left + 4 && e.clientX < r.right - 4 && e.clientY > r.top + 4 && e.clientY < r.bottom - 4) return;
       settle(c);
     });
