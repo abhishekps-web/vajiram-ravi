@@ -23,6 +23,9 @@
 @source "../components/sections/TalkToUs.jsx";
 @source "../components/sections/Stories.jsx";
 @source "../components/ui/CarouselDots.jsx";
+@source "../app/page.jsx";
+@source "../components/sections/Hero/Hero.jsx";
+@source "../components/sections/Hero/HeroBanner.jsx";
 
 @property --fs { syntax: '<percentage>'; inherits: true; initial-value: 120%; }
 @property --fb { syntax: '<percentage>'; inherits: true; initial-value: 120%; }
