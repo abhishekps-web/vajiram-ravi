@@ -2090,3 +2090,9 @@ main.cf, html.foot-curtain main.cf { background: linear-gradient(90deg, rgba(255
    thin 1.4px lines, white at 14% */
 .cf-sec.cf-feat::before { background-image: url("../assets/img/patterns/lattice-white.svg?v=3"); background-size: 160px 160px; opacity: .14; }
 @media (max-width: 760px) { .cf-sec.cf-feat::before { background-size: 128px 128px; } }
+/* no oval behind the Popular Courses heading and text (user 2026-11-24, "take out the circle"): the lattice is light enough now
+   (thin lines, 14%) to run under the words */
+.cf-feat__intro::before { content: none; }
+/* the oval back behind the Popular Courses heading and text, but softer (user 2026-11-24, "bring it back but reduce its opacity"): at
+   55% the lattice shows faintly through it instead of disappearing */
+.cf-feat__intro::before { content: ""; opacity: .55; }
