@@ -2036,3 +2036,15 @@ main.cf, html.foot-curtain main.cf { background: linear-gradient(90deg, rgba(255
    grain and the maroon drawing stay over it */
 .cf-hero { background: #FCDDBC; }
 .cf-bar::before, .cf-bar:not(.is-stuck)::before { background: #FCDDBC; }
+
+/* the search box and the three dropdowns white on the peach (user 2026-11-24, "use white for the search and the dropdowns"; they were
+   cream); a dropdown with a filter picked keeps its light orange (.is-on) so the active filter still shows */
+.cf-search input { background: #fff; }
+.cf-sel { --sel-fill: #fff; background: var(--sel-fill); }
+.cf-sel.is-on { --sel-fill: #FDE6D6; }
+/* the Popular Courses arrows in the other buttons' burnt orange outline again (user 2026-11-24, "use orange for the stroke of the button
+   rather than green, take a look at the other buttons"); the soft shadow stays a deep green so it sits on the card; hover fills orange */
+.cf-feat .cf-arw { border-color: rgb(194 65 12 / .55); }
+.cf-feat .cf-arw:hover { border-color: var(--cf-brand); }
+/* the hero line, now longer with the counts (user 2026-11-24), kept to two lines on the left, clear of the drawing on the right */
+.cf-hero .cf-lede { max-width: 640px; text-wrap: pretty; }
