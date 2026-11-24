@@ -30,7 +30,7 @@ components/
                           Faculties (the faculty section, id "educators"; TS + Tailwind, ported from Soloman; the off-front cards use `-bw` copies of the
                           photos, not a CSS grayscale filter, for performance), Stories, TalkToUs ("Talk to us", the counsellor form, id `contact`: one file, Tailwind `cu:` utilities, no comments, user 2026-11-21), Resources (data.jsx: the cards), ContactUs (Tailwind), Faq, Closing
   dialogs/                RanksDialog, CourseCatalogDialog (+ their behaviours; course-catalog.js also opens the catalogue for any [data-cat] link)
-  ui/                     shared pieces: Button.jsx (the button system, one file: the `<Button>` component and `buttonHTML()` for behaviours; types in Button.d.ts, reference in Button.md), SectionLabel (.lbl eyebrow),
+  ui/                     shared pieces: Button.tsx (the button system, one file: the `<Button>` component, its types and `buttonHTML()` for behaviours), SectionLabel (.lbl eyebrow),
                           ArrowIcon/StraightArrow, Dialog, Stylesheet, CarouselDots.jsx (every carousel's dot indicator; Tailwind,
                           `cu:` utilities, the shared entry app/tailwind-sections.css), Tabs.jsx (every tab bar, one file: the sand bar and sliding brand pill; `Tabs` the markup, `initTabs` the behaviour, `ControlledTabs` for React state; styles public/css/tabs.css, user 2026-11-21; sections only place the bar),
                           custom-select.js (accessible dropdown), accordion.js, rail.js
@@ -52,7 +52,7 @@ public/
 - **Markup**: `<Section>.jsx` is a static server component. Shared markup comes from `components/ui` (`SectionLabel`, `ArrowIcon`, `Dialog`) — reuse those rather than copying markup.
 - **Content**: lists and copy that a behaviour renders, or that repeats, live in the section's `data.js` (e.g. `Faq/data.js`, `Faculties.tsx` (its data)). Editing content means editing data only.
 - **Behaviour**: the section's `*.js` modules export `init…()` functions that work on the server-rendered DOM (they build lists, bind events, animate). Register a new one in `lib/behaviour.js` at the right point in the sequence. They run once, in the browser, after hydration; React never re-renders those nodes, so they may change them freely.
-- **Buttons**: every button and button-styled link is `<Button>` (`components/ui/Button.jsx`) or, in a behaviour, `buttonHTML()` (same file); its look lives only in `public/css/buttons.css`. `shadow={false}` (`buttonHTML({ shadow: false })`) turns the drop shadow off (`.btn--flat`; the header's "Let's talk" uses it). Pick a variant/size, never restyle: section rules may only place a button (margin, position, display) or override its `--btn-*` tokens. Reference: `components/ui/Button/README.md`.
+- **Buttons**: every button and button-styled link is `<Button>` (`components/ui/Button.tsx`) or, in a behaviour, `buttonHTML()` (same file); its look lives only in `public/css/buttons.css`. `shadow={false}` (`buttonHTML({ shadow: false })`) turns the drop shadow off (`.btn--flat`; the header's "Let's talk" uses it). Pick a variant/size, never restyle: section rules may only place a button (margin, position, display) or override its `--btn-*` tokens.
 - **Never change the DOM before hydration** (a script that does breaks it: render that markup in a component instead and have the behaviour find it).
 - JSX from HTML: `className`, `style={{ "--d": ".1s" }}`, `htmlFor`, `tabIndex`; keep meaningful spaces between inline elements as `{" "}`.
 
