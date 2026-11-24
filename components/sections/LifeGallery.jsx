@@ -1,5 +1,6 @@
 import { photoSrcSet } from '@/lib/photo';
-import Button from '@/components/ui/Button/Button';
+import SectionWrapper from '@/components/ui/section_wrapper';
+import Button from '@/components/ui/Button';
 import Stylesheet from '@/components/ui/Stylesheet';
 import Tabs, { initTabs } from '@/components/ui/Tabs';
 
@@ -25,7 +26,7 @@ const VIDEO_ICON = (
 
 export default function LifeGallery() {
   return (
-    <section className="lgal" id="lifeGal" aria-labelledby="lifeH">
+    <SectionWrapper id="lifeGal" labelledBy="lifeH" compact bleed className="lgal">
       <Stylesheet href="/css/life-gallery.css" />
       <div className="lg__hd">
         <h2 className="lg__h rv" id="lifeH" style={{ '--d': '.05s' }}>Life at Vajiram &amp; Ravi</h2>
@@ -60,7 +61,7 @@ export default function LifeGallery() {
         controls="lifeTrack"
         items={[{ id: 'all', label: 'All' }, { id: 'img', label: 'Images' }, { id: 'vid', label: 'Videos' }]}
       />
-    </section>
+    </SectionWrapper>
   );
 }
 

@@ -1,9 +1,10 @@
-import Button from '@/components/ui/Button/Button';
+import Button from '@/components/ui/Button';
+import SectionWrapper from '@/components/ui/section_wrapper';
 import SectionLabel from '@/components/ui/SectionLabel';
 import { $, $$, esc, PHONE, SITE } from '@/lib/site';
 import { CATS } from '@/lib/data/courses';
 import { BATCHES } from '@/components/sections/Batches';
-import { setButtonLoading } from '@/components/ui/Button/button-core';
+import { setButtonLoading } from '@/components/ui/Button';
 import '@/app/tailwind-sections.css';
 
 const TIMES = ['Morning, 9 am to 12 pm', 'Afternoon, 12 pm to 4 pm', 'Evening, 4 pm to 7 pm'];
@@ -30,10 +31,10 @@ const SECTION = [
 ].join(' ');
 
 const INNER = [
-  'cu:relative cu:grid cu:grid-cols-[minmax(0,1fr)_minmax(0,600px)] cu:gap-x-[56px] cu:gap-y-[40px] cu:px-(--px) cu:py-(--sec-y) cu:*:min-w-0',
+  'cu:relative cu:grid cu:grid-cols-[minmax(0,1fr)_minmax(0,600px)] cu:gap-x-[56px] cu:gap-y-(--hd-gap) cu:*:min-w-0',
   'cu:min-[901px]:items-center',
   'cu:min-[1101px]:max-[1279px]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] cu:min-[1101px]:max-[1279px]:gap-x-[48px]',
-  'cu:max-[1100px]:grid-cols-[minmax(0,1fr)] cu:max-[1100px]:gap-y-(--hd-gap)',
+  'cu:max-[1100px]:grid-cols-[minmax(0,1fr)]',
 ].join(' ');
 
 const HEAD = 'cu:relative cu:flex cu:flex-col cu:[&_.lbl>span:first-of-type]:[border-image-source:url(/assets/img/brand/cartouche.svg)]!';
@@ -98,7 +99,7 @@ function Clause({ say, label, htmlFor, tel, children }) {
 
 export default function TalkToUs() {
   return (
-    <section className={SECTION} id="contact" aria-labelledby="counH">
+    <SectionWrapper id="contact" labelledBy="counH" compact className={SECTION}>
       <div className={INNER}>
         <div className={HEAD}>
           <SectionLabel>Talk to us</SectionLabel>
@@ -144,7 +145,7 @@ export default function TalkToUs() {
           </div>
         </form>
       </div>
-    </section>
+    </SectionWrapper>
   );
 }
 

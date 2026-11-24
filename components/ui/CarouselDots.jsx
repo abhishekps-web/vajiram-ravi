@@ -2,8 +2,8 @@ import '@/app/tailwind-sections.css';
 
 const ROW = 'cu:flex cu:items-center cu:m-0 cu:py-[10px] cu:px-[7px] cu:rounded-full cu:bg-(--dot-pill)';
 const TONE = {
-  dark: 'cu:[--dot-edge:rgba(255,255,255,.9)] cu:[--dot-track:rgba(255,255,255,.4)] cu:[--dot-fill:#fff] cu:[--dot-ring:#FFD48A] cu:[--dot-pill:rgba(0,0,0,.25)]',
-  light: 'cu:[--dot-edge:rgba(194,65,12,.8)] cu:[--dot-track:rgba(194,65,12,.3)] cu:[--dot-fill:var(--brand)] cu:[--dot-ring:var(--brand)] cu:[--dot-pill:rgba(194,65,12,.1)]',
+  dark: 'cu:[--dot-edge:rgba(255,255,255,.9)] cu:[--dot-track:rgba(255,255,255,.4)] cu:[--dot-fill:#fff] cu:[--dot-ring:#FFD48A] cu:[--dot-pill:rgba(0,0,0,.05)]',
+  light: 'cu:[--dot-edge:rgba(194,65,12,.8)] cu:[--dot-track:rgba(194,65,12,.3)] cu:[--dot-fill:var(--brand)] cu:[--dot-ring:var(--brand)] cu:[--dot-pill:rgba(0,0,0,.05)]',
 };
 const DOT = [
   'cu:relative cu:flex-none cu:box-content cu:w-[8px] cu:h-[8px] cu:-my-[8px] cu:-mx-[3px] cu:p-0 cu:overflow-hidden cu:cursor-pointer',

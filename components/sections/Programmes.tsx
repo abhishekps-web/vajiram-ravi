@@ -3,6 +3,7 @@
 import '@/app/tailwind-sections.css';
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent, type ReactNode } from "react";
 import SectionLabel from "@/components/ui/SectionLabel";
+import SectionWrapper from "@/components/ui/section_wrapper";
 import Button from "@/components/ui/Button";
 import { ControlledTabs } from "@/components/ui/Tabs";
 import { coursePageHref, programmeCategories, programmes, programmesClosing, type CoverArtKind, type Href, type CoverEmblem, type Programme, type ProgrammeCategory } from "./programmes-data";
@@ -1687,11 +1688,11 @@ function Page({ leaf, programme, onRestart }: { leaf: Leaf; programme: Programme
 function Programmes() {
   return (
 
-    <section id="courses" aria-labelledby="programmes-h" className="prog cu:relative cu:overflow-clip cu:bg-cream">
+    <SectionWrapper id="courses" labelledBy="programmes-h" compact className="prog cu:overflow-clip cu:bg-cream">
 
       <TextMotion rootId="courses" />
 
-      <div className="prog__canvas cu:relative cu:mx-auto cu:flex cu:w-full cu:max-w-[calc(var(--site-w)+2*clamp(16px,5.5vw,80px))] cu:flex-col cu:items-start cu:px-[clamp(16px,5.5vw,80px)] cu:pt-[calc(var(--sec-y)*.5)]">
+      <div className="prog__canvas cu:relative cu:mx-auto cu:flex cu:w-full cu:flex-col cu:items-start">
 
         <div className="cu:relative cu:w-full">
 
@@ -1710,7 +1711,7 @@ function Programmes() {
           </div>
         </div>
 
-        <div className="cu:relative cu:w-full cu:pt-8 cu:pb-[calc(var(--sec-y)*.6)]">
+        <div className="cu:relative cu:w-full cu:pt-8">
 
           <aside
             data-fade
@@ -1744,7 +1745,7 @@ function Programmes() {
           </aside>
         </div>
       </div>
-    </section>
+    </SectionWrapper>
   );
 }
 

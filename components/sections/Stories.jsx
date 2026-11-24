@@ -1,6 +1,7 @@
 import Image from 'next/image';
+import SectionWrapper from '@/components/ui/section_wrapper';
 import SectionLabel from '@/components/ui/SectionLabel';
-import Button from '@/components/ui/Button/Button';
+import Button from '@/components/ui/Button';
 import initCardStack from '@/components/ui/card-stack';
 import { top10 } from '@/components/sections/Toppers';
 import { $, reduce } from '@/lib/site';
@@ -89,7 +90,7 @@ function Postcard({ card, i, copy }) {
 
 export default function Stories() {
   return (
-    <section className="sheet sheet--pad" id="stories" aria-labelledby="stH">
+    <SectionWrapper id="stories" labelledBy="stH" compact noBottom className="sheet sheet--pad">
       <SectionLabel reveal={false}>Success stories</SectionLabel>
       <h2 id="stH" className="h2 h2--sec">
         {/* the heading rises out of its masked line */}
@@ -100,7 +101,7 @@ export default function Stories() {
       <div
         id="tcar"
         className={[
-          'cu:group/tcar cu:block cu:overflow-hidden cu:mx-[calc(var(--px)*-1)] cu:mt-0 cu:mb-[-16px] cu:pt-[76px] cu:pb-[56px]',
+          'cu:group/tcar cu:block cu:overflow-hidden cu:mx-[calc(var(--px)*-1)] cu:mt-[calc(var(--hd-gap)-76px)] cu:mb-[-16px] cu:pt-[76px] cu:pb-[56px]',
           'cu:[-webkit-mask-image:linear-gradient(90deg,transparent_0,#000_7%,#000_93%,transparent_100%)] cu:[mask-image:linear-gradient(90deg,transparent_0,#000_7%,#000_93%,transparent_100%)]',
           'cu:max-[1000px]:snap-x cu:max-[1000px]:snap-mandatory cu:max-[1000px]:[scrollbar-width:none]',
           'cu:motion-reduce:overflow-x-auto cu:motion-reduce:[-webkit-mask-image:none] cu:motion-reduce:[mask-image:none]',
@@ -122,7 +123,7 @@ export default function Stories() {
           <Button variant="outline" size="sm" iconOnly iconStart="arrow" label="Next testimonial" data-tstack="next" />
         </div>
       </div>
-    </section>
+    </SectionWrapper>
   );
 }
 

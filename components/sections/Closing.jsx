@@ -1,8 +1,9 @@
-import Button from '@/components/ui/Button/Button';
+import SectionWrapper from '@/components/ui/section_wrapper';
+import Button from '@/components/ui/Button';
 // ============ CLOSING CTA (Figma 2088:3749): orange gradient card, orange glow + line lotus rising from the bottom; styles/v49.css .cl ============
 export default function Closing() {
   return (
-    <section className="cl" id="closing" aria-labelledby="clH">
+    <SectionWrapper id="closing" labelledBy="clH" compact className="cl">
       <div className="cl__card">
         <img className="cl__glow cl__glow--a" src="/assets/img/patterns/cta-glow-1.svg" alt="" width="1240" height="840" aria-hidden="true" />
         <img className="cl__glow cl__glow--b" src="/assets/img/patterns/cta-glow-2.svg" alt="" width="820" height="600" aria-hidden="true" />
@@ -36,9 +37,8 @@ export default function Closing() {
             <Button variant="secondary" href="#courses" iconEnd="arrow">Find your course</Button>
             <Button onDark href="#contact">Talk to a counsellor</Button>
           </p>
-          <p className="cl__call rv" style={{ "--d": ".36s" }}><span className="cl__call-n">{"Prefer to call? "}<a href="tel:+918062206330">080-6220-6330</a></span><span className="cl__call-s" aria-hidden="true">{" · "}</span><span className="cl__call-h">Mon – Sat, 9 AM – 7 PM</span></p>
         </div>
       </div>
-    </section>
+    </SectionWrapper>
   );
 }

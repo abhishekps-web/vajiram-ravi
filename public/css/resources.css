@@ -160,6 +160,7 @@
 
 /* all six folders the same size (user 2026-11-13): three to a row, equal rows; no wide cards, no larger titles on 1 and 6 */
 #resources .sm__grid--res { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: 1fr; gap: var(--card-gap); }   /* the Batches tickets' gap (v49.css --card-gap) */
+#resources .sm__grid--res { margin-top: calc(var(--hd-gap) - 30px) !important; }
 #resources .sm__grid--res > .rf { grid-column: auto; }
 #resources .sm__grid--res > .rf .sm__t { font-size: 22px; line-height: 1.2; }
 #resources .sm__grid--res > .rf .sm__d { font-size: 14.5px; max-width: none; }
@@ -315,7 +316,7 @@
    shadows and the index tab from being cut by the scroll box. */
 @media (max-width: 640px) {
   #resources .sm__grid.sm__grid--res { display: flex; gap: var(--card-gap); grid-template-columns: none; grid-auto-rows: auto; align-items: stretch;
-    margin-inline: calc(var(--px) * -1); padding: 8px var(--px) 36px; overflow-x: auto; overflow-y: hidden;
+    margin-inline: calc(var(--px) * -1); margin-top: calc(var(--hd-gap) - 38px) !important; padding: 8px var(--px) 36px; overflow-x: auto; overflow-y: hidden;
     scroll-snap-type: x mandatory; scroll-padding-inline: var(--px); overscroll-behavior-x: contain; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
   #resources .sm__grid.sm__grid--res::-webkit-scrollbar { display: none; }
   #resources .sm__grid--res > .rf { flex: 0 0 min(82%, 340px); width: auto; scroll-snap-align: start; }
@@ -329,6 +330,6 @@
 
 /* the dot indicator under the row of folders, on phones only (CarouselDots, bindDots in components/ui/rail.js): centred under the row in the room its bottom padding leaves */
 #resources .sm__dots { display: none; }
-@media (max-width: 640px) { #resources .sm__dots { display: flex; justify-content: center; width: fit-content; margin: -14px auto 0; } }
+@media (max-width: 640px) { #resources .sm__dots { display: flex; justify-content: center; width: fit-content; margin: -20px auto 0; } }
 
 html main #resources { position: relative; z-index: 2; }

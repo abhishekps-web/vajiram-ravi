@@ -1,4 +1,5 @@
 import { photoSrcSet } from '@/lib/photo';
+import SectionWrapper from '@/components/ui/section_wrapper';
 import '@/app/tailwind-sections.css';
 
 const PHONE = 'M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z';
@@ -22,8 +23,7 @@ const PHOTO = { src: '/assets/img/photos/campus-sunlit.webp', alt: 'Students out
 const CARD = [
   'cu:relative cu:grid cu:grid-cols-[minmax(0,340px)_minmax(0,1fr)] cu:gap-[clamp(28px,3.4vw,48px)] cu:w-full cu:max-w-(--site-w) cu:mx-auto cu:mt-(--hd-gap) cu:text-left',
   'cu:p-[clamp(28px,2.6vw,36px)] cu:xs:p-[16px] cu:stacked:grid-cols-1 cu:stacked:gap-[28px] cu:xs:gap-[20px]',
-  'cu:bg-[rgb(255_255_255/.85)] cu:backdrop-blur-[8px] cu:border cu:border-solid cu:border-[#eadbc4] cu:rounded-[8px]',
-  'cu:before:absolute cu:before:inset-[6px] cu:before:border cu:before:border-solid cu:before:border-[rgb(225_120_60/.55)] cu:before:rounded-[4px] cu:before:pointer-events-none',
+  'cu:bg-[rgb(255_255_255/.85)] cu:backdrop-blur-[8px] cu:border-[1.2px] cu:border-solid cu:border-[#D9A441] cu:rounded-none',
 ].join(' ');
 const DETAILS = [
   'cu:flex cu:flex-col cu:min-w-0',
@@ -51,7 +51,7 @@ const PHOTO_IMG = 'cu:absolute cu:inset-0 cu:block cu:w-full cu:h-full cu:object
 
 export default function ContactUs() {
   return (
-    <section className="band dots band--gap" id="visit" aria-labelledby="locH">
+    <SectionWrapper id="visit" labelledBy="locH" compact className="band dots band--gap">
       <h2 id="locH" className="h2 h2--sec rv cu:mt-0!" style={{ "--d": ".12s" }}>Contact us</h2>
       <p className="intro rv" style={{ "--d": ".2s", textWrap: "balance" }}>Pick the channel that suits you, or visit us in New Delhi.</p>
       <div className={`${CARD} rv`} style={{ "--d": ".28s" }}>
@@ -72,6 +72,6 @@ export default function ContactUs() {
           <img className={PHOTO_IMG} src={PHOTO.src} srcSet={photoSrcSet(PHOTO.src, PHOTO.w)} sizes="(max-width: 860px) 92vw, 60vw" alt={PHOTO.alt} width={PHOTO.w} height={PHOTO.h} loading="lazy" decoding="async" />
         </figure>
       </div>
-    </section>
+    </SectionWrapper>
   );
 }

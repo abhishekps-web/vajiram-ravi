@@ -1452,9 +1452,6 @@ main .cover > #dlPin ~ section:where(#courses) {border-radius: 28px 28px 0 0; }
 
 /* Free resources, Contact us and FAQ read as one closing run: the padding where they meet is half the section rhythm
    (resources bottom, Contact top and bottom, FAQ top). Their outer edges keep the full --sec-y. */
-#resources.sm { padding-bottom: calc(var(--sec-y) * .5); }
-#visit { padding-top: calc(var(--sec-y) * .5); padding-bottom: calc(var(--sec-y) * .5); }
-#faq.faq { padding-top: calc(var(--sec-y) * .5); }
 
 /* Contact us: a live map of the Old Rajinder Nagar campus under its address (user 2026-11-11), full width of the row, 200px tall */
 .cm__item--chan .cm__map { flex: 1 0 100%; margin-top: 6px; height: 200px; overflow: hidden; border-radius: 8px; box-shadow: inset 0 0 0 1px rgba(46, 46, 46, .12); background: #F2EEE9; }
@@ -1845,28 +1842,14 @@ html .gz__frame, html .sm__card, html #faqList .qa, html #visit .cm, html #visit
    --hd-lbl  eyebrow -> heading: 24px (was 30px in most sections, 16-28px in others)
    --hd-in   heading -> intro: 16px (was 16-28px)
    --hd-gap  heading block -> its content: 36-48px (was 27-119px, set per section)
-   Every section pads --sec-y above and below. A light section that directly follows another light one takes half on top
+   Every section (components/ui/section_wrapper.jsx) pads --sec-y above and below and --px at the sides. A light section that directly follows another light one takes half on top
    (Faculty after Success stories, FAQ after Visit, the closing card after FAQ), so two cream sections never stack a double gap:
    content to content is then 1.5 x --sec-y there and 2 x --sec-y across a coloured band (Toppers, Why, General Studies, Contact).
    The Why scene (pinned), the Toppers banner, the Contact split card and the closing card keep their own inner layouts. Raised
    with `html` so the section sheets loaded after this one (toppers.css, story.css, Tailwind sections) follow it too. ===== */
 :root { --sec-y: clamp(64px, 6.25vw, 90px); --py: var(--sec-y); --pb: var(--sec-y); --hd-lbl: 24px; --hd-in: 16px; --hd-gap: clamp(36px, 3.4vw, 48px); }
-/* section padding */
-html main :is(#stories.sheet, #batches, #resources.sm, #visit, #faq.faq, #gs.gs, section#toppers) { padding-top: var(--sec-y); padding-bottom: var(--sec-y); }
-html main :is(#educators, #story, #visit, #faq.faq, #closing.cl) { padding-top: calc(var(--sec-y) * .5); }
-html main :is(#educators, #closing.cl) { padding-bottom: var(--sec-y); }
-/* header: eyebrow -> heading -> intro */
-html main section .lbl + .h2, html main section .lbl + .wc__h, html main section .h2.h2--sec,
-html main #courses .prog__shelf-h, html main #educators .edu__head .h2 { margin-top: var(--hd-lbl); }
-html main section .h2 + .intro, html main section .h2--sec + .intro, html main #courses .prog__intro,
-html main #educators .edu__head .intro, html main #faq .h2 + p, html main #gs .h2 + p { margin-top: var(--hd-in); }
-html main #closing .cl__p { margin-top: calc(var(--hd-in) - 20px); }   /* the closing card's column already has a 20px flex gap */
-html main #closing .cl__h { margin-bottom: 0; }
-html main #gs .lbl + .gs__h { margin-top: var(--hd-lbl); }
-/* heading block -> content */
-
-html main .sm__grid, html main #faq .qas { margin-top: var(--hd-gap); }
-html main #visit .cm { margin-top: var(--hd-gap); }
+/* section padding: components/ui/section_wrapper.jsx (the wrapper every section sits in) */
+/* header rhythm (eyebrow -> heading -> intro -> content): components/ui/section_wrapper.jsx */
 
 /* Hero arrows (user 2026-11-13): previous / next as the site's white icon buttons (onDark), at the card's bottom right, level with
    the slide indicators on the left (the indicators sit 26px off the bottom; the 40px buttons are centred on them). They stay on

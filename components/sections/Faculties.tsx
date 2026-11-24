@@ -1,8 +1,9 @@
 "use client";
 
+import SectionWrapper from "@/components/ui/section_wrapper";
 import "./educators.css";
 import { Fragment, useEffect, useMemo, useRef, useState, type CSSProperties, type KeyboardEvent, type PointerEvent, type ReactNode, type RefObject } from "react";
-import Button from "@/components/ui/Button/Button";
+import Button from "@/components/ui/Button";
 import SiteDots from "@/components/ui/CarouselDots";
 import SectionLabel from "@/components/ui/SectionLabel";
 
@@ -1429,6 +1430,14 @@ function CircularCarousel<T>({
 const AUTOPLAY_MS = 4500;
 
 function EducatorFlow({ educators }: { educators: Educator[] }) {
+  const [square, setSquare] = useState(false);
+  useEffect(() => {
+    const query = window.matchMedia("(max-width: 640px)");
+    const sync = () => setSquare(query.matches);
+    sync();
+    query.addEventListener("change", sync);
+    return () => query.removeEventListener("change", sync);
+  }, []);
   return (
     <CircularCarousel
       items={educators}
@@ -1440,7 +1449,7 @@ function EducatorFlow({ educators }: { educators: Educator[] }) {
       renderSlide={(educator) => <SlideText educator={educator} />}
       cardLabel={(educator) => ({ title: educator.name, sub: educator.focus })}
       width={264}
-      height={340}
+      height={square ? 264 : 340}
       gap={30}
       interval={AUTOPLAY_MS}
       fadeColor="#fff8ec"
@@ -1466,7 +1475,7 @@ function SlideText({ educator }: { educator: Educator }) {
 export default function Faculties() {
   const { heading, lead } = facultyIntro;
   return (
-    <section id="educators" aria-labelledby="educators-h" className="relative isolate overflow-clip">
+    <SectionWrapper id="educators" labelledBy="educators-h" compact bleed className="isolate overflow-clip">
       <TextMotion rootId="educators" />
       <div className="edu__head w-full px-[var(--px)]">
         <SectionLabel>Faculty</SectionLabel>
@@ -1480,6 +1489,6 @@ export default function Faculties() {
           <EducatorFlow educators={educators} />
         </div>
       </div>
-    </section>
+    </SectionWrapper>
   );
 }

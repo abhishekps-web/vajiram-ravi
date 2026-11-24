@@ -1,5 +1,5 @@
-import Button from '@/components/ui/Button/Button';
-import { setButtonLabel } from '@/components/ui/Button/button-core';
+import Button from '@/components/ui/Button';
+import { setButtonLabel } from '@/components/ui/Button';
 import { createProgressBar, runProgressBar, pauseProgressBar, resumeProgressBar, resetProgressBar } from '@/components/ui/ProgressBar/progress-bar-core';
 import Tabs, { initTabs } from '@/components/ui/Tabs';
 import { $, $$, reduce } from '@/lib/site';

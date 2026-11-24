@@ -1,4 +1,5 @@
-import Button from '@/components/ui/Button/Button';
+import Button from '@/components/ui/Button';
+import SectionWrapper from '@/components/ui/section_wrapper';
 import CarouselDots from '@/components/ui/CarouselDots';
 import SectionLabel from '@/components/ui/SectionLabel';
 import Stylesheet from '@/components/ui/Stylesheet';
@@ -35,7 +36,7 @@ function ResourceCard({ title, desc, action, tab, image }) {
 
 export default function Resources() {
   return (
-    <section className="sm" id="resources" aria-labelledby="resrcH">
+    <SectionWrapper id="resources" labelledBy="resrcH" compact className="sm">
       <Stylesheet href="/css/resources.css" />
       <div className="sm__in">
         <div className="sm__head">
@@ -50,7 +51,7 @@ export default function Resources() {
         </ul>
         <CarouselDots className="sm__dots" tone="light" label="Choose a resource" labels={RESOURCES.map(r => `Show ${r.title}`)} controls="resGrid" />
       </div>
-    </section>
+    </SectionWrapper>
   );
 }
 

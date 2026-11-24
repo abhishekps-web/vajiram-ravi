@@ -5,8 +5,8 @@ outside the list in "Not buttons" below.
 
 | File | What it is |
 |---|---|
-| `components/ui/Button/Button.jsx` | `<Button>`: the React component (static server component) |
-| `components/ui/Button/button-core.js` | `buttonHTML()` for markup that behaviour modules build in the browser; `setButtonLoading`, `setButtonDisabled`, `setButtonLabel` for runtime state; the shared class/shape resolver both renderers use |
+| `components/ui/Button.jsx` | `<Button>`: the React component (static server component) |
+| `components/ui/Button.jsx` | `buttonHTML()` for markup that behaviour modules build in the browser; `setButtonLoading`, `setButtonDisabled`, `setButtonLabel` for runtime state; the shared class/shape resolver both renderers use |
 | `public/css/buttons.css` | tokens, base, sizes, variants, states: the only place a button's look is defined |
 
 `buttons.css` is linked **before** the base cascade (`app/layout.jsx`), at class specificity, so a section's own rule
@@ -17,7 +17,7 @@ Batches), it overrides the button's **tokens** (`--btn-bg`, `--btn-fg`, `--btn-s
 ## Usage
 
 ```jsx
-import Button from '@/components/ui/Button/Button';
+import Button from '@/components/ui/Button';
 
 <Button href="#contact" iconEnd="arrow">Talk to a counsellor</Button>                          // primary CTA (link)
 <Button variant="secondary" href="#courses" iconEnd="arrow">Find your course</Button>          // ink pill
@@ -33,7 +33,7 @@ import Button from '@/components/ui/Button/Button';
 In a behaviour module (markup built in the browser):
 
 ```js
-import { buttonHTML, setButtonLoading } from '@/components/ui/Button/button-core';
+import { buttonHTML, setButtonLoading } from '@/components/ui/Button';
 
 card.innerHTML = buttonHTML({ href: '#contact', label: 'Enroll now', iconEnd: 'arrow', fullWidth: true, attrs: { 'data-prog': name } });
 setButtonLoading(form.querySelector('#formBtn'), true, 'Sending…');   // … later: setButtonLoading(btn, false)
@@ -173,6 +173,6 @@ whose icon morphs into a cross), carousel progress bars and dots (`#dlProg`, `.r
 ## Extending
 
 - A new colourway that is a real new meaning → a new variant block in `buttons.css` (set the tokens only) and add it to
-  `VARIANTS` in `button-core.js`. A one-off context look → override tokens in the section's placement rule.
-- A new icon → add its paths to `PATHS` in both `button-core.js` and `Button.jsx`.
+  `VARIANTS` in `Button.jsx`. A one-off context look → override tokens in the section's placement rule.
+- A new icon → add its paths to `PATHS` in both `Button.jsx` and `Button.jsx`.
 - Never restate `height`, `padding`, `font`, `background`, `border-radius` or `box-shadow` on a button in a section stylesheet.

@@ -96,7 +96,7 @@ html body .dl .hx__mark { top: 7%; right: 3%; }
 .dl .hx__navs { position: absolute; top: 0; left: 0; z-index: 7; pointer-events: none;
   transform: scale(calc(1 - var(--cover, 0) * .2)); transform-origin: 50% 35%; }
 .dl .hx__dots { position: absolute; left: 50%; bottom: 28px; display: flex; align-items: center; gap: 8px; margin: 0; padding: 10px 12px;
-  border-radius: 999px; translate: -50% 0; background: rgba(0, 0, 0, .25); pointer-events: auto; }
+  border-radius: 999px; translate: -50% 0; background: rgba(0, 0, 0, .05); pointer-events: auto; }
 @media (max-width: 900px) { .dl .hx__dots { bottom: 22px; } }
 .dl .hx__nav { position: absolute; top: 50%; display: flex; translate: -50% -50%; pointer-events: auto; transition: opacity .3s ease; }
 .dl .hx__nav--prev { left: var(--hx-in); top: auto; bottom: 20px; translate: none; }
@@ -361,3 +361,58 @@ html body .dl .hx__mark-exam { grid-column: 2; margin: 0; font: 500 12px/16px va
 
 /* phones (user 2026-11-24): the previous / next arrows are hidden, so the card's foot zone shrinks to the dots (28px) on their 18px margin */
 @media (max-width: 760px) { .dl .hx__nav { display: none; } html .dl { --hx-foot: 62px; } }
+
+/* the hero's height: the banner card and the stats band share the screen (the stats row itself is HeroStats.jsx, Tailwind) */
+
+html body .dl { --stats-h: 120px; }
+@media (min-width: 901px) and (max-height: 760px) {
+  html body .dl { --card-min: calc(var(--txt-h) + 64px);
+    --card-h: clamp(var(--card-min), calc(100svh - var(--hdr-h) - var(--hdr-gap) - var(--stats-h) - 12px), 560px); }
+}
+@media (min-width: 761px) and (max-width: 900px) { html body .dl { --stats-h: 216px; } }
+@media (max-width: 760px) { html body .dl { --stats-h: 96px; --card-h: calc(100svh - var(--hdr-h) - var(--hdr-gap) - var(--stats-h) - 8px); } }
+
+/* Shorter hero again (user 2026-11-21, "reduce the height of the hero banner"): on desktop the card goes down to what its copy needs
+   (--card-min with 64px of room) at every screen height and is capped at 500px (was 560px); tablets 540px (was 620px). */
+@media (min-width: 901px) {
+  html body .dl { --card-min: calc(var(--txt-h) + 64px);
+    --card-h: clamp(var(--card-min), calc(100svh - var(--hdr-h) - var(--hdr-gap) - var(--stats-h) - 100px), 500px); }
+}
+@media (min-width: 901px) and (max-height: 760px) {
+  html body .dl { --card-h: clamp(var(--card-min), calc(100svh - var(--hdr-h) - var(--hdr-gap) - var(--stats-h) - 12px), 500px); }
+}
+@media (min-width: 761px) and (max-width: 900px) {
+  html body .dl { --card-h: min(540px, calc(100svh - var(--hdr-h) - var(--hdr-gap) - 140px)); }
+}
+
+html body .dl--pin .dl__frame { padding-bottom: 0; }
+
+/* The hero fills the screen (user 2026-11-21, "the hero should fill 100% of the viewport"): header band + card + stats = 100svh at every
+   width; no caps. Never below what the copy needs (--card-min). Replaces the 500px / 540px caps above. */
+html body .dl { --card-h: max(var(--card-min), calc(100svh - var(--hdr-h) - var(--hdr-gap) - var(--stats-h))); }
+@media (max-width: 900px) { html body .dl--pin .dl__frame > .dl__stick { min-height: var(--card-h); } }
+/* ... up to 900px tall (user 2026-11-21): on taller screens the hero stops at 900px */
+html body .dl { --card-h: max(var(--card-min), calc(min(100svh, 900px) - var(--hdr-h) - var(--hdr-gap) - var(--stats-h))); }
+/* a little shorter (user 2026-11-21): the screen less 64px, so the next section's top shows under it, and at most 820px (was the full
+   screen, at most 900px); never below the copy */
+html body .dl { --card-h: max(var(--card-min), calc(min(100svh - 64px, 820px) - var(--hdr-h) - var(--hdr-gap) - var(--stats-h))); }
+/* The hero back at the screen's height (at most 900px), the banner card 64px shorter (user 2026-11-21, "the hero height should be the
+   same as before, reduce the banner height"): the stats band takes the 64px (184px on desktop and tablets, was 120px), the figures still
+   centred in it with the same space above and below. Phones keep their compact row. */
+html body .dl { --card-h: max(var(--card-min), calc(min(100svh, 900px) - var(--hdr-h) - var(--hdr-gap) - var(--stats-h))); }
+@media (min-width: 761px) { html body .dl { --stats-min: 184px; } .hx__stats { height: var(--stats-h); padding-top: 0; padding-bottom: 0; } }
+@media (min-width: 761px) and (max-width: 900px) { html body .dl { --stats-min: 280px; } }
+@media (min-width: 761px) and (max-height: 760px) { html body .dl { --stats-min: 120px; } }
+/* the banner card shorter still (user 2026-11-21, "reduce the banner component height"): at most 480px on desktop and tablets (540px, and
+   before that the screen's height less the header and the stats band, ~630px at 1440 x 900). The hero still fills the screen (at most 900px):
+   the stats band takes the height the card gives up (never below --stats-min), the stats centred in it. Never below its copy. */
+@media (min-width: 761px) { html body .dl {
+  --hero-avail: calc(min(100svh, 900px) - var(--hdr-h) - var(--hdr-gap));
+  --card-h: max(var(--card-min), min(480px, calc(var(--hero-avail) - var(--stats-min))));
+  --stats-h: calc(var(--hero-avail) - var(--card-h)); } }
+
+@media (max-width: 760px) {
+  html body .dl { --stats-h: 218px; }
+}
+/* phones: the banner card fills the screen below the header (user 2026-11-21); the stats follow below the fold */
+@media (max-width: 760px) { html body .dl { --card-h: calc(100svh - var(--hdr-h) - var(--hdr-gap)); } }

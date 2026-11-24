@@ -1,4 +1,4 @@
-import Button from '@/components/ui/Button/Button';
+import Button from '@/components/ui/Button';
 
 // ============ WHATSAPP: the site's floating action button (Button variant "fab"; revealed by lib/motion/page-motion.js) ============
 // Its placement and WhatsApp green are set through the button tokens in public/css/v49.css (.wa); the label slides out on hover/focus.

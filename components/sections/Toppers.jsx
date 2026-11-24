@@ -1,6 +1,7 @@
 import Stylesheet from '@/components/ui/Stylesheet';
+import SectionWrapper from '@/components/ui/section_wrapper';
 import SectionLabel from '@/components/ui/SectionLabel';
-import Button from '@/components/ui/Button/Button';
+import Button from '@/components/ui/Button';
 import { $, $$, esc, reduce } from '@/lib/site';
 import '@/app/tailwind-sections.css';
 import ToppersRecord from './ToppersRecord';
@@ -22,7 +23,7 @@ export default function Toppers() {
   return (
     <>
       <Stylesheet href="/css/podium.css" />
-      <section className="pd" id="toppers" aria-labelledby="pdH">
+      <SectionWrapper id="toppers" labelledBy="pdH" compact className="pd">
   
   
   <svg className="pd__defs" width="0" height="0" aria-hidden="true" focusable="false">
@@ -48,7 +49,7 @@ export default function Toppers() {
     <p className="dr__cta"><Button variant="secondary" onDark href="https://vajiramandravi.com/ias-selections-from-vajiram/" target="_blank" rel="noopener" iconEnd="arrow">View all toppers</Button></p>
   </div>
 
-</section>
+</SectionWrapper>
     </>
   );
 }

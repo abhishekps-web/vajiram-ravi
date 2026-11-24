@@ -90,8 +90,8 @@
    intro 16px under the heading; the eyebrow, .h2 and .intro come from the site's own stylesheets ---- */
 #educators { padding: calc(var(--sec-y) * .5) 0 var(--sec-y); }   /* the site rhythm (v49.css, end): half on top after Success stories */
 #educators .edu__head { display: flex; flex-direction: column; align-items: center; text-align: center; }
-#educators .edu__head .h2 { margin: 30px auto 0; text-align: center; }
-#educators .edu__head .intro { margin: 16px auto 0; text-align: center; text-wrap: balance; }
+#educators .edu__head .h2 { margin-inline: auto; text-align: center; }
+#educators .edu__head .intro { margin-inline: auto; text-align: center; text-wrap: balance; }
 /* the caption under the ring: the name as the site's card title, the introduction as its body copy */
 #educators .edu__name { font: 500 30px/1.15 "Newsreader", Georgia, serif; letter-spacing: -.01em; color: var(--ink); }
 

@@ -1,7 +1,7 @@
-import Button from '@/components/ui/Button/Button';
+import Button from '@/components/ui/Button';
+import SectionWrapper from '@/components/ui/section_wrapper';
 import CarouselDots from '@/components/ui/CarouselDots';
-import Dialog from '@/components/ui/Dialog';
-import { $, $$, reduce } from '@/lib/site';
+import { $$, reduce } from '@/lib/site';
 import '@/app/tailwind-sections.css';
 
 export const BFAM = {
@@ -24,25 +24,6 @@ export const BATCHES = [
 ];
 
 export const BYEAR = 2027;
-
-export const BANNERS = [
-  ['Desktop_Size_GS_11_Months_Banner_16_f1fa678225', 'General Studies Prelims cum Mains Programme for UPSC 2027'],
-  ['Desktop_Size_GS_2_year_2_508da0d9c9', 'General Studies PCM 2-year Fledgling Programme 2028'],
-  ['Desktop_Size_Stepup_6_8b18a6bbf0', 'StepUp Mentorship Programme 2027'],
-  ['Desktop_Size_Powerup_9_79a81c3370', 'PowerUp Prelims Test Series 2027'],
-  ['SURE_SHOT_Desktop_Size_Sure_Shot_16_4d2c3b30ad', 'Sure Shot Mains Test Series 2027'],
-  ['Desktop_Size_CSAT_Banner_5eca6e8ca4', 'CSAT course for UPSC 2027'],
-  ['Desktop_Size_optional_Banner_19621e0d08', 'Optional Subject Programme for UPSC CSE 2027'],
-  ['Desktop_Size_History_Optional_35fde8138a', 'History Optional Enrichment and Mentorship Programme 2027'],
-  ['Desktop_Size_economics_module_5_ba1f0b5527', 'Economics Module 2027 for General Studies'],
-  ['SMART_Web_banner_95ee4752b3', 'SMART Current Affairs Programme for UPSC Prelims and Mains 2027'],
-  ['Desktop_Size_Scholership_test_Banner_2_eeb8fb48a8', 'Scholarship test for Sure Shot Mains Programme 2027'],
-  ['Desktop_Size_sureshot_hindi_8_18ae1e3e5f', 'Sure Shot Mains Programme 2027, Hindi medium'],
-  ['2911_575px_Desktop_be707365f9', 'Sure Shot Seniors Super 50'],
-  ['Desktop_size_14_edd2ea9021', 'Top 10 out of 10 rankers in UPSC CSE 2025 from Vajiram & Ravi']
-];
-
-const OPEN = BANNERS.filter(([, t]) => !/^Top 10/.test(t));
 
 const TICKET = [
   'cu:group cu:relative cu:min-w-0 cu:[transform-style:preserve-3d] cu:will-change-[translate] cu:[filter:drop-shadow(0_14px_15px_rgba(102,38,13,.1))]',
@@ -123,13 +104,13 @@ function Ticket({ b }) {
 export default function Batches() {
   return (
     <>
-      <section className="band dots band--gap" id="batches" aria-labelledby="batH">
+      <SectionWrapper id="batches" labelledBy="batH" compact className="band dots band--gap">
         <h2 id="batH" className="h2 h2--sec rv cu:mx-auto! cu:text-center! cu:text-balance cu:mt-0!" style={{ '--d': '.08s' }}>Next batches starting soon.</h2>
         <div className="rv cu:flex cu:flex-col cu:items-center cu:gap-[18px] cu:mb-(--hd-gap) cu:text-center" style={{ '--d': '.16s' }}>
           <p className="intro cu:mx-auto! cu:text-balance">{'Register online, or call '}<a href="tel:08062206330">080-6220-6330</a>{' for registration or seat allotment, Monday to Saturday, 9 am to 7 pm.'}</p>
           <Button variant="link" id="allBatches" iconEnd="arrow">View all batches</Button>
         </div>
-        <div className="rail cu:mt-0! cu:[--bgap:var(--card-gap)] cu:[--cw:calc((100%-3*var(--bgap))/4)] cu:max-[1180px]:[--cw:calc((100%-var(--bgap))/2)] cu:max-[640px]:[--cw:86%]">
+        <div className="rail cu:-mt-[18px]! cu:[--bgap:var(--card-gap)] cu:[--cw:calc((100%-3*var(--bgap))/4)] cu:max-[1180px]:[--cw:calc((100%-var(--bgap))/2)] cu:max-[640px]:[--cw:86%]">
           <div
             className="rail__track cu:gap-(--bgap) cu:pt-[18px]! cu:pb-[80px]! cu:max-[760px]:pb-[32px]! cu:max-[760px]:overflow-y-hidden! cu:min-[761px]:mb-[-80px]! cu:focus-visible:[outline:2px_solid_var(--brand)]! cu:focus-visible:[outline-offset:-2px] cu:focus-visible:rounded-[12px]"
             id="price" tabIndex={0} role="region" aria-roledescription="carousel" aria-label="Upcoming batches"
@@ -140,20 +121,9 @@ export default function Batches() {
             <Button variant="outline" size="sm" iconOnly iconStart="arrow-left" label="Previous batches" className="cbtn cbtn--prev" />
             <Button variant="outline" size="sm" iconOnly iconStart="arrow" label="Next batches" className="cbtn cbtn--next" />
           </div>
-          <div className="cu:flex cu:justify-center cu:mt-[12px] cu:min-[761px]:hidden"><CarouselDots className="rail__dots" tone="light" label="Choose a batch" labels={BATCHES.map(x => `Show ${x.full}`)} controls="price" /></div>
+          <div className="cu:flex cu:justify-center cu:-mt-[16px] cu:min-[761px]:hidden"><CarouselDots className="rail__dots" tone="light" label="Choose a batch" labels={BATCHES.map(x => `Show ${x.full}`)} controls="price" /></div>
         </div>
-      </section>
-      <Dialog id="batchDlg" className="dlg dlg--cat" titleId="batchDlgH" title={`Admissions open: ${OPEN.length} programmes`} closeId="batchDlgX" listId="batchList"
-        listClass="cu:flex-1 cu:min-h-0 cu:overflow-auto cu:grid cu:grid-cols-2 cu:gap-[14px] cu:pt-[4px] cu:px-[24px] cu:pb-[24px] cu:max-[760px]:grid-cols-1 cu:max-[760px]:px-[16px] cu:max-[760px]:pb-[16px]">
-        {OPEN.map(([f, t]) => (
-          <li key={f}>
-            <a href="#contact" data-prog={t} className="cu:block cu:rounded-[14px] cu:overflow-hidden cu:bg-(--sand) cu:transition-[translate,box-shadow] cu:duration-[250ms] cu:ease-(--ease) cu:hover:translate-y-[-2px] cu:hover:shadow-[0_10px_24px_rgba(194,65,12,.16)] cu:focus-visible:translate-y-[-2px] cu:motion-reduce:transition-none">
-              <img src={`/assets/img/banners/${f}.webp`} alt="" loading="lazy" className="cu:block cu:w-full cu:aspect-[2911/575] cu:object-cover" />
-              <span className="cu:flex cu:justify-between cu:items-center cu:gap-[12px] cu:py-[12px] cu:px-[14px] cu:text-[14.5px] cu:leading-[1.35]">{t}<img src="/assets/img/icons/arrow-list.svg" alt="" width="16" height="16" className="cu:size-[16px] cu:flex-none" /></span>
-            </a>
-          </li>
-        ))}
-      </Dialog>
+      </SectionWrapper>
     </>
   );
 }
@@ -170,11 +140,4 @@ export function initBatchTickets() {
     });
     c.addEventListener('pointerleave', () => { c.style.setProperty('--tx', 0); c.style.setProperty('--ty', 0); });
   });
-}
-
-export function initBatchDialog() {
-  const dlg = $('#batchDlg');
-  $('#allBatches').addEventListener('click', () => dlg.showModal());
-  $('#batchDlgX').addEventListener('click', () => dlg.close());
-  dlg.addEventListener('click', e => { if (e.target === dlg || e.target.closest('[data-prog]')) dlg.close(); });
 }

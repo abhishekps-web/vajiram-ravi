@@ -1,6 +1,6 @@
 import '@/app/tailwind-sections.css';
-import Button from '@/components/ui/Button/Button';
-import { buttonHTML } from '@/components/ui/Button/button-core';
+import Button from '@/components/ui/Button';
+import { buttonHTML } from '@/components/ui/Button';
 import { $, $$, esc, reduce, SITE } from '@/lib/site';
 import { CATS, CAT_D, STAGES } from '@/lib/data/courses';
 

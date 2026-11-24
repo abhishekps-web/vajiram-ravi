@@ -1,5 +1,9 @@
+import CarouselDots from '@/components/ui/CarouselDots';
+import SectionWrapper from '@/components/ui/section_wrapper';
 import SectionLabel from '@/components/ui/SectionLabel';
+import { bindDots } from '@/components/ui/rail';
 import { photoSrcSet } from '@/lib/photo';
+import { $$ } from '@/lib/site';
 import '@/app/tailwind-sections.css';
 
 const LEGACY = {
@@ -75,40 +79,45 @@ const REASONS = [
 ];
 
 const CARD = [
-  'cu:group cu:relative cu:flex cu:flex-col cu:h-full cu:p-[26px] cu:rounded-(--r-card) cu:text-[#5a4632]',
+  'cu:group cu:relative cu:grid cu:grid-cols-[auto_minmax(0,1fr)] cu:content-start cu:items-center cu:gap-x-[14px] cu:h-full cu:p-[26px] cu:max-[640px]:p-[20px] cu:rounded-(--r-card) cu:text-[#5a4632]',
   'cu:paper-card',
 ].join(' ');
 
 export default function WhyChoose() {
   return (
-    <section id="story" aria-labelledby="legacyH" className="cu:relative cu:py-(--sec-y) cu:px-(--px) cu:[background:var(--ground-jaali)] cu:overflow-clip">
+    <SectionWrapper id="story" labelledBy="legacyH" compact className="cu:[background:var(--ground-jaali)] cu:overflow-clip">
       <div className="cu:grid cu:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] cu:max-[900px]:grid-cols-1 cu:items-center cu:gap-x-[clamp(24px,5vw,72px)] cu:gap-y-[28px] cu:text-left">
         <figure className="rv cu:m-0 cu:aspect-[3/4] cu:w-[min(100%,calc((100svh-var(--hdr-h)-64px)*.75))] cu:max-[900px]:w-[min(100%,360px)] cu:max-[640px]:w-full cu:max-[640px]:aspect-video cu:overflow-hidden cu:rounded-(--r-card) cu:bg-[#eadbc4] cu:[box-shadow:0_24px_48px_-32px_rgb(80_48_16/.35)]" style={{ '--d': '.05s' }}>
           <img src={PHOTO.src} srcSet={photoSrcSet(PHOTO.src, PHOTO.w)} sizes="(max-width: 900px) 92vw, 30vw" alt={PHOTO.alt} width={PHOTO.w} height={PHOTO.h} loading="lazy" decoding="async" className="cu:block cu:size-full cu:object-cover cu:object-center cu:max-[640px]:object-[50%_56%] cu:transition-transform cu:duration-700 cu:ease-(--ease) cu:fine:hover:scale-[1.03] cu:motion-reduce:transition-none" />
         </figure>
         <header id="legacy" className="cu:flex cu:flex-col cu:items-start">
           <SectionLabel>{LEGACY.label}</SectionLabel>
-          <h2 id="legacyH" className="h2 h2--sec rv cu:mt-(--hd-lbl) cu:mb-0 cu:max-w-[22ch] cu:text-balance cu:text-[clamp(34px,3.7vw,52px)]! cu:leading-[1.08]!" style={{ '--d': '.12s' }}>{LEGACY.title}</h2>
-          <p className="rv cu:mt-(--hd-lbl) cu:mb-0 cu:max-w-[62ch] cu:text-[clamp(16px,1.25vw,18px)] cu:leading-[1.75] cu:text-[#4a3f35]" style={{ '--d': '.2s' }}>{LEGACY.body}</p>
+          <h2 id="legacyH" className="h2 h2--sec rv cu:mt-(--hd-lbl) cu:mb-0 cu:max-w-[22ch] cu:text-balance cu:max-[640px]:max-w-none" style={{ '--d': '.12s' }}>{LEGACY.title}</h2>
+          <p className="rv cu:mt-(--hd-in) cu:mb-0 cu:max-w-[62ch] cu:text-[clamp(16px,1.25vw,18px)] cu:leading-[1.75] cu:text-[#4a3f35]" style={{ '--d': '.2s' }}>{LEGACY.body}</p>
         </header>
       </div>
-      <div id="reasons" className="cu:mt-[clamp(48px,5vw,72px)]">
-        <ul className="why__cards cu:grid cu:grid-cols-3 cu:max-[1000px]:grid-cols-2 cu:max-[640px]:flex cu:max-[640px]:overflow-x-auto cu:max-[640px]:snap-x cu:max-[640px]:snap-mandatory cu:max-[640px]:overscroll-x-contain cu:max-[640px]:[scrollbar-width:none] cu:max-[640px]:[&::-webkit-scrollbar]:hidden cu:max-[640px]:-mx-(--px) cu:max-[640px]:px-(--px) cu:max-[640px]:scroll-px-(--px) cu:max-[640px]:pt-[14px] cu:max-[640px]:pb-[44px] cu:max-[640px]:-mt-[14px] cu:max-[640px]:-mb-[44px] cu:gap-(--card-gap) cu:w-full cu:max-[640px]:w-[calc(100%+2*var(--px))] cu:list-none cu:p-0 cu:text-left">
+      <div id="reasons" className="cu:mt-(--hd-gap) cu:max-[640px]:mt-[calc(var(--hd-gap)+14px)]">
+        <ul id="whyCards" className="why__cards cu:grid cu:grid-cols-3 cu:max-[1000px]:grid-cols-2 cu:max-[640px]:flex cu:max-[640px]:overflow-x-auto cu:max-[640px]:snap-x cu:max-[640px]:snap-mandatory cu:max-[640px]:overscroll-x-contain cu:max-[640px]:[scrollbar-width:none] cu:max-[640px]:[&::-webkit-scrollbar]:hidden cu:max-[640px]:-mx-(--px) cu:max-[640px]:px-(--px) cu:max-[640px]:scroll-px-(--px) cu:max-[640px]:pt-[14px] cu:max-[640px]:pb-[44px] cu:max-[640px]:-mt-[14px] cu:max-[640px]:-mb-[44px] cu:gap-(--card-gap) cu:w-full cu:max-[640px]:w-[calc(100%+2*var(--px))] cu:list-none cu:p-0 cu:text-left">
           {REASONS.map((r) => (
             <li key={r.t} className="cu:min-w-0 cu:max-[640px]:flex-[0_0_82%] cu:max-[640px]:snap-start">
               <article className={CARD}>
-                <span aria-hidden="true" className="cu:grid cu:place-items-center cu:flex-none cu:size-[56px] cu:rounded-full cu:bg-white cu:text-(--brand)">
+                <span aria-hidden="true" className="cu:grid cu:place-items-center cu:flex-none cu:size-[56px] cu:max-[640px]:size-[44px] cu:rounded-full cu:bg-white cu:text-(--brand)">
                   <svg aria-hidden="true" viewBox="0 0 48 48" className="cu:size-[30px] cu:fill-none cu:stroke-(--brand) cu:[stroke-width:3] cu:[stroke-linecap:round] cu:[stroke-linejoin:round]">{ICONS[r.icon]}</svg>
                 </span>
-                <div className="cu:pt-[18px]">
-                  <h3 className="cu:m-0 cu:[font:600_22px/1.2_var(--f-title)] cu:tracking-[-.015em] cu:text-[#2A2016]">{r.t}</h3>
-                  <p className="cu:mt-[8px] cu:mb-0 cu:text-[14.5px] cu:leading-[1.5] cu:text-[#5a4632]">{r.d}</p>
+                <div className="cu:contents">
+                  <h3 className="cu:m-0 cu:[font:600_22px/1.2_var(--f-title)] cu:max-[640px]:text-[20px] cu:max-[640px]:flex cu:max-[640px]:items-center cu:max-[640px]:min-h-[2.4em] cu:text-balance cu:tracking-[-.015em] cu:text-[#2A2016]">{r.t}</h3>
+                  <p className="cu:mt-[12px] cu:col-span-2 cu:mb-0 cu:text-[14.5px] cu:leading-[1.5] cu:text-[#5a4632]">{r.d}</p>
                 </div>
               </article>
             </li>
           ))}
         </ul>
+        <div className="cu:flex cu:justify-center cu:mt-[16px] cu:min-[641px]:hidden"><CarouselDots className="why__dots" tone="light" label="Choose a reason" labels={REASONS.map(r => `Show ${r.t}`)} controls="whyCards" /></div>
       </div>
-    </section>
+    </SectionWrapper>
   );
+}
+
+export function initWhyDots() {
+  bindDots(document.getElementById('whyCards'), $$('.why__dots > button'));
 }
