@@ -566,13 +566,25 @@
     const bar = $('#cfBar'), navEl = $('#nav') || $('.rn'), q = $('#cfQ'), qx = $('#cfQx');
     const mark = document.createElement('div'); mark.className = 'cf-bar-mark'; mark.setAttribute('aria-hidden', 'true');
     if (bar) bar.before(mark);
+    // the hero's drifting dots and the Popular Courses clouds only move while they are on screen (user 2026-11-24, "lag when I
+    // scroll"): .is-off pauses their CSS animations
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('is-off', !e.isIntersecting)));
+      [$('.cf-hero'), $('.cf-sec.cf-feat', list)].forEach(el => el && io.observe(el));
+    }
     const navOff = () => (!navEl || navEl.classList.contains('is-away') || navEl.classList.contains('is-open')) ? 0
       : (parseFloat(getComputedStyle(navEl).top) || 0) + navEl.offsetHeight + 12;
     const pin = () => {
       if (!bar) return;
       const off = navOff();
       document.documentElement.style.setProperty('--cf-navoff', off + 'px');
-      bar.classList.toggle('is-stuck', mark.getBoundingClientRect().top < off + 1);
+      // the bar's height, so the hero can run on behind it (css: --cf-bar-h, user 2026-11-24)
+      document.documentElement.style.setProperty('--cf-bar-h', bar.offsetHeight + 'px');
+      const mt = mark.getBoundingClientRect().top;
+      bar.classList.toggle('is-stuck', mt < off + 1);
+      // its paper fades in with the scroll over the last 90px before it sticks (user 2026-11-24, "the transition is not smooth"):
+      // 0 while it sits on the hero, 1 once it is stuck under the nav (css: --cf-bar-p)
+      bar.style.setProperty('--cf-bar-p', Math.min(1, Math.max(0, (off + 90 - mt) / 90)).toFixed(3));
     };
     addEventListener('scroll', pin, { passive: true }); addEventListener('resize', pin); pin();
     if (navEl) new MutationObserver(pin).observe(navEl, { attributes: true, attributeFilter: ['class'] });

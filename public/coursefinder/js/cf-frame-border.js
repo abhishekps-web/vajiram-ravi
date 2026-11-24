@@ -9,8 +9,11 @@
    Drawn only while the banner is on screen and the tab is visible; a still frame for reduced motion. */
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const A = [194, 65, 12];        // colour A: brand orange (user 2026-11-23: darker than cream, then "a bit light"er than burnt orange)
-  const B = [234, 88, 12];        // colour B: bright orange
+  // the card went green (user 2026-11-24, the homepage batch card's #326F66), so the line is a light mint on it; it was orange
+  // (A [194, 65, 12], B [234, 88, 12], hot [251, 146, 60])
+  const A = [124, 196, 180];      // colour A: soft mint
+  const B = [172, 226, 209];      // colour B: pale mint
+  const HOT = [222, 247, 238];    // what swells and pulses brighten towards
   const LINE = 2, INSET = 1, GLOW = 1, GLOW_W = 110, NOISE = 0.6, NOISE_SCALE = 3;
   const SWELLS = 3, INTRO = 1300, GLOW_IN = 900;
   const lerp = (a, b, t) => a + (b - a) * t;
@@ -113,8 +116,9 @@
         cx.restore();
       };
       if (glowIn > 0) {
-        pass(GLOW_W * 0.9, GLOW_W * 0.4, 0.8 * GLOW);
-        pass(22, 10, 0.75 * GLOW);
+        // no wide glow on the green card (user 2026-11-24, "why does it look like this"): the 100px mint band read as a pale haze
+        // along every edge; only a tight glow hugs the line now. Was: pass(GLOW_W * 0.9, GLOW_W * 0.4, 0.8 * GLOW)
+        pass(22, 10, 0.5 * GLOW);
       }
       // the line, drawn in from the top centre both ways during the intro
       cx.lineWidth = LINE; cx.lineCap = 'round';
@@ -122,7 +126,7 @@
         const p = pts[i], q = pts[i + 1];
         if (Math.min(p.u, 1 - p.u) > ease * 0.5) continue;
         const b = light(p.u, ft, now), c = colour(p.u, ft);
-        const hot = Math.max(0, b - 1) * 0.6, cc = mix(c, [251, 146, 60], Math.min(1, hot));   // swells and pulses brighten towards a hot orange
+        const hot = Math.max(0, b - 1) * 0.6, cc = mix(c, HOT, Math.min(1, hot));   // swells and pulses brighten towards HOT
         cx.strokeStyle = `rgba(${cc[0] | 0}, ${cc[1] | 0}, ${cc[2] | 0}, ${Math.min(1, 0.35 + b * 0.65)})`;
         cx.beginPath(); cx.moveTo(p.x, p.y); cx.lineTo(q.x, q.y); cx.stroke();
       }
