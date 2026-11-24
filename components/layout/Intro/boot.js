@@ -1,13 +1,13 @@
 // The intro's inline boot script (app/layout.jsx puts it in <head>, so it runs before the first paint).
 // It runs the whole intro without waiting for React: the reveal starts at the first paint, ends 2.5s after its first animation
-// (the iris, intro.css) starts (or on Esc / a wheel or touch scroll; no skip button, user 2026-11-16), and lifts; 8s at most in any case. Hydration on a slow phone can take seconds, so the intro used to wait for it and hold
+// (the iris, Intro.jsx) starts (or on Esc / a wheel or touch scroll; no skip button, user 2026-11-16), and lifts; 8s at most in any case. Hydration on a slow phone can take seconds, so the intro used to wait for it and hold
 // the page for that long on top of its own 2.5s.
 // It only sets classes on <html> (which tolerates that before hydration), never touches the overlay's own nodes:
-//   html.vrv-lock  the overlay shows and scrolling is held (public/css/intro.css)
+//   html.vrv-lock  the overlay shows and scrolling is held (Intro.jsx; the lock rules in app/tailwind-sections.css)
 //   html.vrv-play  the reveal animations run
 //   html.vrv-out   the curtain lifts (850ms), then all three are removed and 'vr:intro-done' fires on document
 // A reload (or back / forward) from the middle of the page keeps its place (user 2026-11-21): the scroll position is saved when the page is left
-// and put back by hand while the page settles. The intro still plays; html.vrv-restore lets the page scroll under the overlay (intro.css),
+// and put back by hand while the page settles. The intro still plays; html.vrv-restore lets the page scroll under the overlay (app/tailwind-sections.css),
 // so the page is already in place when the curtain lifts.
 // No intro under prefers-reduced-motion, and with oncePerSession only on the first page of a browser session.
 const PLAY = 2500, LIFT = 850, SAFETY = 8000;

@@ -988,7 +988,7 @@ html.cf-locked { overflow: hidden; }
 
 /* more room around the footer's legal line (user 2026-11-20, "add a bit more space"): a wider gap above its rule, more air between
    the rule and the line, and more below it before the footer's edge */
-.vf .vf__legal { margin-top: 18px; padding-top: 22px; margin-bottom: 16px; }
+/* (the legal row's extra spacing removed 2026-11-23: the footer is now the homepage's, spaced as there) */
 
 /* ---------- the hero in a golden gradient (user 2026-11-20, "lets use a gradient colour similar to the uploaded image ... for the hero
    section"): saffron at the top and bottom, a pale gold band through the middle, with a fine grain over it, as in the image. On the
@@ -1829,3 +1829,270 @@ body { font-family: var(--f); }
 .cf-feat .cf-k.is-beam-out::before, .cf-feat .cf-k.is-beam-out::after { animation-play-state: running; }
 /* frame border canvas round the popular-courses banner (js/cf-frame-border.js, trial): above the banner's ground, below its content */
 .cf-feat__frame { position: absolute; inset: 0; z-index: 2; width: 100%; height: 100%; pointer-events: none; }
+/* Our Popular Courses heading and sub text in white (user 2026-11-23), a soft warm shadow to lift them off the orange */
+.cf-feat .cf-sec__h, .cf-feat .cf-feat__h { color: #fff; text-shadow: 0 1px 2px rgb(120 40 8 / .3); }
+.cf-feat__sub { color: #fff; text-shadow: 0 1px 1px rgb(120 40 8 / .35); }
+/* no shadow where the page's bottom edge meets the footer (user 2026-11-23); v49.css gives the curtain's page a drop shadow */
+html.foot-curtain main { box-shadow: none; }
+/* Our Popular Courses intro (logo, heading, text) centred top-to-bottom against the cards (user 2026-11-23); it was top-aligned.
+   Desktop only: on tablets and phones the intro sits above the cards */
+@media (min-width: 1101px) { .cf-sec.cf-feat > .cf-feat__intro { align-self: center; } }
+
+/* ---------- the page head without the breadcrumb and the figures, its title and line set to the left (user 2026-11-23) ---------- */
+.cf-hero__in { text-align: left; }
+.cf-h, .cf-lede { margin-inline: 0; }
+
+/* ---------- hero illustration on the right only (user 2026-11-23): Rashtrapati Bhavan on the left removed, the India Gate panel
+   made more prominent — wider (the text now sits on the left), from the hero's top, darker and less faded ---------- */
+.cf-hero__bg::before { content: none; }
+.cf-hero__bg { opacity: .42; }
+.cf-hero__bg::after { top: 0; width: 46%; background-size: 1040px auto; background-position: right 0 top -150px;
+  -webkit-mask: linear-gradient(270deg, #000 62%, transparent), linear-gradient(180deg, transparent, #000 40px); -webkit-mask-composite: source-in;
+  mask: linear-gradient(270deg, #000 62%, transparent), linear-gradient(180deg, transparent, #000 40px); mask-composite: intersect; }
+
+/* ---------- Popular Courses (review 2026-11-24): no glow running round the cards' outlines (js/cf-card-beam.js no longer loaded;
+   the section already sets these courses apart), and carousel dots under the cards, the current page a white pill ---------- */
+.cf-feat .cf-k::before, .cf-feat .cf-k::after { content: none; }
+.cf-dots { display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 20px; }
+.cf-dots[hidden] { display: none; }
+.cf-dot { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 999px; background: rgb(255 255 255 / .45); cursor: pointer;
+  transition: width .3s var(--ease-out, ease), background-color .3s; }
+.cf-dot:hover { background: rgb(255 255 255 / .75); }
+.cf-dot[aria-current="true"] { width: 24px; background: #fff; }
+.cf-dot:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+/* the course cards' fact icons (duration, time, mode) in the same colour as their text (user 2026-11-24); they were a lighter grey */
+.cf-k__f svg, .cf-feat .cf-k__f svg { color: inherit; stroke: currentColor; }
+
+/* no badges (Trending, Bestseller, New) on any course card (user 2026-11-24); the Popular Courses cards already had none */
+.cf-k__tags { display: none; }
+
+/* the fee line on the course cards (user 2026-11-24): the amount a touch bolder, "incl. GST" small and lighter after it */
+.cf-k__f--fee > span { font-weight: 600; }
+.cf-k__f--fee.is-none > span { font-weight: inherit; }
+.cf-k__gst { font-size: .82em; font-weight: 400; opacity: .75; margin-left: 2px; }
+/* the rupee icon at 14px (user 2026-11-24, "looks a bit big"), centred in the 16px icon column so the amount still lines up with the
+   text above it */
+.cf-k__f--fee svg { width: 14px; height: 14px; margin: 2px 1px 0; }
+
+/* ---------- grounds swapped (user 2026-11-24): the hero takes the page's cream ground (#FFFAF3 with the homepage's jaali lattice, clear
+   through the middle: the --ground-jaali of base.bundle.css), its beige paper and grain gone; the sticky search bar under it takes the
+   same cream so the two still read as one; the course list below goes plain white ---------- */
+.cf-hero { background: linear-gradient(90deg, rgba(255, 250, 243, 0) 0%, rgba(255, 250, 243, .94) 30%, rgba(255, 250, 243, .94) 70%, rgba(255, 250, 243, 0) 100%),
+  url("../assets/img/patterns/bg-jaali.svg") 0 0 / 36px 36px repeat, #FFFAF3; }
+.cf-hero::after { content: none; }
+.cf-bar::before { background: #FFFAF3; }
+.cf-bar::after { content: none; }
+main.cf, html.foot-curtain main.cf { background: #fff; }
+
+/* the hero's ground in a neutral shade (user 2026-11-24): the same jaali lattice and the same clear middle, over a neutral off-white
+   (#F6F5F2) instead of the cream; the sticky bar under it follows */
+.cf-hero { background: linear-gradient(90deg, rgba(246, 245, 242, 0) 0%, rgba(246, 245, 242, .94) 30%, rgba(246, 245, 242, .94) 70%, rgba(246, 245, 242, 0) 100%),
+  url("../assets/img/patterns/bg-jaali.svg") 0 0 / 36px 36px repeat, #F6F5F2; }
+.cf-bar::before { background: #F6F5F2; }
+
+/* the course list's white ground gets the same jaali lattice as the hero (user 2026-11-24, "add the pattern here as well"): the 36px
+   tile at the sides, clear through the middle, over white */
+main.cf, html.foot-curtain main.cf { background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, .94) 30%, rgba(255, 255, 255, .94) 70%, rgba(255, 255, 255, 0) 100%),
+  url("../assets/img/patterns/bg-jaali.svg") 0 0 / 36px 36px repeat, #fff; }
+
+/* the hero's beige paper back (user 2026-11-24, "bring back the beige colour"): the warm paper gradient and its grain, as before the
+   neutral shade, with the jaali lattice kept at the sides (its own layer, faded out through the middle); the sticky bar back to the
+   same beige paper and grain */
+.cf-hero { background: linear-gradient(178deg, #F9EFDA, #F5E8CE 30%, #EFDFC0); }
+.cf-hero::after { content: ""; }
+.cf-hero::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: url("../assets/img/patterns/bg-jaali.svg") 0 0 / 36px 36px repeat;
+  -webkit-mask: linear-gradient(90deg, #000, rgb(0 0 0 / .06) 30%, rgb(0 0 0 / .06) 70%, #000); mask: linear-gradient(90deg, #000, rgb(0 0 0 / .06) 30%, rgb(0 0 0 / .06) 70%, #000); }
+.cf-bar::before { background: linear-gradient(178deg, #F9EFDA, #F5E8CE 30%, #EFDFC0); }
+.cf-bar::after { content: ""; }
+
+/* ---------- the hero runs on behind the filter bar (user 2026-11-24, "the image and the pattern look cropped in the filter section"):
+   the hero grows by the bar's height (--cf-bar-h, set by js/course-finder.js) and the bar moves up over its bottom, so the beige paper,
+   the jaali lattice and the India Gate art carry on behind the search and filters; the bar's own paper only shows once it is stuck
+   under the nav. The marker the script watches moves up with the bar, so "stuck" still starts the moment the bar reaches the nav ---------- */
+.cf-hero { padding-bottom: calc(40px + var(--cf-bar-h, 84px)); }
+.cf-bar { margin-top: calc(var(--cf-bar-h, 84px) * -1); }
+.cf-bar-mark { position: relative; top: calc(var(--cf-bar-h, 84px) * -1); }
+.cf-bar:not(.is-stuck)::before { background: transparent; box-shadow: none; }
+.cf-bar:not(.is-stuck)::after { opacity: 0; }
+.cf-bar::before, .cf-bar::after { transition: background-color .25s, opacity .25s, box-shadow .25s; }
+/* smooth: the bar's paper, grain and shadow fade in with the scroll instead of switching on when it sticks (user 2026-11-24, "the
+   transition is not smooth"); --cf-bar-p runs 0 to 1 over the last 90px before the bar reaches the nav (js/course-finder.js). The
+   paper is always drawn and only its opacity changes, since a gradient cannot be animated in */
+.cf-bar::before, .cf-bar:not(.is-stuck)::before { background: linear-gradient(178deg, #F9EFDA, #F5E8CE 30%, #EFDFC0);
+  box-shadow: inset 0 1px 0 rgb(255 250 235 / .9), 0 1px 0 rgb(110 66 18 / .2), 0 16px 26px -18px rgb(60 30 5 / .45);
+  opacity: var(--cf-bar-p, 0); transition: none; }
+.cf-bar::after, .cf-bar:not(.is-stuck)::after { opacity: calc(var(--cf-bar-p, 0) * .45); transition: none; }
+.cf-bar::before, .cf-bar::after { top: calc(var(--cf-navoff, 0px) * -1 * var(--cf-bar-p, 0)); }
+@media (prefers-reduced-motion: reduce) { .cf-bar::before, .cf-bar::after { transition: none; } }
+
+
+/* ---------- Our Popular Courses in green (user 2026-11-24, "we will be using the green for the Our Popular Courses card"): the homepage
+   batch card's teal green #326F66, a touch lighter in the middle, with the same white jaali lattice and grain; its shadows, the emblem's
+   drop shadow and the arrows' edges in a deep green instead of burnt orange; the frame's running line turns mint (js/cf-frame-border.js).
+   The cards inside stay white with their orange "View course" buttons ---------- */
+.cf-sec.cf-feat { background: url("../assets/img/patterns/bg-jaali-white.svg") 0 0 / 36px 36px repeat,
+  radial-gradient(75% 65% at 42% 58%, #3B7D73 0%, #367469 38%, #326F66 68%, #2C645B 100%); }
+@media (max-width: 1100px) { .cf-sec.cf-feat { background: url("../assets/img/patterns/bg-jaali-white.svg") 0 0 / 36px 36px repeat,
+  radial-gradient(90% 60% at 45% 55%, #3B7D73 0%, #367469 38%, #326F66 68%, #2C645B 100%); } }
+.cf-feat .cf-sec__h, .cf-feat .cf-feat__h { text-shadow: 0 1px 2px rgb(10 40 35 / .35); }
+.cf-feat__sub { text-shadow: 0 1px 1px rgb(10 40 35 / .35); }
+.cf-feat__logo { filter: drop-shadow(0 6px 10px rgb(10 40 35 / .35)); }
+.cf-feat .cf-arw { border-color: rgb(50 111 102 / .55); box-shadow: 0 6px 14px -4px rgb(10 40 35 / .35); }
+.cf-feat .cf-arw:hover { box-shadow: 0 8px 18px -4px rgb(10 40 35 / .4); }
+/* the soft clouds drifting behind it in greens too (they were orange) */
+.cf-feat__flow i:nth-child(1) { background: #2A5F57; opacity: .45; }
+.cf-feat__flow i:nth-child(2) { background: #4A8C80; opacity: .45; }
+.cf-feat__flow i:nth-child(3) { background: #5C9C8F; opacity: .4; }
+.cf-feat__flow i:nth-child(4) { background: #2F675E; opacity: .4; }
+.cf-feat__flow i:nth-child(5) { background: #417F74; opacity: .4; }
+
+/* ---------- smoother scrolling (user 2026-11-24, "why am I experiencing lag when I scroll"): the Popular Courses clouds were four large
+   circles under blur(80px) that also scaled, so the browser re-blurred them every frame. They are now soft radial gradients (the same
+   look, no blur filter) that only move (no scale), on their own layer; they and the hero's dots pause while off screen (.is-off,
+   js/course-finder.js) ---------- */
+.cf-feat__flow i { filter: none; background-color: transparent; will-change: transform; }
+.cf-feat__flow i:nth-child(1) { background: radial-gradient(closest-side, rgb(42 95 87 / .45), rgb(42 95 87 / .22) 55%, transparent); opacity: 1; }
+.cf-feat__flow i:nth-child(2) { background: radial-gradient(closest-side, rgb(74 140 128 / .45), rgb(74 140 128 / .22) 55%, transparent); opacity: 1; }
+.cf-feat__flow i:nth-child(3) { background: radial-gradient(closest-side, rgb(92 156 143 / .4), rgb(92 156 143 / .2) 55%, transparent); opacity: 1; }
+.cf-feat__flow i:nth-child(4) { background: radial-gradient(closest-side, rgb(47 103 94 / .4), rgb(47 103 94 / .2) 55%, transparent); opacity: 1; }
+@keyframes cf-flow-1c { from { transform: translate(-6%, -4%); } to { transform: translate(34%, 14%); } }
+@keyframes cf-flow-2c { from { transform: translate(-18%, 6%); } to { transform: translate(20%, 18%); } }
+@keyframes cf-flow-3c { from { transform: translate(16%, 0); } to { transform: translate(-30%, -16%); } }
+@keyframes cf-flow-4c { from { transform: translate(0, 0); } to { transform: translate(-46%, -18%); } }
+.cf-sec.cf-feat.is-off .cf-feat__flow i, .cf-hero.is-off::before { animation-play-state: paused; }
+/* and no blended layers over the moving card: its film grain (soft-light over the whole card) made the browser re-blend the card on
+   every frame the clouds and the frame line moved; the 4% Qutub photo under it went with it (neither was visible on the green) */
+.cf-sec.cf-feat::before, .cf-sec.cf-feat::after { content: none; }
+/* the hero's dots stay still, as in the reference: moving them (background-position) repainted the whole hero every frame */
+.cf-hero::before { animation: none; }
+
+/* ---------- Our Popular Courses: the white jaali lattice faded out behind the heading and its text (user 2026-11-24, "remove the pattern
+   or reduce the opacity of the patterns in the text area"): the lattice moves off the card's own background onto a layer of its own,
+   masked to about a fifth of its strength on the text side and full strength under the course cards. Phones and tablets, where the
+   text sits above the cards, fade it from the top instead ---------- */
+.cf-sec.cf-feat { background: radial-gradient(75% 65% at 42% 58%, #3B7D73 0%, #367469 38%, #326F66 68%, #2C645B 100%); }
+.cf-sec.cf-feat::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; border-radius: inherit; opacity: 1;
+  background: url("../assets/img/patterns/bg-jaali-white.svg") 0 0 / 36px 36px repeat;
+  -webkit-mask: linear-gradient(90deg, rgb(0 0 0 / .18) 0%, rgb(0 0 0 / .18) 30%, #000 46%); mask: linear-gradient(90deg, rgb(0 0 0 / .18) 0%, rgb(0 0 0 / .18) 30%, #000 46%); }
+@media (max-width: 1100px) {
+  .cf-sec.cf-feat { background: radial-gradient(90% 60% at 45% 55%, #3B7D73 0%, #367469 38%, #326F66 68%, #2C645B 100%); }
+  .cf-sec.cf-feat::before { -webkit-mask: linear-gradient(180deg, rgb(0 0 0 / .18) 0%, rgb(0 0 0 / .18) 30%, #000 48%); mask: linear-gradient(180deg, rgb(0 0 0 / .18) 0%, rgb(0 0 0 / .18) 30%, #000 48%); }
+}
+/* the two faded copies of the monuments collage (brightened near-white, 14%) came out as light smudges on the green; removed */
+.cf-feat__cuts { display: none; }
+/* the lattice fully gone behind the text (user 2026-11-24: the faded version still sat under the end of the heading, since the text box
+   reaches 44% of the card's width and the lattice was back at full strength by 46%): none at all across the text, then it comes in
+   past it, behind the course cards (desktop: clear to 45%, full by 52%; tablets and phones, text above the cards: clear to 37% of the
+   height, full by 44%) */
+.cf-sec.cf-feat::before { -webkit-mask: linear-gradient(90deg, transparent 0%, transparent 45%, #000 52%); mask: linear-gradient(90deg, transparent 0%, transparent 45%, #000 52%); }
+@media (max-width: 1100px) { .cf-sec.cf-feat::before { -webkit-mask: linear-gradient(180deg, transparent 0%, transparent 37%, #000 44%); mask: linear-gradient(180deg, transparent 0%, transparent 37%, #000 44%); } }
+/* the lattice layer over the whole card: this pseudo-element used to hold the Qutub photo, sized as a tall strip on the left (height
+   100% with an aspect ratio, so about 300px wide); those sizes are undone so it covers the card and the fade above measures across it */
+.cf-sec.cf-feat::before { aspect-ratio: auto; width: auto; height: auto; inset: 0; }
+
+/* ---------- Our Popular Courses (user 2026-11-24, "bring the pattern back to the whole bg and add a same colour that matches the bg as an
+   oval behind the text"): the white jaali lattice over the whole card again (no fade), and behind the logo, heading and text a soft oval
+   in the card's own green at that spot, solid in the middle and feathered at the edge, so the lattice quietly disappears under the words
+   and comes back around them ---------- */
+.cf-sec.cf-feat::before { -webkit-mask: none; mask: none; }
+@media (max-width: 1100px) { .cf-sec.cf-feat::before { -webkit-mask: none; mask: none; } }
+.cf-feat__intro { isolation: isolate; }
+.cf-feat__intro::before { content: ""; position: absolute; z-index: -1; inset: -70px -90px; pointer-events: none;
+  background: radial-gradient(closest-side, #37766B 0%, #37766B 62%, rgb(55 118 107 / 0) 100%); }
+@media (max-width: 1100px) {
+  .cf-feat__intro::before { inset: -40px -40px; background: radial-gradient(closest-side, #336F66 0%, #336F66 62%, rgb(51 111 102 / 0) 100%); }
+}
+/* the oval centred on the words themselves (user 2026-11-24, "fix the position of the circle"): the intro box is ~520px wide but its
+   heading, the widest line, is ~390px, so an oval sized from the box sat ~65px too far right and the lattice showed by the logo and
+   the start of each line. Desktop: a 660 x 520 oval centred on the text's own middle (its left edge 130px before the text) */
+@media (min-width: 1101px) {
+  .cf-feat__intro::before { inset: auto; left: -130px; top: 50%; width: 660px; height: 520px; transform: translateY(-50%); }
+}
+/* the oval off the logo (user 2026-11-24, "it should not cover the logo"): centred on the heading and paragraph only, so the lattice
+   shows around the emblem again; wider and flatter (760 x 330), solid to 70% so the heading's corners stay clear (desktop). Phones and
+   tablets: it starts below the emblem too */
+@media (min-width: 1101px) {
+  .cf-feat__intro::before { left: -184px; top: 6px; width: 760px; height: 330px; transform: none;
+    background: radial-gradient(closest-side, #37766B 0%, #37766B 70%, rgb(55 118 107 / 0) 100%); }
+}
+@media (max-width: 1100px) {
+  .cf-feat__intro::before { inset: auto; left: -40px; right: -40px; top: 72px; bottom: -40px; }
+}
+/* the card's white lattice at half strength (user 2026-11-24, "reduce the opacity of the pattern as well") */
+.cf-sec.cf-feat::before { opacity: .5; }
+
+/* the homepage's chrome width (base.bundle.css :root, used by its header and footer, /css/footer-v6.css): the course finder never
+   defined it, so its copy of the homepage footer ran wider than the homepage's (user 2026-11-24, footer check) */
+:root { --chrome-w: 1500px; --chrome-cap: max(0px, calc((100vw - var(--chrome-w)) / 2)); --chrome-px: calc(var(--chrome-cap) + clamp(16px, 5.5vw, 40px)); }
+
+/* the hero drawing in maroon (user 2026-11-24): the batch card's #9D485B through the #cfMaroon duotone in index.html, a little more
+   contrast and strength so the lines read as maroon on the beige rather than a pale pink; still multiplied into the paper */
+.cf-hero__bg { filter: contrast(1.35) brightness(.96) url(#cfMaroon); opacity: .8; }
+
+/* the hero's ground in the peach from the review comment (user 2026-11-24, "use this color for course page hero section bg": #FCDDBC,
+   flat), in place of the beige paper gradient; the sticky bar's paper the same peach, so the two still read as one; the jaali lattice,
+   grain and the maroon drawing stay over it */
+.cf-hero { background: #FCDDBC; }
+.cf-bar::before, .cf-bar:not(.is-stuck)::before { background: #FCDDBC; }
+
+/* the search box and the three dropdowns white on the peach (user 2026-11-24, "use white for the search and the dropdowns"; they were
+   cream); a dropdown with a filter picked keeps its light orange (.is-on) so the active filter still shows */
+.cf-search input { background: #fff; }
+.cf-sel { --sel-fill: #fff; background: var(--sel-fill); }
+.cf-sel.is-on { --sel-fill: #FDE6D6; }
+/* the Popular Courses arrows in the other buttons' burnt orange outline again (user 2026-11-24, "use orange for the stroke of the button
+   rather than green, take a look at the other buttons"); the soft shadow stays a deep green so it sits on the card; hover fills orange */
+.cf-feat .cf-arw { border-color: rgb(194 65 12 / .55); }
+.cf-feat .cf-arw:hover { border-color: var(--cf-brand); }
+/* the hero line, now longer with the counts (user 2026-11-24), kept to two lines on the left, clear of the drawing on the right */
+.cf-hero .cf-lede { max-width: 640px; text-wrap: pretty; }
+/* hero spacing with the breadcrumb back (user 2026-11-24, "fix the spacing"): the 62px title is set solid (line-height 1), so its
+   ascenders all but touched the breadcrumb 14px above; 22px under the breadcrumb and 18px from the title to the line */
+.cf-hero .cf-crumbs { margin-bottom: 22px; }
+.cf-hero .cf-lede { margin-top: 18px; }
+/* the line closer under the title (user 2026-11-24, "reduce the spacing between the heading and the sub"): 18px to 8px */
+.cf-hero .cf-lede { margin-top: 8px; }
+
+/* ---------- review comment (user 2026-11-24): "let's take out texture from hero, and image on right" — the hero is the plain peach now:
+   no jaali lattice (::before), no grain (::after), no India Gate drawing (.cf-hero__bg); the sticky bar loses its grain too ---------- */
+.cf-hero::before, .cf-hero::after { content: none; }
+.cf-hero__bg { display: none; }
+.cf-bar::after, .cf-bar:not(.is-stuck)::after { content: none; }
+
+/* ---------- review comment: "too many borders, it should be like other cards' style" — the Our Popular Courses cards take the course
+   cards' own look: white with one thin beige border and no shadow (was paper texture, gradient edge and drop shadow), no inner rule
+   5px inside, no orange ring round the picture, the beige divider, and the outlined "View course" pill with the orange disc (was a
+   filled orange pill), hovering like the others ---------- */
+.cf-feat .cf-k__a { background: #fff; border: 1px solid #EADBC4; box-shadow: none; }
+.cf-feat .cf-k__a::before { content: none; }
+.cf-feat .cf-k__pic { box-shadow: none; }
+.cf-feat .cf-k__ft::before { border-top-color: #EADBC4; }
+.cf-feat .cf-k__go { background: #fff; color: var(--cf-brand); box-shadow: inset 0 0 0 1.5px rgb(194 65 12 / .45); }
+.cf-feat .cf-k__a:hover .cf-k__go { background: #fff; color: var(--cf-brand); box-shadow: inset 0 0 0 1.5px var(--cf-brand); }
+.cf-feat .cf-k__a:focus-visible .cf-k__go { box-shadow: 0 0 0 3px #fff, 0 0 0 5.5px var(--cf-hot); }
+.cf-feat .cf-k__go::before { background: rgb(194 65 12 / .08); }
+.cf-feat .cf-go__d { background: var(--cf-brand); color: #fff; }
+/* no underline on "Home" in the breadcrumb (user 2026-11-24); it darkens on hover instead */
+.cf-crumbs a, .cf-crumbs a:hover { text-decoration: none; }
+
+/* Our Popular Courses on a new lattice (user 2026-11-24, "lets try a pattern like this", a quatrefoil grid): assets/img/patterns/
+   lattice-white.svg, an original tile of four-petal flowers on a fine grid with round-cornered knots, 128px, white at 20% (was the
+   diamond jaali); the soft oval behind the heading still keeps the text clear */
+.cf-sec.cf-feat::before { background: url("../assets/img/patterns/lattice-white.svg") 0 0 / 128px 128px repeat; opacity: .2; }
+@media (max-width: 760px) { .cf-sec.cf-feat::before { background-size: 104px 104px; } }
+/* the lattice lighter (user 2026-11-24, "reduce the opacity and stroke weight of the pattern"): lines 1.5 to 1 in the tile, 20% to 14% */
+.cf-sec.cf-feat::before { opacity: .14; background-image: url("../assets/img/patterns/lattice-white.svg?v=2"); }
+/* the lattice redrawn to match the user's reference exactly (2026-11-24, "I need the exact design as the reference"): grid of pitch 40
+   with four-petal flowers on alternate crossings, the petals' tips formed by the rounded corners of the cells beside them; generated
+   by ~/Vajiram-ravi-worktrees/.tools/lattice_gen.py and checked by overlaying it on the reference (within ~1px). 160px tile = 40px grid,
+   thin 1.4px lines, white at 14% */
+.cf-sec.cf-feat::before { background-image: url("../assets/img/patterns/lattice-white.svg?v=3"); background-size: 160px 160px; opacity: .14; }
+@media (max-width: 760px) { .cf-sec.cf-feat::before { background-size: 128px 128px; } }
+/* no oval behind the Popular Courses heading and text (user 2026-11-24, "take out the circle"): the lattice is light enough now
+   (thin lines, 14%) to run under the words */
+.cf-feat__intro::before { content: none; }
+/* the oval back behind the Popular Courses heading and text, but softer (user 2026-11-24, "bring it back but reduce its opacity"): at
+   55% the lattice shows faintly through it instead of disappearing */
+.cf-feat__intro::before { content: ""; opacity: .55; }

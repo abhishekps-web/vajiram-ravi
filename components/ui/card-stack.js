@@ -1,7 +1,3 @@
-// Card stack for phones (760px and narrower), shared by Success stories (#tcar, stories.css) and Batches (#price, v49.css, end).
-// Used as: initCardStack(root, track, cardSelector). The root holds the track and the .tstack-nav (data-tstack=prev|cur|next).
-// Phones (760px and narrower): the cards form a stack (stories.css). Cards carry --p (0 = front, 1, 2 behind, the rest hidden);
-// the front card is swiped away (or the arrows are used) and goes to the back. Larger screens keep the loop and ignore all this.
 export default function initCardStack(tc, track, cardSel = '.pst') {
   const cards = [...track.querySelectorAll(cardSel + ':not([aria-hidden])')];
   const n = cards.length;
@@ -11,7 +7,7 @@ export default function initCardStack(tc, track, cardSel = '.pst') {
   let at = 0, busy = false;
 
   const paint = () => {
-    if (!mq.matches) {   // larger screens keep the loop: no stack state, and every card (not just the first) must take hover
+    if (!mq.matches) {
       cards.forEach(c => {
         ['--p', '--sg'].forEach(v => c.style.removeProperty(v));
         c.classList.remove('is-front', 'is-gone'); c.removeAttribute('inert');
@@ -28,30 +24,32 @@ export default function initCardStack(tc, track, cardSel = '.pst') {
     });
     if (cur) cur.textContent = at + 1;
   };
-  // dir 1 = next (the front card flies off), -1 = previous (the last card comes back to the front)
   const go = (dir, from) => {
     if (!mq.matches || busy) return;
     busy = true;
     const out = cards[at];
     at = (at + dir + n) % n;
     const fly = dir > 0 ? out : cards[at];
+    if (dir > 0) {
+      out.classList.remove('is-front'); out.setAttribute('inert', '');
+      cards[at].classList.add('is-front'); cards[at].removeAttribute('inert');
+    }
     fly.style.setProperty('--dir', dir > 0 ? (from || 1) : -1);
     fly.classList.add(dir > 0 ? 'is-out' : 'is-in');
     setTimeout(() => {
-      fly.classList.remove('is-out', 'is-in'); fly.style.removeProperty('--sdx'); fly.style.removeProperty('--srd'); busy = false;
+      fly.classList.remove('is-out', 'is-in'); fly.style.removeProperty('--sdx'); fly.style.removeProperty('--srd');
     }, 1500);
-    // next: the front card goes behind first, then the others rise; previous: the others step back first, then the card comes up
+    setTimeout(() => { busy = false; }, 160);
     if (dir > 0) setTimeout(paint, 480); else paint();
   };
   tc.querySelector('[data-tstack="next"]')?.addEventListener('click', () => go(1));
   tc.querySelector('[data-tstack="prev"]')?.addEventListener('click', () => go(-1));
 
-  // swipe the front card (horizontal drags only; vertical ones scroll the page)
-  let sx = 0, sy = 0, dx = 0, id = null, front = null, locked = false;
+  let sx = 0, sy = 0, st = 0, dx = 0, id = null, front = null, locked = false;
   tc.addEventListener('pointerdown', e => {
-    if (!mq.matches || busy || e.button) return;
+    if (!mq.matches || e.button) return;
     const c = e.target.closest(cardSel + '.is-front'); if (!c) return;
-    front = c; id = e.pointerId; sx = e.clientX; sy = e.clientY; dx = 0; locked = false;
+    front = c; id = e.pointerId; sx = e.clientX; sy = e.clientY; st = e.timeStamp; dx = 0; locked = false;
   });
   tc.addEventListener('pointermove', e => {
     if (!front || e.pointerId !== id) return;
@@ -70,7 +68,7 @@ export default function initCardStack(tc, track, cardSel = '.pst') {
     const c = front; front = null;
     c.classList.remove('is-drag');
     if (!locked) return;
-    if (Math.abs(dx) > 70) go(1, dx < 0 ? -1 : 1);
+    if (Math.abs(dx) > 70 || (Math.abs(dx) > 24 && Math.abs(dx) / Math.max(e.timeStamp - st, 1) > .5)) go(1, dx < 0 ? -1 : 1);
     else { c.style.removeProperty('--sdx'); c.style.removeProperty('--srd'); }
   };
   tc.addEventListener('pointerup', end);
@@ -78,7 +76,6 @@ export default function initCardStack(tc, track, cardSel = '.pst') {
   tc.addEventListener('keydown', e => {
     if (e.key === 'ArrowRight') go(1); else if (e.key === 'ArrowLeft') go(-1);
   });
-  // a swipe must not end in a click
   tc.addEventListener('click', e => { if (locked && Math.abs(dx) > 6) { e.preventDefault(); e.stopPropagation(); } }, true);
 
   mq.addEventListener?.('change', paint);

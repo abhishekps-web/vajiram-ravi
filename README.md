@@ -22,7 +22,7 @@ npm start          # serve the production build
 | `components/dialogs/` | The ranks and course-catalogue dialogs. |
 | `components/ui/` | Shared pieces: `SectionLabel`, `ArrowIcon`, `Dialog`, `Stylesheet`, the custom select, accordion and rails. |
 | `lib/` | `behaviour.js` (the order behaviours run in), `site.js` (helpers), `data/courses.js` (course catalogue), `motion/` (site-wide motion), `vendor/` (Lenis). |
-| `public/css/` | The stylesheets, served as-is: `v49.css` `@import`s the earlier layers (`v48` → … → `v25`); `intro.css`, `toppers.css`, `story.css` are section sheets. |
+| `public/css/` | The stylesheets, served as-is: `v49.css` `@import`s the earlier layers (`v48` → … → `v25`); `toppers.css` and the other section sheets. |
 | `public/assets/img/` | `brand/`, `icons/`, `patterns/`, `photos/`, `hero/`, `banners/`, `toppers/` by purpose. |
 
 See `CLAUDE.md` for the conventions (how a section is put together, why the CSS is not bundled, motion rules, tokens).

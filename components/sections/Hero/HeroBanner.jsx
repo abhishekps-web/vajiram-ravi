@@ -1,46 +1,14 @@
 import { Fragment } from 'react';
-import Button from '@/components/ui/Button/Button';
-import CarouselDots from '@/components/ui/CarouselDots/CarouselDots';
+import Button from '@/components/ui/Button';
+import CarouselDots from '@/components/ui/CarouselDots';
 import Stylesheet from '@/components/ui/Stylesheet';
 import SectionLabel from '@/components/ui/SectionLabel';
 import { $, reduce } from '@/lib/site';
-import CoverArt from '@/components/sections/Programmes/CoverArt';
-import { programmes } from '@/components/sections/Programmes/data/programmes';
-import { BATCHES } from '@/components/sections/Batches/Batches';
+import { CoverArt } from '@/components/sections/Programmes';
+import { programmes } from '@/components/sections/programmes-data';
+import { BATCHES } from '@/components/sections/Batches';
 
 const EXAM = 'UPSC CSE 2025';
-
-const TOPPER_SLIDES = [
-  {
-    rank: 1, name: 'Anuj Agnihotri', src: '/assets/img/hero-v6/slide-anuj-agnihotri.webp',
-    headline: ['Prepare for the UPSC with', 'the institute behind', 'India’s top rank-holders.'],
-    lead: 'Since 1976, Vajiram & Ravi has brought 50 years of Civil Services teaching experience to your preparation, with expert faculty, structured programmes, comprehensive study resources and flexible learning options.',
-  },
-  {
-    rank: 2, name: 'Rajeshwari Suve M', src: '/assets/img/hero-v6/slide-rajeshwari-suve-m.webp',
-    headline: ['Learn from the faculty', 'behind 36 of the top 50', 'in UPSC CSE 2025.'],
-    lead: 'Expert faculty and structured General Studies programmes take you through every stage of the exam, from Prelims and Mains to the interview.',
-  },
-  {
-    rank: 3, name: 'Akansh Dhull', src: '/assets/img/hero-v6/slide-akansh-dhull.webp',
-    headline: ['Prepare the way', 'this year’s top', 'rank-holders did.'],
-    lead: 'Test series, daily current affairs and mentorship, in the classroom or online, so your preparation fits the way you study.',
-  },
-];
-
-const TOPPER_EYEBROW = 'CSE 2025 results';
-const TOPPER_BTNS = [
-  { t: 'Explore programmes', href: '#courses' },
-  { t: 'Get expert guidance', href: '#contact' },
-];
-const RESULTS_URL = 'https://vajiramandravi.com/ias-selections-from-vajiram/';
-
-const PROGRAMME_COPY = {
-  gs: { name: 'UPSC GS foundation course – PCM', headline: ['Build your preparation', 'from the basics, with our', 'GS foundation course.'],
-    image: { src: '/assets/img/hero-v6/slide-gs-foundation.webp', pos: '80% 45%', mpos: '88% 40%' } },
-  prelims: { name: 'Prelims test series', headline: ['Get Prelims-ready', 'with tests set the way', 'the UPSC sets them.'] },
-  mentor: { name: 'Mentorship programme', headline: ['A personal mentor', 'beside you, from Prelims', 'to Mains.'] },
-};
 
 const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const MONTHS = MONTH_NAMES.map(m => m.slice(0, 3));
@@ -50,42 +18,48 @@ const NEXT_BATCH = BATCHES.find(b => b.hi) || [...BATCHES].sort(byDate)[0];
 const longDate = b => { const { day, month } = batchDay(b); return `${day} ${MONTH_NAMES[month]}`; };
 const shortName = b => (b.fam === 'gs' ? 'GS' : b.n);
 
-const ALL_SLIDES = {
-  ...Object.fromEntries(TOPPER_SLIDES.map(t => [`air-${t.rank}`, {
-    kind: 'topper', topper: t, headline: t.headline, lead: t.lead, eyebrow: TOPPER_EYEBROW, btns: TOPPER_BTNS, image: { src: t.src },
-  }])),
-  results: {
-    kind: 'results', eyebrow: TOPPER_EYEBROW,
+const GS_PROGRAMME = programmes.find(x => x.name === 'UPSC GS foundation course – PCM');
+const AIR_1 = { rank: 1, name: 'Anuj Agnihotri', src: '/assets/img/hero-v6/slide-anuj-agnihotri.webp' };
+const GUIDANCE = { t: 'Get expert guidance', href: '#contact' };
+
+const HERO = [
+  {
+    key: 'results', kind: 'results', eyebrow: 'CSE 2025 results',
     headline: ['36 of the top 50', 'in UPSC CSE 2025', 'prepared with us.'],
     lead: 'All ten of the top ten ranks, and AIR 1 in every UPSC result since 2016.',
-    btns: [{ t: 'See all results', href: RESULTS_URL, ext: true }, { t: 'Meet the toppers', href: '#toppers' }],
+    btns: [{ t: 'See all results', href: 'https://vajiramandravi.com/ias-selections-from-vajiram/', ext: true }, { t: 'Meet the toppers', href: '#toppers' }],
     image: { src: '/assets/img/hero-v6/slide-results.webp', pos: '60% 35%', mpos: '58% 30%' },
   },
-  ...Object.fromEntries(Object.entries(PROGRAMME_COPY).map(([key, c]) => {
-    const p = programmes.find(x => x.name === c.name);
-    return [key, {
-      kind: 'programme', programme: p, headline: c.headline, lead: p.line, eyebrow: `Programmes · ${p.category}`, image: c.image || null,
-      btns: [{ t: 'Enrol now', href: '#contact', prog: p.name }, { t: 'View course', href: p.href || '#courses', ext: !!p.href }],
-    }];
-  })),
-  batch: {
-    kind: 'batch', eyebrow: `Admissions open · ${NEXT_BATCH.tgt}`,
+  {
+    key: 'air-1', kind: 'topper', eyebrow: 'CSE 2025 results',
+    topper: AIR_1,
+    headline: ['Prepare for the UPSC with', 'the institute behind', 'India’s top rank-holders.'],
+    lead: 'Since 1976, Vajiram & Ravi has brought 50 years of Civil Services teaching experience to your preparation, with expert faculty, structured programmes, comprehensive study resources and flexible learning options.',
+    btns: [{ t: 'Explore programmes', href: '#courses' }, GUIDANCE],
+    image: { src: AIR_1.src },
+  },
+  {
+    key: 'gs', kind: 'programme', programme: GS_PROGRAMME, eyebrow: `Programmes · ${GS_PROGRAMME.category}`,
+    headline: ['Build your preparation', 'from the basics, with our', 'GS foundation course.'],
+    lead: GS_PROGRAMME.line,
+    btns: [{ t: 'Enrol now', href: '#contact', prog: GS_PROGRAMME.name }, { t: 'View course', href: GS_PROGRAMME.href || '#courses', ext: !!GS_PROGRAMME.href }],
+    image: { src: '/assets/img/hero-v6/slide-gs-foundation.webp', pos: '80% 45%', mpos: '88% 40%' },
+  },
+  {
+    key: 'batch', kind: 'batch', eyebrow: `Admissions open · ${NEXT_BATCH.tgt}`,
     headline: ['Admissions are open:', `the next ${shortName(NEXT_BATCH)} batch`, `starts ${longDate(NEXT_BATCH)}.`],
     lead: `${NEXT_BATCH.full}. ${NEXT_BATCH.what}`,
     btns: [{ t: 'Enrol now', href: '#contact', prog: NEXT_BATCH.full }, { t: 'See all batches', href: '#batches' }],
     image: { src: '/assets/img/hero-v6/slide-batch.webp', pos: '80% 60%', mpos: '96% 55%' },
   },
-  campus: {
-    kind: 'campus', eyebrow: 'Since 1976 · New Delhi',
+  {
+    key: 'campus', kind: 'campus', eyebrow: 'Since 1976 · New Delhi',
     headline: ['Five decades of', 'preparing India’s', 'civil servants.'],
     lead: 'Our Old Rajinder Nagar campus, at Gate 5 of Karol Bagh Metro, has taught generations of UPSC aspirants, in the classroom and LIVE-Online.',
-    btns: [{ t: 'Visit the campus', href: '#visit' }, { t: 'Get expert guidance', href: '#contact' }],
+    btns: [{ t: 'Visit the campus', href: '#visit' }, GUIDANCE],
     image: { src: '/assets/img/hero-v6/slide-campus.webp', pos: '0% 0%', mpos: '52% 20%', wide: true },
   },
-};
-
-const HERO_ORDER = ['results', 'air-1', 'gs', 'batch', 'campus'];
-const HERO = HERO_ORDER.map(key => ({ key, ...ALL_SLIDES[key] }));
+];
 const KIND_NAMES = { results: 'CSE 2025 results', batch: 'Upcoming batch', campus: 'Our campus' };
 const slideName = s => (s.topper ? `AIR ${s.topper.rank}: ${s.topper.name}` : s.programme?.name ?? KIND_NAMES[s.kind]);
 
@@ -180,7 +154,7 @@ function Controls() {
       <span className="hx__nav hx__nav--prev">
         <Button iconOnly size="sm" iconStart="arrow-left" label="Previous slide" className="dl__arrow dl__arrow--prev" />
       </span>
-      <CarouselDots as="p" id="dlProg" className="hx__dots" label="Choose a slide" labels={HERO.map(slideName)} />
+      <CarouselDots as="p" id="dlProg" tone="hero" className="hx__dots" label="Choose a slide" labels={HERO.map(slideName)} />
       <span className="hx__nav hx__nav--next">
         <Button iconOnly size="sm" iconStart="arrow" label="Next slide" className="dl__arrow dl__arrow--next" />
       </span>
@@ -191,15 +165,13 @@ function Controls() {
 export const FIRST_KIND = HERO[0].kind;
 
 export default function HeroBanner() {
-  const [first] = HERO;
-  const topper = (HERO.find(x => x.topper) || ALL_SLIDES['air-1']).topper;
   return (
     <>
       <Stylesheet href="/css/hero-banner.css" />
       <div className="dl__stick">
         <Slides />
-        <AirCard slide={topper} />
-        <Copy slide={first} />
+        <AirCard slide={AIR_1} />
+        <Copy slide={HERO[0]} />
       </div>
       <Controls />
     </>
@@ -232,6 +204,21 @@ export function initHeroCarousel() {
       back.onfinish = () => { out.cancel(); back.cancel(); };
     };
   };
+  const swapHeadline = change => {
+    let w = copyH.querySelector('.hx__w');
+    if (!w) { w = document.createElement('span'); w.className = 'hx__w'; w.style.display = 'block'; w.append(...copyH.childNodes); copyH.append(w); }
+    w.getAnimations().forEach(a => a.cancel());
+    const clip = on => Object.assign(copyH.style, on
+      ? { overflow: 'clip', overflowClipMargin: '24px', paddingBlock: '.12em', marginBlock: '-.12em' }
+      : { overflow: '', overflowClipMargin: '', paddingBlock: '', marginBlock: '' });
+    clip(true);
+    const out = w.animate([{ translate: '0 0' }, { translate: '0 -108%' }], { duration: 420, easing: 'cubic-bezier(.5, 0, .75, 0)', fill: 'forwards' });
+    out.onfinish = () => {
+      change();
+      const back = w.animate([{ translate: '0 108%' }, { translate: '0 0' }], { duration: 760, easing: 'cubic-bezier(.22, 1, .36, 1)', fill: 'forwards' });
+      back.onfinish = () => { out.cancel(); back.cancel(); clip(false); };
+    };
+  };
   // a button's label, link, the programme it picks in the contact form ([data-prog]) and whether it opens a new tab
   const setBtns = list => [...copyBtns.querySelectorAll('.btn')].forEach((b, i) => {
     const d = list[i]; if (!d) return;
@@ -244,7 +231,7 @@ export function initHeroCarousel() {
     const { eyebrow, lead, h, btns } = sl.dataset;
     if (eyebrow !== copyLbl.textContent) swapEl(copyLbl.closest('.lbl'), 0, () => { copyLbl.textContent = eyebrow; });
     const lines = JSON.parse(h);
-    swapEl(copyH, 0, () => copyH.querySelectorAll('.hx__line').forEach((s, i) => { s.textContent = lines[i] || ''; }));
+    swapHeadline(() => copyH.querySelectorAll('.hx__line').forEach((s, i) => { s.textContent = lines[i] || ''; }));
     swapEl(copyLead, 70, () => { copyLead.textContent = lead; });
     if (btns !== copyBtns.dataset.btns) { copyBtns.dataset.btns = btns; swapEl(copyBtns, 120, () => setBtns(JSON.parse(btns))); }
   };

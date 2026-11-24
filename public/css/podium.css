@@ -252,7 +252,7 @@
    the metal), drifting slowly left in an endless loop. One metal for all of them, an antique champagne, so gold, silver and bronze stay
    the podium's. js/diamond-reel.js copies the list once for the loop and sets the pace; it stops under the pointer, and off screen.
    ===================================================================================================================================== */
-.dr { --dw: clamp(132px, 12vw, 172px); --dh: calc(var(--dw) * 1.1547); margin: clamp(72px, 8vw, 112px) calc(var(--px) * -1) 0; }
+.dr { --dw: clamp(108px, 9vw, 132px); --dh: calc(var(--dw) * 1.1547); margin: clamp(72px, 8vw, 112px) calc(var(--px) * -1) 0; }
 .dr__h { display: flex; align-items: center; justify-content: center; gap: 16px; margin: 0 var(--px); font: 700 12.5px/1.2 var(--f); letter-spacing: .18em;
   text-transform: uppercase; color: rgba(255, 238, 214, .9); }
 .dr__h::before, .dr__h::after { content: ""; width: min(120px, 14vw); height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 220, 160, .7)); }
@@ -260,7 +260,7 @@
 .dr__view { position: relative; overflow: hidden; padding: calc(var(--dh) * .16) 0 8px; margin-top: 18px;
   -webkit-mask: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); mask: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); }
 .dr__track { display: flex; width: max-content; margin: 0; padding: 0; list-style: none; }
-.dr__item { flex: none; box-sizing: content-box; width: var(--dw); padding: 0 calc(var(--dw) * .18);   /* more room between them (user 2026-11-13); content-box, so the padding adds to the width */
+.dr__item { flex: none; box-sizing: content-box; width: var(--dw); padding: 0 calc(var(--dw) * .08);   /* tighter (user 2026-11-24, was .18); content-box, so the padding adds to the width */
    display: flex; flex-direction: column; align-items: center; text-align: center; }
 
 .dr__view:hover .dr__track, .dr.is-off .dr__track { animation-play-state: paused; }
@@ -293,7 +293,7 @@
   font: 600 10px/1.35 var(--f); letter-spacing: .08em; text-transform: uppercase; color: #FFF6EA; text-shadow: 0 1px 2px rgba(60, 14, 0, .55); }
 
 /* phones: a little smaller */
-@media (max-width: 640px) { .dr { --dw: 118px; } .dr__h { gap: 10px; font-size: 11px; letter-spacing: .12em; } .dr__h::before, .dr__h::after { width: 36px; } .dr__n { font-size: 27px; } .dr__name { font-size: 11.5px; } .dr__prog { font-size: 9px; } }
+@media (max-width: 640px) { .dr { --dw: 96px; } .dr__h { gap: 10px; font-size: 11px; letter-spacing: .12em; } .dr__h::before, .dr__h::after { width: 36px; } .dr__n { font-size: 27px; } .dr__name { font-size: 11.5px; } .dr__prog { font-size: 9px; } }
 /* reduced motion: it does not drift; it scrolls sideways by hand instead */
 @media (prefers-reduced-motion: reduce) {
   .dr__view { overflow-x: auto; scrollbar-width: thin; }
@@ -498,8 +498,8 @@ html #toppers.pd, html main #toppers.pd { box-shadow: none; border-radius: 0; }
 /* Toppers tightened (user 2026-11-21, "tighten the space of the toppers section"): less padding at the section's top and bottom, a closer
    reel under the heading and a closer "View all toppers" */
 html main #toppers.pd { padding-top: calc(var(--sec-y) * .7); padding-bottom: calc(var(--sec-y) * .7); }
-html #toppers .dr { margin-top: clamp(52px, 5vw, 72px); }
-html #toppers .dr__cta { margin-top: clamp(20px, 2vw, 28px); }
+html #toppers .dr { margin-top: var(--hd-gap); }
+html #toppers .dr__cta { margin-top: var(--hd-gap); }
 
 /* Toppers record, changing the person (user 2026-11-21, "more seamless"): the new portrait crossfades in over the old one (two stacked
    images, no blank gap), rising a little as it arrives while the old one sinks away, and the caption fades out and back in with it */
@@ -552,20 +552,23 @@ html #toppers .tp-row b { transition: color .4s var(--ease, ease); }
 html #toppers .tp-row .tp-badge { transition: background-color .4s var(--ease, ease), color .4s var(--ease, ease); }
 @media (prefers-reduced-motion: reduce) { html #toppers .tp-row, html #toppers .tp-row b, html #toppers .tp-row .tp-badge { transition: none; } }
 @media (max-width: 600px) {
-  html #toppers .tp-record { padding-inline: 0; margin-top: 4px; }
+  html #toppers .tp-record { padding-inline: 0; margin-top: var(--hd-gap); }
   html #toppers .tp-record > div { padding-inline: 8px; }
-  html #toppers .tp-frame { padding-inline: 12px; padding-top: 12px; margin-top: 4px; }
-  html #toppers .tp-frame::before { left: 4px; right: 4px; top: 54px; }
-  html #toppers .tp-frame::after { left: 0; right: 0; }
+  html #toppers .tp-frame { margin-top: 10px; padding-inline: 12px; padding-top: 8px; padding-bottom: 12px; }
+  html #toppers .tp-record > div > div:first-child { gap: 12px; }
+  html #toppers .tp-frame > div { margin-top: 16px; }
+  html #toppers .tp-row { padding-block: 8px; }
+  html #toppers .dr__cta { margin-top: 28px; }
+  html #toppers .tp-frame::before, html #toppers .tp-frame::after { display: none; }
 }
 @media (max-width: 900px) {
   html #toppers .tp-list { max-height: none; overflow: visible; -webkit-mask-image: none; mask-image: none; margin-left: 0; padding-inline: 0; }
 }
 .tp-more-wrap { display: none; }
 @media (max-width: 900px) {
-  html #toppers .tp-more-wrap { display: flex; justify-content: center; margin-top: 16px; }
+  html #toppers .tp-more-wrap { display: flex; justify-content: flex-start; margin-top: -12px; padding-left: 10px; }
   html #toppers .tp-more-wrap [hidden] { display: none; }
-  html #toppers .tp-list.is-clamped ul > li:nth-child(n+11) { display: none; }
+  html #toppers .tp-list.is-clamped ul > li:nth-child(n+6) { display: none; }
   html #toppers .tp-record .dr__h { scroll-margin-top: 96px; }
 }
 .dr__view.is-scroll { overflow-x: auto; overflow-y: hidden; scrollbar-width: none; overscroll-behavior-x: contain; touch-action: pan-x pan-y; -webkit-overflow-scrolling: touch; }
@@ -577,8 +580,7 @@ html #toppers .tp-row .tp-badge { transition: background-color .4s var(--ease, e
   .tp-sheet.is-open .tp-sheet__scrim { opacity: 1; }
   .tp-sheet__panel { position: absolute; left: 0; right: 0; bottom: 0; max-height: 88svh; overflow-y: auto; overscroll-behavior: contain; padding: 22px 20px calc(28px + env(safe-area-inset-bottom)); border-radius: 24px 24px 0 0; background: #FFF8EA; box-shadow: 0 -18px 48px -16px rgba(29, 23, 18, .4); transform: translateY(100%); transition: transform .4s var(--ease, cubic-bezier(.22, 1, .36, 1)); touch-action: pan-y; }
   .tp-sheet.is-open .tp-sheet__panel { transform: translateY(0); }
-  .tp-sheet__grab { position: absolute; top: 8px; left: 50%; width: 44px; height: 5px; margin-left: -22px; border-radius: 999px; background: rgba(120, 80, 40, .3); }
-  .tp-sheet__x { position: absolute; top: 14px; right: 14px; }
+  .tp-sheet__x { position: absolute; top: 12px; right: 12px; }
   .tp-sheet .tp-pane { display: flex; flex-direction: column; align-items: center; gap: 18px; padding-top: 20px; text-align: center; }
   .tp-sheet .tp-pane .dr__fig { margin: 18px 0 0; }
   .tp-sheet .tp-pane .tp-meta { display: flex; flex-direction: column; align-items: center; width: 100%; height: auto; }
@@ -590,3 +592,25 @@ html #toppers .tp-row .tp-badge { transition: background-color .4s var(--ease, e
 html .tp-sheet .dr__n { background-image: linear-gradient(180deg, #E0661F 0%, #C2410C 55%, #9A3412 100%); filter: none; }
 html .tp-sheet .dr__name { color: var(--ink, #1D1712); }
 html .tp-sheet .dr__prog { color: #6b5d50; text-shadow: none; }
+
+@media (max-width: 900px) {
+  .tp-prog { display: none; }
+  html #toppers .tp-row[aria-current] { background-color: transparent; }
+  html #toppers .tp-row[aria-current] b { color: var(--ink, #1D1712); }
+  html #toppers .tp-row[aria-current] .tp-badge { background: rgba(194, 65, 12, .1); color: var(--brand, #C2410C); }
+}
+@media (max-width: 600px) {
+  html #toppers .tp-frame .dr__h { margin-inline: 0; gap: 10px; }
+  html #toppers .tp-frame .dr__h::before, html #toppers .tp-frame .dr__h::after { width: auto; flex: 1 1 0; min-width: 16px; }
+}
+
+/* The year tabs above the reel title (user 2026-11-24, moved from the hidden record): pick a year, the reels show its rank holders */
+#toppers .dr__yrs { margin: 0 auto var(--hd-lbl); max-width: calc(100% - var(--px) * 2); }
+#toppers #drList > [hidden] { display: none; }
+
+/* Toppers spacing on the rhythm tokens (user 2026-11-24): title -> reel --hd-lbl, reel -> reel a tight row gap, reels -> button --hd-gap
+   (the reel's top padding is the room the portraits' heads rise into, its bottom 8px is counted into the button's gap) */
+#toppers .dr__h + #drList > [data-y] > .dr__view:first-child { margin-top: calc(var(--hd-lbl) - 8px); }
+#toppers #drList .dr__view + .dr__view { margin-top: 4px; }
+html #toppers .dr__cta { margin-top: calc(var(--hd-gap) - 8px); }
+html #toppers .dr { margin-top: var(--hd-lbl); }

@@ -6,8 +6,8 @@
 export default function init() {
   'use strict';
   var root = document.documentElement;
-  if (!document.querySelector('.vrv') || !root.classList.contains('vrv-lock')) return;
-  var behind = [].filter.call(document.body.children, function (n) { return !n.classList.contains('vrv') && !n.inert; });
+  if (!document.getElementById('intro') || !root.classList.contains('vrv-lock')) return;
+  var behind = [].filter.call(document.body.children, function (n) { return n.id !== 'intro' && !n.inert; });
   behind.forEach(function (n) { n.inert = true; });
   document.addEventListener('vr:intro-done', function () { behind.forEach(function (n) { n.inert = false; }); }, { once: true });
 }

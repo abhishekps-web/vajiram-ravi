@@ -1,7 +1,7 @@
 /* =====================================================================================================================
    BUTTONS: the site's one button system (single source of truth)
-   Markup:    components/ui/Button/Button.jsx (<Button>) and buttonHTML() in components/ui/Button/button-core.js
-   Reference: components/ui/Button/README.md (variants, sizes, states, props)
+   Markup:    components/ui/Button.tsx (<Button> and buttonHTML(), one file)
+   Reference: components/ui/Button.tsx
 
    Built from the audit of the existing buttons (2026-11-13): the brand CTA (gradient pill + round arrow disc + rolling
    label), the white pill for dark/photo/orange grounds, the ink pill (Closing, Why), the brand outline (Visit, Toppers),
@@ -223,6 +223,10 @@
 .btn.btn--icon, .btn.btn--icon.btn--on-dark { --btn-bg-hover: var(--brand); --btn-fg-hover: #fff; --btn-edge-hover: inset 0 0 0 1.5px var(--brand); }
 /* ...and rests on a white fill (user 2026-11-16), the icon in the brand colour, on light and dark grounds alike */
 .btn.btn--icon, .btn.btn--icon.btn--on-dark { --btn-bg: #fff; --btn-fg: var(--brand); --btn-edge: inset 0 0 0 1.5px rgba(194, 65, 12, .3); }
+/* GHOST icon-only: the bare icon (no disc, no edge), muted ink, a soft tint and ink on hover (quiet close and toolbar icons) */
+.btn.btn--ghost.btn--icon, .btn.btn--ghost.btn--icon.btn--on-dark { --btn-bg: transparent; --btn-fg: rgba(29, 23, 18, .55); --btn-edge: inset 0 0 0 0 transparent;
+  --btn-bg-hover: rgba(29, 23, 18, .08); --btn-fg-hover: var(--ink); --btn-edge-hover: inset 0 0 0 0 transparent; }
+.btn.btn--ghost.btn--icon.btn--on-dark { --btn-fg: rgba(255, 255, 255, .7); --btn-bg-hover: rgba(255, 255, 255, .14); --btn-fg-hover: #fff; }
 /* PRIMARY icon-only (user 2026-11-21: the hero's previous / next): the brand fill and a white icon, no edge at rest; hover deepens to
    --brand-d with a soft white edge */
 .btn.btn--primary.btn--icon, .btn.btn--primary.btn--icon.btn--on-dark { --btn-bg: var(--brand); --btn-fg: #fff; --btn-edge: inset 0 0 0 0 transparent;

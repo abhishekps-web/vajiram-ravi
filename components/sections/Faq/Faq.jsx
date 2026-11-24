@@ -1,21 +1,22 @@
-import Button from '@/components/ui/Button/Button';
+import Button from '@/components/ui/Button';
+import SectionWrapper from '@/components/ui/section_wrapper';
 import { FAQS } from './data';
 // ============ FAQ ============
 // The questions are server-rendered from data.js (user 2026-11-16: "make FAQ server-rendered"; faq.js built them in the browser before).
 // One answer open at a time and the open/close motion: components/ui/accordion.js.
 export default function Faq() {
   return (
-    <section className="sheet sheet--pad sheet--gap faq" id="faq" aria-labelledby="faqH">
+    <SectionWrapper id="faq" labelledBy="faqH" compact className="sheet sheet--pad sheet--gap faq">
       <div className="faq__l">
-        <h2 id="faqH" className="h2 h2--sec rv" style={{ "--d": ".12s" }}>Frequently asked questions</h2>
+        <h2 id="faqH" className="h2 h2--sec rv cu:mt-0!" style={{ "--d": ".12s" }}>Frequently asked questions</h2>
         <p className="intro rv" style={{ "--d": ".2s" }}>Still unsure? A counsellor can help, with no pressure to enrol.</p>
         <div className="rv-btn rv" style={{ "--d": ".28s" }}>
           <Button href="#contact" iconEnd="arrow">Talk to a counsellor</Button>
         </div>
       </div>
       <div className="qas" id="faqList">
-        {FAQS.map(([q, a], i) => (
-          <details key={q} className="qa" open={i === 0}>
+        {FAQS.map(([q, a]) => (
+          <details key={q} className="qa">
             <summary>
               {q}
               <svg className="qa__ic" width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true">
@@ -26,6 +27,6 @@ export default function Faq() {
           </details>
         ))}
       </div>
-    </section>
+    </SectionWrapper>
   );
 }
