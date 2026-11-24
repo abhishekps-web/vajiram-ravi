@@ -2054,3 +2054,39 @@ main.cf, html.foot-curtain main.cf { background: linear-gradient(90deg, rgba(255
 .cf-hero .cf-lede { margin-top: 18px; }
 /* the line closer under the title (user 2026-11-24, "reduce the spacing between the heading and the sub"): 18px to 8px */
 .cf-hero .cf-lede { margin-top: 8px; }
+
+/* ---------- review comment (user 2026-11-24): "let's take out texture from hero, and image on right" — the hero is the plain peach now:
+   no jaali lattice (::before), no grain (::after), no India Gate drawing (.cf-hero__bg); the sticky bar loses its grain too ---------- */
+.cf-hero::before, .cf-hero::after { content: none; }
+.cf-hero__bg { display: none; }
+.cf-bar::after, .cf-bar:not(.is-stuck)::after { content: none; }
+
+/* ---------- review comment: "too many borders, it should be like other cards' style" — the Our Popular Courses cards take the course
+   cards' own look: white with one thin beige border and no shadow (was paper texture, gradient edge and drop shadow), no inner rule
+   5px inside, no orange ring round the picture, the beige divider, and the outlined "View course" pill with the orange disc (was a
+   filled orange pill), hovering like the others ---------- */
+.cf-feat .cf-k__a { background: #fff; border: 1px solid #EADBC4; box-shadow: none; }
+.cf-feat .cf-k__a::before { content: none; }
+.cf-feat .cf-k__pic { box-shadow: none; }
+.cf-feat .cf-k__ft::before { border-top-color: #EADBC4; }
+.cf-feat .cf-k__go { background: #fff; color: var(--cf-brand); box-shadow: inset 0 0 0 1.5px rgb(194 65 12 / .45); }
+.cf-feat .cf-k__a:hover .cf-k__go { background: #fff; color: var(--cf-brand); box-shadow: inset 0 0 0 1.5px var(--cf-brand); }
+.cf-feat .cf-k__a:focus-visible .cf-k__go { box-shadow: 0 0 0 3px #fff, 0 0 0 5.5px var(--cf-hot); }
+.cf-feat .cf-k__go::before { background: rgb(194 65 12 / .08); }
+.cf-feat .cf-go__d { background: var(--cf-brand); color: #fff; }
+/* no underline on "Home" in the breadcrumb (user 2026-11-24); it darkens on hover instead */
+.cf-crumbs a, .cf-crumbs a:hover { text-decoration: none; }
+
+/* Our Popular Courses on a new lattice (user 2026-11-24, "lets try a pattern like this", a quatrefoil grid): assets/img/patterns/
+   lattice-white.svg, an original tile of four-petal flowers on a fine grid with round-cornered knots, 128px, white at 20% (was the
+   diamond jaali); the soft oval behind the heading still keeps the text clear */
+.cf-sec.cf-feat::before { background: url("../assets/img/patterns/lattice-white.svg") 0 0 / 128px 128px repeat; opacity: .2; }
+@media (max-width: 760px) { .cf-sec.cf-feat::before { background-size: 104px 104px; } }
+/* the lattice lighter (user 2026-11-24, "reduce the opacity and stroke weight of the pattern"): lines 1.5 to 1 in the tile, 20% to 14% */
+.cf-sec.cf-feat::before { opacity: .14; background-image: url("../assets/img/patterns/lattice-white.svg?v=2"); }
+/* the lattice redrawn to match the user's reference exactly (2026-11-24, "I need the exact design as the reference"): grid of pitch 40
+   with four-petal flowers on alternate crossings, the petals' tips formed by the rounded corners of the cells beside them; generated
+   by ~/Vajiram-ravi-worktrees/.tools/lattice_gen.py and checked by overlaying it on the reference (within ~1px). 160px tile = 40px grid,
+   thin 1.4px lines, white at 14% */
+.cf-sec.cf-feat::before { background-image: url("../assets/img/patterns/lattice-white.svg?v=3"); background-size: 160px 160px; opacity: .14; }
+@media (max-width: 760px) { .cf-sec.cf-feat::before { background-size: 128px 128px; } }
