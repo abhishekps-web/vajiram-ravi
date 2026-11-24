@@ -2048,3 +2048,7 @@ main.cf, html.foot-curtain main.cf { background: linear-gradient(90deg, rgba(255
 .cf-feat .cf-arw:hover { border-color: var(--cf-brand); }
 /* the hero line, now longer with the counts (user 2026-11-24), kept to two lines on the left, clear of the drawing on the right */
 .cf-hero .cf-lede { max-width: 640px; text-wrap: pretty; }
+/* hero spacing with the breadcrumb back (user 2026-11-24, "fix the spacing"): the 62px title is set solid (line-height 1), so its
+   ascenders all but touched the breadcrumb 14px above; 22px under the breadcrumb and 18px from the title to the line */
+.cf-hero .cf-crumbs { margin-bottom: 22px; }
+.cf-hero .cf-lede { margin-top: 18px; }
