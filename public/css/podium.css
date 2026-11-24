@@ -614,4 +614,3 @@ html .tp-sheet .dr__prog { color: #6b5d50; text-shadow: none; }
 #toppers #drList .dr__view + .dr__view { margin-top: 4px; }
 html #toppers .dr__cta { margin-top: calc(var(--hd-gap) - 8px); }
 html #toppers .dr { margin-top: var(--hd-lbl); }
-html #toppers .pd__h { line-height: 1.02; }
