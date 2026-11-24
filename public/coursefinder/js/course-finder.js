@@ -739,7 +739,14 @@
         // on tablets and phones the rail floats at the screen's edge (user 2026-11-19, "bring the same line indicator in mobile as
         // well"), shown only while the course list is what's being read
         const lr = list.getBoundingClientRect(), mid = innerHeight / 2;
-        rail.classList.toggle('is-shown', lr.top < mid && lr.bottom > mid);
+        // the rail ends with the last category shown (user 2026-11-24, "the category rail should stop with the last category, at the line,
+        // and from there scroll with the parent"): on desktop its track (absolute in the list) stops at that section's bottom line, so the
+        // sticky lines halt there and scroll away with the page instead of riding over the counsellor banner below; on tablets and
+        // phones it hides once that line has passed the middle of the screen
+        const last = [...secs].reverse().find(x => !x.s.hidden), endY = last ? last.s.getBoundingClientRect().bottom : lr.bottom;
+        const cut = `${Math.max(0, Math.round(lr.bottom - endY))}px`;
+        if (rail.style.bottom !== cut) rail.style.bottom = cut;
+        rail.classList.toggle('is-shown', lr.top < mid && endY > mid);
         if (!rail.classList.contains('is-shown')) open(false);
       };
       // (openedAt: a tap fires focus, which opens the list, and then click; the click must not close it again straight away)

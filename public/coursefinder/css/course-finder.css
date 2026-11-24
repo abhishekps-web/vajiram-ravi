@@ -2022,3 +2022,7 @@ main.cf, html.foot-curtain main.cf { background: linear-gradient(90deg, rgba(255
 }
 /* the card's white lattice at half strength (user 2026-11-24, "reduce the opacity of the pattern as well") */
 .cf-sec.cf-feat::before { opacity: .5; }
+
+/* the homepage's chrome width (base.bundle.css :root, used by its header and footer, /css/footer-v6.css): the course finder never
+   defined it, so its copy of the homepage footer ran wider than the homepage's (user 2026-11-24, footer check) */
+:root { --chrome-w: 1500px; --chrome-cap: max(0px, calc((100vw - var(--chrome-w)) / 2)); --chrome-px: calc(var(--chrome-cap) + clamp(16px, 5.5vw, 40px)); }

@@ -137,7 +137,8 @@ html.foot-curtain .vf::after { content: ""; position: absolute; inset: 0px; z-in
 @media (max-width: 760px) { .vf .vf__tagline > span { display: block; } }
 html.foot-curtain .vf.vf--zooming > .vf__in, html.foot-curtain .vf.vf--zooming > .foot__frame { will-change: transform; }
 @media (min-width: 761px) { .vf .vf__in { padding-bottom: 52px; } }
-@media (min-width: 761px) { .vf .vf__tagline { display: none; } }
+/* (the tagline was hidden on desktop here; the homepage footer now shows it at the right of the logo row, so the course finder does
+   too: user 2026-11-24, "this text is missing in the footer") */
 .vf .vf__legal p, .vf .vf__legal a, .vf .vf__legal nav > span { font-size: 15px; line-height: 20px; }
 .vf .vf__legal nav > span { font-weight: 500; }
 @keyframes vfPulse { 50% { opacity: 0.35; scale: 0.8; } }
