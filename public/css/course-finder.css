@@ -20,7 +20,8 @@
 .course-page { --cf-bar-h: 64px; --cf-top: calc(var(--hdr-h, 68px) + 24px); }   /* the floating header pill ends about 8px below --hdr-h: the bar sits clear of it */
 .cf-bar-sentinel { height: 1px; margin-bottom: -1px; pointer-events: none; }
 .cf-bar { position: sticky; z-index: 20; top: var(--cf-top); padding: 0 var(--px); box-sizing: border-box; background: #FFFAF3; border-bottom: 1px solid rgba(122, 42, 10, .1); }
-.cf-bar { --stick: 0; box-shadow: 0 10px 24px -18px rgba(60, 25, 5, calc(.35 * var(--stick))); }   /* the shadow follows the scroll too, like the cover */
+.course-page { --stick: 0; }   /* 0 to 1 as the filter bar reaches the header (set by the component while scrolling) */
+.cf-bar { box-shadow: 0 10px 24px -18px rgba(60, 25, 5, calc(.35 * var(--stick))); }   /* the shadow follows the scroll too, like the cover */
 .cf-bar::before { content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: calc(var(--cf-top) + 48px); background: #FFFAF3; pointer-events: none; opacity: var(--stick);
   -webkit-mask: linear-gradient(180deg, transparent, #000 48px); mask: linear-gradient(180deg, transparent, #000 48px); }   /* the bar's colour runs up behind the header, filling in with the scroll, its feathered top edge kept off screen: nothing scrolls past in the gaps */
 .cf-bar__in { display: flex; align-items: center; gap: 12px 20px; min-height: var(--cf-bar-h); }
@@ -177,6 +178,8 @@
 }
 
 @media (max-width: 1180px) { .cf-cols { gap: 40px; grid-template-columns: minmax(0, 1fr) 280px; } }
+.cf-rail__dots { display: none; }
+.cf-rail .cf-card { animation: none; }
 @media (max-width: 1023px) {
   .cf-cols { grid-template-columns: minmax(0, 1fr); gap: 0; padding-top: 0; }
   /* the category pills: a second sticky row under the filter bar; the row runs off the screen edge so it reads as scrollable */
@@ -189,7 +192,8 @@
   .cf-topic[aria-current="true"] { background: var(--brand); color: #fff; box-shadow: none; }
   .cf-topic[aria-current="true"] b { color: #fff; }
   .cf-group { scroll-margin-top: calc(var(--cf-top) + var(--cf-bar-h) + 70px); }
-  .cf-bar { border-bottom: 0; }
+  .cf-bar { border-bottom: 0; box-shadow: none; }
+  .cf-side { box-shadow: 0 10px 24px -18px rgba(60, 25, 5, calc(.35 * var(--stick))); }
 }
 @media (max-width: 860px) { .cf-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; } .cf-card__t { font-size: 16px; } .cf-path { padding: 28px; } }
 @media (max-width: 760px) {
@@ -220,3 +224,11 @@ body:has(.course-page) .nav-band { background: #FCDDBC; }
 /* paper grain (the reference page's filter-bar texture) over the hero and the band behind the nav, so the two stay one surface */
 body:has(.course-page) .nav-band::before, .cf-hero::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: url(/assets/img/patterns/grain.png); background-size: 220px; mix-blend-mode: soft-light; opacity: .18; }
 body:has(.course-page) .nav-band { isolation: isolate; }
+
+/* phones: each category's cards are a swipe row, the next card peeking in, with dots under it */
+@media (max-width: 560px) {
+  .cf-rail .cf-grid { display: grid; grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 86%; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin-inline: calc(var(--px) * -1); padding: 4px var(--px) 12px; scroll-padding-inline: var(--px); overscroll-behavior-x: contain; }
+  .cf-rail .cf-grid::-webkit-scrollbar { display: none; }
+  .cf-rail .cf-card { scroll-snap-align: start; }
+  .cf-rail__dots { display: flex; justify-content: center; margin-top: 6px; }
+}

@@ -137,6 +137,38 @@ function Card({ it, now }) {
   );
 }
 
+/* A category's cards: a grid, and on phones a sideways swipe row with its own dot indicator (at most 7 dots; a long category maps onto them). */
+function CardRail({ items, now }) {
+  const tr = useRef(null);
+  const [pos, setPos] = useState({ i: 0 });
+  const n = items.length;
+  const dots = Math.min(n, 7);
+  const upd = () => {
+    const el = tr.current;
+    if (!el) return;
+    const kids = el.children, step = kids.length > 1 ? kids[1].offsetLeft - kids[0].offsetLeft : el.clientWidth;
+    const max = el.scrollWidth - el.clientWidth;
+    const card = el.scrollLeft >= max - 2 ? n - 1 : Math.min(n - 1, Math.max(0, Math.round(el.scrollLeft / (step || 1))));
+    setPos({ i: n > 1 ? Math.round(card / (n - 1) * (dots - 1)) : 0 });
+  };
+  const go = d => {
+    const el = tr.current;
+    if (!el || n < 2) return;
+    const kids = el.children, step = kids[1].offsetLeft - kids[0].offsetLeft;
+    const card = Math.round(d / (dots - 1) * (n - 1));
+    el.scrollTo({ left: card * step, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  };
+  useEffect(() => { if (tr.current) tr.current.scrollLeft = 0; upd(); }, [n]);
+  return (
+    <div className="cf-rail">
+      <div className="cf-grid" ref={tr} onScroll={upd}>
+        {items.map(it => <Card key={it.id} it={it} now={now} />)}
+      </div>
+      {dots > 1 && <div className="cf-rail__dots"><CarouselDots tone="light" label="Scroll courses" labels={Array.from({ length: dots }, (_, k) => `Show courses, position ${k + 1} of ${dots}`)} active={pos.i} onSelect={go} /></div>}
+    </div>
+  );
+}
+
 export default function CourseFinder() {
   const [mode, setMode] = useState('all');
   const [medium, setMedium] = useState('all');
@@ -242,12 +274,13 @@ export default function CourseFinder() {
     if (!el) return;
     const top = parseFloat(getComputedStyle(el).getPropertyValue('--cf-top')) || 92;
     const bar = el.nextElementSibling;
+    const page = el.closest('.course-page') || bar;   // --stick lives on the page wrapper: the filter bar's cover and the pills row's shadow both read it
     const ramp = 140;   // the cream behind the header fills in over this much scroll, so it follows the finger instead of fading on a timer
     let raf = 0;
     const tick = () => {
       raf = 0;
       const d = el.getBoundingClientRect().top - top;
-      bar?.style.setProperty('--stick', Math.min(1, Math.max(0, 1 - d / ramp)).toFixed(3));
+      page?.style.setProperty('--stick', Math.min(1, Math.max(0, 1 - d / ramp)).toFixed(3));
       bar?.toggleAttribute('data-stuck', d <= 0);   // set on the node, not in React state: a re-render of the 100 cards at the moment of sticking is what made it catch
     };
     const on = () => { if (!raf) raf = requestAnimationFrame(tick); };
@@ -333,11 +366,7 @@ export default function CourseFinder() {
                   <h2 id={`cfg-${g.id}`} className="cf-group__t">{g.label}</h2>
                   <p className="cf-group__sub">{g.sub}</p>
                 </header>
-                <div className="cf-grid">
-                  {g.items.map(it => (
-                    <Card key={it.id} it={it} now={now} />
-                  ))}
-                </div>
+                <CardRail items={g.items} now={now} />
               </section>
             ))}
             {groups.length === 0 && <p className="cf-none">No courses match your search or filters. <button type="button" className="cf-clear" onClick={clearAll}>Clear filters</button></p>}
