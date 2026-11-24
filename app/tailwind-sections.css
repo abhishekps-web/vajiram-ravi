@@ -24,6 +24,13 @@
 @source "../components/sections/ToppersRecord.jsx";
 @source "../components/sections/TalkToUs.jsx";
 @source "../components/sections/Stories.jsx";
+@source "../components/layout/Footer/Footer.jsx";
+
+/* the footer curtain (Footer.jsx initFooterCurtain sets html.foot-curtain, --foot-off, --foot-p and footer[data-zooming]): parked under
+   the page and zoomed in as it is uncovered, wider than phones only; the zoom never under reduced motion */
+@custom-variant curtain { @media (min-width: 761px) { html.foot-curtain & { @slot; } } }
+@custom-variant curtain-zoom { @media (min-width: 761px) and (prefers-reduced-motion: no-preference) { html.foot-curtain & { @slot; } } }
+@custom-variant foot-zooming { @media (min-width: 761px) { html.foot-curtain footer[data-zooming] > & { @slot; } } }
 
 @property --fs { syntax: '<percentage>'; inherits: true; initial-value: 120%; }
 @property --fb { syntax: '<percentage>'; inherits: true; initial-value: 120%; }
@@ -190,6 +197,8 @@ html.js #stories:not([data-in]) > .lbl { opacity: 0; }
   --color-orange: #e57512;
   --color-clay: #6b4a3a;
   --color-charcoal: #1a1a1a;
+  --color-taupe: #6e655c;
+  --color-espresso: #1a1714;
 
   --font-sans: var(--f, "Mukta"), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   --font-heading: "Mukta", ui-sans-serif, system-ui, "Segoe UI", Arial, sans-serif;

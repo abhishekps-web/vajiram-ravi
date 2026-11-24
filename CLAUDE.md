@@ -19,7 +19,7 @@ components/
   layout/                 site chrome
     NavigationBar/        the site header: NavigationBar.jsx only (user 2026-11-20: one file, Tailwind `cu:` utilities via
                           app/tailwind-sections.css, no comments): markup, menu data, mega menus, drawer, More menu, language switch
-    Footer/               Footer.jsx (Kevin's footer, user 2026-11-16; styles public/css/footer-v6.css): one file, user 2026-11-17: the logo row (with the socials), the link
+    Footer/               Footer.jsx (Kevin's footer, user 2026-11-16; Tailwind `cu:` utilities via app/tailwind-sections.css since 2026-11-24, which also holds its curtain variants): one file, user 2026-11-17: the logo row (with the socials), the link
                           columns and the legal bar (no giant debossed name, user 2026-11-21) (no news, user 2026-11-20; the logo, emblem + wordmark, back at the top since user 2026-11-21), the markup and initFooterCurtain (the curtain behaviour)
     Intro/                Intro.jsx (server-rendered overlay), intro.js (plays and lifts it)
     WhatsAppButton/       WhatsAppButton.jsx
@@ -132,7 +132,7 @@ The client wants **every section and every element animated**. For any change to
   stats fit the first screen from 1024x650 and 390x844 up.
 - Contact us (`#visit`) and the footer are Kevin's too (user 2026-11-16). Contact us (user 2026-11-17) is `ContactUs/ContactUs.jsx`,
   Tailwind with `cu:` utilities (the shared entry `app/tailwind-sections.css`; the folder holds only the .jsx): one card holding the 2:1 map (no "View on maps"), the address (title font), phone,
-  email (Lucide `phone` / `mail` glyphs, inline SVG) on the left and a static campus photo on the right, no shadow; its id stays `visit` for the shared shell rules; the cream footer `Footer.jsx` + `public/css/footer-v6.css` (its text is in Mukta, the body font; its tagline in Newsreader as in the preloader; while it zooms in, `.vf--zooming` makes its content one layer so the social icons do not jump).
+  email (Lucide `phone` / `mail` glyphs, inline SVG) on the left and a static campus photo on the right, no shadow; its id stays `visit` for the shared shell rules; the cream footer `Footer.jsx` (Tailwind `cu:`, its text is in Mukta, the body font; its tagline in Newsreader as in the preloader; while it zooms in, `footer[data-zooming]` makes its content one layer so the social icons do not jump).
 
 - The Toppers section (`#toppers`, `Toppers/Toppers.jsx`, styles `public/css/podium.css`): heading, the drifting reel (`diamond-reel.js`; drag, swipe, or a
   two-finger sideways trackpad swipe moves it) starting at AIR 1 (no podium for the top three, user 2026-11-21), then "The full record, year by year" (`ToppersRecord`, refined 2026-11-21: a frosted

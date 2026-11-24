@@ -835,24 +835,6 @@ html.vrv-lock .wa { opacity: 0; pointer-events: none; }
 /* FAQ: a readable width (about 70 characters of answer text per line), centred */
 
 /* ===== merged 2026-11-10: the rules below came after the teammate's block above and take precedence where they overlap ===== */
-/* ---- Footer ornament border (Figma 2164:5557): an outer gold rule 24px in (1.2px), an inner one 6px further in (0.6px), and an 18px gold
-   diamond on each outer corner. Built in CSS rather than the 1440 x 520 SVG so it fits any footer height without squashing the diamonds.
-   The span's box is the diamonds' bounds (15px in); ::before is the double rule. Sits above the wash (::before, z -1) and under the content. ---- */
-.foot__frame { position: absolute; inset: 15px; z-index: -1; pointer-events: none;
-  background: url(/assets/img/patterns/foot-diamond.svg) no-repeat 0 0 / 18px, url(/assets/img/patterns/foot-diamond.svg) no-repeat 100% 0 / 18px,
-              url(/assets/img/patterns/foot-diamond.svg) no-repeat 0 100% / 18px, url(/assets/img/patterns/foot-diamond.svg) no-repeat 100% 100% / 18px; }
-.foot__frame::before { content: ""; position: absolute; inset: 9px; border: 1.2px solid #D9A441; outline: .6px solid #D9A441; outline-offset: -6.6px; }
-/* content clears the inner rule (30px in) */
-.foot .foot__bot { margin-left: 0; margin-right: 0; padding: 18px 0 44px; }   /* divider stays inside the frame; the row clears the bottom rules */
-.foot .foot__word { margin-top: 8px; }   /* gives back the bottom bar's extra room, so the footer still fits the screen (the curtain needs that) */
-@media (max-width: 640px) {
-  .foot__frame { inset: 4px; }
-  footer.foot { padding-left: 30px; padding-right: 30px; }
-}
-/* reveal (js/page-motion.js adds .fb-anim, then .is-in when the footer shows): the frame settles in from a touch larger, diamonds turn in */
-.foot__frame.fb-anim { opacity: 0; transform: scale(1.012); transition: opacity .9s var(--ease), transform 1.1s var(--ease); }
-.foot__frame.fb-anim.is-in { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) { .foot__frame.fb-anim { opacity: 1; transform: none; transition: none; } }
 
 /* footer social icons: the old hover (v25 .socials a:hover img { filter: none }) animated the white icon's filter from brightness(0) invert(1)
    to none, which passes through a dark grey mid-way (a flash). Now the icon stays white and the hover is a clear one: the disc fills white,
@@ -1768,8 +1750,6 @@ footer.foot .foot__logo--mark:focus-visible { outline: 2px solid #fff; outline-o
 }
 .dl__frame { padding-left: calc(var(--cap) + 20px); padding-right: calc(var(--cap) + 20px); }
 footer.foot { padding-left: calc(var(--chrome-cap) + 40px); padding-right: calc(var(--chrome-cap) + 40px); }
-.foot__frame { left: calc(var(--chrome-cap) + 15px); right: calc(var(--chrome-cap) + 15px); }
-@media (max-width: 640px) { .foot__frame { left: 4px; right: 4px; } }
 @media (max-width: 640px) { footer.foot { padding-left: 40px; padding-right: 40px; } }
 
 /* Hero height above 1440px wide: a fixed 680px instead of filling the screen (user 2026-11-13); up to 1440px the header + hero
