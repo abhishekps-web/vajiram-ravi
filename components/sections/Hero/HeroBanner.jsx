@@ -120,7 +120,7 @@ function Slides() {
 
 function AirCard({ slide }) {
   return (
-    <div className="hx__mark cu:max-[760px]:top-[calc(var(--hdr-h)+14px)]!" aria-hidden="true">
+    <div className="hx__mark" aria-hidden="true">
       <div className="hx__mark-card">
         <p className="hx__mark-air"><span>AIR</span><b>{slide.rank}</b></p>
         <p className="hx__mark-name">{slide.name}</p>

@@ -9,6 +9,7 @@
 @import "tailwindcss/theme.css" layer(theme) prefix(cu);
 @import "tailwindcss/utilities.css" source(none);
 @source "../components/sections/ContactUs.jsx";
+@source "../components/ui/CarouselDots.jsx";
 
 @custom-variant stacked (@media (max-width: 860px));
 @custom-variant xs (@media (max-width: 640px));   /* phones and small tablets: the map above the details (beside them only from 641px) */
@@ -22,10 +23,6 @@
 @source "../components/sections/ToppersRecord.jsx";
 @source "../components/sections/TalkToUs.jsx";
 @source "../components/sections/Stories.jsx";
-@source "../components/ui/CarouselDots.jsx";
-@source "../app/page.jsx";
-@source "../components/sections/Hero/Hero.jsx";
-@source "../components/sections/Hero/HeroBanner.jsx";
 
 @property --fs { syntax: '<percentage>'; inherits: true; initial-value: 120%; }
 @property --fb { syntax: '<percentage>'; inherits: true; initial-value: 120%; }

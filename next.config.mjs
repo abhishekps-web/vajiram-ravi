@@ -13,6 +13,7 @@ const base = {
 // The static pages in public/ (the course finder) are served by Cloudflare as folder/index.html. The dev server does not do that, so
 // in development only /coursefinder goes to /coursefinder/ (trailing slashes, so the page's relative css/ and js/ links resolve) and that to its index.html.
 const devStatic = {
+  allowedDevOrigins: ['192.168.*.*', '10.*.*.*', '172.16.*.*'],
   trailingSlash: true,
   async rewrites() { return [{ source: '/coursefinder/', destination: '/coursefinder/index.html' }]; },
 };

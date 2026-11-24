@@ -358,3 +358,6 @@ html body .dl .hx__mark-exam { grid-column: 2; margin: 0; font: 500 12px/16px va
   html body .dl .dl__in > * { max-width: 50%; }
   html body .dl .dl__in > .hx__lead { max-width: min(50%, 36em); }
 }
+
+/* phones (user 2026-11-24): the previous / next arrows are hidden, so the card's foot zone shrinks to the dots (28px) on their 18px margin */
+@media (max-width: 760px) { .dl .hx__nav { display: none; } html .dl { --hx-foot: 62px; } }

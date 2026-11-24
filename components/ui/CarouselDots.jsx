@@ -1,72 +1,36 @@
-// The site's carousel indicator, one component for every carousel (user 2026-11-17, "unify all dots as components"): the hero, the
-// promo banner, the Faculty ring, Free resources and the Contact us photos. Tailwind (user 2026-11-17, "convert that component to a
-// single file using Tailwind"): every style is a `cu:` utility below (the shared entry app/tailwind-sections.css, which also holds the
-// timed fill's `cd-fill` keyframes).
-//
-//   <CarouselDots label="Choose a banner" labels={['Show banner 1', …]} active={i} onSelect={go} timed />
-//
-// Look: 8px dots (user 2026-11-17, from 6px) in a strong colour (white on photos and dark grounds, brand orange on light ones); the current one is a 32px pill of
-// the SAME 8px height (user 2026-11-17, "the height of the dot should be the same for active and default"), whose fill (<i>) shows
-// how far that slide has run. Each dot sits in an 8px transparent border, so its
-// tap target is 24px across; the negative block margin keeps the row 8px tall.
-// States: default (an 8px dot), hover/focus (the dot grows to about 13px across and tall), current (the 32 x 8px progress pill: a pale
-// track, filled from the left in the full colour as the slide runs).
-// The fill is driven by each carousel: --p (0..1) on the dot (the hero, page-motion.js), a timed CSS fill (`timed`, `duration` long;
-// its animationend moves the carousel on; paused under an .is-paused ancestor), or an inline transform (the Faculty clock). Without a
-// driver the current pill is full. Scripts mark the current dot with aria-current="true"; the styles follow that attribute.
-//
-// Props
-//   labels      one accessible name per dot (its length is the number of dots)
-//   label       the group's accessible name
-//   active      the current dot's index (leave it out when a behaviour script marks the current dot in the browser)
-//   onSelect    called with a dot's index when it is chosen (client components); script-driven rows bind their own clicks
-//   tone        'dark' (white, on photos and dark grounds; the default) or 'light' (brand orange, on light grounds)
-//   timed       the current dot fills over `duration` by itself (a CSS animation; its animationend moves the carousel on)
-//   duration    the timed fill's length, e.g. '5s' (default 6s)
-//   fillRef     a ref to the current dot's fill, for a carousel whose clock sets the fill itself (the Faculty ring)
-//   fillProps   (index, isCurrent) => extra props for a dot's fill element (key, style, onAnimationEnd …)
-//   activeClass a class also put on the current dot (the Contact us gallery's script looks for .is-on)
-//   controls    the id of the element the dots change (aria-controls)
-//   as          the element of the row: 'div' (default) or 'p'
-// A plain component (no hooks): it renders in server components and, with onSelect, inside client ones.
 import '@/app/tailwind-sections.css';
 
-const ROW = 'cu:flex cu:items-center cu:gap-[0] cu:m-[0] cu:py-[10px] cu:px-[7px] cu:rounded-full cu:bg-(--dot-pill)';
-const DARK = 'cu:[--dot-edge:rgba(255,255,255,.9)] cu:[--dot-track:rgba(255,255,255,.4)] cu:[--dot-fill:#fff] cu:[--dot-ring:#FFD48A] cu:[--dot-pill:rgba(0,0,0,.25)]';
-const LIGHT = 'cu:[--dot-edge:rgba(194,65,12,.8)] cu:[--dot-track:rgba(194,65,12,.3)] cu:[--dot-fill:var(--brand)] cu:[--dot-ring:var(--brand)] cu:[--dot-pill:rgba(194,65,12,.1)]';
+const ROW = 'cu:flex cu:items-center cu:m-0 cu:py-[10px] cu:px-[7px] cu:rounded-full cu:bg-(--dot-pill)';
+const TONE = {
+  dark: 'cu:[--dot-edge:rgba(255,255,255,.9)] cu:[--dot-track:rgba(255,255,255,.4)] cu:[--dot-fill:#fff] cu:[--dot-ring:#FFD48A] cu:[--dot-pill:rgba(0,0,0,.25)]',
+  light: 'cu:[--dot-edge:rgba(194,65,12,.8)] cu:[--dot-track:rgba(194,65,12,.3)] cu:[--dot-fill:var(--brand)] cu:[--dot-ring:var(--brand)] cu:[--dot-pill:rgba(194,65,12,.1)]',
+};
 const DOT = [
-  'cu:relative cu:flex-none cu:box-content cu:w-[8px] cu:h-[8px] cu:my-[-8px] cu:mx-[-3px] cu:p-[0] cu:overflow-hidden cu:cursor-pointer',
+  'cu:relative cu:flex-none cu:box-content cu:w-[8px] cu:h-[8px] cu:-my-[8px] cu:-mx-[3px] cu:p-0 cu:overflow-hidden cu:cursor-pointer',
   'cu:border-8 cu:border-solid cu:border-transparent cu:rounded-full cu:bg-clip-padding cu:bg-(--dot-edge)',
   'cu:[transition:width_.35s_cubic-bezier(.65,0,.35,1),scale_.2s_ease,background-color_.2s_ease] cu:motion-reduce:transition-none',
-  // hover / keyboard focus on a dot that is not current: it grows in both width and height (scale, so its neighbours do not move)
   'cu:[&:not([aria-current=true]):hover]:[scale:1.6] cu:[&:not([aria-current=true]):focus-visible]:[scale:1.6]',
   'cu:aria-[current=true]:w-[32px] cu:aria-[current=true]:bg-(--dot-track)',
   'cu:focus-visible:outline-2 cu:focus-visible:outline-(--dot-ring) cu:focus-visible:outline-offset-[-5px]',
 ].join(' ');
-// the fill: a square bar the pill clips, growing from its rounded left end; empty on the other dots
-const FILL = 'cu:absolute cu:inset-[0] cu:block cu:bg-(--dot-fill) cu:origin-left cu:[transform:scaleX(var(--p,1))] cu:[:not([aria-current=true])>&]:[transform:scaleX(0)]';
+const FILL = 'cu:absolute cu:inset-0 cu:block cu:bg-(--dot-fill) cu:origin-left cu:[transform:scaleX(var(--p,1))] cu:[:not([aria-current=true])>&]:[transform:scaleX(0)]';
 const TIMED = [
   'cu:[[aria-current=true]>&]:[transform:scaleX(0)] cu:[[aria-current=true]>&]:animate-[cd-fill_var(--dot-t,6s)_linear_forwards]',
   'cu:[.is-paused_&]:[animation-play-state:paused]',
   'cu:motion-reduce:[[aria-current=true]>&]:animate-none cu:motion-reduce:[[aria-current=true]>&]:[transform:none]',
 ].join(' ');
 
-/**
- * @param {{ labels: string[], label?: string, active?: number, onSelect?: (index: number) => void, tone?: 'dark' | 'light',
- *   timed?: boolean, duration?: string, fillRef?: any, fillProps?: (index: number, current: boolean) => Record<string, any>,
- *   activeClass?: string, controls?: string, as?: 'div' | 'p', id?: string, className?: string }} props
- */
 export default function CarouselDots({
-  labels, label, active, onSelect, tone = 'dark', timed = false, duration, fillRef, fillProps, activeClass, controls,
-  as: Tag = 'div', id, className,
+  labels, label, active, onSelect, tone = 'dark', timed = false, duration = undefined, fillRef, fillProps, activeClass = undefined,
+  controls = undefined, as: Tag = 'div', id = undefined, className,
 }) {
-  const cls = [ROW, tone === 'light' ? LIGHT : DARK, className].filter(Boolean).join(' ');
+  const cls = [ROW, TONE[tone] || TONE.dark, className].filter(Boolean).join(' ');
   const fillCls = timed ? `${FILL} ${TIMED}` : FILL;
   return (
     <Tag id={id} className={cls} role="group" aria-label={label} style={duration ? { '--dot-t': duration } : undefined}>
       {labels.map((name, i) => {
         const on = i === active;
-        const { key: fillKey, ...fill } = (fillProps && fillProps(i, on)) || {};   // a fill's key (to restart its fill) is set apart
+        const { key: fillKey, ...fill } = (fillProps && fillProps(i, on)) || {};
         return (
           <button key={i} type="button" aria-label={name} aria-controls={controls} aria-current={on ? 'true' : undefined}
             className={on && activeClass ? `${DOT} ${activeClass}` : DOT} onClick={onSelect ? () => onSelect(i) : undefined}>

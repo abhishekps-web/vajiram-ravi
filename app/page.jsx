@@ -1,4 +1,3 @@
-import '@/app/tailwind-sections.css';
 import NavigationBar from '@/components/layout/NavigationBar';
 import Footer from '@/components/layout/Footer/Footer';
 import WhatsAppButton from '@/components/layout/WhatsAppButton/WhatsAppButton';
@@ -23,7 +22,7 @@ export default function Home() {
   return (
     <>
       <NavigationBar />
-      <main id="top" className="cu:max-[760px]:pt-0!">
+      <main id="top">
         {/* Order from the 11 Nov 2026 direction session (WEBSITE-DIRECTION-2026-11-11.md): 1 banners (hero),
             2 courses, 3 toppers, 4 topper testimonials, 5 faculty, 6 why choose us, then the rest */}
         <div className="cover" id="cover">

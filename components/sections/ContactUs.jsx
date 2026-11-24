@@ -33,7 +33,7 @@ const BADGE = 'cu:self-start cu:justify-self-start cu:m-0 cu:text-[#E57512] cu:[
 const ADDRESS = 'cu:mt-[10px] cu:mb-0 cu:font-(family-name:--f-title) cu:font-normal cu:text-[clamp(24px,2vw,28px)] cu:leading-[1.2] cu:tracking-[-.01em] cu:text-(--ink) cu:[text-wrap:balance]';
 const NEAR = 'cu:mt-[8px] cu:mb-0 cu:[font:400_15px/1.5_var(--f)] cu:text-(--body)';
 const HOURS = 'cu:mt-[14px] cu:mb-0 cu:[font:600_15px/1.5_var(--f)] cu:text-(--ink)';
-const META = 'cu:flex cu:flex-col cu:gap-[12px] cu:mt-[20px] cu:mb-0 cu:pt-[20px] cu:px-0 cu:pb-0 cu:border-0 cu:[border-top:1px_solid_#eadbc4] cu:list-none cu:xs:gap-0 cu:xs:mt-[16px] cu:xs:pt-[6px]';
+const META = 'cu:flex cu:flex-col cu:gap-[12px] cu:mt-[20px] cu:mb-0 cu:p-0 cu:pt-[20px] cu:border-0 cu:border-t cu:border-solid cu:border-[#eadbc4] cu:list-none cu:xs:gap-0 cu:xs:mt-[16px] cu:xs:pt-[6px]';
 const LINK = [
   'cu:inline-flex cu:items-center cu:gap-[8px] cu:pb-px cu:xs:min-h-[40px] cu:xs:gap-[10px] cu:[font:600_16.5px/1.3_var(--f)] cu:text-(--ink) cu:no-underline',
   'cu:bg-[linear-gradient(currentColor,currentColor)] cu:bg-no-repeat cu:bg-[position:0_100%] cu:bg-[length:0_1px]',
@@ -57,7 +57,7 @@ export default function ContactUs() {
       <div className={`${CARD} rv`} style={{ "--d": ".28s" }}>
         <div className={DETAILS}>
           <div className={MAP_BOX}>
-            <iframe className={MAP_FRAME} src={CENTRE.embed} title="Map: Vajiram & Ravi, 1-B/7 Pusa Road, Old Rajinder Nagar, New Delhi" loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen />
+            <iframe className={MAP_FRAME} src={CENTRE.embed} title={`Map: Vajiram & Ravi, ${CENTRE.address}`} loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen />
           </div>
           <p className={BADGE}>New Delhi centre</p>
           <h3 className={ADDRESS}>{CENTRE.address}</h3>
