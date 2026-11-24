@@ -2052,3 +2052,5 @@ main.cf, html.foot-curtain main.cf { background: linear-gradient(90deg, rgba(255
    ascenders all but touched the breadcrumb 14px above; 22px under the breadcrumb and 18px from the title to the line */
 .cf-hero .cf-crumbs { margin-bottom: 22px; }
 .cf-hero .cf-lede { margin-top: 18px; }
+/* the line closer under the title (user 2026-11-24, "reduce the spacing between the heading and the sub"): 18px to 8px */
+.cf-hero .cf-lede { margin-top: 8px; }
