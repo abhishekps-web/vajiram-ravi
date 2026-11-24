@@ -80,9 +80,9 @@ function LangSwitch({ bar }) {
 }
 
 function Logo() {
-  const img = 'cu:h-11 cu:w-auto cu:transition-transform cu:duration-300 cu:ease-[cubic-bezier(.22,1,.36,1)] cu:group-hover/logo:scale-[1.03] cu:group-focus-visible/logo:scale-[1.03] cu:max-[1023.98px]:w-[187px] cu:max-[1023.98px]:max-w-full cu:max-[1023.98px]:h-auto cu:max-[760px]:w-[158px]';
+  const img = 'cu:h-[52px] cu:w-auto cu:transition-transform cu:duration-300 cu:ease-[cubic-bezier(.22,1,.36,1)] cu:group-hover/logo:scale-[1.03] cu:group-focus-visible/logo:scale-[1.03] cu:max-[1023.98px]:w-[210px] cu:max-[1023.98px]:max-w-full cu:max-[1023.98px]:h-auto cu:max-[760px]:w-[176px]';
   return (
-    <a className="cu:group/logo cu:flex cu:flex-none cu:items-center cu:h-11 cu:max-[760px]:h-10 cu:mr-3.5 cu:rounded-lg cu:focus-visible:outline-2 cu:focus-visible:outline-offset-4 cu:focus-visible:outline-[var(--brand)] cu:max-[1023.98px]:flex-[0_1_auto] cu:max-[1023.98px]:min-w-0 cu:max-[1023.98px]:mr-auto" href="#top" aria-label="Vajiram & Ravi home">
+    <a className="cu:group/logo cu:flex cu:flex-none cu:items-center cu:h-[52px] cu:max-[760px]:h-11 cu:mr-3.5 cu:rounded-lg cu:focus-visible:outline-2 cu:focus-visible:outline-offset-4 cu:focus-visible:outline-[var(--brand)] cu:max-[1023.98px]:flex-[0_1_auto] cu:max-[1023.98px]:min-w-0 cu:max-[1023.98px]:mr-auto" href="#top" aria-label="Vajiram & Ravi home">
       <img className={`${img} cu:block`} src="/assets/img/brand/logo.webp" alt="Vajiram & Ravi, Institute for IAS Examination" width="966" height="227" />
     </a>
   );
@@ -122,8 +122,8 @@ export default function NavigationBar() {
   return (
     <>
       <div className="nav-band cu:absolute cu:top-0 cu:inset-x-0 cu:z-[2] cu:h-[calc(var(--hdr-h)+var(--hdr-gap))] cu:pointer-events-none" aria-hidden="true" />
-      <header className="cu:fixed cu:z-50 cu:top-[var(--hdr-pt)] cu:left-[calc(var(--chrome-px)+10px)] cu:min-[901px]:left-[calc(var(--chrome-cap)+34px)] cu:right-[calc(var(--chrome-px)+10px)] cu:min-[901px]:right-[calc(var(--chrome-cap)+34px)] cu:flex cu:items-center cu:justify-between cu:pointer-events-none cu:*:pointer-events-auto cu:after:absolute cu:after:-inset-y-2 cu:after:-inset-x-2.5 cu:after:-z-10 cu:after:rounded-[24px] cu:max-[900px]:after:rounded-[20px] cu:after:pointer-events-none cu:after:bg-white cu:after:shadow-[0_6px_24px_-14px_rgba(60,25,5,.28)] cu:after:transition-[background-color,box-shadow] cu:after:duration-[.35s] cu:nav-top:after:bg-transparent cu:nav-top:after:shadow-none cu:max-[760px]:transition-[left,right,padding] cu:max-[760px]:duration-[.35s] cu:max-[760px]:nav-top:left-[10px] cu:max-[760px]:nav-top:right-[10px] cu:max-[760px]:nav-top:px-(--chrome-px) cu:max-[760px]:after:bg-[#FFFAF3] cu:max-[760px]:nav-top:after:rounded-none cu:max-[760px]:after:transition-[background-color,box-shadow,border-radius] cu:motion-reduce:after:transition-none cu:max-[1023.98px]:justify-start cu:max-[1023.98px]:gap-2" id="nav" data-top="">
-        <div className="cu:relative cu:flex cu:items-center cu:gap-1.5 cu:h-[46px] cu:py-px cu:pl-3 cu:pr-2.5 cu:max-[1023.98px]:contents">
+      <header className="cu:fixed cu:z-50 cu:top-[var(--hdr-pt)] cu:left-[calc(var(--chrome-px)+10px)] cu:min-[901px]:left-[calc(var(--chrome-cap)+34px)] cu:right-[calc(var(--chrome-px)+10px)] cu:min-[901px]:right-[calc(var(--chrome-cap)+34px)] cu:flex cu:items-center cu:justify-between cu:pointer-events-none cu:*:pointer-events-auto cu:after:absolute cu:after:-inset-y-2 cu:after:-inset-x-2.5 cu:after:-z-10 cu:after:rounded-[24px] cu:max-[900px]:after:rounded-[20px] cu:after:pointer-events-none cu:after:bg-whitecu:after:transition-[opacity] cu:after:duration-[.25s] cu:after:ease-out cu:max-[760px]:after:bg-[#FFFAF3] cu:motion-reduce:after:transition-none cu:max-[1023.98px]:justify-start cu:max-[1023.98px]:gap-2" id="nav" data-top="">
+        <div className="cu:relative cu:flex cu:items-center cu:gap-1.5 cu:h-[54px] cu:py-px cu:pl-3 cu:pr-2.5 cu:max-[1023.98px]:contents">
           <Logo />
           <nav className="cu:flex cu:items-center cu:gap-0.5 cu:max-[1600px]:gap-0 cu:max-[1023.98px]:hidden" id="navLinks" aria-label="Main">
             <MegaMenu id="mega" wrapId="explore" btnId="exploreBtn" label="All courses" wide />
@@ -277,7 +277,7 @@ export function initNavScrolled() {
   const nav = $('#nav');
   if (!nav) return;
   let tick = false;
-  const update = () => { tick = false; nav.toggleAttribute('data-top', scrollY <= 20); };
+  const update = () => { tick = false; nav.toggleAttribute('data-top', scrollY <= 2); };
   addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(update); } }, { passive: true });
   update();
 }

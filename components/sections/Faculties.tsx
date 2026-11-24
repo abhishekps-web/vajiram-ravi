@@ -1450,7 +1450,7 @@ function EducatorFlow({ educators }: { educators: Educator[] }) {
       cardLabel={(educator) => ({ title: educator.name, sub: educator.focus })}
       width={264}
       height={square ? 264 : 340}
-      gap={30}
+      gap={square ? 14 : 30}
       interval={AUTOPLAY_MS}
       fadeColor="#fff8ec"
       backColor="#ead9c2"

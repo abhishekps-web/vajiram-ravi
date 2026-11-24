@@ -154,7 +154,7 @@ function Controls() {
       <span className="hx__nav hx__nav--prev">
         <Button iconOnly size="sm" iconStart="arrow-left" label="Previous slide" className="dl__arrow dl__arrow--prev" />
       </span>
-      <CarouselDots as="p" id="dlProg" className="hx__dots" label="Choose a slide" labels={HERO.map(slideName)} />
+      <CarouselDots as="p" id="dlProg" tone="hero" className="hx__dots" label="Choose a slide" labels={HERO.map(slideName)} />
       <span className="hx__nav hx__nav--next">
         <Button iconOnly size="sm" iconStart="arrow" label="Next slide" className="dl__arrow dl__arrow--next" />
       </span>

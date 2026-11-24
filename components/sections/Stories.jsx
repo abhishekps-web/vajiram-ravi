@@ -119,7 +119,6 @@ export default function Stories() {
         <div className="tstack-nav" role="group" aria-label="Testimonials">
           {/* the site's arrow buttons (icon-only, outline, sm), as on every other carousel (user 2026-11-17: arrows, not chevrons) */}
           <Button variant="outline" size="sm" iconOnly iconStart="arrow-left" label="Previous testimonial" data-tstack="prev" />
-          <span className="tstack-count" aria-live="polite"><b data-tstack="cur">1</b> / {POSTCARDS.length}</span>
           <Button variant="outline" size="sm" iconOnly iconStart="arrow" label="Next testimonial" data-tstack="next" />
         </div>
       </div>

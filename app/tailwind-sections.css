@@ -142,8 +142,8 @@ html.js #stories:not([data-in]) > .lbl { opacity: 0; }
   #tcar .pst.is-drag { transition: none; cursor: grabbing; }
   /* the front card slips out to the side, drops behind the stack and settles at the back; the card behind it rises meanwhile
      (its --p changes at once and transitions). Previous does the reverse with the card from the back. */
-  #tcar .pst.is-out { animation: st-behind 1s linear both; }
-  #tcar .pst.is-in { animation: st-ahead 1s .3s linear both; }
+  #tcar .pst.is-out { animation: st-behind .5s cubic-bezier(.3, 0, .2, 1) both; }
+  #tcar .pst.is-in { animation: st-ahead .5s .1s cubic-bezier(.3, 0, .2, 1) both; }
   #tcar .pst:hover, #tcar .pst:focus-within { z-index: calc(10 - var(--q)); }
   #tcar .pst.is-front:hover { scale: 1; }
   /* the entrance moves to the stack itself (the cards' own deal animation would pin their opacity) */
@@ -162,18 +162,11 @@ html.js #stories:not([data-in]) > .lbl { opacity: 0; }
 /* the card leaves the stack completely (sideways, past the other cards), changes layer while it is clear of them, then
    slides back in behind: it never passes through a card. The section clips the sideways overshoot (#stories, below). */
 @keyframes st-behind {
-  0%   { z-index: 10; visibility: visible; opacity: 1; scale: 1; translate: var(--sdx, 0px) 0; rotate: var(--srd, 0deg); animation-timing-function: cubic-bezier(.3, 0, .2, 1); }
-  45%  { z-index: 10; visibility: visible; opacity: 1; scale: .97; translate: calc(var(--dir, 1) * 108%) -8px; rotate: calc(var(--dir, 1) * 9deg); }
-  46%  { z-index: 0; animation-timing-function: cubic-bezier(.4, 0, .2, 1); }
-  75%  { z-index: 0; visibility: visible; opacity: 1; scale: .85; translate: 0 48px; rotate: calc(var(--sg, 1) * 6deg); }
-  100% { z-index: 0; visibility: visible; opacity: 0; scale: .85; translate: 0 48px; rotate: calc(var(--sg, 1) * 6deg); }
+  0%   { z-index: 10; visibility: visible; opacity: 1; scale: 1; translate: var(--sdx, 0px) 0; rotate: var(--srd, 0deg); }
+  100% { z-index: 10; visibility: visible; opacity: 0; scale: .97; translate: calc(var(--dir, 1) * 108%) -8px; rotate: calc(var(--dir, 1) * 9deg); }
 }
 @keyframes st-ahead {
-  0%   { z-index: 0; visibility: visible; opacity: 0; scale: .85; translate: 0 48px; rotate: calc(var(--sg, 1) * 6deg); animation-timing-function: cubic-bezier(.3, 0, .2, 1); }
-  12%  { z-index: 0; visibility: visible; opacity: 1; scale: .85; translate: 0 48px; rotate: calc(var(--sg, 1) * 6deg); }
-  30%  { z-index: 0; visibility: visible; opacity: 1; }
-  54%  { z-index: 0; visibility: visible; opacity: 1; scale: .97; translate: calc(var(--dir, -1) * 108%) -8px; rotate: calc(var(--dir, -1) * 9deg); }
-  55%  { z-index: 10; animation-timing-function: cubic-bezier(.4, 0, .2, 1); }
+  0%   { z-index: 10; visibility: visible; opacity: 0; scale: .97; translate: calc(var(--dir, -1) * 108%) -8px; rotate: calc(var(--dir, -1) * 9deg); }
   100% { z-index: 10; visibility: visible; opacity: 1; scale: 1; translate: 0 0; rotate: 0deg; }
 }
 

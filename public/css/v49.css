@@ -2373,9 +2373,9 @@ html main #gs.gs { margin-bottom: var(--sec-y); }
 
 /* Header sizes (user 2026-11-20: the header is the Tailwind NavigationBar component; these moved here from navigation-bar.css, which
    is gone): the fixed bar sits --hdr-pt from the top, 46px tall; --hdr-h is the space it takes; --hdr-gap the 20px gutter under it. */
-:root { --hdr-pt: 22px; --hdr-gap: 20px; --strip-h: 0px; --hdr-h: calc(var(--hdr-pt) + 46px); }
+:root { --hdr-pt: 22px; --hdr-gap: 20px; --strip-h: 0px; --hdr-h: calc(var(--hdr-pt) + 54px); }
 @media (max-width: 900px) { :root { --hdr-pt: 16px; } }
-@media (max-width: 760px) { :root { --hdr-pt: 10px; --hdr-gap: 14px; --hdr-h: calc(var(--hdr-pt) + 40px); } }
+@media (max-width: 760px) { :root { --hdr-pt: 10px; --hdr-gap: 14px; --hdr-h: calc(var(--hdr-pt) + 44px); } }
 main#top { padding-top: calc(var(--hdr-h) + var(--hdr-gap)); }
 
 /* Hero on the sections' ground (user 2026-11-20, "the same section colour used for other sections"): the header band and the hero
