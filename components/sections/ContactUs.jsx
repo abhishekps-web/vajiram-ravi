@@ -22,8 +22,9 @@ const PHOTO = { src: '/assets/img/photos/campus-sunlit.webp', alt: 'Students out
 
 const CARD = [
   'cu:relative cu:grid cu:grid-cols-[minmax(0,340px)_minmax(0,1fr)] cu:gap-[clamp(28px,3.4vw,48px)] cu:w-full cu:max-w-(--site-w) cu:mx-auto cu:mt-(--hd-gap) cu:text-left',
-  'cu:p-[clamp(28px,2.6vw,36px)] cu:xs:p-[16px] cu:stacked:grid-cols-1 cu:stacked:gap-[28px] cu:xs:gap-[20px]',
-  'cu:bg-[rgb(255_255_255/.85)] cu:backdrop-blur-[8px] cu:border-[1.2px] cu:border-solid cu:border-[#D9A441] cu:rounded-none',
+  'cu:p-[clamp(38px,2.6vw+10px,46px)] cu:xs:p-[24px] cu:stacked:grid-cols-1 cu:stacked:gap-[28px] cu:xs:gap-[20px]',
+  'cu:bg-[rgb(255_255_255/.85)] cu:backdrop-blur-[8px] cu:rounded-none',
+  'cu:after:absolute cu:after:inset-[10px] cu:xs:after:inset-[8px] cu:after:border-[1.2px] cu:after:border-solid cu:after:border-[#D9A441] cu:after:pointer-events-none',
 ].join(' ');
 const DETAILS = [
   'cu:flex cu:flex-col cu:min-w-0',
