@@ -42,7 +42,7 @@ lib/
                           hero-kit.js (nav hide-on-scroll), rise.js (.rise card groups), word-fill.js (.reveal headings)
   vendor/lenis.min.js
 public/
-  css/                    the stylesheets, served as-is (see "Styles" below): buttons.css, v25.css … v49.css, intro.css, toppers.css
+  css/                    the stylesheets, served as-is (see "Styles" below): buttons.css, v25.css … v49.css, toppers.css
   assets/img/             brand/, icons/, patterns/, hero/, photos/, banners/, toppers/ (by purpose)
 .claude/skills/site-motion/   the motion rules and the headless-Chrome check script
 ```
@@ -135,7 +135,7 @@ The client wants **every section and every element animated**. For any change to
   email (Lucide `phone` / `mail` glyphs, inline SVG) on the left and a static campus photo on the right, no shadow; its id stays `visit` for the shared shell rules; the cream footer `Footer.jsx` (Tailwind `cu:`, its text is in Mukta, the body font; its tagline in Newsreader as in the preloader; while it zooms in, `footer[data-zooming]` makes its content one layer so the social icons do not jump).
 
 - The Toppers section (`#toppers`, `Toppers/Toppers.jsx`, styles `public/css/podium.css`): heading, the drifting reel (`diamond-reel.js`; drag, swipe, or a
-  two-finger sideways trackpad swipe moves it) starting at AIR 1 (no podium for the top three, user 2026-11-21), then "The full record, year by year" (`ToppersRecord`, refined 2026-11-21: a frosted
+  two-finger sideways trackpad swipe moves it) starting at AIR 1 (no podium for the top three, user 2026-11-21), with the record's year tabs above its title and a second reel under it drifting the other way (user 2026-11-24, `ToppersReel.jsx`: `YEARS`, one group of reels per year; 2025 splits at `REEL_SIZE`, an archive year of more than 12 splits in half, a smaller one is one reel; `initDiamondReel` runs `initReel` per `.dr__view`, `data-dir="-1"` reverses it), then the "View all toppers" button. "The full record, year by year" (`ToppersRecord`) is hidden (user 2026-11-24: not rendered; the component and `initToppersRecord`, which no-ops without it, are kept; refined 2026-11-21: a frosted
   panel on the main content column (the hero card's width), archive label + live count, gold year chips (one scrolling line on phones), rank badges (solid gold for the top 10), the portrait
   pane with the rank in gold; phones show a photo in each row instead of the pane; the rows are hover-only, not clickable; the list scrolls on its own: `data-lenis-prevent`; photo pane on the left). Ground: the hero's `--ground-beige` (user 2026-11-21), its text in ink and brand orange and the record a white card;
   a faint grain (200px, soft-light, 45%; end of `podium.css`).

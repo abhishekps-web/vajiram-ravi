@@ -32,6 +32,24 @@
 @custom-variant curtain-zoom { @media (min-width: 761px) and (prefers-reduced-motion: no-preference) { html.foot-curtain & { @slot; } } }
 @custom-variant foot-zooming { @media (min-width: 761px) { html.foot-curtain footer[data-zooming] > & { @slot; } } }
 
+/* the intro (components/layout/Intro/Intro.jsx), driven by classes the inline boot script (Intro/boot.js) sets on <html>: vrv-lock shows
+   it and holds scrolling, vrv-play runs the reveal, vrv-out lifts it. The lock keeps the scrollbar (user 2026-11-16: hiding it made the
+   page jump ~15px as the intro lifted) and holds the page to one screen under the overlay; vrv-restore lets a reload from mid-page
+   scroll back to its place under it. boot.js listens for the `iris` animation, so that name stays. */
+@source "../components/layout/Intro/Intro.jsx";
+@custom-variant vrv-lock (html.vrv-lock &);
+@custom-variant vrv-play (html.vrv-play &);
+@custom-variant vrv-out (html.vrv-out &);
+html.vrv-lock { overflow-y: scroll; }
+html.vrv-lock body { height: 100vh; overflow: hidden; }
+html.vrv-lock.vrv-restore body { height: auto; overflow: visible; }
+@keyframes vrvIn { from { opacity: 0; } }
+@keyframes vrvFail { to { visibility: hidden; pointer-events: none; } }
+@keyframes iris { to { clip-path: circle(150% at 50% 52%); } }
+@keyframes vrv-ring { from { opacity: 0; transform: translate(-50%, -50%) scale(.86); } to { opacity: .16; transform: translate(-50%, -50%) scale(1); } }
+@keyframes vrv-logo { from { opacity: 0; transform: translateY(14px) scale(.97); filter: blur(4px); } to { opacity: 1; transform: none; filter: none; } }
+@keyframes vrv-tin { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
 @property --fs { syntax: '<percentage>'; inherits: true; initial-value: 120%; }
 @property --fb { syntax: '<percentage>'; inherits: true; initial-value: 120%; }
 @property --fr { syntax: '<angle>'; inherits: true; initial-value: 0deg; }
