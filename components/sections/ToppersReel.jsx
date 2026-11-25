@@ -1,9 +1,10 @@
 import { $, $$, reduce } from '@/lib/site';
+import { TOPPERS } from './toppers-data';
 
 const PORTRAIT = "/assets/img/toppers/portrait/2025/";
 const PHOTO = "/assets/img/toppers/";
 
-const TOPPERS_2025 = [
+export const TOPPERS_2025 = [
   { rank: 1, name: "Anuj Agnihotri", programmes: ["Interview Guidance Programme"], photo: PORTRAIT + "01-anuj-agnihotri.webp" },
   { rank: 2, name: "Rajeshwari Suve M", programmes: ["PowerUp Prelims Test Series", "Interview Guidance Programme", "Mains 2020 Test Series"], photo: PORTRAIT + "02-rajeshwari-suve-m.webp" },
   { rank: 3, name: "Akansh Dhull", programmes: ["General Studies Prelims-cum-Mains Classroom Programme"], photo: PORTRAIT + "03-akansh-dhull.webp" },
@@ -32,43 +33,44 @@ const TOPPERS_2025 = [
   { rank: 34, name: "Nancy Singh", programmes: ["Interview Guidance Programme"], photo: PHOTO + "2025-34-nancy-singh.webp" },
 ];
 
-const progLine = rank => {
-  const p = TOPPERS_2025.find(t => t.rank === rank)?.programmes || [];
-  return p.slice(0, 2).join(' · ') + (p.length > 2 ? ` +${p.length - 2} more` : '');
-};
+const prog = list => list.slice(0, 2).join(' · ') + (list.length > 2 ? ` +${list.length - 2} more` : '');
+const tidy = c => (c || '').split(/,(?![^(]*\))/).map(x => x.trim().replace(/^IGP$/i, 'Interview Guidance Programme')).filter(Boolean);
 
-const REEL_SIZE = 17;
-const PLACEHOLDER = PHOTO + 'portrait/placeholder-man.webp';
+const PLACEHOLDER = PHOTO + 'portrait/placeholder-topper.webp';
+
+const AIR_ONES = TOPPERS.filter(p => p.r === 1).sort((a, b) => b.y - a.y).slice(0, 10).map(p => {
+  const year = p.y === 2025 ? TOPPERS_2025[0] : null;
+  return {
+    year: p.y,
+    name: p.n.replace(/\b[a-z]/g, c => c.toUpperCase()),
+    programmes: year ? year.programmes : tidy(p.c),
+  };
+});
 
 function ReelItem({ person }) {
-  const { rank, name, photo } = person;
-  const portrait = photo.startsWith(PORTRAIT);
-  const base = portrait ? photo.replace(/\.webp$/, '') : '';
+  const { year, name, programmes } = person;
   return (
     <li className="dr__item">
       <div className="dr__fig">
         <span className="dr__gem" aria-hidden="true"><i></i></span>
         <span className="dr__pic">
-          {portrait
-            ? <img src={photo.replace(/\.webp$/, '-460.webp')} srcSet={`${base}-460.webp 460w, ${photo} 768w`} sizes="(max-width: 640px) 156px, 228px" alt={name} width="360" height="360" loading="lazy" decoding="async" />
-            : <img src={PLACEHOLDER} alt="" width="360" height="360" loading="lazy" decoding="async" />}
+          <img className="is-boxed" src={PLACEHOLDER} alt="" width="480" height="600" loading="lazy" decoding="async" />
         </span>
       </div>
-      <p className="dr__n" aria-hidden="true"><small>AIR</small> {rank}</p>
-      <h4 className="dr__name">{name}<span className="pd__vh">, All India Rank {rank}</span></h4>
-      <p className="dr__prog">{progLine(rank)}</p>
+      <p className="dr__n" aria-hidden="true"><small>AIR</small> 1</p>
+      <h4 className="dr__name">{name}<span className="pd__vh">, All India Rank 1, UPSC CSE {year}</span></h4>
+      <p className="dr__prog">UPSC CSE {year}{programmes.length ? ` · ${prog(programmes)}` : ''}</p>
     </li>
   );
 }
 
 export default function ToppersReel() {
-  const people = TOPPERS_2025.slice(0, REEL_SIZE).map(p => (p.rank <= 10 ? p : { ...p, photo: PLACEHOLDER }));
   return (
     <>
-      <p className="dr__h"><span id="drHead"> 36/50 Ranks, UPSC CSE 2025</span></p>
+      <p className="dr__h"><span id="drHead">AIR 1, ten years running</span></p>
       <div className="dr__view" id="drList" aria-labelledby="drHead">
         <ul className="dr__track">
-          {people.map(p => <ReelItem key={p.rank} person={p} />)}
+          {AIR_ONES.map(p => <ReelItem key={p.year} person={p} />)}
         </ul>
       </div>
     </>

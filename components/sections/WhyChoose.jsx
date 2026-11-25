@@ -93,7 +93,7 @@ export default function WhyChoose() {
         <header id="legacy" className="cu:flex cu:flex-col cu:items-start">
           <SectionLabel>{LEGACY.label}</SectionLabel>
           <h2 id="legacyH" className="h2 h2--sec rv cu:mt-(--hd-lbl) cu:mb-0 cu:max-w-[22ch] cu:text-balance cu:max-[640px]:max-w-none" style={{ '--d': '.12s' }}>{LEGACY.title}</h2>
-          <p className="rv cu:mt-(--hd-in) cu:mb-0 cu:max-w-[62ch] cu:text-[clamp(16px,1.25vw,18px)] cu:leading-[1.75] cu:text-[#4a3f35]" style={{ '--d': '.2s' }}>{LEGACY.body}</p>
+          <p className="rv cu:mt-(--hd-in) cu:mb-0 cu:text-[clamp(16px,1.25vw,18px)] cu:leading-[1.75] cu:text-[#4a3f35]" style={{ '--d': '.2s' }}>{LEGACY.body}</p>
         </header>
       </div>
       <div id="reasons" className="cu:mt-(--hd-gap) cu:max-[640px]:mt-[calc(var(--hd-gap)+14px)]">

@@ -542,7 +542,7 @@ html #toppers .tp-row[aria-current]:focus-visible { outline-color: var(--ink, #1
 .tp-list ul[hidden] { display: none; }
 
 .tp-record .dr__h { margin-inline: 0; }
-.tp-frame::after { content: ""; position: absolute; left: 8px; right: 8px; bottom: 8px; height: 9px; pointer-events: none;
+.tp-frame::after { content: ""; position: absolute; left: -3.5px; right: -3.5px; bottom: 8.5px; height: 9px; pointer-events: none;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 9'%3E%3Cpath d='M4.5 0 9 4.5 4.5 9 0 4.5Z' fill='%23c2410c' fill-opacity='.7'/%3E%3C/svg%3E") left center / 9px 9px no-repeat,
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 9'%3E%3Cpath d='M4.5 0 9 4.5 4.5 9 0 4.5Z' fill='%23c2410c' fill-opacity='.7'/%3E%3C/svg%3E") right center / 9px 9px no-repeat; }
 .tp-row { overflow: hidden; }
@@ -554,11 +554,11 @@ html #toppers .tp-row .tp-badge { transition: background-color .4s var(--ease, e
 @media (max-width: 600px) {
   html #toppers .tp-record { padding-inline: 0; margin-top: var(--hd-gap); }
   html #toppers .tp-record > div { padding-inline: 8px; }
-  html #toppers .tp-frame { margin-top: 10px; padding-inline: 12px; padding-top: 8px; padding-bottom: 12px; }
+  html #toppers .tp-frame { margin-top: 6px; padding-inline: 12px; padding-top: 6px; padding-bottom: 8px; }
   html #toppers .tp-record > div > div:first-child { gap: 12px; }
-  html #toppers .tp-frame > div { margin-top: 16px; }
-  html #toppers .tp-row { padding-block: 8px; }
-  html #toppers .dr__cta { margin-top: 28px; }
+  html #toppers .tp-frame > div { margin-top: 10px; }
+  html #toppers .tp-row { padding-block: 6px; }
+  html #toppers .dr__cta { margin-top: 20px; }
   html #toppers .tp-frame::before, html #toppers .tp-frame::after { display: none; }
 }
 @media (max-width: 900px) {
@@ -568,7 +568,7 @@ html #toppers .tp-row .tp-badge { transition: background-color .4s var(--ease, e
 @media (max-width: 900px) {
   html #toppers .tp-more-wrap { display: flex; justify-content: flex-start; margin-top: -12px; padding-left: 10px; }
   html #toppers .tp-more-wrap [hidden] { display: none; }
-  html #toppers .tp-list.is-clamped ul > li:nth-child(n+6) { display: none; }
+  html #toppers .tp-list.is-clamped ul > li:nth-child(n+8) { display: none; }   /* 7 names (user 2026-11-25) */
   html #toppers .tp-record .dr__h { scroll-margin-top: 96px; }
 }
 .dr__view.is-scroll { overflow-x: auto; overflow-y: hidden; scrollbar-width: none; overscroll-behavior-x: contain; touch-action: pan-x pan-y; -webkit-overflow-scrolling: touch; }
@@ -607,7 +607,7 @@ html .tp-sheet .dr__prog { color: #6b5d50; text-shadow: none; }
 /* More toppers in one view (user 2026-11-25): smaller shields and tighter gaps in the reel, about 11 across at 1440px (was 6),
    3.5 on a 390px phone (was 2.5); the type scaled to match. The record pane sets its own --dw, so it keeps its size. */
 .dr { --dw: clamp(100px, 7.6vw, 120px); }
-.dr__item { padding: 0 calc(var(--dw) * .1); }
+.dr__item { padding: 0 calc(var(--dw) * .2); }   /* more gap between the shields again (user 2026-11-25, "add more gap"; was .1) */
 .dr__n { font-size: 26px; margin-top: 10px; }
 .dr__name { font-size: 11.5px; letter-spacing: .04em; }
 .dr__prog { font-size: 9px; letter-spacing: .06em; }
@@ -619,3 +619,12 @@ html #toppers .pd__h { max-width: none; white-space: nowrap; font-size: min(var(
 html #toppers .pd__h em { display: inline; }
 /* less room between the title and "36/50 Ranks" (user 2026-11-25): 24px, from --hd-gap */
 html #toppers .dr { margin-top: 24px; }
+
+/* Tighter record (user 2026-11-25): "View all toppers" 28px under the record (was --hd-gap) */
+@media (min-width: 601px) { html #toppers .dr__cta { margin-top: 28px; } }
+
+/* Record: programme names in full, no "…" (user 2026-11-25) */
+html #toppers .tp-pane .tp-meta .dr__prog { display: block; -webkit-line-clamp: unset; overflow: visible; }
+/* Reel placeholder (user 2026-11-25): a full photo (placeholder-topper.webp), not a cut-out, so it fills the shield */
+.dr__item .dr__pic img.is-boxed { top: calc(var(--dh) * .47); translate: -50% 0; width: calc(var(--dw) * .911); height: calc(var(--dh) * .86); object-fit: cover; object-position: 50% 18%; }
+@media (hover: hover) and (pointer: fine) { .dr__item:hover .dr__pic img.is-boxed { translate: -50% -6px; } }

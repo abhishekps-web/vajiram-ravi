@@ -5,24 +5,31 @@ import Tabs, { initTabs } from '@/components/ui/Tabs';
 import { $, $$, reduce } from '@/lib/site';
 import '@/app/tailwind-sections.css';
 import { NP_ARCHIVE, TOPPERS } from './toppers-data';
+import { TOPPERS_2025 } from './ToppersReel';
 
-const LATEST = NP_ARCHIVE.ARCHIVE_YEARS[0];
+const SHOW = 7;
 const tidyProg = p => p.replace(/^&\s*/, '').trim()
   .replace(/^IGP$/i, 'Interview Guidance Programme').replace(/\bIGP\b/g, 'Interview Guidance Programme')
   .replace(/Interview Guidance Program\b/gi, 'Interview Guidance Programme').replace(/Prelims Cum Mains/g, 'Prelims-cum-Mains');
-const prog = s => {
-  const P = (s || '').split(/,(?![^(]*\))|\s&\s/).map(tidyProg).filter(Boolean);
-  return P.slice(0, 2).join(' · ') + (P.length > 2 ? ` +${P.length - 2} more` : '');
-};
+const prog = s => (Array.isArray(s) ? s : (s || '').split(/,(?![^(]*\))|\s&\s/)).map(tidyProg).filter(Boolean).join(' · ');
 const PROG = new Map(TOPPERS.filter(p => p.c).map(p => [`${p.y}-${p.r}`, p.c]));
-const PLACEHOLDER = '/assets/img/toppers/portrait/placeholder-man-pad.webp';
-const RECORD = NP_ARCHIVE.ARCHIVE_YEARS.filter(y => y < LATEST).map(y => ({
+const PLACEHOLDER = '/assets/img/toppers/portrait/placeholder-topper.webp';
+const PHOTO = new Map(TOPPERS.filter(p => p.src).map(p => [`${p.y}-${p.r}`, '/' + p.src]));
+const RANKS = y => y === 2025
+  ? TOPPERS_2025.map(p => ({ rank: p.rank, name: p.name, programmes: p.programmes, photo: p.photo }))
+  : NP_ARCHIVE.ARCHIVE[y];
+const RECORD = NP_ARCHIVE.ARCHIVE_YEARS.map(y => ({
   y,
-  people: [...NP_ARCHIVE.ARCHIVE[y]].sort((a, b) => a.rank - b.rank).map(p => ({ r: p.rank, n: p.name, c: prog(p.programmes || PROG.get(`${y}-${p.rank}`)), src: PLACEHOLDER })),
+  total: RANKS(y).length,
+  people: [...RANKS(y)].sort((a, b) => a.rank - b.rank).slice(0, SHOW).map(p => ({
+    r: p.rank, n: p.name,
+    c: prog(p.programmes || PROG.get(`${y}-${p.rank}`)),
+    src: p.photo || PHOTO.get(`${y}-${p.rank}`) || PLACEHOLDER,
+  })),
 }));
 const FIRST = RECORD[0].people[0];
-const isCutout = src => src.includes('/portrait/2025/') || src.includes('/portrait/placeholder');
-const isPlaceholder = src => src.includes('/portrait/placeholder');
+const isCutout = src => src.includes('/portrait/2025/') || src.includes('placeholder-man');
+const isPlaceholder = src => src.includes('placeholder-man');
 
 const RECORD_BOX = [
   'cu:relative cu:max-w-(--site-w) cu:mx-auto cu:px-[40px] cu:max-[600px]:px-[20px]',
@@ -30,7 +37,7 @@ const RECORD_BOX = [
 ].join(' ');
 
 const ROW = [
-  'tp-row cu:group cu:relative cu:cursor-pointer cu:focus-visible:[outline:2px_solid_var(--brand)] cu:focus-visible:[outline-offset:-2px] cu:flex cu:items-center cu:gap-[12px] cu:w-full cu:py-[10px] cu:px-[14px] cu:max-[900px]:px-[10px]',
+  'tp-row cu:group cu:relative cu:cursor-pointer cu:focus-visible:[outline:2px_solid_var(--brand)] cu:focus-visible:[outline-offset:-2px] cu:flex cu:items-center cu:gap-[12px] cu:w-full cu:py-[8px] cu:px-[14px] cu:max-[900px]:px-[10px] cu:max-[900px]:py-[6px]',
   'cu:rounded-[10px] cu:text-left cu:text-(--ink)',
   'cu:transition-[background-color] cu:duration-200 cu:fine:hover:bg-[#F7F0E6]',
   'cu:motion-reduce:transition-none',
@@ -50,10 +57,10 @@ export default function ToppersRecord() {
         <div className="cu:flex cu:flex-col cu:items-center cu:text-center cu:gap-(--hd-in)">
           <Tabs className="tp-yrs cu:self-center" label="Year of the examination" controls="tpList" items={RECORD.map(g => ({ id: String(g.y), label: g.y }))} />
         </div>
-        <div className="tp-frame cu:relative cu:mt-(--hd-in) cu:p-[clamp(32px,3.2vw,46px)] cu:pt-[clamp(14px,1.6vw,22px)] cu:rounded-(--r-form) cu:before:absolute cu:before:inset-[12px] cu:before:top-[calc(clamp(14px,1.6vw,22px)+46px)] cu:before:pointer-events-none cu:before:border-2 cu:before:border-t-0 cu:before:border-solid cu:before:border-[rgba(194,65,12,.55)] cu:before:[mask-image:linear-gradient(180deg,transparent,#000_45%)]">
-          <p className="dr__h"><span data-year-head>{`${RECORD[0].people.length} Ranks, UPSC CSE ${RECORD[0].y}`}</span></p>
-          <div className="cu:grid cu:grid-cols-[minmax(0,1fr)_minmax(0,300px)] cu:max-[1100px]:grid-cols-[minmax(0,1fr)_minmax(0,270px)] cu:max-[900px]:grid-cols-1 cu:gap-[clamp(20px,3vw,40px)] cu:items-start cu:mt-[24px] cu:[--col:406px]">
-            <div id="tpList" data-lenis-prevent className="tp-list cu:max-h-(--col) cu:overflow-y-auto cu:-ml-[6px] cu:pl-[6px] cu:pr-[10px] cu:[mask-image:linear-gradient(180deg,#000_90%,transparent)]">
+        <div className="tp-frame cu:relative cu:mt-[8px] cu:px-0 cu:pb-[clamp(20px,2.4vw,32px)] cu:pt-[clamp(14px,1.6vw,22px)] cu:rounded-(--r-form) cu:before:absolute cu:before:inset-x-0 cu:before:bottom-[12px] cu:before:top-[calc(clamp(14px,1.6vw,22px)+46px)] cu:before:pointer-events-none cu:before:border-2 cu:before:border-t-0 cu:before:border-solid cu:before:border-[rgba(194,65,12,.55)] cu:before:[mask-image:linear-gradient(180deg,transparent,#000_45%)]">
+          <p className="dr__h"><span data-year-head>{`${RECORD[0].total} Ranks, UPSC CSE ${RECORD[0].y}`}</span></p>
+          <div className="cu:grid cu:grid-cols-[auto_minmax(0,300px)] cu:max-[1100px]:grid-cols-[auto_minmax(250px,270px)] cu:max-[900px]:grid-cols-1 cu:justify-center cu:gap-[clamp(28px,3.4vw,56px)] cu:items-start cu:mt-[16px] cu:[--col:316px] cu:max-[900px]:mt-[10px]">
+            <div id="tpList" data-lenis-prevent className="tp-list cu:-ml-[6px] cu:pl-[6px] cu:pr-[10px]">
               {RECORD.map((g, gi) => (
                 <ul key={g.y} data-y={g.y} hidden={gi !== 0} className="cu:m-0 cu:p-0 cu:list-none cu:grid cu:gap-0">
                   {g.people.map(p => (
@@ -69,8 +76,8 @@ export default function ToppersRecord() {
               ))}
             </div>
             <div className="tp-more-wrap"><Button variant="link" iconEnd="chevron" data-more aria-expanded="false" hidden>Show all names</Button></div>
-            <div className="tp-pane cu:order-first cu:[--shield:min(350px,calc((var(--col)-150px)*.88))] cu:max-[1100px]:[--shield:min(290px,calc((var(--col)-150px)*.88))] cu:sticky cu:top-[calc(var(--hdr-h)+16px)] cu:h-(--col) cu:flex cu:items-center cu:justify-center cu:gap-[clamp(20px,2.4vw,36px)] cu:text-left cu:text-(--ink) cu:max-[900px]:hidden" aria-live="polite">
-              <div className="dr__fig cu:mt-[28px]" style={{ '--dw': 'var(--shield)', '--dh': 'calc(var(--shield) * 1.24089)' }}>
+            <div className="tp-pane cu:order-first cu:[--shield:226px] cu:max-[1100px]:[--shield:200px] cu:sticky cu:top-[calc(var(--hdr-h)+16px)] cu:h-(--col) cu:flex cu:items-center cu:justify-center cu:gap-[clamp(16px,2vw,36px)] cu:text-left cu:text-(--ink) cu:max-[900px]:hidden" aria-live="polite">
+              <div className="dr__fig cu:mt-[12px]" style={{ '--dw': 'var(--shield)', '--dh': 'calc(var(--shield) * 1.24089)' }}>
                 <span className="tp-laurel" aria-hidden="true" />
                 <span className="dr__gem" aria-hidden="true" />
                 <span className="dr__pic">
@@ -78,7 +85,7 @@ export default function ToppersRecord() {
                   <img data-shot-back src={FIRST.src} alt="" aria-hidden="true" loading="lazy" decoding="async" className="tp-shot is-back" />
                 </span>
               </div>
-              <div data-meta className="tp-meta cu:flex cu:flex-col cu:items-start cu:flex-none cu:w-[230px] cu:h-[190px] cu:justify-start">
+              <div data-meta className="tp-meta cu:flex cu:flex-col cu:items-start cu:flex-none cu:w-[250px] cu:max-[1100px]:w-[210px] cu:min-h-[190px] cu:justify-start">
                 <p className="dr__n" aria-hidden="true"><small>AIR</small> <span data-rank>{FIRST.r}</span></p>
                 <h4 data-name className="dr__name">{FIRST.n}</h4>
                 <p data-cap className="dr__prog">{FIRST.c || `UPSC CSE ${RECORD[0].y}`}</p>
@@ -226,7 +233,7 @@ export function initToppersRecord() {
   if ('IntersectionObserver' in window) new IntersectionObserver(es => { const was = visible; visible = es[0].isIntersecting; if (visible && !was) resumeView(); else if (!visible) pauseView(); }, { threshold: .35 }).observe(rec); else { visible = true; arm(); }
 
   const yearHead = $('[data-year-head]', rec);
-  const more = $('[data-more]', rec), LIMIT = 5;
+  const more = $('[data-more]', rec), LIMIT = SHOW;
   const syncMore = () => {
     const n = ($('ul:not([hidden])', list) || { children: [] }).children.length, clamped = list.classList.contains('is-clamped');
     more.hidden = n <= LIMIT;
@@ -242,7 +249,8 @@ export function initToppersRecord() {
   });
   initTabs($('.tp-yrs', rec), { onSelect: id => {
     const group = $(`ul[data-y="${id}"]`, list);
-    if (group) yearHead.textContent = `${group.children.length} Ranks, UPSC CSE ${id}`;
+    const yr = RECORD.find(g => String(g.y) === id);
+    if (yr) yearHead.textContent = `${yr.total} Ranks, UPSC CSE ${id}`;
     const swap = () => {
       $$('ul[data-y]', list).forEach(u => { u.hidden = u.dataset.y !== id; });
       list.scrollTop = 0;
