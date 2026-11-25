@@ -76,8 +76,7 @@ export default function ToppersRecord() {
             </div>
             <div className="tp-more-wrap"><Button variant="link" iconEnd="chevron" data-more aria-expanded="false" hidden>Show all names</Button></div>
             <div className="tp-pane cu:order-first cu:[--shield:184px] cu:max-[1100px]:[--shield:164px] cu:sticky cu:top-[calc(var(--hdr-h)+16px)] cu:h-(--col) cu:flex cu:items-center cu:justify-center cu:gap-[clamp(16px,2vw,36px)] cu:text-left cu:text-(--ink) cu:max-[900px]:hidden" aria-live="polite">
-              <div className="dr__fig dr__fig--gs cu:mt-[12px]" style={{ '--dw': 'var(--shield)', '--dh': 'calc(var(--shield) * 1.24089)' }}>
-                <span className="tp-laurel" aria-hidden="true" />
+              <div className="dr__fig dr__fig--gs cu:-mt-[10px]" style={{ '--dw': 'var(--shield)', '--dh': 'calc(var(--shield) * 1.24089)' }}>
                 <span className="dr__gem" aria-hidden="true" />
                 <span className="dr__pic">
                   <img data-shot src={FIRST.src} alt={FIRST.n} loading="lazy" decoding="async" className={`tp-shot${isPlaceholder(FIRST.src) ? ' is-pad' : isCutout(FIRST.src) ? '' : ' is-boxed'}`} />
@@ -99,7 +98,6 @@ export default function ToppersRecord() {
           <Button variant="ghost" size="sm" iconOnly iconStart={LUCIDE_X} label="Close" className="tp-sheet__x" data-sheet-close />
           <div className="tp-pane tp-sheet__body">
             <div className="dr__fig dr__fig--gs" style={{ '--dw': 'min(210px, 54vw)', '--dh': 'calc(min(210px, 54vw) * 1.24089)' }}>
-              <span className="tp-laurel" aria-hidden="true" />
               <span className="dr__gem" aria-hidden="true" />
               <span className="dr__pic"><img data-s-shot src={FIRST.src} alt="" className="tp-shot" decoding="async" /></span>
             </div>

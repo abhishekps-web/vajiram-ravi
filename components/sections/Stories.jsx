@@ -42,16 +42,16 @@ function Postcard({ card, i, copy }) {
     >
       <div
         className={[
-          'cu:relative cu:aspect-[1.41] cu:rounded-[4px] cu:text-[#1B2A52] cu:postcard-paper',
+          'cu:relative cu:aspect-[1.72] cu:rounded-[4px] cu:text-[#1B2A52] cu:postcard-paper',
           'cu:[transform:perspective(1000px)_rotateX(calc(var(--ty,0)*-3deg))_rotateY(calc(var(--tx,0)*4deg))]',
           'cu:[transition:transform_.5s_var(--ease)] cu:group-hover/pcu:duration-200 cu:motion-reduce:transition-none',
         ].join(' ')}
       >
-        <p className="cu:absolute cu:top-[16px] cu:left-[28px] cu:m-0 cu:[font:600_11px/1_var(--f)] cu:tracking-[.32em] cu:text-[rgba(27,42,82,.5)]" aria-hidden="true">
+        <p className="cu:absolute cu:top-[14px] cu:left-[28px] cu:m-0 cu:[font:600_11px/1_var(--f)] cu:tracking-[.32em] cu:text-[rgba(27,42,82,.5)]" aria-hidden="true">
           TESTIMONIAL
         </p>
         <blockquote
-          className='cu:absolute cu:inset-x-[28px] cu:top-[40px] cu:bottom-[84px] cu:m-0 cu:overflow-hidden cu:[font:500_22px/28px_Caveat,"Segoe_Script",cursive] cu:text-[#1B2A52] cu:text-pretty cu:max-[460px]:text-[19px] cu:max-[460px]:leading-[24px]'
+          className='cu:absolute cu:inset-x-[28px] cu:top-[34px] cu:bottom-[70px] cu:m-0 cu:overflow-hidden cu:[font:500_22px/26px_Caveat,"Segoe_Script",cursive] cu:text-[#1B2A52] cu:text-pretty cu:max-[460px]:text-[19px] cu:max-[460px]:leading-[23px]'
         >
           <Image
             className={[
@@ -67,9 +67,9 @@ function Postcard({ card, i, copy }) {
           />
           {card.quote}
         </blockquote>
-        <footer className="cu:absolute cu:inset-x-[28px] cu:bottom-[20px] cu:grid cu:pt-[8px] cu:[border-top:1px_solid_rgba(27,42,82,.25)]">
-          <b className='cu:[font:600_25px/28px_Caveat,"Segoe_Script",cursive] cu:text-[#1B2A52]'>{card.name}</b>
-          <em className='cu:[font:500_18px/22px_Caveat,"Segoe_Script",cursive] cu:text-[rgba(27,42,82,.75)]'>AIR {card.rank}, UPSC CSE {card.year}</em>
+        <footer className="cu:absolute cu:inset-x-[28px] cu:bottom-[14px] cu:grid cu:pt-[6px] cu:[border-top:1px_solid_rgba(27,42,82,.25)]">
+          <b className='cu:[font:600_24px/25px_Caveat,"Segoe_Script",cursive] cu:text-[#1B2A52]'>{card.name}</b>
+          <em className='cu:[font:500_18px/20px_Caveat,"Segoe_Script",cursive] cu:text-[rgba(27,42,82,.75)]'>AIR {card.rank}, UPSC CSE {card.year}</em>
         </footer>
       </div>
     </article>

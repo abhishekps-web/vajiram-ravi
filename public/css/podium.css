@@ -25,8 +25,6 @@
 /* ---------- the header ---------- */
 .pd__hd { max-width: 820px; margin: 0 auto; }
 .pd__hd .lbl { justify-content: center; }
-/* the eyebrow badge in the dark cartouche, as Talk to us (css/v49.css #contact .lbl .lbl__t) */
-#toppers .lbl .lbl__t { border-image-source: url(../assets/img/brand/cartouche.svg); color: #fff !important; }
 #toppers .pd__h { max-width: 14em; margin-left: auto; margin-right: auto; color: #fff; text-align: center; }
 .pd__h em { display: block; font-style: normal; color: var(--pd-gold); }   /* upright: one type style, no italics (user 2026-11-16) */   /* "with the guidance we gave." on a line of its own, on every screen */
 /* the heading shines (user 2026-11-15, after animate-ui's GradientText): each line keeps its colour, white and the gold, as a gradient
@@ -630,6 +628,6 @@ html #toppers .tp-pane .tp-meta .dr__prog { display: block; -webkit-line-clamp: 
 .dr__fig--mains .dr__gem { background-image: url(../assets/img/toppers/figma/shield2-mains.svg); }
 .dr__fig--mentor .dr__gem { background-image: url(../assets/img/toppers/figma/shield2-mentor.svg); }
 
-/* Year tabs: the selected pill in the dark ink of "View all toppers", not brand orange (user 2026-11-25; Toppers only) */
+/* Year tabs: the selected pill in the eyebrow's colour, the dark cartouche's #2B1206 (user 2026-11-25; Toppers only) */
 html #toppers .tp-yrs .tabs__ind,
-html #toppers .tp-yrs .tab[aria-selected="true"]:not(.has-ind *) { background: var(--ink, #1D1712); }
+html #toppers .tp-yrs .tab[aria-selected="true"]:not(.has-ind *) { background: #2B1206; }

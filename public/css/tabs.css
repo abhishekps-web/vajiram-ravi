@@ -30,6 +30,6 @@
 @media (max-width: 640px) { .tab { padding: 0 12px; font-size: 14px; } }
 @media (prefers-reduced-motion: reduce) { .tabs__ind, .tab, .tab__n { transition: none; } .tab:active { scale: none; } }
 
-/* Life at Vajiram & Ravi shares the Toppers ground (--ground-beige), so its tabs take the same dark ink pill (user 2026-11-25) */
+/* Life at Vajiram & Ravi: the selected pill in the Toppers tab's dark brown, #2B1206 (user 2026-11-25) */
 html #lifeGal .lg__tabs .tabs__ind,
-html #lifeGal .lg__tabs .tab[aria-selected="true"]:not(.has-ind *) { background: var(--ink, #1D1712); }
+html #lifeGal .lg__tabs .tab[aria-selected="true"]:not(.has-ind *) { background: #2B1206; }

@@ -446,13 +446,18 @@ function TextMotion({ rootId }: { rootId: string }) {
 const AUTOPLAY_MS = 4500;
 
 function EducatorFlow({ educators }: { educators: Educator[] }) {
-  const [phone, setPhone] = useState(false);
+  const [phoneWidth, setPhoneWidth] = useState(0);
+  const phone = phoneWidth > 0;
   useEffect(() => {
     const query = window.matchMedia("(max-width: 640px)");
-    const sync = () => setPhone(query.matches);
+    const sync = () => setPhoneWidth(query.matches ? document.documentElement.clientWidth : 0);
     sync();
     query.addEventListener("change", sync);
-    return () => query.removeEventListener("change", sync);
+    window.addEventListener("resize", sync);
+    return () => {
+      query.removeEventListener("change", sync);
+      window.removeEventListener("resize", sync);
+    };
   }, []);
   return (
     <CircularCarousel
@@ -465,14 +470,14 @@ function EducatorFlow({ educators }: { educators: Educator[] }) {
       renderSlide={(educator) => <FacultyCardText educator={educator} />}
       cardLabel={facultyCardLabel}
       cardDetail={(educator) => <FacultyCardDetails educator={educator} />}
-      {...facultyCardSize(phone)}
+      {...facultyCardSize(phoneWidth)}
       gap={phone ? 12 : 24}
       interval={AUTOPLAY_MS}
       fadeColor="#fff8ec"
       backColor="#ead9c2"
       tone="light"
       spacing={20}
-      arrowReach={470}
+      arrowReach={phone ? 470 : 580}
     />
   );
 }
@@ -489,7 +494,7 @@ export default function Faculties() {
         </h2>
         <p className="intro rv" style={{ "--d": ".2s" } as CSSProperties}>{lead}</p>
       </div>
-      <div className="cu:mt-(--hd-in)">
+      <div className="cu:mt-(--hd-in) cu:-mx-[calc(var(--px)-12px)]">
         <div data-rise>
           <EducatorFlow educators={educators} />
         </div>
