@@ -10,6 +10,8 @@
 @import "tailwindcss/utilities.css" source(none);
 @source "../components/sections/ContactUs.jsx";
 @source "../components/ui/CarouselDots.jsx";
+@source "../components/ui/CircularCarousel.tsx";
+@source "../components/sections/Faculties.tsx";
 
 @custom-variant stacked (@media (max-width: 860px));
 @custom-variant xs (@media (max-width: 640px));   /* phones and small tablets: the map above the details (beside them only from 641px) */
