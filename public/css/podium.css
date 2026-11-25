@@ -613,10 +613,6 @@ html .tp-sheet .dr__prog { color: #6b5d50; text-shadow: none; }
 .dr__prog { font-size: 9px; letter-spacing: .06em; }
 @media (max-width: 640px) { .dr { --dw: 92px; } .dr__n { font-size: 22px; } .dr__name { font-size: 10.5px; } .dr__prog { font-size: 8.5px; } }
 
-/* The title on one line (user 2026-11-25): the second half runs on inline; at --h2 where it fits, smaller with the screen below that */
-html #toppers .pd__hd { max-width: none; }
-html #toppers .pd__h { max-width: none; white-space: nowrap; font-size: min(var(--h2), 4.6vw); }
-html #toppers .pd__h em { display: inline; }
 /* less room between the title and "36/50 Ranks" (user 2026-11-25): 24px, from --hd-gap */
 html #toppers .dr { margin-top: 24px; }
 
@@ -633,3 +629,7 @@ html #toppers .tp-pane .tp-meta .dr__prog { display: block; -webkit-line-clamp: 
 .dr__fig--ca .dr__gem { background-image: url(../assets/img/toppers/figma/shield2-ca.svg); }
 .dr__fig--mains .dr__gem { background-image: url(../assets/img/toppers/figma/shield2-mains.svg); }
 .dr__fig--mentor .dr__gem { background-image: url(../assets/img/toppers/figma/shield2-mentor.svg); }
+
+/* Year tabs: the selected pill in the dark ink of "View all toppers", not brand orange (user 2026-11-25; Toppers only) */
+html #toppers .tp-yrs .tabs__ind,
+html #toppers .tp-yrs .tab[aria-selected="true"]:not(.has-ind *) { background: var(--ink, #1D1712); }

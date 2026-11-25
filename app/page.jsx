@@ -13,7 +13,7 @@ import TalkToUs from '@/components/sections/TalkToUs';
 import Resources from '@/components/sections/Resources';
 import LifeGallery from '@/components/sections/LifeGallery';
 import ContactUs from '@/components/sections/ContactUs';
-import Faq from '@/components/sections/Faq/Faq';
+import Faq from '@/components/sections/Faq';
 import Closing from '@/components/sections/Closing';
 import CourseCatalogDialog from '@/components/dialogs/CourseCatalogDialog';
 

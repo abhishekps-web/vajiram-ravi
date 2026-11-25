@@ -1,6 +1,6 @@
 import Button from '@/components/ui/Button';
 import SectionWrapper from '@/components/ui/section_wrapper';
-import { FAQS } from './data';
+import { FAQS } from '@/lib/data/faq';
 // ============ FAQ ============
 // The questions are server-rendered from data.js (user 2026-11-16: "make FAQ server-rendered"; faq.js built them in the browser before).
 // One answer open at a time and the open/close motion: components/ui/accordion.js.

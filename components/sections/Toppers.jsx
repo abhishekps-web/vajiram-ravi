@@ -6,7 +6,7 @@ import { $, $$, esc, reduce } from '@/lib/site';
 import '@/app/tailwind-sections.css';
 import ToppersRecord from './ToppersRecord';
 import ToppersReel from './ToppersReel';
-import { TOPPERS, NP_ARCHIVE } from './toppers-data';
+import { TOPPERS, NP_ARCHIVE } from '@/lib/data/toppers';
 
 export { TOPPERS, NP_ARCHIVE };
 export { initToppersRecord } from './ToppersRecord';
@@ -35,7 +35,7 @@ export default function Toppers() {
     </clipPath>
   </svg>
   <div className="pd__hd">
-    <SectionLabel>UPSC CSE 2025 results</SectionLabel>
+    <SectionLabel>Toppers</SectionLabel>
     <h2 id="pdH" className="h2 h2--sec pd__h">Ranks they earned, <em>with the guidance we gave.</em></h2>
   </div>
 

@@ -1,66 +1,26 @@
 import { $, $$, reduce } from '@/lib/site';
-import { TOPPERS } from './toppers-data';
-
-const PORTRAIT = "/assets/img/toppers/portrait/2025/";
-const PHOTO = "/assets/img/toppers/";
-
-export const TOPPERS_2025 = [
-  { rank: 1, name: "Anuj Agnihotri", programmes: ["Interview Guidance Programme"], photo: PORTRAIT + "01-anuj-agnihotri.webp" },
-  { rank: 2, name: "Rajeshwari Suve M", programmes: ["PowerUp Prelims Test Series", "Interview Guidance Programme", "Mains 2020 Test Series"], photo: PORTRAIT + "02-rajeshwari-suve-m.webp" },
-  { rank: 3, name: "Akansh Dhull", programmes: ["General Studies Prelims-cum-Mains Classroom Programme"], photo: PORTRAIT + "03-akansh-dhull.webp" },
-  { rank: 4, name: "Raghav Jhunjhunwala", programmes: ["Interview Guidance Programme"], photo: PORTRAIT + "04-raghav-jhunjhunwala.webp" },
-  { rank: 5, name: "Ishan Bhatnagar", programmes: ["Sociology Optional Crash Course", "Sociology Enrichment Course", "Prelims CAMP (Online and Offline)", "Interview Guidance Programme"], photo: PORTRAIT + "05-ishan-bhatnagar.webp" },
-  { rank: 6, name: "Zinnia Aurora", programmes: ["GS Ethics Module", "Interview Guidance Programme", "Power Up 23 Combined Test Series for Prelims 2023"], photo: PORTRAIT + "06-zinnia-aurora.webp" },
-  { rank: 7, name: "A R Rajah Mohaideen", programmes: ["Interview Guidance Programme"], photo: PORTRAIT + "07-a-r-rajah-mohaideen.webp" },
-  { rank: 8, name: "Pakshal Secretry", programmes: ["Mains Camp", "Interview Guidance Programme"], photo: PORTRAIT + "08-pakshal-secretry.webp" },
-  { rank: 9, name: "Astha Jain", programmes: ["Interview Guidance Programme"], photo: PORTRAIT + "09-astha-jain.webp" },
-  { rank: 10, name: "Ujjwal Priyank", programmes: ["Interview Guidance Programme"], photo: PORTRAIT + "10-ujjwal-priyank.webp" },
-  { rank: 11, name: "Yashaswi Raj Vardhan", programmes: ["Interview Guidance Programme"], photo: PHOTO + "2025-11-yashaswi-raj-vardhan.webp" },
-  { rank: 12, name: "Akshit Bhardwaj", programmes: ["Prelims CAMP", "General Studies", "Interview Guidance Programme"], photo: PHOTO + "2025-12-akshit-bhardwaj.webp" },
-  { rank: 13, name: "Ananya Sharma", programmes: ["Interview Guidance Programme"], photo: PHOTO + "2025-13-ananya-sharma.webp" },
-  { rank: 14, name: "Surabhi Yadav", programmes: ["Ethics Answer Writing Prog.", "Interview Guidance Programme"], photo: PHOTO + "2025-14-surabhi-yadav.webp" },
-  { rank: 15, name: "Simrandeep Kaur", programmes: ["Interview Guidance Programme"], photo: PHOTO + "2025-15-simrandeep-kaur.webp" },
-  { rank: 16, name: "Monika Srivastava", programmes: ["GS Ethics Module", "Sure Shot Mains - FLT-A2", "Essay Module", "SMART Current Affairs Programme"], photo: PHOTO + "2025-16-monika-srivastava.webp" },
-  { rank: 18, name: "Sruthii R", programmes: ["General Studies", "Sociology Optional"], photo: PHOTO + "2025-18-sruthii-r.webp" },
-  { rank: 19, name: "Nisar Dishant Amrutlal", programmes: ["Interview Guidance Programme"], photo: PHOTO + "2025-19-nisar-dishant-amrutlal.webp" },
-  { rank: 21, name: "Shubham Singh", programmes: ["Ethics Answer Writing Program", "Ethics Module Course"], photo: PHOTO + "2025-21-shubham-singh.webp" },
-  { rank: 22, name: "Geetika Arora", programmes: ["General Studies"], photo: PHOTO + "2025-22-geetika-arora.webp" },
-  { rank: 23, name: "Jeenu Sri Jaswanth Chandra", programmes: ["Interview Guidance Programme"], photo: PHOTO + "2025-23-jeenu-sri-jaswanth-chandra.webp" },
-  { rank: 25, name: "Bhavika Chopra", programmes: ["Interview Guidance Programme"], photo: PHOTO + "2025-25-bhavika-chopra.webp" },
-  { rank: 27, name: "Vikas", programmes: ["IGS Ethics Module", "Interview Guidance Programme", "SMART Current Affairs Programme", "PSIR Optional Mains Test Series-A2", "Essay Module", "Sure Shot Mains - FLT-A2"], photo: PHOTO + "2025-27-vikas.webp" },
-  { rank: 31, name: "Aryan Yadav", programmes: ["PowerUp Prelims Test Series 2024: Offline", "Online"], photo: PHOTO + "2025-31-aryan-yadav.webp" },
-  { rank: 33, name: "Mayank Purohit", programmes: ["Ethics Answer Writing Programme"], photo: PHOTO + "2025-33-mayank-purohit.webp" },
-  { rank: 34, name: "Nancy Singh", programmes: ["Interview Guidance Programme"], photo: PHOTO + "2025-34-nancy-singh.webp" },
-];
+import { PHOTO, TOPPERS_2025 } from '@/lib/data/toppers';
 
 const prog = list => list.slice(0, 2).join(' · ') + (list.length > 2 ? ` +${list.length - 2} more` : '');
-const tidy = c => (c || '').split(/,(?![^(]*\))/).map(x => x.trim().replace(/^IGP$/i, 'Interview Guidance Programme')).filter(Boolean);
 
 const PLACEHOLDER = PHOTO + 'portrait/placeholder-topper.webp';
-const TONES = ['gs', 'pre', 'ca', 'mains', 'mentor'];
+const TONES = ['gs', 'pre'];
 
-const AIR_ONES = TOPPERS.filter(p => p.r === 1).sort((a, b) => b.y - a.y).slice(0, 10).map(p => {
-  const year = p.y === 2025 ? TOPPERS_2025[0] : null;
-  return {
-    year: p.y,
-    name: p.n.replace(/\b[a-z]/g, c => c.toUpperCase()),
-    programmes: year ? year.programmes : tidy(p.c),
-  };
-});
+const TOP_10 = TOPPERS_2025.filter(p => p.rank <= 10);
 
 function ReelItem({ person, i }) {
-  const { year, name, programmes } = person;
+  const { rank, name, programmes, photo } = person;
   return (
     <li className="dr__item">
       <div className={`dr__fig dr__fig--${TONES[i % TONES.length]}`}>
         <span className="dr__gem" aria-hidden="true"><i></i></span>
         <span className="dr__pic">
-          <img src={PLACEHOLDER} alt="" width="360" height="360" loading="lazy" decoding="async" />
+          <img src={photo || PLACEHOLDER} alt="" width="360" height="360" loading="lazy" decoding="async" />
         </span>
       </div>
-      <p className="dr__n" aria-hidden="true"><small>AIR</small> 1</p>
-      <h4 className="dr__name">{name}<span className="pd__vh">, All India Rank 1, UPSC CSE {year}</span></h4>
-      <p className="dr__prog">UPSC CSE {year}{programmes.length ? ` · ${prog(programmes)}` : ''}</p>
+      <p className="dr__n" aria-hidden="true"><small>AIR</small> {rank}</p>
+      <h4 className="dr__name">{name}<span className="pd__vh">, All India Rank {rank}, UPSC CSE 2025</span></h4>
+      <p className="dr__prog">UPSC CSE 2025{programmes.length ? ` · ${prog(programmes)}` : ''}</p>
     </li>
   );
 }
@@ -68,19 +28,29 @@ function ReelItem({ person, i }) {
 export default function ToppersReel() {
   return (
     <>
-      <p className="dr__h"><span id="drHead">A decade of AIR 1s</span></p>
-      <div className="dr__view" id="drList" aria-labelledby="drHead">
+      <div className="dr__view" id="drList" role="region" aria-label="UPSC CSE 2025, ranks 1 to 10">
         <ul className="dr__track">
-          {AIR_ONES.map((p, i) => <ReelItem key={p.year} person={p} i={i} />)}
+          {TOP_10.map((p, i) => <ReelItem key={p.rank} person={p} i={i} />)}
         </ul>
       </div>
     </>
   );
 }
 
+const shuffle = track => {
+  const items = [...track.children];
+  for (let i = items.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [items[i], items[j]] = [items[j], items[i]]; }
+  items.forEach((li, i) => {
+    const fig = li.querySelector('.dr__fig');
+    TONES.forEach(t => fig.classList.toggle(`dr__fig--${t}`, t === TONES[i % TONES.length]));
+    track.appendChild(li);
+  });
+};
+
 export function initDiamondReel() {
   const dr = document.querySelector('#toppers .dr'); if (!dr) return;
   const track = dr.querySelector('.dr__track'), view = dr.querySelector('.dr__view');
+  shuffle(track);
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const SPEED = 34;
   const coarse = matchMedia('(hover: none) and (pointer: coarse)').matches;

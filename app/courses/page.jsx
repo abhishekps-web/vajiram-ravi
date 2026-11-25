@@ -1,7 +1,7 @@
 import NavigationBar from '@/components/layout/NavigationBar';
 import Footer from '@/components/layout/Footer';
 import Stylesheet from '@/components/ui/Stylesheet';
-import CourseFinder from '@/components/sections/CourseFinder/CourseFinder';
+import CourseFinder from '@/components/sections/CourseFinder';
 
 // The course finder: every course, grouped. Layout from the Figma courses page; header, footer, ground, type and buttons are the site's.
 export const metadata = {

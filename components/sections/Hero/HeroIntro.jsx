@@ -2,8 +2,7 @@ import SectionWrapper from '@/components/ui/section_wrapper';
 import SectionLabel from '@/components/ui/SectionLabel';
 import { $, reduce } from '@/lib/site';
 import '@/app/tailwind-sections.css';
-
-const KEY = 'cu:font-semibold cu:text-(--ink)';
+import { STATS } from '@/lib/data/hero';
 
 export default function HeroIntro() {
   return (
@@ -14,7 +13,7 @@ export default function HeroIntro() {
           Best IAS Coaching in Delhi, India
         </h1>
         <p className="intro rv cu:max-w-[720px]! cu:text-balance" style={{ '--d': '.2s' }}>
-          With 5+ decades of excellence, <strong className={KEY}>Vajiram &amp; Ravi</strong> is one of the most trusted names for <strong className={KEY}>Best IAS Coaching in Delhi</strong>. The institute has served aspirants since 1976, offering experienced faculty, proven teaching methods, and organized preparation strategies centered on achievement.
+          With 5+ decades of excellence, Vajiram &amp; Ravi is one of the most trusted names for Best IAS Coaching in Delhi. The institute has served aspirants since 1976, offering experienced faculty, proven teaching methods, and organized preparation strategies centered on achievement.
         </p>
       </div>
       <Stats />
@@ -24,13 +23,6 @@ export default function HeroIntro() {
 
 const STAGGER_MS = 70;
 const ROLL_MS = 700;
-
-const STATS = [
-  { fig: '50+', lines: ['Years of', 'experience'] },
-  { fig: '59', lines: ['Prelims questions', 'reflected'] },
-  { fig: '10/10', lines: ['Top rankers', 'trained'] },
-  { fig: '36/50', lines: ['CSE 2025', 'rankers'] },
-];
 
 const LIST = [
   'cu:grid cu:flex-none cu:box-border cu:m-0 cu:p-0 cu:list-none cu:items-center cu:justify-center cu:text-center cu:text-(--ink)',

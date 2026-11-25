@@ -4,11 +4,10 @@ import { createProgressBar, runProgressBar, pauseProgressBar, resumeProgressBar,
 import Tabs, { initTabs } from '@/components/ui/Tabs';
 import { $, $$, reduce } from '@/lib/site';
 import '@/app/tailwind-sections.css';
-import { NP_ARCHIVE, TOPPERS } from './toppers-data';
-import { TOPPERS_2025 } from './ToppersReel';
+import { NP_ARCHIVE, TOPPERS, TOPPERS_2025 } from '@/lib/data/toppers';
 
 const SHOW = 7;
-const TONES = ['gs', 'pre', 'ca', 'mains', 'mentor'];
+const TONES = ['gs', 'pre'];
 const tidyProg = p => p.replace(/^&\s*/, '').trim()
   .replace(/^IGP$/i, 'Interview Guidance Programme').replace(/\bIGP\b/g, 'Interview Guidance Programme')
   .replace(/Interview Guidance Program\b/gi, 'Interview Guidance Programme').replace(/Prelims Cum Mains/g, 'Prelims-cum-Mains');
@@ -77,7 +76,7 @@ export default function ToppersRecord() {
               ))}
             </div>
             <div className="tp-more-wrap"><Button variant="link" iconEnd="chevron" data-more aria-expanded="false" hidden>Show all names</Button></div>
-            <div className="tp-pane cu:order-first cu:[--shield:226px] cu:max-[1100px]:[--shield:200px] cu:sticky cu:top-[calc(var(--hdr-h)+16px)] cu:h-(--col) cu:flex cu:items-center cu:justify-center cu:gap-[clamp(16px,2vw,36px)] cu:text-left cu:text-(--ink) cu:max-[900px]:hidden" aria-live="polite">
+            <div className="tp-pane cu:order-first cu:[--shield:184px] cu:max-[1100px]:[--shield:164px] cu:sticky cu:top-[calc(var(--hdr-h)+16px)] cu:h-(--col) cu:flex cu:items-center cu:justify-center cu:gap-[clamp(16px,2vw,36px)] cu:text-left cu:text-(--ink) cu:max-[900px]:hidden" aria-live="polite">
               <div className="dr__fig dr__fig--gs cu:mt-[12px]" style={{ '--dw': 'var(--shield)', '--dh': 'calc(var(--shield) * 1.24089)' }}>
                 <span className="tp-laurel" aria-hidden="true" />
                 <span className="dr__gem" aria-hidden="true" />

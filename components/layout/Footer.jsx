@@ -1,88 +1,14 @@
 import '@/app/tailwind-sections.css';
+import { SITE, site, COLUMNS, SOCIALS, STORES, LEGAL } from '@/lib/data/footer';
 
-const SITE = 'https://vajiramandravi.com/';
-const site = path => `${SITE}${path}`;
 
 const NEW_TAB = { target: '_blank', rel: 'noopener' };
 const linkProps = href => (href.startsWith('#') ? {} : NEW_TAB);
 
-const COLUMNS = [
-  {
-    title: 'Vajiram & Ravi',
-    links: [
-      { label: 'About Us', href: site('about-us/') },
-      { label: 'Careers', href: site('careers/') },
-      { label: 'Contact Us', href: '#contact' },
-      { label: 'FAQs', href: '#faq' },
-    ],
-  },
-  {
-    title: 'Free Resources',
-    links: [
-      { label: 'Current Affairs', href: site('current-affairs/') },
-      { label: 'Previous Year Papers', href: site('upsc-previous-year-papers/') },
-      { label: 'Books & Study Material', href: site('upsc-exam/upsc-book-list/') },
-      { label: 'Model Answers for Mains 2026', href: site('upsc-exam/model-answers-for-upsc-mains/') },
-    ],
-  },
-  {
-    title: 'UPSC Exam',
-    links: [
-      { label: 'Syllabus & Exam Pattern', href: site('upsc-syllabus/') },
-      { label: 'Optional Subjects List', href: site('upsc-exam/optional-subjects-for-upsc/') },
-      { label: 'Eligibility & Age Limit', href: site('upsc-exam/upsc-age-limit/') },
-      { label: 'Exam Calendar 2027', href: site('upsc-exam/upsc-calendar/') },
-      { label: 'Admit Card & Answer Key', href: site('upsc-exam/upsc-admit-card/') },
-      { label: 'Cut Off & Results', href: site('upsc-exam/upsc-cut-off/') },
-      { label: 'IAS Salary', href: site('upsc-exam/ias-salary/') },
-    ],
-  },
-  {
-    title: 'Courses & Test Series',
-    links: [
-      { label: 'GS Course 2027', href: site('courses/upsc-gs-course/') },
-      { label: '2 Year Course', href: site('courses/2-year-upsc-course/') },
-      { label: 'Online Coaching', href: site('upsc-online-coaching/') },
-      { label: 'CSAT Course', href: site('courses/upsc-csat-course/') },
-      { label: 'Current Affairs Course', href: site('courses/upsc-module-courses/current-affairs-course/') },
-      { label: 'Prelims Test Series 2027', href: site('courses/prelims-test-series/') },
-      { label: 'Mains Test Series 2027', href: site('courses/upsc-mains-test-series/') },
-      { label: 'Optional Test Series', href: site('courses/upsc-mains-optional-subject-test-series/') },
-      { label: 'Mentorship Program 2027', href: site('courses/upsc-mentorship-program/') },
-      { label: 'Interview Guidance Program', href: site('courses/interview-guidance-program/') },
-    ],
-  },
-];
 
-const SOCIALS = [
-  { label: 'YouTube', icon: 'youtube' },
-  { label: 'Facebook', icon: 'facebook' },
-  { label: 'Instagram', icon: 'instagram' },
-  { label: 'Telegram', icon: 'telegram' },
-  { label: 'Quora', icon: 'quora' },
-  { label: 'WhatsApp channel', icon: 'whatsapp' },
-];
 
 const APP = 'Vajiram IAS';
-const STORES = [
-  {
-    kicker: 'Download on the',
-    name: 'App Store',
-    href: 'https://apps.apple.com/in/app/vajiram-ias/id1482088570',
-    icon: 'M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701',
-  },
-  {
-    kicker: 'Get it on',
-    name: 'Google Play',
-    href: 'https://play.google.com/store/search?q=Vajiram%20IAS&c=apps',
-    icon: 'M22.018 13.298l-3.919 2.218-3.515-3.493 3.543-3.521 3.891 2.202a1.49 1.49 0 0 1 0 2.594zM1.337.924a1.486 1.486 0 0 0-.112.568v21.017c0 .217.045.419.124.6l11.155-11.087L1.337.924zm12.207 10.065l3.258-3.238L3.45.195a1.466 1.466 0 0 0-.946-.179l11.04 10.973zm0 2.067l-11 10.933c.298.036.612-.016.906-.183l13.324-7.54-3.23-3.21z',
-  },
-];
 
-const LEGAL = [
-  { label: 'Terms and Conditions', href: site('terms-and-conditions/') },
-  { label: 'Privacy Policy', href: site('privacy-policy/') },
-];
 
 const FOCUS = 'cu:focus-visible:outline-2 cu:focus-visible:outline-burnt cu:focus-visible:outline-offset-3';
 const LINK = `cu:font-medium cu:[font-family:var(--f,IBM_Plex_Sans),sans-serif] cu:text-taupe cu:no-underline cu:text-pretty cu:bg-[linear-gradient(currentColor,currentColor)] cu:bg-[position:0_100%] cu:bg-[length:0_1px] cu:bg-no-repeat cu:box-decoration-clone cu:[transition:color_.2s_ease,background-size_.25s_ease] cu:hover:text-burnt cu:hover:bg-[length:100%_1px] cu:focus-visible:text-burnt cu:focus-visible:bg-[length:100%_1px] cu:focus-visible:rounded-[2px] ${FOCUS}`;
@@ -126,13 +52,13 @@ function AppLinks() {
     <div className="cu:flex cu:min-w-0 cu:flex-col cu:items-start cu:stacked:col-span-2 cu:max-[760px]:items-center">
       <h2 className="cu:m-0 cu:[font-family:var(--f)] cu:text-[14px]/[20px] cu:font-semibold cu:tracking-[.06em] cu:whitespace-nowrap cu:text-espresso cu:uppercase">Get {APP} App</h2>
       <ul className="cu:m-0 cu:mt-3.5 cu:flex cu:list-none cu:flex-col cu:gap-2.5 cu:p-0 cu:stacked:flex-row cu:stacked:flex-wrap cu:max-[760px]:justify-center">
-        {STORES.map(({ kicker, name, href, icon }) => (
+        {STORES.map(({ kicker, name, href, icon, font, upper }) => (
           <li key={name}>
             <a className={`cu:group cu:flex cu:h-[46px] cu:w-[156px] cu:items-center cu:gap-2.5 cu:rounded-[10px] cu:bg-espresso cu:px-3.5 cu:text-cream cu:no-underline cu:shadow-[0_6px_14px_-8px_rgba(26,23,20,.5)] cu:[transition:background-color_.2s_ease,translate_.3s_cubic-bezier(.22,1,.36,1),box-shadow_.3s_ease] cu:hover:-translate-y-0.5 cu:hover:bg-burnt cu:hover:shadow-[0_12px_20px_-10px_rgba(204,85,0,.6)] cu:focus-visible:bg-burnt cu:motion-reduce:transition-none ${FOCUS}`} href={href} {...NEW_TAB} aria-label={`${APP}: ${kicker} ${name}`}>
               <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" className="cu:flex-none cu:fill-current"><path d={icon} /></svg>
-              <span className="cu:flex cu:flex-col cu:text-left cu:leading-none">
-                <span className="cu:text-[10px] cu:font-medium cu:uppercase cu:tracking-[.06em] cu:opacity-80">{kicker}</span>
-                <span className="cu:mt-[3px] cu:text-[16px] cu:font-semibold cu:tracking-[-.01em]">{name}</span>
+              <span className="cu:flex cu:flex-col cu:text-left cu:leading-none" style={{ fontFamily: font }}>
+                <span className={`cu:text-[10px] cu:font-normal cu:opacity-90 ${upper ? 'cu:uppercase cu:tracking-[.04em]' : 'cu:tracking-[.01em]'}`}>{kicker}</span>
+                <span className="cu:mt-[3px] cu:text-[17px] cu:font-medium cu:tracking-[-.02em]">{name}</span>
               </span>
             </a>
           </li>

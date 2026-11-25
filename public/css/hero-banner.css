@@ -422,3 +422,9 @@ html body .dl { --card-h: max(var(--card-min), calc(min(100svh, 900px) - var(--h
 html body .dl--pin, html body .dl--pin .dl__frame { height: auto; min-height: 0; }
 html body #about-vr .hx__stats { height: auto; margin-top: var(--hd-gap); padding-top: 0; padding-bottom: 0; }
 @media (min-width: 761px) { html body .dl { --card-h: max(var(--card-min), min(480px, calc(var(--hero-avail) - 184px))); } }
+
+/* the first screen shows the intro's first three lines under the card (user 2026-11-25, "reduce the height to see the HeroIntro body 3
+   lines"): the card gives up what the intro's eyebrow, heading and three lines of its paragraph need (290px; 330px where the heading
+   wraps), at most 480px as before and never below what the longest slide's copy needs (408px; 470px where it wraps more). */
+@media (min-width: 761px) { html body .dl { --card-h: max(408px, min(480px, calc(100svh - var(--hdr-h) - var(--hdr-gap) - 290px))); } }
+@media (min-width: 761px) and (max-width: 1100px) { html body .dl { --card-h: max(470px, min(480px, calc(100svh - var(--hdr-h) - var(--hdr-gap) - 330px))); } }

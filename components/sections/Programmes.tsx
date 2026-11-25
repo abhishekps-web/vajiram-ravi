@@ -6,7 +6,10 @@ import SectionLabel from "@/components/ui/SectionLabel";
 import SectionWrapper from "@/components/ui/section_wrapper";
 import Button from "@/components/ui/Button";
 import { ControlledTabs } from "@/components/ui/Tabs";
-import { coursePageHref, programmeCategories, programmes, programmesClosing, type CoverArtKind, type Href, type CoverEmblem, type Programme, type ProgrammeCategory } from "./programmes-data";
+import { contact, coursePageHref, programmeCategories, programmes, programmesClosing, type CoverArtKind, type Href, type CoverEmblem, type Programme, type ProgrammeCategory } from "@/lib/data/programmes";
+
+const MINOR = new Set(["a", "an", "and", "as", "at", "by", "for", "in", "of", "on", "or", "the", "to", "with"]);
+const titleCase = (s: string) => s.split(" ").map((w, i) => (i && MINOR.has(w) ? w : w.charAt(0).toUpperCase() + w.slice(1))).join(" ");
 
 function cx(...names: Array<string | false | null | undefined>): string {
   return names.filter(Boolean).join(" ");
@@ -26,13 +29,6 @@ function whenFontsReady(): Promise<unknown> {
 function mod(n: number, m: number): number {
   return ((n % m) + m) % m;
 }
-
-const contact = {
-  phone: "080-6220-6330",
-  phoneHref: "tel:+918062206330",
-  hours: "Mon – Sat, 9 AM – 7 PM",
-  email: "admissions@vajiramandravi.com",
-};
 
 const NUDGE =
   "cu:[transition:translate_300ms_var(--ease-out)] cu:group-hover/medal:translate-x-1 cu:motion-reduce:transition-none";
@@ -789,11 +785,12 @@ const BOOK = { w: 195, h: 230 };
 
 const FOLLOW_BOTTOM = 18;
 
-const REST_TILT = "perspective(1200px) rotateX(7deg)";
+const REST_TILT = "perspective(1200px) rotateX(10deg)";
 const HOVER_TILT = "perspective(1200px) translateY(-26px) rotateX(calc(var(--ty, 0) * -4deg)) rotateY(calc(var(--tx, 0) * 6deg))";
 const REST_SHADOW = "drop-shadow(0 8px 10px rgb(60 25 5 / 0.16))";
 const HOVER_SHADOW = "drop-shadow(calc(var(--tx, 0) * -12px) 34px 26px rgb(60 25 5 / 0.3))";
 const SPRING = "cubic-bezier(0.34, 1.56, 0.64, 1)";
+const FALL = "linear(0, 0.04 10%, 0.16 20%, 0.36 30%, 0.64 40%, 1 50%, 0.9 58%, 0.88 62%, 0.93 68%, 1 76%, 0.98 84%, 1 92%, 1)";
 const GAP = 32;
 const ROW_H = 300;
 const BOOK_TOP = 30;
@@ -1167,7 +1164,7 @@ function CourseShelf({ programmes }: { programmes: Programme[] }) {
             : hovered === i && !away
               ?
                 `left ${MOVE_MS}ms ${EASE}, top ${MOVE_MS}ms ${EASE}, width ${MOVE_MS}ms ${EASE}, height ${MOVE_MS}ms ${EASE}, transform 650ms ${SPRING}, filter 450ms ${EASE}, opacity 700ms ${EASE}`
-              : `left ${MOVE_MS}ms ${EASE}, top ${MOVE_MS}ms ${EASE}, width ${MOVE_MS}ms ${EASE}, height ${MOVE_MS}ms ${EASE}, transform 700ms ${SPRING}, filter 450ms ${EASE}, opacity 700ms ${EASE}`,
+              : `left ${MOVE_MS}ms ${EASE}, top ${MOVE_MS}ms ${EASE}, width ${MOVE_MS}ms ${EASE}, height ${MOVE_MS}ms ${EASE}, transform 900ms ${FALL}, filter 600ms ${EASE}, opacity 700ms ${EASE}`,
     };
   };
 
@@ -1175,7 +1172,6 @@ function CourseShelf({ programmes }: { programmes: Programme[] }) {
     <div ref={frameRef} className="cu:flex cu:w-full cu:flex-col cu:items-center">
       <ShelfFilter
         filter={filter}
-        counts={FILTERS.map((f) => shownIn(f).length)}
         onChoose={choose}
       />
       <p aria-live="polite" className="cu:sr-only">
@@ -1250,7 +1246,7 @@ function ProgrammeRail({ programmes, filter }: { programmes: Programme[]; filter
   );
 }
 
-function ShelfFilter({ filter, counts, onChoose }: { filter: Filter; counts: number[]; onChoose: (f: Filter) => void }) {
+function ShelfFilter({ filter, onChoose }: { filter: Filter; onChoose: (f: Filter) => void }) {
   return (
     <ControlledTabs
       className="prog__filter cu:max-[640px]:-mr-[var(--px)]! cu:max-[640px]:w-[calc(100%+var(--px))]! cu:max-[640px]:max-w-none! cu:max-[640px]:self-start! cu:max-[640px]:rounded-[14px_0_0_14px]! cu:max-[640px]:pr-5!"
@@ -1258,7 +1254,7 @@ function ShelfFilter({ filter, counts, onChoose }: { filter: Filter; counts: num
       controls="programme-shelf"
       value={filter}
       onChange={(id: string) => onChoose(id as Filter)}
-      items={FILTERS.map((f, n) => ({ id: f, label: f, count: counts[n] }))}
+      items={FILTERS.map((f) => ({ id: f, label: f }))}
     />
   );
 }
@@ -1513,6 +1509,14 @@ function CoverFront({ programme, large }: { programme: Programme; large: boolean
       <span aria-hidden="true" className="cu:pointer-events-none cu:absolute cu:inset-0 cu:bg-[linear-gradient(115deg,rgb(255_255_255/0.14),transparent_42%,rgb(0_0_0/0.16))]" />
 
 
+      <span
+        aria-hidden="true"
+        className="cu:absolute cu:rounded-[2px] cu:border cu:opacity-60 cu:[transition:opacity_500ms_var(--ease-out)] cu:group-hover/book:opacity-95"
+        style={{ ...frame, borderColor: FOIL }}
+      >
+        <span className="cu:absolute cu:inset-[3px] cu:rounded-[1px] cu:border cu:opacity-50" style={{ borderColor: FOIL }} />
+      </span>
+
       <span className={cx("cu:absolute cu:flex cu:flex-col cu:items-center", large ? "cu:px-6 cu:pt-7 cu:pb-6" : "cu:px-2.5 cu:pt-3.5 cu:pb-3")} style={frame}>
 
         <span
@@ -1521,7 +1525,13 @@ function CoverFront({ programme, large }: { programme: Programme; large: boolean
             large ? "cu:mt-2 cu:h-[3.24em] cu:text-[36px]/[1.08]" : "cu:mt-1 cu:h-[3.3em] cu:text-[20px]/[1.1] cu:max-[640px]:text-[18px]",
           )}
         >
-          {programme.name}
+          {titleCase(programme.name)}
+        </span>
+
+        <span aria-hidden="true" className={cx("cu:flex cu:items-center cu:gap-1.5", large ? "cu:mt-4" : "cu:mt-2")} style={{ color: FOIL }}>
+          <span className={cx("cu:h-px cu:bg-current cu:opacity-70", large ? "cu:w-10" : "cu:w-5")} />
+          <span className={cx("cu:rotate-45 cu:bg-current", large ? "cu:size-1.5" : "cu:size-1")} />
+          <span className={cx("cu:h-px cu:bg-current cu:opacity-70", large ? "cu:w-10" : "cu:w-5")} />
         </span>
 
         <span aria-hidden="true" className="cu:flex cu:min-h-0 cu:flex-1 cu:items-center cu:justify-center cu:max-[640px]:[&>svg]:size-[48px]">

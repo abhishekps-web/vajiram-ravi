@@ -233,3 +233,11 @@ export const coursePageHref = (programme: Pick<Programme, "name">) => {
   const key = FINDER_KEY[programme.name];
   return key ? `/coursefinder/#cat=${key}` : "/coursefinder/";
 };
+
+// The contact line on an open programme page (Programmes.tsx).
+export const contact = {
+  phone: "080-6220-6330",
+  phoneHref: "tel:+918062206330",
+  hours: "Mon – Sat, 9 AM – 7 PM",
+  email: "admissions@vajiramandravi.com",
+};

@@ -3,87 +3,24 @@ import Button from '@/components/ui/Button';
 import { buttonHTML } from '@/components/ui/Button';
 import { $, $$, esc, reduce, SITE } from '@/lib/site';
 import { CATS, CAT_D, STAGES } from '@/lib/data/courses';
+import { BAR_LINKS, DRAWER_LINKS, MORE_ORDER, STUDY_MENU, HEADLINES } from '@/lib/data/navigation';
 
-const BAR_LINKS = [
-  { k: 'toppers', href: '#toppers', t: 'Toppers' },
-  { k: 'batches', href: '#batches', t: 'Upcoming batches' },
-  { k: 'faq', href: '#faq', t: 'FAQs' },
-];
-
-const DRAWER_LINKS = [
-  ['/coursefinder/', 'All courses'],   // the course finder page (user 2026-11-23)
-  ['#toppers', 'Toppers'],
-  ['#resources', 'Study materials'],
-  ['#batches', 'Upcoming batches'],
-  ['#faq', 'FAQs'],
-  ['#contact', 'Contact us'],
-];
-
-const MORE_ORDER = ['faq', 'batches', 'toppers'];
 const MORE_GAP = 40;
 
-export const STUDY_MENU = [
-  ['Current affairs', [['Daily current affairs', 'Prelims, Mains and Quest articles', 'Daily'],
-    ['The Recitals', 'The monthly current affairs magazine', 'Monthly'],
-    ['Editorial analysis', 'The day’s editorials, explained', 'Daily'],
-    ['Daily quiz', 'Ten quick questions on the news', 'Daily']]],
-  ['Practice', [['Previous year papers', 'Prelims and Mains, with answer keys'],
-    ['Answer writing practice', 'A Mains question to write each day'],
-    ['Model answers for Mains', 'Mains 2026, paper by paper'],
-    ['Essay topics', 'Past and probable essay themes']]],
-  ['Study material', [['GS postal books', 'Printed General Studies material'],
-    ['NCERT notes', 'The basics every paper builds on'],
-    ['Government schemes', 'Schemes and missions, summed up'],
-    ['Ethics case studies', 'GS Paper IV cases, with approaches']]],
-  ['Exam guide', [['Syllabus & exam pattern', 'Each stage, and how it is marked'],
-    ['UPSC Calendar 2027', 'Every date, the age limit, eligibility'],
-    ['Optional subjects list', 'All optionals, and how to choose'],
-    ['Interview guidance tips', 'Preparing for the Personality Test']]],
-];
-
-const HEADLINES = [
-  ['Mains', 'Supreme Court redefines the meaning of ‘industry’', 'current-affairs/upsc-mains-current-affairs/'],
-  ['Mains', 'NITI Aayog flags gap between education and employment', 'current-affairs/upsc-mains-current-affairs/'],
-  ['Prelims', 'Thiksey Monastery', 'current-affairs/upsc-prelims-current-affairs/'],
-];
-
-const HI = {
-  'All courses': 'सभी कोर्स', 'Toppers': 'टॉपर्स', 'Study materials': 'अध्ययन सामग्री', 'Upcoming batches': 'आगामी बैच',
-  'FAQs': 'सामान्य प्रश्न', 'Contact us': 'संपर्क करें', "Let's talk": 'बात करें', 'More': 'और',
-};
-const LANG_KEY = 'vr-lang';
 const EASE = 'cubic-bezier(.2, .7, .2, 1)';
 
-const LINK = 'cu:flex cu:items-center cu:h-[34px] cu:px-[13px] cu:rounded-full cu:border-0 cu:bg-transparent cu:cursor-pointer cu:whitespace-nowrap cu:no-underline cu:[font-family:var(--btn-font)] cu:font-medium cu:text-base cu:leading-[var(--btn-lh)] cu:tracking-[var(--btn-ls)] cu:text-[var(--ink)] cu:transition-colors cu:duration-200 cu:hover:bg-[rgba(194,65,12,.1)] cu:hover:text-[var(--brand)] cu:aria-expanded:bg-[rgba(194,65,12,.1)] cu:aria-expanded:text-[var(--brand)] cu:focus-visible:outline-2 cu:focus-visible:outline-offset-2 cu:focus-visible:outline-[var(--brand)] cu:data-[over]:hidden cu:[html[lang=hi]_&]:[font-family:Mukta,var(--btn-font)]';
+const LINK = 'cu:flex cu:items-center cu:h-[34px] cu:px-[13px] cu:rounded-full cu:border-0 cu:bg-transparent cu:cursor-pointer cu:whitespace-nowrap cu:no-underline cu:[font-family:var(--btn-font)] cu:font-medium cu:text-base cu:leading-[var(--btn-lh)] cu:tracking-[var(--btn-ls)] cu:text-[var(--ink)] cu:transition-colors cu:duration-200 cu:hover:bg-[rgba(194,65,12,.1)] cu:hover:text-[var(--brand)] cu:aria-expanded:bg-[rgba(194,65,12,.1)] cu:aria-expanded:text-[var(--brand)] cu:focus-visible:outline-2 cu:focus-visible:outline-offset-2 cu:focus-visible:outline-[var(--brand)] cu:data-[over]:hidden';
 
 const MEGA = 'cu:absolute cu:-left-2.5 cu:top-[calc(100%+12px)] cu:grid cu:box-border cu:overflow-hidden cu:rounded-[var(--r-box,16px)] cu:bg-white cu:shadow-[0_0_0_1px_rgba(38,20,8,.06),0_30px_60px_-24px_rgba(60,24,6,.45)] cu:invisible cu:opacity-0 cu:-translate-y-2 cu:[transition:opacity_.2s_var(--ease),translate_.25s_var(--ease),visibility_0s_.25s] cu:group-data-[open]/mega:visible cu:group-data-[open]/mega:opacity-100 cu:group-data-[open]/mega:translate-y-0 cu:group-data-[open]/mega:[transition:opacity_.22s_var(--ease),translate_.3s_var(--ease),visibility_0s] cu:motion-reduce:transition-none cu:motion-reduce:translate-y-0';
 
-const LANG_WRAP = 'cu:group/lang cu:relative cu:flex cu:items-center cu:h-11 cu:p-1 cu:rounded-full cu:bg-[#F9F0E4] cu:transition-[background-color,box-shadow] cu:duration-300 cu:motion-safe:animate-[nav-lang-in_.7s_var(--ease)_.15s_both]';
-const LANG_WRAP_BAR = 'cu:max-[600px]:p-0';
-const LANG_THUMB = 'cu:absolute cu:inset-y-1 cu:left-1 cu:w-[calc(50%-4px)] cu:rounded-full cu:bg-[var(--brand)] cu:transition-transform cu:duration-[.45s] cu:ease-[cubic-bezier(.34,1.4,.5,1)] cu:group-data-[cur=hi]/lang:translate-x-full cu:motion-reduce:transition-none';
-const LANG_THUMB_BAR = 'cu:max-[600px]:hidden';
-const LANG_BTN = 'cu:relative cu:z-[1] cu:min-w-11 cu:h-full cu:px-3 cu:rounded-full cu:border-0 cu:bg-transparent cu:cursor-pointer cu:text-[var(--ink)] cu:transition-[color,translate] cu:duration-[.25s] cu:aria-pressed:text-white cu:fine:hover:aria-[pressed=false]:text-[var(--brand)] cu:fine:hover:aria-[pressed=false]:-translate-y-px cu:focus-visible:outline-2 cu:focus-visible:outline-offset-2 cu:focus-visible:outline-[var(--brand)] cu:motion-reduce:transition-none';
-const LANG_BTN_BAR = 'cu:max-[600px]:aria-pressed:hidden cu:max-[600px]:h-11 cu:max-[600px]:px-1.5';
-const LANG_EN = 'cu:[font:600_15px/1_var(--f)] cu:tracking-[.02em]';
-const LANG_EN_BAR = 'cu:max-[480px]:text-[13.5px]';
-const LANG_HI = 'cu:[font:400_20px/1_var(--f-hi)] cu:pt-0.5';
-const LANG_HI_BAR = 'cu:max-[480px]:text-[17px]';
-
-function LangSwitch({ bar }) {
-  return (
-    <div className={`${LANG_WRAP} ${bar ? LANG_WRAP_BAR : 'cu:flex-none'}`} data-lang-sw="" data-cur="en" role="group" aria-label="Language / भाषा">
-      <span className={`${LANG_THUMB} ${bar ? LANG_THUMB_BAR : ''}`} aria-hidden="true" />
-      <button className={`${LANG_BTN} ${LANG_EN} ${bar ? `${LANG_BTN_BAR} ${LANG_EN_BAR}` : ''}`} type="button" data-lang="en" lang="en" aria-pressed="true" title="English">EN</button>
-      <button className={`${LANG_BTN} ${LANG_HI} ${bar ? `${LANG_BTN_BAR} ${LANG_HI_BAR}` : ''}`} type="button" data-lang="hi" lang="hi" aria-pressed="false" title="हिन्दी">हिं</button>
-    </div>
-  );
-}
-
 function Logo() {
-  const img = 'cu:h-[52px] cu:w-auto cu:transition-transform cu:duration-300 cu:ease-[cubic-bezier(.22,1,.36,1)] cu:group-hover/logo:scale-[1.03] cu:group-focus-visible/logo:scale-[1.03] cu:max-[1023.98px]:w-[210px] cu:max-[1023.98px]:max-w-full cu:max-[1023.98px]:h-auto cu:max-[760px]:w-[176px]';
+  const box = 'cu:flex cu:items-center cu:gap-[calc(var(--lh)*.167)] cu:[--lh:52px] cu:max-[1023.98px]:[--lh:49px] cu:max-[760px]:[--lh:41px] cu:transition-transform cu:duration-300 cu:ease-[cubic-bezier(.22,1,.36,1)] cu:group-hover/logo:scale-[1.03] cu:group-focus-visible/logo:scale-[1.03]';
   return (
     <a className="cu:group/logo cu:flex cu:flex-none cu:items-center cu:h-[52px] cu:max-[760px]:h-11 cu:mr-3.5 cu:rounded-lg cu:focus-visible:outline-2 cu:focus-visible:outline-offset-4 cu:focus-visible:outline-[var(--brand)] cu:max-[1023.98px]:flex-[0_1_auto] cu:max-[1023.98px]:min-w-0 cu:max-[1023.98px]:mr-auto" href="#top" aria-label="Vajiram & Ravi home">
-      <img className={`${img} cu:block`} src="/assets/img/brand/logo.webp" alt="Vajiram & Ravi, Institute for IAS Examination" width="966" height="227" />
+      <span className={box}>
+        <img className="cu:block cu:h-(--lh) cu:w-auto cu:flex-none" src="/assets/img/brand/logo-emblem.webp" alt="" width="222" height="227" />
+        <img className="cu:block cu:h-[calc(var(--lh)*.476)] cu:w-auto cu:min-w-0" src="/assets/img/brand/logo-text.webp" alt="Vajiram & Ravi, Institute for IAS Examination" width="707" height="127" />
+      </span>
     </a>
   );
 }
@@ -94,7 +31,7 @@ function MegaMenu({ id, wrapId, btnId, label, wide }) {
     : 'cu:w-[min(1240px,calc(100vw-2*var(--chrome-px)))] cu:grid-cols-[minmax(0,1fr)_300px] cu:max-[1500px]:grid-cols-[minmax(0,1fr)_270px]';
   return (
     <div className="cu:group/mega cu:static" id={wrapId}>
-      <button className={LINK} id={btnId} type="button" aria-expanded="false" aria-controls={id} data-i18n="">{label}</button>
+      <button className={LINK} id={btnId} type="button" aria-expanded="false" aria-controls={id}>{label}</button>
       <div className={`${MEGA} ${size}`} id={id} />
     </div>
   );
@@ -104,13 +41,13 @@ function MoreMenu() {
   return (
     <div className="cu:group/more cu:relative cu:flex cu:items-center cu:[&[hidden]]:hidden" id="navMore" hidden>
       <button className={`${LINK} cu:gap-1.5`} id="moreBtn" type="button" aria-expanded="false" aria-controls="moreMenu" aria-haspopup="true">
-        <span data-i18n="">More</span>
+        <span>More</span>
         <svg className="cu:fill-none cu:stroke-current cu:[stroke-width:1.8] cu:[stroke-linecap:round] cu:[stroke-linejoin:round] cu:transition-[rotate] cu:duration-300 cu:ease-[cubic-bezier(.22,1,.36,1)] cu:group-data-[open]/more:rotate-180 cu:motion-reduce:transition-none" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M4 6l4 4 4-4" /></svg>
       </button>
       <ul className="cu:absolute cu:top-[calc(100%+14px)] cu:right-0 cu:z-[70] cu:min-w-[220px] cu:m-0 cu:p-2 cu:list-none cu:bg-white cu:rounded-[var(--r-box,16px)] cu:shadow-[0_0_0_1px_rgba(122,42,10,.06),0_24px_48px_-20px_rgba(60,25,5,.35)] cu:invisible cu:opacity-0 cu:-translate-y-1.5 cu:pointer-events-none cu:[transition:opacity_.2s_ease,translate_.3s_cubic-bezier(.22,1,.36,1),visibility_0s_linear_.3s] cu:group-data-[open]/more:visible cu:group-data-[open]/more:opacity-100 cu:group-data-[open]/more:translate-y-0 cu:group-data-[open]/more:pointer-events-auto cu:group-data-[open]/more:delay-0 cu:motion-reduce:transition-none cu:[&>li+li]:mt-0.5" id="moreMenu">
         {BAR_LINKS.map(({ k, href, t }) => (
           <li key={k} className="cu:[&[hidden]]:hidden" data-more={k} hidden>
-            <a className="cu:block cu:w-full cu:box-border cu:py-[11px] cu:px-3.5 cu:rounded-[10px] cu:text-[var(--ink)] cu:no-underline cu:whitespace-nowrap cu:[font-family:var(--btn-font)] cu:font-medium cu:text-[17px] cu:leading-[1.2] cu:transition-colors cu:duration-200 cu:hover:bg-[rgba(194,65,12,.08)] cu:hover:text-[var(--brand)] cu:focus-visible:bg-[rgba(194,65,12,.08)] cu:focus-visible:text-[var(--brand)] cu:focus-visible:outline-none cu:focus-visible:shadow-[inset_0_0_0_2px_var(--brand)] cu:[html[lang=hi]_&]:[font-family:Mukta,var(--btn-font)]" href={href} data-i18n="">{t}</a>
+            <a className="cu:block cu:w-full cu:box-border cu:py-[11px] cu:px-3.5 cu:rounded-[10px] cu:text-[var(--ink)] cu:no-underline cu:whitespace-nowrap cu:[font-family:var(--btn-font)] cu:font-medium cu:text-[17px] cu:leading-[1.2] cu:transition-colors cu:duration-200 cu:hover:bg-[rgba(194,65,12,.08)] cu:hover:text-[var(--brand)] cu:focus-visible:bg-[rgba(194,65,12,.08)] cu:focus-visible:text-[var(--brand)] cu:focus-visible:outline-none cu:focus-visible:shadow-[inset_0_0_0_2px_var(--brand)]" href={href}>{t}</a>
           </li>
         ))}
       </ul>
@@ -127,10 +64,10 @@ export default function NavigationBar() {
           <Logo />
           <nav className="cu:flex cu:items-center cu:gap-0.5 cu:max-[1600px]:gap-0 cu:max-[1023.98px]:hidden" id="navLinks" aria-label="Main">
             <MegaMenu id="mega" wrapId="explore" btnId="exploreBtn" label="All courses" wide />
-            <a className={LINK} href="#toppers" data-more="toppers" data-i18n="">Toppers</a>
+            <a className={LINK} href="#toppers" data-more="toppers">Toppers</a>
             <MegaMenu id="megaSm" wrapId="studyNav" btnId="studyBtn" label="Study materials" />
-            <a className={LINK} href="#batches" data-more="batches" data-i18n="">Upcoming batches</a>
-            <a className={LINK} href="#faq" data-more="faq" data-i18n="">FAQs</a>
+            <a className={LINK} href="#batches" data-more="batches">Upcoming batches</a>
+            <a className={LINK} href="#faq" data-more="faq">FAQs</a>
             <MoreMenu />
           </nav>
           <button className="cu:group/burger cu:hidden cu:max-[1023.98px]:block cu:relative cu:flex-none cu:order-2 cu:size-11 cu:max-[760px]:size-10 cu:p-0 cu:rounded-xl cu:border-0 cu:bg-transparent cu:cursor-pointer cu:text-[var(--ink)] cu:transition-colors cu:duration-200 cu:hover:bg-[rgba(38,38,38,.06)] cu:focus-visible:outline-2 cu:focus-visible:outline-offset-2 cu:focus-visible:outline-current cu:max-[760px]:ml-auto" id="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="drawer">
@@ -139,17 +76,14 @@ export default function NavigationBar() {
           </button>
         </div>
         <div className="cu:flex cu:items-center cu:gap-2.5 cu:pr-3 cu:max-[1023.98px]:order-1 cu:max-[760px]:hidden" id="navEnd">
-          {/* EN / हिं in the bar beside "Let's talk", as in the course finder's nav (user 2026-11-23); phones keep it in the drawer */}
-          <LangSwitch bar />
           <Button className="talk" size="sm" shadow={false} href="#contact" iconEnd="arrow" data-talk="">Let's talk</Button>
         </div>
       </header>
       <div className="cu:fixed cu:z-[49] cu:top-[100px] cu:inset-x-[var(--chrome-px)] cu:grid cu:p-2.5 cu:rounded-[20px] cu:bg-white cu:shadow-[0_18px_48px_rgba(38,38,38,.16)] cu:max-[900px]:top-[92px] cu:[&[hidden]]:hidden" id="drawer" hidden>
         {DRAWER_LINKS.map(([href, t]) => (
-          <a key={href} className="cu:py-3 cu:px-3.5 cu:rounded-xl cu:text-[var(--ink)] cu:no-underline cu:[font-family:var(--btn-font)] cu:font-medium cu:text-lg cu:leading-[var(--btn-lh)] cu:tracking-[var(--btn-ls)] cu:transition-colors cu:duration-200 cu:hover:bg-[var(--sand)] cu:focus-visible:bg-[var(--sand)] cu:focus-visible:outline-2 cu:focus-visible:-outline-offset-2 cu:focus-visible:outline-[var(--brand)] cu:[html[lang=hi]_&]:[font-family:Mukta,var(--btn-font)]" href={href} data-i18n="">{t}</a>
+          <a key={href} className="cu:py-3 cu:px-3.5 cu:rounded-xl cu:text-[var(--ink)] cu:no-underline cu:[font-family:var(--btn-font)] cu:font-medium cu:text-lg cu:leading-[var(--btn-lh)] cu:tracking-[var(--btn-ls)] cu:transition-colors cu:duration-200 cu:hover:bg-[var(--sand)] cu:focus-visible:bg-[var(--sand)] cu:focus-visible:outline-2 cu:focus-visible:-outline-offset-2 cu:focus-visible:outline-[var(--brand)]" href={href}>{t}</a>
         ))}
         <div className="cu:hidden cu:max-[760px]:flex cu:items-center cu:gap-3 cu:mt-2 cu:pt-3 cu:px-1 cu:pb-1 cu:border-t cu:border-[var(--sand)]">
-          <LangSwitch />
           <Button className="cu:flex-[1_1_auto] cu:min-w-0" size="sm" shadow={false} href="#contact" iconEnd="arrow" data-talk="">Let's talk</Button>
         </div>
       </div>
@@ -320,37 +254,7 @@ export function initNavMore() {
   wrap.addEventListener('focusout', e => { if (isOpen() && !wrap.contains(e.relatedTarget)) setOpen(false); });
   ['#exploreBtn', '#studyBtn'].forEach(s => $(s)?.addEventListener('click', () => setOpen(false)));
   addEventListener('resize', refit);
-  document.addEventListener('langchange', refit);
   document.fonts?.ready.then(refit);
   fit();
 }
 
-export function initLangSwitch() {
-  const sws = $$('[data-lang-sw]');
-  if (!sws.length) return;
-  const targets = () => $$('[data-i18n], [data-talk] .btn__t');
-  const btns = sws.flatMap(w => $$('button[data-lang]', w));
-  const apply = (lang, animate) => {
-    sws.forEach(w => { w.dataset.cur = lang; });
-    document.documentElement.lang = lang;
-    btns.forEach(b => b.setAttribute('aria-pressed', b.dataset.lang === lang));
-    targets().forEach(el => {
-      if (!el.dataset.en) el.dataset.en = el.textContent.trim();
-      const t = lang === 'hi' ? (HI[el.dataset.en] || el.dataset.en) : el.dataset.en;
-      if (el.textContent.trim() === t) return;
-      el.textContent = t;
-      if (animate && !reduce) el.animate([{ opacity: 0, translate: '0 6px' }, { opacity: 1, translate: '0 0' }], { duration: 450, easing: EASE });
-    });
-    document.dispatchEvent(new CustomEvent('langchange', { detail: { lang } }));
-  };
-  let saved = 'en';
-  try { saved = localStorage.getItem(LANG_KEY) === 'hi' ? 'hi' : 'en'; } catch (e) {}
-  apply(saved, false);
-  btns.forEach(b => b.addEventListener('click', () => {
-    const lang = b.dataset.lang;
-    if (sws[0].dataset.cur === lang) return;
-    try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
-    apply(lang, true);
-    if (document.activeElement === b && !b.offsetParent) $$('button[data-lang]', b.parentElement).find(x => x !== b)?.focus();
-  }));
-}

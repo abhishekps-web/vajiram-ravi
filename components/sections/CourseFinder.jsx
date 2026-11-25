@@ -2,28 +2,15 @@
 /* The course finder (/courses). Layout from the Figma "Courses page – final style – 1440" (node 203:6519): a left-aligned title block,
    then two columns: the courses in groups (a mode filter on top, each group a heading, one line and a three-across card grid) and a
    sticky category list with a help card; a closing "Ready to start" block with two paths. Look: this site's own (ground, type, tab bar,
-   buttons). `#cat=<family or group>` opens a group. Data: courses.json (slimmed from the finder's CF_DATA); banners in
+   buttons). `#cat=<family or group>` opens a group. Data: lib/data/course-finder.json (slimmed from the finder's CF_DATA); banners in
    public/assets/img/courses. Styles: public/css/course-finder.css. */
 import { useEffect, useMemo, useRef, useState } from 'react';
 import CarouselDots from '@/components/ui/CarouselDots';
 import Button from '@/components/ui/Button';
-import DATA from './courses.json';
+import DATA from '@/lib/data/course-finder.json';
+import { GROUPS, MODES, MEDIUMS, FEATURED } from '@/lib/data/course-finder';
 
-const GROUPS = [
-  { id: 'gs', label: 'GS Foundation', fams: ['gs-11', 'gs-2yr'], sub: 'The whole General Studies syllabus for Prelims and Mains, over 11 months or 2 years.' },
-  { id: 'csat-interview', label: 'CSAT & Interview', fams: ['csat', 'interview'], sub: 'Prelims Paper II practice, and mock boards for the 275-mark personality test.' },
-  { id: 'mentorship', label: 'Mentorship', fams: ['mentorship'], sub: 'A personal mentor shapes your strategy and keeps your plan on track, week by week.' },
-  { id: 'mains-ts', label: 'Mains Test Series', fams: ['mains-ts'], sub: 'Write to time, then read what an evaluator would change. English and Hindi.' },
-  { id: 'prelims-ts', label: 'Prelims Test Series', fams: ['prelims-ts'], sub: 'Full-length tests with the reasoning behind every answer, plus current affairs.' },
-  { id: 'module', label: 'Module Courses', fams: ['module'], sub: 'Short modules on one part of the syllabus: Economics, Ethics and SMART current affairs.' },
-  { id: 'optional', label: 'Optional Subject Programme', fams: ['optional'], sub: 'Two papers, 500 marks, taught by a specialist in your optional subject.' },
-  { id: 'optional-ts', label: 'Optional Test Series', fams: ['optional-ts'], sub: 'Answer writing for your optional, evaluated paper by paper.' },
-  { id: 'crash', label: 'Crash Course & Enrichment', fams: ['crash', 'enrichment'], sub: 'Short, intensive optional courses, and answer-writing programmes for sharper answers.' },
-  { id: 'ifos-postal', label: 'IFoS & Postal', fams: ['ifos', 'postal'], sub: 'Forestry and Geology for the Indian Forest Service, and printed study material by post.' },
-];
 const groupOf = key => GROUPS.find(g => g.id === key || g.fams.includes(key));
-const MODES = [{ id: 'all', label: 'All courses' }, { id: 'classroom', label: 'Classroom' }, { id: 'online', label: 'LIVE-Online' }];
-const MEDIUMS = [{ id: 'all', label: 'All mediums' }, { id: 'en', label: 'English' }, { id: 'hi', label: 'हिंदी' }];
 
 /* A dropdown filter: a button that opens a listbox (arrows, Home/End, Enter, Esc, outside click). */
 function Dropdown({ label, value, onChange, items }) {
@@ -109,9 +96,6 @@ const I_ROOM = ['M22 4.6V17.4C22 17.7314 21.7314 18 21.4 18H2.6C2.26863 18 2 17.
 const I_LIVE = ['M15 12V16.4C15 16.7314 14.7314 17 14.4 17H3.6C3.26863 17 3 16.7314 3 16.4V7.6C3 7.26863 3.26863 7 3.6 7H14.4C14.7314 7 15 7.26863 15 7.6V12ZM15 12L20.0159 7.82009C20.4067 7.49443 21 7.77232 21 8.28103V15.719C21 16.2277 20.4067 16.5056 20.0159 16.1799L15 12Z'];
 const I_FEE = ['M2 7.6C2 6.7 2.7 6 3.6 6H20.4C21.3 6 22 6.7 22 7.6V16.4C22 17.3 21.3 18 20.4 18H3.6C2.7 18 2 17.3 2 16.4V7.6Z', 'M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z', 'M5.5 9.5V14.5', 'M18.5 9.5V14.5'];
 
-/* Handpicked highlights, shown as ordinary course cards. */
-const FEATURED = ['courses-upsc-gs-course', 'courses-upsc-gs-online-course', 'courses-prelims-test-series-powerup', 'courses-prelims-test-series-camp',
-  'courses-upsc-module-courses-prelims-current-affairs-programme', 'courses-upsc-module-courses-current-affairs-course'];
 
 function Card({ it, now }) {
   return (

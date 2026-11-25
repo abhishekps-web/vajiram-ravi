@@ -2425,3 +2425,7 @@ html.is-scrolling { scrollbar-color: rgba(194, 65, 12, .6) transparent; }
 
 /* phones: the header band takes the Programmes section's ground (user 2026-11-24) */
 @media (max-width: 760px) { html .nav-band { background: var(--ground-jaali); background-size: 100% 100%, 36px 36px, auto; background-position: 0 0, 0 0, 0 0; } }
+
+/* FAQ cards: the Contact us card's hairline border (user 2026-11-25). */
+#faq .qa, #faq .qa:hover { box-shadow: inset 0 0 0 1px rgba(45, 18, 4, .08); }
+#faq .qa[open] { box-shadow: inset 0 0 0 1px rgba(45, 18, 4, .08), 0 18px 34px -22px rgba(120, 50, 10, .45); }

@@ -720,10 +720,9 @@ export default function CircularCarousel<T>({
                       className="cu:absolute cu:inset-0 cu:bg-no-repeat cu:[filter:blur(3px)_saturate(1.1)] cu:scale-[1.04]"
                       style={{ backgroundImage: near ? `url("${src}")` : undefined, backgroundSize: `${width}px auto`, backgroundPosition: `0 ${imageY}`, backgroundColor: backColor }}
                     />
-                    <span aria-hidden="true" className="cu:absolute cu:inset-0 cu:bg-[linear-gradient(180deg,rgb(255_255_255/.22)_0%,rgb(255_255_255/.3)_38%,rgb(255_250_242/.86)_70%,rgb(255_250_242/.92)_100%)]" />
-                    <span aria-hidden="true" className="cu:absolute cu:inset-0 cu:rounded-[inherit] cu:shadow-[inset_0_0_0_1px_rgb(255_255_255/.7),inset_0_1px_0_rgb(255_255_255/.9)]" />
+                    <span aria-hidden="true" className="cu:absolute cu:inset-0 cu:bg-[linear-gradient(180deg,rgb(243_232_214/.12)_0%,rgb(243_232_214/.3)_30%,rgb(243_232_214/.97)_58%,#F3E8D6_100%)]" />                    <span aria-hidden="true" className="cu:absolute cu:inset-0 cu:rounded-[inherit] cu:shadow-[inset_0_0_0_1px_rgb(255_255_255/.7),inset_0_1px_0_rgb(255_255_255/.9)]" />
                     <span
-                      className="cu:relative cu:flex cu:size-full cu:flex-col cu:justify-end cu:gap-1 cu:px-5 cu:pt-5 cu:pb-4 cu:text-left cu:[translate:0_8px] cu:[transition:translate_.45s_cubic-bezier(0.22,1,0.36,1)] cu:group-hover/cc:[translate:0_0] cu:group-focus-within/cc:[translate:0_0] cu:motion-reduce:transition-none"
+                      className="cu:relative cu:flex cu:size-full cu:flex-col cu:justify-end cu:gap-0 cu:px-5 cu:pt-5 cu:pb-5 cu:text-left cu:[translate:0_8px] cu:[transition:translate_.45s_cubic-bezier(0.22,1,0.36,1)] cu:group-hover/cc:[translate:0_0] cu:group-focus-within/cc:[translate:0_0] cu:motion-reduce:transition-none"
                     >
                       {cardDetail(item)}
                     </span>
