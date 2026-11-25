@@ -59,7 +59,7 @@ export default function NavigationBar() {
   return (
     <>
       <div className="nav-band cu:absolute cu:top-0 cu:inset-x-0 cu:z-[2] cu:h-[calc(var(--hdr-h)+var(--hdr-gap))] cu:pointer-events-none" aria-hidden="true" />
-      <header className="cu:fixed cu:z-50 cu:top-[var(--hdr-pt)] cu:left-[calc(var(--chrome-px)+10px)] cu:min-[901px]:left-[calc(var(--chrome-cap)+34px)] cu:right-[calc(var(--chrome-px)+10px)] cu:min-[901px]:right-[calc(var(--chrome-cap)+34px)] cu:flex cu:items-center cu:justify-between cu:pointer-events-none cu:*:pointer-events-auto cu:after:absolute cu:after:-inset-y-2 cu:after:-inset-x-2.5 cu:after:-z-10 cu:after:rounded-[24px] cu:max-[900px]:after:rounded-[20px] cu:after:pointer-events-none cu:after:bg-[#FFFAF3] cu:min-[761px]:data-[top]:after:opacity-0 cu:not-data-[top]:after:shadow-[0_6px_18px_-8px_rgba(40,25,10,.22),0_1px_3px_rgba(40,25,10,.08)] cu:after:transition-[opacity,box-shadow] cu:after:duration-[.25s] cu:after:ease-out cu:max-[760px]:after:bg-[#FFFAF3] cu:motion-reduce:after:transition-none cu:max-[1023.98px]:justify-start cu:max-[1023.98px]:gap-2" id="nav" data-top="">
+      <header className="cu:fixed cu:z-50 cu:top-[var(--hdr-pt)] cu:left-[calc(var(--chrome-px)+10px)] cu:min-[901px]:left-[calc(var(--chrome-cap)+34px)] cu:right-[calc(var(--chrome-px)+10px)] cu:min-[901px]:right-[calc(var(--chrome-cap)+34px)] cu:flex cu:items-center cu:justify-between cu:pointer-events-none cu:*:pointer-events-auto cu:after:absolute cu:after:-inset-y-2 cu:after:-inset-x-2.5 cu:after:-z-10 cu:after:rounded-[24px] cu:max-[900px]:after:rounded-[20px] cu:after:pointer-events-none cu:after:bg-[#FFFAF3] cu:min-[761px]:data-[top]:after:opacity-0 cu:not-data-[top]:after:shadow-[0_6px_18px_-8px_rgba(40,25,10,.22),0_1px_3px_rgba(40,25,10,.08)] cu:after:transition-[opacity,box-shadow] cu:after:duration-[.25s] cu:after:ease-out cu:max-[760px]:after:bg-[#FFFAF3] cu:motion-reduce:after:transition-none cu:max-[1023.98px]:justify-start cu:max-[1023.98px]:gap-2 cu:max-[760px]:flex-wrap cu:max-[760px]:gap-0" id="nav" data-top="">
         <div className="cu:relative cu:flex cu:items-center cu:gap-1.5 cu:h-[54px] cu:py-px cu:pl-3 cu:pr-2.5 cu:max-[1023.98px]:contents">
           <Logo />
           <nav className="cu:flex cu:items-center cu:gap-0.5 cu:max-[1600px]:gap-0 cu:max-[1023.98px]:hidden" id="navLinks" aria-label="Main">
@@ -78,15 +78,15 @@ export default function NavigationBar() {
         <div className="cu:flex cu:items-center cu:gap-2.5 cu:pr-3 cu:max-[1023.98px]:order-1 cu:max-[760px]:hidden" id="navEnd">
           <Button className="talk" size="sm" shadow={false} href="#contact" iconEnd="arrow" data-talk="">Let's talk</Button>
         </div>
-      </header>
-      <div className="cu:fixed cu:z-[49] cu:top-[100px] cu:inset-x-[var(--chrome-px)] cu:grid cu:p-2.5 cu:rounded-[20px] cu:bg-white cu:shadow-[0_18px_48px_rgba(38,38,38,.16)] cu:max-[900px]:top-[92px] cu:[&[hidden]]:hidden" id="drawer" hidden>
+        <div className="cu:fixed cu:z-[49] cu:top-[100px] cu:inset-x-[var(--chrome-px)] cu:grid cu:p-2.5 cu:rounded-[20px] cu:bg-white cu:shadow-[0_18px_48px_rgba(38,38,38,.16)] cu:max-[900px]:top-[92px] cu:max-[760px]:static cu:max-[760px]:order-3 cu:max-[760px]:basis-full cu:max-[760px]:mt-2 cu:max-[760px]:p-0 cu:max-[760px]:pt-2 cu:max-[760px]:pb-1 cu:max-[760px]:max-h-[calc(100svh-120px)] cu:max-[760px]:overflow-y-auto cu:max-[760px]:rounded-none cu:max-[760px]:bg-transparent cu:max-[760px]:shadow-none cu:max-[760px]:border-0 cu:max-[760px]:border-t cu:max-[760px]:border-solid cu:max-[760px]:border-[rgba(45,18,4,.08)] cu:[&[hidden]]:hidden" id="drawer" hidden>
         {DRAWER_LINKS.map(([href, t]) => (
           <a key={href} className="cu:py-3 cu:px-3.5 cu:rounded-xl cu:text-[var(--ink)] cu:no-underline cu:[font-family:var(--btn-font)] cu:font-medium cu:text-lg cu:leading-[var(--btn-lh)] cu:tracking-[var(--btn-ls)] cu:transition-colors cu:duration-200 cu:hover:bg-[var(--sand)] cu:focus-visible:bg-[var(--sand)] cu:focus-visible:outline-2 cu:focus-visible:-outline-offset-2 cu:focus-visible:outline-[var(--brand)]" href={href}>{t}</a>
         ))}
         <div className="cu:hidden cu:max-[760px]:flex cu:items-center cu:gap-3 cu:mt-2 cu:pt-3 cu:px-1 cu:pb-1 cu:border-t cu:border-[var(--sand)]">
           <Button className="cu:flex-[1_1_auto] cu:min-w-0" size="sm" shadow={false} href="#contact" iconEnd="arrow" data-talk="">Let's talk</Button>
         </div>
-      </div>
+        </div>
+      </header>
       <div className="cu:fixed cu:inset-0 cu:z-[49] cu:pointer-events-none cu:invisible cu:opacity-0 cu:bg-[rgba(26,10,2,.16)] cu:backdrop-blur-[10px] cu:[transition:opacity_.3s_var(--ease),visibility_0s_.3s] cu:data-[open]:visible cu:data-[open]:opacity-100 cu:data-[open]:[transition:opacity_.3s_var(--ease),visibility_0s] cu:motion-reduce:transition-none" id="megaScrim" aria-hidden="true" />
     </>
   );

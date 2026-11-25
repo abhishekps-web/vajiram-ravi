@@ -162,6 +162,7 @@ export default function CircularCarousel<T>({
   const [shown, setShown] = useState(true);
   const [playing, setPlaying] = useState(interval > 0);
   const [near, setNear] = useState(false);
+  const [opened, setOpened] = useState(false);
   useEffect(() => {
     const stage = stageRef.current;
     if (!stage || near) return;
@@ -180,7 +181,7 @@ export default function CircularCarousel<T>({
   const liveRef = useRef<HTMLParagraphElement>(null);
 
   const sim = useRef<Sim>({ pos: 0, vel: 0, target: 0, stiffness: SNAP_HAND, held: false, lean: { x: 0, y: 0, aimX: 0, aimY: 0 }, clock: 0 });
-  const flags = useRef({ playing: interval > 0, onScreen: false, still: false, entered: true, hover: false, focus: false, edge: false });
+  const flags = useRef({ playing: interval > 0, onScreen: false, still: false, entered: true, hover: false, focus: false, edge: false, open: false });
   const frontRef = useRef(0);
   const depths = useRef<string[]>([]);
   const frame = useRef(0);
@@ -227,6 +228,8 @@ export default function CircularCarousel<T>({
       if (nearest !== frontRef.current) {
         frontRef.current = nearest;
         f.hover = false;
+        f.open = false;
+        setOpened(false);
         setFront(nearest);
       }
     };
@@ -260,7 +263,7 @@ export default function CircularCarousel<T>({
       const counting = interval > 0 && f.playing && !f.still && f.entered && f.onScreen && slots > 1;
       if (counting) {
         busy = true;
-        if (!f.hover && !f.edge && !f.focus && !s.held && !document.hidden) s.clock += dt * 1000;
+        if (!f.hover && !f.open && !f.edge && !f.focus && !s.held && !document.hidden) s.clock += dt * 1000;
         if (s.clock >= interval) {
           s.clock = 0;
           s.target = Math.round(s.target) + 1;
@@ -610,7 +613,14 @@ export default function CircularCarousel<T>({
           const el = (event.target as Element | null)?.closest<HTMLElement>("[data-slot]");
           if (!el) return;
           const by = offsetTo(Number(el.dataset.slot));
-          if (by === 0) return;
+          if (by === 0) {
+            if (!cardDetail || (event.target as Element).closest("a[href]")) return;
+            setOpened((o) => {
+              flags.current.open = !o;
+              return !o;
+            });
+            return;
+          }
           event.preventDefault();
           move(by, true);
         }}
@@ -686,7 +696,7 @@ export default function CircularCarousel<T>({
                   );
                 });
                 const cardStyle: CSSProperties = { transform: `rotateY(${(slot * step).toFixed(3)}deg) translateZ(${radius.toFixed(2)}px)` };
-                const cardClass = "cu:group/cc cu:absolute cu:top-0 cu:left-0 cu:size-0 cu:[transform-style:preserve-3d] cu:[translate:0_0] cu:[transition:translate_450ms_cubic-bezier(0.22,1,0.36,1)] cu:hover:[translate:0_-10px] cu:focus-within:[translate:0_-10px] cu:motion-reduce:transition-none";
+                const cardClass = "cu:group/cc cu:absolute cu:top-0 cu:left-0 cu:size-0 cu:[transform-style:preserve-3d] cu:[translate:0_0] cu:[transition:translate_450ms_cubic-bezier(0.22,1,0.36,1)] cu:hover:[translate:0_-10px] cu:focus-within:[translate:0_-10px] cu:data-[open]:[translate:0_-10px] cu:motion-reduce:transition-none";
                 const label = cardLabel?.(item);
                 const plate = label ? (
                   <span
@@ -694,13 +704,14 @@ export default function CircularCarousel<T>({
                     className={cx(
                       "cu:pointer-events-none cu:absolute cu:[backface-visibility:hidden] cu:[transition:opacity_350ms_cubic-bezier(0.22,1,0.36,1),translate_450ms_cubic-bezier(0.22,1,0.36,1)] cu:motion-reduce:transition-none",
                       isFront ? "cu:[translate:0_0] cu:opacity-100" : "cu:[translate:0_8px] cu:opacity-0",
-                      isFront && cardDetail && "cu:group-hover/cc:opacity-0 cu:group-focus-within/cc:opacity-0",
+                      isFront && cardDetail && "cu:group-hover/cc:opacity-0 cu:group-focus-within/cc:opacity-0 cu:group-data-[open]/cc:opacity-0",
                     )}
                     style={{ left: -width / 2, top: -height / 2, width, height, transform: "translateZ(2px)" }}
                   >
                     <span className="cu:absolute cu:inset-x-0 cu:bottom-0 cu:flex cu:flex-col cu:gap-0.5 cu:px-4 cu:pb-4 cu:text-left">
                       <span className="cu:[font:500_22px/1.15_Newsreader,Georgia,serif] cu:tracking-[-.01em] cu:text-white cu:[text-shadow:0_1px_12px_rgb(20_8_2/.35)] cu:max-[640px]:text-[19px]">{label.title}</span>
                       {label.sub && <span className="cu:[font:600_13px/1.3_var(--f)] cu:tracking-[.02em] cu:text-[#FFD9A8]">{label.sub}</span>}
+                      {cardDetail && <span className="cu:hidden cu:[@media(hover:none)]:inline-flex cu:mt-1.5 cu:self-start cu:items-center cu:gap-1 cu:rounded-full cu:bg-white/20 cu:px-2 cu:py-0.5 cu:[font:600_11px/1.4_var(--f)] cu:text-white cu:backdrop-blur-[2px]">Tap for details</span>}
                     </span>
                   </span>
                 ) : null;
@@ -711,7 +722,7 @@ export default function CircularCarousel<T>({
                     className={cx(
                       "cu:absolute cu:overflow-hidden",
                       "cu:pointer-events-none cu:opacity-0 cu:[transition:opacity_.4s_ease] cu:motion-reduce:transition-none",
-                      "cu:group-hover/cc:pointer-events-auto cu:group-hover/cc:opacity-100 cu:group-focus-within/cc:pointer-events-auto cu:group-focus-within/cc:opacity-100",
+                      "cu:group-hover/cc:pointer-events-auto cu:group-hover/cc:opacity-100 cu:group-focus-within/cc:pointer-events-auto cu:group-focus-within/cc:opacity-100 cu:group-data-[open]/cc:pointer-events-auto cu:group-data-[open]/cc:opacity-100",
                     )}
                     style={{ ...plane, borderRadius: radiusPx, transform: "translateZ(3px)" }}
                   >
@@ -722,7 +733,7 @@ export default function CircularCarousel<T>({
                     />
                     <span aria-hidden="true" className="cu:absolute cu:inset-0 cu:bg-[linear-gradient(180deg,rgb(243_232_214/.12)_0%,rgb(243_232_214/.3)_30%,rgb(243_232_214/.97)_58%,#F3E8D6_100%)]" />                    <span aria-hidden="true" className="cu:absolute cu:inset-0 cu:rounded-[inherit] cu:shadow-[inset_0_0_0_1px_rgb(255_255_255/.7),inset_0_1px_0_rgb(255_255_255/.9)]" />
                     <span
-                      className="cu:relative cu:flex cu:size-full cu:flex-col cu:justify-end cu:gap-0 cu:px-5 cu:pt-5 cu:pb-5 cu:text-left cu:[translate:0_8px] cu:[transition:translate_.45s_cubic-bezier(0.22,1,0.36,1)] cu:group-hover/cc:[translate:0_0] cu:group-focus-within/cc:[translate:0_0] cu:motion-reduce:transition-none"
+                      className="cu:relative cu:flex cu:size-full cu:flex-col cu:justify-end cu:gap-0 cu:px-5 cu:pt-5 cu:pb-5 cu:text-left cu:[translate:0_8px] cu:[transition:translate_.45s_cubic-bezier(0.22,1,0.36,1)] cu:group-hover/cc:[translate:0_0] cu:group-focus-within/cc:[translate:0_0] cu:group-data-[open]/cc:[translate:0_0] cu:motion-reduce:transition-none"
                     >
                       {cardDetail(item)}
                     </span>
@@ -742,6 +753,7 @@ export default function CircularCarousel<T>({
                       cardRefs.current[slot] = el;
                     }}
                     data-slot={slot}
+                    data-open={isFront && opened ? "" : undefined}
                     {...(copy ? { "aria-hidden": true } : { role: "group", "aria-roledescription": "slide", "aria-label": `${index + 1} of ${count}` })}
                     onFocus={() => {
                       const by = offsetTo(slot);

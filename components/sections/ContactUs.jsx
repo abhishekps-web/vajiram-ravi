@@ -15,7 +15,7 @@ const GO = ['M7 17 17 7', 'M7 7h10v10'];
 
 const CARD = [
   'cu:relative cu:grid cu:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] cu:w-full cu:max-w-[900px] cu:mx-auto cu:mt-[20px] cu:xs:mt-[16px] cu:text-left cu:stacked:grid-cols-1',
-  'cu:overflow-hidden cu:rounded-(--r-card) cu:bg-white cu:border cu:border-solid cu:border-[rgba(45,18,4,.08)] cu:shadow-[0_28px_56px_-32px_rgba(45,18,4,.35)]',
+  'cu:overflow-hidden cu:rounded-(--r-card) cu:bg-white cu:border cu:border-solid cu:border-[rgba(45,18,4,.08)] cu:border-r-0 cu:stacked:border-r cu:stacked:border-b-0 cu:shadow-[0_28px_56px_-32px_rgba(45,18,4,.35)]',
 ].join(' ');
 const DETAILS = 'cu:relative cu:flex cu:flex-col cu:justify-center cu:min-w-0 cu:px-[clamp(24px,3.4vw,40px)] cu:py-[30px] cu:xs:p-[22px]';
 const BADGE = 'cu:self-start cu:justify-self-start cu:m-0 cu:text-[#E57512] cu:[font:700_13px/1.2_var(--f)] cu:tracking-[.08em] cu:uppercase';
@@ -32,7 +32,6 @@ const LINK = [
 ].join(' ');
 const MAP_BOX = [
   'cu:relative cu:z-1 cu:min-h-[290px] cu:w-full cu:overflow-hidden cu:bg-[#EDE6DA] cu:stacked:min-h-0 cu:stacked:aspect-[2/1] cu:xs:aspect-[4/3]',
-  'cu:border-0 cu:border-l cu:border-solid cu:border-[rgba(45,18,4,.08)] cu:stacked:border-l-0 cu:stacked:border-t',
 ].join(' ');
 const MAP_FRAME = 'cu:pointer-events-none cu:absolute cu:inset-x-0 cu:top-[-64px] cu:w-full cu:h-[calc(160%+128px)] cu:border-0';
 const POP = [

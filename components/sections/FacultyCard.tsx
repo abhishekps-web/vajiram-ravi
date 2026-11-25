@@ -1,9 +1,19 @@
+import type { ReactNode } from "react";
 import type { Educator } from "@/lib/data/faculty";
 import "@/app/tailwind-sections.css";
 
 export const facultyCardSize = (phone: boolean) => ({ width: phone ? 220 : 240, height: phone ? 220 : 240, imageY: "0%" });
 
 export const facultyCardLabel = (educator: Educator) => ({ title: educator.name, sub: educator.focus });
+
+function Fact({ children }: { children: ReactNode }) {
+  return (
+    <span className="cu:flex cu:items-baseline cu:gap-2 cu:text-[12.5px] cu:leading-[1.4] cu:font-normal cu:text-(--ink)">
+      <i className="cu:flex-none cu:size-[4px] cu:rounded-full cu:bg-(--ink) cu:translate-y-[-2px]" />
+      <span>{children}</span>
+    </span>
+  );
+}
 
 export function FacultyCardDetails({ educator }: { educator: Educator }) {
   const { name, experience, qualifications, studiedAt, linkedin } = educator;
@@ -12,18 +22,14 @@ export function FacultyCardDetails({ educator }: { educator: Educator }) {
     <>
       <span aria-hidden="true" className="cu:contents">
         <span className="cu:block">
-          <span className="cu:block cu:[font:600_20px/1.12_Newsreader,Georgia,serif] cu:tracking-[-.01em] cu:text-(--ink)">{name}</span>
-          <span className="cu:mt-1 cu:block cu:text-[12px] cu:leading-[1.3] cu:font-medium cu:text-(--ink)">{educator.focus}</span>
+          <span className="cu:block cu:[font:600_20px/1.15_Newsreader,Georgia,serif] cu:tracking-[-.01em] cu:text-(--ink)">{name}</span>
+          <span className="cu:mt-1 cu:block cu:text-[12.5px] cu:leading-[1.35] cu:font-medium cu:text-(--ink)">{educator.focus}</span>
         </span>
-        <span className="cu:mt-2.5 cu:block cu:h-px cu:w-full cu:bg-[linear-gradient(90deg,#D9A441,rgb(217_164_65/0))]" />
-        <span className="cu:mt-2.5 cu:grid cu:gap-2">
-          {experience && (
-            <span className="cu:block cu:text-[12px] cu:leading-[1.35] cu:font-normal cu:text-(--ink)">
-              {years ? <><b className="cu:font-semibold">{years[1]} years</b>{years[2] ? ` ${years[2]}` : ""}</> : experience}
-            </span>
-          )}
-          {qualifications && <span className="cu:block"><i className="cu:block cu:[font:500_9.5px/1.3_var(--f)] cu:tracking-[.1em] cu:uppercase cu:text-(--ink) cu:not-italic">Qualification</i><span className="cu:block cu:mt-0.5 cu:text-[12px] cu:leading-[1.35] cu:font-semibold cu:text-(--ink)">{qualifications}</span></span>}
-          {studiedAt?.length ? <span className="cu:block"><i className="cu:block cu:[font:500_9.5px/1.3_var(--f)] cu:tracking-[.1em] cu:uppercase cu:text-(--ink) cu:not-italic">Studied at</i><span className="cu:block cu:mt-0.5 cu:text-[12px] cu:leading-[1.35] cu:font-semibold cu:text-(--ink)">{studiedAt.join(" · ")}</span></span> : null}
+        <span className="cu:mt-3 cu:block cu:h-px cu:w-full cu:bg-[linear-gradient(90deg,#D9A441,rgb(217_164_65/0))]" />
+        <span className="cu:mt-3 cu:grid cu:gap-1">
+          {experience && <Fact>{years ? <><b className="cu:font-semibold">{years[1]} years</b>{years[2] ? ` ${years[2]}` : ""}</> : experience}</Fact>}
+          {qualifications && <Fact>{qualifications}</Fact>}
+          {studiedAt?.length ? <Fact>Studied at {studiedAt.join(" · ")}</Fact> : null}
         </span>
       </span>
       {linkedin && (

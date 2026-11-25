@@ -28,10 +28,11 @@ function Poster({ v }) {
 }
 
 const DLG = [
-  'cu:m-auto cu:w-[min(92vw,1040px)] cu:max-w-none cu:max-h-none cu:p-0 cu:border-0 cu:bg-transparent cu:overflow-visible',
+  'cu:fixed cu:inset-0 cu:m-0 cu:w-full cu:h-full cu:max-w-none cu:max-h-none cu:p-[clamp(16px,4vw,48px)] cu:border-0 cu:bg-transparent cu:open:grid cu:place-items-center',
   'cu:backdrop:bg-[rgba(20,8,2,.82)] cu:backdrop:backdrop-blur-[4px]',
-  'cu:opacity-0 cu:scale-[.96] cu:open:opacity-100 cu:open:scale-100 cu:[transition:opacity_.3s_ease,scale_.4s_cubic-bezier(.22,1,.36,1),overlay_.3s_allow-discrete,display_.3s_allow-discrete] cu:starting:open:opacity-0 cu:starting:open:scale-[.96] cu:motion-reduce:transition-none',
+  'cu:opacity-0 cu:open:opacity-100 cu:[transition:opacity_.3s_ease,overlay_.3s_allow-discrete,display_.3s_allow-discrete] cu:starting:open:opacity-0 cu:motion-reduce:transition-none',
 ].join(' ');
+const BOX = 'cu:w-[min(100%,1040px)] cu:scale-100 cu:starting:scale-[.96] cu:[transition:scale_.4s_cubic-bezier(.22,1,.36,1)] cu:motion-reduce:transition-none';
 
 function Player({ v, onClose }) {
   const dlg = useRef(null);
@@ -46,13 +47,13 @@ function Player({ v, onClose }) {
   return (
     <dialog ref={dlg} className={DLG} aria-label={v ? `${v.name}, AIR ${v.rank}: ${v.title}` : 'Video'} onClose={onClose} onClick={e => { if (e.target === e.currentTarget) close(); }}>
       {v && (
-        <div className="cu:relative">
-          <div className="cu:flex cu:items-center cu:justify-between cu:gap-[16px] cu:mb-[12px] cu:text-white">
-            <p className="cu:m-0 cu:[font:600_16px/1.35_var(--f)]"><span className="cu:text-[#F7B267]">AIR {v.rank}</span> · {v.name} <span className="cu:font-normal cu:opacity-80">· {v.kind}</span></p>
-            <Button variant="outline" size="sm" iconOnly iconStart="close" label="Close video" onClick={close} />
+        <>
+          <Button variant="outline" size="sm" iconOnly iconStart="close" label="Close video" onClick={close} className="cu:fixed! cu:top-[clamp(12px,2.4vw,28px)] cu:right-[clamp(12px,2.4vw,28px)] cu:z-[3]" />
+          <div className={BOX}>
+            <p className="cu:m-0 cu:mb-[12px] cu:pr-[56px] cu:text-white cu:[font:600_16px/1.35_var(--f)]"><span className="cu:text-[#F7B267]">AIR {v.rank}</span> · {v.name} <span className="cu:font-normal cu:opacity-80">· {v.kind}</span></p>
+            <iframe className="cu:block cu:w-full cu:aspect-video cu:rounded-(--r-card) cu:border-0 cu:bg-black cu:shadow-[0_30px_60px_-20px_rgba(0,0,0,.6)]" src={`https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&rel=0`} title={`${v.name}, AIR ${v.rank}: ${v.title}`} allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowFullScreen />
           </div>
-          <iframe className="cu:block cu:w-full cu:aspect-video cu:rounded-(--r-card) cu:border-0 cu:bg-black cu:shadow-[0_30px_60px_-20px_rgba(0,0,0,.6)]" src={`https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&rel=0`} title={`${v.name}, AIR ${v.rank}: ${v.title}`} allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowFullScreen />
-        </div>
+        </>
       )}
     </dialog>
   );
@@ -79,7 +80,7 @@ export default function VideoStories() {
         <p className="intro rv cu:mx-auto! cu:text-balance" style={{ '--d': '.16s' }}>Rank holders on their preparation, in their own words.</p>
       </div>
       <div className="rail cu:mt-[24px]! cu:[container-type:inline-size] cu:[--bgap:var(--card-gap)] cu:[--cw:calc((100cqw-3*var(--bgap))/4)] cu:max-[1180px]:[--cw:calc((100cqw-var(--bgap))/2)] cu:max-[640px]:[--cw:86cqw]">
-        <ul id="vidRail" data-lenis-prevent-horizontal className="rail__track rv cu:list-none cu:gap-(--bgap) cu:pt-[6px]! cu:pb-[18px]! cu:focus-visible:[outline:2px_solid_var(--brand)]! cu:focus-visible:[outline-offset:-2px] cu:focus-visible:rounded-[12px]" tabIndex={0} role="region" aria-roledescription="carousel" aria-label="Topper videos">
+        <ul id="vidRail" data-lenis-prevent-horizontal className="rail__track rv cu:list-none cu:gap-(--bgap) cu:pt-[6px]! cu:pb-[18px]! cu:outline-none!" tabIndex={0} role="region" aria-roledescription="carousel" aria-label="Topper videos">
           {VIDEOS.map(v => <Video key={v.rank} v={v} onPlay={setPlaying} />)}
         </ul>
         <div className="rail__nav rv cu:flex cu:justify-center cu:gap-[12px] cu:mt-[4px] cu:max-[760px]:hidden cu:min-[1024px]:absolute cu:min-[1024px]:inset-x-[calc(var(--px)*-1)] cu:min-[1024px]:top-[6px] cu:min-[1024px]:h-[calc(var(--cw)*9/16)] cu:min-[1024px]:z-[2] cu:min-[1024px]:m-0 cu:min-[1024px]:justify-between cu:min-[1024px]:items-center cu:min-[1024px]:px-[max(4px,calc((var(--px)-44px)/2))] cu:min-[1024px]:pointer-events-none cu:min-[1024px]:[&>*]:pointer-events-auto" style={{ '--d': '.24s' }}>

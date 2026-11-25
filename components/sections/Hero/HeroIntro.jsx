@@ -6,7 +6,7 @@ import { STATS } from '@/lib/data/hero';
 
 export default function HeroIntro() {
   return (
-    <SectionWrapper id="about-vr" labelledBy="aboutVrH" compact className="hx__intro cu:z-1 cu:text-center">
+    <SectionWrapper id="about-vr" labelledBy="aboutVrH" compact className="hx__intro cu:z-1 cu:text-center cu:[--px:clamp(16px,5.5vw,60px)]">
       <div className="cu:mx-auto cu:flex cu:max-w-[1000px] cu:flex-col cu:items-center">
         <SectionLabel>Vajiram &amp; Ravi IAS Institute</SectionLabel>
         <h1 id="aboutVrH" className="h2 h2--sec rv cu:text-balance" style={{ '--d': '.1s' }}>
