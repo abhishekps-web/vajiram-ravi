@@ -5,14 +5,7 @@ import { bindDots } from '@/components/ui/rail';
 import { photoSrcSet } from '@/lib/photo';
 import { $$ } from '@/lib/site';
 import '@/app/tailwind-sections.css';
-
-const LEGACY = {
-  label: 'Why Vajiram & Ravi?',
-  title: '50+ Years of Experience: The Best IAS Coaching in Delhi, India',
-  body: 'Vajiram & Ravi maintains its prominence in UPSC preparation through both offline and online formats. Established in 1976, the institute has built a five-decade legacy, adapting to every shift in the examination while staying focused on aspirant outcomes. The organization features seasoned educators delivering thorough training for the Prelims, Mains, and Interview stages, supported by a consistent track record of student success. Throughout its history, the institute has assisted thousands of candidates in entering the IAS, IPS, IFS, and related government positions through expert mentorship and structured curricula.',
-};
-
-const PHOTO = { src: '/assets/img/photos/institute-exterior.webp', alt: 'The Vajiram & Ravi institute building, its sign reading "Institute for IAS Exam"', w: 900, h: 1200 };
+import { LEGACY, PHOTO, REASONS } from '@/lib/data/why-choose';
 
 const ICONS = {
   medal: (
@@ -69,15 +62,6 @@ const ICONS = {
   ),
 };
 
-const REASONS = [
-  { t: 'A proven track record', d: 'AIR 1 in every UPSC result since 2016, and all ten of the top ten ranks in CSE 2025 prepared with us. Founded in 1976 by Prof. P. Velayutham.', icon: 'medal' },
-  { t: 'Expert faculty', d: 'Expert faculty for every GS paper, the optionals and the essay: an academic tradition shaped by educators and subject specialists.', icon: 'board' },
-  { t: 'Personal guidance', d: 'A plan shaped around your strengths and gaps, with a mentor who keeps it on track from Foundation to Interview.', icon: 'mentor' },
-  { t: 'Complete study material', d: 'Notes, test series and interview preparation in one place. 59 questions in Prelims 2025 came from our test series.', icon: 'notes' },
-  { t: 'A prime location', d: 'Over 50 years in Old Rajinder Nagar, New Delhi, at Gate 5 of Karol Bagh Metro.', icon: 'place' },
-  { t: 'Learn the way that suits you', d: '12 UPSC CSE programmes in the classroom and LIVE-Online, with the same teachers and the same tests.', icon: 'live' },
-];
-
 const CARD = [
   'cu:group cu:relative cu:grid cu:grid-cols-[auto_minmax(0,1fr)] cu:content-start cu:items-center cu:gap-x-[14px] cu:h-full cu:p-[26px] cu:max-[640px]:p-[20px] cu:rounded-(--r-card) cu:text-[#5a4632]',
   'cu:paper-card',
@@ -93,7 +77,7 @@ export default function WhyChoose() {
         <header id="legacy" className="cu:flex cu:flex-col cu:items-start">
           <SectionLabel>{LEGACY.label}</SectionLabel>
           <h2 id="legacyH" className="h2 h2--sec rv cu:mt-(--hd-lbl) cu:mb-0 cu:max-w-[22ch] cu:text-balance cu:max-[640px]:max-w-none" style={{ '--d': '.12s' }}>{LEGACY.title}</h2>
-          <p className="rv cu:mt-(--hd-in) cu:mb-0 cu:max-w-[62ch] cu:text-[clamp(16px,1.25vw,18px)] cu:leading-[1.75] cu:text-[#4a3f35]" style={{ '--d': '.2s' }}>{LEGACY.body}</p>
+          {LEGACY.body.map((para, i) => <p key={i} className={`rv cu:mb-0 cu:text-[clamp(16px,1.25vw,18px)] cu:leading-[1.75] cu:text-[#4a3f35] ${i ? 'cu:mt-[1em]' : 'cu:mt-(--hd-in)'}`} style={{ '--d': `${0.2 + 0.08 * i}s` }}>{para}</p>)}
         </header>
       </div>
       <div id="reasons" className="cu:mt-(--hd-gap) cu:max-[640px]:mt-[calc(var(--hd-gap)+14px)]">

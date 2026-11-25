@@ -6,7 +6,10 @@ import SectionLabel from "@/components/ui/SectionLabel";
 import SectionWrapper from "@/components/ui/section_wrapper";
 import Button from "@/components/ui/Button";
 import { ControlledTabs } from "@/components/ui/Tabs";
-import { coursePageHref, programmeCategories, programmes, programmesClosing, type CoverArtKind, type Href, type CoverEmblem, type Programme, type ProgrammeCategory } from "./programmes-data";
+import { contact, coursePageHref, programmeCategories, programmes, programmesClosing, type CoverArtKind, type Href, type CoverEmblem, type Programme, type ProgrammeCategory } from "@/lib/data/programmes";
+
+const MINOR = new Set(["a", "an", "and", "as", "at", "by", "for", "in", "of", "on", "or", "the", "to", "with"]);
+const titleCase = (s: string) => s.split(" ").map((w, i) => (i && MINOR.has(w) ? w : w.charAt(0).toUpperCase() + w.slice(1))).join(" ");
 
 function cx(...names: Array<string | false | null | undefined>): string {
   return names.filter(Boolean).join(" ");
@@ -26,13 +29,6 @@ function whenFontsReady(): Promise<unknown> {
 function mod(n: number, m: number): number {
   return ((n % m) + m) % m;
 }
-
-const contact = {
-  phone: "080-6220-6330",
-  phoneHref: "tel:+918062206330",
-  hours: "Mon – Sat, 9 AM – 7 PM",
-  email: "admissions@vajiramandravi.com",
-};
 
 const NUDGE =
   "cu:[transition:translate_300ms_var(--ease-out)] cu:group-hover/medal:translate-x-1 cu:motion-reduce:transition-none";
@@ -782,14 +778,19 @@ function TextMotion({ rootId }: { rootId: string }) {
   return null;
 }
 
+
 const PLANK_GRAIN = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='80'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.0035 0.42' numOctaves='3' seed='11'/%3E%3CfeColorMatrix values='0 0 0 0 0.22 0 0 0 0 0.11 0 0 0 0 0.04 2 0 0 0 -0.66'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E")`;
 
 const BOOK = { w: 195, h: 230 };
 
-const FOLLOW_BOTTOM = 45;
+const FOLLOW_BOTTOM = 18;
 
-const HOVER_TILT = "perspective(1000px) translateY(-8px) rotateX(calc(var(--ty, 0) * -7deg)) rotateY(calc(var(--tx, 0) * 9deg))";
-const HOVER_SHADOW = "drop-shadow(calc(var(--tx, 0) * -14px) calc(24px - var(--ty, 0) * 10px) 18px rgb(60 25 5 / 0.32))";
+const REST_TILT = "perspective(1200px) rotateX(10deg)";
+const HOVER_TILT = "perspective(1200px) translateY(-26px) rotateX(calc(var(--ty, 0) * -4deg)) rotateY(calc(var(--tx, 0) * 6deg))";
+const REST_SHADOW = "drop-shadow(0 8px 10px rgb(60 25 5 / 0.16))";
+const HOVER_SHADOW = "drop-shadow(calc(var(--tx, 0) * -12px) 34px 26px rgb(60 25 5 / 0.3))";
+const SPRING = "cubic-bezier(0.34, 1.56, 0.64, 1)";
+const FALL = "linear(0, 0.04 10%, 0.16 20%, 0.36 30%, 0.64 40%, 1 50%, 0.9 58%, 0.88 62%, 0.93 68%, 1 76%, 0.98 84%, 1 92%, 1)";
 const GAP = 32;
 const ROW_H = 300;
 const BOOK_TOP = 30;
@@ -1151,8 +1152,9 @@ function CourseShelf({ programmes }: { programmes: Programme[] }) {
       left: x,
       top: y,
 
-      transform: hovered === i && !away ? HOVER_TILT : "none",
-      filter: away ? "blur(14px)" : hovered === i ? HOVER_SHADOW : "none",
+      transform: away ? "none" : hovered === i ? HOVER_TILT : REST_TILT,
+      transformOrigin: "50% 100%",
+      filter: away ? "blur(14px)" : hovered === i ? HOVER_SHADOW : REST_SHADOW,
       opacity: away ? 0.25 : 1,
       transition: shuffle?.arriving.includes(i)
         ?
@@ -1161,8 +1163,8 @@ function CourseShelf({ programmes }: { programmes: Programme[] }) {
             ? `left ${SLIDE_MS}ms ${EASE}, top ${SLIDE_MS}ms ${EASE}, width ${MOVE_MS}ms ${EASE}, height ${MOVE_MS}ms ${EASE}, transform 320ms ${EASE}, filter 700ms ${EASE}, opacity 700ms ${EASE}`
             : hovered === i && !away
               ?
-                `left ${MOVE_MS}ms ${EASE}, top ${MOVE_MS}ms ${EASE}, width ${MOVE_MS}ms ${EASE}, height ${MOVE_MS}ms ${EASE}, transform 140ms linear, filter 200ms linear, opacity 700ms ${EASE}`
-              : `left ${MOVE_MS}ms ${EASE}, top ${MOVE_MS}ms ${EASE}, width ${MOVE_MS}ms ${EASE}, height ${MOVE_MS}ms ${EASE}, transform 500ms ${EASE}, filter 400ms ${EASE}, opacity 700ms ${EASE}`,
+                `left ${MOVE_MS}ms ${EASE}, top ${MOVE_MS}ms ${EASE}, width ${MOVE_MS}ms ${EASE}, height ${MOVE_MS}ms ${EASE}, transform 650ms ${SPRING}, filter 450ms ${EASE}, opacity 700ms ${EASE}`
+              : `left ${MOVE_MS}ms ${EASE}, top ${MOVE_MS}ms ${EASE}, width ${MOVE_MS}ms ${EASE}, height ${MOVE_MS}ms ${EASE}, transform 900ms ${FALL}, filter 600ms ${EASE}, opacity 700ms ${EASE}`,
     };
   };
 
@@ -1170,7 +1172,6 @@ function CourseShelf({ programmes }: { programmes: Programme[] }) {
     <div ref={frameRef} className="cu:flex cu:w-full cu:flex-col cu:items-center">
       <ShelfFilter
         filter={filter}
-        counts={FILTERS.map((f) => shownIn(f).length)}
         onChoose={choose}
       />
       <p aria-live="polite" className="cu:sr-only">
@@ -1236,7 +1237,7 @@ function ProgrammeRail({ programmes, filter }: { programmes: Programme[]; filter
       {programmes.map((programme) => (
         <article key={programme.name} className="prog__card cu:flex cu:snap-start cu:flex-col cu:gap-4">
 
-          <a className="prog__card-cover cu:relative cu:block cu:aspect-[195/230] cu:w-full cu:rounded-[3px_7px_7px_3px] cu:shadow-[0_8px_10px_rgba(43,18,6,.28)] cu:[transition:scale_.35s_var(--ease-out)] cu:active:scale-[.98] cu:focus-visible:outline-2 cu:focus-visible:outline-offset-4 cu:focus-visible:outline-[var(--brand)]" href={coursePageHref(programme)} onClick={stayPut} aria-label={`View course: ${programme.name}`}>
+          <a className="prog__card-cover cu:relative cu:block cu:aspect-[195/230] cu:w-full cu:shadow-[0_8px_10px_rgba(43,18,6,.28)] cu:[transition:scale_.35s_var(--ease-out)] cu:active:scale-[.98] cu:focus-visible:outline-2 cu:focus-visible:outline-offset-4 cu:focus-visible:outline-[var(--brand)]" href={coursePageHref(programme)} onClick={stayPut} aria-label={`View course: ${programme.name}`}>
             <CoverFront programme={programme} large={false} />
           </a>
         </article>
@@ -1245,7 +1246,7 @@ function ProgrammeRail({ programmes, filter }: { programmes: Programme[]; filter
   );
 }
 
-function ShelfFilter({ filter, counts, onChoose }: { filter: Filter; counts: number[]; onChoose: (f: Filter) => void }) {
+function ShelfFilter({ filter, onChoose }: { filter: Filter; onChoose: (f: Filter) => void }) {
   return (
     <ControlledTabs
       className="prog__filter cu:max-[640px]:-mr-[var(--px)]! cu:max-[640px]:w-[calc(100%+var(--px))]! cu:max-[640px]:max-w-none! cu:max-[640px]:self-start! cu:max-[640px]:rounded-[14px_0_0_14px]! cu:max-[640px]:pr-5!"
@@ -1253,7 +1254,7 @@ function ShelfFilter({ filter, counts, onChoose }: { filter: Filter; counts: num
       controls="programme-shelf"
       value={filter}
       onChange={(id: string) => onChoose(id as Filter)}
-      items={FILTERS.map((f, n) => ({ id: f, label: f, count: counts[n] }))}
+      items={FILTERS.map((f) => ({ id: f, label: f }))}
     />
   );
 }
@@ -1327,15 +1328,13 @@ function Book({ index, programme, hidden, out, open, away, style, onPick, onClos
     >
       <div data-cover className="cu:absolute cu:inset-0 cu:origin-bottom cu:[perspective:2200px]">
 
-        <span data-lift aria-hidden="true" className="cu:pointer-events-none cu:absolute cu:inset-[8px] cu:rounded-[6px] cu:opacity-0 cu:shadow-[0_22px_34px_-6px_rgb(43_18_6/0.5)]" />
+        <span data-lift aria-hidden="true" className="cu:pointer-events-none cu:absolute cu:inset-[8px] cu:opacity-0 cu:shadow-[0_22px_34px_-6px_rgb(43_18_6/0.5)]" />
 
         <span
           aria-hidden="true"
           className={cx("cu:pointer-events-none cu:absolute cu:inset-0 cu:[transition:opacity_400ms_var(--ease-out)]", out ? "cu:opacity-0" : "cu:opacity-100")}
         >
-          <span data-foot className="cu:absolute cu:-right-[7px] cu:bottom-[-1px] cu:left-3 cu:h-3 cu:rounded-[50%] cu:bg-[rgb(43_18_6/0.45)] cu:blur-[5px]" />
-          <span className="cu:absolute cu:top-0 cu:-right-[6px] cu:bottom-0 cu:w-4 cu:rounded-r-[7px]" style={{ backgroundColor: deep, filter: "brightness(0.8)" }} />
-          <span className="cu:absolute cu:[background-image:repeating-linear-gradient(90deg,#e6d4b6_0_1px,#fbf3e4_1px_3px)] cu:top-[4px] cu:-right-[4px] cu:bottom-[4px] cu:w-3 cu:rounded-r-[3px] cu:shadow-[inset_2px_0_3px_rgb(43_18_6/0.25)]" />
+          <span data-foot className="cu:absolute cu:right-3 cu:bottom-[-1px] cu:left-3 cu:h-3 cu:rounded-[50%] cu:bg-[rgb(43_18_6/0.45)] cu:blur-[5px]" />
         </span>
 
         {out && (
@@ -1424,10 +1423,9 @@ function Book({ index, programme, hidden, out, open, away, style, onPick, onClos
 
         <button
           type="button"
-          aria-label={out ? `Close ${programme.name}` : `Open ${programme.name}`}
-          aria-expanded={open}
-          onClick={() => (out ? onClose() : onPick())}
-          className="cu:absolute cu:inset-0 cu:origin-left cu:cursor-pointer cu:rounded-[3px_7px_7px_3px] cu:[transform-style:preserve-3d] cu:focus-visible:outline-offset-4"
+          aria-label={out ? `Close ${programme.name}` : `View course: ${programme.name}`}
+          onClick={() => (out ? onClose() : window.location.assign(coursePageHref(programme)))}
+          className="cu:absolute cu:inset-0 cu:origin-left cu:cursor-pointer cu:[transform-style:preserve-3d] cu:focus-visible:outline-offset-4"
           style={{ transform: open ? "rotateY(-180deg)" : "none", zIndex: open ? 55 : 100, transition: flip(OPEN_MS) }}
         >
           <span className="cu:absolute cu:inset-0 cu:[backface-visibility:hidden]">
@@ -1435,8 +1433,8 @@ function Book({ index, programme, hidden, out, open, away, style, onPick, onClos
           </span>
           <span
             aria-hidden="true"
-            className="cu:absolute cu:inset-0 cu:flex cu:flex-col cu:justify-between cu:rounded-[7px_3px_3px_7px] cu:p-8 cu:text-left cu:[backface-visibility:hidden] cu:[transform:rotateY(180deg)]"
-            style={{ backgroundColor: deep, backgroundImage: "linear-gradient(270deg, rgb(0 0 0/0.32), transparent 14%, rgb(0 0 0/0.1))", color: FOIL }}
+            className="cu:absolute cu:inset-0 cu:flex cu:flex-col cu:justify-between cu:p-8 cu:text-left cu:[backface-visibility:hidden] cu:[transform:rotateY(180deg)]"
+            style={{ backgroundColor: deep, color: FOIL }}
           >
             <span className="cu:text-[12px]/[14px] cu:tracking-[0.04em] cu:opacity-85">Vajiram &amp; Ravi</span>
 
@@ -1494,11 +1492,10 @@ function Book({ index, programme, hidden, out, open, away, style, onPick, onClos
 
 function CoverFront({ programme, large }: { programme: Programme; large: boolean }) {
   const { light, base, deep, emblem, art } = programme.cover;
-  const SPINE_W = large ? 26 : 14;
-  const frame = large ? { top: 20, right: 20, bottom: 20, left: SPINE_W + 18 } : { top: 10, right: 10, bottom: 10, left: SPINE_W + 9 };
+  const frame = large ? { top: 20, right: 20, bottom: 20, left: 20 } : { top: 10, right: 10, bottom: 10, left: 10 };
   return (
     <span
-      className="cu:relative cu:block cu:size-full cu:overflow-clip cu:rounded-[3px_7px_7px_3px] cu:text-center cu:[transition:filter_700ms_var(--ease-out)] cu:group-hover/book:brightness-[1.12] cu:group-hover/book:saturate-[1.3]"
+      className="cu:relative cu:block cu:size-full cu:overflow-clip cu:text-center cu:[transition:filter_700ms_var(--ease-out)] cu:group-hover/book:brightness-[1.12] cu:group-hover/book:saturate-[1.3]"
       style={{ backgroundColor: base, backgroundImage: `linear-gradient(140deg, ${light} 0%, ${base} 48%, ${deep} 100%)` }}
     >
 
@@ -1508,18 +1505,9 @@ function CoverFront({ programme, large }: { programme: Programme; large: boolean
       <span aria-hidden="true" className="cu:pointer-events-none cu:absolute cu:inset-0 cu:[background-image:repeating-linear-gradient(45deg,rgb(255_255_255/.03)_0_2px,transparent_2px_5px),repeating-linear-gradient(-45deg,rgb(0_0_0/.035)_0_2px,transparent_2px_5px)]" />
       <span aria-hidden="true" className="cover-grain cu:pointer-events-none cu:absolute cu:inset-0 cu:opacity-[0.12]!" />
 
-      <span
-        aria-hidden="true"
-        className="cu:absolute cu:inset-y-0 cu:left-0"
-        style={{ width: SPINE_W, background: `linear-gradient(90deg, rgb(0 0 0 / 0.38), ${deep} 38%, ${base} 80%, rgb(0 0 0 / 0.2))` }}
-      />
-      <span
-        aria-hidden="true"
-        className="cu:absolute cu:inset-y-0 cu:w-[3px] cu:bg-[linear-gradient(90deg,rgb(0_0_0/0.32),rgb(255_255_255/0.12))]"
-        style={{ left: SPINE_W }}
-      />
 
       <span aria-hidden="true" className="cu:pointer-events-none cu:absolute cu:inset-0 cu:bg-[linear-gradient(115deg,rgb(255_255_255/0.14),transparent_42%,rgb(0_0_0/0.16))]" />
+
 
       <span
         aria-hidden="true"
@@ -1537,7 +1525,7 @@ function CoverFront({ programme, large }: { programme: Programme; large: boolean
             large ? "cu:mt-2 cu:h-[3.24em] cu:text-[36px]/[1.08]" : "cu:mt-1 cu:h-[3.3em] cu:text-[20px]/[1.1] cu:max-[640px]:text-[18px]",
           )}
         >
-          {programme.name}
+          {titleCase(programme.name)}
         </span>
 
         <span aria-hidden="true" className={cx("cu:flex cu:items-center cu:gap-1.5", large ? "cu:mt-4" : "cu:mt-2")} style={{ color: FOIL }}>
@@ -1545,6 +1533,7 @@ function CoverFront({ programme, large }: { programme: Programme; large: boolean
           <span className={cx("cu:rotate-45 cu:bg-current", large ? "cu:size-1.5" : "cu:size-1")} />
           <span className={cx("cu:h-px cu:bg-current cu:opacity-70", large ? "cu:w-10" : "cu:w-5")} />
         </span>
+
         <span aria-hidden="true" className="cu:flex cu:min-h-0 cu:flex-1 cu:items-center cu:justify-center cu:max-[640px]:[&>svg]:size-[48px]">
           <CoverArt emblem={emblem} size={large ? 128 : 66} />
         </span>
@@ -1707,7 +1696,7 @@ function Programmes() {
           </div>
 
           <div data-fade className="prog__more cu:mt-6 cu:max-[640px]:mt-0 cu:flex cu:justify-center">
-            <Button variant="outline" href="/coursefinder/" iconEnd="arrow">See all programmes</Button>
+            <Button variant="outline" href="/courses" iconEnd="arrow">See all programmes</Button>
           </div>
         </div>
 

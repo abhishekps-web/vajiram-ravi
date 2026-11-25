@@ -6,18 +6,8 @@ import initCardStack from '@/components/ui/card-stack';
 import { top10 } from '@/components/sections/Toppers';
 import { $, reduce } from '@/lib/site';
 import '@/app/tailwind-sections.css';
+import { TESTIMONIALS } from '@/lib/data/stories';
 
-export const TESTIMONIALS = {
-  1: '“The GS classes gave me a clear rhythm for Prelims and Mains. The test feedback showed me exactly what to improve each week.”',
-  2: '“I needed consistency more than another resource. The current-affairs notes and regular tests kept my preparation focused.”',
-  3: '“The interview guidance helped me speak with structure and confidence while still sounding like myself.”',
-  4: '“The mock interview boards felt close to the real one. I knew how to present my DAF by the day.”',
-  5: '“The optional crash course gave my Sociology a clean, final revision before Mains.”',
-  6: '“The Ethics module changed how I wrote case studies, and the interview sessions kept me steady.”',
-  7: '“Interview guidance helped me organise my background and answer plainly.”',
-  8: '“The mock interviews showed me what a panel notices. I corrected it before the day.”',
-  9: '“I walked into the interview having rehearsed the hard questions, not just the easy ones.”'
-};
 
 const LIE = [[-3.2, 12], [1.8, -14], [-1.5, 6], [2.6, -6]];
 
@@ -52,16 +42,16 @@ function Postcard({ card, i, copy }) {
     >
       <div
         className={[
-          'cu:relative cu:aspect-[1.41] cu:rounded-[4px] cu:text-[#1B2A52] cu:postcard-paper',
+          'cu:relative cu:aspect-[1.72] cu:rounded-[4px] cu:text-[#1B2A52] cu:postcard-paper',
           'cu:[transform:perspective(1000px)_rotateX(calc(var(--ty,0)*-3deg))_rotateY(calc(var(--tx,0)*4deg))]',
           'cu:[transition:transform_.5s_var(--ease)] cu:group-hover/pcu:duration-200 cu:motion-reduce:transition-none',
         ].join(' ')}
       >
-        <p className="cu:absolute cu:top-[16px] cu:left-[28px] cu:m-0 cu:[font:600_11px/1_var(--f)] cu:tracking-[.32em] cu:text-[rgba(27,42,82,.5)]" aria-hidden="true">
+        <p className="cu:absolute cu:top-[14px] cu:left-[28px] cu:m-0 cu:[font:600_11px/1_var(--f)] cu:tracking-[.32em] cu:text-[rgba(27,42,82,.5)]" aria-hidden="true">
           TESTIMONIAL
         </p>
         <blockquote
-          className='cu:absolute cu:inset-x-[28px] cu:top-[40px] cu:bottom-[84px] cu:m-0 cu:overflow-hidden cu:[font:500_22px/28px_Caveat,"Segoe_Script",cursive] cu:text-[#1B2A52] cu:text-pretty cu:max-[460px]:text-[19px] cu:max-[460px]:leading-[24px]'
+          className='cu:absolute cu:inset-x-[28px] cu:top-[34px] cu:bottom-[70px] cu:m-0 cu:overflow-hidden cu:[font:500_22px/26px_Caveat,"Segoe_Script",cursive] cu:text-[#1B2A52] cu:text-pretty cu:max-[460px]:text-[19px] cu:max-[460px]:leading-[23px]'
         >
           <Image
             className={[
@@ -77,9 +67,9 @@ function Postcard({ card, i, copy }) {
           />
           {card.quote}
         </blockquote>
-        <footer className="cu:absolute cu:inset-x-[28px] cu:bottom-[20px] cu:grid cu:pt-[8px] cu:[border-top:1px_solid_rgba(27,42,82,.25)]">
-          <b className='cu:[font:600_25px/28px_Caveat,"Segoe_Script",cursive] cu:text-[#1B2A52]'>{card.name}</b>
-          <em className='cu:[font:500_18px/22px_Caveat,"Segoe_Script",cursive] cu:text-[rgba(27,42,82,.75)]'>AIR {card.rank}, UPSC CSE {card.year}</em>
+        <footer className="cu:absolute cu:inset-x-[28px] cu:bottom-[14px] cu:grid cu:pt-[6px] cu:[border-top:1px_solid_rgba(27,42,82,.25)]">
+          <b className='cu:[font:600_24px/25px_Caveat,"Segoe_Script",cursive] cu:text-[#1B2A52]'>{card.name}</b>
+          <em className='cu:[font:500_18px/20px_Caveat,"Segoe_Script",cursive] cu:text-[rgba(27,42,82,.75)]'>AIR {card.rank}, UPSC CSE {card.year}</em>
         </footer>
       </div>
     </article>

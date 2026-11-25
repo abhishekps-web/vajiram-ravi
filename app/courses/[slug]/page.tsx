@@ -1,10 +1,10 @@
 import type { CSSProperties } from "react";
 import { notFound } from "next/navigation";
 import NavigationBar from "@/components/layout/NavigationBar";
-import Footer from "@/components/layout/Footer/Footer";
+import Footer from "@/components/layout/Footer";
 import SectionLabel from "@/components/ui/SectionLabel";
 import Button from "@/components/ui/Button";
-import { programmes, programmeSlug } from "@/components/sections/programmes-data";
+import { programmes, programmeSlug } from "@/lib/data/programmes";
 
 /**
  * A programme's course detail page: a PLACEHOLDER (user 2026-11-13) until the real course content is ready. "View course" on a

@@ -11,9 +11,10 @@
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   // the card went green (user 2026-11-24, the homepage batch card's #326F66), so the line is a light mint on it; it was orange
   // (A [194, 65, 12], B [234, 88, 12], hot [251, 146, 60])
-  const A = [124, 196, 180];      // colour A: soft mint
-  const B = [172, 226, 209];      // colour B: pale mint
-  const HOT = [222, 247, 238];    // what swells and pulses brighten towards
+  // orange again (user 2026-11-25, the card back in its earlier orange)
+  const A = [194, 65, 12];        // colour A: brand orange
+  const B = [234, 88, 12];        // colour B: bright orange
+  const HOT = [251, 146, 60];     // what swells and pulses brighten towards
   const LINE = 2, INSET = 1, GLOW = 1, GLOW_W = 110, NOISE = 0.6, NOISE_SCALE = 3;
   const SWELLS = 3, INTRO = 1300, GLOW_IN = 900;
   const lerp = (a, b, t) => a + (b - a) * t;

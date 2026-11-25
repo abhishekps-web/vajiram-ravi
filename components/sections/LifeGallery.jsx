@@ -3,19 +3,8 @@ import SectionWrapper from '@/components/ui/section_wrapper';
 import Button from '@/components/ui/Button';
 import '@/app/tailwind-sections.css';
 import Tabs, { initTabs } from '@/components/ui/Tabs';
+import { LIFE } from '@/lib/data/life-gallery';
 
-const P = '/assets/img/photos';
-export const LIFE = [
-  { vid: true, poster: `${P}/footer-classroom.webp`, src: '', label: 'Video: a full classroom for an Indian Polity lecture', name: 'In the classroom', detail: 'Indian Polity lecture, Old Rajinder Nagar' },
-  { img: `${P}/why-2-faculty.webp`, alt: 'A Vajiram & Ravi professor teaching a General Studies class', w: 1536, h: 1024, pos: '62% 30%', name: 'Our faculty', detail: 'Specialists for every General Studies paper' },
-  { img: `${P}/campus-entrance.webp`, alt: 'The institute entrance with the Vajiram & Ravi sign', w: 900, h: 1600, pos: '50% 32%', name: 'The entrance', detail: 'Next to Gate 5, Karol Bagh Metro' },
-  { img: `${P}/why-3-guidance.webp`, alt: 'A mentor going through a study plan with an aspirant', w: 1536, h: 1024, pos: '45% 40%', name: 'Mentoring', detail: 'A study plan, kept on track' },
-  { img: `${P}/why-4-study-material.webp`, alt: 'Vajiram & Ravi study material, test series sheets and notes on a desk', w: 1536, h: 1024, name: 'Study material', detail: 'Notes and test series for every stage' },
-  { vid: true, poster: `${P}/why-5-location-800.webp`, src: '', label: 'Video: aspirants walking in to the campus in Old Rajinder Nagar', name: 'Arriving for class', detail: 'Old Rajinder Nagar, New Delhi' },
-  { img: `${P}/building-hd.webp`, alt: 'The Vajiram & Ravi building seen from the street', w: 2240, h: 1685, pos: '40% 50%', name: 'The building', detail: '1-B/7, Pusa Road' },
-  { img: `${P}/why-6-classroom-online.webp`, alt: 'A Vajiram & Ravi classroom with the lecture streaming live to online students', w: 1536, h: 1024, pos: '50% 40%', name: 'Classroom + LIVE-Online', detail: 'The same teachers and the same tests' },
-  { img: `${P}/campus-hd.webp`, alt: 'The Vajiram & Ravi campus gate and building at Old Rajinder Nagar', w: 2000, h: 1334, pos: '62% 50%', name: 'The campus', detail: 'Old Rajinder Nagar since 1976' },
-];
 
 const VIDEO_ICON = (
   <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
@@ -26,7 +15,7 @@ const VIDEO_ICON = (
 
 const ARROW = 'cu:absolute cu:top-[calc(var(--cpad)+var(--ch)/2-22px)] cu:z-4 cu:flex cu:opacity-0 cu:pointer-events-none cu:[transition:opacity_.3s_ease,translate_.35s_cubic-bezier(.22,1,.36,1)] cu:focus-within:opacity-100 cu:focus-within:pointer-events-auto cu:focus-within:[translate:0_0] cu:fine:group-hover/rail:opacity-100 cu:fine:group-hover/rail:pointer-events-auto cu:fine:group-hover/rail:[translate:0_0]';
 const MEDIA = 'cu:block cu:size-full cu:object-cover cu:[filter:brightness(.92)] cu:[transition:transform_1.1s_cubic-bezier(.22,.8,.24,1),filter_.5s_ease] cu:motion-reduce:transition-none cu:fine:group-hover/slide:[transform:scale(1.03)] cu:fine:group-hover/slide:[filter:brightness(1)]';
-const PLAY = 'lg__vctl cu:[&.btn.btn]:absolute cu:[&.btn.btn]:inset-0 cu:[&.btn.btn]:z-2 cu:[&.btn.btn]:m-auto cu:[&.btn.btn]:size-14 cu:[&.btn.btn]:[--btn-h:56px] cu:[&.btn.btn]:[--btn-ic:38px] cu:[&.btn.btn]:[--btn-bg:rgba(255,249,241,.92)] cu:[&.btn.btn]:[--btn-fg:#C2410C] cu:[&.btn.btn]:[--btn-edge:inset_0_0_0_1px_rgba(255,255,255,.85)] cu:[&.btn.btn]:[--btn-edge-hover:inset_0_0_0_1px_var(--brand,#C2410C)] cu:[&.btn.btn]:[--btn-shadow:0_14px_30px_-10px_rgba(0,0,0,.55)] cu:[&.btn.btn]:backdrop-blur-[6px] cu:[&.btn.btn]:[transition:opacity_.3s_ease] cu:motion-reduce:[&.btn.btn]:transition-none cu:[&_svg]:size-full cu:[&.is-playing]:opacity-60 cu:[&.is-playing:hover]:opacity-100 cu:[&.is-playing:focus-visible]:opacity-100 cu:[.is-copy_&]:invisible cu:max-[760px]:[&.btn.btn]:size-13 cu:max-[760px]:[&.btn.btn]:[--btn-h:52px] cu:max-[760px]:[&.btn.btn]:[--btn-ic:34px]';
+const PLAY = 'lg__vctl cu:[&.btn.btn]:absolute cu:[&.btn.btn]:inset-0 cu:[&.btn.btn]:z-2 cu:[&.btn.btn]:m-auto cu:[&.btn.btn]:size-14 cu:[&.btn.btn]:[--btn-h:56px] cu:[&.btn.btn]:[--btn-ic:38px] cu:[&.btn.btn]:[--btn-bg:rgba(255,249,241,.92)] cu:[&.btn.btn]:[--btn-fg:#C2410C] cu:[&.btn.btn]:[--btn-edge:inset_0_0_0_1px_rgba(255,255,255,.85)] cu:[&.btn.btn]:[--btn-edge-hover:inset_0_0_0_1px_var(--brand,#C2410C)] cu:[&.btn.btn]:[--btn-shadow:0_14px_30px_-10px_rgba(0,0,0,.55)] cu:[&.btn.btn]:backdrop-blur-[6px] cu:[&.btn.btn]:[transition:opacity_.3s_ease] cu:motion-reduce:[&.btn.btn]:transition-none cu:[&_svg]:size-full cu:[&.is-playing]:opacity-60 cu:[&.is-playing:hover]:opacity-100 cu:[&.is-playing:focus-visible]:opacity-100 cu:max-[760px]:[&.btn.btn]:size-13 cu:max-[760px]:[&.btn.btn]:[--btn-h:52px] cu:max-[760px]:[&.btn.btn]:[--btn-ic:34px]';
 
 export default function LifeGallery() {
   return (
@@ -91,7 +80,7 @@ export function initLifeGallery() {
     const last = shown[shown.length - 1];
     setW = last.offsetLeft + last.offsetWidth + gap - shown[0].offsetLeft;
     const n = Math.max(1, Math.ceil(track.clientWidth / setW));
-    const copy = s => { const c = s.cloneNode(true); c.classList.add('is-copy'); c.setAttribute('aria-hidden', 'true'); c.inert = true; c.querySelectorAll('img').forEach(i => { i.loading = 'eager'; }); return c; };
+    const copy = s => { const c = s.cloneNode(true); c.classList.add('is-copy'); c.setAttribute('aria-hidden', 'true'); c.querySelectorAll('a, button, [tabindex]').forEach(f => { f.tabIndex = -1; }); c.querySelectorAll('img').forEach(i => { i.loading = 'eager'; }); return c; };
     for (let k = 0; k < n; k++) {
       track.prepend(...shown.map(copy));
       track.append(...shown.map(copy));
