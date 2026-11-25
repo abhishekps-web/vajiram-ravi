@@ -35,7 +35,7 @@ export default function Toppers() {
     </clipPath>
   </svg>
   <div className="pd__hd">
-    <SectionLabel>Toppers</SectionLabel>
+    <SectionLabel tone="dark">Toppers</SectionLabel>
     <h2 id="pdH" className="h2 h2--sec pd__h">Ranks they earned, <em>with the guidance we gave.</em></h2>
   </div>
 

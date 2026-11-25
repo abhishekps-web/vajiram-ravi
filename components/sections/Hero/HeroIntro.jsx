@@ -1,5 +1,4 @@
 import SectionWrapper from '@/components/ui/section_wrapper';
-import SectionLabel from '@/components/ui/SectionLabel';
 import { $, reduce } from '@/lib/site';
 import '@/app/tailwind-sections.css';
 import { STATS } from '@/lib/data/hero';
@@ -7,14 +6,14 @@ import { STATS } from '@/lib/data/hero';
 export default function HeroIntro() {
   return (
     <SectionWrapper id="about-vr" labelledBy="aboutVrH" compact className="hx__intro cu:z-1 cu:text-center cu:[--px:clamp(16px,5.5vw,60px)]">
-      <div className="cu:mx-auto cu:flex cu:max-w-[1000px] cu:flex-col cu:items-center">
-        <SectionLabel>Vajiram &amp; Ravi IAS Institute</SectionLabel>
-        <h1 id="aboutVrH" className="h2 h2--sec rv cu:text-balance" style={{ '--d': '.1s' }}>
+      <div className="cu:mx-auto cu:flex cu:max-w-[1180px] cu:flex-col cu:items-center">
+        <h1 id="aboutVrH" className="h2 h2--sec rv cu:mt-0! cu:text-balance" style={{ '--d': '.1s' }}>
           Best IAS Coaching in Delhi, India
         </h1>
-        <p className="intro rv cu:max-w-[720px]! cu:text-balance" style={{ '--d': '.2s' }}>
+        <p className="intro rv cu:max-w-none! cu:text-balance" style={{ '--d': '.2s' }}>
           With 5+ decades of excellence, Vajiram &amp; Ravi is one of the most trusted names for Best IAS Coaching in Delhi. The institute has served aspirants since 1976, offering experienced faculty, proven teaching methods, and organized preparation strategies centered on achievement.
         </p>
+        <span aria-hidden="true" className="rv cu:block cu:mt-[calc(var(--hd-gap)*.6)] cu:w-[96px] cu:h-[2px] cu:rounded-full cu:bg-(--brand)" style={{ '--d': '.28s' }} />
       </div>
       <Stats />
     </SectionWrapper>
@@ -26,9 +25,9 @@ const ROLL_MS = 700;
 
 const LIST = [
   'cu:grid cu:flex-none cu:box-border cu:m-0 cu:p-0 cu:list-none cu:items-center cu:justify-center cu:text-center cu:text-(--ink)',
-  'cu:gap-x-[16px] cu:gap-y-[28px] cu:max-[760.98px]:py-[24px]',
+  'cu:gap-x-[16px] cu:gap-y-[28px] cu:h-auto! cu:mt-[calc(var(--hd-gap)*.6)]! cu:py-0!',
   'cu:max-[900.98px]:relative cu:max-[900.98px]:grid-cols-[repeat(2,minmax(0,1fr))] cu:max-[900.98px]:justify-items-center cu:max-[900.98px]:content-center',
-  'cu:min-[761px]:text-start cu:min-[761px]:h-(--stats-h) cu:min-[761px]:gap-y-[24px] cu:min-[761px]:max-[900.98px]:px-[8px]',
+  'cu:min-[761px]:text-start cu:min-[761px]:gap-y-[24px] cu:min-[761px]:max-[900.98px]:px-[8px]',
   'cu:[--sg:clamp(28px,3.2vw,80px)] cu:min-[901px]:max-[1180.98px]:[--sg:36px] cu:min-[1181px]:max-[1500.98px]:[--sg:40px]',
   'cu:min-[901px]:grid-cols-[minmax(28px,1fr)_repeat(4,auto)_minmax(28px,1fr)] cu:min-[901px]:gap-x-[40px] cu:min-[1181px]:gap-x-(--sg)',
   'cu:before:content-[""] cu:after:content-[""] cu:before:pointer-events-none cu:after:pointer-events-none',

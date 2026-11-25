@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import SectionWrapper from '@/components/ui/section_wrapper';
-import SectionLabel from '@/components/ui/SectionLabel';
 import Button from '@/components/ui/Button';
 import CarouselDots from '@/components/ui/CarouselDots';
 import '@/app/tailwind-sections.css';
@@ -64,8 +63,6 @@ function Video({ v, onPlay }) {
   return (
     <li className="cu:min-w-0">
       <button type="button" className={CARD} onClick={() => onPlay(v)} aria-label={label} aria-haspopup="dialog"><Poster v={v} /></button>
-      <p className="cu:mt-[12px] cu:mb-0 cu:[font:600_16px/1.35_var(--f)] cu:text-(--ink)"><span className="cu:text-(--brand)">AIR {v.rank}</span> · {v.name}</p>
-      <p className="cu:mt-[2px] cu:mb-0 cu:text-[13.5px] cu:text-(--body)">{v.kind} · UPSC CSE 2025</p>
     </li>
   );
 }
@@ -73,13 +70,8 @@ function Video({ v, onPlay }) {
 export default function VideoStories() {
   const [playing, setPlaying] = useState(null);
   return (
-    <SectionWrapper id="videos" labelledBy="vidH" compact>
-      <div className="cu:flex cu:flex-col cu:items-center cu:text-center">
-        <SectionLabel>Topper talks</SectionLabel>
-        <h2 id="vidH" className="h2 h2--sec rv cu:mx-auto! cu:text-center!" style={{ '--d': '.08s' }}>Watch how they did it.</h2>
-        <p className="intro rv cu:mx-auto! cu:text-balance" style={{ '--d': '.16s' }}>Rank holders on their preparation, in their own words.</p>
-      </div>
-      <div className="rail cu:mt-[24px]! cu:[container-type:inline-size] cu:[--bgap:var(--card-gap)] cu:[--cw:calc((100cqw-3*var(--bgap))/4)] cu:max-[1180px]:[--cw:calc((100cqw-var(--bgap))/2)] cu:max-[640px]:[--cw:86cqw]">
+    <SectionWrapper id="videos" aria-label="Topper talks" compact>
+      <div className="rail cu:mt-0! cu:[container-type:inline-size] cu:[--bgap:var(--card-gap)] cu:[--cw:calc((100cqw-3*var(--bgap))/4)] cu:max-[1180px]:[--cw:calc((100cqw-var(--bgap))/2)] cu:max-[640px]:[--cw:86cqw]">
         <ul id="vidRail" data-lenis-prevent-horizontal className="rail__track rv cu:list-none cu:gap-(--bgap) cu:pt-[6px]! cu:pb-[18px]! cu:outline-none!" tabIndex={0} role="region" aria-roledescription="carousel" aria-label="Topper videos">
           {VIDEOS.map(v => <Video key={v.rank} v={v} onPlay={setPlaying} />)}
         </ul>

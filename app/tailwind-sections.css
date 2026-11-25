@@ -10,6 +10,7 @@
 @import "tailwindcss/utilities.css" source(none);
 @source "../components/sections/ContactUs.jsx";
 @source "../components/ui/CarouselDots.jsx";
+@source "../components/ui/SectionLabel.tsx";
 @source "../components/ui/CircularCarousel.tsx";
 @source "../components/sections/Faculties.tsx";
 @source "../components/sections/FacultyCard.tsx";
@@ -26,6 +27,13 @@
 @source "../components/sections/BatchCard.jsx";
 @source "../components/sections/Toppers.jsx";
 @source "../components/sections/Hero/HeroIntro.jsx";
+@source "../components/sections/Hero/Hero.jsx";
+@source "../components/sections/Hero/HeroBanner.jsx";
+
+/* the hero banner (components/sections/Hero/HeroBanner.jsx): touch screens get no arrows; a programme book's float and shine */
+@custom-variant coarse { @media (hover: none), (pointer: coarse) { @slot; } }
+@keyframes hxBookFloat { to { translate: 0 -8px; } }
+@keyframes hxBookShine { to { left: 130%; } }
 @source "../components/sections/ToppersRecord.jsx";
 @source "../components/sections/TalkToUs.jsx";
 @source "../components/sections/Stories.jsx";
@@ -167,10 +175,10 @@ html.js #stories:not([data-in]) > .lbl { opacity: 0; }
   /* phones: the card grows with its quote instead of cropping it at a fixed ratio; every card takes the height of the tallest,
      so the stack stays one shape (the label, quote and name flow in a column instead of being placed absolutely) */
   #tcar .pst { align-self: stretch; }
-  #tcar .pst > div { height: 100%; aspect-ratio: auto; display: flex; flex-direction: column; padding: 18px 24px 20px; box-sizing: border-box; }
-  #tcar .pst > div > p { position: static; margin: 0 0 12px; }
+  #tcar .pst > div { height: 100%; aspect-ratio: auto; display: flex; flex-direction: column; padding: 14px 22px 14px; box-sizing: border-box; }
+  #tcar .pst > div > p { position: static; margin: 0 0 8px; }
   #tcar .pst blockquote { position: static; inset: auto; flex: 1 1 auto; overflow: visible; }
-  #tcar .pst footer { position: static; inset: auto; margin-top: 14px; }
+  #tcar .pst footer { position: static; inset: auto; margin-top: 10px; }
   #tcar .pst.is-front { pointer-events: auto; }
   #tcar .pst.is-gone { visibility: hidden; }
   #tcar .pst.is-gone.is-out, #tcar .pst.is-gone.is-in { visibility: visible; }

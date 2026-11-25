@@ -2,22 +2,23 @@ import type { ReactNode } from "react";
 import type { Educator } from "@/lib/data/faculty";
 import "@/app/tailwind-sections.css";
 
-export const facultyCardSize = (phone: boolean) => ({ width: phone ? 220 : 240, height: phone ? 220 : 240, imageY: "0%" });
+export const facultyCardSize = (phone: boolean) => ({ width: phone ? 240 : 300, height: phone ? 240 : 300, imageY: "0%" });
 
 export const facultyCardLabel = (educator: Educator) => ({ title: educator.name, sub: educator.focus });
 
-function Fact({ children }: { children: ReactNode }) {
-  return (
-    <span className="cu:flex cu:items-baseline cu:gap-2 cu:text-[12.5px] cu:leading-[1.4] cu:font-normal cu:text-(--ink)">
-      <i className="cu:flex-none cu:size-[4px] cu:rounded-full cu:bg-(--ink) cu:translate-y-[-2px]" />
-      <span>{children}</span>
-    </span>
-  );
+const listOf = (items: string[]) => (items.length > 1 ? `${items.slice(0, -1).join(", ")} and ${items[items.length - 1]}` : items[0] ?? "");
+
+function factsSentence({ experience, qualifications, studiedAt }: Educator): ReactNode {
+  const years = experience?.match(/^(\d+\+?)\s*years?\s*(.*)$/i);
+  const lead = years ? <><b className="cu:font-semibold">{years[1]} years</b>{years[2] ? ` ${years[2]}` : ""}</> : experience;
+  const degree = qualifications?.replace(/^([^,]+),\s*(.+)$/, "$1 in $2");
+  const rest = [degree, studiedAt?.length ? `${degree ? "studied" : "Studied"} at ${listOf(studiedAt)}` : ""].filter(Boolean).join(", ");
+  if (!lead && !rest) return null;
+  return <>{lead}{lead && rest ? ". " : ""}{rest}{rest ? "." : lead ? "." : ""}</>;
 }
 
 export function FacultyCardDetails({ educator }: { educator: Educator }) {
-  const { name, experience, qualifications, studiedAt, linkedin } = educator;
-  const years = experience?.match(/^(\d+\+?)\s*years?\s*(.*)$/i);
+  const { name, linkedin } = educator;
   return (
     <>
       <span aria-hidden="true" className="cu:contents">
@@ -26,11 +27,7 @@ export function FacultyCardDetails({ educator }: { educator: Educator }) {
           <span className="cu:mt-1 cu:block cu:text-[12.5px] cu:leading-[1.35] cu:font-medium cu:text-(--ink)">{educator.focus}</span>
         </span>
         <span className="cu:mt-3 cu:block cu:h-px cu:w-full cu:bg-[linear-gradient(90deg,#D9A441,rgb(217_164_65/0))]" />
-        <span className="cu:mt-3 cu:grid cu:gap-1">
-          {experience && <Fact>{years ? <><b className="cu:font-semibold">{years[1]} years</b>{years[2] ? ` ${years[2]}` : ""}</> : experience}</Fact>}
-          {qualifications && <Fact>{qualifications}</Fact>}
-          {studiedAt?.length ? <Fact>Studied at {studiedAt.join(" · ")}</Fact> : null}
-        </span>
+        <span className="cu:mt-3 cu:block cu:text-[13px] cu:leading-[1.5] cu:font-normal cu:text-(--ink) cu:text-pretty">{factsSentence(educator)}</span>
       </span>
       {linkedin && (
         <a

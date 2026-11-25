@@ -437,9 +437,6 @@
 .dl__stick { transform: scale(calc(1 - var(--cover, 0) * .2)); transform-origin: 50% 35%; border-radius: calc(var(--cover, 0) * 36px); }
 @media (prefers-reduced-motion: reduce) { .dl__stick { transform: none; border-radius: 0; } }
 
-/* eyebrow labels on light sections: English and Hindi both brand orange (labels on orange / dark sections stay white) */
-#courses .lbl__t, #faculty .lbl__t, #stories .lbl__t, #resources .lbl__t, #visit .lbl__t, #faq .lbl__t, #courses .lbl__hi, #faculty .lbl__hi, #stories .lbl__hi, #resources .lbl__hi, #visit .lbl__hi, #faq .lbl__hi { color: var(--brand) !important; }
-#courses .lbl__hi, #faculty .lbl__hi, #stories .lbl__hi, #resources .lbl__hi, #visit .lbl__hi, #faq .lbl__hi { border-color: rgba(194, 65, 12, .3) !important; }
 
 /* footer text, larger (user 2026-11-10): logo 20 -> 24, intro 17 -> 19, column heads 17 -> 20, links 14.5 -> 16.5, bottom bar 14 -> 15.5 */
 footer.foot .foot__logo { font-size: 24px; }
@@ -509,10 +506,6 @@ html[lang="hi"] .talk .btn__t { font-family: "Mukta", var(--f); }
 .bnr { padding-top: 0; padding-bottom: 0; }
 
 /* ---- eyebrows: one style everywhere. Brand on light grounds, white on dark ones; Hindi twin, dotted rule and lotus as built in .lbl ---- */
-.lbl { gap: 20px; }
-.lbl .lbl__t { font: 600 14px/1.2 var(--f); letter-spacing: 0; text-transform: none; color: var(--brand); }
-.lbl .lbl__hi { font: 400 17px/1 var(--f-hi); color: var(--brand); border-color: rgba(194, 65, 12, .3); }
-.lbl--w .lbl__t, .lbl--w .lbl__hi { color: #fff; border-color: rgba(255, 255, 255, .32); }
 .lbl + .h2, .lbl + .wc__h, .h2--sec { margin-top: 30px; }
 /* the same rhythm for the sections that set their own padding with a stronger selector */
 section#toppers.vrnp { padding-top: var(--sec-y); padding-bottom: var(--sec-y); }
@@ -783,14 +776,7 @@ html.vrv-lock .wa { opacity: 0; pointer-events: none; }
 
 /* ---- eyebrow badges (Figma "eyebrow pill"): a dark-brown cartouche with pointed ends, white 12px bold caps, 0.96px tracking.
    Replaces the plain eyebrow text and its rule/ornament. On dark backgrounds (hero, flagship, "why") the cartouche is brand orange so it still reads. ---- */
-:is(#courses, #batches, #why, #gs, #faculty, #stories, #resources, #visit, #faq) .lbl__t, .lbl .lbl__t, .dl__k, .sc .vp__k > .ln, .hw__k {
-  display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; height: 30px; margin: 0; padding: 0 11px; overflow: visible;
-  border: solid transparent; border-width: 0 13px; border-image: url(/assets/img/brand/cartouche.svg) 0 13 fill / 0 13px / 0 stretch;
-  background: none; color: #fff !important; font: 500 12px/16px "Geist", var(--f), sans-serif; letter-spacing: .96px; text-transform: uppercase; white-space: nowrap; text-shadow: none;
-}
-.lbl > i, .lbl__orn, .lbl__sym, .lbl--sym > img { display: none !important; }
-.lbl, .lbl--w { gap: 0; }
-.lbl--w .lbl__t, #gs .lbl__t, .dl__k, .sc .vp__k > .ln, #resources:not(.is-paper) .lbl__t { border-image-source: url(/assets/img/brand/cartouche-brand.svg); }
+/* the eyebrow badge itself (the Toppers dark cartouche, white 12px caps) is SectionLabel.tsx, Tailwind (user 2026-11-25) */
 .dl__k { display: inline-flex; width: fit-content; margin: 0 0 24px; }
 .sc .vp__k { display: block; margin: 0 0 24px; }
 .sc .vp__k > .ln { padding: 0 11px; margin: 0; }
@@ -891,9 +877,6 @@ body { background-color: var(--ground-end); }
 :is(#courses, #why, #batches, #bnr, #faculty, #stories, #visit, #faq, #closing) { background: var(--ground); }
 section#why.wc, #stories.sheet, #faq.sheet { background: var(--ground); }   /* outranks css/why-choose.css (#why.wc, loads later) and an earlier #stories.sheet { background: none } */
 
-/* eyebrow badges: brand-orange fill everywhere (was dark brown #2B1206 on light grounds); shape, type and size unchanged */
-:is(#courses, #batches, #why, #gs, #faculty, #stories, #resources, #visit, #faq) .lbl__t, .lbl .lbl__t, .dl__k, .sc .vp__k > .ln, .hw__k {
-  border-image-source: url(/assets/img/brand/cartouche-brand.svg); }
 
 /* ---- Consistent scroll reveal (user 2026-11-10). Every section header uses the same .rv stagger: eyebrow .05s, heading .12s, intro .2s,
    CTA / form .28s (.rv: 18px rise, .8-.9s ease). A button is wrapped in .rv-btn because the button's own transition list overrides .rv's.

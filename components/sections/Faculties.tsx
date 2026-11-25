@@ -472,7 +472,7 @@ function EducatorFlow({ educators }: { educators: Educator[] }) {
       backColor="#ead9c2"
       tone="light"
       spacing={20}
-      arrowReach={470}
+      arrowReach={phone ? 470 : 580}
     />
   );
 }
@@ -489,7 +489,7 @@ export default function Faculties() {
         </h2>
         <p className="intro rv" style={{ "--d": ".2s" } as CSSProperties}>{lead}</p>
       </div>
-      <div className="cu:mt-(--hd-in)">
+      <div className="cu:mt-(--hd-in) cu:-mx-[calc(var(--px)-12px)]">
         <div data-rise>
           <EducatorFlow educators={educators} />
         </div>

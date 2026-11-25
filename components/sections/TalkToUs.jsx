@@ -30,7 +30,7 @@ const INNER = [
   'cu:max-[1100px]:grid-cols-[minmax(0,1fr)]',
 ].join(' ');
 
-const HEAD = 'cu:relative cu:flex cu:flex-col cu:[&_.lbl>span:first-of-type]:[border-image-source:url(/assets/img/brand/cartouche.svg)]!';
+const HEAD = 'cu:relative cu:flex cu:flex-col';
 
 const FORM = [
   'cu:relative cu:self-start cu:pt-[34px] cu:px-[40px] cu:pb-[30px] cu:max-[600px]:pt-[30px] cu:max-[600px]:px-[28px] cu:max-[600px]:pb-[26px]',
@@ -95,7 +95,7 @@ export default function TalkToUs() {
     <SectionWrapper id="contact" labelledBy="counH" compact className={SECTION}>
       <div className={INNER}>
         <div className={HEAD}>
-          <SectionLabel>Talk to us</SectionLabel>
+          <SectionLabel tone="dark">Talk to us</SectionLabel>
           <h2 id="counH" className="h2 h2--sec rv cu:text-white!" style={delay(.12)}>Need assistance? Talk to our expert counsellor.</h2>
           <p className="intro rv cu:max-w-[520px]! cu:text-[rgba(255,255,255,.92)]!" style={delay(.2)}>Schedule a free call with a Vajiram & Ravi counsellor to answer your questions, with no pressure to enrol.</p>
         </div>
