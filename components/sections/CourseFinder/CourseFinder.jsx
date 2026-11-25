@@ -186,10 +186,9 @@ function CardRail({ items: every, now }) {
         {items.map(it => <Card key={it.id} it={it} now={now} />)}
       </div>
       {all.length > SHOWN && (
-        <button type="button" className="cf-more" aria-expanded={more} onClick={() => setMore(m => !m)}>
-          {more ? 'Show fewer' : `See all ${all.length} courses`}
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ rotate: more ? '180deg' : '0deg' }}><path d="m6 9 6 6 6-6" /></svg>
-        </button>
+        <div className="cf-more">
+          <Button variant="ghost" size="sm" iconEnd="chevron" aria-expanded={more} onClick={() => setMore(m => !m)}>{more ? 'Show fewer' : `See all ${all.length} courses`}</Button>
+        </div>
       )}
       {dots > 1 && <div className="cf-rail__dots"><CarouselDots tone="light" label="Scroll courses" labels={Array.from({ length: dots }, (_, k) => `Show courses, position ${k + 1} of ${dots}`)} active={pos.i} onSelect={go} /></div>}
     </div>

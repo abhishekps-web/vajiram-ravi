@@ -260,10 +260,10 @@ html.foot-curtain main.course-page, main.course-page { background: var(--ground-
 .cf-cover__t { display:block; max-width:82%; font:700 clamp(18px,1.6vw,21px)/1.15 var(--f-d, var(--f)); letter-spacing:-.015em; text-wrap:balance; overflow-wrap:break-word; text-shadow:0 1px 10px rgba(0,0,0,.2); }
 .cf-card__t { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-.cf-more { display:flex; align-items:center; gap:8px; margin:22px auto 0; padding:12px 24px; border:1.5px solid var(--brand, #C64613); border-radius:999px; background:transparent; color:var(--brand, #C64613); font:600 15px/1 var(--f); cursor:pointer; transition:background .25s var(--ease,ease), color .25s var(--ease,ease); }
-.cf-more svg { transition:rotate .3s var(--ease,ease); }
-.cf-more:hover, .cf-more:focus-visible { background:var(--brand, #C64613); color:#fff; }
-.cf-more:focus-visible { outline:2px solid var(--brand, #C64613); outline-offset:3px; }
+.cf-more { display:flex; justify-content:center; margin-top:22px; }
+.cf-more .btn { color:var(--brand); }
+.cf-more .btn__icon { transition:rotate .3s var(--ease,ease); }
+.cf-more .btn[aria-expanded="true"] .btn__icon { rotate:180deg; }
 
 .cf-tabs { display:flex; flex-wrap:wrap; gap:8px; margin-top:20px; }
 .cf-tab { display:inline-flex; align-items:center; gap:8px; padding:8px 16px; border:1px solid rgba(122,42,10,.22); border-radius:999px; background:#FFFAF3; color:var(--ink, #2a1a12); font:500 14px/1 var(--f); cursor:pointer; transition:background .25s var(--ease,ease), color .25s var(--ease,ease), border-color .25s var(--ease,ease); }
