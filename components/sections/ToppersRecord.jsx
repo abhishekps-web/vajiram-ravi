@@ -45,17 +45,14 @@ const LUCIDE_X = (
 
 export default function ToppersRecord() {
   return (
-    <div className="tp-record rv cu:mt-(--hd-gap) cu:mb-0 cu:px-(--px) cu:text-left cu:text-(--ink)">
+    <div className="tp-record rv cu:mt-[24px] cu:mb-0 cu:px-(--px) cu:text-left cu:text-(--ink)">
       <div className={RECORD_BOX}>
         <div className="cu:flex cu:flex-col cu:items-center cu:text-center cu:gap-(--hd-in)">
-          <div className="cu:min-w-0">
-            <h3 className="cu:m-0 cu:[font-family:var(--f-title)] cu:font-normal cu:text-[clamp(12px,3.3vw,44px)] cu:whitespace-nowrap cu:max-[640px]:whitespace-normal cu:max-[640px]:text-[clamp(26px,7.4vw,32px)] cu:max-[640px]:text-balance cu:leading-[1.1] cu:max-[640px]:leading-[1.15] cu:tracking-[-.02em] cu:text-(--ink)">For a decade, we’ve been shaping India’s civil servants.</h3>
-          </div>
           <Tabs className="tp-yrs cu:self-center" label="Year of the examination" controls="tpList" items={RECORD.map(g => ({ id: String(g.y), label: g.y }))} />
         </div>
         <div className="tp-frame cu:relative cu:mt-(--hd-in) cu:p-[clamp(32px,3.2vw,46px)] cu:pt-[clamp(14px,1.6vw,22px)] cu:rounded-(--r-form) cu:before:absolute cu:before:inset-[12px] cu:before:top-[calc(clamp(14px,1.6vw,22px)+46px)] cu:before:pointer-events-none cu:before:border-2 cu:before:border-t-0 cu:before:border-solid cu:before:border-[rgba(194,65,12,.55)] cu:before:[mask-image:linear-gradient(180deg,transparent,#000_45%)]">
           <p className="dr__h"><span data-year-head>{`${RECORD[0].people.length} Ranks, UPSC CSE ${RECORD[0].y}`}</span></p>
-          <div className="cu:grid cu:grid-cols-[minmax(0,1fr)_minmax(0,300px)] cu:max-[1100px]:grid-cols-[minmax(0,1fr)_minmax(0,270px)] cu:max-[900px]:grid-cols-1 cu:gap-[clamp(20px,3vw,40px)] cu:items-start cu:mt-(--hd-lbl) cu:[--col:406px]">
+          <div className="cu:grid cu:grid-cols-[minmax(0,1fr)_minmax(0,300px)] cu:max-[1100px]:grid-cols-[minmax(0,1fr)_minmax(0,270px)] cu:max-[900px]:grid-cols-1 cu:gap-[clamp(20px,3vw,40px)] cu:items-start cu:mt-[24px] cu:[--col:406px]">
             <div id="tpList" data-lenis-prevent className="tp-list cu:max-h-(--col) cu:overflow-y-auto cu:-ml-[6px] cu:pl-[6px] cu:pr-[10px] cu:[mask-image:linear-gradient(180deg,#000_90%,transparent)]">
               {RECORD.map((g, gi) => (
                 <ul key={g.y} data-y={g.y} hidden={gi !== 0} className="cu:m-0 cu:p-0 cu:list-none cu:grid cu:gap-0">
