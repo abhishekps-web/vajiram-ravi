@@ -1,5 +1,5 @@
 import NavigationBar from '@/components/layout/NavigationBar';
-import Footer from '@/components/layout/Footer/Footer';
+import Footer from '@/components/layout/Footer';
 import Stylesheet from '@/components/ui/Stylesheet';
 import CourseFinder from '@/components/sections/CourseFinder/CourseFinder';
 
