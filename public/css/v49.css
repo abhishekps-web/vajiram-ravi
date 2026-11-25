@@ -1819,7 +1819,7 @@ html .gz__frame, html .sm__card, html #faqList .qa, html #visit .cm, html #visit
 
 /* ===== Vertical rhythm, standardised (user 2026-11-13 audit). One set of tokens for every section, a little tighter than before:
    --sec-y   section padding, top and bottom: 64px on phones to 90px from 1440px (was 72-104px)
-   --hd-lbl  eyebrow -> heading: 24px (was 30px in most sections, 16-28px in others)
+   --hd-lbl  eyebrow -> heading: 16px (user 2026-11-25; was 24px)
    --hd-in   heading -> intro: 16px (was 16-28px)
    --hd-gap  heading block -> its content: 36-48px (was 27-119px, set per section)
    Every section (components/ui/section_wrapper.jsx) pads --sec-y above and below and --px at the sides. A light section that directly follows another light one takes half on top
@@ -1827,7 +1827,7 @@ html .gz__frame, html .sm__card, html #faqList .qa, html #visit .cm, html #visit
    content to content is then 1.5 x --sec-y there and 2 x --sec-y across a coloured band (Toppers, Why, General Studies, Contact).
    The Why scene (pinned), the Toppers banner, the Contact split card and the closing card keep their own inner layouts. Raised
    with `html` so the section sheets loaded after this one (toppers.css, story.css, Tailwind sections) follow it too. ===== */
-:root { --sec-y: clamp(64px, 6.25vw, 90px); --py: var(--sec-y); --pb: var(--sec-y); --hd-lbl: 24px; --hd-in: 16px; --hd-gap: clamp(36px, 3.4vw, 48px); }
+:root { --sec-y: clamp(64px, 6.25vw, 90px); --py: var(--sec-y); --pb: var(--sec-y); --hd-lbl: 16px; --hd-in: 16px; --hd-gap: clamp(36px, 3.4vw, 48px); }
 /* section padding: components/ui/section_wrapper.jsx (the wrapper every section sits in) */
 /* header rhythm (eyebrow -> heading -> intro -> content): components/ui/section_wrapper.jsx */
 
@@ -1843,7 +1843,7 @@ html .gz__frame, html .sm__card, html #faqList .qa, html #visit .cm, html #visit
 /* Course detail page, placeholder (app/courses/[slug]/page.tsx, user 2026-11-13): the site's ground, header offset, rhythm and type */
 .course-page { background: var(--ground-jaali); background-size: 100% 100%, 36px 36px, auto; }
 .course-ph { display: flex; flex-direction: column; align-items: center; text-align: center; padding: var(--sec-y) var(--px); }
-.course-ph .h2 { margin: var(--hd-lbl, 24px) auto 0; max-width: 18ch; text-wrap: balance; }
+.course-ph .h2 { margin: var(--hd-lbl, 16px) auto 0; max-width: 18ch; text-wrap: balance; }
 .course-ph .intro { margin: var(--hd-in, 16px) auto 0; text-wrap: balance; }
 .course-ph__card { width: min(100%, 720px); margin-top: var(--hd-gap, 48px); padding: clamp(24px, 4vw, 44px); border-radius: var(--r-box, 16px);
   background: #fff; box-shadow: 0 0 0 1px rgba(122, 42, 10, .06), 0 24px 48px -28px rgba(122, 42, 10, .2); text-align: left; }

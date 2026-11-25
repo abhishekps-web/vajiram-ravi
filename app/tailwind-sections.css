@@ -21,11 +21,14 @@
 @source "../components/sections/BestCoaching.jsx";
 @source "../components/sections/Legacy/Legacy.jsx";
 @source "../components/sections/Batches.jsx";
+@source "../components/sections/BatchCard.jsx";
 @source "../components/sections/Toppers.jsx";
 @source "../components/sections/Hero/HeroStats.jsx";
+@source "../components/sections/Hero/HeroIntro.jsx";
 @source "../components/sections/ToppersRecord.jsx";
 @source "../components/sections/TalkToUs.jsx";
 @source "../components/sections/Stories.jsx";
+@source "../components/sections/VideoStories.jsx";
 @source "../components/layout/Footer.jsx";
 
 /* the footer curtain (Footer.jsx initFooterCurtain sets html.foot-curtain, --foot-off, --foot-p and footer[data-zooming]): parked under

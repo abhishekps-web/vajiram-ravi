@@ -134,11 +134,11 @@ function Copy({ slide }) {
   return (
     <div className="dl__in">
       <SectionLabel light>{slide.eyebrow}</SectionLabel>
-      <h1 className="hx__h" id="dlH">
+      <h2 className="hx__h" id="dlH">
         {slide.headline.map((line, i) => (
           <Fragment key={i}>{i ? ' ' : null}<span className="hx__line rv" style={delay(.05 + i * .07)}>{line}</span></Fragment>
         ))}
-      </h1>
+      </h2>
       <p className="hx__lead rv" style={delay(.27)}>{slide.lead}</p>
       <p className="hx__btns rv" style={delay(.34)} data-btns={JSON.stringify(slide.btns)}>
         <Button size="md" iconEnd="arrow" {...btnProps(slide.btns[0])}>{slide.btns[0].t}</Button>

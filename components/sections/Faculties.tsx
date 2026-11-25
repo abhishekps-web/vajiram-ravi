@@ -560,14 +560,14 @@ function Credentials({ educator }: { educator: Educator }) {
   return (
     <>
       <span aria-hidden="true" className="cu:contents">
-      <span className="cu:[font:500_24px/1.15_Newsreader,Georgia,serif] cu:tracking-[-.01em] cu:text-(--ink)">{name}</span>
+      <span className="cu:[font:500_17px/1.15_Newsreader,Georgia,serif] cu:tracking-[-.01em] cu:text-(--ink)">{name}</span>
       {experience && (
-        <span className="cu:[font:600_13.5px/1.3_var(--f)] cu:text-(--ink)">
-          {years ? <><b className="cu:mr-0.5 cu:[font:700_30px/1_Newsreader,Georgia,serif] cu:text-[#C2410C]">{years[1]}</b> years{years[2] ? ` ${years[2]}` : ""}</> : experience}
+        <span className="cu:[font:600_12.5px/1.3_var(--f)] cu:text-(--ink)">
+          {years ? <><b className="cu:mr-0.5 cu:[font:700_18px/1_Newsreader,Georgia,serif] cu:text-[#C2410C]">{years[1]}</b> years{years[2] ? ` ${years[2]}` : ""}</> : experience}
         </span>
       )}
-      {qualifications && <span className="cu:flex cu:flex-col cu:text-[13px] cu:leading-[1.4] cu:font-medium cu:text-[#4a3d32]"><i className="cu:[font:700_10px/1.4_var(--f)] cu:not-italic cu:tracking-[.08em] cu:uppercase cu:text-[#C2410C]">Qualification</i>{qualifications}</span>}
-      {studiedAt?.length ? <span className="cu:flex cu:flex-col cu:text-[13px] cu:leading-[1.4] cu:font-medium cu:text-[#4a3d32]"><i className="cu:[font:700_10px/1.4_var(--f)] cu:not-italic cu:tracking-[.08em] cu:uppercase cu:text-[#C2410C]">Studied at</i>{studiedAt.join(" · ")}</span> : null}
+      {qualifications && <span className="cu:flex cu:flex-col cu:text-[12px] cu:leading-[1.35] cu:font-medium cu:text-[#4a3d32]"><i className="cu:[font:700_10px/1.4_var(--f)] cu:not-italic cu:tracking-[.08em] cu:uppercase cu:text-[#C2410C]">Qualification</i>{qualifications}</span>}
+      {studiedAt?.length ? <span className="cu:flex cu:flex-col cu:text-[12px] cu:leading-[1.35] cu:font-medium cu:text-[#4a3d32]"><i className="cu:[font:700_10px/1.4_var(--f)] cu:not-italic cu:tracking-[.08em] cu:uppercase cu:text-[#C2410C]">Studied at</i>{studiedAt.join(" · ")}</span> : null}
       </span>
       {linkedin && (
         <a

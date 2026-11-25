@@ -694,6 +694,7 @@ export default function CircularCarousel<T>({
                     className={cx(
                       "cu:pointer-events-none cu:absolute cu:[backface-visibility:hidden] cu:[transition:opacity_350ms_cubic-bezier(0.22,1,0.36,1),translate_450ms_cubic-bezier(0.22,1,0.36,1)] cu:motion-reduce:transition-none",
                       isFront ? "cu:[translate:0_0] cu:opacity-100" : "cu:[translate:0_8px] cu:opacity-0",
+                      isFront && cardDetail && "cu:group-hover/cc:opacity-0 cu:group-focus-within/cc:opacity-0",
                     )}
                     style={{ left: -width / 2, top: -height / 2, width, height, transform: "translateZ(2px)" }}
                   >
@@ -703,29 +704,29 @@ export default function CircularCarousel<T>({
                     </span>
                   </span>
                 ) : null;
-                const flips = !!cardDetail && isFront;
+                const details = !!cardDetail && isFront;
                 const plane: CSSProperties = { left: -width / 2, top: -height / 2, width, height };
-                const back = flips ? (
+                const info = details ? (
                   <span
-                    className="cu:absolute cu:flex cu:flex-col cu:justify-center cu:gap-2 cu:overflow-hidden cu:bg-white cu:px-6 cu:py-5 cu:text-left cu:[backface-visibility:hidden] cu:shadow-[0_18px_36px_-14px_rgb(45_18_4/.4)] cu:after:absolute cu:after:inset-[8px] cu:after:border-[1.2px] cu:after:border-solid cu:after:border-[#D9A441] cu:after:pointer-events-none"
-                    style={{ ...plane, borderRadius: radiusPx, transform: "rotateY(180deg)" }}
+                    className={cx(
+                      "cu:absolute cu:flex cu:flex-col cu:justify-end cu:p-1.5",
+                      "cu:pointer-events-none cu:opacity-0 cu:[translate:0_10px] cu:[transition:opacity_.35s_ease,translate_.45s_cubic-bezier(0.22,1,0.36,1)] cu:motion-reduce:transition-none",
+                      "cu:group-hover/cc:pointer-events-auto cu:group-hover/cc:opacity-100 cu:group-hover/cc:[translate:0_0] cu:group-focus-within/cc:pointer-events-auto cu:group-focus-within/cc:opacity-100 cu:group-focus-within/cc:[translate:0_0]",
+                    )}
+                    style={{ ...plane, transform: "translateZ(3px)" }}
                   >
-                    {cardDetail(item)}
+                    <span className="cu:relative cu:flex cu:flex-col cu:gap-0.5 cu:rounded-[6px] cu:bg-[rgb(255_255_255/.95)] cu:px-3.5 cu:py-2.5 cu:text-left cu:shadow-[0_12px_24px_-12px_rgb(45_18_4/.45)] cu:after:absolute cu:after:inset-[5px] cu:after:rounded-[3px] cu:after:border cu:after:border-solid cu:after:border-[#D9A441] cu:after:pointer-events-none">
+                      {cardDetail(item)}
+                    </span>
                   </span>
                 ) : null;
                 const turn = (
-                  <div
-                    className={cx(
-                      "cu:absolute cu:top-0 cu:left-0 cu:size-0 cu:[transform-style:preserve-3d] cu:[transition:transform_700ms_cubic-bezier(0.22,1,0.36,1)] cu:motion-reduce:transition-none",
-                      flips && "cu:group-hover/cc:[transform:rotateY(180deg)] cu:group-focus-within/cc:[transform:rotateY(180deg)]",
-                    )}
-                  >
+                  <div className="cu:absolute cu:top-0 cu:left-0 cu:size-0 cu:[transform-style:preserve-3d]">
                     {faces}
                     {plate}
-                    {back}
+                    {info}
                   </div>
                 );
-                const hit = flips ? <span aria-hidden="true" className="cu:absolute" style={{ ...plane, transform: "translateZ(-1px)" }} /> : null;
                 return (
                   <div
                     key={slot}
@@ -751,13 +752,11 @@ export default function CircularCarousel<T>({
                   >
                     {link !== null ? (
                       <a href={link} draggable={false} tabIndex={copy ? -1 : undefined} className="cu:absolute cu:top-0 cu:left-0 cu:size-0 cu:[transform-style:preserve-3d]">
-                        {hit}
                         {turn}
                         <div className="cu:sr-only">{renderSlide(item)}</div>
                       </a>
                     ) : (
                       <>
-                        {hit}
                         {turn}
                         {!copy && <div className="cu:sr-only">{renderSlide(item)}</div>}
                       </>

@@ -63,6 +63,7 @@ const SOCIALS = [
   { label: 'WhatsApp channel', icon: 'whatsapp' },
 ];
 
+const APP = 'Vajiram IAS';
 const STORES = [
   {
     kicker: 'Download on the',
@@ -105,26 +106,29 @@ function Brand() {
 
 function Socials() {
   return (
-    <ul className="cu:my-[-8px] cu:mr-0 cu:ml-[-8px] cu:flex cu:list-none cu:items-center cu:gap-2 cu:p-0 cu:max-[760px]:m-0 cu:max-[760px]:justify-center" aria-label="Vajiram & Ravi on social media">
-      {SOCIALS.map(({ label, icon }) => (
-        <li key={icon}>
-          <a className={`cu:flex cu:size-10 cu:items-center cu:justify-center cu:rounded-full cu:text-taupe cu:[transition:color_.2s_ease,background-color_.2s_ease] cu:hover:bg-[rgba(204,85,0,.1)] cu:hover:text-burnt cu:focus-visible:bg-[rgba(204,85,0,.1)] cu:focus-visible:text-burnt cu:max-[760px]:size-11 ${FOCUS}`} href={SITE} {...NEW_TAB} aria-label={label}>
-            <span className="cu:block cu:size-5 cu:bg-current cu:[-webkit-mask:var(--m)_center/contain_no-repeat] cu:[mask:var(--m)_center/contain_no-repeat] cu:max-[760px]:size-[22px]" style={{ '--m': `url(/assets/img/footer/social-${icon}.svg)` }} aria-hidden="true" />
-          </a>
-        </li>
-      ))}
-    </ul>
+    <div className="cu:flex cu:items-center cu:gap-3 cu:max-[760px]:flex-col cu:max-[760px]:gap-1.5">
+      <p className="cu:m-0 cu:[font-family:var(--f)] cu:text-[12px]/[16px] cu:font-semibold cu:tracking-[.08em] cu:uppercase cu:text-espresso">Follow us</p>
+      <ul className="cu:m-0 cu:ml-[-8px] cu:flex cu:list-none cu:items-center cu:gap-1 cu:p-0 cu:max-[760px]:ml-0 cu:max-[760px]:justify-center" aria-label="Vajiram & Ravi on social media">
+        {SOCIALS.map(({ label, icon }) => (
+          <li key={icon}>
+            <a className={`cu:flex cu:size-10 cu:items-center cu:justify-center cu:rounded-full cu:text-taupe cu:[transition:color_.2s_ease,background-color_.2s_ease] cu:hover:bg-[rgba(204,85,0,.1)] cu:hover:text-burnt cu:focus-visible:bg-[rgba(204,85,0,.1)] cu:focus-visible:text-burnt cu:max-[760px]:size-11 ${FOCUS}`} href={SITE} {...NEW_TAB} aria-label={label}>
+              <span className="cu:block cu:size-5 cu:bg-current cu:[-webkit-mask:var(--m)_center/contain_no-repeat] cu:[mask:var(--m)_center/contain_no-repeat] cu:max-[760px]:size-[22px]" style={{ '--m': `url(/assets/img/footer/social-${icon}.svg)` }} aria-hidden="true" />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 
 function AppLinks() {
   return (
-    <div className="cu:flex cu:min-w-0 cu:flex-col cu:items-start cu:gap-2.5 cu:stacked:col-span-2 cu:max-[760px]:items-center">
-      <h2 className="cu:m-0 cu:[font-family:var(--f)] cu:text-[14px]/[20px] cu:font-semibold cu:tracking-[.06em] cu:whitespace-nowrap cu:text-espresso cu:uppercase">Get the app</h2>
-      <ul className="cu:m-0 cu:flex cu:list-none cu:flex-col cu:gap-2.5 cu:p-0 cu:stacked:flex-row cu:stacked:flex-wrap cu:max-[760px]:justify-center">
+    <div className="cu:flex cu:min-w-0 cu:flex-col cu:items-start cu:stacked:col-span-2 cu:max-[760px]:items-center">
+      <h2 className="cu:m-0 cu:[font-family:var(--f)] cu:text-[14px]/[20px] cu:font-semibold cu:tracking-[.06em] cu:whitespace-nowrap cu:text-espresso cu:uppercase">Get {APP} App</h2>
+      <ul className="cu:m-0 cu:mt-3.5 cu:flex cu:list-none cu:flex-col cu:gap-2.5 cu:p-0 cu:stacked:flex-row cu:stacked:flex-wrap cu:max-[760px]:justify-center">
         {STORES.map(({ kicker, name, href, icon }) => (
           <li key={name}>
-            <a className={`cu:group cu:flex cu:h-[46px] cu:w-[156px] cu:items-center cu:gap-2.5 cu:rounded-[10px] cu:bg-espresso cu:px-3.5 cu:text-cream cu:no-underline cu:shadow-[0_6px_14px_-8px_rgba(26,23,20,.5)] cu:[transition:background-color_.2s_ease,translate_.3s_cubic-bezier(.22,1,.36,1),box-shadow_.3s_ease] cu:hover:-translate-y-0.5 cu:hover:bg-burnt cu:hover:shadow-[0_12px_20px_-10px_rgba(204,85,0,.6)] cu:focus-visible:bg-burnt cu:motion-reduce:transition-none ${FOCUS}`} href={href} {...NEW_TAB} aria-label={`${kicker} ${name}`}>
+            <a className={`cu:group cu:flex cu:h-[46px] cu:w-[156px] cu:items-center cu:gap-2.5 cu:rounded-[10px] cu:bg-espresso cu:px-3.5 cu:text-cream cu:no-underline cu:shadow-[0_6px_14px_-8px_rgba(26,23,20,.5)] cu:[transition:background-color_.2s_ease,translate_.3s_cubic-bezier(.22,1,.36,1),box-shadow_.3s_ease] cu:hover:-translate-y-0.5 cu:hover:bg-burnt cu:hover:shadow-[0_12px_20px_-10px_rgba(204,85,0,.6)] cu:focus-visible:bg-burnt cu:motion-reduce:transition-none ${FOCUS}`} href={href} {...NEW_TAB} aria-label={`${APP}: ${kicker} ${name}`}>
               <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" className="cu:flex-none cu:fill-current"><path d={icon} /></svg>
               <span className="cu:flex cu:flex-col cu:text-left cu:leading-none">
                 <span className="cu:text-[10px] cu:font-medium cu:uppercase cu:tracking-[.06em] cu:opacity-80">{kicker}</span>
@@ -156,16 +160,19 @@ function LinkColumns() {
   );
 }
 
+const YEAR = new Date().getFullYear();
+
 function Legal() {
+  const SEP = "cu:[&>*+*]:before:content-['·'] cu:[&>*+*]:before:mx-3 cu:[&>*+*]:before:text-[rgba(26,23,20,.35)]";
   return (
-    <div className={`cu:flex cu:w-full cu:flex-wrap cu:items-center cu:justify-between cu:gap-x-6 cu:gap-y-3 cu:border-t cu:pt-3.5 cu:text-[14px]/[20px] cu:max-[760px]:flex-col cu:max-[760px]:gap-2 cu:max-[760px]:text-center ${RULE}`}>
-      <div className="cu:flex cu:flex-wrap cu:items-center cu:gap-x-6 cu:gap-y-2 cu:max-[760px]:flex-col-reverse cu:max-[760px]:justify-center cu:max-[760px]:gap-2">
-        <p className="cu:m-0 cu:text-[15px]/[20px] cu:max-[760px]:opacity-85">© 2026 Vajiram &amp; Ravi. All Rights Reserved.</p>
-        <Socials />
-      </div>
-      <nav className="cu:flex cu:flex-wrap cu:gap-x-6 cu:gap-y-2 cu:max-[760px]:order-[-1] cu:max-[760px]:justify-center cu:max-[760px]:gap-x-5 cu:max-[760px]:gap-y-1" aria-label="Legal">
-        {LEGAL.map(({ label, href }) => <a key={label} className={`${LINK} cu:text-[15px]/[20px] cu:max-[760px]:py-0.5`} href={href} {...NEW_TAB}>{label}</a>)}
-        <span className="cu:text-[15px]/[20px] cu:font-medium cu:max-[760px]:py-0.5">Grievance Redressal</span>
+    <div className={`cu:grid cu:w-full cu:grid-cols-[1fr_auto_1fr] cu:items-center cu:gap-x-8 cu:border-t cu:pt-4 cu:max-[1100px]:grid-cols-[auto_1fr] cu:max-[1100px]:gap-y-3 cu:max-[760px]:flex cu:max-[760px]:flex-col cu:max-[760px]:gap-4 ${RULE}`}>
+      <p className="cu:m-0 cu:text-[14px]/[20px] cu:max-[1100px]:col-span-2 cu:max-[1100px]:row-start-2 cu:max-[760px]:order-last cu:max-[760px]:text-center cu:max-[760px]:text-[13px]">© {YEAR} Vajiram &amp; Ravi. All rights reserved.</p>
+      <Socials />
+      <nav className="cu:justify-self-end" aria-label="Legal">
+        <ul className={`cu:m-0 cu:flex cu:list-none cu:flex-wrap cu:items-center cu:justify-end cu:p-0 cu:text-[14px]/[20px] cu:max-[760px]:justify-center cu:max-[760px]:gap-x-5 cu:max-[760px]:gap-y-1 cu:max-[760px]:[&>*+*]:before:content-none ${SEP}`}>
+          {LEGAL.map(({ label, href }) => <li key={label} className="cu:flex cu:items-center"><a className={`${LINK} cu:text-[14px]/[20px]`} href={href} {...NEW_TAB}>{label}</a></li>)}
+          <li className="cu:flex cu:items-center cu:font-medium">Grievance Redressal</li>
+        </ul>
       </nav>
     </div>
   );

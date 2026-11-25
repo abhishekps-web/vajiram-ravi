@@ -190,7 +190,7 @@ html body .dl .hx__tag { margin-left: -10px; }
 
 /* The eyebrow (user 2026-11-21, after the results pill with the running names went): the site's SectionLabel, light on the card, where
    the pill was, with its gap to the headline. */
-html body .dl .dl__in > .lbl { margin: 0 0 22px; justify-content: flex-start; }
+html body .dl .dl__in > .lbl { margin: 0 0 var(--hd-lbl); justify-content: flex-start; }   /* 16px, the site eyebrow gap (user 2026-11-25; was 22px) */
 @media (max-width: 640px) { html body .dl .dl__in > .lbl { margin-bottom: 16px; } }
 
 /* Shorter hero (user 2026-11-21, "reduce the height of the hero section"): the card 100px further short of the screen and capped at 560px
@@ -416,3 +416,9 @@ html body .dl { --card-h: max(var(--card-min), calc(min(100svh, 900px) - var(--h
 }
 /* phones: the banner card fills the screen below the header (user 2026-11-21); the stats follow below the fold */
 @media (max-width: 760px) { html body .dl { --card-h: calc(100svh - var(--hdr-h) - var(--hdr-gap)); } }
+
+/* The intro and the stats are one section (user 2026-11-25, "merge stats and intro section"): HeroIntro.jsx (a SectionWrapper) renders
+   the stats row under its buttons; the section takes its content's height. The banner card keeps its size (at most 480px). */
+html body .dl--pin, html body .dl--pin .dl__frame { height: auto; min-height: 0; }
+html body #about-vr .hx__stats { height: auto; margin-top: var(--hd-gap); padding-top: 0; padding-bottom: 0; }
+@media (min-width: 761px) { html body .dl { --card-h: max(var(--card-min), min(480px, calc(var(--hero-avail) - 184px))); } }

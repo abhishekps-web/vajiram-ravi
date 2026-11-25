@@ -1,5 +1,5 @@
 import HeroBanner, { FIRST_KIND } from './HeroBanner';
-import HeroStats from './HeroStats';
+import HeroIntro from './HeroIntro';
 
 export default function Hero() {
   return (
@@ -7,7 +7,7 @@ export default function Hero() {
       <span className="dl__ground" aria-hidden="true" />
       <div className="dl__frame">
         <HeroBanner />
-        <HeroStats />
+        <HeroIntro />
       </div>
     </section>
   );

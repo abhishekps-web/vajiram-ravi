@@ -8,6 +8,7 @@ import WhyChoose from '@/components/sections/WhyChoose';
 import Batches from '@/components/sections/Batches';
 import Faculties from '@/components/sections/Faculties';
 import Stories from '@/components/sections/Stories';
+import VideoStories from '@/components/sections/VideoStories';
 import TalkToUs from '@/components/sections/TalkToUs';
 import Resources from '@/components/sections/Resources';
 import LifeGallery from '@/components/sections/LifeGallery';
@@ -34,6 +35,7 @@ export default function Home() {
             background (public/css/v49.css .ground-merge) */}
         <div className="ground-merge">
           <Stories />
+          <VideoStories />
           <Faculties />
         </div>
         <LifeGallery />
