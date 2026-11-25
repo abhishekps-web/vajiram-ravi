@@ -37,6 +37,7 @@ const prog = list => list.slice(0, 2).join(' · ') + (list.length > 2 ? ` +${lis
 const tidy = c => (c || '').split(/,(?![^(]*\))/).map(x => x.trim().replace(/^IGP$/i, 'Interview Guidance Programme')).filter(Boolean);
 
 const PLACEHOLDER = PHOTO + 'portrait/placeholder-topper.webp';
+const TONES = ['gs', 'pre', 'ca', 'mains', 'mentor'];
 
 const AIR_ONES = TOPPERS.filter(p => p.r === 1).sort((a, b) => b.y - a.y).slice(0, 10).map(p => {
   const year = p.y === 2025 ? TOPPERS_2025[0] : null;
@@ -47,14 +48,14 @@ const AIR_ONES = TOPPERS.filter(p => p.r === 1).sort((a, b) => b.y - a.y).slice(
   };
 });
 
-function ReelItem({ person }) {
+function ReelItem({ person, i }) {
   const { year, name, programmes } = person;
   return (
     <li className="dr__item">
-      <div className="dr__fig">
+      <div className={`dr__fig dr__fig--${TONES[i % TONES.length]}`}>
         <span className="dr__gem" aria-hidden="true"><i></i></span>
         <span className="dr__pic">
-          <img className="is-boxed" src={PLACEHOLDER} alt="" width="480" height="600" loading="lazy" decoding="async" />
+          <img src={PLACEHOLDER} alt="" width="360" height="360" loading="lazy" decoding="async" />
         </span>
       </div>
       <p className="dr__n" aria-hidden="true"><small>AIR</small> 1</p>
@@ -67,10 +68,10 @@ function ReelItem({ person }) {
 export default function ToppersReel() {
   return (
     <>
-      <p className="dr__h"><span id="drHead">AIR 1, ten years running</span></p>
+      <p className="dr__h"><span id="drHead">A decade of AIR 1s</span></p>
       <div className="dr__view" id="drList" aria-labelledby="drHead">
         <ul className="dr__track">
-          {AIR_ONES.map(p => <ReelItem key={p.year} person={p} />)}
+          {AIR_ONES.map((p, i) => <ReelItem key={p.year} person={p} i={i} />)}
         </ul>
       </div>
     </>

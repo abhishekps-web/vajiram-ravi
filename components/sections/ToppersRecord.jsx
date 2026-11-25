@@ -8,6 +8,7 @@ import { NP_ARCHIVE, TOPPERS } from './toppers-data';
 import { TOPPERS_2025 } from './ToppersReel';
 
 const SHOW = 7;
+const TONES = ['gs', 'pre', 'ca', 'mains', 'mentor'];
 const tidyProg = p => p.replace(/^&\s*/, '').trim()
   .replace(/^IGP$/i, 'Interview Guidance Programme').replace(/\bIGP\b/g, 'Interview Guidance Programme')
   .replace(/Interview Guidance Program\b/gi, 'Interview Guidance Programme').replace(/Prelims Cum Mains/g, 'Prelims-cum-Mains');
@@ -28,7 +29,7 @@ const RECORD = NP_ARCHIVE.ARCHIVE_YEARS.map(y => ({
   })),
 }));
 const FIRST = RECORD[0].people[0];
-const isCutout = src => src.includes('/portrait/2025/') || src.includes('placeholder-man');
+const isCutout = src => src.includes('/portrait/2025/') || src.includes('/portrait/placeholder');
 const isPlaceholder = src => src.includes('placeholder-man');
 
 const RECORD_BOX = [
@@ -57,15 +58,15 @@ export default function ToppersRecord() {
         <div className="cu:flex cu:flex-col cu:items-center cu:text-center cu:gap-(--hd-in)">
           <Tabs className="tp-yrs cu:self-center" label="Year of the examination" controls="tpList" items={RECORD.map(g => ({ id: String(g.y), label: g.y }))} />
         </div>
-        <div className="tp-frame cu:relative cu:mt-[8px] cu:px-0 cu:pb-[clamp(20px,2.4vw,32px)] cu:pt-[clamp(14px,1.6vw,22px)] cu:rounded-(--r-form) cu:before:absolute cu:before:inset-x-0 cu:before:bottom-[12px] cu:before:top-[calc(clamp(14px,1.6vw,22px)+46px)] cu:before:pointer-events-none cu:before:border-2 cu:before:border-t-0 cu:before:border-solid cu:before:border-[rgba(194,65,12,.55)] cu:before:[mask-image:linear-gradient(180deg,transparent,#000_45%)]">
+        <div className="tp-frame cu:relative cu:mt-[8px] cu:px-0 cu:min-[901px]:w-fit cu:min-[901px]:mx-auto cu:min-[901px]:px-[clamp(24px,2.6vw,40px)] cu:pb-[clamp(20px,2.4vw,32px)] cu:pt-[clamp(14px,1.6vw,22px)] cu:rounded-(--r-form) cu:before:absolute cu:before:inset-x-0 cu:before:bottom-[12px] cu:before:top-[calc(clamp(14px,1.6vw,22px)+46px)] cu:before:pointer-events-none cu:before:border-2 cu:before:border-t-0 cu:before:border-solid cu:before:border-[rgba(194,65,12,.55)] cu:before:[mask-image:linear-gradient(180deg,transparent,#000_45%)]">
           <p className="dr__h"><span data-year-head>{`${RECORD[0].total} Ranks, UPSC CSE ${RECORD[0].y}`}</span></p>
           <div className="cu:grid cu:grid-cols-[auto_minmax(0,300px)] cu:max-[1100px]:grid-cols-[auto_minmax(250px,270px)] cu:max-[900px]:grid-cols-1 cu:justify-center cu:gap-[clamp(28px,3.4vw,56px)] cu:items-start cu:mt-[16px] cu:[--col:316px] cu:max-[900px]:mt-[10px]">
             <div id="tpList" data-lenis-prevent className="tp-list cu:-ml-[6px] cu:pl-[6px] cu:pr-[10px]">
               {RECORD.map((g, gi) => (
                 <ul key={g.y} data-y={g.y} hidden={gi !== 0} className="cu:m-0 cu:p-0 cu:list-none cu:grid cu:gap-0">
-                  {g.people.map(p => (
+                  {g.people.map((p, pi) => (
                     <li key={p.r + p.n} className="cu:[border-bottom:1px_solid_rgba(120,80,40,.16)] cu:last:[border-bottom:0]">
-                      <div className={ROW} role="button" tabIndex={0} data-src={p.src} data-n={p.n} data-r={p.r} data-c={p.c || `UPSC CSE ${g.y}`}>
+                      <div className={ROW} role="button" tabIndex={0} data-src={p.src} data-n={p.n} data-r={p.r} data-c={p.c || `UPSC CSE ${g.y}`} data-tone={TONES[pi % TONES.length]}>
                         <img src={p.src} alt="" width="40" height="40" loading="lazy" decoding="async" className="cu:hidden cu:max-[900px]:block cu:shrink-0 cu:size-[40px] cu:rounded-full cu:object-cover cu:object-top cu:bg-[#F4EDE3] cu:[box-shadow:0_0_0_2px_rgba(194,65,12,.35)]" />
                         <span className="tab__n tp-badge cu:shrink-0 cu:whitespace-nowrap cu:min-w-[68px] cu:text-center" aria-label={`All India Rank ${p.r}`}>AIR {p.r}</span>
                         <b className="cu:block cu:min-w-0 cu:[font:600_clamp(16px,1.3vw,18px)/1.3_var(--f)] cu:text-(--ink)">{p.n}</b>
@@ -77,7 +78,7 @@ export default function ToppersRecord() {
             </div>
             <div className="tp-more-wrap"><Button variant="link" iconEnd="chevron" data-more aria-expanded="false" hidden>Show all names</Button></div>
             <div className="tp-pane cu:order-first cu:[--shield:226px] cu:max-[1100px]:[--shield:200px] cu:sticky cu:top-[calc(var(--hdr-h)+16px)] cu:h-(--col) cu:flex cu:items-center cu:justify-center cu:gap-[clamp(16px,2vw,36px)] cu:text-left cu:text-(--ink) cu:max-[900px]:hidden" aria-live="polite">
-              <div className="dr__fig cu:mt-[12px]" style={{ '--dw': 'var(--shield)', '--dh': 'calc(var(--shield) * 1.24089)' }}>
+              <div className="dr__fig dr__fig--gs cu:mt-[12px]" style={{ '--dw': 'var(--shield)', '--dh': 'calc(var(--shield) * 1.24089)' }}>
                 <span className="tp-laurel" aria-hidden="true" />
                 <span className="dr__gem" aria-hidden="true" />
                 <span className="dr__pic">
@@ -99,7 +100,7 @@ export default function ToppersRecord() {
         <div className="tp-sheet__panel" role="dialog" aria-modal="true" aria-label="Topper details" data-lenis-prevent>
           <Button variant="ghost" size="sm" iconOnly iconStart={LUCIDE_X} label="Close" className="tp-sheet__x" data-sheet-close />
           <div className="tp-pane tp-sheet__body">
-            <div className="dr__fig" style={{ '--dw': 'min(210px, 54vw)', '--dh': 'calc(min(210px, 54vw) * 1.24089)' }}>
+            <div className="dr__fig dr__fig--gs" style={{ '--dw': 'min(210px, 54vw)', '--dh': 'calc(min(210px, 54vw) * 1.24089)' }}>
               <span className="tp-laurel" aria-hidden="true" />
               <span className="dr__gem" aria-hidden="true" />
               <span className="dr__pic"><img data-s-shot src={FIRST.src} alt="" className="tp-shot" decoding="async" /></span>
@@ -122,6 +123,8 @@ export function initToppersRecord() {
   const list = $('.tp-list', rec), pane = $('.tp-pane', rec);
   const name = $('[data-name]', pane), cap = $('[data-cap]', pane), rank = $('[data-rank]', pane), meta = $('[data-meta]', pane);
   let front = $('[data-shot]', pane), back = $('[data-shot-back]', pane);
+  const fig = $('.dr__fig', pane);
+  const tone = (el, t) => { if (!el || !t) return; TONES.forEach(x => el.classList.toggle(`dr__fig--${x}`, x === t)); };
   let cur = null, token = 0;
   const bar = createProgressBar({ className: 'tp-prog', track: true });
   const wait = ms => new Promise(r => setTimeout(r, reduce ? 0 : ms));
@@ -131,7 +134,7 @@ export function initToppersRecord() {
     if (cur) cur.removeAttribute('aria-current');
     cur = row; row.setAttribute('aria-current', 'true'); row.appendChild(bar);
     const mine = ++token, src = row.dataset.src;
-    const text = () => { name.textContent = row.dataset.n; cap.textContent = row.dataset.c; rank.textContent = row.dataset.r; };
+    const text = () => { name.textContent = row.dataset.n; cap.textContent = row.dataset.c; rank.textContent = row.dataset.r; tone(fig, row.dataset.tone); };
     if (instant) { text(); return; }
     meta.classList.add('is-swap');
     const photo = front.getAttribute('src') === src ? Promise.resolve() : preload(src);
@@ -163,6 +166,7 @@ export function initToppersRecord() {
       sShot.src = src; sShot.alt = row.dataset.n;
       sShot.classList.toggle('is-boxed', !isCutout(src)); sShot.classList.toggle('is-pad', isPlaceholder(src));
       sRank.textContent = row.dataset.r; sName.textContent = row.dataset.n; sCap.textContent = row.dataset.c;
+      tone($('.dr__fig', sheet), row.dataset.tone);
       sheet.hidden = false; void sheet.offsetWidth;
       sheet.classList.add('is-open'); document.documentElement.classList.add('tp-sheet-open');
       $('.tp-sheet__x', sheet).focus({ preventScroll: true });

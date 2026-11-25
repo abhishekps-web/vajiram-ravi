@@ -625,6 +625,11 @@ html #toppers .dr { margin-top: 24px; }
 
 /* Record: programme names in full, no "…" (user 2026-11-25) */
 html #toppers .tp-pane .tp-meta .dr__prog { display: block; -webkit-line-clamp: unset; overflow: visible; }
-/* Reel placeholder (user 2026-11-25): a full photo (placeholder-topper.webp), not a cut-out, so it fills the shield */
-.dr__item .dr__pic img.is-boxed { top: calc(var(--dh) * .47); translate: -50% 0; width: calc(var(--dw) * .911); height: calc(var(--dh) * .86); object-fit: cover; object-position: 50% 18%; }
-@media (hover: hover) and (pointer: fine) { .dr__item:hover .dr__pic img.is-boxed { translate: -50% -6px; } }
+
+/* Shield grounds in the Batches card colours (user 2026-11-25, a trial): the reel cycles GS, Prelims, Current affairs, Mains, Mentorship
+   (BFAM in Batches.jsx); the record's shield is the GS colour. Undo: drop these rules. */
+.dr__fig--gs .dr__gem { background-image: url(../assets/img/toppers/figma/shield2-gs.svg); }
+.dr__fig--pre .dr__gem { background-image: url(../assets/img/toppers/figma/shield2-pre.svg); }
+.dr__fig--ca .dr__gem { background-image: url(../assets/img/toppers/figma/shield2-ca.svg); }
+.dr__fig--mains .dr__gem { background-image: url(../assets/img/toppers/figma/shield2-mains.svg); }
+.dr__fig--mentor .dr__gem { background-image: url(../assets/img/toppers/figma/shield2-mentor.svg); }
