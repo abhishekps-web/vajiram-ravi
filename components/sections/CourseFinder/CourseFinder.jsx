@@ -7,6 +7,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import CarouselDots from '@/components/ui/CarouselDots';
 import Button from '@/components/ui/Button';
+import Cover from './Cover';
 import DATA from './courses.json';
 
 const GROUPS = [
@@ -117,7 +118,7 @@ function Card({ it, now }) {
   return (
     <article className="cf-card">
       <a className="cf-card__a" href={it.u} target="_blank" rel="noopener" tabIndex={-1} aria-hidden="true" />
-      <span className="cf-card__pic"><img src={`/${it.i}`} alt="" width="450" height="300" loading="lazy" decoding="async" /></span>
+      <span className="cf-card__pic"><Cover it={it} /></span>
       <div className="cf-card__body">
         <h3 className="cf-card__t">{it.t}</h3>
         <ul className="cf-card__facts">
@@ -138,9 +139,23 @@ function Card({ it, now }) {
 }
 
 /* A category's cards: a grid, and on phones a sideways swipe row with its own dot indicator (at most 7 dots; a long category maps onto them). */
-function CardRail({ items, now }) {
+const SHOWN = 3;
+const TABS = [['all', 'All'], ['new', 'New'], ['upcoming', 'Upcoming']];
+// Every course is in exactly one: Upcoming when a batch date is still ahead, otherwise New (already running, or no date yet).
+const status = (raw, now) => {
+  if (now == null) return '';
+  const ds = [...String(raw || '').matchAll(/(\d{1,2})(?:st|nd|rd|th)?\s+([A-Za-z]+),?\s+(\d{4})/g)]
+    .map(m => { const mo = MONTHS.indexOf(m[2].toLowerCase()); return mo < 0 ? null : new Date(+m[3], mo, +m[1]); }).filter(Boolean);
+  return ds.some(d => d >= now) ? 'upcoming' : 'new';
+};
+function CardRail({ items: every, now }) {
+  const [tab, setTab] = useState('all');
+  const all = tab === 'all' ? every : every.filter(it => status(it.start, now) === tab);
+  const cnt = k => k === 'all' ? every.length : every.filter(it => status(it.start, now) === k).length;
   const tr = useRef(null);
   const [pos, setPos] = useState({ i: 0 });
+  const [more, setMore] = useState(false);
+  const items = more ? all : all.slice(0, SHOWN);
   const n = items.length;
   const dots = Math.min(n, 7);
   const upd = () => {
@@ -158,12 +173,24 @@ function CardRail({ items, now }) {
     const card = Math.round(d / (dots - 1) * (n - 1));
     el.scrollTo({ left: card * step, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
   };
-  useEffect(() => { if (tr.current) tr.current.scrollLeft = 0; upd(); }, [n]);
+  useEffect(() => { if (tr.current) tr.current.scrollLeft = 0; upd(); }, [n, tab]);
   return (
     <div className="cf-rail">
+      <div className="cf-tabs" role="group" aria-label="Filter courses">
+        {TABS.map(([k, label]) => (
+          <button key={k} type="button" className="cf-tab" aria-pressed={tab === k} disabled={k !== 'all' && cnt(k) === 0}
+            onClick={() => { setTab(k); setMore(false); }}>{label}<small>{cnt(k)}</small></button>
+        ))}
+      </div>
       <div className="cf-grid" ref={tr} onScroll={upd}>
         {items.map(it => <Card key={it.id} it={it} now={now} />)}
       </div>
+      {all.length > SHOWN && (
+        <button type="button" className="cf-more" aria-expanded={more} onClick={() => setMore(m => !m)}>
+          {more ? 'Show fewer' : `See all ${all.length} courses`}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ rotate: more ? '180deg' : '0deg' }}><path d="m6 9 6 6 6-6" /></svg>
+        </button>
+      )}
       {dots > 1 && <div className="cf-rail__dots"><CarouselDots tone="light" label="Scroll courses" labels={Array.from({ length: dots }, (_, k) => `Show courses, position ${k + 1} of ${dots}`)} active={pos.i} onSelect={go} /></div>}
     </div>
   );
@@ -322,13 +349,16 @@ export default function CourseFinder() {
           <Button variant="outline" size="sm" iconOnly iconStart="arrow-left" label="Previous featured courses" className="cf-arw cf-arw--prev" hidden={!arw.prev} onClick={() => slide(-1)} />
           <Button variant="outline" size="sm" iconOnly iconStart="arrow" label="Next featured courses" className="cf-arw cf-arw--next" hidden={!arw.next} onClick={() => slide(1)} />
         </div>
-        {arw.n > 1 && <div className="cf-feat__dots"><CarouselDots tone="dark" label="Choose featured courses" labels={Array.from({ length: arw.n }, (_, k) => `Show featured courses ${k + 1}`)} active={arw.i} onSelect={goPage} /></div>}
+        {arw.n > 1 && <div className="cf-feat__dots"><CarouselDots tone="hero" className="cu:[--dot-pill:rgba(60,15,0,.28)]" label="Choose featured courses" labels={Array.from({ length: arw.n }, (_, k) => `Show featured courses ${k + 1}`)} active={arw.i} onSelect={goPage} /></div>}
       </section>
   );
 
   return (
     <>
       <section className="cf-hero" aria-labelledby="cfH">
+        <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true" focusable="false"><filter id="cfMaroon" colorInterpolationFilters="sRGB"><feColorMatrix type="matrix" values=".0816 .2746 .0277 0 .616  .1526 .5135 .0518 0 .282  .1367 .4599 .0464 0 .357  0 0 0 1 0" /></filter></svg>
+        <span className="cf-hero__bg cf-hero__bg--l" aria-hidden="true"></span>
+        <span className="cf-hero__bg" aria-hidden="true"></span>
         <div className="cf-hero__in">
           <nav className="cf-crumb rv" aria-label="Breadcrumb" style={{ '--d': '.02s' }}>
             <a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Courses</span>
