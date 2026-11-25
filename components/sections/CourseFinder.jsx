@@ -8,7 +8,7 @@ import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import CarouselDots from '@/components/ui/CarouselDots';
 import Button from '@/components/ui/Button';
 import DATA from '@/lib/data/course-finder.json';
-import { GROUPS, MODES, MEDIUMS, FEATURED } from '@/lib/data/course-finder';
+import { GROUPS, MODES, MEDIUMS, FEATURED, FEATURED_START } from '@/lib/data/course-finder';
 import SectionWrapper from '@/components/ui/section_wrapper';
 import Cover from './CourseFinder/Cover';
 
@@ -99,7 +99,7 @@ const I_LIVE = ['M15 12V16.4C15 16.7314 14.7314 17 14.4 17H3.6C3.26863 17 3 16.7
 const I_FEE = ['M2 7.6C2 6.7 2.7 6 3.6 6H20.4C21.3 6 22 6.7 22 7.6V16.4C22 17.3 21.3 18 20.4 18H3.6C2.7 18 2 17.3 2 16.4V7.6Z', 'M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z', 'M5.5 9.5V14.5', 'M18.5 9.5V14.5'];
 
 
-function Card({ it, now }) {
+function Card({ it, now, start }) {
   return (
     <article className="cf-card">
       <a className="cf-card__a" href={it.u} target="_blank" rel="noopener" tabIndex={-1} aria-hidden="true" />
@@ -115,7 +115,7 @@ function Card({ it, now }) {
       </div>
       <div className="cf-card__ft">
         <div className="cf-card__start">
-          <span><small>{startInfo(it.start, now).label}</small><b>{startInfo(it.start, now).val}</b></span>
+          <span><small>{startInfo(start ?? it.start, now).label}</small><b>{startInfo(start ?? it.start, now).val}</b></span>
         </div>
         <Button className="cf-card__go" href={it.u} target="_blank" variant="outline" size="sm" iconEnd="arrow" aria-label={`View course: ${it.t}`}>View course</Button>
       </div>
@@ -212,7 +212,7 @@ const CardRail = memo(function CardRail({ items: every, now }) {
           <Button variant="outline" size="sm" iconOnly iconStart="arrow" label="Next courses" className="cf-arw cf-arw--next" hidden={!edge.next} onClick={() => slide(1)} />
         </>}
       </div>
-      {dots > 1 && (car || phone) && <div className="cf-rail__dots"><CarouselDots tone="light" label="Scroll courses" labels={Array.from({ length: dots }, (_, k) => `Show courses, position ${k + 1} of ${dots}`)} active={pos.i} onSelect={go} /></div>}
+      {dots > 1 && phone && <div className="cf-rail__dots"><CarouselDots tone="light" label="Scroll courses" labels={Array.from({ length: dots }, (_, k) => `Show courses, position ${k + 1} of ${dots}`)} active={pos.i} onSelect={go} /></div>}
       {all.length > SHOWN && !phone && (
         <div className="cf-more">
           <Button variant="ghost" size="sm" iconEnd="chevron" aria-expanded={open} onClick={toggle}>{open ? 'Show fewer' : `See all ${all.length} courses`}</Button>
@@ -371,7 +371,7 @@ export default function CourseFinder() {
         <h2 id="cfFeatH" className="cf-feat__t">Our featured courses</h2>
         <div className="cf-feat__car">
           <div className="cf-feat__grid" ref={row} onScroll={arrows} tabIndex={0} role="region" aria-label="Featured courses">
-            {featured.map(it => <Card key={it.id} it={it} now={now} />)}
+            {featured.map((it, k) => <Card key={it.id} it={it} now={now} start={FEATURED_START[k]} />)}
           </div>
           <Button variant="outline" size="sm" iconOnly iconStart="arrow-left" label="Previous featured courses" className="cf-arw cf-arw--prev" hidden={!arw.prev} onClick={() => slide(-1)} />
           <Button variant="outline" size="sm" iconOnly iconStart="arrow" label="Next featured courses" className="cf-arw cf-arw--next" hidden={!arw.next} onClick={() => slide(1)} />
