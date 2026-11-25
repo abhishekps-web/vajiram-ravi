@@ -168,7 +168,7 @@ export const setDrawer = open => {
 
 export const setMega = open => megas.forEach(m => m.set(open && m === megas[0]));
 
-const navMega = (wrap, btn) => {
+const navMega = (wrap, btn, href) => {
   const isOpen = () => wrap.hasAttribute('data-open');
   const set = open => {
     if (open) megas.forEach(m => m !== api && m.set(false));
@@ -179,7 +179,10 @@ const navMega = (wrap, btn) => {
     if (open && !was) rise($$('[data-mega-col]', wrap), 8, 35);
   };
   let t;
-  btn.addEventListener('click', () => set(!isOpen()));
+  btn.addEventListener('click', e => {
+    if (href && e.detail > 0 && matchMedia('(hover: hover)').matches) { location.assign(href); return; }   // a mouse click goes to the page (the menu already opens on hover); touch and keyboard toggle the menu
+    set(!isOpen());
+  });
   wrap.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') { clearTimeout(t); set(true); } });
   wrap.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') t = setTimeout(() => set(false), 160); });
   document.addEventListener('click', e => { if (!wrap.contains(e.target)) set(false); });
@@ -202,7 +205,7 @@ export function initNavMenus() {
   $$('a', drawer).forEach(a => a.addEventListener('click', () => setDrawer(false)));
   $('#mega').innerHTML = coursesMenu();
   $('#megaSm').innerHTML = studyMenu();
-  navMega($('#explore'), $('#exploreBtn'));
+  navMega($('#explore'), $('#exploreBtn'), '/courses');
   navMega($('#studyNav'), $('#studyBtn'));
   addEventListener('keydown', e => { if (e.key === 'Escape') { setMega(false); setDrawer(false); } });
 }
