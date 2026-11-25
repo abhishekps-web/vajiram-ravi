@@ -7,13 +7,13 @@
 
 /* secondary hero (the original course finder's head): a full-bleed band, solid #F8E6C9, continuous with the header band above it:
    crumb, title and one-line lede. */
-.cf-hero { position: relative; isolation: isolate; overflow: hidden; box-sizing: border-box; clip-path: inset(0); padding: 44px var(--px) 80px;   /* the header band above already holds ~12px under the pill, so the top and bottom spaces read equal (about 56px); the bottom is given extra room (user: more space below) */ background: var(--hero-beige, #F3E8D6); }
-.cf-hero__bg { position: absolute; top: 0; right: 0; bottom: 0; width: 34%; z-index: -1; pointer-events: none; background: url(/assets/img/photos/collage.webp) right 0 top -150px / 1040px auto no-repeat; filter: contrast(1.35) brightness(.96) url(#cfMaroon); mix-blend-mode: multiply; opacity: .32;   /* the maroon India Gate drawing on the right, as on the original course finder */
+.cf-hero { position: relative; isolation: isolate; overflow: hidden; box-sizing: border-box; clip-path: inset(0); padding-inline: var(--px);   /* the header band above already holds ~12px under the pill, so the top and bottom spaces read equal (about 56px); the bottom is given extra room (user: more space below) */ background: var(--hero-beige, #F3E8D6); }
+.cf-hero__bg { position: absolute; top: 0; right: 0; bottom: 0; width: 34%; z-index: -1; pointer-events: none; background: url(/assets/img/photos/collage.webp) right 0 top -150px / 1040px auto no-repeat; filter: grayscale(1) contrast(1.15) brightness(1.04); mix-blend-mode: multiply; opacity: .11;   /* the maroon India Gate drawing on the right, as on the original course finder */
   -webkit-mask: linear-gradient(270deg, #000 62%, transparent), linear-gradient(180deg, transparent, #000 40px); -webkit-mask-composite: source-in; mask: linear-gradient(270deg, #000 62%, transparent), linear-gradient(180deg, transparent, #000 40px); mask-composite: intersect; }
 .cf-hero__bg--l { right: auto; left: 0; width: 34%; background-position: right 0 top -60px; transform: scaleX(-1); }
 @media (max-width: 1100px) { .cf-hero__bg { display: none; } }
 .cf-hero::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; background: url(/assets/img/patterns/grain.png); background-size: 220px; mix-blend-mode: soft-light; opacity: .4; }
-.cf-hero { display: flex; align-items: center; min-height: 340px; padding-top: 48px; padding-bottom: 48px; }   /* a little taller, the text block centred vertically and still left aligned */
+.cf-hero { display: flex; align-items: center; min-height: 0; }   /* a little taller, the text block centred vertically and still left aligned */
 .cf-hero__in { width: 100%; text-align: center; }
 .cf-h { margin: 0; font: 400 clamp(40px, 4.6vw, 64px)/1.02 var(--f-title, 'Newsreader', Georgia, serif); letter-spacing: -.025em; color: #2A1A0C; text-wrap: balance; }
 .cf-lede { margin: 16px auto 0; max-width: 620px; font: 500 18px/1.55 var(--f); color: #3A2410; text-wrap: pretty;  }
@@ -117,14 +117,14 @@
 .cf-card__ft .btn { position: relative; z-index: 2; margin-left: auto; }
 
 /* featured courses: three handpicked cards, each saying who it suits, on a soft apricot panel ahead of the categories */
-.cf-feat { margin: 0 0 56px; padding: 48px 48px 52px; border-radius: 10px; }
+.cf-feat { margin: 0 0 56px; padding: 30px 30px 22px; border-radius: 10px; }
 /* the homepage form section's ground, white type; the white cards sit on it */
 .cf-feat { position: relative; isolation: isolate; overflow: hidden;
   background: radial-gradient(48% 60% at 85% 20%, rgba(255, 190, 130, .3), transparent 70%), radial-gradient(45% 55% at 8% 100%, rgba(170, 70, 30, .25), transparent 70%), linear-gradient(135deg, #E8683A 0%, #D45A2A 55%, #C24E22 100%); }
 .cf-feat::before { content: ""; position: absolute; inset: -44px; z-index: -1; pointer-events: none; opacity: .14; background: url(/assets/img/patterns/jaali.svg) 0 0 / 44px 44px repeat;
   -webkit-mask: radial-gradient(78% 70% at 50% 55%, transparent 40%, #000 100%); mask: radial-gradient(78% 70% at 50% 55%, transparent 40%, #000 100%); }   /* the homepage "Talk to us" form section's ground, as it is: the orange gradient with its glows and the faint jaali lattice */
 .cf-feat__t { margin: 0; font: 500 clamp(26px, 2.6vw, 34px)/1.15 var(--f-title, 'Newsreader', serif); color: #fff; text-wrap: balance; }
-.cf-feat__car { position: relative; margin-top: 30px; }
+.cf-feat__car { position: relative; margin-top: 20px; }
 .cf-feat__grid { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 28px) / 3); gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 10px 10px 34px; margin: -10px -10px -34px; scroll-padding-inline: 10px; }   /* room inside the scroller for the card's lift and shadow, so hover is not clipped */
 .cf-feat__grid::-webkit-scrollbar { display: none; }
 .cf-feat__grid:focus-visible { outline: 2px solid var(--brand); outline-offset: 4px; border-radius: 12px; }
@@ -132,9 +132,9 @@
 .cf-arw { position: absolute; z-index: 3; top: 50%; margin-top: -22px; background: #fff; }   /* the site's icon-only outline button, as on the homepage carousels */
 .cf-arw[hidden] { display: none; }
 .cf-arw--prev { left: -22px; } .cf-arw--next { right: -22px; }
-.cf-feat__dots { display: flex; justify-content: center; margin-top: 28px; }
+.cf-feat__dots { display: flex; justify-content: center; margin-top: 14px; }
 @media (max-width: 1000px) { .cf-feat__grid { grid-auto-columns: calc((100% - 12px) / 2); gap: 12px; } }
-@media (max-width: 560px) { .cf-feat { padding: 32px 20px 34px; border-radius: 10px; } .cf-feat__grid { grid-auto-columns: 86%; } .cf-arw--prev { left: -8px; } .cf-arw--next { right: -8px; } }
+@media (max-width: 560px) { .cf-feat { padding: 22px 14px 16px; border-radius: 10px; } .cf-feat__grid { grid-auto-columns: 86%; } .cf-arw--prev { left: -8px; } .cf-arw--next { right: -8px; } }
 
 /* the category list: sticky, a rule down its left, the group being read marked with a brand bar */
 .cf-side { order: -1; --cf-side-top: calc(var(--cf-top) + var(--cf-bar-h) + 24px); position: sticky; top: var(--cf-side-top); display: flex; flex-direction: column; max-height: calc(100vh - var(--cf-side-top) - 16px); }
@@ -185,7 +185,7 @@
 }
 
 @media (max-width: 1180px) { .cf-cols { gap: 40px; grid-template-columns: 280px minmax(0, 1fr); } }
-.cf-rail__dots { display: none; }
+.cf-rail__dots { display: flex; justify-content: center; margin-top: 6px; }
 .cf-rail .cf-card { animation: none; }
 @media (max-width: 1023px) {
   .cf-cols { grid-template-columns: minmax(0, 1fr); gap: 0; padding-top: 0; }
@@ -204,7 +204,7 @@
 }
 @media (max-width: 860px) { .cf-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; } .cf-card__t { font-size: 16px; } .cf-path { padding: 28px; } }
 @media (max-width: 760px) {
-  .cf-hero { min-height: 280px; padding-top: 32px; padding-bottom: 32px; }
+  .cf-hero { min-height: 0; }
 }
 @media (max-width: 760px) {
   .course-page { --cf-bar-h: 60px; }
@@ -226,7 +226,7 @@
 
 /* Header on this page (user 2026-11-23): the bar stays white at the top of the page instead of blending into the ground, and the
    beige band behind it is dropped so the page's own ground runs up under the bar. The id outranks the nav-top variant. */
-body:has(.course-page) #nav[data-top]::after { background-color: #fff; box-shadow: 0 6px 24px -14px rgba(60, 25, 5, .28); }
+@media (min-width: 901px) { body:has(.course-page) #nav[data-top]::after { background-color: #fff; box-shadow: 0 6px 24px -14px rgba(60, 25, 5, .28); } }
 body:has(.course-page) #nav:not([data-top])::after { box-shadow: none; }   /* no shadow under the header pill once the page has scrolled (user 2026-11-24) */
 body:has(.course-page) .nav-band { background: #FFFAF3; border-bottom: 1px solid rgba(122, 42, 10, .12); box-sizing: border-box; }   /* the header sits on its own cream band, ruled off from the peach hero below */
 /* paper grain (the reference page's filter-bar texture) over the hero and the band behind the nav, so the two stay one surface */
@@ -242,7 +242,7 @@ body:has(.course-page) .nav-band { isolation: isolate; }
 }
 
 /* the page's jaali ground stays fixed to the screen while the content scrolls over it (user 2026-11-25) */
-html.foot-curtain main.course-page, main.course-page { background: var(--ground-jaali); background-size: 100% 100%, 36px 36px, auto; background-attachment: fixed; }   /* restated with a stronger selector: v49.css's .course-page shorthand loads after this sheet and reset the attachment */
+html.foot-curtain main.course-page, main.course-page { background: #FFFAF3; }   /* plain cream, no jaali pattern (user 2026-11-25) */
 
 /* card thumbnails in the Batches ticket-head style (user 2026-11-25): the category's solid colour (BFAM's), a fine white line inset
    7px, the lotus watermark bottom right, white text; the course name is on the cover, so the card's own heading is for screen readers */
@@ -260,7 +260,7 @@ html.foot-curtain main.course-page, main.course-page { background: var(--ground-
 .cf-cover__t { display:block; max-width:82%; font:700 clamp(18px,1.6vw,21px)/1.15 var(--f-d, var(--f)); letter-spacing:-.015em; text-wrap:balance; overflow-wrap:break-word; text-shadow:0 1px 10px rgba(0,0,0,.2); }
 .cf-card__t { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-.cf-more { display:flex; justify-content:center; margin-top:22px; }
+.cf-more { display:flex; justify-content:center; margin-top:14px; }
 .cf-more .btn { color:var(--brand); }
 .cf-more .btn__icon { transition:rotate .3s var(--ease,ease); }
 .cf-more .btn[aria-expanded="true"] .btn__icon { rotate:180deg; }
@@ -274,7 +274,18 @@ html.foot-curtain main.course-page, main.course-page { background: var(--ground-
 .cf-tab:focus-visible { outline:2px solid var(--brand, #C64613); outline-offset:2px; }
 .cf-tabs + .cf-grid { margin-top:18px; }
 
-/* "See all": the rest of a category's cards unfold under the first row instead of popping in (user 2026-11-25) */
+/* desktop: a category's cards are one horizontal carousel (arrows); "See all" opens them as a grid. Phones keep their own swipe row above. */
+@media (min-width: 561px) {
+  .cf-rail__car { position: relative; }
+  .cf-rail .cf-grid--car { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: calc((100% - 36px) / 3); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 10px 10px 34px; margin: 8px -10px -24px; scroll-padding-inline: 10px; overscroll-behavior-x: contain; }
+  .cf-rail .cf-grid--car::-webkit-scrollbar { display: none; }
+  .cf-rail .cf-grid--car > .cf-card { scroll-snap-align: start; animation: none; }
+}
+@media (min-width: 561px) and (max-width: 860px) { .cf-rail .cf-grid--car { grid-auto-columns: calc((100% - 12px) / 2); } }
+@media (max-width: 560px) { .cf-rail__car .cf-arw { display: none; } }
+
+
+/* "See all": the rest of the cards unfold under the first row (height + fade/slide) */
 .cf-extra { display: grid; grid-template-rows: 0fr; visibility: hidden; transition: grid-template-rows .6s var(--ease, cubic-bezier(.22,1,.36,1)), visibility 0s .6s; }
 .cf-extra[data-open] { grid-template-rows: 1fr; visibility: visible; transition: grid-template-rows .6s var(--ease, cubic-bezier(.22,1,.36,1)), visibility 0s; }
 .cf-extra__in { min-height: 0; overflow: hidden; margin: 0 -14px; padding: 0 14px; }
