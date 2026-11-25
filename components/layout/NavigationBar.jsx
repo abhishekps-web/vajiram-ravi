@@ -104,9 +104,9 @@ const ROW_D = 'cu:[font:400_13px/1.45_var(--f)] cu:text-[#6B5D52]';
 const ASIDE = 'cu:flex cu:flex-col cu:items-start cu:bg-[var(--sand,#FFF2E6)] cu:border-l cu:border-[rgba(194,65,12,.12)]';
 
 const plural = n => n + (n === 1 ? ' course' : ' courses');
-// the All courses menu opens the course finder (public/coursefinder/) at that category's section (user 2026-11-23); CATS order -> its section keys
+// the All courses menu opens the course finder (app/courses) at that category's section (user 2026-11-23); CATS order -> its section keys
 const CF_KEY = ['gs', 'optional', 'csat', 'interview', 'mentorship', 'mains-ts', 'prelims-ts', 'optional-ts'];
-const cfHref = c => `/coursefinder/#cat=${CF_KEY[c] || 'all'}`;
+const cfHref = c => `/courses#cat=${CF_KEY[c] || 'all'}`;
 const num = i => String(i + 1).padStart(2, '0');
 
 function coursesMenu() {
@@ -120,7 +120,7 @@ function coursesMenu() {
       <p class="${KICKER} cu:tracking-[.1em]">Not sure where to start?</p>
       <p class="cu:m-0 cu:[font:400_14px/1.5_var(--f)] cu:text-[#4A4038]">A counsellor will match you to a programme for your stage, with no pressure to enrol.</p>
       ${buttonHTML({ href: '#contact', label: 'Talk to a counsellor', size: 'sm', iconEnd: 'arrow', fullWidth: true, className: 'cu:self-stretch cu:mt-1 cu:grid-cols-[minmax(0,1fr)_var(--btn-disc)]! cu:[&>:first-child]:col-start-1! cu:[&>:nth-child(2)]:col-start-2!', attrs: { 'data-mega-close': '' } })}
-      <a class="${ALL_LINK} cu:mt-auto" href="/coursefinder/" data-mega-close>View all ${total} courses${ARROW_SVG}</a>
+      <a class="${ALL_LINK} cu:mt-auto" href="/courses" data-mega-close>View all ${total} courses${ARROW_SVG}</a>
     </aside>`;
 }
 
