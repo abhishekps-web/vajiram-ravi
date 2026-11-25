@@ -162,7 +162,8 @@ const CardRail = memo(function CardRail({ items: every, now }) {
     on(); mq.addEventListener('change', on);
     return () => mq.removeEventListener('change', on);
   }, []);
-  const items = more || phone ? all : all.slice(0, SHOWN);
+  const items = phone ? all : all.slice(0, SHOWN);
+  const rest = phone ? [] : all.slice(SHOWN);
   const n = items.length;
   const dots = Math.min(n, 7);
   const upd = () => {
@@ -192,6 +193,11 @@ const CardRail = memo(function CardRail({ items: every, now }) {
       <div className="cf-grid" ref={tr} onScroll={upd}>
         {items.map(it => <Card key={it.id} it={it} now={now} />)}
       </div>
+      {rest.length > 0 && (
+        <div className="cf-extra" data-open={more ? '' : undefined}>
+          <div className="cf-extra__in"><div className="cf-grid">{rest.map(it => <Card key={it.id} it={it} now={now} />)}</div></div>
+        </div>
+      )}
       {all.length > SHOWN && !phone && (
         <div className="cf-more">
           <Button variant="ghost" size="sm" iconEnd="chevron" aria-expanded={more} onClick={() => setMore(m => !m)}>{more ? 'Show fewer' : `See all ${all.length} courses`}</Button>

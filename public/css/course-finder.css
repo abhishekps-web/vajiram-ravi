@@ -273,3 +273,11 @@ html.foot-curtain main.course-page, main.course-page { background: var(--ground-
 .cf-tab:disabled { opacity:.4; cursor:default; }
 .cf-tab:focus-visible { outline:2px solid var(--brand, #C64613); outline-offset:2px; }
 .cf-tabs + .cf-grid { margin-top:18px; }
+
+/* "See all": the rest of a category's cards unfold under the first row instead of popping in (user 2026-11-25) */
+.cf-extra { display: grid; grid-template-rows: 0fr; visibility: hidden; transition: grid-template-rows .6s var(--ease, cubic-bezier(.22,1,.36,1)), visibility 0s .6s; }
+.cf-extra[data-open] { grid-template-rows: 1fr; visibility: visible; transition: grid-template-rows .6s var(--ease, cubic-bezier(.22,1,.36,1)), visibility 0s; }
+.cf-extra__in { min-height: 0; overflow: hidden; margin: 0 -14px; padding: 0 14px; }
+.cf-extra__in .cf-grid { margin-top: 18px; opacity: 0; translate: 0 18px; padding-bottom: 14px; transition: opacity .35s ease, translate .6s var(--ease, cubic-bezier(.22,1,.36,1)); }
+.cf-extra[data-open] .cf-extra__in .cf-grid { opacity: 1; translate: 0 0; transition-delay: .12s; }
+@media (prefers-reduced-motion: reduce) { .cf-extra, .cf-extra__in .cf-grid { transition: none !important; } }
