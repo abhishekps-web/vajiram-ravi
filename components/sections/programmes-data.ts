@@ -231,5 +231,5 @@ const FINDER_KEY: Record<string, string> = {
 };
 export const coursePageHref = (programme: Pick<Programme, "name">) => {
   const key = FINDER_KEY[programme.name];
-  return key ? `/coursefinder/#cat=${key}` : "/coursefinder/";
+  return key ? `/courses#cat=${key}` : "/courses";
 };
