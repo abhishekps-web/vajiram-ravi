@@ -106,12 +106,12 @@ function Brand() {
 
 function Socials() {
   return (
-    <div className="cu:flex cu:items-center cu:gap-3 cu:max-[760px]:flex-col cu:max-[760px]:gap-1.5">
-      <p className="cu:m-0 cu:[font-family:var(--f)] cu:text-[12px]/[16px] cu:font-semibold cu:tracking-[.08em] cu:uppercase cu:text-espresso">Follow us</p>
-      <ul className="cu:m-0 cu:ml-[-8px] cu:flex cu:list-none cu:items-center cu:gap-1 cu:p-0 cu:max-[760px]:ml-0 cu:max-[760px]:justify-center" aria-label="Vajiram & Ravi on social media">
+    <div className="cu:mt-6 cu:flex cu:flex-col cu:items-start cu:gap-2 cu:max-[760px]:items-center">
+      <h2 className="cu:m-0 cu:[font-family:var(--f)] cu:text-[14px]/[20px] cu:font-semibold cu:tracking-[.06em] cu:whitespace-nowrap cu:text-espresso cu:uppercase">Follow us</h2>
+      <ul className="cu:m-0 cu:ml-[-8px] cu:flex cu:list-none cu:items-center cu:gap-0 cu:p-0 cu:max-[760px]:ml-0 cu:max-[760px]:justify-center" aria-label="Vajiram & Ravi on social media">
         {SOCIALS.map(({ label, icon }) => (
           <li key={icon}>
-            <a className={`cu:flex cu:size-10 cu:items-center cu:justify-center cu:rounded-full cu:text-taupe cu:[transition:color_.2s_ease,background-color_.2s_ease] cu:hover:bg-[rgba(204,85,0,.1)] cu:hover:text-burnt cu:focus-visible:bg-[rgba(204,85,0,.1)] cu:focus-visible:text-burnt cu:max-[760px]:size-11 ${FOCUS}`} href={SITE} {...NEW_TAB} aria-label={label}>
+            <a className={`cu:flex cu:size-9 cu:items-center cu:justify-center cu:rounded-full cu:text-taupe cu:[transition:color_.2s_ease,background-color_.2s_ease] cu:hover:bg-[rgba(204,85,0,.1)] cu:hover:text-burnt cu:focus-visible:bg-[rgba(204,85,0,.1)] cu:focus-visible:text-burnt cu:max-[760px]:size-11 ${FOCUS}`} href={SITE} {...NEW_TAB} aria-label={label}>
               <span className="cu:block cu:size-5 cu:bg-current cu:[-webkit-mask:var(--m)_center/contain_no-repeat] cu:[mask:var(--m)_center/contain_no-repeat] cu:max-[760px]:size-[22px]" style={{ '--m': `url(/assets/img/footer/social-${icon}.svg)` }} aria-hidden="true" />
             </a>
           </li>
@@ -138,6 +138,7 @@ function AppLinks() {
           </li>
         ))}
       </ul>
+      <Socials />
     </div>
   );
 }
@@ -165,9 +166,8 @@ const YEAR = new Date().getFullYear();
 function Legal() {
   const SEP = "cu:[&>*+*]:before:content-['·'] cu:[&>*+*]:before:mx-3 cu:[&>*+*]:before:text-[rgba(26,23,20,.35)]";
   return (
-    <div className={`cu:grid cu:w-full cu:grid-cols-[1fr_auto_1fr] cu:items-center cu:gap-x-8 cu:border-t cu:pt-4 cu:max-[1100px]:grid-cols-[auto_1fr] cu:max-[1100px]:gap-y-3 cu:max-[760px]:flex cu:max-[760px]:flex-col cu:max-[760px]:gap-4 ${RULE}`}>
-      <p className="cu:m-0 cu:text-[14px]/[20px] cu:max-[1100px]:col-span-2 cu:max-[1100px]:row-start-2 cu:max-[760px]:order-last cu:max-[760px]:text-center cu:max-[760px]:text-[13px]">© {YEAR} Vajiram &amp; Ravi. All rights reserved.</p>
-      <Socials />
+    <div className={`cu:grid cu:w-full cu:grid-cols-[auto_1fr] cu:items-center cu:gap-x-8 cu:border-t cu:pt-4 cu:max-[760px]:flex cu:max-[760px]:flex-col cu:max-[760px]:gap-4 ${RULE}`}>
+      <p className="cu:m-0 cu:text-[14px]/[20px] cu:max-[760px]:order-last cu:max-[760px]:text-center cu:max-[760px]:text-[13px]">© {YEAR} Vajiram &amp; Ravi. All rights reserved.</p>
       <nav className="cu:justify-self-end" aria-label="Legal">
         <ul className={`cu:m-0 cu:flex cu:list-none cu:flex-wrap cu:items-center cu:justify-end cu:p-0 cu:text-[14px]/[20px] cu:max-[760px]:justify-center cu:max-[760px]:gap-x-5 cu:max-[760px]:gap-y-1 cu:max-[760px]:[&>*+*]:before:content-none ${SEP}`}>
           {LEGAL.map(({ label, href }) => <li key={label} className="cu:flex cu:items-center"><a className={`${LINK} cu:text-[14px]/[20px]`} href={href} {...NEW_TAB}>{label}</a></li>)}
