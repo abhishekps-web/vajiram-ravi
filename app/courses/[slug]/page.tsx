@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react";
 import { notFound } from "next/navigation";
 import NavigationBar from "@/components/layout/NavigationBar";
-import Footer from "@/components/layout/Footer/Footer";
+import Footer from "@/components/layout/Footer";
 import SectionLabel from "@/components/ui/SectionLabel";
 import Button from "@/components/ui/Button";
 import { programmes, programmeSlug } from "@/components/sections/programmes-data";

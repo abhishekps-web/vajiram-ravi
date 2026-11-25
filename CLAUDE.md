@@ -19,7 +19,7 @@ components/
   layout/                 site chrome
     NavigationBar/        the site header: NavigationBar.jsx only (user 2026-11-20: one file, Tailwind `cu:` utilities via
                           app/tailwind-sections.css, no comments): markup, menu data, mega menus, drawer, More menu, language switch
-    Footer/               Footer.jsx (Kevin's footer, user 2026-11-16; Tailwind `cu:` utilities via app/tailwind-sections.css since 2026-11-24, which also holds its curtain variants): one file, user 2026-11-17: the logo row (with the socials), the link
+    Footer.jsx            the site footer, one file, no folder (user 2026-11-25; Kevin's footer, user 2026-11-16; a "Get the app" column with App Store and Google Play badges, `STORES`, user 2026-11-25: the App Store link is the "Vajiram IAS" app, the Google Play link a Play search until its package id is known; Tailwind `cu:` utilities via app/tailwind-sections.css since 2026-11-24, which also holds its curtain variants): one file, user 2026-11-17: the logo row (with the socials), the link
                           columns and the legal bar (no giant debossed name, user 2026-11-21) (no news, user 2026-11-20; the logo, emblem + wordmark, back at the top since user 2026-11-21), the markup and initFooterCurtain (the curtain behaviour)
     Intro/                Intro.jsx (server-rendered overlay), intro.js (plays and lifts it)
     WhatsAppButton/       WhatsAppButton.jsx

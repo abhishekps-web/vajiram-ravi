@@ -63,6 +63,21 @@ const SOCIALS = [
   { label: 'WhatsApp channel', icon: 'whatsapp' },
 ];
 
+const STORES = [
+  {
+    kicker: 'Download on the',
+    name: 'App Store',
+    href: 'https://apps.apple.com/in/app/vajiram-ias/id1482088570',
+    icon: 'M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701',
+  },
+  {
+    kicker: 'Get it on',
+    name: 'Google Play',
+    href: 'https://play.google.com/store/search?q=Vajiram%20IAS&c=apps',
+    icon: 'M22.018 13.298l-3.919 2.218-3.515-3.493 3.543-3.521 3.891 2.202a1.49 1.49 0 0 1 0 2.594zM1.337.924a1.486 1.486 0 0 0-.112.568v21.017c0 .217.045.419.124.6l11.155-11.087L1.337.924zm12.207 10.065l3.258-3.238L3.45.195a1.466 1.466 0 0 0-.946-.179l11.04 10.973zm0 2.067l-11 10.933c.298.036.612-.016.906-.183l13.324-7.54-3.23-3.21z',
+  },
+];
+
 const LEGAL = [
   { label: 'Terms and Conditions', href: site('terms-and-conditions/') },
   { label: 'Privacy Policy', href: site('privacy-policy/') },
@@ -102,9 +117,30 @@ function Socials() {
   );
 }
 
+function AppLinks() {
+  return (
+    <div className="cu:flex cu:min-w-0 cu:flex-col cu:items-start cu:gap-2.5 cu:stacked:col-span-2 cu:max-[760px]:items-center">
+      <h2 className="cu:m-0 cu:[font-family:var(--f)] cu:text-[14px]/[20px] cu:font-semibold cu:tracking-[.06em] cu:whitespace-nowrap cu:text-espresso cu:uppercase">Get the app</h2>
+      <ul className="cu:m-0 cu:flex cu:list-none cu:flex-col cu:gap-2.5 cu:p-0 cu:stacked:flex-row cu:stacked:flex-wrap cu:max-[760px]:justify-center">
+        {STORES.map(({ kicker, name, href, icon }) => (
+          <li key={name}>
+            <a className={`cu:group cu:flex cu:h-[46px] cu:w-[156px] cu:items-center cu:gap-2.5 cu:rounded-[10px] cu:bg-espresso cu:px-3.5 cu:text-cream cu:no-underline cu:shadow-[0_6px_14px_-8px_rgba(26,23,20,.5)] cu:[transition:background-color_.2s_ease,translate_.3s_cubic-bezier(.22,1,.36,1),box-shadow_.3s_ease] cu:hover:-translate-y-0.5 cu:hover:bg-burnt cu:hover:shadow-[0_12px_20px_-10px_rgba(204,85,0,.6)] cu:focus-visible:bg-burnt cu:motion-reduce:transition-none ${FOCUS}`} href={href} {...NEW_TAB} aria-label={`${kicker} ${name}`}>
+              <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" className="cu:flex-none cu:fill-current"><path d={icon} /></svg>
+              <span className="cu:flex cu:flex-col cu:text-left cu:leading-none">
+                <span className="cu:text-[10px] cu:font-medium cu:uppercase cu:tracking-[.06em] cu:opacity-80">{kicker}</span>
+                <span className="cu:mt-[3px] cu:text-[16px] cu:font-semibold cu:tracking-[-.01em]">{name}</span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 function LinkColumns() {
   return (
-    <nav className="cu:grid cu:w-full cu:grid-cols-[.8fr_1.15fr_1.15fr_1fr] cu:items-start cu:gap-x-8 cu:gap-y-7 cu:stacked:grid-cols-2 cu:xs:gap-x-5" aria-label="Footer">
+    <nav className="cu:grid cu:w-full cu:grid-cols-[.8fr_1.15fr_1.15fr_1fr_auto] cu:items-start cu:gap-x-8 cu:gap-y-7 cu:stacked:grid-cols-2 cu:xs:gap-x-5" aria-label="Footer">
       {COLUMNS.map(({ title, links }) => (
         <div key={title} className="cu:flex cu:min-w-0 cu:flex-col cu:items-start cu:gap-2.5">
           <h2 className="cu:m-0 cu:[font-family:var(--f)] cu:text-[14px]/[20px] cu:font-semibold cu:tracking-[.06em] cu:whitespace-nowrap cu:text-espresso cu:uppercase cu:xs:whitespace-normal">{title}</h2>
@@ -115,6 +151,7 @@ function LinkColumns() {
           </ul>
         </div>
       ))}
+      <AppLinks />
     </nav>
   );
 }

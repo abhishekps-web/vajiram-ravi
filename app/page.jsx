@@ -1,5 +1,5 @@
 import NavigationBar from '@/components/layout/NavigationBar';
-import Footer from '@/components/layout/Footer/Footer';
+import Footer from '@/components/layout/Footer';
 import WhatsAppButton from '@/components/layout/WhatsAppButton/WhatsAppButton';
 import Hero from '@/components/sections/Hero/Hero';
 import Programmes from '@/components/sections/Programmes';
