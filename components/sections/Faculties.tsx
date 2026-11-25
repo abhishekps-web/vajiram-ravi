@@ -446,13 +446,18 @@ function TextMotion({ rootId }: { rootId: string }) {
 const AUTOPLAY_MS = 4500;
 
 function EducatorFlow({ educators }: { educators: Educator[] }) {
-  const [phone, setPhone] = useState(false);
+  const [phoneWidth, setPhoneWidth] = useState(0);
+  const phone = phoneWidth > 0;
   useEffect(() => {
     const query = window.matchMedia("(max-width: 640px)");
-    const sync = () => setPhone(query.matches);
+    const sync = () => setPhoneWidth(query.matches ? document.documentElement.clientWidth : 0);
     sync();
     query.addEventListener("change", sync);
-    return () => query.removeEventListener("change", sync);
+    window.addEventListener("resize", sync);
+    return () => {
+      query.removeEventListener("change", sync);
+      window.removeEventListener("resize", sync);
+    };
   }, []);
   return (
     <CircularCarousel
@@ -465,7 +470,7 @@ function EducatorFlow({ educators }: { educators: Educator[] }) {
       renderSlide={(educator) => <FacultyCardText educator={educator} />}
       cardLabel={facultyCardLabel}
       cardDetail={(educator) => <FacultyCardDetails educator={educator} />}
-      {...facultyCardSize(phone)}
+      {...facultyCardSize(phoneWidth)}
       gap={phone ? 12 : 24}
       interval={AUTOPLAY_MS}
       fadeColor="#fff8ec"

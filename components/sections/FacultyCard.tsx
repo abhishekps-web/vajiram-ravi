@@ -2,7 +2,12 @@ import type { ReactNode } from "react";
 import type { Educator } from "@/lib/data/faculty";
 import "@/app/tailwind-sections.css";
 
-export const facultyCardSize = (phone: boolean) => ({ width: phone ? 240 : 300, height: phone ? 240 : 300, imageY: "0%" });
+export const PHONE_CARD_SHARE = 0.7;
+
+export const facultyCardSize = (phoneWidth: number) => {
+  const size = phoneWidth ? Math.round(phoneWidth * PHONE_CARD_SHARE) : 300;
+  return { width: size, height: size, imageY: "0%" };
+};
 
 export const facultyCardLabel = (educator: Educator) => ({ title: educator.name, sub: educator.focus });
 
