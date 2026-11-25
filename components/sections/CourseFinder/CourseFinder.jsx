@@ -4,7 +4,7 @@
    sticky category list with a help card; a closing "Ready to start" block with two paths. Look: this site's own (ground, type, tab bar,
    buttons). `#cat=<family or group>` opens a group. Data: courses.json (slimmed from the finder's CF_DATA); banners in
    public/assets/img/courses. Styles: public/css/course-finder.css. */
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import CarouselDots from '@/components/ui/CarouselDots';
 import Button from '@/components/ui/Button';
 import Cover from './Cover';
@@ -148,14 +148,21 @@ const status = (raw, now) => {
     .map(m => { const mo = MONTHS.indexOf(m[2].toLowerCase()); return mo < 0 ? null : new Date(+m[3], mo, +m[1]); }).filter(Boolean);
   return ds.some(d => d >= now) ? 'upcoming' : 'new';
 };
-function CardRail({ items: every, now }) {
+const CardRail = memo(function CardRail({ items: every, now }) {
   const [tab, setTab] = useState('all');
   const all = tab === 'all' ? every : every.filter(it => status(it.start, now) === tab);
   const cnt = k => k === 'all' ? every.length : every.filter(it => status(it.start, now) === k).length;
   const tr = useRef(null);
   const [pos, setPos] = useState({ i: 0 });
   const [more, setMore] = useState(false);
-  const items = more ? all : all.slice(0, SHOWN);
+  const [phone, setPhone] = useState(false);
+  useEffect(() => {
+    const mq = matchMedia('(max-width: 560px)');
+    const on = () => setPhone(mq.matches);
+    on(); mq.addEventListener('change', on);
+    return () => mq.removeEventListener('change', on);
+  }, []);
+  const items = more || phone ? all : all.slice(0, SHOWN);
   const n = items.length;
   const dots = Math.min(n, 7);
   const upd = () => {
@@ -185,7 +192,7 @@ function CardRail({ items: every, now }) {
       <div className="cf-grid" ref={tr} onScroll={upd}>
         {items.map(it => <Card key={it.id} it={it} now={now} />)}
       </div>
-      {all.length > SHOWN && (
+      {all.length > SHOWN && !phone && (
         <div className="cf-more">
           <Button variant="ghost" size="sm" iconEnd="chevron" aria-expanded={more} onClick={() => setMore(m => !m)}>{more ? 'Show fewer' : `See all ${all.length} courses`}</Button>
         </div>
@@ -193,7 +200,7 @@ function CardRail({ items: every, now }) {
       {dots > 1 && <div className="cf-rail__dots"><CarouselDots tone="light" label="Scroll courses" labels={Array.from({ length: dots }, (_, k) => `Show courses, position ${k + 1} of ${dots}`)} active={pos.i} onSelect={go} /></div>}
     </div>
   );
-}
+});
 
 export default function CourseFinder() {
   const [mode, setMode] = useState('all');
@@ -252,7 +259,8 @@ export default function CourseFinder() {
     if (!list || !cur) return;
     const behavior = reduce.current ? 'auto' : 'smooth';
     if (matchMedia('(max-width: 1023px)').matches) {   // the pills are a row there: scroll sideways to the current one
-      if (list.scrollWidth > list.clientWidth + 1) list.scrollTo({ left: Math.max(0, cur.offsetLeft - (list.clientWidth - cur.offsetWidth) / 2), behavior });
+      const edge = 24, l = cur.offsetLeft, r = l + cur.offsetWidth;
+      if (list.scrollWidth > list.clientWidth + 1 && (l - edge < list.scrollLeft || r + edge > list.scrollLeft + list.clientWidth)) list.scrollTo({ left: Math.max(0, l - (list.clientWidth - cur.offsetWidth) / 2), behavior });
       return;
     }
     if (list.scrollHeight <= list.clientHeight + 1) return;
@@ -348,7 +356,7 @@ export default function CourseFinder() {
           <Button variant="outline" size="sm" iconOnly iconStart="arrow-left" label="Previous featured courses" className="cf-arw cf-arw--prev" hidden={!arw.prev} onClick={() => slide(-1)} />
           <Button variant="outline" size="sm" iconOnly iconStart="arrow" label="Next featured courses" className="cf-arw cf-arw--next" hidden={!arw.next} onClick={() => slide(1)} />
         </div>
-        {arw.n > 1 && <div className="cf-feat__dots"><CarouselDots tone="hero" className="cu:[--dot-pill:rgba(60,15,0,.28)]" label="Choose featured courses" labels={Array.from({ length: arw.n }, (_, k) => `Show featured courses ${k + 1}`)} active={arw.i} onSelect={goPage} /></div>}
+        {arw.n > 1 && <div className="cf-feat__dots"><CarouselDots tone="hero" label="Choose featured courses" labels={Array.from({ length: arw.n }, (_, k) => `Show featured courses ${k + 1}`)} active={arw.i} onSelect={goPage} /></div>}
       </section>
   );
 

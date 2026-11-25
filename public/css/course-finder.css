@@ -196,7 +196,7 @@
   .cf-side__list::-webkit-scrollbar { display: none; }
   .cf-topic { flex: none; padding: 9px 14px; border-radius: 999px; background: #fff; box-shadow: 0 0 0 1px rgba(122, 42, 10, .12); font-size: 14.5px; white-space: nowrap; }
   .cf-topic::before { display: none; }
-  .cf-topic[aria-current="true"] { background: var(--brand); color: #fff; box-shadow: none; }
+  .cf-topic[aria-current="true"] { background: var(--brand); color: #fff; box-shadow: none; font-weight: 500; }
   .cf-topic[aria-current="true"] b { color: #fff; }
   .cf-group { scroll-margin-top: calc(var(--cf-top) + var(--cf-bar-h) + 70px); }
   .cf-bar { border-bottom: 0; box-shadow: none; }
