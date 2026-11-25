@@ -19,9 +19,9 @@
 .cf-lede { margin: 16px auto 0; max-width: 620px; font: 500 18px/1.55 var(--f); color: #3A2410; text-wrap: pretty;  }
 .cf-lede [lang="hi"] { font-family: "Tiro Devanagari Hindi", var(--f); }
 .cf-crumb { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 0 0 18px; font: 500 14px/1 var(--f); color: rgba(42, 26, 12, .55); }
-.cf-crumb a { color: rgba(42, 26, 12, .6); text-decoration: underline; text-decoration-color: rgba(42, 26, 12, .25); text-underline-offset: 4px; transition: color .25s var(--ease, ease), text-decoration-color .25s var(--ease, ease); }
+.cf-crumb a { color: #2A1A0C; text-decoration: underline; text-decoration-color: rgba(42, 26, 12, .25); text-underline-offset: 4px; transition: color .25s var(--ease, ease), text-decoration-color .25s var(--ease, ease); }
 .cf-crumb a:hover, .cf-crumb a:focus-visible { color: #2A1A0C; text-decoration-color: rgba(42, 26, 12, .6); }
-.cf-crumb [aria-current] { color: #2A1A0C; }
+.cf-crumb [aria-current] { color: rgba(42, 26, 12, .6); }   /* Home dark, Courses muted: swapped, user 2026-11-25 */
 
 /* sticky filter bar: Mode and Medium dropdowns, held under the header while the courses scroll */
 .course-page { --cf-bar-h: 64px; --cf-top: calc(var(--hdr-h, 68px) + 6px); }   /* the header ends at --hdr-h (the merged staging header is a bar, not a floating pill): the sticky filters sit 6px under it */
