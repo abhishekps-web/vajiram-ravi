@@ -1696,7 +1696,7 @@ function Programmes() {
           </div>
 
           <div data-fade className="prog__more cu:mt-6 cu:max-[640px]:mt-0 cu:flex cu:justify-center">
-            <Button variant="outline" href="/coursefinder/" iconEnd="arrow">See all programmes</Button>
+            <Button variant="outline" href="/courses" iconEnd="arrow">See all programmes</Button>
           </div>
         </div>
 

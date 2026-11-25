@@ -4,11 +4,13 @@
    sticky category list with a help card; a closing "Ready to start" block with two paths. Look: this site's own (ground, type, tab bar,
    buttons). `#cat=<family or group>` opens a group. Data: lib/data/course-finder.json (slimmed from the finder's CF_DATA); banners in
    public/assets/img/courses. Styles: public/css/course-finder.css. */
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import CarouselDots from '@/components/ui/CarouselDots';
 import Button from '@/components/ui/Button';
 import DATA from '@/lib/data/course-finder.json';
 import { GROUPS, MODES, MEDIUMS, FEATURED } from '@/lib/data/course-finder';
+import SectionWrapper from '@/components/ui/section_wrapper';
+import Cover from './CourseFinder/Cover';
 
 const groupOf = key => GROUPS.find(g => g.id === key || g.fams.includes(key));
 
@@ -101,7 +103,7 @@ function Card({ it, now }) {
   return (
     <article className="cf-card">
       <a className="cf-card__a" href={it.u} target="_blank" rel="noopener" tabIndex={-1} aria-hidden="true" />
-      <span className="cf-card__pic"><img src={`/${it.i}`} alt="" width="450" height="300" loading="lazy" decoding="async" /></span>
+      <span className="cf-card__pic"><Cover it={it} /></span>
       <div className="cf-card__body">
         <h3 className="cf-card__t">{it.t}</h3>
         <ul className="cf-card__facts">
@@ -122,36 +124,103 @@ function Card({ it, now }) {
 }
 
 /* A category's cards: a grid, and on phones a sideways swipe row with its own dot indicator (at most 7 dots; a long category maps onto them). */
-function CardRail({ items, now }) {
+const SHOWN = 3;
+const TABS = [['all', 'All'], ['new', 'New'], ['upcoming', 'Upcoming']];
+// Every course is in exactly one: Upcoming when a batch date is still ahead, otherwise New (already running, or no date yet).
+const status = (raw, now) => {
+  if (now == null) return '';
+  const ds = [...String(raw || '').matchAll(/(\d{1,2})(?:st|nd|rd|th)?\s+([A-Za-z]+),?\s+(\d{4})/g)]
+    .map(m => { const mo = MONTHS.indexOf(m[2].toLowerCase()); return mo < 0 ? null : new Date(+m[3], mo, +m[1]); }).filter(Boolean);
+  return ds.some(d => d >= now) ? 'upcoming' : 'new';
+};
+const CardRail = memo(function CardRail({ items: every, now }) {
+  const [tab, setTab] = useState('all');
+  const all = tab === 'all' ? every : every.filter(it => status(it.start, now) === tab);
+  const cnt = k => k === 'all' ? every.length : every.filter(it => status(it.start, now) === k).length;
+  const tabs = now == null ? [] : TABS.filter(([k]) => k === 'all' || cnt(k) > 0);   // a pill with no courses under it is not shown
   const tr = useRef(null);
-  const [pos, setPos] = useState({ i: 0 });
+  const [pos, setPos] = useState({ i: 0, stops: 0 });
+  const [more, setMore] = useState(false);   // the grid is mounted
+  const [open, setOpen] = useState(false);   // its extra cards are unfolded (a frame after mounting, so they animate)
+  const timer = useRef(0);
+  useEffect(() => () => clearTimeout(timer.current), []);
+  const toggle = () => {
+    clearTimeout(timer.current);
+    if (!more) { setMore(true); requestAnimationFrame(() => requestAnimationFrame(() => setOpen(true))); }
+    else { setOpen(false); timer.current = setTimeout(() => setMore(false), 650); }
+  };
+  const [phone, setPhone] = useState(false);
+  useEffect(() => {
+    const mq = matchMedia('(max-width: 560px)');
+    const on = () => setPhone(mq.matches);
+    on(); mq.addEventListener('change', on);
+    return () => mq.removeEventListener('change', on);
+  }, []);
+  const items = all;
+  const car = !more && all.length > SHOWN;   // collapsed: one swipe/arrow row of every course; "See all" opens them as a grid (phones always keep the row)
+  const [edge, setEdge] = useState({ prev: false, next: true });
   const n = items.length;
-  const dots = Math.min(n, 7);
+  const dots = Math.min(pos.stops || n, 7);
+  const perOf = (el, step, gap) => Math.max(1, Math.floor((el.clientWidth - 20 + gap + 1) / step));
   const upd = () => {
     const el = tr.current;
     if (!el) return;
     const kids = el.children, step = kids.length > 1 ? kids[1].offsetLeft - kids[0].offsetLeft : el.clientWidth;
     const max = el.scrollWidth - el.clientWidth;
-    const card = el.scrollLeft >= max - 2 ? n - 1 : Math.min(n - 1, Math.max(0, Math.round(el.scrollLeft / (step || 1))));
-    setPos({ i: n > 1 ? Math.round(card / (n - 1) * (dots - 1)) : 0 });
+    const stops = Math.max(1, n - perOf(el, step, step - (kids[0]?.getBoundingClientRect().width || 0)) + 1);   // the places the row can rest: one dot each (at most 7)
+    const card = el.scrollLeft >= max - 2 ? stops - 1 : Math.min(stops - 1, Math.max(0, Math.round(el.scrollLeft / (step || 1))));
+    const d = Math.min(stops, 7);
+    setPos(q => { const i = stops > 1 ? Math.round(card / (stops - 1) * (d - 1)) : 0; return q.i === i && q.stops === stops ? q : { i, stops }; });
+    setEdge(e => { const prev = el.scrollLeft > 2, next = el.scrollLeft < max - 2; return e.prev === prev && e.next === next ? e : { prev, next }; });
+  };
+  const slide = dir => {
+    const el = tr.current;
+    if (!el || el.children.length < 2) return;
+    const kids = el.children, step = kids[1].offsetLeft - kids[0].offsetLeft, gap = step - kids[0].getBoundingClientRect().width;
+    const per = Math.max(1, Math.floor((el.clientWidth - 20 + gap + 1) / step));
+    el.scrollBy({ left: dir * per * step, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
   };
   const go = d => {
     const el = tr.current;
-    if (!el || n < 2) return;
+    if (!el || n < 2 || !pos.stops) return;
     const kids = el.children, step = kids[1].offsetLeft - kids[0].offsetLeft;
-    const card = Math.round(d / (dots - 1) * (n - 1));
+    const card = Math.round(d / (dots - 1) * (pos.stops - 1));
     el.scrollTo({ left: card * step, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
   };
-  useEffect(() => { if (tr.current) tr.current.scrollLeft = 0; upd(); }, [n]);
+  useEffect(() => { if (tr.current) tr.current.scrollLeft = 0; upd(); }, [n, tab, car]);
   return (
     <div className="cf-rail">
-      <div className="cf-grid" ref={tr} onScroll={upd}>
-        {items.map(it => <Card key={it.id} it={it} now={now} />)}
+      {tabs.length > 1 && (
+        <div className="cf-tabs" role="group" aria-label="Filter courses">
+          {tabs.map(([k, label]) => (
+            <button key={k} type="button" className="cf-tab" aria-pressed={tab === k}
+              onClick={() => { clearTimeout(timer.current); setTab(k); setMore(false); setOpen(false); }}>{label}<small>{cnt(k)}</small></button>
+          ))}
+        </div>
+      )}
+      <div className="cf-rail__car">
+        <div className={`cf-grid${car ? ' cf-grid--car' : ''}`} ref={tr} onScroll={upd}>
+          {(more && !phone ? items.slice(0, SHOWN) : items).map(it => <Card key={it.id} it={it} now={now} />)}
+        </div>
+        {more && !phone && (
+          <div className="cf-extra" data-open={open ? '' : undefined}>
+            <div className="cf-extra__in"><div className="cf-grid">{items.slice(SHOWN).map(it => <Card key={it.id} it={it} now={now} />)}</div></div>
+          </div>
+        )}
+        {car && !phone && <>
+          <Button variant="outline" size="sm" iconOnly iconStart="arrow-left" label="Previous courses" className="cf-arw cf-arw--prev" hidden={!edge.prev} onClick={() => slide(-1)} />
+          <Button variant="outline" size="sm" iconOnly iconStart="arrow" label="Next courses" className="cf-arw cf-arw--next" hidden={!edge.next} onClick={() => slide(1)} />
+        </>}
       </div>
-      {dots > 1 && <div className="cf-rail__dots"><CarouselDots tone="light" label="Scroll courses" labels={Array.from({ length: dots }, (_, k) => `Show courses, position ${k + 1} of ${dots}`)} active={pos.i} onSelect={go} /></div>}
+      {dots > 1 && (car || phone) && <div className="cf-rail__dots"><CarouselDots tone="light" label="Scroll courses" labels={Array.from({ length: dots }, (_, k) => `Show courses, position ${k + 1} of ${dots}`)} active={pos.i} onSelect={go} /></div>}
+      {all.length > SHOWN && !phone && (
+        <div className="cf-more">
+          <Button variant="ghost" size="sm" iconEnd="chevron" aria-expanded={open} onClick={toggle}>{open ? 'Show fewer' : `See all ${all.length} courses`}</Button>
+        </div>
+      )}
     </div>
   );
-}
+});
 
 export default function CourseFinder() {
   const [mode, setMode] = useState('all');
@@ -210,7 +279,8 @@ export default function CourseFinder() {
     if (!list || !cur) return;
     const behavior = reduce.current ? 'auto' : 'smooth';
     if (matchMedia('(max-width: 1023px)').matches) {   // the pills are a row there: scroll sideways to the current one
-      if (list.scrollWidth > list.clientWidth + 1) list.scrollTo({ left: Math.max(0, cur.offsetLeft - (list.clientWidth - cur.offsetWidth) / 2), behavior });
+      const edge = 24, l = cur.offsetLeft, r = l + cur.offsetWidth;
+      if (list.scrollWidth > list.clientWidth + 1 && (l - edge < list.scrollLeft || r + edge > list.scrollLeft + list.clientWidth)) list.scrollTo({ left: Math.max(0, l - (list.clientWidth - cur.offsetWidth) / 2), behavior });
       return;
     }
     if (list.scrollHeight <= list.clientHeight + 1) return;
@@ -306,13 +376,16 @@ export default function CourseFinder() {
           <Button variant="outline" size="sm" iconOnly iconStart="arrow-left" label="Previous featured courses" className="cf-arw cf-arw--prev" hidden={!arw.prev} onClick={() => slide(-1)} />
           <Button variant="outline" size="sm" iconOnly iconStart="arrow" label="Next featured courses" className="cf-arw cf-arw--next" hidden={!arw.next} onClick={() => slide(1)} />
         </div>
-        {arw.n > 1 && <div className="cf-feat__dots"><CarouselDots tone="dark" label="Choose featured courses" labels={Array.from({ length: arw.n }, (_, k) => `Show featured courses ${k + 1}`)} active={arw.i} onSelect={goPage} /></div>}
+        {arw.n > 1 && <div className="cf-feat__dots"><CarouselDots tone="hero" label="Choose featured courses" labels={Array.from({ length: arw.n }, (_, k) => `Show featured courses ${k + 1}`)} active={arw.i} onSelect={goPage} /></div>}
       </section>
   );
 
   return (
     <>
-      <section className="cf-hero" aria-labelledby="cfH">
+      <SectionWrapper id="cfHero" labelledBy="cfH" compact className="cf-hero">
+        <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true" focusable="false"><filter id="cfMaroon" colorInterpolationFilters="sRGB"><feColorMatrix type="matrix" values=".0816 .2746 .0277 0 .616  .1526 .5135 .0518 0 .282  .1367 .4599 .0464 0 .357  0 0 0 1 0" /></filter></svg>
+        <span className="cf-hero__bg cf-hero__bg--l" aria-hidden="true"></span>
+        <span className="cf-hero__bg" aria-hidden="true"></span>
         <div className="cf-hero__in">
           <nav className="cf-crumb rv" aria-label="Breadcrumb" style={{ '--d': '.02s' }}>
             <a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Courses</span>
@@ -320,7 +393,7 @@ export default function CourseFinder() {
           <h1 id="cfH" className="cf-h rv" style={{ '--d': '.1s' }}>Find your UPSC course</h1>
           <p className="cf-lede rv" style={{ '--d': '.18s' }}>Prelims to Interview. Classroom and LIVE-Online programmes, in English and <span lang="hi">हिंदी</span>.</p>
         </div>
-      </section>
+      </SectionWrapper>
 
       <div ref={sentinel} className="cf-bar-sentinel" aria-hidden="true" />
       <div className="cf-bar">
