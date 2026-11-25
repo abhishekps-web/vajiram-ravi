@@ -1,0 +1,235 @@
+/* Course finder (/courses, components/sections/CourseFinder). Layout from the Figma "Courses page – final style – 1440" (203:6519):
+   left-aligned title block, a courses column (mode filter, then groups of three-across cards) beside a sticky category list with a help
+   card, and a closing block with two paths. Look is the site's own: the jaali ground, type, rhythm (--sec-y, --hd-*), tab bar and
+   buttons. Motion: reveals (.rv), cards rise as they scroll in (scroll-driven where supported), one hover accent per card, the
+   category list's accent bar slides to the group being read; all off under reduced motion. */
+.cf-cols, .cf-close { padding-left: var(--px); padding-right: var(--px); box-sizing: border-box; }   /* --px already centres the 1440px column (--cap is a margin, not a width) */
+
+/* secondary hero (the original course finder's head): a full-bleed band, solid #F8E6C9, continuous with the header band above it:
+   crumb, title and one-line lede. */
+.cf-hero { position: relative; isolation: isolate; overflow: hidden; box-sizing: border-box; padding: 44px var(--px) 80px;   /* the header band above already holds ~12px under the pill, so the top and bottom spaces read equal (about 56px); the bottom is given extra room (user: more space below) */ background: #FCDDBC; }
+.cf-h { margin: 0; font: 400 clamp(40px, 4.6vw, 64px)/1.02 var(--f-title, 'Newsreader', Georgia, serif); letter-spacing: -.025em; color: #2A1A0C; text-wrap: balance; }
+.cf-lede { margin: 16px 0 0; font: 400 18px/1.55 var(--f); color: #4A2F14; text-wrap: pretty; }
+.cf-lede [lang="hi"] { font-family: "Tiro Devanagari Hindi", var(--f); }
+.cf-crumb { display: flex; align-items: center; gap: 10px; margin: 0 0 18px; font: 500 14px/1 var(--f); color: rgba(42, 26, 12, .55); }
+.cf-crumb a { color: rgba(42, 26, 12, .6); text-decoration: underline; text-decoration-color: rgba(42, 26, 12, .25); text-underline-offset: 4px; transition: color .25s var(--ease, ease), text-decoration-color .25s var(--ease, ease); }
+.cf-crumb a:hover, .cf-crumb a:focus-visible { color: #2A1A0C; text-decoration-color: rgba(42, 26, 12, .6); }
+.cf-crumb [aria-current] { color: #2A1A0C; }
+
+/* sticky filter bar: Mode and Medium dropdowns, held under the header while the courses scroll */
+.course-page { --cf-bar-h: 64px; --cf-top: calc(var(--hdr-h, 68px) + 6px); }   /* the header ends at --hdr-h (the merged staging header is a bar, not a floating pill): the sticky filters sit 6px under it */
+.cf-bar-sentinel { height: 1px; margin-bottom: -1px; pointer-events: none; }
+.cf-bar { position: sticky; z-index: 20; top: var(--cf-top); padding: 0 var(--px); box-sizing: border-box; background: #FFFAF3; border-bottom: 1px solid rgba(122, 42, 10, .1); }
+.course-page { --stick: 0; }   /* 0 to 1 as the filter bar reaches the header (set by the component while scrolling) */
+.cf-bar { box-shadow: 0 10px 24px -18px rgba(60, 25, 5, calc(.35 * var(--stick))); }   /* the shadow follows the scroll too, like the cover */
+.cf-bar::before { content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: calc(var(--cf-top) + 48px); background: #FFFAF3; pointer-events: none; opacity: var(--stick);
+  -webkit-mask: linear-gradient(180deg, transparent, #000 48px); mask: linear-gradient(180deg, transparent, #000 48px); }   /* the bar's colour runs up behind the header, filling in with the scroll, its feathered top edge kept off screen: nothing scrolls past in the gaps */
+.cf-bar__in { display: flex; align-items: center; gap: 12px 20px; min-height: var(--cf-bar-h); }
+.cf-search { position: relative; display: flex; align-items: center; flex: 1 1 280px; max-width: 420px; min-width: 0; }
+.cf-search > svg { position: absolute; left: 14px; color: var(--brand); pointer-events: none; }
+.cf-search input { width: 100%; height: 40px; box-sizing: border-box; padding: 0 38px 0 40px; border: 0; border-radius: 999px; background: #fff; box-shadow: 0 0 0 1px rgba(122, 42, 10, .16); font: 500 15px/1 var(--f); color: var(--ink); transition: box-shadow .25s var(--ease, ease); -webkit-appearance: none; appearance: none; }
+.cf-search input::placeholder { color: var(--body); opacity: .8; }
+.cf-search input::-webkit-search-cancel-button { display: none; }
+.cf-search input:hover { box-shadow: 0 0 0 1px rgba(194, 65, 12, .5); }
+.cf-search input:focus-visible { outline: 0; box-shadow: 0 0 0 1.5px var(--brand); }
+.cf-search__x { position: absolute; right: 6px; width: 28px; height: 28px; border: 0; border-radius: 50%; background: transparent; color: var(--body); font-size: 20px; line-height: 1; cursor: pointer; }
+.cf-search__x:hover { background: #FDF1E4; color: var(--brand); }
+.cf-fbtn { display: none; position: relative; flex: none; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; background: #fff; box-shadow: 0 0 0 1px rgba(122, 42, 10, .16); color: var(--brand); cursor: pointer; }
+.cf-fbtn:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.cf-fbtn__n { position: absolute; top: -3px; right: -3px; display: grid; place-items: center; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 9px; background: var(--brand); color: #fff; font: 700 11px/1 var(--f); box-sizing: border-box; }
+
+/* the filter sheet (phones): Mode and Medium as radio pills in a bottom sheet */
+.cf-sheet { position: fixed; inset: 0; z-index: 100000; display: flex; align-items: flex-end; }
+.cf-sheet__ov { position: absolute; inset: 0; background: rgba(40, 15, 5, .5); animation: cf-fade .25s ease both; }
+.cf-sheet__p { position: relative; width: 100%; max-height: 86vh; display: flex; flex-direction: column; border-radius: 20px 20px 0 0; background: #FFFAF3; box-shadow: 0 -20px 40px -20px rgba(40, 15, 5, .4); animation: cf-sheet .32s var(--ease, cubic-bezier(.22, 1, .36, 1)) both; padding-bottom: env(safe-area-inset-bottom, 0px); }
+.cf-sheet__grab { align-self: center; width: 40px; height: 4px; margin: 10px 0 2px; border-radius: 2px; background: rgba(122, 42, 10, .22); }
+.cf-sheet__hd { display: flex; align-items: center; justify-content: space-between; padding: 8px 20px 4px; }
+.cf-sheet__t { margin: 0; font: 600 22px/1.2 var(--f-title, 'Newsreader', serif); color: var(--ink); }
+.cf-sheet__x { width: 40px; height: 40px; border: 0; border-radius: 50%; background: transparent; color: var(--body); font-size: 26px; line-height: 1; cursor: pointer; }
+.cf-sheet__x:focus-visible, .cf-sheet__opt:focus-visible, .cf-sheet__clear:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.cf-sheet__bd { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 8px 20px 12px; }
+.cf-sheet__grp + .cf-sheet__grp { margin-top: 22px; }
+.cf-sheet__k { margin: 0 0 10px; font: 600 12px/1.3 var(--f); letter-spacing: .14em; text-transform: uppercase; color: var(--body); }
+.cf-sheet__opts { display: flex; flex-wrap: wrap; gap: 10px; }
+.cf-sheet__opt { min-height: 44px; padding: 0 18px; border: 0; border-radius: 999px; background: #fff; box-shadow: 0 0 0 1px rgba(122, 42, 10, .16); font: 500 15px/1 var(--f); color: var(--ink); cursor: pointer; transition: background-color .2s var(--ease, ease), color .2s var(--ease, ease), box-shadow .2s var(--ease, ease); }
+.cf-sheet__opt[aria-checked="true"] { background: var(--brand); color: #fff; box-shadow: none; }
+.cf-sheet__ft { display: flex; align-items: center; gap: 12px; padding: 12px 20px 16px; border-top: 1px solid rgba(122, 42, 10, .1); }
+.cf-sheet__ft .btn { flex: 1; }
+.cf-sheet__clear { flex: none; height: 44px; padding: 0 6px; border: 0; background: none; font: 600 14.5px/1 var(--f); color: var(--brand); text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+.cf-sheet__clear:disabled { opacity: .4; cursor: default; text-decoration: none; }
+@keyframes cf-fade { from { opacity: 0; } }
+@keyframes cf-sheet { from { translate: 0 100%; } }
+.cf-clear { flex: none; height: 40px; padding: 0 6px; border: 0; background: none; font: 600 14.5px/1 var(--f); color: var(--brand); text-decoration: underline; text-underline-offset: 4px; cursor: pointer; animation: cf-pop .18s var(--ease, ease) both; }
+.cf-clear:hover { color: var(--brand-d, #A8380A); }
+.cf-clear:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 6px; }
+.cf-none .cf-clear { height: auto; padding: 0; margin-left: 6px; }
+.cf-dd { position: relative; display: flex; align-items: center; }
+.cf-dd__k { color: var(--body); font-weight: 500; }
+.cf-dd__t { white-space: nowrap; }
+.cf-dd__btn { display: inline-flex; align-items: center; justify-content: space-between; gap: 12px; min-width: 190px; height: 40px; padding: 0 14px; border: 0; border-radius: 999px; background: #fff; box-shadow: 0 0 0 1px rgba(122, 42, 10, .16);
+  font: 500 15px/1 var(--f); color: var(--ink); cursor: pointer; transition: box-shadow .25s var(--ease, ease), color .25s var(--ease, ease); }
+.cf-dd__btn svg { color: var(--brand); transition: rotate .25s var(--ease, ease); }
+.cf-dd__btn:hover { box-shadow: 0 0 0 1px rgba(194, 65, 12, .5); }
+.cf-dd__btn:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.cf-dd[data-open] .cf-dd__btn { box-shadow: 0 0 0 1.5px var(--brand); }
+.cf-dd[data-open] .cf-dd__btn svg { rotate: 180deg; }
+.cf-dd__list { position: absolute; z-index: 30; top: calc(100% + 6px); right: 0; left: auto; min-width: 100%; margin: 0; padding: 6px; list-style: none; border-radius: 14px; background: #fff; box-shadow: 0 0 0 1px rgba(122, 42, 10, .12), 0 18px 36px -16px rgba(60, 25, 5, .35); animation: cf-pop .18s var(--ease, ease) both; }
+.cf-dd__list li { padding: 10px 12px; border-radius: 9px; font: 500 15px/1.2 var(--f); color: var(--body); white-space: nowrap; cursor: pointer; }
+.cf-dd__list li[data-hi] { background: #FDF1E4; color: var(--ink); }
+.cf-dd__list li[aria-selected="true"] { color: var(--brand); font-weight: 600; }
+@keyframes cf-pop { from { opacity: 0; translate: 0 -6px; } }
+
+/* two columns */
+.cf-cols { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 64px; align-items: start; padding-top: 40px; padding-bottom: var(--sec-y); }
+.cf-main { min-width: 0; }
+.cf-group { scroll-margin-top: calc(var(--cf-top) + var(--cf-bar-h) + 24px); margin-top: 56px; }
+.cf-main > div > .cf-group:first-child { margin-top: 0; }
+.cf-group__t { margin: 0; font: 600 clamp(26px, 2.6vw, 34px)/1.15 var(--f-title, 'Newsreader', serif); color: var(--ink); text-wrap: balance; }
+.cf-group__sub { margin: 8px 0 0; font: 400 16px/1.5 var(--f); color: var(--body); }
+.cf-none { margin: 40px 0 0; font: 500 16px/1.5 var(--f); color: var(--body); }
+
+/* cards: three across in the column */
+.cf-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 28px; }
+.cf-card { --cf-line: #EADBC4; --cf-mute: #8A776A; display: flex; flex-direction: column; padding: 12px 12px 0; border-radius: 12px; background: #fff; position: relative;
+  border: 1px solid var(--cf-line);
+  transition: translate .45s var(--ease, ease), border-color .45s var(--ease, ease), box-shadow .45s var(--ease, ease); }
+.cf-card__a { position: absolute; inset: 0; z-index: 1; border-radius: inherit; }   /* the whole card opens the course (the original's card was one link) */
+.cf-card__pic { display: block; position: relative; overflow: hidden; aspect-ratio: 16 / 9; border-radius: 6px; background: #F9F0E4; }
+.cf-card__pic img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; transition: scale .5s var(--ease, ease); }
+.cf-card__body { display: flex; flex: 1; flex-direction: column; gap: 8px; padding: 14px 4px 16px; }
+.cf-card__t { margin: 0; font: 600 17px/1.3 var(--f); color: var(--ink); text-wrap: pretty; }
+.cf-card__facts { display: flex; flex-direction: column; gap: 6px; margin: 6px 0 0; padding: 0; list-style: none; }
+.cf-card__facts li { display: flex; align-items: flex-start; gap: 8px; font: 400 14px/1.35 var(--f); color: var(--body); }
+.cf-card__facts svg { flex: none; margin-top: 1px; color: var(--cf-mute); }
+.cf-card__ft { position: relative; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 12px; margin: auto -12px 0; padding: 14px 16px 16px; }
+.cf-card__ft::before { content: ""; position: absolute; left: 16px; right: 16px; top: 0; border-top: 1px solid var(--cf-line); }
+.cf-card__start { display: flex; align-items: center; min-width: 0; }
+.cf-card__start > span { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.cf-card__start small { font: 600 10px/1 var(--f); letter-spacing: .08em; text-transform: uppercase; color: var(--cf-mute); }
+.cf-card__start b { font: 600 16px/1.15 var(--f); color: var(--ink); white-space: nowrap; font-variant-numeric: lining-nums; }
+.cf-card__ft .btn { position: relative; z-index: 2; margin-left: auto; }
+
+/* featured courses: three handpicked cards, each saying who it suits, on a soft apricot panel ahead of the categories */
+.cf-feat { margin: 0 0 56px; padding: 32px 32px 36px; border-radius: 10px; }
+/* the homepage form section's ground, white type; the white cards sit on it */
+.cf-feat { position: relative; isolation: isolate; overflow: hidden;
+  background: radial-gradient(48% 60% at 85% 20%, rgba(255, 190, 130, .3), transparent 70%), radial-gradient(45% 55% at 8% 100%, rgba(170, 70, 30, .25), transparent 70%), linear-gradient(135deg, #E8683A 0%, #D45A2A 55%, #C24E22 100%); }
+.cf-feat::before { content: ""; position: absolute; inset: -44px; z-index: -1; pointer-events: none; opacity: .14; background: url(/assets/img/patterns/jaali.svg) 0 0 / 44px 44px repeat;
+  -webkit-mask: radial-gradient(78% 70% at 50% 55%, transparent 40%, #000 100%); mask: radial-gradient(78% 70% at 50% 55%, transparent 40%, #000 100%); }   /* the homepage "Talk to us" form section's ground, as it is: the orange gradient with its glows and the faint jaali lattice */
+.cf-feat__t { margin: 0; font: 500 clamp(26px, 2.6vw, 34px)/1.15 var(--f-title, 'Newsreader', serif); color: #fff; text-wrap: balance; }
+.cf-feat__car { position: relative; margin-top: 22px; }
+.cf-feat__grid { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 40px) / 3); gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 10px 10px 34px; margin: -10px -10px -34px; scroll-padding-inline: 10px; }   /* room inside the scroller for the card's lift and shadow, so hover is not clipped */
+.cf-feat__grid::-webkit-scrollbar { display: none; }
+.cf-feat__grid:focus-visible { outline: 2px solid var(--brand); outline-offset: 4px; border-radius: 12px; }
+.cf-feat__grid > .cf-card { scroll-snap-align: start; animation: none; }   /* the list's scroll-in rise would hold the card's translate, which the hover lift needs */
+.cf-arw { position: absolute; z-index: 3; top: 50%; margin-top: -22px; background: #fff; }   /* the site's icon-only outline button, as on the homepage carousels */
+.cf-arw[hidden] { display: none; }
+.cf-arw--prev { left: -22px; } .cf-arw--next { right: -22px; }
+.cf-feat__dots { display: flex; justify-content: center; margin-top: 22px; }
+@media (max-width: 1000px) { .cf-feat__grid { grid-auto-columns: calc((100% - 16px) / 2); gap: 16px; } }
+@media (max-width: 560px) { .cf-feat { padding: 24px 16px 26px; border-radius: 10px; } .cf-feat__grid { grid-auto-columns: 86%; } .cf-arw--prev { left: -8px; } .cf-arw--next { right: -8px; } }
+
+/* the category list: sticky, a rule down its left, the group being read marked with a brand bar */
+.cf-side { --cf-side-top: calc(var(--cf-top) + var(--cf-bar-h) + 24px); position: sticky; top: var(--cf-side-top); display: flex; flex-direction: column; max-height: calc(100vh - var(--cf-side-top) - 16px); }
+.cf-side__k, .cf-help { flex: none; }
+.cf-side__list { position: relative; flex: 0 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: rgba(122, 42, 10, .25) transparent; }   /* on a short screen the list scrolls inside, so the Talk to us card always stays in view */
+@media (max-height: 820px) and (min-width: 1025px) { .cf-topic { padding-block: 8px; } .cf-help { margin-top: 20px; padding: 18px 20px; } .cf-help__t { font-size: 20px; } .cf-help__p { margin-bottom: 10px; font-size: 14px; } }
+.cf-side__k { margin: 0 0 12px; font: 600 12px/1.3 var(--f); letter-spacing: .14em; text-transform: uppercase; color: var(--body); }
+.cf-side__list { position: relative; margin: 0; padding: 0; list-style: none; border-left: 1px solid rgba(122, 42, 10, .16); }
+.cf-topic { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 11px 4px 11px 18px; text-decoration: none;
+  font: 500 16px/1.3 var(--f); color: var(--body); transition: color .25s var(--ease, ease), background-color .25s var(--ease, ease); }
+.cf-topic b { font: 500 14px/1 var(--f); font-variant-numeric: tabular-nums; color: var(--body); opacity: .75; }
+.cf-topic::before { content: ""; position: absolute; left: -2px; top: 0; bottom: 0; width: 3px; background: var(--brand); transform: scaleY(0); transform-origin: center;
+  transition: transform .35s var(--ease, ease); }
+.cf-topic:hover, .cf-topic:focus-visible { color: var(--brand); }
+.cf-topic:focus-visible { outline: 2px solid var(--brand); outline-offset: -2px; }
+.cf-topic[aria-current="true"] { color: var(--ink); font-weight: 600; }
+.cf-topic[aria-current="true"]::before { transform: scaleY(1); }
+.cf-help { display: grid; gap: 6px; margin-top: 32px; padding: 24px; border-radius: var(--r-box, 16px); background: #FDF1E4; box-shadow: 0 0 0 1px rgba(194, 65, 12, .14); }
+.cf-help__k { margin: 0; font: 600 12px/1.3 var(--f); letter-spacing: .14em; text-transform: uppercase; color: var(--brand); }
+.cf-help__t { margin: 0; font: 600 22px/1.25 var(--f-title, 'Newsreader', serif); color: var(--ink); }
+.cf-help__p { margin: 0 0 14px; font: 400 15px/1.5 var(--f); color: var(--body); }
+
+/* closing: two paths */
+.cf-close { display: flex; flex-direction: column; align-items: center; text-align: center; padding-top: var(--sec-y); padding-bottom: var(--sec-y); border-top: 1px solid rgba(122, 42, 10, .1); }
+.cf-close .h2 { margin: var(--hd-lbl, 24px) auto 0; max-width: 20ch; text-wrap: balance; }
+.cf-close .intro { margin: var(--hd-in, 16px) auto 0; }
+.cf-paths { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; width: min(100%, 1136px); margin-top: var(--hd-gap, 48px); text-align: left; }
+.cf-path { position: relative; overflow: hidden; isolation: isolate; display: grid; justify-items: start; align-content: start; gap: 12px; padding: 40px; border-radius: 20px; background: #FDF1E4; box-shadow: 0 0 0 1px rgba(194, 65, 12, .14); }
+.cf-path--alt { background: #fff; box-shadow: 0 0 0 1px rgba(122, 42, 10, .1); }
+.cf-path::before { content: ""; position: absolute; z-index: -1; right: -120px; top: -228px; width: 400px; height: 400px; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, rgba(194, 65, 12, .16) 0 40%, rgba(194, 65, 12, .1) 40% 70%, rgba(194, 65, 12, .06) 70% 100%); transition: scale .8s var(--ease, ease); }
+.cf-path--alt::before { background: radial-gradient(circle, rgba(255, 212, 138, .55) 0 40%, rgba(255, 212, 138, .35) 40% 70%, rgba(255, 212, 138, .2) 70% 100%); }
+.cf-path__tag { margin: 0; padding: 6px 12px; border-radius: 999px; background: rgba(194, 65, 12, .1); font: 600 13px/1.3 var(--f); color: var(--brand); }
+.cf-path__t { margin: 8px 0 0; font: 600 clamp(26px, 2.6vw, 32px)/1.15 var(--f-title, 'Newsreader', serif); color: var(--ink); }
+.cf-path__p { margin: 0 0 12px; max-width: 400px; font: 400 16px/1.55 var(--f); color: var(--body); }
+
+@media (hover: hover) and (pointer: fine) {
+  .cf-card:hover { translate: 0 -6px; border-color: #DCC8AE; box-shadow: 0 24px 36px -26px rgba(122, 42, 10, .34); }
+  .cf-card:hover .cf-card__pic img { scale: 1.04; }
+  .cf-path:hover::before { scale: 1.08; }
+}
+.cf-card:focus-within { border-color: var(--brand); }
+
+/* cards rise as they scroll in; where scroll-driven animation is missing they are simply there */
+@keyframes cf-rise { from { opacity: 0; translate: 0 24px; } to { opacity: 1; translate: 0 0; } }
+@supports (animation-timeline: view()) {
+  .cf-card { animation: cf-rise linear both; animation-timeline: view(); animation-range: entry 0% entry 35%; }
+}
+
+@media (max-width: 1180px) { .cf-cols { gap: 40px; grid-template-columns: minmax(0, 1fr) 280px; } }
+.cf-rail__dots { display: none; }
+.cf-rail .cf-card { animation: none; }
+@media (max-width: 1023px) {
+  .cf-cols { grid-template-columns: minmax(0, 1fr); gap: 0; padding-top: 0; }
+  /* the category pills: a second sticky row under the filter bar; the row runs off the screen edge so it reads as scrollable */
+  .cf-side { position: sticky; top: calc(var(--cf-top) + var(--cf-bar-h)); z-index: 19; display: block; max-height: none; order: -1; margin: 0 calc(var(--px) * -1) 28px; padding: 10px 0 12px; background: #FFFAF3; border-bottom: 1px solid rgba(122, 42, 10, .1); }
+  .cf-side__k, .cf-help { display: none; }
+  .cf-side__list { display: flex; gap: 8px; overflow-x: auto; overflow-y: hidden; border-left: 0; padding: 2px var(--px); scroll-padding-inline: var(--px); scrollbar-width: none; }
+  .cf-side__list::-webkit-scrollbar { display: none; }
+  .cf-topic { flex: none; padding: 9px 14px; border-radius: 999px; background: #fff; box-shadow: 0 0 0 1px rgba(122, 42, 10, .12); font-size: 14.5px; white-space: nowrap; }
+  .cf-topic::before { display: none; }
+  .cf-topic[aria-current="true"] { background: var(--brand); color: #fff; box-shadow: none; }
+  .cf-topic[aria-current="true"] b { color: #fff; }
+  .cf-group { scroll-margin-top: calc(var(--cf-top) + var(--cf-bar-h) + 70px); }
+  .cf-bar { border-bottom: 0; box-shadow: none; }
+  .cf-side { box-shadow: 0 10px 24px -18px rgba(60, 25, 5, calc(.35 * var(--stick))); }
+}
+@media (max-width: 860px) { .cf-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; } .cf-card__t { font-size: 16px; } .cf-path { padding: 28px; } }
+@media (max-width: 760px) {
+  .cf-hero { padding-top: 30px; padding-bottom: 56px; }
+}
+@media (max-width: 760px) {
+  .course-page { --cf-bar-h: 60px; }
+  .cf-bar__in { flex-wrap: nowrap; gap: 10px; padding: 8px 0; }
+  .cf-search { flex: 1 1 auto; max-width: none; }
+  .cf-bar .cf-dd, .cf-bar .cf-clear { display: none; }
+  .cf-fbtn { display: inline-flex; }
+}
+@media (max-width: 560px) { .cf-dd__btn { min-width: 0; padding: 0 12px; font-size: 14px; } .cf-dd__list { left: 0; right: auto; } }
+@media (max-width: 700px) { .cf-paths { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 560px) { .cf-grid { grid-template-columns: minmax(0, 1fr); } .cf-group { margin-top: 44px; } }
+@media (prefers-reduced-motion: reduce) {
+  .cf-card { animation: none; }
+  .cf-dd__list, .cf-clear, .cf-sheet__ov, .cf-sheet__p { animation: none; }
+  .cf-sheet__opt { transition: none; }
+  .cf-bar, .cf-bar::before { transition: none; }
+  .cf-card, .cf-card__pic img, .cf-topic, .cf-topic::before, .cf-path::before { transition: none; }
+}
+
+/* Header on this page (user 2026-11-23): the bar stays white at the top of the page instead of blending into the ground, and the
+   beige band behind it is dropped so the page's own ground runs up under the bar. The id outranks the nav-top variant. */
+body:has(.course-page) #nav[data-top]::after { background-color: #fff; box-shadow: 0 6px 24px -14px rgba(60, 25, 5, .28); }
+body:has(.course-page) #nav:not([data-top])::after { box-shadow: none; }   /* no shadow under the header pill once the page has scrolled (user 2026-11-24) */
+body:has(.course-page) .nav-band { background: #FCDDBC; }
+/* paper grain (the reference page's filter-bar texture) over the hero and the band behind the nav, so the two stay one surface */
+body:has(.course-page) .nav-band::before, .cf-hero::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: url(/assets/img/patterns/grain.png); background-size: 220px; mix-blend-mode: soft-light; opacity: .18; }
+body:has(.course-page) .nav-band { isolation: isolate; }
+
+/* phones: each category's cards are a swipe row, the next card peeking in, with dots under it */
+@media (max-width: 560px) {
+  .cf-rail .cf-grid { display: grid; grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 86%; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin-inline: calc(var(--px) * -1); padding: 4px var(--px) 12px; scroll-padding-inline: var(--px); overscroll-behavior-x: contain; }
+  .cf-rail .cf-grid::-webkit-scrollbar { display: none; }
+  .cf-rail .cf-card { scroll-snap-align: start; }
+  .cf-rail__dots { display: flex; justify-content: center; margin-top: 6px; }
+}

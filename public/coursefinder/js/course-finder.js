@@ -325,7 +325,9 @@
     // the chips (user 2026-11-18, "change this to new, trending, bestseller, apply this to all categories"; they were the subjects): the
     // same four in every category, filtering it by the cards' badges; a chip with nothing behind it is greyed out and cannot be chosen
     // Upcoming (user 2026-11-18, "add an upcoming chip too"): the courses whose next batch has yet to start (the card's "Batch starts" date)
-    const CHIPS = [['badge:new', 'New'], ['badge:trending', 'Trending'], ['badge:bestseller', 'Bestseller'], ['up:1', 'Upcoming']];
+    // back as All / Bestseller / Upcoming only (user 2026-11-25, "lets add the chips back, all, bestseller, upcoming, not in all category
+    // but in some": the categories with more than four courses, the ones with a View all button; the rows are dropped from the rest below)
+    const CHIPS = [['badge:bestseller', 'Bestseller'], ['up:1', 'Upcoming']];
     const chipRow = t => `<div class="cf-chips" role="group" aria-label="Show ${esc(t.label)} courses">
           <button type="button" class="cf-chip" data-f="" aria-pressed="true">All</button>${CHIPS.map(([f, l]) => `<button type="button" class="cf-chip" data-f="${f}" aria-pressed="false">${esc(l)}</button>`).join('')}
         </div>`;
@@ -341,11 +343,17 @@
         </div>
         <a class="bt bt--brand cf-help__cta" href="/#contact">Get expert guidance<span class="sq"></span></a>
       </aside>`;
+    // "View all" (user 2026-11-25, "for categories that have more than 4 courses it should have a view all button, once the user clicks
+    // this it will show all the courses as an accordion and the carousel function will be removed when the accordion is open"): a row
+    // with more than four courses (after the search, filters and chips) gets the button under it; it opens the row downwards into a
+    // grid of every course (no sideways scrolling, no arrows) and closes it back into the carousel
+    const MORE_AT = 4;
+    const MORE_CHEV = '<svg class="cf-all__i" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4"/></svg>';
     const secHTML = TREE.map(t => {
       const items = D.courses.filter(c => t.kids.includes(c.f)).flatMap(c => c.v.map(v => [c, v]));
       if (!items.length) return '';
       const car = `<div class="cf-car">
-          <ul class="cf-grid">${items.map(([c, v]) => card(c, v, t)).join('')}</ul>
+          <ul class="cf-grid" id="grid-${t.k}">${items.map(([c, v]) => card(c, v, t)).join('')}</ul>
           <button type="button" class="cf-arw cf-arw--prev" data-dir="-1" aria-label="Previous ${esc(t.label)} courses" hidden>${CHEV(-1)}</button>
           <button type="button" class="cf-arw cf-arw--next" data-dir="1" aria-label="More ${esc(t.label)} courses" hidden>${CHEV(1)}</button>
         </div>`;
@@ -353,9 +361,12 @@
         <div class="cf-sec__top">${bookFor(t.k, t.label, items.length)}<div class="cf-sec__txt">
         <h2 class="cf-sec__h" id="cath-${t.k}"><span class="cf-sec__name">${esc(t.label)}</span>${NEW.has(t.k) ? ' <span class="cf-new">New</span>' : ''}<span class="cf-sec__n" data-total="${items.length}">${items.length} ${items.length === 1 ? 'course' : 'courses'}</span></h2>
         ${ABOUT[t.k] ? `<div class="cf-sec__about"><p class="cf-sec__d">${esc(ABOUT[t.k][0])}</p><p class="cf-sec__who"><b>Who it’s for</b> ${esc(ABOUT[t.k][1])}</p></div>` : ''}
-        </div></div>
+        </div>
+        ${items.length > MORE_AT ? `<div class="cf-all"><button type="button" class="cf-all__b" aria-expanded="false" aria-controls="grid-${t.k}"><span class="cf-all__t">View all ${items.length} courses</span>${MORE_CHEV}</button></div>` : ''}
+        </div>
         ${chipRow(t)}
         ${car}
+        ${items.length > MORE_AT ? `<div class="cf-less"><button type="button" class="cf-all__b cf-less__b" aria-expanded="true" aria-controls="grid-${t.k}"><span>Show fewer courses</span>${MORE_CHEV}</button></div>` : ''}
       </section>`;
     });
     // Vajiram's Top Picks (user 2026-11-18, "change our flagship courses to Vajiram's top picks; this section will show some of the top
@@ -373,7 +384,6 @@
         <div class="cf-feat__intro">
           <span class="cf-feat__lockup"><span class="cf-feat__brand"><img class="cf-feat__logo" src="assets/img/brand/emblem.png" alt="Vajiram &amp; Ravi" width="222" height="227" decoding="async"></span></span>   <!-- the Vajiram & Ravi emblem over the eyebrow (user 2026-11-21) -->
           <h2 class="cf-sec__h cf-feat__h" id="cath-top"><span class="cf-sec__name">Our Popular Courses</span></h2>
-          <p class="cf-feat__sub">Our best and most popular courses, the ones aspirants join year after year. Unsure where to begin your UPSC preparation? Start here.</p>
         </div>
         <div class="cf-car">
           <ul class="cf-grid">${tops.map(([c, v]) => card(c, v, famOf(c.f) || TOP_T)).join('')}</ul>
@@ -382,13 +392,18 @@
           <div class="cf-dots" aria-label="Popular courses pages" hidden></div>   <!-- carousel dots under the cards (review 2026-11-24) -->
         </div>
       </section>` : '';
-    list.innerHTML = '<nav class="cf-rail" id="cfRail" aria-label="Course categories"></nav><div class="cf-list__main">'
-      + TOP_HTML + secHTML.filter(Boolean).join('') + HELP + '</div>';   // the counsellor banner after the last category (user 2026-11-18, "move this banner to the bottom"; it sat after the 6th)
+    // the category rail gave way to a fixed list of the categories beside them (user 2026-11-25, "we will be removing the category rail
+    // and will be making this as fixed, as of now this only appears when hovered"): the list (.cf-side, sticky under the search bar)
+    // runs the whole way down beside Our Popular Courses and every category (user 2026-11-25, "I have changed the layout so the category
+    // filter could fit throughout the section": Popular Courses went to three cards so it fits the column), then the counsellor banner
+    list.innerHTML = '<div class="cf-list__main">'
+      + '<div class="cf-body"><aside class="cf-side" id="cfSide" aria-label="Course categories"></aside><div class="cf-cats">'
+      + TOP_HTML + secHTML.filter(Boolean).join('') + '</div></div>' + HELP + '</div>';   // the counsellor banner after the last category (user 2026-11-18, "move this banner to the bottom"; it sat after the 6th)
     // each card's place in its row, so a chip can put the row back after Upcoming has sorted it
     list.querySelectorAll('.cf-grid').forEach(g => [...g.children].forEach((k, i) => { k.dataset.i = i; }));
-    // no All / New / Trending / Bestseller / Upcoming chips in any category (user 2026-11-24, "just remove it from all"); the
-    // search and the mode, medium and target-year filters in the bar still narrow every category
-    list.querySelectorAll('.cf-chips').forEach(row => row.remove());
+    // the chips only in the categories with more than four courses (user 2026-11-25; they had been taken out of every category
+    // 2026-11-24); the search and the mode, medium and target-year filters in the bar still narrow every category
+    list.querySelectorAll('.cf-chips').forEach(row => { if ($$('.cf-k', row.closest('.cf-sec')).length <= MORE_AT) row.remove(); });
 
     // the bar's search and tabs filter every category; a category with nothing left is hidden, and its subject chips with nothing left too
     // (Duration, Class time and Fee were filters too, removed by the user on 2026-11-18; Mode and Medium are dropdowns beside Target year)
@@ -410,6 +425,7 @@
     };
     const arrows = sec => {
       const tr = $('.cf-grid', sec), max = tr.scrollWidth - tr.clientWidth;
+      if (sec.classList.contains('is-all')) { $('.cf-arw--prev', sec).hidden = true; $('.cf-arw--next', sec).hidden = true; return; }
       $('.cf-arw--prev', sec).hidden = tr.scrollLeft <= 2;
       $('.cf-arw--next', sec).hidden = tr.scrollLeft >= max - 2;
       // carousel dots (Popular Courses): one per screenful the arrows step through, the current one drawn as a pill
@@ -456,6 +472,12 @@
       [...all].sort((a, b) => f === 'up:1' ? (+a.dataset.start - +b.dataset.start) || (a.dataset.i - b.dataset.i) : a.dataset.i - b.dataset.i).forEach(k => grid.appendChild(k));
       all.forEach(k => { k.hidden = !match.includes(k); });
       sec.hidden = !ok.length;
+      const more = $('.cf-all', sec);
+      if (more) {
+        more.hidden = match.length <= MORE_AT;
+        if (more.hidden) sec.classList.remove('is-all');
+        moreLabel(sec, match.length);
+      }
       const cnt = $('.cf-sec__n', sec);
       if (cnt) { const all = +cnt.dataset.total, n = ok.length; cnt.textContent = n === all ? `${all} ${all === 1 ? 'course' : 'courses'}` : `${n} of ${all} courses`; }
       // Top Picks carries its number in the headline, "Our 6 Top Picks" (user 2026-11-20, "remove this and incorperate the 6 courses in
@@ -466,6 +488,23 @@
       even(sec);
       arrows(sec);
       return ok.length;
+    };
+    const moreLabel = (sec, n = $$('.cf-k:not([hidden])', sec).length) => {
+      const b = $('.cf-all .cf-all__b', sec); if (!b) return;
+      b.setAttribute('aria-expanded', String(sec.classList.contains('is-all')));
+      $('.cf-all__t', b).textContent = `View all ${n} courses`;
+    };
+    // open or close a row: its height eases between the one row and the full grid; closing a row whose top has scrolled away brings
+    // the category's heading back into view
+    const toggleAll = sec => {
+      const grid = $('.cf-grid', sec), h0 = grid.offsetHeight, open = !sec.classList.contains('is-all');
+      grid.scrollLeft = 0;
+      sec.classList.toggle('is-all', open);
+      moreLabel(sec); arrows(sec);
+      const h1 = grid.offsetHeight;
+      if (!reduce && grid.animate) grid.animate([{ height: `${h0}px`, overflow: 'hidden' }, { height: `${h1}px`, overflow: 'hidden' }],
+        { duration: Math.min(700, 300 + Math.abs(h1 - h0) / 4), easing: 'cubic-bezier(.2, .7, .2, 1)' });
+      if (!open && sec.getBoundingClientRect().top < 0) sec.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
     };
     // every card in a section keeps the height of its tallest course, shown or not (user 2026-11-21: switching chips in Top Picks
     // changed the card height); measured with all the cards in, then the filter's hidden state put back. --kh is the min-height
@@ -483,6 +522,9 @@
       const n = $$('.cf-sec', list).reduce((s, sec) => { const m = layout(sec); return s + (sec.dataset.top ? 0 : m); }, 0);
       const first = $('.cf-sec:not([hidden])', list);
       $$('.cf-sec', list).forEach(s => s.classList.toggle('is-first', s === first));
+      // the last category shown ends at its cards (no padding under them), so the sticky categories list stops level with its last card
+      const lastSec = [...$$('.cf-cats > .cf-sec:not([hidden])', list)].pop();
+      $$('.cf-sec', list).forEach(s => s.classList.toggle('is-last', s === lastSec));
       if (empty) empty.hidden = n > 0;
       const help = $('#cfHelp'); if (help) help.hidden = !n;
       if (count) count.textContent = n ? `${n} course${n === 1 ? '' : 's'} shown` : 'No courses match.';
@@ -545,6 +587,14 @@
         const sec = chip.closest('.cf-sec');
         $$('.cf-chip', sec).forEach(c => c.setAttribute('aria-pressed', String(c === chip)));
         sec.dataset.f = chip.dataset.f; layout(sec); return;
+      }
+      const mb = e.target.closest('.cf-all__b');
+      if (mb) {
+        const sec = mb.closest('.cf-sec'), open = sec.classList.contains('is-all');
+        toggleAll(sec);
+        // focus follows the button that is still there: opening hides "View all" (focus to "Show fewer"), closing hides "Show fewer"
+        $(open ? '.cf-all .cf-all__b' : '.cf-less__b', sec)?.focus({ preventScroll: true });
+        return;
       }
       const dot = e.target.closest('.cf-dot');
       if (dot) {   // a dot scrolls the row to that screenful
@@ -697,94 +747,45 @@
       setTimeout(again, 900); setTimeout(again, 1800);
     }
 
-    /* ---------- the category rail (user 2026-11-18, a wireframe: "an indicator for the user to find the categories ... when the user
-       hovers over it they can see all the other categories, and by clicking on one they can go to it"): a slim column on the left of
-       the course list, held halfway down the screen. A short line for every section, the one being read longer and in the brand colour,
-       and beside them the book of the category being read, which flips as it changes. Hovering the rail (or pressing the book) opens a
-       list of every category, its cloth colour and its number of courses; choosing one scrolls to it. On tablets and phones it floats at the screen's left edge and opens with a tap. ---------- */
-    const rail = $('#cfRail');
-    if (rail) {
+    // the fixed category list (user 2026-11-25; it was the panel the rail opened on hover): every category with its cloth colour and its
+    // number of courses, the one being read highlighted, those the filters empty greyed out; choosing one scrolls to it. Wide screens:
+    // a column on the left, held just under the sticky search bar. Tablets and phones: a row of pills above the categories
+    const side = $('#cfSide');
+    if (side) {
       const secs = $$('.cf-sec', list).map(s => {
         const k = s.id.slice(4), name = k === 'top' ? 'Our Popular Courses' : $('.cf-sec__name', s).textContent.trim(), n = +($('.cf-sec__n', s) || {}).dataset?.total || $$('.cf-k', s).length;
-        return { k, s, name, n, book: k === 'top' ? 'Top Picks' : (TREE.find(t => t.k === k) || {}).label || name };
+        return { k, s, name, n };
       });
-      rail.innerHTML = `<div class="cf-rail__in">
-          <button type="button" class="cf-rail__btn" aria-expanded="false" aria-controls="cfRailPanel"><span class="vh">Categories, now showing: </span><span class="cf-rail__now"></span><ol class="cf-rail__ticks" aria-hidden="true">${secs.map(x => `<li data-k="${x.k}"></li>`).join('')}</ol></button>
-          <div class="cf-rail__panel" id="cfRailPanel">
-            <p class="cf-rail__h">Categories</p>
-            <ul>${secs.map(x => `<li><button type="button" class="cf-rail__go" data-k="${x.k}"><i style="background:${(COVER[x.k] || COVER.top).base}"></i><span>${esc(x.name)}</span><b>${x.n}</b></button></li>`).join('')}</ul>
-          </div>
-        </div>`;
-      const btn = $('.cf-rail__btn', rail), nowTxt = $('.cf-rail__now', rail);
+      side.innerHTML = `<div class="cf-side__list"><p class="cf-side__h">Categories</p>
+        <ul>${secs.map(x => `<li><button type="button" class="cf-side__go" data-k="${x.k}"><span>${esc(x.name)}</span><b>${x.n}</b></button></li>`).join('')}</ul></div>`;
+      // the counsellor banner under the list on wide screens (user 2026-11-25, "rearrange the layout of the banner and place it under the
+      // category rail"), as a compact card that sticks with it; tablets and phones keep it after the last category
+      const help = $('#cfHelp'), helpHome = help && help.parentNode, wide = matchMedia('(min-width: 1101px)');
+      const placeHelp = () => { if (help) (wide.matches ? side : helpHome).appendChild(help); };
+      placeHelp(); wide.addEventListener('change', placeHelp);
+      const gos = $$('.cf-side__go', side), barEl = $('#cfBar'), navEl2 = $('#nav');
       let cur = '';
-      const show = k => {
-        if (k === cur) return; cur = k;
-        const x = secs.find(y => y.k === k); if (!x) return;
-        $$('.cf-rail__ticks li', rail).forEach(li => li.classList.toggle('is-on', li.dataset.k === k));
-        $$('.cf-rail__go', rail).forEach(b => b.toggleAttribute('aria-current', b.dataset.k === k));
-        nowTxt.textContent = x.name;
-      };
-      // which section is being read: the last one whose top has passed a line just under the sticky bar
       const spy = () => {
-        // measured at the rail's own book (user 2026-11-18, "the book should change to the GS book when it reaches the GS headline and
-        // stay until the divider line"): a section is the current one from when its heading comes level with the book until the next
-        // section's top, its divider line, gets there
-        const rb = btn.getBoundingClientRect(), line = rb.height ? rb.top + rb.height / 2 : (bar ? bar.getBoundingClientRect().bottom : 0) + 140;   // (measured at the book until it left the rail, 2026-11-18)
+        // the list sticks 20px under whatever is lowest of the nav and the stuck search bar (the nav slides away on the way down)
+        const top = Math.max(0, barEl ? barEl.getBoundingClientRect().bottom : 0, navEl2 ? navEl2.getBoundingClientRect().bottom : 0);
+        side.style.setProperty('--side-top', `${Math.round(top + 20)}px`);
+        // the section being read: the last one whose top has passed a line a little under that
         let k = secs[0].k;
-        for (const x of secs) { if (x.s.hidden) continue; if (x.s.getBoundingClientRect().top <= line) k = x.k; else break; }
-        show(k);
-        // the list's sections hidden by the filters are dimmed in the panel
-        $$('.cf-rail__go', rail).forEach(b => { b.disabled = $('#cat-' + b.dataset.k).hidden; });
-        $$('.cf-rail__ticks li', rail).forEach(li => li.classList.toggle('is-off', $('#cat-' + li.dataset.k).hidden));
-        // on tablets and phones the rail floats at the screen's edge (user 2026-11-19, "bring the same line indicator in mobile as
-        // well"), shown only while the course list is what's being read
-        const lr = list.getBoundingClientRect(), mid = innerHeight / 2;
-        // the rail ends with the last category shown (user 2026-11-24, "the category rail should stop with the last category, at the line,
-        // and from there scroll with the parent"): on desktop its track (absolute in the list) stops at that section's bottom line, so the
-        // sticky lines halt there and scroll away with the page instead of riding over the counsellor banner below; on tablets and
-        // phones it hides once that line has passed the middle of the screen
-        const last = [...secs].reverse().find(x => !x.s.hidden), endY = last ? last.s.getBoundingClientRect().bottom : lr.bottom;
-        const cut = `${Math.max(0, Math.round(lr.bottom - endY))}px`;
-        if (rail.style.bottom !== cut) rail.style.bottom = cut;
-        rail.classList.toggle('is-shown', lr.top < mid && endY > mid);
-        if (!rail.classList.contains('is-shown')) open(false);
+        for (const x of secs) { if (x.s.hidden) continue; if (x.s.getBoundingClientRect().top <= top + 140) k = x.k; else break; }
+        if (k !== cur) {
+          cur = k; gos.forEach(g => g.toggleAttribute('aria-current', g.dataset.k === k));
+          // the pill row on tablets and phones keeps the current one in view
+          const on = gos.find(g => g.dataset.k === k), ul = $('ul', side);
+          if (on && ul.scrollWidth > ul.clientWidth + 2) ul.scrollTo({ left: on.parentElement.offsetLeft - 16, behavior: reduce ? 'auto' : 'smooth' });
+        }
       };
-      // (openedAt: a tap fires focus, which opens the list, and then click; the click must not close it again straight away)
-      let openedAt = 0;
-      const open = on => {
-        if (on && !rail.classList.contains('is-open')) openedAt = performance.now();
-        rail.classList.toggle('is-open', on); btn.setAttribute('aria-expanded', String(on));
-        if (on) fit();
-      };
-      // the open list stays between the sticky search bar and the bottom of the screen (user 2026-11-21: it opened centred on the
-      // lines and its top half went under the bar): --py nudges it from that centred spot, --ph caps its height (it scrolls)
-      const panel = $('.cf-rail__panel', rail), barEl = $('#cfBar'), navEl2 = $('#nav');
-      const fit = () => {
-        if (!panel || !panel.offsetParent) return;
-        panel.style.removeProperty('--ph'); panel.classList.remove('is-capped');
-        const gap = 12, top = Math.max(0, barEl ? barEl.getBoundingClientRect().bottom : 0, navEl2 ? navEl2.getBoundingClientRect().bottom : 0) + gap;
-        const room = innerHeight - gap - top, h = Math.min(panel.offsetHeight, room);
-        if (panel.offsetHeight > room) { panel.style.setProperty('--ph', `${Math.max(160, room)}px`); panel.classList.add('is-capped'); }
-        const cb = panel.offsetParent.getBoundingClientRect(), mid = cb.top + panel.offsetTop;   // where top:50% puts its centre
-        const want = Math.min(Math.max(mid - h / 2, top), innerHeight - gap - h);
-        panel.style.setProperty('--py', `${Math.round(want - (mid - h / 2))}px`);
-      };
-      addEventListener('scroll', () => { if (rail.classList.contains('is-open')) fit(); }, { passive: true });
-      addEventListener('scroll', spy, { passive: true }); addEventListener('resize', spy);
-      list.addEventListener('cf:layout', spy);
-      spy(); rail.classList.add('is-ready');
-      // the list opens only from the lines (user 2026-11-18, "the list should only open when hovered over the lines"): hovering them,
-      // or tabbing to them; it stays open while the pointer crosses the book to it, and closes when the pointer leaves the rail
-      btn.addEventListener('mouseenter', () => open(true));
-      btn.addEventListener('focus', () => open(true));
-      btn.addEventListener('click', () => { if (performance.now() - openedAt > 400) open(!rail.classList.contains('is-open')); });
-      // a tap anywhere else closes it (touch screens have no pointer leaving the rail)
-      document.addEventListener('pointerdown', e => { if (rail.classList.contains('is-open') && !rail.contains(e.target)) open(false); });
-      rail.addEventListener('mouseleave', () => open(false));
-      // (only when focus moves to something else on the page: the window losing focus is no reason to close it)
-      rail.addEventListener('focusout', e => { if (e.relatedTarget && !rail.contains(e.relatedTarget)) open(false); });
-      rail.addEventListener('keydown', e => { if (e.key === 'Escape') { open(false); btn.focus(); } });
-      rail.addEventListener('click', e => { const g = e.target.closest('.cf-rail__go'); if (!g) return; open(false); window.__cfSetCat(g.dataset.k); });
+      let raf = 0;
+      const req = () => { if (!raf) raf = requestAnimationFrame(() => { raf = 0; spy(); }); };
+      addEventListener('scroll', req, { passive: true }); addEventListener('resize', req);
+      list.addEventListener('cf:layout', () => { gos.forEach(g => { g.disabled = $('#cat-' + g.dataset.k).hidden; }); req(); });
+      gos.forEach(g => { g.disabled = $('#cat-' + g.dataset.k).hidden; });
+      spy();
+      side.addEventListener('click', e => { const g = e.target.closest('.cf-side__go'); if (g) window.__cfSetCat(g.dataset.k); });
     }
   }
 

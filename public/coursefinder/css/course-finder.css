@@ -2031,11 +2031,7 @@ main.cf, html.foot-curtain main.cf { background: linear-gradient(90deg, rgba(255
    contrast and strength so the lines read as maroon on the beige rather than a pale pink; still multiplied into the paper */
 .cf-hero__bg { filter: contrast(1.35) brightness(.96) url(#cfMaroon); opacity: .8; }
 
-/* the hero's ground in the peach from the review comment (user 2026-11-24, "use this color for course page hero section bg": #FCDDBC,
-   flat), in place of the beige paper gradient; the sticky bar's paper the same peach, so the two still read as one; the jaali lattice,
-   grain and the maroon drawing stay over it */
-.cf-hero { background: #FCDDBC; }
-.cf-bar::before, .cf-bar:not(.is-stuck)::before { background: #FCDDBC; }
+/* (2026-11-24 the hero and sticky bar were the peach #FCDDBC here; user 2026-11-25 "beige colour too": back on the beige paper gradient) */
 
 /* the search box and the three dropdowns white on the peach (user 2026-11-24, "use white for the search and the dropdowns"; they were
    cream); a dropdown with a filter picked keeps its light orange (.is-on) so the active filter still shows */
@@ -2055,11 +2051,8 @@ main.cf, html.foot-curtain main.cf { background: linear-gradient(90deg, rgba(255
 /* the line closer under the title (user 2026-11-24, "reduce the spacing between the heading and the sub"): 18px to 8px */
 .cf-hero .cf-lede { margin-top: 8px; }
 
-/* ---------- review comment (user 2026-11-24): "let's take out texture from hero, and image on right" — the hero is the plain peach now:
-   no jaali lattice (::before), no grain (::after), no India Gate drawing (.cf-hero__bg); the sticky bar loses its grain too ---------- */
-.cf-hero::before, .cf-hero::after { content: none; }
-.cf-hero__bg { display: none; }
-.cf-bar::after, .cf-bar:not(.is-stuck)::after { content: none; }
+/* (2026-11-24 the hero's texture and India Gate drawing were taken out here; user 2026-11-25 "lets bring back the previous design with
+   illustration and texture": the jaali lattice, grain, maroon drawing and the bar's grain are back as before) */
 
 /* ---------- review comment: "too many borders, it should be like other cards' style" — the Our Popular Courses cards take the course
    cards' own look: white with one thin beige border and no shadow (was paper texture, gradient edge and drop shadow), no inner rule
@@ -2096,3 +2089,209 @@ main.cf, html.foot-curtain main.cf { background: linear-gradient(90deg, rgba(255
 /* the oval back behind the Popular Courses heading and text, but softer (user 2026-11-24, "bring it back but reduce its opacity"): at
    55% the lattice shows faintly through it instead of disappearing */
 .cf-feat__intro::before { content: ""; opacity: .55; }
+
+/* ---------- Our Popular Courses back in its earlier orange (user 2026-11-25, "lets use the previous orange shade for this section too"):
+   the radial #F08541 to #E87D39 it had before the green (2026-11-24), clouds, shadows and the soft oval behind the text in matching
+   oranges; the quatrefoil lattice, the white cards and the orange-outlined arrows stay; the frame's running line goes orange again
+   (js/cf-frame-border.js) ---------- */
+.cf-sec.cf-feat { background: radial-gradient(75% 65% at 42% 58%, #F08541 0%, #EE833F 38%, #EB803C 68%, #E87D39 100%); }
+@media (max-width: 1100px) { .cf-sec.cf-feat { background: radial-gradient(90% 60% at 45% 55%, #F08541 0%, #EE833F 38%, #EB803C 68%, #E87D39 100%); } }
+.cf-feat .cf-sec__h, .cf-feat .cf-feat__h { text-shadow: 0 1px 2px rgb(120 40 8 / .3); }
+.cf-feat__sub { text-shadow: 0 1px 1px rgb(120 40 8 / .35); }
+.cf-feat__logo { filter: drop-shadow(0 6px 10px rgb(80 26 4 / .28)); }
+.cf-feat .cf-arw { box-shadow: 0 6px 14px -4px rgb(80 26 4 / .35); }
+.cf-feat .cf-arw:hover { box-shadow: 0 8px 18px -4px rgb(80 26 4 / .4); }
+.cf-feat__flow i:nth-child(1) { background: radial-gradient(closest-side, rgb(229 118 54 / .45), rgb(229 118 54 / .22) 55%, transparent); }
+.cf-feat__flow i:nth-child(2) { background: radial-gradient(closest-side, rgb(242 140 72 / .45), rgb(242 140 72 / .22) 55%, transparent); }
+.cf-feat__flow i:nth-child(3) { background: radial-gradient(closest-side, rgb(243 146 80 / .4), rgb(243 146 80 / .2) 55%, transparent); }
+.cf-feat__flow i:nth-child(4) { background: radial-gradient(closest-side, rgb(233 123 55 / .4), rgb(233 123 55 / .2) 55%, transparent); }
+.cf-feat__intro::before { background: radial-gradient(closest-side, #EE833F 0%, #EE833F 70%, rgb(238 131 63 / 0) 100%); }
+@media (max-width: 1100px) { .cf-feat__intro::before { background: radial-gradient(closest-side, #EC813D 0%, #EC813D 62%, rgb(236 129 61 / 0) 100%); } }
+
+/* ---------- "View all" under a category with more than four courses (user 2026-11-25): an outlined pill like "View course", centred
+   under the row; open, the row becomes a plain grid of every course (four, three or two across; one on phones) with no sideways
+   scrolling, snapping or arrows, and the chevron turns up ---------- */
+.cf-all { display: flex; justify-content: center; margin: 6px 0 0; }
+.cf-all[hidden] { display: none; }
+.cf-all__b { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px 10px 20px; border: 0; border-radius: 999px; background: #fff;
+  color: var(--cf-brand); font: 600 14px/1 var(--cf-f, inherit); cursor: pointer; box-shadow: inset 0 0 0 1.5px rgb(194 65 12 / .45);
+  transition: box-shadow .2s, background-color .2s; }
+.cf-all__b:hover { box-shadow: inset 0 0 0 1.5px var(--cf-brand); background: #FFF8F2; }
+.cf-all__b:focus-visible { outline: 0; box-shadow: 0 0 0 3px #fff, 0 0 0 5.5px var(--cf-hot, #EA580C); }
+.cf-all__i { width: 16px; height: 16px; transition: transform .3s ease; }
+.cf-all__b[aria-expanded="true"] .cf-all__i { transform: rotate(180deg); }
+.cf-sec.is-all .cf-grid { grid-auto-flow: row; grid-template-columns: repeat(var(--cols), minmax(0, 1fr)); grid-auto-columns: auto;
+  overflow: visible; scroll-snap-type: none; }
+.cf-sec.is-all .cf-arw { display: none; }
+@media (max-width: 760px) { .cf-sec.is-all .cf-grid { grid-template-columns: minmax(0, 1fr); } }
+@media (prefers-reduced-motion: reduce) { .cf-all__i { transition: none; } }
+/* "View all" moved up to the right end of the heading block, just above the row's last card (user 2026-11-25, "the view all button
+   should be on top of last card in the right side"), its bottom level with the line under the heading; phones: its own line, right */
+.cf-sec__top > .cf-sec__txt { min-width: 0; }
+.cf-sec__top > .cf-all { flex: none; align-self: flex-end; margin: 0 0 0 auto; }
+@media (max-width: 760px) {
+  .cf-sec__top:has(> .cf-all) { flex-wrap: wrap; row-gap: 12px; }
+  .cf-sec__top > .cf-all { flex-basis: 100%; justify-content: flex-end; }
+}
+/* "Show fewer courses" at the bottom of the open grid (user 2026-11-25): centred under the last row, chevron pointing up; while the
+   row is open the "View all" button at the top is hidden */
+.cf-less { display: none; }
+.cf-sec.is-all .cf-less { display: flex; justify-content: center; margin: 4px 0 0; }
+.cf-sec.is-all .cf-sec__top > .cf-all { display: none; }
+/* the View all / Show fewer buttons' type (user 2026-11-25, "fix the spacing"): the font shorthand above had an invalid fallback, so
+   they fell back to 17px regular; now the "View course" pill's own 13px bold at its 36px height. "Show fewer courses" 28px under the
+   last row (was 4px, crowding the cards), with the section's 36px below it to the next category's line */
+.cf-all__b { min-height: 36px; padding: 0 14px 0 16px; font-family: inherit; font-size: 13px; font-weight: 700; line-height: 1; }
+.cf-sec.is-all .cf-less { margin-top: 28px; }
+
+/* ---------- the categories as a fixed list (user 2026-11-25, "we will be removing the category rail and will be making this as fixed,
+   as of now this only appears when hovered"): the panel the rail opened on hover, now always there. Wide screens: a 248px column left
+   of the categories (Our Popular Courses keeps the full width above), sticky 20px under the search bar and stopping with the last
+   category; the categories three cards across beside it. Tablets and phones: a row of category pills above the categories ---------- */
+.cf-side__h { margin: 0 8px 8px; font: 600 11.5px/1 var(--f); letter-spacing: .1em; text-transform: uppercase; color: var(--cf-mute); }
+.cf-side ul { margin: 0; padding: 0; list-style: none; }
+.cf-side__go { display: flex; align-items: center; gap: 10px; width: 100%; padding: 8px; border: 0; border-radius: 8px; background: none; cursor: pointer; text-align: left;
+  font: 500 14.5px/1.25 var(--f); color: var(--cf-ink); transition: background-color .15s, color .15s; }
+.cf-side__go i { flex: none; width: 10px; height: 14px; border-radius: 2px 3px 3px 2px; box-shadow: inset 2px 0 0 rgb(0 0 0 / .25); }
+.cf-side__go span { flex: 1 1 auto; min-width: 0; }
+.cf-side__go b { flex: none; font: 500 12.5px/1 var(--f); color: var(--cf-mute); font-variant-numeric: tabular-nums; }
+.cf-side__go:hover { background: var(--cf-sand); }
+.cf-side__go[aria-current] { background: #FFF1E6; color: var(--cf-brand); font-weight: 600; }
+.cf-side__go[aria-current] b { color: var(--cf-brand); }
+.cf-side__go:disabled { opacity: .4; cursor: default; background: none; }
+.cf-side__go:focus-visible { outline: 2px solid var(--cf-brand); outline-offset: -2px; }
+@media (min-width: 1101px) {
+  .cf-body { display: grid; grid-template-columns: 248px minmax(0, 1fr); column-gap: 40px; align-items: start; }
+  .cf-side { position: sticky; top: var(--side-top, 180px); z-index: 5; max-height: calc(100vh - var(--side-top, 180px) - 20px); overflow-y: auto; overscroll-behavior: contain;
+    padding: 14px 10px 10px; border: 1px solid var(--cf-line); border-radius: 14px; background: #fff; box-shadow: 0 2px 6px rgb(60 30 10 / .06); scrollbar-width: thin; }
+  .cf-cats { min-width: 0; }
+  .cf-cats .cf-sec .cf-grid { --cols: 3; }
+}
+@media (max-width: 1100px) {
+  .cf-side { margin: 0 calc(var(--px) * -1) 28px; }
+  .cf-side__h { display: none; }
+  .cf-side ul { display: flex; gap: 8px; padding: 2px var(--px); overflow-x: auto; scrollbar-width: none; }
+  .cf-side ul::-webkit-scrollbar { display: none; }
+  .cf-side li { flex: none; }
+  .cf-side__go { width: auto; padding: 9px 14px 9px 12px; border: 1px solid var(--cf-line); border-radius: 999px; background: #fff; font-size: 14px; white-space: nowrap; }
+  .cf-side__go[aria-current] { border-color: rgb(194 65 12 / .45); }
+}
+
+/* ---------- Our Popular Courses, new layout (user 2026-11-25, a wireframe: logo and heading in a row at the top, three course cards
+   across underneath): the emblem beside the heading and its line, then the cards as one full-width carousel, three to a screen
+   (two on tablets; phones keep their swipe row); the arrows back at the row's ends, the dots under it; the soft oval sits behind the
+   heading block only ---------- */
+.cf-sec.cf-feat > .cf-feat__intro { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 22px; align-items: center; align-self: start;
+  width: max-content; max-width: 100%; }
+.cf-feat__intro > .cf-feat__lockup { grid-row: 1 / span 2; margin: 0; }
+.cf-feat__intro > .cf-feat__h { margin: 0; align-self: end; }
+.cf-feat__intro > .cf-feat__sub { margin: 8px 0 0; max-width: 600px; align-self: start; }
+@media (min-width: 761px) {
+  .cf-sec.cf-feat { grid-template-columns: minmax(0, 1fr); row-gap: 30px; align-items: start; }
+  .cf-sec.cf-feat .cf-grid { grid-auto-columns: calc((100% - 40px) / 3); }
+  .cf-feat .cf-car { position: relative; }
+  .cf-feat .cf-arw { top: calc(50% - 10px); bottom: auto; margin-top: -20px; z-index: 4; }
+  .cf-feat .cf-arw--prev { left: -20px; right: auto; }
+  .cf-feat .cf-arw--next { right: -20px; left: auto; }
+  .cf-feat .cf-arw[hidden] { display: none; }
+  .cf-feat__intro::before { inset: -56px -120px; left: -120px; top: -56px; width: auto; height: auto; transform: none; }
+}
+@media (min-width: 761px) and (max-width: 1100px) {
+  .cf-sec.cf-feat .cf-grid { grid-auto-columns: calc((100% - 20px) / 2); }
+}
+@media (max-width: 760px) {
+  .cf-sec.cf-feat > .cf-feat__intro { column-gap: 14px; }
+  .cf-feat__intro::before { inset: -30px -40px; }
+}
+/* phones: the emblem and the heading in a row, the line of text under both at full width */
+@media (max-width: 760px) {
+  .cf-feat__intro > .cf-feat__lockup { grid-row: 1; }
+  .cf-feat__intro > .cf-feat__h { align-self: center; }
+  .cf-feat__intro > .cf-feat__sub { grid-column: 1 / -1; margin-top: 14px; }
+}
+/* the emblem to the top of the heading block (user 2026-11-25, "align the logo to the top"), not centred on heading + line */
+@media (min-width: 761px) { .cf-feat__intro > .cf-feat__lockup { align-self: start; margin-top: 6px; } }
+/* no peek of the 4th card at the right edge (user 2026-11-25): the row's 20px side padding (room for the cards' shadows) let the next
+   card's edge show; the row is now clipped at the cards' own edges, so exactly three show and the others slide in under that edge */
+@media (min-width: 761px) {
+  .cf-sec.cf-feat .cf-grid { clip-path: inset(-40px 20px -60px 20px); }
+  .cf-feat .cf-k.is-peek, .cf-feat .cf-k.is-peek-l { -webkit-mask-image: none; mask-image: none; }
+}
+/* Our Popular Courses with less padding all round (user 2026-11-25): 44 / 48 / 40 to 30 / 32 / 24 (top / sides / bottom); phones 24 / 20 / 20 */
+@media (min-width: 761px) { .cf-sec.cf-feat { padding: 30px 32px 24px; row-gap: 24px; } }
+@media (max-width: 760px) { .cf-sec.cf-feat { padding-top: 24px; padding-bottom: 20px; } }
+/* the categories list 24px from the courses (user 2026-11-25, "reduce it to 24px"; was 40px) */
+@media (min-width: 1101px) { .cf-body { column-gap: 24px; } }
+/* the categories list stops level with the last card (user 2026-11-25, "the category filter should stop by same alignment as the last
+   card and then it should scroll with the parent"): the last category shown has no padding under its cards (.is-last, set by the
+   script), and that 36px moves below the two columns, so the sticky list's run ends exactly at the last card's bottom edge */
+.cf-cats > .cf-sec.is-last { padding-bottom: 0; }
+.cf-body { margin-bottom: 36px; }
+@media (max-width: 760px) { .cf-body { margin-bottom: 24px; } }
+/* (as padding, not margin: a margin merged with the banner's own 37px and put its divider line on the last card's edge; the sticky
+   list is held inside the content box, so it still stops at the last card) */
+.cf-body { margin-bottom: 0; padding-bottom: 36px; }
+@media (max-width: 760px) { .cf-body { margin-bottom: 0; padding-bottom: 24px; } }
+/* the course count on the same baseline as the category name (user 2026-11-25, "fix the alignment"): centring the two boxes put the
+   smaller 12.5px count's baseline ~1.5px above the name's (Mukta sits low in its line box); they now share the text baseline */
+.cf-side__go { align-items: baseline; }
+.cf-side__go b { line-height: 1.25; }
+/* no line under "Our Popular Courses" (user 2026-11-25, "remove this"): the emblem and the heading alone, centred on each other */
+.cf-feat__intro > .cf-feat__lockup { grid-row: 1; align-self: center; margin-top: 0; }
+.cf-feat__intro > .cf-feat__h { align-self: center; }
+@media (min-width: 761px) { .cf-feat__intro > .cf-feat__lockup { align-self: center; margin-top: 0; } }
+/* View all / Show fewer: equal room either side (user 2026-11-25 alignment check): the chevron's drawing sits 4px inside its 16px box,
+   so 14px of padding read as 18px on the right against 16px on the left; 12px right padding makes both sides 16px to the ink */
+.cf-all__b { padding-right: 12px; }
+/* no sliver of the next card at a category row's right end (user 2026-11-25, "a line is visible at the very end"): the 4th card starts
+   exactly at the row's clipping edge and its 1px border bled through there; the rows are clipped 3px inside each end (the 24px kept
+   for the cards' hover shadow loses only those 3px). Not while a row is open as a grid */
+@media (min-width: 761px) {
+  .cf-sec:not(.cf-feat):not(.is-all) .cf-grid { clip-path: inset(-40px 3px -60px 3px); }
+}
+
+/* ---------- the counsellor banner under the categories list (user 2026-11-25, "rearrange the layout of the banner and place it under
+   the category rail"): wide screens only; the list and the banner are two cards in the sticky column (the column itself no longer
+   drawn as a card), the list's rows a little tighter so both fit one screen under the search bar; the banner stacked: headset disc
+   beside the question, the number and hours under it, the button full width ---------- */
+@media (min-width: 1101px) {
+  .cf-side { display: flex; flex-direction: column; gap: 14px; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; }
+  .cf-side__list { padding: 12px 10px 8px; border: 1px solid var(--cf-line); border-radius: 14px; background: #fff; }
+  .cf-side .cf-side__go { padding: 5px 8px; }
+  .cf-side > .cf-help { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px 12px; align-items: center; width: auto; max-width: none;
+    margin: 0; padding: 18px 18px 18px; border-radius: 14px; }
+  .cf-side > .cf-help::before { inset: 5px; border-radius: 10px; }
+  .cf-side > .cf-help::after { content: none; }
+  .cf-side .cf-help__ic { width: 40px; height: 40px; }
+  .cf-side .cf-help__ic svg { width: 22px; height: 22px; }
+  .cf-side .cf-help__tx { display: contents; }
+  .cf-side .cf-help__h { font-size: 18px; line-height: 1.2; }
+  .cf-side .cf-help__p { grid-column: 1 / -1; font-size: 13.5px; line-height: 1.45; }
+  .cf-side .cf-help__hrs { display: block; }
+  .cf-side .cf-help__hrs i { display: none; }
+  .cf-side .cf-help__cta { grid-column: 1 / -1; justify-content: space-between; min-height: 46px; padding: 4px 4px 4px 16px; border-radius: 12px; font-size: 15px; }
+}
+/* (the button kept the site's 18px label from a stronger rule and cut "Get expert guidance" off; set here by the banner's id) */
+@media (min-width: 1101px) {
+  .cf-side > #cfHelp .cf-help__cta { gap: 10px; font-size: 15px; }
+  .cf-side > #cfHelp .cf-help__cta .btn__t { font-size: 15px; }
+}
+/* the banner under the list without its icons (user 2026-11-25, "remove the icon from button and from the header too"): no headset disc
+   beside the question (the question takes the full width), no arrow disc in the button (its label centred) */
+@media (min-width: 1101px) {
+  .cf-side > #cfHelp { grid-template-columns: minmax(0, 1fr); }
+  .cf-side > #cfHelp .cf-help__ic { display: none; }
+  .cf-side > #cfHelp .cf-help__cta { justify-content: center; padding: 4px 16px; }
+  .cf-side > #cfHelp .cf-help__cta .sq { display: none; }
+}
+/* no clipped shadow under the banner (user 2026-11-25, "there seems to be a clip on the banner"): the sticky column scrolls when it is
+   taller than the screen, which cut the banner's shadow off in a hard-edged box; the column now has 14px of room at the sides and 24px
+   at the bottom for it (pulled back out with matching negative margins, so the cards stay exactly where they were) */
+@media (min-width: 1101px) {
+  .cf-side { padding: 0 14px 24px; margin: 0 -14px; max-height: calc(100vh - var(--side-top, 180px)); }
+}
+/* (the banner's shadow is 0 10px 22px, so it needs ~32px below and ~22px at the sides; the matching negative bottom margin keeps the
+   cards' bottom stopping level with the last course card) */
+@media (min-width: 1101px) {
+  .cf-side { padding: 0 22px 34px; margin: 0 -22px -34px; max-height: calc(100vh - var(--side-top, 180px) + 14px); }
+}
