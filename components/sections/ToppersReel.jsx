@@ -6,16 +6,16 @@ const prog = list => list.slice(0, 2).join(' · ') + (list.length > 2 ? ` +${lis
 const PLACEHOLDER = PHOTO + 'portrait/placeholder-topper.webp';
 const TONES = ['gs', 'pre'];
 
-const TOP_10 = TOPPERS_2025.filter(p => p.rank <= 10);
+const REEL = TOPPERS_2025;
 
 function ReelItem({ person, i }) {
-  const { rank, name, programmes, photo } = person;
+  const { rank, name, programmes } = person;
   return (
     <li className="dr__item">
       <div className={`dr__fig dr__fig--${TONES[i % TONES.length]}`}>
         <span className="dr__gem" aria-hidden="true"><i></i></span>
         <span className="dr__pic">
-          <img src={photo || PLACEHOLDER} alt="" width="360" height="360" loading="lazy" decoding="async" />
+          <img src={PLACEHOLDER} alt="" width="360" height="360" loading="lazy" decoding="async" />
         </span>
       </div>
       <p className="dr__n" aria-hidden="true"><small>AIR</small> {rank}</p>
@@ -28,9 +28,9 @@ function ReelItem({ person, i }) {
 export default function ToppersReel() {
   return (
     <>
-      <div className="dr__view" id="drList" role="region" aria-label="UPSC CSE 2025, ranks 1 to 10">
+      <div className="dr__view" id="drList" role="region" aria-label={`UPSC CSE 2025, ${REEL.length} rank holders`}>
         <ul className="dr__track">
-          {TOP_10.map((p, i) => <ReelItem key={p.rank} person={p} i={i} />)}
+          {REEL.map((p, i) => <ReelItem key={p.rank} person={p} i={i} />)}
         </ul>
       </div>
     </>

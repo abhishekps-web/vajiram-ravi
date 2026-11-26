@@ -14,6 +14,7 @@ const tidyProg = p => p.replace(/^&\s*/, '').trim()
 const prog = s => (Array.isArray(s) ? s : (s || '').split(/,(?![^(]*\))|\s&\s/)).map(tidyProg).filter(Boolean).join(' · ');
 const PROG = new Map(TOPPERS.filter(p => p.c).map(p => [`${p.y}-${p.r}`, p.c]));
 const PLACEHOLDER = '/assets/img/toppers/portrait/placeholder-topper.webp';
+const isCutout = src => src.includes('/portrait/2025/') || src.includes('/portrait/placeholder');
 const RANKS = y => y === 2025
   ? TOPPERS_2025.map(p => ({ rank: p.rank, name: p.name, programmes: p.programmes, photo: p.photo }))
   : NP_ARCHIVE.ARCHIVE[y];
@@ -23,11 +24,10 @@ const RECORD = NP_ARCHIVE.ARCHIVE_YEARS.map(y => ({
   people: [...RANKS(y)].sort((a, b) => a.rank - b.rank).slice(0, SHOW).map(p => ({
     r: p.rank, n: p.name,
     c: prog(p.programmes || PROG.get(`${y}-${p.rank}`)),
-    src: p.photo || PLACEHOLDER,
+    src: PLACEHOLDER,
   })),
 }));
 const FIRST = RECORD[0].people[0];
-const isCutout = src => src.includes('/portrait/2025/') || src.includes('/portrait/placeholder');
 const isPlaceholder = src => src.includes('placeholder-man');
 
 const RECORD_BOX = [
