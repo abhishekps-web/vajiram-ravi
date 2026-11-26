@@ -1,6 +1,6 @@
-import Preloader, { preloaderBoot } from '@/components/layout/Preloader';
-import SiteBehaviour from '@/components/layout/SiteBehaviour';
-import DevCssReload from '@/components/layout/DevCssReload';
+import Preloader, { preloaderBoot } from '@/components/layout/preloader';
+import SiteBehaviour from '@/components/layout/site-behaviour';
+import DevCssReload from '@/components/layout/dev-css-reload';
 import { ENABLE_PRELOADER, INTRO_ONCE_PER_SESSION } from '@/lib/config';
 import { BASE_CSS } from '@/lib/css-layers.mjs';
 
@@ -24,7 +24,7 @@ const FONTS = 'https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&fami
 const BASE_HREFS = process.env.NODE_ENV === 'development' ? BASE_CSS.map(n => `/css/${n}.css`) : ['/css/base.bundle.css'];
 
 // Runs before paint: html.js (the CSS's JS-on hooks) and, with the preloader on (ENABLE_PRELOADER, lib/config.js), the intro
-// itself (preloaderBoot() in components/layout/Preloader.jsx: html.vrv-lock shows the overlay and holds scrolling until it lifts). With the
+// itself (preloaderBoot() in components/layout/preloader.jsx: html.vrv-lock shows the overlay and holds scrolling until it lifts). With the
 // preloader off only html.js is set.
 const BOOT = (ENABLE_PRELOADER
   ? preloaderBoot({ oncePerSession: INTRO_ONCE_PER_SESSION })

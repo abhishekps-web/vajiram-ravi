@@ -43,7 +43,9 @@ export default function Preloader() {
 // A reload (or back / forward) from the middle of the page keeps its place (user 2026-11-21): the scroll position is saved when the page is left
 // and put back by hand while the page settles. The intro still plays; html.vrv-restore lets the page scroll under the overlay (app/tailwind-sections.css),
 // so the page is already in place when the curtain lifts.
-// No intro under prefers-reduced-motion, and with oncePerSession only on the first page of a browser session.
+// No intro under prefers-reduced-motion, none when the page was reached from another page of the site (a link or back / forward;
+// user 2026-11-26: "no page to page preloader"; a reload or an arrival from outside still plays it), and with oncePerSession only
+// on the first page of a browser session.
 const PLAY = 2500, LIFT = 850, SAFETY = 8000;
 
 export function preloaderBoot({ oncePerSession = false } = {}) {
@@ -56,6 +58,7 @@ var put=function(){if(!stop&&Math.abs(scrollY-y)>2)scrollTo({top:y,left:0,behavi
 addEventListener('wheel',halt,{passive:true});addEventListener('touchmove',halt,{passive:true});addEventListener('keydown',halt);
 document.addEventListener('DOMContentLoaded',put);addEventListener('load',put);[200,600,1200,2500].forEach(function(ms){setTimeout(put,ms)});document.addEventListener('vr:intro-done',put);put();}
 if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+if(!nav||nav.type!=='reload'){try{if(document.referrer&&new URL(document.referrer).origin===location.origin)return}catch(e){}}
 ${oncePerSession ? "try{if(sessionStorage.getItem('vr-intro'))return;sessionStorage.setItem('vr-intro','1')}catch(e){}" : ''}
 r.classList.add('vrv-lock','vrv-play');if(y>0)r.classList.add('vrv-restore');
 var done=0,t=0;

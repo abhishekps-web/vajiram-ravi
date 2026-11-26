@@ -4,7 +4,7 @@
      other Tailwind sheets (Programmes); unlayered; no preflight;
    - the breakpoints those components use (the site's are max-width ones).
    Imported by each component that uses it. A new section that joins: add its @source line here and use the `cu:` prefix.
-   Now: Contact us (components/sections/home/contact-us.jsx), the navigation bar (components/layout/NavigationBar.jsx) Why Vajiram & Ravi (components/sections/home/why-choose.jsx) Best IAS coaching (components/sections/BestCoaching.jsx) 50+ years (components/sections/Legacy/Legacy.jsx) Batches (components/sections/home/batches.jsx) the Toppers year-by-year record (components/sections/home/toppers.jsx) and Talk to us (components/sections/home/talk-to-us.jsx). */
+   Now: Contact us (components/sections/home/contact-us.jsx), the navigation bar (components/layout/navigation-bar.jsx) Why Vajiram & Ravi (components/sections/home/why-choose.jsx) Best IAS coaching (components/sections/BestCoaching.jsx) 50+ years (components/sections/Legacy/Legacy.jsx) Batches (components/sections/home/batches.jsx) the Toppers year-by-year record (components/sections/home/toppers.jsx) and Talk to us (components/sections/home/talk-to-us.jsx). */
 
 @import "tailwindcss/theme.css" layer(theme) prefix(cu);
 @import "tailwindcss/utilities.css" source(none);
@@ -19,7 +19,7 @@
 @custom-variant stacked (@media (max-width: 860px));
 @custom-variant xs (@media (max-width: 640px));   /* phones and small tablets: the map above the details (beside them only from 641px) */
 @custom-variant fine (@media (hover: hover) and (pointer: fine));
-@source "../components/layout/NavigationBar.jsx";
+@source "../components/layout/navigation-bar.jsx";
 @source "../components/sections/home/why-choose.jsx";
 @source "../components/sections/BestCoaching.jsx";
 @source "../components/sections/Legacy/Legacy.jsx";
@@ -27,7 +27,7 @@
 @source "../components/ui/batch-card.jsx";
 @source "../components/sections/BatchesPage.jsx";
 @source "../components/ui/page-hero.jsx";
-@source "../app/courses/page.jsx";
+@source "../app/courses";
 @source "../components/sections/home/toppers.jsx";
 @source "../components/sections/home/hero-intro.jsx";
 @source "../components/sections/home/hero.jsx";
@@ -41,19 +41,19 @@
 @source "../components/sections/home/talk-to-us.jsx";
 @source "../components/sections/home/stories.jsx";
 @source "../components/sections/home/video-stories.jsx";
-@source "../components/layout/Footer.jsx";
+@source "../components/layout/footer.jsx";
 
-/* the footer curtain (Footer.jsx initFooterCurtain sets html.foot-curtain, --foot-off, --foot-p and footer[data-zooming]): parked under
+/* the footer curtain (footer.jsx initFooterCurtain sets html.foot-curtain, --foot-off, --foot-p and footer[data-zooming]): parked under
    the page and zoomed in as it is uncovered, wider than phones only; the zoom never under reduced motion */
 @custom-variant curtain { @media (min-width: 761px) { html.foot-curtain & { @slot; } } }
 @custom-variant curtain-zoom { @media (min-width: 761px) and (prefers-reduced-motion: no-preference) { html.foot-curtain & { @slot; } } }
 @custom-variant foot-zooming { @media (min-width: 761px) { html.foot-curtain footer[data-zooming] > & { @slot; } } }
 
-/* the intro (components/layout/Preloader.jsx), driven by classes its inline boot script (preloaderBoot) sets on <html>: vrv-lock shows
+/* the intro (components/layout/preloader.jsx), driven by classes its inline boot script (preloaderBoot) sets on <html>: vrv-lock shows
    it and holds scrolling, vrv-play runs the reveal, vrv-out lifts it. The lock keeps the scrollbar (user 2026-11-16: hiding it made the
    page jump ~15px as the intro lifted) and holds the page to one screen under the overlay; vrv-restore lets a reload from mid-page
    scroll back to its place under it. preloaderBoot listens for the `iris` animation, so that name stays. */
-@source "../components/layout/Preloader.jsx";
+@source "../components/layout/preloader.jsx";
 @source "../components/sections/home/life-gallery.jsx";
 
 /* the hero's beige ground (--ground-beige, v49.css: a fade, the jaali tile, the beige), sized as on the hero (.dl__ground) */

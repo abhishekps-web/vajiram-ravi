@@ -1,5 +1,5 @@
-import NavigationBar from '@/components/layout/NavigationBar';
-import Footer from '@/components/layout/Footer';
+import NavigationBar from '@/components/layout/navigation-bar';
+import Footer from '@/components/layout/footer';
 import Stylesheet from '@/components/ui/stylesheet';
 import PageHero from '@/components/ui/page-hero';
 import { COURSES_HERO as H } from '@/lib/data/course-finder';

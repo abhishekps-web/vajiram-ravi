@@ -7,67 +7,12 @@
 import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import CarouselDots from '@/components/ui/carousel-dots';
 import Button from '@/components/ui/button';
+import FilterBar from '@/components/ui/filter-bar';
 import DATA from '@/lib/data/course-finder.json';
 import { GROUPS, MODES, MEDIUMS, FEATURED, FEATURED_START } from '@/lib/data/course-finder';
 import Cover from './CourseFinder/Cover';
 
 const groupOf = key => GROUPS.find(g => g.id === key || g.fams.includes(key));
-
-/* A dropdown filter: a button that opens a listbox (arrows, Home/End, Enter, Esc, outside click). */
-function Dropdown({ label, value, onChange, items }) {
-  const [open, setOpen] = useState(false);
-  const [hi, setHi] = useState(0);
-  const root = useRef(null);
-  const cur = items.find(i => i.id === value) || items[0];
-  useEffect(() => {
-    if (!open) return;
-    const off = e => { if (!root.current?.contains(e.target)) setOpen(false); };
-    document.addEventListener('pointerdown', off);
-    return () => document.removeEventListener('pointerdown', off);
-  }, [open]);
-  const show = () => { setHi(Math.max(0, items.findIndex(i => i.id === value))); setOpen(true); };
-  const choose = i => { onChange(items[i].id); setOpen(false); root.current?.querySelector('button')?.focus(); };
-  const key = e => {
-    if (!open) { if (['ArrowDown', 'ArrowUp', 'Enter', ' '].includes(e.key)) { e.preventDefault(); show(); } return; }
-    if (e.key === 'ArrowDown') { e.preventDefault(); setHi(h => (h + 1) % items.length); }
-    else if (e.key === 'ArrowUp') { e.preventDefault(); setHi(h => (h - 1 + items.length) % items.length); }
-    else if (e.key === 'Home') { e.preventDefault(); setHi(0); }
-    else if (e.key === 'End') { e.preventDefault(); setHi(items.length - 1); }
-    else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); choose(hi); }
-    else if (e.key === 'Escape' || e.key === 'Tab') setOpen(false);
-  };
-  return (
-    <div className="cf-dd" ref={root} data-open={open ? 'true' : undefined}>
-      <button type="button" className="cf-dd__btn" role="combobox" aria-haspopup="listbox" aria-expanded={open} aria-label={label}
-        onClick={() => (open ? setOpen(false) : show())} onKeyDown={key}>
-        <span className="cf-dd__t"><span className="cf-dd__k">{label}:</span> {cur.label}</span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
-      </button>
-      {open && (
-        <ul className="cf-dd__list" role="listbox" aria-label={label}>
-          {items.map((o, i) => (
-            <li key={o.id} role="option" aria-selected={o.id === value} data-hi={i === hi ? 'true' : undefined}
-              onPointerEnter={() => setHi(i)} onPointerDown={e => e.preventDefault()} onClick={() => choose(i)}>{o.label}</li>
-          ))}
-        </ul>
-      )}
-    </div>
-  );
-}
-
-/* One choice group in the filter sheet: a row of radio pills. */
-function Choice({ label, value, onChange, items }) {
-  return (
-    <div className="cf-sheet__grp" role="radiogroup" aria-label={label}>
-      <p className="cf-sheet__k">{label}</p>
-      <div className="cf-sheet__opts">
-        {items.map(o => (
-          <button key={o.id} type="button" role="radio" aria-checked={o.id === value} className="cf-sheet__opt" onClick={() => onChange(o.id)}>{o.label}</button>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 const modeText = k => (k === 'classroom' ? 'Classroom' : k === 'online' ? 'LIVE-Online' : 'Classroom & LIVE-Online');
 const MONTHS = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
@@ -225,9 +170,6 @@ export default function CourseFinder() {
   const [mode, setMode] = useState('all');
   const [medium, setMedium] = useState('all');
   const [query, setQuery] = useState('');
-  const [sheet, setSheet] = useState(false);
-  const fbtn = useRef(null);
-  const sentinel = useRef(null);
   const row = useRef(null);
   const [arw, setArw] = useState({ prev: false, next: true, n: 1, i: 0 });
   const [active, setActive] = useState(GROUPS[0].id);
@@ -293,55 +235,13 @@ export default function CourseFinder() {
   })).filter(g => g.items.length > 0), [mode, medium, terms]);
 
   const count = groups.reduce((n, g) => n + g.items.length, 0);
-  const applied = (mode !== 'all') + (medium !== 'all');
   const clearAll = () => { setMode('all'); setMedium('all'); setQuery(''); };
-  const closeSheet = () => { setSheet(false); fbtn.current?.focus(); };
-
-  useEffect(() => {   // the bottom sheet: Esc closes it, Tab stays inside it, the page behind does not scroll
-    if (!sheet) return undefined;
-    const panel = document.querySelector('.cf-sheet__p');
-    panel?.querySelector('button')?.focus();
-    const key = e => {
-      if (e.key === 'Escape') { e.preventDefault(); closeSheet(); return; }
-      if (e.key !== 'Tab' || !panel) return;
-      const f = [...panel.querySelectorAll('button:not([disabled])')];
-      if (!f.length) return;
-      const first = f[0], last = f[f.length - 1];
-      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-    };
-    const prev = document.documentElement.style.overflow;
-    document.documentElement.style.overflow = 'hidden';
-    document.addEventListener('keydown', key);
-    return () => { document.removeEventListener('keydown', key); document.documentElement.style.overflow = prev; };
-  }, [sheet]);
 
   const scrollTo = (id, smooth = true) => {
     const el = document.getElementById(`cat-${id}`);
     if (el) el.scrollIntoView({ behavior: smooth && !reduce.current ? 'smooth' : 'auto', block: 'start' });
   };
   const pick = id => { setActive(id); try { history.replaceState(null, '', `#cat=${id}`); } catch {} scrollTo(id); };
-
-  useEffect(() => {   // the filter bar is 'stuck' once its resting place has scrolled up under the header
-    const el = sentinel.current;
-    if (!el) return;
-    const top = parseFloat(getComputedStyle(el).getPropertyValue('--cf-top')) || 92;
-    const bar = el.nextElementSibling;
-    const page = el.closest('.course-page') || bar;   // --stick lives on the page wrapper: the filter bar's cover and the pills row's shadow both read it
-    const ramp = 140;   // the cream behind the header fills in over this much scroll, so it follows the finger instead of fading on a timer
-    let raf = 0;
-    const tick = () => {
-      raf = 0;
-      const d = el.getBoundingClientRect().top - top;
-      page?.style.setProperty('--stick', Math.min(1, Math.max(0, 1 - d / ramp)).toFixed(3));
-      bar?.toggleAttribute('data-stuck', d <= 0);   // set on the node, not in React state: a re-render of the 100 cards at the moment of sticking is what made it catch
-    };
-    const on = () => { if (!raf) raf = requestAnimationFrame(tick); };
-    tick();
-    window.addEventListener('scroll', on, { passive: true });
-    window.addEventListener('resize', on);
-    return () => { window.removeEventListener('scroll', on); window.removeEventListener('resize', on); if (raf) cancelAnimationFrame(raf); };
-  }, []);
 
   useEffect(() => {
     reduce.current = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -381,23 +281,8 @@ export default function CourseFinder() {
 
   return (
     <>
-      <div ref={sentinel} className="cf-bar-sentinel" aria-hidden="true" />
-      <div className="cf-bar">
-        <div className="cf-bar__in">
-          <form className="cf-search" role="search" onSubmit={e => e.preventDefault()}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="M20 20l-3.5-3.5" /></svg>
-            <input type="search" value={query} onChange={e => setQuery(e.target.value)} placeholder="Search courses" aria-label="Search courses" autoComplete="off" />
-            {query && <button type="button" className="cf-search__x" aria-label="Clear search" onClick={() => setQuery('')}>×</button>}
-          </form>
-          <Dropdown label="Mode" value={mode} onChange={setMode} items={MODES} />
-          <Dropdown label="Medium" value={medium} onChange={setMedium} items={MEDIUMS} />
-          {filtering && <button type="button" className="cf-clear" onClick={clearAll}>Clear filters</button>}
-          <button type="button" ref={fbtn} className="cf-fbtn" aria-label={applied ? `Filters, ${applied} applied` : 'Filters'} aria-haspopup="dialog" aria-expanded={sheet} onClick={() => setSheet(true)}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10" /><circle cx="16" cy="7" r="2" /><circle cx="8" cy="17" r="2" /></svg>
-            {applied > 0 && <span className="cf-fbtn__n" aria-hidden="true">{applied}</span>}
-          </button>
-        </div>
-      </div>
+      <FilterBar query={query} onQuery={setQuery} searchLabel="Search courses" count={count} noun={['course', 'courses']}
+        filters={[{ label: 'Mode', value: mode, onChange: setMode, items: MODES }, { label: 'Medium', value: medium, onChange: setMedium, items: MEDIUMS }]} />
 
       <section className="cf-cols" aria-label="Course catalogue">
         <div className="cf-main">
@@ -436,26 +321,6 @@ export default function CourseFinder() {
           </div>
         </aside>
       </section>
-      {sheet && (
-        <div className="cf-sheet">
-          <div className="cf-sheet__ov" onClick={closeSheet} />
-          <div className="cf-sheet__p" role="dialog" aria-modal="true" aria-labelledby="cfSheetH">
-            <span className="cf-sheet__grab" aria-hidden="true" />
-            <div className="cf-sheet__hd">
-              <h2 id="cfSheetH" className="cf-sheet__t">Filters</h2>
-              <button type="button" className="cf-sheet__x" aria-label="Close filters" onClick={closeSheet}>×</button>
-            </div>
-            <div className="cf-sheet__bd" data-lenis-prevent>
-              <Choice label="Mode" value={mode} onChange={setMode} items={MODES} />
-              <Choice label="Medium" value={medium} onChange={setMedium} items={MEDIUMS} />
-            </div>
-            <div className="cf-sheet__ft">
-              <button type="button" className="cf-sheet__clear" disabled={!applied} onClick={() => { setMode('all'); setMedium('all'); }}>Clear all</button>
-              <Button fullWidth onClick={closeSheet}>{count === 0 ? 'No courses' : `Show ${count} ${count === 1 ? 'course' : 'courses'}`}</Button>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 }

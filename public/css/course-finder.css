@@ -203,15 +203,6 @@
   .cf-card, .cf-card__pic img, .cf-topic, .cf-topic::before, .cf-path::before { transition: none; }
 }
 
-/* Header on this page (user 2026-11-23): the bar stays white at the top of the page instead of blending into the ground, and the
-   beige band behind it is dropped so the page's own ground runs up under the bar. The id outranks the nav-top variant. */
-@media (min-width: 901px) { body:has(.course-page) #nav[data-top]::after { background-color: #fff; box-shadow: 0 6px 24px -14px rgba(60, 25, 5, .28); } }
-body:has(.course-page) #nav:not([data-top])::after { box-shadow: none; }   /* no shadow under the header pill once the page has scrolled (user 2026-11-24) */
-body:has(.course-page) .nav-band { background: #FFFAF3; border-bottom: 1px solid rgba(122, 42, 10, .12); box-sizing: border-box; }   /* the header sits on its own cream band, ruled off from the peach hero below */
-/* paper grain (the reference page's filter-bar texture) over the hero and the band behind the nav, so the two stay one surface */
-body:has(.course-page) .nav-band::before { content: none; }
-body:has(.course-page) .nav-band { isolation: isolate; }
-
 /* phones: each category's cards are a swipe row, the next card peeking in, with dots under it */
 @media (max-width: 560px) {
   .cf-rail .cf-grid { display: grid; grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 86%; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin-inline: calc(var(--px) * -1); padding: 4px var(--px) 12px; scroll-padding-inline: var(--px); overscroll-behavior-x: contain; }
@@ -220,8 +211,6 @@ body:has(.course-page) .nav-band { isolation: isolate; }
   .cf-rail__dots { display: flex; justify-content: center; margin-top: 6px; }
 }
 
-/* the page's jaali ground stays fixed to the screen while the content scrolls over it (user 2026-11-25) */
-html.foot-curtain main.course-page, main.course-page { background: #FFFAF3; }   /* plain cream, no jaali pattern (user 2026-11-25) */
 
 /* card thumbnails in the Batches ticket-head style (user 2026-11-25): the category's solid colour (BFAM's), a fine white line inset
    7px, the lotus watermark bottom right, white text; the course name is on the cover, so the card's own heading is for screen readers */

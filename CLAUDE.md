@@ -30,7 +30,7 @@ one file in `components/sections/home/` holding its markup and behaviour (its da
 - `app/layout.jsx` links `buttons.css` (the button system, first so placement rules after it win) and then the layers v25 → v26 → … → v49 (`CSS_LAYERS`, precedence "base"), each its own `<link>` in cascade order (order matters; they keep their names). No `@import` between them: the old chain held first paint about 3s on phones. A new layer goes into `CSS_LAYERS`. A section with its own sheet declares it with `<Stylesheet href="/css/…" />` (precedence "sections", hoisted after the base).
 - Production CSS (performance audit 2026-11-16): `scripts/build-css.mjs` (npm `prebuild`) joins the base layers (`BASE_CSS`) and the homepage's section sheets (`SECTION_CSS`, in their hoisted order) into one `public/css/base.bundle.css` (gitignored), and `<Stylesheet>` renders nothing for a bundled sheet. A new section sheet the homepage loads goes into `SECTION_CSS` (`lib/css-layers.mjs`) at its place in page order. Development still links each file (live reload). Next inlines its own bundler CSS (the Tailwind sheets) into the HTML (`experimental.inlineCss`, `next.config.mjs`).
 - Asset URLs in CSS are root-relative (`url(/assets/img/…)`); in JSX `/assets/img/…`; in behaviour modules `assets/img/…` (the page is at `/`).
-- Live CSS in development: `components/layout/DevCssReload.jsx` (rendered by `app/layout.jsx` only when `NODE_ENV` is development) checks the `/css/` sheets about once a second and swaps in an edited one without a page reload. Behaviour modules (`*.js` that build or bind the DOM) still need a refresh: they run once after hydration.
+- Live CSS in development: `components/layout/dev-css-reload.jsx` (rendered by `app/layout.jsx` only when `NODE_ENV` is development) checks the `/css/` sheets about once a second and swaps in an edited one without a page reload. Behaviour modules (`*.js` that build or bind the DOM) still need a refresh: they run once after hydration.
 
 ## Every section: apply the `section-wrapper` skill
 
@@ -62,7 +62,7 @@ The client wants **every section and every element animated**. For any change to
   rounded brand-orange thumb, no track, auto-hiding (shown while scrolling or over the list; `.is-scrolling` from page-motion.js, which
   also forces Chrome to repaint the bar when it flips).
 - Global config: `lib/config.js` (`ENABLE_PRELOADER`: the logo intro on or off; `INTRO_ONCE_PER_SESSION`: every load, or only the
-  first page of a session). Its mandala ring is capped at 88% of the screen height (user 2026-11-21). The intro runs from the inline boot script (`preloaderBoot()` in `components/layout/Preloader.jsx`, one file with the overlay and its behaviour) from the first paint,
+  first page of a session). Its mandala ring is capped at 88% of the screen height (user 2026-11-21). The intro runs from the inline boot script (`preloaderBoot()` in `components/layout/preloader.jsx`, one file with the overlay and its behaviour) from the first paint,
   never waiting for hydration, and never under reduced motion.
 - Content column: 1440px, centred on wider screens (`--cap` / `--px`, end of `public/css/v49.css`); section backgrounds stay full-bleed.
   Hero height (user 2026-11-13): every first screen ends with a preview of Programmes (its sheet top and eyebrow label): the hero

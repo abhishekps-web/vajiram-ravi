@@ -1,8 +1,9 @@
 import type { CSSProperties } from "react";
 import { notFound } from "next/navigation";
-import NavigationBar from "@/components/layout/NavigationBar";
-import Footer from "@/components/layout/Footer";
-import SectionLabel from "@/components/ui/section-label";
+import NavigationBar from "@/components/layout/navigation-bar";
+import Footer from "@/components/layout/footer";
+import PageHero from "@/components/ui/page-hero";
+import SectionWrapper from "@/components/ui/section-wrapper";
 import Button from "@/components/ui/button";
 import { programmes, programmeSlug } from "@/lib/data/programmes";
 
@@ -30,12 +31,12 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
     <>
       <NavigationBar />
       <main id="top" className="course-page">
-        <section className="course-ph" aria-labelledby="coursePhH">
-          <SectionLabel>{p.category}</SectionLabel>
-          <h1 id="coursePhH" className="h2 h2--sec rv" style={{ "--d": ".12s" } as CSSProperties}>{p.name}</h1>
-          <p className="intro rv" style={{ "--d": ".2s" } as CSSProperties}>{p.line}</p>
-          <div className="course-ph__card rv" style={{ "--d": ".28s" } as CSSProperties}>
-            <p className="course-ph__k">Course details coming soon</p>
+        <PageHero id="courseHero" crumbs={[["/", "Home"], ["/courses", "Courses"], [null, p.name]]} eyebrow={p.category} title={p.name}>
+          {p.line}
+        </PageHero>
+        <SectionWrapper id="courseSoon" labelledBy="courseSoonH" tight className="cu:flex cu:justify-center">
+          <div className="course-ph__card rv" style={{ "--d": ".1s" } as CSSProperties}>
+            <h2 id="courseSoonH" className="course-ph__k">Course details coming soon</h2>
             <p className="course-ph__p">
               The full page for this programme ({p.count} {p.count === 1 ? "course" : "courses"}) is being prepared. Meanwhile, our
               counsellors can walk you through it.
@@ -50,7 +51,7 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
               <Button variant="secondary" href="/#courses" iconStart="arrow-left">All programmes</Button>
             </div>
           </div>
-        </section>
+        </SectionWrapper>
       </main>
       <Footer />
     </>
