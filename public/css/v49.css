@@ -2336,9 +2336,9 @@ html main #gs.gs { margin-bottom: var(--sec-y); }
 
 /* Header sizes (user 2026-11-20: the header is the Tailwind NavigationBar component; these moved here from navigation-bar.css, which
    is gone): the fixed bar sits --hdr-pt from the top, 46px tall; --hdr-h is the space it takes; --hdr-gap the 20px gutter under it. */
-:root { --hdr-pt: 22px; --hdr-gap: 20px; --strip-h: 0px; --hdr-h: calc(var(--hdr-pt) + 54px); }
-@media (max-width: 900px) { :root { --hdr-pt: 16px; } }
-@media (max-width: 760px) { :root { --hdr-pt: 10px; --hdr-gap: 14px; --hdr-h: calc(var(--hdr-pt) + 44px); } }
+:root { --sat: env(safe-area-inset-top, 0px); --hdr-pt: calc(22px + var(--sat)); --hdr-gap: 20px; --strip-h: 0px; --hdr-h: calc(var(--hdr-pt) + 54px); }
+@media (max-width: 900px) { :root { --hdr-pt: calc(16px + var(--sat)); } }
+@media (max-width: 760px) { :root { --hdr-pt: calc(10px + var(--sat)); --hdr-gap: 14px; --hdr-h: calc(var(--hdr-pt) + 44px); } }
 main#top { padding-top: calc(var(--hdr-h) + var(--hdr-gap)); }
 
 /* Hero on the sections' ground (user 2026-11-20, "the same section colour used for other sections"): the header band and the hero
@@ -2412,3 +2412,12 @@ html.is-scrolling { scrollbar-color: rgba(194, 65, 12, .6) transparent; }
 /* FAQ cards: the Contact us card's hairline border (user 2026-11-25). */
 #faq .qa, #faq .qa:hover { box-shadow: inset 0 0 0 1px rgba(45, 18, 4, .08); }
 #faq .qa[open] { box-shadow: inset 0 0 0 1px rgba(45, 18, 4, .08), 0 18px 34px -22px rgba(120, 50, 10, .45); }
+
+/* Notch / status bar (iPhone with a notch or Dynamic Island, user 2026-11-26): the page runs edge to edge (viewport-fit=cover) and the fixed
+   header sits below the safe area (--sat in --hdr-pt). A cream strip, fixed to the top edge, covers everything above the header (the safe
+   area and the gap over the bar), so scrolled content never shows there; at the top of the page the header band is already behind it. */
+.notch-shield { display: none; }
+@media (max-width: 900px) {
+  .notch-shield { display: block; position: fixed; z-index: 55; top: 0; left: 0; right: 0; height: var(--hdr-pt, 10px); background: #FFFAF3; pointer-events: none; transition: opacity .25s ease; }
+  html:has(#nav[data-top]) .notch-shield { opacity: 0; }
+}
