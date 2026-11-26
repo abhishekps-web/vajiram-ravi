@@ -13,6 +13,27 @@ const LINK = 'cu:flex cu:items-center cu:h-[34px] cu:px-[13px] cu:rounded-full c
 
 const MEGA = 'cu:absolute cu:-left-2.5 cu:top-[calc(100%+12px)] cu:grid cu:box-border cu:overflow-hidden cu:rounded-[var(--r-box,16px)] cu:bg-white cu:shadow-[0_0_0_1px_rgba(38,20,8,.06),0_30px_60px_-24px_rgba(60,24,6,.45)] cu:invisible cu:opacity-0 cu:-translate-y-2 cu:[transition:opacity_.2s_var(--ease),translate_.25s_var(--ease),visibility_0s_.25s] cu:group-data-[open]/mega:visible cu:group-data-[open]/mega:opacity-100 cu:group-data-[open]/mega:translate-y-0 cu:group-data-[open]/mega:[transition:opacity_.22s_var(--ease),translate_.3s_var(--ease),visibility_0s] cu:motion-reduce:transition-none cu:motion-reduce:translate-y-0';
 
+const LANG_WRAP = 'cu:group/lang cu:relative cu:flex cu:items-center cu:h-11 cu:p-1 cu:rounded-full cu:bg-[#F9F0E4] cu:transition-[background-color,box-shadow] cu:duration-300 cu:motion-safe:animate-[nav-lang-in_.7s_var(--ease)_.15s_both]';
+const LANG_WRAP_BAR = 'cu:max-[600px]:p-0';
+const LANG_THUMB = 'cu:absolute cu:inset-y-1 cu:left-1 cu:w-[calc(50%-4px)] cu:rounded-full cu:bg-[var(--brand)] cu:transition-transform cu:duration-[.45s] cu:ease-[cubic-bezier(.34,1.4,.5,1)] cu:group-data-[cur=hi]/lang:translate-x-full cu:motion-reduce:transition-none';
+const LANG_THUMB_BAR = 'cu:max-[600px]:hidden';
+const LANG_BTN = 'cu:relative cu:z-[1] cu:min-w-11 cu:h-full cu:px-3 cu:rounded-full cu:border-0 cu:bg-transparent cu:cursor-pointer cu:text-[var(--ink)] cu:transition-[color,translate] cu:duration-[.25s] cu:aria-pressed:text-white cu:fine:hover:aria-[pressed=false]:text-[var(--brand)] cu:fine:hover:aria-[pressed=false]:-translate-y-px cu:focus-visible:outline-2 cu:focus-visible:outline-offset-2 cu:focus-visible:outline-[var(--brand)] cu:motion-reduce:transition-none';
+const LANG_BTN_BAR = 'cu:max-[600px]:aria-pressed:hidden cu:max-[600px]:h-11 cu:max-[600px]:px-1.5';
+const LANG_EN = 'cu:[font:600_15px/1_var(--f)] cu:tracking-[.02em]';
+const LANG_EN_BAR = 'cu:max-[480px]:text-[13.5px]';
+const LANG_HI = 'cu:[font:400_20px/1_var(--f-hi)] cu:pt-0.5';
+const LANG_HI_BAR = 'cu:max-[480px]:text-[17px]';
+
+function LangSwitch({ bar }) {
+  return (
+    <div className={`${LANG_WRAP} ${bar ? LANG_WRAP_BAR : 'cu:flex-none'}`} data-lang-sw="" data-cur="en" role="group" aria-label="Language / भाषा">
+      <span className={`${LANG_THUMB} ${bar ? LANG_THUMB_BAR : ''}`} aria-hidden="true" />
+      <button className={`${LANG_BTN} ${LANG_EN} ${bar ? `${LANG_BTN_BAR} ${LANG_EN_BAR}` : ''}`} type="button" data-lang="en" lang="en" aria-pressed="true" title="English">EN</button>
+      <button className={`${LANG_BTN} ${LANG_HI} ${bar ? `${LANG_BTN_BAR} ${LANG_HI_BAR}` : ''}`} type="button" data-lang="hi" lang="hi" aria-pressed="false" title="हिन्दी">हिं</button>
+    </div>
+  );
+}
+
 function Logo() {
   const box = 'cu:flex cu:items-center cu:gap-[calc(var(--lh)*.167)] cu:[--lh:52px] cu:max-[1023.98px]:[--lh:49px] cu:max-[760px]:[--lh:41px] cu:transition-transform cu:duration-300 cu:ease-[cubic-bezier(.22,1,.36,1)] cu:group-hover/logo:scale-[1.03] cu:group-focus-visible/logo:scale-[1.03]';
   return (
@@ -76,6 +97,7 @@ export default function NavigationBar() {
           </button>
         </div>
         <div className="cu:flex cu:items-center cu:gap-2.5 cu:pr-3 cu:max-[1023.98px]:order-1 cu:max-[760px]:hidden" id="navEnd">
+          <LangSwitch bar />
           <Button className="talk" size="sm" shadow={false} href="#contact" iconEnd="arrow" data-talk="">Let's talk</Button>
         </div>
         <div className="cu:fixed cu:z-[49] cu:top-[100px] cu:inset-x-[var(--chrome-px)] cu:grid cu:p-2.5 cu:rounded-[20px] cu:bg-white cu:shadow-[0_18px_48px_rgba(38,38,38,.16)] cu:max-[900px]:top-[92px] cu:max-[760px]:static cu:max-[760px]:order-3 cu:max-[760px]:basis-full cu:max-[760px]:mt-2 cu:max-[760px]:p-0 cu:max-[760px]:pt-2 cu:max-[760px]:pb-1 cu:max-[760px]:max-h-[calc(100svh-120px)] cu:max-[760px]:overflow-y-auto cu:max-[760px]:rounded-none cu:max-[760px]:bg-transparent cu:max-[760px]:shadow-none cu:max-[760px]:border-0 cu:max-[760px]:border-t cu:max-[760px]:border-solid cu:max-[760px]:border-[rgba(45,18,4,.08)] cu:[&[hidden]]:hidden" id="drawer" hidden>
@@ -83,6 +105,7 @@ export default function NavigationBar() {
           <a key={href} className="cu:py-3 cu:px-3.5 cu:rounded-xl cu:text-[var(--ink)] cu:no-underline cu:[font-family:var(--btn-font)] cu:font-medium cu:text-lg cu:leading-[var(--btn-lh)] cu:tracking-[var(--btn-ls)] cu:transition-colors cu:duration-200 cu:hover:bg-[var(--sand)] cu:focus-visible:bg-[var(--sand)] cu:focus-visible:outline-2 cu:focus-visible:-outline-offset-2 cu:focus-visible:outline-[var(--brand)]" href={href}>{t}</a>
         ))}
         <div className="cu:hidden cu:max-[760px]:flex cu:items-center cu:gap-3 cu:mt-2 cu:pt-3 cu:px-1 cu:pb-1 cu:border-t cu:border-[var(--sand)]">
+          <LangSwitch />
           <Button className="cu:flex-[1_1_auto] cu:min-w-0" size="sm" shadow={false} href="#contact" iconEnd="arrow" data-talk="">Let's talk</Button>
         </div>
         </div>
@@ -261,3 +284,9 @@ export function initNavMore() {
   fit();
 }
 
+export function initLangSwitch() {
+  $$('[data-lang-sw]').forEach(w => $$('button[data-lang]', w).forEach(b => b.addEventListener('click', () => {
+    w.dataset.cur = b.dataset.lang;
+    $$('button[data-lang]', w).forEach(x => x.setAttribute('aria-pressed', x === b));
+  })));
+}
