@@ -491,7 +491,7 @@ html.foot-curtain footer.foot { position: sticky; bottom: var(--foot-off, 0px); 
 html[lang="hi"] .talk .btn__t { font-family: "Mukta", var(--f); }
 
 /* ---- section titles: one size everywhere (64px on desktop, 40px on phones). The hero, the Toppers masthead and card headings are not section titles. ---- */
-:root { --h2: clamp(40px, 6vw, 64px); }
+:root { --h2: clamp(40px, 6vw, 60px); }
 .h2, .stats__h, .hw__h, .wc__h, .rs__head2 .h2 { font-size: var(--h2); line-height: 1.02; letter-spacing: -.03em; }
 .h2 { max-width: 15em; text-wrap: balance; }
 .gs__h { max-width: 14em; }
