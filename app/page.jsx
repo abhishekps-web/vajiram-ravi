@@ -1,21 +1,20 @@
 import NavigationBar from '@/components/layout/NavigationBar';
 import Footer from '@/components/layout/Footer';
-import WhatsAppButton from '@/components/layout/WhatsAppButton/WhatsAppButton';
-import Hero from '@/components/sections/Hero/Hero';
-import Programmes from '@/components/sections/Programmes';
-import Toppers from '@/components/sections/Toppers';
-import WhyChoose from '@/components/sections/WhyChoose';
-import Batches from '@/components/sections/Batches';
-import Faculties from '@/components/sections/Faculties';
-import Stories from '@/components/sections/Stories';
-import VideoStories from '@/components/sections/VideoStories';
-import TalkToUs from '@/components/sections/TalkToUs';
-import Resources from '@/components/sections/Resources';
-import LifeGallery from '@/components/sections/LifeGallery';
-import ContactUs from '@/components/sections/ContactUs';
-import Faq from '@/components/sections/Faq';
-import Closing from '@/components/sections/Closing';
-import CourseCatalogDialog from '@/components/dialogs/CourseCatalogDialog';
+import WhatsAppButton from '@/components/layout/WhatsAppButton';
+import Hero from '@/components/sections/home/hero';
+import Programmes from '@/components/sections/home/programmes';
+import Toppers from '@/components/sections/home/toppers';
+import WhyChoose from '@/components/sections/home/why-choose';
+import Batches from '@/components/sections/home/batches';
+import Faculties from '@/components/sections/home/faculties';
+import Stories from '@/components/sections/home/stories';
+import VideoStories from '@/components/sections/home/video-stories';
+import TalkToUs from '@/components/sections/home/talk-to-us';
+import Resources from '@/components/sections/home/resources';
+import LifeGallery from '@/components/sections/home/life-gallery';
+import ContactUs from '@/components/sections/home/contact-us';
+import Faq from '@/components/sections/home/faq';
+import Closing from '@/components/sections/home/closing';
 
 export default function Home() {
   return (
@@ -40,7 +39,6 @@ export default function Home() {
         <ContactUs />
         <Faq />
         <Closing />
-        <CourseCatalogDialog />
       </main>
       <WhatsAppButton />
       <Footer />

@@ -328,7 +328,7 @@
 #resources .rf .sm__act { --btn-bg: rgba(255, 252, 244, .76); --btn-bg-hover: rgba(255, 252, 244, .76);
   --btn-edge: inset 0 0 0 1px rgba(120, 70, 20, .16); --btn-edge-hover: inset 0 0 0 1px rgba(120, 70, 20, .16); }   /* no colour change on hover (user 2026-11-16): the label roll and the disc still play */
 
-/* the dot indicator under the row of folders, on phones only (CarouselDots, bindDots in components/ui/rail.js): centred under the row in the room its bottom padding leaves */
+/* the dot indicator under the row of folders, on phones only (CarouselDots, bindDots in components/ui/rail.jsx): centred under the row in the room its bottom padding leaves */
 #resources .sm__dots { display: none; }
 @media (max-width: 640px) { #resources .sm__dots { display: flex; justify-content: center; width: fit-content; margin: -20px auto 0; } }
 

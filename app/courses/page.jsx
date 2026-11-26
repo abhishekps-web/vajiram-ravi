@@ -1,6 +1,8 @@
 import NavigationBar from '@/components/layout/NavigationBar';
 import Footer from '@/components/layout/Footer';
-import Stylesheet from '@/components/ui/Stylesheet';
+import Stylesheet from '@/components/ui/stylesheet';
+import PageHero from '@/components/ui/page-hero';
+import { COURSES_HERO as H } from '@/lib/data/course-finder';
 import CourseFinder from '@/components/sections/CourseFinder';
 
 // The course finder: every course, grouped. Layout from the Figma courses page; header, footer, ground, type and buttons are the site's.
@@ -15,6 +17,9 @@ export default function CoursesPage() {
       <NavigationBar />
       <Stylesheet href="/css/course-finder.css" />
       <main id="top" className="course-page">
+        <PageHero id="cfHero" crumbs={H.crumbs} title={H.heading}>
+          {H.lede} <span className="cu:[font-family:'Tiro_Devanagari_Hindi',var(--f)]" lang="hi">{H.ledeHi}</span>.
+        </PageHero>
         <CourseFinder />
       </main>
       <Footer />

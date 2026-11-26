@@ -1,7 +1,6 @@
-import Intro from '@/components/layout/Intro/Intro';
+import Preloader, { preloaderBoot } from '@/components/layout/Preloader';
 import SiteBehaviour from '@/components/layout/SiteBehaviour';
 import DevCssReload from '@/components/layout/DevCssReload';
-import introBoot from '@/components/layout/Intro/boot';
 import { ENABLE_PRELOADER, INTRO_ONCE_PER_SESSION } from '@/lib/config';
 import { BASE_CSS } from '@/lib/css-layers.mjs';
 
@@ -25,10 +24,10 @@ const FONTS = 'https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&fami
 const BASE_HREFS = process.env.NODE_ENV === 'development' ? BASE_CSS.map(n => `/css/${n}.css`) : ['/css/base.bundle.css'];
 
 // Runs before paint: html.js (the CSS's JS-on hooks) and, with the preloader on (ENABLE_PRELOADER, lib/config.js), the intro
-// itself (components/layout/Intro/boot.js: html.vrv-lock shows the overlay and holds scrolling until it lifts). With the
+// itself (preloaderBoot() in components/layout/Preloader.jsx: html.vrv-lock shows the overlay and holds scrolling until it lifts). With the
 // preloader off only html.js is set.
 const BOOT = (ENABLE_PRELOADER
-  ? introBoot({ oncePerSession: INTRO_ONCE_PER_SESSION })
+  ? preloaderBoot({ oncePerSession: INTRO_ONCE_PER_SESSION })
   : "document.documentElement.classList.add('js')");
 
 export default function RootLayout({ children }) {
@@ -41,14 +40,14 @@ export default function RootLayout({ children }) {
         <link rel="stylesheet" href={FONTS} />
         {/* the site stylesheet, served as-is from public/css: the layers v25 -> ... -> v49, linked in cascade order (each its
             own <link>, so they download in parallel; they used to @import each other, a chain that held first paint ~3s on
-            phones). Sections add their own sheets after them (components/ui/Stylesheet.jsx, precedence "sections"). */}
-        {/* the button system (components/ui/Button) comes first: placement rules in the layers after it always win, so
+            phones). Sections add their own sheets after them (components/ui/stylesheet.jsx, precedence "sections"). */}
+        {/* the button system (components/ui/button) comes first: placement rules in the layers after it always win, so
             sections position buttons without restyling them */}
         {BASE_HREFS.map(h => <link key={h} rel="stylesheet" href={h} precedence="base" />)}
         <script dangerouslySetInnerHTML={{ __html: BOOT }} />
       </head>
       <body suppressHydrationWarning>
-        {ENABLE_PRELOADER && <Intro />}
+        {ENABLE_PRELOADER && <Preloader />}
         {children}
         <SiteBehaviour />
         {process.env.NODE_ENV === 'development' && <DevCssReload />}   {/* live-reloads public/css edits (dev only) */}

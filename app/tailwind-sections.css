@@ -4,40 +4,42 @@
      other Tailwind sheets (Programmes); unlayered; no preflight;
    - the breakpoints those components use (the site's are max-width ones).
    Imported by each component that uses it. A new section that joins: add its @source line here and use the `cu:` prefix.
-   Now: Contact us (components/sections/ContactUs.jsx), the navigation bar (components/layout/NavigationBar.jsx) Why Vajiram & Ravi (components/sections/WhyChoose.jsx) Best IAS coaching (components/sections/BestCoaching.jsx) 50+ years (components/sections/Legacy/Legacy.jsx) Batches (components/sections/Batches.jsx) the Toppers year-by-year record (components/sections/Toppers.jsx) and Talk to us (components/sections/TalkToUs.jsx). */
+   Now: Contact us (components/sections/home/contact-us.jsx), the navigation bar (components/layout/NavigationBar.jsx) Why Vajiram & Ravi (components/sections/home/why-choose.jsx) Best IAS coaching (components/sections/BestCoaching.jsx) 50+ years (components/sections/Legacy/Legacy.jsx) Batches (components/sections/home/batches.jsx) the Toppers year-by-year record (components/sections/home/toppers.jsx) and Talk to us (components/sections/home/talk-to-us.jsx). */
 
 @import "tailwindcss/theme.css" layer(theme) prefix(cu);
 @import "tailwindcss/utilities.css" source(none);
-@source "../components/sections/ContactUs.jsx";
-@source "../components/ui/CarouselDots.jsx";
-@source "../components/ui/SectionLabel.tsx";
-@source "../components/ui/CircularCarousel.tsx";
-@source "../components/sections/Faculties.tsx";
-@source "../components/sections/FacultyCard.tsx";
-@source "../components/sections/Faq.jsx";
+@source "../components/sections/home/contact-us.jsx";
+@source "../components/ui/carousel-dots.jsx";
+@source "../components/ui/section-label.tsx";
+@source "../components/ui/circular-carousel.tsx";
+@source "../components/sections/home/faculties.tsx";
+@source "../components/sections/home/faculty-card.tsx";
+@source "../components/sections/home/faq.jsx";
 
 @custom-variant stacked (@media (max-width: 860px));
 @custom-variant xs (@media (max-width: 640px));   /* phones and small tablets: the map above the details (beside them only from 641px) */
 @custom-variant fine (@media (hover: hover) and (pointer: fine));
 @source "../components/layout/NavigationBar.jsx";
-@source "../components/sections/WhyChoose.jsx";
+@source "../components/sections/home/why-choose.jsx";
 @source "../components/sections/BestCoaching.jsx";
 @source "../components/sections/Legacy/Legacy.jsx";
-@source "../components/sections/Batches.jsx";
-@source "../components/sections/BatchCard.jsx";
-@source "../components/sections/Toppers.jsx";
-@source "../components/sections/Hero/HeroIntro.jsx";
-@source "../components/sections/Hero/Hero.jsx";
-@source "../components/sections/Hero/HeroBanner.jsx";
+@source "../components/sections/home/batches.jsx";
+@source "../components/ui/batch-card.jsx";
+@source "../components/ui/page-hero.jsx";
+@source "../app/courses/page.jsx";
+@source "../components/sections/home/toppers.jsx";
+@source "../components/sections/home/hero-intro.jsx";
+@source "../components/sections/home/hero.jsx";
+@source "../components/sections/home/hero-banner.jsx";
 
-/* the hero banner (components/sections/Hero/HeroBanner.jsx): touch screens get no arrows; a programme book's float and shine */
+/* the hero banner (components/sections/home/hero-banner.jsx): touch screens get no arrows; a programme book's float and shine */
 @custom-variant coarse { @media (hover: none), (pointer: coarse) { @slot; } }
 @keyframes hxBookFloat { to { translate: 0 -8px; } }
 @keyframes hxBookShine { to { left: 130%; } }
-@source "../components/sections/ToppersRecord.jsx";
-@source "../components/sections/TalkToUs.jsx";
-@source "../components/sections/Stories.jsx";
-@source "../components/sections/VideoStories.jsx";
+@source "../components/sections/home/toppers-record.jsx";
+@source "../components/sections/home/talk-to-us.jsx";
+@source "../components/sections/home/stories.jsx";
+@source "../components/sections/home/video-stories.jsx";
 @source "../components/layout/Footer.jsx";
 
 /* the footer curtain (Footer.jsx initFooterCurtain sets html.foot-curtain, --foot-off, --foot-p and footer[data-zooming]): parked under
@@ -46,12 +48,12 @@
 @custom-variant curtain-zoom { @media (min-width: 761px) and (prefers-reduced-motion: no-preference) { html.foot-curtain & { @slot; } } }
 @custom-variant foot-zooming { @media (min-width: 761px) { html.foot-curtain footer[data-zooming] > & { @slot; } } }
 
-/* the intro (components/layout/Intro/Intro.jsx), driven by classes the inline boot script (Intro/boot.js) sets on <html>: vrv-lock shows
+/* the intro (components/layout/Preloader.jsx), driven by classes its inline boot script (preloaderBoot) sets on <html>: vrv-lock shows
    it and holds scrolling, vrv-play runs the reveal, vrv-out lifts it. The lock keeps the scrollbar (user 2026-11-16: hiding it made the
    page jump ~15px as the intro lifted) and holds the page to one screen under the overlay; vrv-restore lets a reload from mid-page
-   scroll back to its place under it. boot.js listens for the `iris` animation, so that name stays. */
-@source "../components/layout/Intro/Intro.jsx";
-@source "../components/sections/LifeGallery.jsx";
+   scroll back to its place under it. preloaderBoot listens for the `iris` animation, so that name stays. */
+@source "../components/layout/Preloader.jsx";
+@source "../components/sections/home/life-gallery.jsx";
 
 /* the hero's beige ground (--ground-beige, v49.css: a fade, the jaali tile, the beige), sized as on the hero (.dl__ground) */
 @utility ground-beige { background: var(--ground-beige); background-size: 100% 100%, 36px 36px, auto; }
@@ -93,7 +95,7 @@ html.vrv-lock.vrv-restore body { height: auto; overflow: visible; }
 :root { --f-hi: "Tiro Devanagari Hindi", "Mukta", var(--f); }
 @keyframes nav-lang-in { from { opacity: 0; transform: translateY(-10px); } }
 
-/* ===== Success stories (#stories, components/sections/Stories.jsx): its utilities are `cu:` like every section here; below, what a utility cannot say cleanly: the section states, the postcard paper, the keyframes and the phone stack ===== */
+/* ===== Success stories (#stories, components/sections/home/stories.jsx): its utilities are `cu:` like every section here; below, what a utility cannot say cleanly: the section states, the postcard paper, the keyframes and the phone stack ===== */
 /* section states, set by stories.js: `waiting` until the section scrolls in (only when JS runs, so the page reads without it),
    `dealt` once it has; `dimmed` is every other postcard while one is hovered or focused (real pointers only) */
 /* hover as the section always had it: a plain :hover (the default also requires @media (hover: hover)) */
@@ -213,12 +215,12 @@ html.js #stories:not([data-in]) > .lbl { opacity: 0; }
   100% { z-index: 10; visibility: visible; opacity: 1; scale: 1; translate: 0 0; rotate: 0deg; }
 }
 
-/* the carousel indicator's timed fill (components/ui/CarouselDots.jsx) */
+/* the carousel indicator's timed fill (components/ui/carousel-dots.jsx) */
 @keyframes cd-fill { to { transform: scaleX(1); } }
 
-/* ===== Programmes (#courses, components/sections/Programmes.tsx): its utilities are `cu:` like every section here; below, the soloboy theme it uses, its base reset held to #courses, and the keyframes and states a utility cannot say ===== */
-@source "../components/sections/Programmes.tsx";
-@source "../components/ui/section_wrapper.jsx";
+/* ===== Programmes (#courses, components/sections/home/programmes.tsx): its utilities are `cu:` like every section here; below, the soloboy theme it uses, its base reset held to #courses, and the keyframes and states a utility cannot say ===== */
+@source "../components/sections/home/programmes.tsx";
+@source "../components/ui/section-wrapper.jsx";
 :root { --ease-out: cubic-bezier(0.22, 1, 0.36, 1); --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1); --ease-in: cubic-bezier(0.4, 0, 1, 1); }
 @theme {
 

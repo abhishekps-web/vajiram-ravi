@@ -441,7 +441,7 @@
 /* footer text, larger (user 2026-11-10): logo 20 -> 24, intro 17 -> 19, column heads 17 -> 20, links 14.5 -> 16.5, bottom bar 14 -> 15.5 */
 footer.foot .foot__logo { font-size: 24px; }
 
-/* accordions (js/accordion.js animates the height): the + turns back as soon as a panel starts closing, not when it has closed */
+/* accordions (components/ui/accordion.jsx animates the height): the + turns back as soon as a panel starts closing, not when it has closed */
 .qa.is-closing summary img { transform: none; }
 .qa.is-closing summary { padding-bottom: 22px; transition: padding .38s cubic-bezier(.2, .7, .2, 1); }
 .rs-yv-more.is-closing summary::after { content: "+"; }
@@ -776,7 +776,7 @@ html.vrv-lock .wa { opacity: 0; pointer-events: none; }
 
 /* ---- eyebrow badges (Figma "eyebrow pill"): a dark-brown cartouche with pointed ends, white 12px bold caps, 0.96px tracking.
    Replaces the plain eyebrow text and its rule/ornament. On dark backgrounds (hero, flagship, "why") the cartouche is brand orange so it still reads. ---- */
-/* the eyebrow badge itself (the Toppers dark cartouche, white 12px caps) is SectionLabel.tsx, Tailwind (user 2026-11-25) */
+/* the eyebrow badge itself (the Toppers dark cartouche, white 12px caps) is section-label.tsx, Tailwind (user 2026-11-25) */
 .dl__k { display: inline-flex; width: fit-content; margin: 0 0 24px; }
 .sc .vp__k { display: block; margin: 0 0 24px; }
 .sc .vp__k > .ln { padding: 0 11px; margin: 0; }
@@ -1657,7 +1657,7 @@ footer.foot .foot__logo--mark:focus-visible { outline: 2px solid #fff; outline-o
 
 /* Study materials rows: every row is title + one line; Current affairs prefixes its frequency in brand orange */
 
-/* ---- custom select (js/custom-select.js; user 2026-11-11: the site's own dropdown for "pick a programme" instead of the browser's).
+/* ---- custom select (components/ui/custom-select.jsx; user 2026-11-11: the site's own dropdown for "pick a programme" instead of the browser's).
    The field looks exactly like the other blanks in the sentence form (handwriting on a dashed brand line, the chevron turns when open);
    the list is a white card in the site's language: 8px corners, warm shadow, group headings as small tracked brand caps, options in the
    body font with a warm tint for the highlighted one and a brand tick on the chosen one. It drops in (fade + 6px) and flips above the field
@@ -2108,7 +2108,7 @@ html body .dl--pin.dl .dl__in { opacity: 1; transform: none; filter: none; point
 }
 @media (prefers-reduced-motion: reduce) { .hx__glide { animation: none; } }
 
-/* Carousel progress indicator: moved into components/ui/CarouselDots.jsx (Tailwind, user 2026-11-17). */
+/* Carousel progress indicator: moved into components/ui/carousel-dots.jsx (Tailwind, user 2026-11-17). */
 
 /* the "CSE 2025 results" tag in the eyebrow's shape (user 2026-11-16): the brand cartouche with pointed ends (cartouche-brand.svg as a
    border image) and the eyebrow's type, 12px spaced capitals, exactly as .dl__k / .lbl__t above; the dark ticker pill around it stays */

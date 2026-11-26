@@ -1,7 +1,7 @@
 /* =====================================================================================================================
    BUTTONS: the site's one button system (single source of truth)
-   Markup:    components/ui/Button.tsx (<Button> and buttonHTML(), one file)
-   Reference: components/ui/Button.tsx
+   Markup:    components/ui/button.tsx (<Button> and buttonHTML(), one file)
+   Reference: components/ui/button.tsx
 
    Built from the audit of the existing buttons (2026-11-13): the brand CTA (gradient pill + round arrow disc + rolling
    label), the white pill for dark/photo/orange grounds, the ink pill (Closing, Why), the brand outline (Visit, Toppers),

@@ -1,11 +1,11 @@
 ---
 name: section-wrapper
-description: Wrap every section of the Vajiram & Ravi site in the shared SectionWrapper (components/ui/section_wrapper.jsx). Use this by default on EVERY new section, every section ported from another branch, and any section whose outer <section> markup, padding or heading spacing is touched: the outer element must be <SectionWrapper>, never a hand-written <section> with its own padding.
+description: Wrap every section of the Vajiram & Ravi site in the shared SectionWrapper (components/ui/section-wrapper.jsx). Use this by default on EVERY new section, every section ported from another branch, and any section whose outer <section> markup, padding or heading spacing is touched: the outer element must be <SectionWrapper>, never a hand-written <section> with its own padding.
 ---
 
 # Every section is a SectionWrapper
 
-`components/ui/section_wrapper.jsx` is the one outer shell for a homepage section. It renders the `<section>` and gives it:
+`components/ui/section-wrapper.jsx` is the one outer shell for a homepage section. It renders the `<section>` and gives it:
 
 - the site's vertical rhythm, `--sec-y` above and below, so no section sets its own padding;
 - the side gutter, `--px`, so content lines up with the 1440px column;
@@ -21,7 +21,7 @@ A section that writes its own `<section className="... pt-[..] px-[..]">` drifts
 4. Grounds and section-level classes (`band`, `dots`, `sheet`, a background utility) go in `className`; they are kept.
 
 ```jsx
-import SectionWrapper from '@/components/ui/section_wrapper';
+import SectionWrapper from '@/components/ui/section-wrapper';
 
 export default function Example() {
   return (
@@ -60,6 +60,6 @@ If it still renders its own `<section>`, convert it: move `id`, `aria-labelledby
 
 ## Check before reporting
 
-- `grep -n "<section" components/sections/<File>` shows nothing for the file you touched (only `section_wrapper.jsx` renders one).
+- `grep -n "<section" components/sections/<File>` shows nothing for the file you touched (only `section-wrapper.jsx` renders one).
 - With `npm run dev` running, screenshot the section at 1440px and 390px: the top and bottom space match its neighbours, and its content lines up with the column edges.
 - Then run the `site-motion` check as usual.

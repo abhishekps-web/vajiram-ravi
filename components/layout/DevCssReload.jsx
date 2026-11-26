@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 
 // Development only (rendered from app/layout.jsx when NODE_ENV is "development"; never in a production build).
-// The stylesheets in public/css are plain <link>s, not bundled (see Stylesheet.jsx for why), so Next's hot reload does not see
+// The stylesheets in public/css are plain <link>s, not bundled (see stylesheet.jsx for why), so Next's hot reload does not see
 // them and an edit needed a page refresh. This checks each /css/ sheet's ETag about once a second (the dev server sends a new one
 // when the file changes) and, when one changes, loads the new copy in a <link> right after the original, so the cascade order holds,
 // then switches the original off once the new one has loaded (no unstyled flash). The originals belong to React, so they are only

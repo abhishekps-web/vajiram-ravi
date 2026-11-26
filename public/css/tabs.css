@@ -1,4 +1,4 @@
-/* The tab bar (components/ui/Tabs.jsx), used by Toppers' years, Life at V&R's All / Images / Videos and the
+/* The tab bar (components/ui/tabs.jsx), used by Toppers' years, Life at V&R's All / Images / Videos and the
    Programmes filter (user 2026-11-21: one component for every tab bar). A sand bar, the labels in ink and one brand pill (.tabs__ind)
    that springs along under the chosen tab. Sections only place the bar (margin, width); they never restyle it.
    On narrow screens the tabs scroll sideways inside the bar (the pill scrolls with them). */

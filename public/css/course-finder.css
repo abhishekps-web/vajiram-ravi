@@ -5,24 +5,6 @@
    category list's accent bar slides to the group being read; all off under reduced motion. */
 .cf-cols, .cf-close { padding-left: var(--px); padding-right: var(--px); box-sizing: border-box; }   /* --px already centres the 1440px column (--cap is a margin, not a width) */
 
-/* secondary hero (the original course finder's head): a full-bleed band, solid #F8E6C9, continuous with the header band above it:
-   crumb, title and one-line lede. */
-.cf-hero { position: relative; isolation: isolate; overflow: hidden; box-sizing: border-box; clip-path: inset(0); padding-inline: var(--px);   /* the header band above already holds ~12px under the pill, so the top and bottom spaces read equal (about 56px); the bottom is given extra room (user: more space below) */ background: var(--hero-beige, #F3E8D6); }
-.cf-hero__bg { position: absolute; top: 0; right: 0; bottom: 0; width: 34%; z-index: -1; pointer-events: none; background: url(/assets/img/photos/collage.webp) right 0 top -150px / 1040px auto no-repeat; filter: grayscale(1) contrast(1.15) brightness(1.04); mix-blend-mode: multiply; opacity: .11;   /* the maroon India Gate drawing on the right, as on the original course finder */
-  -webkit-mask: linear-gradient(270deg, #000 62%, transparent), linear-gradient(180deg, transparent, #000 40px); -webkit-mask-composite: source-in; mask: linear-gradient(270deg, #000 62%, transparent), linear-gradient(180deg, transparent, #000 40px); mask-composite: intersect; }
-.cf-hero__bg--l { right: auto; left: 0; width: 34%; background-position: right 0 top -60px; transform: scaleX(-1); }
-@media (max-width: 1100px) { .cf-hero__bg { display: none; } }
-.cf-hero::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; background: url(/assets/img/patterns/grain.png); background-size: 220px; mix-blend-mode: soft-light; opacity: .4; }
-.cf-hero { display: flex; align-items: center; min-height: 0; }   /* a little taller, the text block centred vertically and still left aligned */
-.cf-hero__in { width: 100%; text-align: center; }
-.cf-h { margin: 0; font: 400 clamp(40px, 4.6vw, 64px)/1.02 var(--f-title, 'Newsreader', Georgia, serif); letter-spacing: -.025em; color: #2A1A0C; text-wrap: balance; }
-.cf-lede { margin: 16px auto 0; max-width: 620px; font: 500 18px/1.55 var(--f); color: #3A2410; text-wrap: pretty;  }
-.cf-lede [lang="hi"] { font-family: "Tiro Devanagari Hindi", var(--f); }
-.cf-crumb { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 0 0 18px; font: 500 14px/1 var(--f); color: rgba(42, 26, 12, .55); }
-.cf-crumb a { color: #2A1A0C; text-decoration: underline; text-decoration-color: rgba(42, 26, 12, .25); text-underline-offset: 4px; transition: color .25s var(--ease, ease), text-decoration-color .25s var(--ease, ease); }
-.cf-crumb a:hover, .cf-crumb a:focus-visible { color: #2A1A0C; text-decoration-color: rgba(42, 26, 12, .6); }
-.cf-crumb [aria-current] { color: rgba(42, 26, 12, .6); }   /* Home dark, Courses muted: swapped, user 2026-11-25 */
-
 /* sticky filter bar: Mode and Medium dropdowns, held under the header while the courses scroll */
 .course-page { --cf-bar-h: 64px; --cf-top: calc(var(--hdr-h, 68px) + 6px); }   /* the header ends at --hdr-h (the merged staging header is a bar, not a floating pill): the sticky filters sit 6px under it */
 .cf-bar-sentinel { height: 1px; margin-bottom: -1px; pointer-events: none; }
@@ -203,9 +185,6 @@
   .cf-side { box-shadow: 0 10px 24px -18px rgba(60, 25, 5, calc(.35 * var(--stick))); }
 }
 @media (max-width: 860px) { .cf-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; } .cf-card__t { font-size: 16px; } .cf-path { padding: 28px; } }
-@media (max-width: 760px) {
-  .cf-hero { min-height: 0; }
-}
 @media (max-width: 760px) {
   .course-page { --cf-bar-h: 60px; }
   .cf-bar__in { flex-wrap: nowrap; gap: 10px; padding: 8px 0; }

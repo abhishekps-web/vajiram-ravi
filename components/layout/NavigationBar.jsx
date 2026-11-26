@@ -1,6 +1,6 @@
 import '@/app/tailwind-sections.css';
-import Button from '@/components/ui/Button';
-import { buttonHTML } from '@/components/ui/Button';
+import Button from '@/components/ui/button';
+import { buttonHTML } from '@/components/ui/button';
 import { $, $$, esc, reduce, SITE } from '@/lib/site';
 import { CATS, CAT_D, STAGES } from '@/lib/data/courses';
 import { BAR_LINKS, DRAWER_LINKS, MORE_ORDER, STUDY_MENU, HEADLINES } from '@/lib/data/navigation';
@@ -215,7 +215,7 @@ const navMega = (wrap, btn, href) => {
     e.preventDefault(); set(true);
     $('[data-mega-col] a', wrap)?.focus();
   });
-  wrap.addEventListener('click', e => { if (e.target.closest('[data-mega-close], [data-cat]')) set(false); });
+  wrap.addEventListener('click', e => { if (e.target.closest('[data-mega-close]')) set(false); });
   const api = { set, isOpen };
   megas.push(api);
   return api;

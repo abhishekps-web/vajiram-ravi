@@ -5,11 +5,10 @@
    buttons). `#cat=<family or group>` opens a group. Data: lib/data/course-finder.json (slimmed from the finder's CF_DATA); banners in
    public/assets/img/courses. Styles: public/css/course-finder.css. */
 import { memo, useEffect, useMemo, useRef, useState } from 'react';
-import CarouselDots from '@/components/ui/CarouselDots';
-import Button from '@/components/ui/Button';
+import CarouselDots from '@/components/ui/carousel-dots';
+import Button from '@/components/ui/button';
 import DATA from '@/lib/data/course-finder.json';
 import { GROUPS, MODES, MEDIUMS, FEATURED, FEATURED_START } from '@/lib/data/course-finder';
-import SectionWrapper from '@/components/ui/section_wrapper';
 import Cover from './CourseFinder/Cover';
 
 const groupOf = key => GROUPS.find(g => g.id === key || g.fams.includes(key));
@@ -382,19 +381,6 @@ export default function CourseFinder() {
 
   return (
     <>
-      <SectionWrapper id="cfHero" labelledBy="cfH" compact className="cf-hero">
-        <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true" focusable="false"><filter id="cfMaroon" colorInterpolationFilters="sRGB"><feColorMatrix type="matrix" values=".0816 .2746 .0277 0 .616  .1526 .5135 .0518 0 .282  .1367 .4599 .0464 0 .357  0 0 0 1 0" /></filter></svg>
-        <span className="cf-hero__bg cf-hero__bg--l" aria-hidden="true"></span>
-        <span className="cf-hero__bg" aria-hidden="true"></span>
-        <div className="cf-hero__in">
-          <nav className="cf-crumb rv" aria-label="Breadcrumb" style={{ '--d': '.02s' }}>
-            <a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Courses</span>
-          </nav>
-          <h1 id="cfH" className="cf-h rv" style={{ '--d': '.1s' }}>Find your UPSC course</h1>
-          <p className="cf-lede rv" style={{ '--d': '.18s' }}>Prelims to Interview. Classroom and LIVE-Online programmes, in English and <span lang="hi">हिंदी</span>.</p>
-        </div>
-      </SectionWrapper>
-
       <div ref={sentinel} className="cf-bar-sentinel" aria-hidden="true" />
       <div className="cf-bar">
         <div className="cf-bar__in">
