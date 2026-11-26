@@ -11,7 +11,7 @@ one file in `components/sections/home/` holding its markup and behaviour (its da
 ## Project layout
 
 - `app/page.jsx` only composes the section components, in page order; `app/layout.jsx` holds `<head>`, fonts, the stylesheets (`CSS_LAYERS`), the pre-paint boot script, `<Preloader/>` and `<SiteBehaviour/>`.
-- `components/`: `layout/` (site chrome), `sections/` (`sections/home/`: every homepage section, one lowercase kebab-case file each, no per-section folders, e.g. `hero-banner.jsx`, `toppers-reel.jsx`, user 2026-11-26; the other pages' sections, `CourseFinder.jsx`, beside it), `ui/` (shared pieces, kebab-case files, user 2026-11-26). Per-component and per-section decisions are in `components/CLAUDE.md`.
+- `components/`: `layout/` (site chrome), `sections/` (`sections/home/`: every homepage section, one lowercase kebab-case file each, no per-section folders, e.g. `hero-banner.jsx`, `toppers-reel.jsx`, user 2026-11-26; the other pages' sections, `BatchesPage.jsx`, `CourseFinder.jsx`, beside it), `ui/` (shared pieces, kebab-case files, user 2026-11-26). Per-component and per-section decisions are in `components/CLAUDE.md`.
 - `lib/behaviour.js` is THE ORDER every behaviour runs in (the order matters; see the comment at its top). `lib/site.js` the shared helpers and constants, `lib/data/` all content, `lib/motion/` site-wide motion.
 - `public/css/` the stylesheets (see "Styles"), `public/assets/img/` by purpose. `.claude/skills/site-motion/` the motion rules and the headless-Chrome check script.
 

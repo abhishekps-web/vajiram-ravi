@@ -87,7 +87,7 @@ export default function NavigationBar() {
             <MegaMenu id="mega" wrapId="explore" btnId="exploreBtn" label="All courses" wide />
             <a className={LINK} href="#toppers" data-more="toppers">Toppers</a>
             <MegaMenu id="megaSm" wrapId="studyNav" btnId="studyBtn" label="Study materials" />
-            <a className={LINK} href="#batches" data-more="batches">Upcoming batches</a>
+            <a className={LINK} href="/upcoming-batches" data-more="batches">Upcoming batches</a>
             <a className={LINK} href="#faq" data-more="faq">FAQs</a>
             <MoreMenu />
           </nav>

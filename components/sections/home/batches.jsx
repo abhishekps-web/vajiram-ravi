@@ -17,7 +17,7 @@ export default function Batches() {
         <h2 id="batH" className="h2 h2--sec rv cu:mx-auto! cu:text-center! cu:text-balance cu:mt-0!" style={{ '--d': '.08s' }}>Next batches starting soon.</h2>
         <div className="rv cu:flex cu:flex-col cu:items-center cu:gap-[18px] cu:mb-(--hd-gap) cu:text-center" style={{ '--d': '.16s' }}>
           <p className="intro cu:mx-auto! cu:text-balance">{'Register online, or call '}<a href="tel:08062206330">080-6220-6330</a>{' for registration or seat allotment, Monday to Saturday, 9 am to 7 pm.'}</p>
-          <Button variant="link" id="allBatches" iconEnd="arrow">View all batches</Button>
+          <Button variant="link" id="allBatches" href="/upcoming-batches" iconEnd="arrow">View all batches</Button>
         </div>
         <div className="rail cu:-mt-[18px]! cu:[--bgap:var(--card-gap)] cu:[--cw:calc((100%-3*var(--bgap))/4)] cu:max-[1180px]:[--cw:calc((100%-var(--bgap))/2)] cu:max-[640px]:[--cw:86%]">
           <div

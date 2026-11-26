@@ -25,6 +25,7 @@
 @source "../components/sections/Legacy/Legacy.jsx";
 @source "../components/sections/home/batches.jsx";
 @source "../components/ui/batch-card.jsx";
+@source "../components/sections/BatchesPage.jsx";
 @source "../components/ui/page-hero.jsx";
 @source "../app/courses/page.jsx";
 @source "../components/sections/home/toppers.jsx";

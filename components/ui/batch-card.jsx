@@ -54,7 +54,7 @@ export default function BatchCard({ b, fam, year }) {
         <div className="cu:flex cu:flex-col cu:flex-1 cu:pt-[12px] cu:px-[20px] cu:pb-[8px]">
           <span className="cu:m-0 cu:text-(--ticket) cu:[font:700_12px/1.2_var(--f)] cu:uppercase cu:tracking-[.06em]">{fam.t}{flagship ? ' · Flagship' : ''}</span>
           <h3 className="cu:mt-[6px] cu:mb-0 cu:text-(--ink) cu:[font:600_28px/1.12_var(--f-d)] cu:tracking-[-.02em] cu:max-[640px]:text-[24px] cu:text-balance">{b.n}</h3>
-          <p className="cu:mt-[4px] cu:mb-0 cu:text-(--body) cu:text-[14px] cu:leading-[1.4]">{b.what}</p>
+          {b.what && <p className="cu:mt-[4px] cu:mb-0 cu:text-(--body) cu:text-[14px] cu:leading-[1.4]">{b.what}</p>}
           <div className="cu:relative cu:box-border cu:flex cu:items-end cu:justify-between cu:gap-[12px] cu:mt-auto cu:pt-[8px] cu:min-h-[78px]">
             <dl className={`cu:grid cu:gap-0 cu:m-0 cu:p-0 cu:text-[14.5px] cu:leading-[1.5] cu:text-(--body) ${limited ? 'cu:pr-[90px]' : ''}`}>
               <div>
@@ -79,7 +79,7 @@ export default function BatchCard({ b, fam, year }) {
 
 export function initBatchTickets() {
   if (reduce || !matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-  $$('#price > article').forEach(c => {
+  $$('#price > article, #batchGrid article').forEach(c => {
     c.addEventListener('pointermove', e => {
       const r = c.getBoundingClientRect(), px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
       c.style.setProperty('--tx', (px - .5).toFixed(3));
