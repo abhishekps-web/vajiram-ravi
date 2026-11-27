@@ -90,7 +90,7 @@ The client wants **every section and every element animated**. For any change to
 - Section titles: `--h2` (64px on desktop, 40px on phones) for every section heading.
 - Section rhythm (audited 2026-11-13, "Vertical rhythm, standardised" at the end of `public/css/v49.css`): `--sec-y` (64-90px)
   above and below every section, half on top for a light section that follows another light one (Faculty, FAQ, closing);
-  eyebrow -> heading `--hd-lbl` (16px everywhere, user 2026-11-25; was 24px), heading -> intro `--hd-in` (16px), heading block -> content `--hd-gap` (12px everywhere, user 2026-11-25; was 36-48px). The
+  eyebrow -> heading `--hd-lbl` (16px everywhere, user 2026-11-25; was 24px), heading -> intro `--hd-in` (16px), heading block -> content `--hd-gap` (24px everywhere, user 2026-11-27; was 12px, and 36-48px before 2026-11-25, Why's legacy block -> reasons included; the Toppers record on phones stays 12px). The
   Tailwind sections use the same variables (`pt-[var(--sec-y)]`, `mt-[var(--hd-gap)]`). Do not give a section its own padding.
 - Eyebrows: the `SectionLabel` component (`components/ui/SectionLabel.tsx`): brand orange everywhere; the dark brown #2B1206 only on the Toppers and Talk to us eyebrows (`tone="dark"`) and the selected tab of the Toppers years and Life at Vajiram & Ravi (user 2026-11-25).
 - `--f` is the font-family variable. Never reuse that name for a scroll progress value (an earlier `--f` clash broke every font in Programmes).

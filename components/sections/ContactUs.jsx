@@ -14,7 +14,7 @@ const Ico = ({ d }) => (
 const GO = ['M7 17 17 7', 'M7 7h10v10'];
 
 const CARD = [
-  'cu:relative cu:grid cu:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] cu:w-full cu:max-w-[900px] cu:mx-auto cu:mt-[20px] cu:xs:mt-[16px] cu:text-left cu:stacked:grid-cols-1',
+  'cu:relative cu:grid cu:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] cu:w-full cu:max-w-[900px] cu:mx-auto cu:mt-(--hd-gap) cu:text-left cu:stacked:grid-cols-1',
   'cu:overflow-hidden cu:rounded-(--r-card) cu:bg-white cu:border cu:border-solid cu:border-[rgba(45,18,4,.08)] cu:border-r-0 cu:stacked:border-r cu:stacked:border-b-0 cu:shadow-[0_28px_56px_-32px_rgba(45,18,4,.35)]',
 ].join(' ');
 const DETAILS = 'cu:relative cu:flex cu:flex-col cu:justify-center cu:min-w-0 cu:px-[clamp(24px,3.4vw,40px)] cu:py-[30px] cu:xs:p-[22px]';
@@ -54,7 +54,6 @@ export default function ContactUs() {
   return (
     <SectionWrapper id="visit" labelledBy="locH" half className="band dots band--gap">
       <h2 id="locH" className="h2 h2--sec rv cu:mt-0!" style={{ "--d": ".12s" }}>Contact us</h2>
-      <p className="intro rv cu:text-balance" style={{ "--d": ".2s" }}>Pick the channel that suits you, or visit us in New Delhi.</p>
       <div className={`${CARD} rv`} style={{ "--d": ".28s" }}>
         <div className={DETAILS}>
           <p className={BADGE}>New Delhi centre</p>

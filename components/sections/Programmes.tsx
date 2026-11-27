@@ -1691,7 +1691,7 @@ function Programmes() {
             Programmes for every stage of UPSC.
           </h2>
 
-          <div className="cu:mt-[var(--hd-gap)]">
+          <div className="cu:mt-(--hd-gap)">
             <CourseShelf programmes={programmes} />
           </div>
 

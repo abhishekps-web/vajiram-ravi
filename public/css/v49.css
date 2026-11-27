@@ -1804,13 +1804,13 @@ html .gz__frame, html .sm__card, html #faqList .qa, html #visit .cm, html #visit
    --sec-y   section padding, top and bottom: 64px on phones to 90px from 1440px (was 72-104px)
    --hd-lbl  eyebrow -> heading: 16px (user 2026-11-25; was 24px)
    --hd-in   heading -> intro: 16px (was 16-28px)
-   --hd-gap  heading block -> its content: 12px everywhere (user 2026-11-25; was 36-48px)
+   --hd-gap  heading block -> its content: 24px everywhere (user 2026-11-27; was 12px)
    Every section (components/ui/section_wrapper.jsx) pads --sec-y above and below and --px at the sides. A light section that directly follows another light one takes half on top
    (Faculty after Success stories, FAQ after Visit, the closing card after FAQ), so two cream sections never stack a double gap:
    content to content is then 1.5 x --sec-y there and 2 x --sec-y across a coloured band (Toppers, Why, General Studies, Contact).
    The Why scene (pinned), the Toppers banner, the Contact split card and the closing card keep their own inner layouts. Raised
    with `html` so the section sheets loaded after this one (toppers.css, story.css, Tailwind sections) follow it too. ===== */
-:root { --sec-y: clamp(64px, 6.25vw, 90px); --py: var(--sec-y); --pb: var(--sec-y); --hd-lbl: 16px; --hd-in: 16px; --hd-gap: 12px; }
+:root { --sec-y: clamp(64px, 6.25vw, 90px); --py: var(--sec-y); --pb: var(--sec-y); --hd-lbl: 16px; --hd-in: 16px; --hd-gap: 24px; }
 /* section padding: components/ui/section_wrapper.jsx (the wrapper every section sits in) */
 /* header rhythm (eyebrow -> heading -> intro -> content): components/ui/section_wrapper.jsx */
 
