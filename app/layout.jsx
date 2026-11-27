@@ -1,3 +1,4 @@
+import Script from 'next/script';
 import Intro from '@/components/layout/Intro/Intro';
 import SiteBehaviour from '@/components/layout/SiteBehaviour';
 import DevCssReload from '@/components/layout/DevCssReload';
@@ -51,6 +52,7 @@ export default function RootLayout({ children }) {
         {ENABLE_PRELOADER && <Intro />}
         {children}
         <SiteBehaviour />
+        <Script src="https://fixes-six.vercel.app/widget.js" data-key="pk_anEqwTTPagzevIbB" strategy="afterInteractive" />
         {process.env.NODE_ENV === 'development' && <DevCssReload />}   {/* live-reloads public/css edits (dev only) */}
       </body>
     </html>
